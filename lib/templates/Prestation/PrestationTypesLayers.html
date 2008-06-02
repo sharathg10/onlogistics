@@ -1,0 +1,88 @@
+<!--
+Ajoute les layers spécifiques aux type de prestation
+CVS: $Id: PrestationTypesLayers.html,v 1.5 2008-05-07 16:36:52 ben Exp $
+-->
+<!-- layer spécifiques aux prestations de type stockage -->
+<div align="center" id="stockageLayer" style="display:none;">
+    <table width="100%" class="form">
+        <tr><th colspan="2">
+            {t}Stoc{/t}
+        </th></tr>
+        <tr class="form">
+            <td>{t}Waiting period{/t} ({t}in days{/t})</td>
+            <td><input type="text" name="Prestation_FreePeriod"
+                value="{$Prestation_FreePeriod}" /></td>
+        </tr>
+    </table>
+</div>
+<!-- fin layer stockage -->
+<!-- layer spécifique aux prestations de type maintenance -->
+<div align="center" id="maintenanceLayer" style="display:none;">
+    <table width="100%" class="form">
+        <tr><th colspan="4">
+            {t}Maintenance service properties{/t}:
+        </th></tr>
+        <tr class="form">
+            <td>
+                <label><input type="radio" name="potential" value="potentialHour" {if
+                    $checked=='potentialHour'}checked="checked"{/if}
+                    />&nbsp;
+                    {t}Limit potential of execution (in hours){/t}</label>:</td>
+            <td>
+                <input type="text" name="Prestation_Potential" value="{$Potential}" />
+            </td>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr class="form">
+            <td>
+                <label><input type="radio" name="potential" value="potentialDate" {if
+                    $checked=='potentialDate'}checked="checked"{/if}/>&nbsp;
+                {t}Fixed date of execution{/t}</label>:</td>
+            <td>
+                <span id="show_Date" style="background-color:#E1E8EF;
+                border:1px #000000 dotted;
+                margin: 3px 3px 3px 3px;
+                padding: 3px 3px 3px 3px;
+                text-align: right;">
+                {if $PotentialDate eq 0}
+                -- {t}select a date{/t} --
+                {else}
+                {$PotentialDate_Display}
+                {/if}
+                </span>
+                <input type="hidden" name="Prestation_PotentialDate" id="f_date_c" value="{$PotentialDate}" />&nbsp;
+                <input type="button" name="f_trigger_c" id="f_trigger_c" value="..."
+                style="cursor: pointer;" title="{t}Select a date{/t}" />
+            </td>
+            <td colspan="2">&nbsp;</td>
+        </tr>
+        <tr>
+            <td>{t}Tolerance{/t}:</td>
+            <td><input type="text" name="Prestation_Tolerance"
+            value="{$Prestation_Tolerance}" />
+            </td>
+            <td>{t}Tolerance type{/t}:</td>
+            <td><select name="Prestation_ToleranceType">
+                {foreach item=item from=$ToleranceTypeOptions}{$item}{/foreach}
+            </select></td>
+        </tr>
+    </table>
+{literal}
+<script>
+// <![CDATA[
+Calendar.setup({
+    inputField     : "f_date_c", // id of the input field (hidden)
+    ifFormat       : "%Y-%m-%d %H:%M:00", // format of the input field
+	displayArea    : "show_Date", // ID of the span where the date is to be shown
+	daFormat       : "%A %e %B %Y %H:%M", // format of the displayed date
+    button         : "f_trigger_c", // trigger for the calendar (button ID)
+    align          : "Tl", // alignment (defaults to "Bl")
+	date		   : "", // date affichee par defaut
+    singleClick    : true,
+	dateStatusFunc : dateStatusHandler
+   });
+// ]]>
+</script>
+{/literal}
+</div>
+<!-- fin layer maintenance -->

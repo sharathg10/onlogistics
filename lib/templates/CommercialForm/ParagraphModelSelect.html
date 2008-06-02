@@ -1,0 +1,38 @@
+<!--$Id: ParagraphModelSelect.html,v 1.4 2008-05-07 16:36:51 ben Exp $ -->
+{$form.javascript}
+<form {$form.attributes}>
+{$form.hidden}
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+  <thead>
+  <tr> 
+	<td colspan ="2">&nbsp;</td>
+  </tr>  
+  </thead>
+  <tbody>
+  <tr class="gridRowEven"> 
+    <td nowrap>{$form.FormModel_ParagraphModel_ID.label}: </td>
+    <td>{$form.FormModel_ParagraphModel_ID.html}</td>
+  </tr>
+   <tr class="gridRowEven"> 
+    <td nowrap>{$form.FormModel_ParagraphModel_Title.label}: </td>
+    <td>{$form.FormModel_ParagraphModel_Title.html}</td>
+  </tr>
+  <tr class="gridRowEven"> 
+    <td nowrap>{$form.ParagraphOrder.label}: </td>
+    <td>{$form.ParagraphOrder.html}</td>
+  </tr>
+
+  </tbody>
+  <tfoot>
+  <tr> 
+    <td align="left">
+		<input name="Ok" type="submit" value="{t}Ok{/t}" class="button">&nbsp;
+		<input name="Cancel" value="{t}Close{/t}" type="button" 
+            onClick="window.opener.location.reload();window.close();" class="button">
+    </td>
+    <td>&nbsp;</td>
+  </tr>
+  </tfoot>
+</table>
+</form>
+

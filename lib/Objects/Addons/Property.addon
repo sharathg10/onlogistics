@@ -1,0 +1,121 @@
+    /**
+     *
+     * @access public
+     * @return void 
+     **/
+    function getTypeToString(){
+        $type = $this->GetType();
+        $typeArray = $this->getTypeConstArray();
+        
+        if (isset($type) && array_key_exists($type, $typeArray)) {
+            return $typeArray[$type];
+        }
+        return '';
+    }
+    
+    /**
+     * Certaines propriétés sont juste définies en tant que telles mais ne sont 
+     * pas des propriétés dynamiques, cad que leur valeur est bien stockée dans 
+     * Product. Cette méthode permet de s'assurer que la propriété est bien une 
+     * propriété dynamique.
+     * XXX: si on ajoute des fils à product et qu'on veut mélanger les types 
+     * de produits dans un catalogue, il faudra modifier cette méthode, pour 
+     * tester aussi sur la classe qu'on aura rajoutée.
+     * 
+     * @access public
+     * @return boolean 
+     **/
+    function isDynamic() {
+        $context = Preferences::get('TradeContext', array());
+        if (in_array('readytowear', $context)) {
+            return !method_exists(new RTWProduct(), 'get' . $this->getName());
+        }
+        return !method_exists(new AeroProduct(), 'get' . $this->getName());
+    }
+    
+    /**
+     * Récupère une valeur de PropertyValue en tenant compte du type de données
+     *
+     * @access public
+     * @param  int $productID l'id du produit
+     * @return mixed 
+     */
+    function getValue($productID){
+        require_once('Objects/Product.php');
+        $ptyValue = Object::load(
+            'PropertyValue', 
+            array(
+                'Property' => $this->getId(),
+                'Product'  => $productID
+            )
+        );
+        if ($ptyValue instanceof PropertyValue) {
+            switch($this->getType()){
+                case Property::STRING_TYPE: 
+                    return $ptyValue->getStringValue();
+                case Property::INT_TYPE:
+                case Property::BOOL_TYPE: 
+                    return $ptyValue->getIntValue();
+                case Property::FLOAT_TYPE: 
+                    return $ptyValue->getFloatValue();
+                case Property::DATE_TYPE: 
+                    return $ptyValue->getDateValue();
+                case Property::OBJECT_TYPE:
+                    $props = Product::getPropertiesByContext();
+                    $name = isset($props[$this->getName()])?
+                        $props[$this->getName()]:$this->getName();
+                    $obj = Object::load($name, $ptyValue->getIntValue());
+                    if ($obj instanceof $name && $obj->getId() > 0) {
+                        return $obj;
+                    }
+                    return false;
+                default:
+                    return false;
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Assigne une valeur à une PropertyValue en tenant compte du type de 
+     * données.
+     *
+     * @access public
+     * @param  int $productID l'id du produit
+     * @param  mixed $value la valeur de la propriété
+     * @return boolean
+     */
+    function setValue($productID, $value) {
+        $ptyValue = Object::load(
+            'PropertyValue', 
+            array(
+                'Property' => $this->getId(),
+                'Product'  => $productID
+            )
+        );
+        if (!($ptyValue instanceof PropertyValue)) {
+            $ptyValue = new PropertyValue();
+            $ptyValue->setProduct($productID);
+            $ptyValue->setProperty($this->getId());
+        }
+        switch($this->getType()){
+            case Property::STRING_TYPE:
+                $ptyValue->setStringValue($value);
+                break;
+            case Property::INT_TYPE: 
+            case Property::BOOL_TYPE: 
+            case Property::OBJECT_TYPE:
+                $ptyValue->setIntValue($value);
+                break;
+            case Property::FLOAT_TYPE: 
+                $ptyValue->setFloatValue($value);
+                break;
+            case Property::DATE_TYPE: 
+                $ptyValue->setDateValue($value);
+                break;
+            default:
+                return false;
+        } // switch
+        $ptyValue->save();
+        return true;
+    }

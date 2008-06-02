@@ -1,0 +1,78 @@
+<form {$form.attributes}>
+<input type="hidden" name="formSubmitted" value="1">
+{$form.hidden}
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form" id="searchForm">
+  <thead>
+	<tr> 
+		<td colspan="4">{t}Flight informations{/t} {$CommandNo}</td>
+	</tr>
+  </thead>
+  <tbody>
+	<tr class="search">
+		<td width="20%">{t}Airplane type{/t} :</td>
+		<td width="30%">{$FlyTypeName}</td>
+		<td width="20%">{$form.RealConcreteProduct.label} :</td>
+		<td width="30%">{$form.RealConcreteProduct.html}</td>
+	</tr>
+	<tr class="search">
+		<td nowrap="nowrap">{t}Maximum weight on lift-off{/t} :</td>
+		<td nowrap="nowrap">{$MaxWeightTakeOff} Kg</td>
+		<td nowrap="nowrap">{t}Total load weight{/t} :</td>
+		<td nowrap="nowrap">{$PassengerWeight} Kg</td>
+	</tr>
+	<tr class="search">
+		<td nowrap="nowrap">{t}Flight duration{/t} :</td>
+		<td nowrap="nowrap" >{$Duration} {t}hundredth of hours{/t}</td>
+		<td nowrap="nowrap">{t}Maximum tank capacity{/t} :</td>
+		<td nowrap="nowrap">{$TankCapacity} {$TankUnitType}</td>
+	</tr>
+  </tbody>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form" id="searchForm">
+  <thead>
+	<tr> 
+		<td colspan="4">{t}Booking of completed actions{/t}</td>
+	</tr>
+  </thead>
+  <tbody>
+	<tr class="search">
+		<td nowrap="nowrap" width="20%" valign="top">{t}User{/t} :</td>
+		<td nowrap="nowrap" width="30%" valign="top">{$ConnectedUserIdentity}</td>
+		<td nowrap="nowrap" width="20%" valign="top">&nbsp;</td>
+		<td nowrap="nowrap" width="30%" valign="top">&nbsp;&nbsp;</td>
+	</tr>
+	<tr class="search">
+		<td valign="top" colspan="4">{t}Fuel{/t} :</td>
+	</tr>	
+	<tr class="search">
+		<td valign="top">{$form.ActivatedChainTaskDetail_CarburantRest.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CarburantRest.html}&nbsp;&nbsp;
+						 {$form.CarburantRestUnitType.html}
+		</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CarburantTotal.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CarburantTotal.html}&nbsp;&nbsp;L
+		</td>
+	</tr>
+	<tr class="search">
+		<td valign="top">{$form.ActivatedChainTaskDetail_CarburantAdded.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CarburantAdded.html}&nbsp;&nbsp;
+						 {$form.CarburantAddedUnitType.html}
+		</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_OilAdded.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_OilAdded.html}
+		</td>
+	</tr>
+	<tr class="search">
+		<td valign="top">{$form.ActivatedChainTaskDetail_Comment.label} :</td>
+		<td valign="top" colspan="3">{$form.ActivatedChainTaskDetail_Comment.html}</td>
+	</tr>
+  </tbody>
+  <tfoot>
+  <tr height="22"> 
+    <td colspan="3">&nbsp;&nbsp;</td>
+	<td nowrap>
+	{$form.update.html}&nbsp;&nbsp;{$form.submitForm.html}&nbsp;&nbsp;{$form.Cancel.html}&nbsp;&nbsp;&nbsp;&nbsp;
+	</td>
+  </tr>
+</table>
+</form>

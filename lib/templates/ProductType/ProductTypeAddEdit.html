@@ -1,0 +1,118 @@
+<form name="ProductTypeAddEdit" method="POST" action="{$FormAction}">
+    <input type="hidden" name="formSubmitted" value="1">
+    <input type="hidden" name="PropertyToAdd" value="0">
+    <input type="hidden" name="prtId" value="{if $ProductType != 0}{$ProductType->getId()}{/if}">
+    <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+      <thead>
+      <tr> 
+        <td colspan="7">&nbsp;</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr> 
+        <td with="5%" nowrap>{t}Name{/t} : </td>
+        <td with="95%" colspan="6">
+            <input name="ProductType_Name" value="{if $ProductType != 0}{$ProductType->getName()}{/if}" type="text" id="ProductType_Name" style="width: 100%">
+        </td>
+      </tr>
+      <tr> 
+        <td with="5%" nowrap>{t}Generic product type{/t}: </td>
+        <td with="95%" colspan="6">
+          <select name="ProductType_GenericProductType_ID" {$GenericProductTypeDisabled}>
+              <option value="0">{t}None{/t}</option>
+            {$GenericProductTypeOptions}
+          </select>
+        </td>
+      </tr>
+      </tbody>
+      <thead>
+      <tr> 
+        <td colspan="7">{t}Generic properties{/t}</td>
+      </tr>
+      </thead>
+      <tbody>
+      {section name=Property loop=$GenericPropertyList}
+      <tr> 
+        <td nowrap with="5%">{t}Property{/t} : </td>
+        <td with="25%">
+            <input type="hidden" name="GenericProperty_Ids[]" value="{$GenericPropertyList[Property]->getId()}">
+            <input type="hidden" name="GenericProperty_Ids[]" value="{$GenericPropertyList[Property]->getId()}">
+            <input type="text" name="GenericProperty_Name[]" value="{$GenericPropertyList[Property]->getName()}">
+        </td>
+        <td nowrap with="5%">{t}Displayed name{/t} : </td>
+        <td with="25%">
+            <input type="text" name="GenericProperty_DisplayName[]" value="{$GenericPropertyList[Property]->getDisplayName()}">
+        </td>
+        <td nowrap with="5%">{t}Type{/t} : </td>
+        <td with="25%">
+          <select name="GenericProperty_Type[]">
+                {foreach key=key item=item from=$TypeList}
+              <option value="{$key}"{if $key==$GenericPropertyList[Property]->getType()} selected{/if}>{$item}</option>
+                {/foreach}
+          </select>
+        </td>
+        <td with="10%" align="right">
+            &nbsp;
+        </td>
+      </tr>
+      {sectionelse}
+      <tr> 
+        <td colspan="7">{t}No generic property defined{/t}</td>
+      </tr>
+      {/section}
+      <thead>  
+      <tr> 
+        <td colspan="7">{t}Specific properties{/t}</td>
+      </tr>
+      </thead>
+      <tbody>
+      {section name=Property loop=$PropertyList}
+      <tr> 
+        <td nowrap with="5%">{t}Property{/t} : </td>
+        <td with="25%">
+            <input type="hidden" name="Property_Ids[]" value="{$PropertyList[Property]->getId()}">
+            <input type="text" name="Property_Name[]" value="{$PropertyList[Property]->getName()}">
+        </td>
+        <td nowrap with="5%">{t}Displayed name{/t} : </td>
+        <td with="25%">
+            <input type="text" name="Property_DisplayName[]" value="{$PropertyList[Property]->getDisplayName()}">
+        </td>
+        <td nowrap with="5%">{t}Type{/t} : </td>
+        <td with="25%">
+          <select name="Property_Type[]">
+                {foreach key=key item=item from=$TypeList}
+              <option value="{$key}"{if $key==$PropertyList[Property]->getType()} selected{/if}>{$item}</option>
+                {/foreach}
+          </select>
+        </td>
+        <td with="10%" align="right">
+          &nbsp;
+          <a href="PropertyDelete.php?prtIds={$PropertyList[Property]->getId()}&retURL=ProductTypeAddEdit.php">
+            <img src="images/sup.gif" border=0 alt="{t}Delete{/t}">
+          </a>
+        </td>
+      </tr>
+      {sectionelse}
+      <tr> 
+        <td colspan="7">{t}No property defined{/t}</td>
+      </tr>
+      {/section}
+      <tr> 
+        <td colspan="7" align="right">
+          <a href="javascript:document.forms['ProductTypeAddEdit'].elements['PropertyToAdd'].value='1';document.forms['ProductTypeAddEdit'].submit();">
+            <img src="images/ajouter.gif" border=0 alt="{t}Add a property{/t}">
+          </a>    
+        </td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr> 
+        <td colspan="7">
+          <input type="button" value="{t}Cancel{/t}" name="cancel" onClick="window.location='{$retURL}'" class="Button">
+          &nbsp;
+          <input type="submit" value="Ok" name="submitButton" class="Button">
+        </td>
+      </tr>
+      </tfoot> 
+    </table>
+</form>

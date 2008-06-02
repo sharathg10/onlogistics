@@ -1,0 +1,75 @@
+    
+    /**
+     * Methode raccourci qui renvoie un tableau
+     * nom prop=>obj prop
+     * 
+     * @access public
+     * @param boolean $withGeneric si à false ne renvoi pas les propriétés
+     *           de l'objet générique lié
+     * @return void 
+     **/
+    function getPropertyArray($withGeneric = true){
+        $tempArray = array();
+        if ($withGeneric) {
+            $tempArray = $this->getGenericPropertyArray();
+        }
+        $collection = $this->getPropertyCollection();
+        if ($collection instanceof Collection) {
+            for($i = 0; $i < $collection->getCount(); $i++){
+                $prop = $collection->getItem($i);
+                if ($prop instanceof Property) {
+                    $tempArray[$prop->getName()] = $prop;
+                }
+                unset($prop);
+            } // for
+        }
+        return $tempArray;
+    }
+    
+    /**
+     *
+     * @access public
+     * @return void 
+     **/
+    function getGenericPropertyArray(){
+        $genProductType = $this->getGenericProductType();
+        if ($genProductType instanceof ProductType) {
+            return $genProductType->getPropertyArray();
+        }
+        return array();        
+    }
+    
+    /**
+     * Ajoute une propriété dynamique au type de produit
+     * 
+     * @access public
+     * @param Property $property l'objet property à ajouter
+     * @return void 
+     **/
+    function addProperty($property){
+        $collection = $this->getPropertyCollection();
+        $collection->acceptDuplicate = false;
+        $collection->setItem($property);
+    }
+    
+    /**
+     * Methode addon pour faciliter la suppression d'une propriété
+     * 
+     * @access public
+     * @param integer $propertyId: l'id de l'objet
+     * @return boolean 
+     **/
+    function removeProperty($propertyId){
+        if (false == $propertyId) {
+            return false;
+        }
+        // on charge la collection et le tableau d'ids
+        $collection = $this->getPropertyCollection();
+        foreach($collection->getItemIds() as $key=>$id){
+            if ($propertyId == $id) {
+                $collection->removeItem($key);
+                break;
+            }
+        }
+        return true;
+    }

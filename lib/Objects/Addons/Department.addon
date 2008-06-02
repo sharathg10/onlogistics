@@ -1,0 +1,39 @@
+
+    /**
+     * Retourne true ou false selon s'il n'existe pas déjà de Departement 
+     * avec le meme couple (State.Country, (Name et/ou Number))
+     * @access public
+     * @return void 
+     **/
+    function isNameCorrect() {
+        $mapper = Mapper::singleton(get_class($this));
+        
+        $FilterComponent = new FilterComponent();
+        $FilterComponent->setItem(new FilterRule(
+                'Name',
+                FilterRule::OPERATOR_EQUALS,
+                $this->getName()));
+        $FilterComponent->operator = FilterComponent::OPERATOR_OR;        
+        $FilterComponent->setItem(new FilterRule(
+                'Number',
+                FilterRule::OPERATOR_EQUALS,
+                $this->getNumber()));
+        
+        $filter = new FilterComponent();  // le filtre qui est le 'contenant' de niveau supérieur
+        $rule = new FilterRule('Country',
+                               FilterRule::OPERATOR_EQUALS,
+                               $this->getCountryId());
+        $filter->setItem($rule);
+        $rule = new FilterRule('Id',
+                               FilterRule::OPERATOR_NOT_EQUALS,
+                               $this->getId());
+        $filter->setItem($rule);
+        $filter->operator = FilterComponent::OPERATOR_AND;
+        $filter->setItem($FilterComponent);
+        
+        $State = $mapper->load($filter);
+        if (Tools::isEmptyObject($State)) {
+            return true;
+        }
+        return false;
+    }

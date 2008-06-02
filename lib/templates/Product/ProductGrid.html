@@ -1,0 +1,90 @@
+<!-- $Id: ProductGrid.html,v 1.7 2008-05-07 16:36:52 ben Exp $ -->
+<script type="text/javascript">
+<!--
+// <![CDATA[
+{$gridJS}
+// ]]>
+-->
+</script>
+<div class="grid">
+<table class="grid" width="100%" cellspacing="0" cellpadding="3" border="0">
+  <thead>
+	<tr>
+	  {section name=GridHeader loop=$GridHeader}
+		<td nowrap="nowrap"> {$GridHeader[GridHeader].Caption}</td>
+	  {/section}
+		<td width="20">&nbsp;</td>
+	</tr>
+  </thead>
+  <tbody>
+	{section name=GridContent loop=$GridRow}
+		{if $smarty.section.GridContent.index is odd}
+		<tr class="gridRowOdd">
+		{else}
+		<tr class="gridRowEven">
+		{/if}
+		{section name=GridCol loop=$GridRow[GridContent]}
+			{if $GridObjectIds[GridContent] != -1}
+			<td>{$GridRow[GridContent][GridCol]}</td>
+			{/if}
+		{/section}
+			<td>
+				<input type="checkbox" name="gridItems[]" value="{$GridObjectIds[GridContent]}" />
+			</td>
+		</tr>
+	{sectionelse}
+	<tr class="gridRowEven">
+		<td colspan="{$smarty.section.GridHeader.total}">
+			<br />
+			{t}No record found{/t}
+			<br />
+			<br />
+		</td>
+		<td width="20">&nbsp;</td>
+	</tr>
+    {/section}
+  </tbody>
+  <tfoot>
+	<tr align="right">
+	<td colspan="{math equation="y + x" y=$smarty.section.GridHeader.total x=1}">
+		<input type="image" name="suppr" src="images/sup.gif" border="0"
+		alt="{t}Delete selected items{/t}"
+		onclick="javascript:return validSuppr();" />
+	</td>
+	</tr>
+  </tfoot>
+ </table>
+ {literal}
+ <script type="text/javascript">
+// <![CDATA[
+ function validSuppr() {
+ 	with (document.forms[0]) {
+	 	var linesLength = elements["gridItems[]"].length;
+		var deletedCount = 0;  // Nb d'items a supprimer
+		if (!linesLength) {
+			// 1 seule ligne: non supprimable
+			alert(ProductCommand_8);
+			return false;
+		} else {
+			for(var i=0;i < linesLength; i++) {
+				if (elements["gridItems[]"][i].checked == true) {
+					deletedCount +=1;
+				}
+			}
+			if (deletedCount == linesLength) {
+				alert(ProductCommand_8);
+				return false;
+			}
+			else if (deletedCount == 0) {
+				alert(ProductCommand_7);
+				return false;
+			}
+		}
+	}
+	return true;
+ }
+
+// ]]>
+ </script>
+ {/literal}
+ </div>

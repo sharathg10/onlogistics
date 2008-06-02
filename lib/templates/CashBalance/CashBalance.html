@@ -1,0 +1,94 @@
+<!--
+Résultat courant avant impôts: Recettes prévisionnelles - Charges prévisionnelles
+Trésorerie réelle : Recettes réelles - charges réelles
+Trésorerie prévisionnelles : Need a complex calcul... 
+-->
+<div class="grid">
+    <table width="100%" cellspacing="0" cellpadding="3" border="0">
+    <thead>
+        <tr>
+            <th>{t}label{/t}</th>
+            {foreach from=$headers key=k item=month name=headers}
+            <th>{$month}</th>
+            {/foreach}
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            {assign var=totalCells value=`$smarty.foreach.headers.total+1`}
+            <td colspan="{$totalCells}">
+              <div class="grid_actions_container">
+                <span class="grid_actions">
+                    &nbsp;<input type="button" value="{t}Print{/t}" 
+                    title="Imprimer la liste"  onclick="window.print();"  
+                    class="button" name="button_3" />
+	                &nbsp;<input type="submit" name="Export" value="{t}Export{/t}" class="button">
+                </span>
+              </div>
+
+            </td>
+        </tr>
+    </tfoot>
+    <tbody>
+        {foreach from=$data key=label item=values name=data}
+        {if ($smarty.foreach.data.index % 2) == 0}
+            {assign var="class" value="grid_row_even"}
+        {else}
+            {assign var="class" value="grid_row_odd"}
+        {/if}
+        <tr class="{$class}">
+            <td>{$values.name}</td>
+            {foreach from=$headers key=i item=v}
+            <td>{if $values[$v].total lt 0}<span
+                    style="color:red">{$values[$v].total}</span>{else}{$values[$v].total}{/if} {if $values[$v].forecast !=
+                0}(<span style="color:blue;">{$values[$v].forecast}</span>){/if}</td>
+            {/foreach}
+        </tr>
+        {/foreach}
+        <tr>
+            <td colspan="{$totalCells}">
+                <hr/>
+            </td>
+        </tr>
+        <tr class="grid_row_even">
+            <td><b><i>{t}Result before taxes{/t}</i></b></td>
+            {foreach from=$headers key=i item=v}
+            <td style="color: blue;">{$totals[$v].forecast}</td>
+            {/foreach}
+        </tr>
+        <tr class="grid_row_even">
+            <td><b><i>{t}Result before cumuled taxes{/t}</i></b></td>
+            {assign var=sum value=0}
+            {foreach from=$headers key=i item=v}
+            <td style="color: blue;">
+                {if count($headers) gt ($i+1)}
+                {$totals[$v].forecast+$sum}
+                {assign var=sum value=$totals[$v].forecast+$sum}
+                {/if}
+            </td>
+            {/foreach}
+        </tr>
+        <tr class="grid_row_odd">
+            <td><b><i>{t}Month balance{/t}</i></b></td>
+            {foreach from=$headers key=i item=v}
+            <td>{if $totals[$v].total lt 0}<span
+                    style="color:red">{$totals[$v].total}</span>{else}{$totals[$v].total}{/if}</td>
+            {/foreach}
+        </tr>
+        <tr class="grid_row_even">
+            <td><b><i>{t}Real treasury{/t}</i></b></td>
+            {assign var=sum value=0}
+            {foreach from=$headers key=i item=v}
+            <td>
+                {if count($headers) gt ($i+1)}
+                {assign var=sum value=$totals[$v].total+$sum}
+                {if $um lt 0}<span
+                    style="color:red">{$sum}</span>{else}{$sum}{/if}
+                {/if}
+            </td>
+            {/foreach}
+
+        </tr>
+    </tbody>
+</table>
+</div>

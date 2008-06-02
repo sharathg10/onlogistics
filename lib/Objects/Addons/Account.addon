@@ -1,0 +1,44 @@
+
+    /**
+     * Retourne un tableau contenant les types
+     * de factures à ventiller pour ce compte.
+     * A comparer avec Invoice.CommandType
+     * @access public
+     * @return array
+     */
+    public function getInvoicesTypes() {
+        $filter = array();
+        $filter[] = SearchTools::NewFilterComponent('InvoiceType', 'InvoiceType', 'NotEquals', 0,1);
+        $filter = SearchTools::FilterAssembler($filter);
+        $flowTypeCol = $this->getFlowTypeCollection($filter);
+        $count = $flowTypeCol->getCount();
+        $invoiceTypes = array();
+        for($i=0 ; $i<$count ; $i++) {
+            $flowType = $flowTypeCol->getItem($i);
+            $invoiceTypes[] = $flowType->getInvoiceType();
+        }
+        return $invoiceTypes;
+    }
+    
+    /**
+     * Retourne un tableau avec le detail de ce qu'il 
+     * faut ventiller pour un type de facture donné.
+     * @param int $invoiceType
+     * @access public
+     * @return array
+     */
+    public function getBreakdownParts($invoiceType) {
+        $filter=array();
+        $filter[] = SearchTools::NewFilterComponent('BreakdownPart', 'BreakdownPart', 'NotEquals', 0,1);
+        $filter[] = SearchTools::NewFilterComponent('InvoiceType', 'FlowType.InvoiceType', 'Equals', $invoiceType, 1);
+        $filter = SearchTools::FilterAssembler($filter);
+        $flowTypeItemCol = $this->getFlowTypeItemCollection($filter);
+        $count = $flowTypeItemCol->getCount();
+        $breakdownParts = array();
+        for($i=0 ; $i<$count ; $i++) {
+            $flowTypeItem = $flowTypeItemCol->getItem($i);
+            $breakdownParts[] = $flowTypeItem->getBreakdownPart();
+        }
+        return $breakdownParts;
+        
+    }

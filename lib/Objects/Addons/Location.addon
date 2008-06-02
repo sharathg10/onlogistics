@@ -1,0 +1,29 @@
+
+    /**
+     * Retourne true si le Location est supprimable, et 0 ou 2 sinon
+     * @access public
+     * @return integer: une des 3 constantes ci-dessus
+     **/
+    function isDeletable() {
+        // Test sur les LPQ
+        $mapper = Mapper::singleton('LocationProductQuantities');
+        if ($mapper->alreadyExists(array('Location' => $this->getId()))) {
+            return Store::CAN_NOT_BE_DISABLED;
+        }
+        // Test sur les LCP
+        $mapper = Mapper::singleton('LocationConcreteProduct');
+        if ($mapper->alreadyExists(array('Location' => $this->getId()))) {
+            return Store::CAN_NOT_BE_DISABLED;
+        }
+        // Test sur les LEM
+        $mapper = Mapper::singleton('LocationExecutedMovement');
+        if ($mapper->alreadyExists(array('Location' => $this->getId()))) {
+            return Store::CAN_BE_DISABLED;
+        }
+        // Test sur les OccupiedLocation
+        $mapper = Mapper::singleton('OccupiedLocation');
+        if ($mapper->alreadyExists(array('Location' => $this->getId()))) {
+            return Store::CAN_BE_DISABLED;
+        }
+        return Store::DELETABLE;
+    }

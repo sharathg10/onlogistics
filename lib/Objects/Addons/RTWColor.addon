@@ -1,0 +1,52 @@
+    // RTWColor::canBeDeleted() {{{
+
+    /**
+     * RTWColor::canBeDeleted()
+     * Retourne true si l'objet peut être détruit en base de donnees.
+     * Un RTWColor ne doit pas etre lie a un RTWMaterial
+     *
+     * @access public
+     * @return boolean
+     */
+    public function canBeDeleted() {
+        $mapper = Mapper::singleton('RTWMaterial');
+        $testColl = $mapper->loadCollection(array('Color' => $this->getId()));
+        
+        if (parent::canBeDeleted() && $testColl->getCount() == 0) {
+            return true;
+        }
+        if ($testColl->getCount() > 0) {
+            throw new Exception('This color cannot be deleted cause it is used by an existing material.');
+        }
+        return true;
+    }
+
+    // }}}
+    // RTWOption::getToStringAttribute() {{{
+
+    /**
+     * @access public
+     * @return string
+     */
+    function getToStringAttribute() {
+        return array('Name', 'SupplierReference');
+    }
+
+    // }}}
+    // RTWOption::toString() {{{
+
+    /**
+     * Retourne le nom de l'option et son type.
+
+     * @access public
+     * @return string
+     */
+    function toString() {
+        $ref = $this->getSupplierReference();
+        if (!empty($ref)) {
+            return $this->getName() . ' / ' . $ref;
+        }
+        return $this->getName();
+    }
+
+    // }}}

@@ -1,0 +1,25 @@
+<!--debut du grid-->
+<table class="grid" width="100%" cellspacing="0" cellpadding="3" border="0">
+<thead>
+<tr>
+{section name=GridHeader loop=$GridHeader}
+	  <td nowrap="nowrap"> {$GridHeader[GridHeader].Caption}</td>
+{/section}
+	<td width="20">&nbsp;</td>
+</tr>
+</thead>
+<tbody>
+{section name=GridContent loop=$GridRow}
+{if $smarty.section.GridContent.index is odd}<tr class="gridRowOdd">{else}<tr class="gridRowEven">{/if}
+	{section name=GridCol loop=$GridRow[GridContent]}
+	{if $GridObjectIds[GridContent] != -1}
+	<td>{$GridRow[GridContent][GridCol]}</td>
+	{/if}
+	{/section}
+	<td>&nbsp;</td>
+</tr>
+{/section}
+</tbody>
+</table>
+<br />
+<!--fin du grid-->

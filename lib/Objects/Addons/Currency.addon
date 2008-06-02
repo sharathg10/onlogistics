@@ -1,0 +1,56 @@
+
+    // getConverterRate() {{{
+
+    /**
+     * Retourne le taux de change a une date donnee, pour une devise donnee.
+     *
+     * @access public
+     * @param object $currency Currency instance
+     * @param string $date date donnee au format YYYY-mm-dd
+     * @return mixed
+     */
+    public static function getConverterRate($currency, $date) {
+        $return = false;
+        $mapper = Mapper::singleton('CurrencyConverter');
+        $filter = array(
+            SearchTools::NewFilterComponent(
+                'BeginDate', '', 'LowerThanOrEquals', $date, 1),
+            SearchTools::NewFilterComponent(
+                'EndDate', '', 'GreaterThanOrEquals', $date, 1)
+        );
+        
+        $cur1Filter = array(
+            SearchTools::NewFilterComponent(
+                'FromCurrency', '', 'Equals', $this->getId(), 1),
+            SearchTools::NewFilterComponent(
+                'ToCurrency', '', 'Equals', $currency->getId(), 1)
+        );
+        $cur1Filter = SearchTools::filterAssembler($cur1Filter);
+        
+        $cur2Filter = array(
+            SearchTools::NewFilterComponent(
+                'ToCurrency', '', 'Equals', $this->getId(), 1),
+            SearchTools::NewFilterComponent(
+                'FromCurrency', '', 'Equals', $currency->getId(), 1)
+        );
+        $cur2Filter = SearchTools::filterAssembler($cur2Filter);
+        
+        $curFilter = SearchTools::filterAssembler(
+                array($cur1Filter, $cur2Filter), FilterComponent::OPERATOR_OR);
+        
+        $filter[] = $curFilter;
+        $filter = SearchTools::filterAssembler($filter);
+        $converter = $mapper->load($filter);
+        if (!($converter instanceof CurrencyConverter)) {
+            return false;
+        }
+        if ($converter->getFromCurrencyId() == $this->getId()) {
+            $return = $converter->getRate();
+        } else {
+            $return = round(1 / $converter->getRate(), 6);
+        }
+        
+        return $return;
+    }
+
+    // }}}

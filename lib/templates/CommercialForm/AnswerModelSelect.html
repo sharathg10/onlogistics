@@ -1,0 +1,44 @@
+<!--$Id: AnswerModelSelect.html,v 1.3 2008-05-07 16:36:51 ben Exp $ -->
+{$form.javascript}
+<form {$form.attributes}>
+{$form.hidden}
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+  <thead>
+  <tr> 
+	<td colspan ="2">&nbsp;</td>
+  </tr>  
+  </thead>
+  <tbody>
+   <tr class="gridRowEven"> 
+    <td nowrap>{t}Move answer in next question{/t}: </td>
+    <td><select name="QuestionID" style="width:100%;">
+		  {$questionOptions}
+		</select></td>
+  </tr>
+  <tr class="gridRowEven"> 
+    <td nowrap>{$form.AnswerModelID.label}: </td>
+    <td>{$form.AnswerModelID.html}</td>
+  </tr>
+  <tr class="gridRowEven"> 
+    <td nowrap>{$form.AnswerOrder.label}: </td>
+    <td>{$form.AnswerOrder.html}</td>
+  </tr>
+  <tr>
+    <td colspan="2" align="left">
+      <input name="AddAnswerModel" value="{t}Add an answer model.{/t}" type="button" 
+            onClick="window.location.href='AnswerModelAddEdit.php?retURL=AnswerModelSelect.php&popup=1';" class="button">
+    </td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr> 
+    <td align="left">
+		<input name="Ok" type="submit" value="{t}Ok{/t}" class="button">&nbsp;
+		<input name="Cancel" value="{t}Cancel{/t}" type="button" 
+            onClick="window.opener.location.reload();window.close();" class="button">
+    </td>
+    <td>&nbsp;</td>
+  </tr>
+  </tfoot>
+</table>
+</form>

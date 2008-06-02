@@ -1,0 +1,21 @@
+    // OccupiedLocation::getOwner() {{{
+
+    /**
+     * Retourne le product.Owner
+     *
+     * @access public
+     * @return object Actor    // or false
+     */
+    public function getOwner() {
+    /*  Methode plus longue, mais lazyyy
+        $filter = SearchTools::newFilterComponent('Owner', '', 'NotEquals', 0, 1);
+        $productColl = $this->getProductCollection($filter, array(), array('Owner'));
+        if (Tools::isEmptyObject($productColl)) {
+            return false;
+        }
+        return $productColl->getItem(0)->getOwner();*/
+        $actorId =  Tools::getValueFromMacro($this, '%Product.Owner.Id%');
+        return Object::load('Actor', $actorId);
+    }
+
+    // }}}

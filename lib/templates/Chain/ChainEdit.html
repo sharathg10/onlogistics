@@ -1,0 +1,136 @@
+<!-- $Id: ChainEdit.html,v 1.11 2008-05-07 16:36:51 ben Exp $ -->
+<div id="header" class="grid">
+<table width="100%">
+  <thead>
+  <tr>
+    <td align="left">{t}Chain reference{/t} : </td>
+    <td><div class="ReadOnlyField" id="ChainReference">{$Reference}&nbsp;</div></td>
+    <td align="right">{t}Chain name{/t} : </td>
+    <td><div class="ReadOnlyField" id="ChainName">{$Description}&nbsp;</div></td>
+  </tr>
+  </thead>
+</table>
+</div>
+
+<form {$form.attributes}>
+{$form.hidden}
+  <!--  style="background-color: #BBBBBB; border: 1px solid #000000; margin: 2px 2px 2px 2px; padding: 5px 5px 5px 5px;" -->
+  <div id="Main" class="grid">
+  	<!-- Generation des opérations et taches -->
+	{t}Page loading, please wait...{/t}
+  </div>
+  <br /><br />
+  <table width="100%" cellspacing="0" class="form">
+    <tfoot>
+    <tr>
+      <td align="right">
+	    <input type="hidden" name="FormSubmitted" id="FormSubmitted" value="false" />
+        <input type="button" name="ok" value="{t}Ok{/t}" class="Button"
+        onclick="checkAndSubmit();"/>&nbsp;
+        <input name="annuler" value="{t}Cancel{/t}" type="button" class="Button"
+          onclick="window.location='dispatcher.php?entity=Chain';" />
+	  </td>
+    </tr>
+	</tfoot>
+  </table>
+</form>
+<div id="tplOperationBlock" style="display:none;z-index:1;position:relative;">
+  <table  width="100%" cellspacing="0" cellpadding="3">
+    <thead>
+    <tr>
+      <td width="16">
+	  	<a href="javascript:void(0);" onclick="with(OperationBlockList.getItem([$JS_i])) if(isCollapsed()) expand(); else collapse(); OperationBlockList.render(); OperationBlockList.refresh();">
+		  <img src="images/vierge.gif" height="16" width="16" alt="{t}Show/Hide operation tasks{/t}" border="0" />
+		</a>
+	  </td>
+      <td> [[$JS_OperationNo]]
+        <select name="Operation[$JS_i]" onchange="OperationBlockList.getItem([$JS_i]).setOperationId(this.options[this.selectedIndex].value); OperationBlockList.render(); OperationBlockList.refresh();">
+        </select>
+        <a href="javascript:void(0);" onclick="OperationBlockList.addOperation([$JS_i]); OperationBlockList.render(); OperationBlockList.refresh();/*OpList.addOperation();*/">
+		  <img src="images/ajouter.gif" height="16" width="16" alt="{t}Add a new operation{/t}" border="0" />
+	    </a>
+        <a href="javascript:void(0);" onclick="DeleteOperation([$JS_i]);">
+		  <img src="images/sup.gif" height="16" width="16" alt="{t}Delete operation{/t}" border="0" />
+		</a>
+        <a href="javascript:void(0);" onclick="OperationBlockList.moveDown([$JS_i]); OperationBlockList.render(); OperationBlockList.refresh();/*OpList.moveDown([$JS_i]);*/">
+		  <img src="images/bas.gif" height="16" width="16" alt="{t}Down{/t}" border="0" />
+		</a>
+        <a href="javascript:void(0);" onclick="OperationBlockList.moveUp([$JS_i]); OperationBlockList.render(); OperationBlockList.refresh();/*OpList.moveUp([$JS_i]);*/">
+		  <img src="images/haut.gif" height="16" width="16" alt="{t}Up{/t}" border="0" />
+		</a>
+      </td>
+      <td>
+        <select id="Operation[$JS_i]Actor" name="Operation[$JS_i]Actor" onchange="if (OperationBlockList.getItem([$JS_i]).setActorId(this.options[this.selectedIndex].value)==false) ConfirmAlertTroubles(this,[$JS_i]);">
+        </select>
+      </td>
+    </tr>
+	<thead>
+  </table>
+</div>
+<div id="tplTaskBlock" style="display:none;z-index:2;position:relative;">
+  <table width="100%" height="15" border="0" cellpadding="0" cellspacing="0" id="Task[$JS_i]_[$JS_j]">
+	<tbody>
+	<tr valign="middle" class="[$JS_Task[$JS_i]_[$JS_j]Css]">
+      <td width="5%" height="43">
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]DepartureActor" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]DepartureSite" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]ArrivalActor" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]ArrivalSite" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]Instructions" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]InteruptibleTask" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]TriggerMode" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]TriggerDelta" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]Duration" value="" />
+        <input type="hidden" name="Task[$JS_i]_[$JS_j]DurationType" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]KilometerNumber" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]Cost" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]CostType" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]RessourceGroup" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]AbstractDepartureType" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]DepartureWeeklyInstantDay" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]DepartureWeeklyInstantTime" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]DepartureInstantDate" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]AbstractArrivalType" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]ArrivalWeeklyInstantDay" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]ArrivalWeeklyInstantTime" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]ArrivalInstantDate" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]DepartureZone" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]ArrivalZone" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]AutoAlert" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]AlertedUsers" value="" />
+		<!-- Task d'activation -->
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]ChainToActivate" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]HasProductCommandType" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]ProductCommandType" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]ChainDepartureActor" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]ChainDepartureSite" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]ChainArrivalActor" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]ChainArrivalSite" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]WishedDateType" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]Delta" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]Nomenclature" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]Components" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]Component" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]ComponentQuantityRatio" value="" />
+		<input type="hidden" name="Task[$JS_i]_[$JS_j]ActivationPerSupplier" value="" />
+	  </td>
+      <td width="55%"> [[$JS_OperationNo].[$JS_TaskNo]]
+        <nobr>
+		<select name="Task[$JS_i]_[$JS_j]" onchange="OperationBlockList.getItem([$JS_i]).getItem([$JS_j]).setId(this.options[this.selectedIndex].value); OperationBlockList.render(); OperationBlockList.refresh();"></select>
+        <a href="javascript:void(0);" onclick="OperationBlockList.getItem([$JS_i]).addTask([$JS_j]); OperationBlockList.render(); OperationBlockList.refresh();"><img src="images/ajouter.gif" height="16" width="16" alt="{t}Add a new task{/t}" border="0" /></a>
+        <a href="javascript:void(0);" onclick="DeleteTask([$JS_i], [$JS_j]);"><img src="images/sup.gif" height="16" width="16" alt="{t}Delete task{/t}" border="0" /></a>
+        <a href="javascript:void(0);" onclick="OperationBlockList.getItem([$JS_i]).moveDown([$JS_j]); OperationBlockList.render(); OperationBlockList.refresh();"><img src="images/bas.gif" height="16" width="16" alt="{t}Down{/t}" border="0" /></a>
+        <a href="javascript:void(0);" onclick="OperationBlockList.getItem([$JS_i]).moveUp([$JS_j]); OperationBlockList.render(); OperationBlockList.refresh();"><img src="images/haut.gif" height="16" width="16" alt="{t}Up{/t}" border="0" /></a>
+        <a href="javascript:void(0);" onclick="TaskDetail([$JS_i],[$JS_j]);"><img src="images/detail.gif" height="16" width="16" alt="{t}Task details{/t}" border="0" /></a>
+		</nobr>
+	  </td>
+      <td width="20%" align="right">
+        <div class="ReadOnlyField"><nobr>[$JS_Task[$JS_i]_[$JS_j]Duration] ([$JS_Task[$JS_i]_[$JS_j]DurationTypeLabel])</nobr></div>
+      </td>
+      <td width="20%" align="right" nowrap>
+        <div class="ReadOnlyField"><nobr>[$JS_Task[$JS_i]_[$JS_j]Cost] &euro; ([$JS_Task[$JS_i]_[$JS_j]CostTypeLabel])</nobr></div>
+      </td>
+    </tr>
+	</tbody>
+  </table>
+</div>

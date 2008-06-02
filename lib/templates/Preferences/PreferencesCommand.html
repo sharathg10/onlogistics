@@ -1,0 +1,133 @@
+<form name="PreferencesWebSite" method="POST" action="{$formAction}">
+  <div class="grid">
+	<table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	  <thead>
+	  <tr>
+		<td colspan="2">{t}Order preferences{/t}</td>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  	<tr class="grid_row_even">
+	       <td><label for="ProductCommandQtyInCatalog">{t}Allow to provide quantity in products catalogs{/t}</label></td>
+			<td><input type="checkbox" value="1" name="ProductCommandQtyInCatalog"
+                {if $ProductCommandQtyInCatalog eq 1} checked="checked"{/if}
+                 id="ProductCommandQtyInCatalog" />&nbsp;
+			</td>
+        </tr>
+	  	<tr class="grid_row_odd">
+	       <td><label for="ProductCommandUEQty">{t}Allow to provide packaging unit quantity instead of selling unit quantity for customer orders{/t}</label></td>
+			<td><input type="checkbox" value="1" name="ProductCommandUEQty"
+                {if $ProductCommandUEQty eq 1} checked="checked"{/if}
+                 id="ProductCommandUEQty" />&nbsp;
+			</td>
+        </tr>
+	  	<tr class="grid_row_even">
+	       <td><label for="CommandActivateMultipleChains">{t}Allow multiple chains activation{/t}</label></td>
+			<td><input type="checkbox" value="1" name="CommandActivateMultipleChains"
+                {if $CommandActivateMultipleChains} checked="checked"{/if}
+                 id="CommandActivateMultipleChains" />&nbsp;
+			</td>
+        </tr>
+	  	<tr class="grid_row_odd">
+	       <td><label for="MercurialForClient">{t}Allow mercurial on catalogues{/t}</label></td>
+           <td><input type="checkbox" value="1" name="MercurialForClient"
+                {if $MercurialForClient} checked="checked"{/if}
+                 id="MercurialForClient" />&nbsp;
+			</td>
+        </tr>
+	  	<tr class="grid_row_even">
+	       <td><label for="CalendarAwareOfPlanning">{t}Take into account customer planning in command date calendar{/t}</label></td>
+           <td><input type="checkbox" value="1" name="CalendarAwareOfPlanning"
+                {if $CalendarAwareOfPlanning} checked="checked"{/if}
+                 id="CalendarAwareOfPlanning" />&nbsp;
+			</td>
+        </tr>
+	  	<tr class="grid_row_odd">
+	       <td><label for="EstimateValidityDays">{t}Estimates behaviour{/t}</label></td>
+           <td>
+             <select name="EstimateBehaviour">
+                 <option value="0"{if $EstimateBehaviour eq 0} selected="selected"{/if}>{t}Estimate{/t}</option>
+                 <option value="1"{if $EstimateBehaviour eq 1} selected="selected"{/if}>{t}Previsional order{/t}</option>
+             </select>
+		   </td>
+        </tr>
+	  	<tr class="grid_row_odd">
+	       <td><label for="EstimateValidityDays">{t}Number of days of validity of estimates{/t}</label></td>
+           <td><input type="text" value="{$EstimateValidityDays}"
+               name="EstimateValidityDays" id="EstimateValidityDays" />&nbsp;
+			</td>
+        </tr>
+        <tr class="grid_row_even">
+	       <td>{t}Customer product orders behaviour{/t}</label></td>
+           <td><input type="radio" value="0" name="CustomerProductCommandBehaviour"
+                {if $CustomerProductCommandBehaviour eq 0} checked="checked"{/if}
+                 id="CustomerProductCommandBehaviour_0" />&nbsp;
+                 <label for="CustomerProductCommandBehaviour_0">{t}Billable{/t}
+			</td>
+        </tr>
+        <tr>
+	       <td>&nbsp;</td>
+           <td><input type="radio" value="1" name="CustomerProductCommandBehaviour"
+                {if $CustomerProductCommandBehaviour eq 1} checked="checked"{/if}
+                 id="CustomerProductCommandBehaviour_1" />&nbsp;
+                 <label for="CustomerProductCommandBehaviour_1">{t}Not billable, closed after prepared{/t}
+			</td>
+        </tr>
+        <tr>
+	       <td>&nbsp;</td>
+           <td><input type="radio" value="2" name="CustomerProductCommandBehaviour"
+                {if $CustomerProductCommandBehaviour eq 2} checked="checked"{/if}
+                 id="CustomerProductCommandBehaviour_2" />&nbsp;
+                 <label for="CustomerProductCommandBehaviour_2">{t}Not billable, closed after delivery{/t}
+			</td>
+        </tr>
+        <tr>
+	       <td>&nbsp;</td>
+           <td><input type="radio" value="3" name="CustomerProductCommandBehaviour"
+                {if $CustomerProductCommandBehaviour eq 3} checked="checked"{/if}
+                 id="CustomerProductCommandBehaviour_3" />&nbsp;
+                 <label for="CustomerProductCommandBehaviour_3">{t}Managed by couple supplier/customer{/t}
+			</td>
+        </tr>
+        <tr class="grid_row_odd">
+	       <td>{t}Carriage services billing{/t}</label></td>
+           <td><input type="radio" value="0" name="ChainCommandBillingBehaviour"
+                {if $ChainCommandBillingBehaviour eq 0} checked="checked"{/if}
+                 id="ChainCommandBillingBehaviour_0" />&nbsp;
+                 <label for="ChainCommandBillingBehaviour_0">{t}Based on forecast{/t}
+			</td>
+        </tr>
+        <tr class="grid_row_odd">
+	       <td>&nbsp;</td>
+           <td><input type="radio" value="1" name="ChainCommandBillingBehaviour"
+                {if $ChainCommandBillingBehaviour eq 1} checked="checked"{/if}
+                 id="ChainCommandBillingBehaviour_1" />&nbsp;
+                 <label for="ChainCommandBillingBehaviour_1">{t}Based on reality{/t}
+			</td>
+        </tr>
+	  	<tr class="grid_row_even">
+	       <td><label for="TvaSurtax">{t}VAT overtaxed (%){/t}</label></td>
+           <td><input type="text" value="{$TvaSurtax}" name="TvaSurtax" id="TvaSurtax" />&nbsp;
+			</td>
+        </tr>
+	  	<tr class="grid_row_odd">
+	       <td><label for="FodecTax">{t}FODEC tax (%){/t}</label></td>
+           <td><input type="text" value="{$FodecTax}" name="FodecTax" id="FodecTax" />&nbsp;
+			</td>
+        </tr>
+	  	<tr class="grid_row_even">
+	       <td><label for="TaxStamp">{t}Tax stamp{/t}</label></td>
+           <td><input type="text" value="{$TaxStamp}" name="TaxStamp" id="TaxStamp" />&nbsp;
+			</td>
+        </tr>
+	  </tbody>
+	  <tfoot>
+	  <tr>
+	    <td align="right" colspan="2">
+	      <input type="submit" name="Ok" value="{t}Ok{/t}" class="button" />
+		</td>
+	  </tr>
+	  </tfoot>
+	</table>
+  </div>
+<form>

@@ -1,0 +1,20 @@
+    /**
+     * Retourne la collection de Question du 
+     * ParagraphModel trié selon QuestionOrder.
+     *
+     * @access public
+     * @return Object Collection
+     */
+    function getQuestionCollection(
+        $filter=array(), $order=array('QuestionOrder'=>SORT_ASC))
+    {
+        $collection = new Collection();
+        $paragraphModelMapper = Mapper::singleton('Question');
+        $linkCol = $this->getLinkParagraphModelQuestionCollection($filter, $order);
+        $count = $linkCol->getCount();
+        for($i=0 ; $i<$count ; $i++) {
+            $item = $linkCol->getItem($i);
+            $collection->setItem($item->getQuestion());
+        }
+        return $collection;
+    }

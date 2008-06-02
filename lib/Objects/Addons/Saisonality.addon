@@ -1,0 +1,16 @@
+/**
+     * Renouvelle une saisonnalite our l'annee suivante
+     * @access public
+     * @return void 
+     **/
+    function Renew(){
+        if ($this->GetEndDate() > date("Y-m-d H:i:s")) {  // periode non expiree: on ne peut renouveler
+            return false;  
+        }
+        $StartDate = $this->GetStartDate();
+        $this->SetStartDate(DateTimeTools::getNextYearDate($StartDate));
+        $EndDate = $this->GetEndDate();
+        $this->SetEndDate(DateTimeTools::getNextYearDate($EndDate));
+        return true;
+    }
+

@@ -1,0 +1,105 @@
+<form name="CatalogAddEdit" method="post" action="{$FormAction}">
+	<table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	  <thead>
+	  <tr>
+		<td colspan="4">{t}General information{/t}
+            <input type="hidden" name="formSubmitted" value="1" />
+            <input type="hidden" name="PropertyToAdd" value="0" />
+            <input type="hidden" name="ctgId" value="{if $Catalog != 0}{$Catalog->getId()}{/if}" />
+        </td>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr valign="top">
+        <td width="5%" nowrap="nowrap"><span style="color: #f00">*</span>&nbsp;{t}Name{/t} : </td>
+		<td width="45%">
+			<input name="Catalog_Name" value="{if $Catalog != 0}{$Catalog->getName()}{/if}"
+              type="text" id="Catalog_Name" style="width: 100%;" />
+		</td>
+        <td width="5%" nowrap="nowrap">{t}Number of items per page{/t} : </td>
+		<td width="45%">
+			<input name="Catalog_ItemPerPage" value="{if $Catalog != 0}{$Catalog->getItemPerPage()}{/if}"
+              type="text" id="Catalog_ItemPerPage" size="5" />
+		</td>
+	  </tr>
+	  <tr valign="top">
+        <td width="5%" nowrap="nowrap">{t}Scheduled order{/t} : </td>
+		<td width="45%">
+			<input type="checkbox" name="Catalog_CadencedOrder" value="1"
+              {if $Catalog != 0 and $Catalog->getCadencedOrder()}checked="checked"{/if}" />
+		</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+	  </tr>
+	  </tbody>
+	  <thead>
+	  <tr>
+		<td colspan="4">{t}Catalog content{/t}</td>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  {section name=i loop=$CriteriaList}
+	  <tr>
+	    <td nowrap="nowrap">
+			<input name="Criteria_Property[{$smarty.section.i.index}]" type="hidden"
+              value="{$CriteriaList[i].property}" style="width: 100%;" />
+			{t}Criterion{/t} :
+		</td>
+	    <td>
+			<input name="Criteria_DisplayName[{$smarty.section.i.index}]" type="text"
+              value="{$CriteriaList[i].displayName}" style="width: 100%;" />
+		</td>
+	    <td colspan="2" nowrap="nowrap">
+			<input name="Criteria_Displayable[{$smarty.section.i.index}]" type="checkbox"
+              value="1"{if $CriteriaList[i].displayable == 1} checked="checked"{/if} />
+			{t}Display in catalog{/t} &nbsp;&nbsp;&nbsp;
+			{t}Column index{/t} :
+			<input name="Criteria_Index[{$smarty.section.i.index}]" type="text"
+              value="{$CriteriaList[i].index}" size="3" />
+			&nbsp;&nbsp;&nbsp;
+			<input name="Criteria_Searchable[{$smarty.section.i.index}]" type="checkbox"
+              value="1"{if $CriteriaList[i].searchable == 1} checked="checked"{/if} />
+			{t}Search criterion{/t}&nbsp;&nbsp;&nbsp;
+			{t}Display order{/t} :
+			<input name="Criteria_SearchIndex[{$smarty.section.i.index}]" type="text"
+              value="{$CriteriaList[i].searchIndex}" size="3" />
+		</td>
+	  </tr>
+	  {sectionelse}
+	  <tr>
+	    <td colspan="4">{t}No criterion defined.{/t}</td>
+	  </tr>
+	  {/section}
+	  </tbody>
+	  <thead>
+	  <tr>
+		<td colspan="4">{t}Assign catalog{/t}</td>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+	    <td colspan="2">
+			{t}Assign catalogue to a page{/t} :
+		</td>
+	    <td colspan="2">
+			<select name="Catalog_Page">
+			    <option value="">{t}None{/t}</option>
+				{$Catalog_Page_Options}
+			</select>
+		</td>
+	  </tr>
+	  </tbody>
+	  <tfoot>
+	  <tr>
+	    <td colspan="4">
+          <input type="submit" value="{t}Ok{/t}" name="submitButton" class="Button"
+            onclick="return checkForm(document.forms['CatalogAddEdit'],
+            new Array(new Array('Catalog_Name', REQUIRED, NONE, CatalogAddEdit_0)));" />
+		  &nbsp;
+		  <input type="button" value="{t}Cancel{/t}" name="cancel"
+            onclick="window.location='{$retURL}'" class="Button" />
+		</td>
+	  </tr>
+	  </tfoot>
+	</table>
+</form>

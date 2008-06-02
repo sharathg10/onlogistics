@@ -1,0 +1,58 @@
+{$form.javascript}
+<form {$form.attributes}>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+  <thead>
+  <tr>
+    <td colspan ="3">{t}Supplier{/t}{$form.hidden}</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td width="10%" nowrap="nowrap">*{$form.ActorProduct_Actor_ID.label}: </td>
+    <td width="40%">{$form.ActorProduct_Actor_ID.html}</td>
+    <td>{$form.ActorProduct_Priority.html}&nbsp;{$form.ActorProduct_Priority.label}</td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap">{$form.ActorProduct_AssociatedProductReference.label}: </td>
+    <td>{$form.ActorProduct_AssociatedProductReference.html}</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap">*{$form.ActorProduct_BuyUnitType_ID.label}: </td>
+    <td>{$form.ActorProduct_BuyUnitType_ID.html}</td>
+    <td nowrap="nowrap">*{$form.ActorProduct_BuyUnitQuantity.label}:
+        {$form.ActorProduct_BuyUnitQuantity.html}</td>
+  </tr>
+  </tbody>
+  <thead>
+  <tr>
+    <td colspan="3">{t}Purchase price in the different currencies{/t}</td>
+  </tr>
+  </thead>
+  <tbody>
+  {section name=currency loop=$currencies}
+  <tr>
+    <td nowrap="nowrap">{t}Purchase price{/t} {$currencies[currency].Name}: </td>
+    <td>
+        <input type="hidden" name="Currencies[]"
+            value="{$currencies[currency].Id}" />
+        <input type="text" name="PurchasePrice_{$currencies[currency].Id}"
+            size="5" value="{$currencies[currency].PurchasePriceValue}" />
+        &nbsp;{$currencies[currency].Symbol} {t}excl. VAT{/t}
+    </td>
+    <td>&nbsp;</td>
+  </tr>
+  {/section}
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="3" align="right">
+      <input name="Ok" type="submit" value="{t}Ok{/t}" class="button" />&nbsp;
+      <input name="Cancel" value="{t}Cancel{/t}" type="button"
+             onclick="window.location='{$retURL}'" class="button" />
+    </td>
+  </tr>
+  </tfoot>
+</table>
+</form>

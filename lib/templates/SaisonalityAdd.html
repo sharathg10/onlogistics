@@ -1,0 +1,40 @@
+{$form.javascript}
+<form {$form.attributes}>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form" id="searchForm">
+  <tbody>
+    <tr>
+      <td colspan ="2">{$form.hidden} {$form.ProductType.html}</td>
+    </tr>
+    <tr>
+      <td colspan ="2">{$form.ProductKindArray.html}</td>
+    </tr>
+	<tr class="search">
+	  <td width="18%" >{t}Ratio{/t}</td>
+      <td>{$form.Rate.html}</td>
+    </tr>
+    <tr class="search">
+	  <td>{t}Beginning{/t}</td>
+      <td>{$form.StartDate.html}</td>
+    </tr>
+	<tr class="search">
+	  <td>{t}End{/t} </td>
+      <td>{$form.EndDate.html}</td>
+    </tr>
+	<tr class="search">
+      <td colspan="2">{$form.AddReferences.html}</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td align="right" colspan="2">
+	    <input class="button" value="{t}Ok{/t}" type="submit" />
+        &nbsp;
+        <input class="button" onclick="window.location.href='SaisonalityList.php'"
+        value="{t}Cancel{/t}" type="button" />
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  </td>
+    </tr>
+  </tfoot>
+</table>
+</form>

@@ -1,0 +1,155 @@
+    // Constants {{{
+
+    const CAN_NOT_BE_DISABLED = 0;
+    const DELETABLE = 1;
+    const CAN_BE_DISABLED = 2;
+
+    // }}}
+    // Store::getLocationNameArray() {{{
+
+    /**
+     * Retourne un tableau contenant le nom des Location qu'il contient
+     * @access public
+     * @return array of strings
+     **/
+    public function getLocationNameArray() {
+        $NameArray = array();
+        $LocationCollection = $this->getLocationCollection(array(), array(), array('Name'));
+        for ($i=0; $i<$LocationCollection->getCount(); $i++) {
+            $Location = $LocationCollection->getItem($i);
+            $NameArray[] = $Location->getName();
+            unset($Location);
+        }
+        return $NameArray;
+    }
+
+    // }}}
+    // Store::getOccupiedLocationOwners {{{
+
+    /**
+     * Retourne un tableau contenant le nom des Location qu'il contient
+     *
+     * @param boolean $factured false par defaut
+     * @access public
+     * @return object collection d'Actors
+     **/
+    function getOccupiedLocationOwners($factured=false) {
+        $ownerColl = new Collection();
+        $oclMapper = Mapper::singleton('OccupiedLocation');
+
+        $FilterComponentArray = array();
+        $FilterComponentArray[] = SearchTools::newFilterComponent(
+                'Store', 'Location.Store', 'Equals', $this->getId(), 1);
+        $FilterComponentArray[] = SearchTools::newFilterComponent(
+                'Owner', 'Product.Owner', 'NotEquals', 0, 1, 'OccupiedLocation');
+        if ($factured == false) {
+            $FilterComponentArray[] = SearchTools::newFilterComponent(
+                'InvoiceItem', '', 'Equals', 0, 1);
+        }
+        $filter = SearchTools::filterAssembler($FilterComponentArray);
+        $oclCollection = $oclMapper->loadCollection($filter);
+
+        if (Tools::isEmptyObject($oclCollection)) {
+            return $ownerColl;
+        }
+        $count = $oclCollection->getCount();
+        $ownerColl->acceptDuplicate = false;
+        for ($i = 0; $i < $count; $i++) {
+            $ownerColl->setItem($oclCollection->getItem($i)->getOwner());
+        }
+        return $ownerColl;
+    }
+
+    // }}}
+    // Store::isDeletable() {{{
+
+    /**
+     * Retourne DELETABLE si le Store est supprimable, c a d si vide ou si tous ses
+     * Location le sont
+     * retourne CAN_BE_DISABLED si ne contient aucun Location CAN_NOT_BE_DISABLED
+     * et au moins un Location CAN_BE_DISABLED
+     * retourne CAN_NOT_BE_DISABLED si au moins un de ses Location est CAN_NOT_BE_DISABLED
+     *
+     * @access public
+     * @return integer: une des 3 constantes ci-dessus
+     **/
+    function isDeletable() {
+         $locColl = $this->getLocationCollection();
+         $canBeDisabled = false;
+        // si la collection est vide, on peut supprimer le store sans probleme
+        if (Tools::isEmptyObject($locColl)) {
+            return Store::DELETABLE;
+        }
+        $count = $locColl->getCount();
+        for($i = 0; $i < $count; $i++){
+            $loc = $locColl->getItem($i);
+            if ($loc->isDeletable() == Store::CAN_NOT_BE_DISABLED) {
+                return Store::CAN_NOT_BE_DISABLED;
+            }
+            elseif ($loc->isDeletable() == Store::CAN_BE_DISABLED) {
+                $canBeDisabled = true;
+            }
+        }
+        return $canBeDisabled?Store::CAN_BE_DISABLED:Store::DELETABLE;
+    }
+
+    // }}}
+    // Store::getNameWithDetails() {{{
+    /**
+     *
+     * @return string
+     */
+    public function toString() {
+        $stoSite = $this->getStorageSite();
+        $details = '';
+        if($stoSite instanceof Site) {
+            $details .= '(' . $stoSite->getName() . ' ';
+            $owner = $stoSite->getOwner();
+            if ($owner instanceof Actor) {
+                $details .= $owner->getName() . ')';
+            } else {
+                $details .= ')';
+            }
+        }
+        return $this->getName() . $details;
+    }
+    // }}}
+    // Store::getToStringAttribute() {{{
+    /**
+     * @static
+     * @return array
+     */
+    public function getToStringAttribute() {
+        return array('Name', 'StorageSite');
+    }
+    // }}}
+    // Store::setActivated() {{{
+
+    /**
+     * Surcharge du setter setActivated().
+     * Desactive/Active le Store et ses locations en cascade.
+     * Ajout du param $saveLoc, car lors d'un simple Object::load('Store', $id);
+     * cela generait autant de req UPDATE Location... que de Locations dans le Store
+     *
+     * @access public
+     * @param boolean $state
+     * @param boolean $saveLoc true s'il faut modifier et sauver les locations liees
+     * @return void
+     */
+    public function setActivated($state, $saveLoc=false) {
+        if ($saveLoc) {
+            // change l'état des emplacements
+            $locCollection = $this->getLocationCollection();
+            $count = $locCollection->getCount();
+    	    for($i = 0; $i < $count; $i++) {
+    	        $loc = $locCollection->getItem($i);
+    	        $loc->setActivated($state);
+    	        $loc->save();
+    	    }
+        }
+        
+        // change l'état du magasin
+        parent::setActivated($state);
+    }
+
+    // }}}

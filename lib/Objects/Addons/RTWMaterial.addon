@@ -1,0 +1,34 @@
+    // RTWMaterial::getToStringAttribute() {{{
+
+    /**
+     * Retourne le nom des attributs utilisés par la méthode toString()
+
+     * @access public
+     * @return array
+     */
+    function getToStringAttribute() {
+        return array('Name', 'Color');
+    }
+
+    // }}}
+    // RTWMaterial::toString() {{{
+
+    /**
+     * Retourne le nom du material et sa couleur.
+
+     * @access public
+     * @return string
+     */
+    function toString() {
+        $ret = $this->getName();
+        if ($this->getColor() instanceof RTWColor) {
+            $ret .= ' ' . $this->getColor()->getName();
+        }
+        $ref = $this->getReferenceByActor();
+        if (!empty($ref)) {
+            $ret .= ' / ' . $ref;
+        }
+        return $ret;
+    }
+
+    // }}}

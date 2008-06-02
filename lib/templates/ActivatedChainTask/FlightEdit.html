@@ -1,0 +1,181 @@
+<form {$form.attributes}>
+<input type="hidden" name="formSubmitted" value="1">
+{$form.hidden}
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form" id="searchForm">
+  <thead>
+	<tr>
+		<td colspan="4">{t}Flight informations{/t} {$CommandNo}</td>
+	</tr>
+  </thead>
+  <tbody>
+	<tr class="search">
+		<td width="20%">{t}Airplane type{/t} :</td>
+		<td width="30%">{$FlyTypeName}</td>
+		<td width="20%">{t}Airplane matriculation{/t} :</td>
+		<td width="30%">{$Immatriculation}</td>
+	</tr>
+	<tr class="search">
+		<td nowrap="nowrap">{t}Flight duration{/t} :</td>
+		<td nowrap="nowrap">{$Duration} {t}hundredth of hours{/t}</td>
+		<td nowrap="nowrap">{t}Expected instructor/Pilot{/t} :</td>
+		<td nowrap="nowrap">{$Actor}</td>
+	</tr>
+  </tbody>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form" id="searchForm">
+  <thead>
+	<tr>
+		<td colspan="4">{t}Booking of completed actions{/t}</td>
+	</tr>
+  </thead>
+  <tbody>
+	<tr class="search">
+		<td valign="top" colspan="4" class="gris2">{t}Aircrew{/t}</td>
+	</tr>
+	<tr class="search">
+		<td nowrap="nowrap" width="20%" valign="top">{$form.RealConcreteProduct.label} :</td>
+		<td nowrap="nowrap" width="30%" valign="top">{$form.RealConcreteProduct.html}</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr class="search">
+		<td nowrap="nowrap" width="20%" valign="top">{t}Pilot{/t} 1 :</td>
+		<td nowrap="nowrap" width="30%" valign="top">{$Customer}</td>
+		<td nowrap="nowrap" width="20%" valign="top">{$form.ActivatedChainTaskDetail_CustomerSeat.label}* :</td>
+		<td nowrap="nowrap" width="30%" valign="top">{$form.ActivatedChainTaskDetail_CustomerSeat.html}</td>
+	</tr>
+	<tr class="search">
+		<td valign="top">{$form.RealActor.label} :</td>
+		<td valign="top">{$form.RealActor.html}</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_InstructorSeat.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_InstructorSeat.html}</td>
+	</tr>
+	<tr class="search">
+		<td valign="top" colspan="4" class="gris2">{t}Flight (hours in hundredth of hour){/t}</td>
+	</tr>
+		<tr class="search">
+		<td valign="top">{$form.ActivatedChainTaskDetail_Nature.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_Nature.html}</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr class="search">
+		<td valign="top">{$form.Date_TakeOff.label} :</td>
+		<td valign="top">{$form.Date_TakeOff.html}</td>
+		<td valign="top">{$form.Date_Landing.label} :</td>
+		<td valign="top">{$form.Date_Landing.html}</td>
+	</tr>
+	<tr class="search">
+		<td valign="top">{$form.Date_EngineOn.label} :</td>
+		<td valign="top">{$form.Date_EngineOn.html}</td>
+		<td valign="top">{$form.Date_EngineOff.label} :</td>
+		<td valign="top">{$form.Date_EngineOff.html}</td>
+	</tr>
+<!-- LIGNE SUIVANTE INDEFINIE DANS LE SC !!!!!!! -->
+	</tr>
+		<tr class="search">
+		<td valign="top">{t}Total flight time{/t} :</td>
+		<td valign="top">?????????</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_TechnicalHour.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_TechnicalHour.html}</td>
+	</tr>
+	</tr>
+		<tr class="search">
+		<td valign="top">{$form.PilotHours.label} :</td>
+		<td valign="top">{$form.PilotHours.html}</td>
+		<td valign="top">{$form.PilotHoursNight.label} :</td>
+		<td valign="top">{$form.PilotHoursNight.html}</td>
+	</tr>
+	<tr class="search">
+		<td valign="top">{$form.ActivatedChainTaskDetail_PilotHoursIFR.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_PilotHoursIFR.html}</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_IFRLanding.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_IFRLanding.html}</td>
+	</tr>
+	<tr class="search" style="display:{$displayBlock}">
+		<td valign="top" colspan="4" class="gris2">{t}Commercial hours (hours in hundredth of hour){/t}</td>
+	</tr>
+	<tr class="search">
+		<td valign="top">{$form.ActivatedChainTaskDetail_RealCommercialDuration.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_RealCommercialDuration.html}</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr class="search">
+		<td valign="top" colspan="4" class="gris2">{t}Machine data{/t}</td>
+	</tr>
+	<tr class="search">
+		<td valign="top">{$form.ActivatedChainTaskDetail_TakeOffNumber.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_TakeOffNumber.html}</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_LandingNumber.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_LandingNumber.html}</td>
+	</tr>
+	<tr class="search">
+		<td valign="top">{$form.ActivatedChainTaskDetail_CelluleHour.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CelluleHour.html}</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CycleCellule.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CycleCellule.html}</td>
+	</tr>
+	<tr class="search">
+		<td valign="top" colspan="2">{t}Engine cycle 1{/t} :</td>
+		<td valign="top" colspan="2">{t}Engine cycle 2{/t} :</td>
+	</tr>
+	<tr class="search">
+		<td valign="top">{$form.ActivatedChainTaskDetail_CycleEngine1N1.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CycleEngine1N1.html}</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CycleEngine2N1.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CycleEngine2N1.html}</td>
+	</tr>
+	<tr class="search">
+		<td valign="top">{$form.ActivatedChainTaskDetail_CycleEngine1N2.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CycleEngine1N2.html}</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CycleEngine2N2.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CycleEngine2N2.html}</td>
+	</tr>
+<!--<tr class="search">
+		<td valign="top">{$form.ActivatedChainTaskDetail_CycleEngine1.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CycleEngine1.html}</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CycleEngine2.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CycleEngine2.html}</td>
+	</tr>-->
+	<tr class="search">
+		<td valign="top">{$form.ActivatedChainTaskDetail_CarburantUsed.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CarburantUsed.html}&nbsp;&nbsp;
+				{$form.ActivatedChainTaskDetail_CarburantUsedUnitType.html}
+		</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr class="search" style="display:{$displayBlock}">
+		<td valign="top" colspan="4" class="gris2">{t}Hours related to specific activities (in hundredth of hours){/t}</td>
+	</tr>
+	<tr class="search">
+		<td valign="top">{$form.ActivatedChainTaskDetail_VLAEHours.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_VLAEHours.html}</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CycleTreuillage.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CycleTreuillage.html}</td>
+	</tr>
+	<tr class="search">
+		<td valign="top">{$form.ActivatedChainTaskDetail_PublicHours.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_PublicHours.html}</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CycleCharge.label} :</td>
+		<td valign="top">{$form.ActivatedChainTaskDetail_CycleCharge.html}</td>
+	</tr>
+<!--<tr class="search">
+		<td valign="top">{$form.ActivatedChainTaskDetail_CycleCellule.label} :</td>
+		<td valign="top" colspan="3">{$form.ActivatedChainTaskDetail_CycleCellule.html}</td>
+	</tr>-->
+	<tr class="search">
+		<td valign="top">{$form.ActivatedChainTaskDetail_Comment.label} :</td>
+		<td valign="top" colspan="3">{$form.ActivatedChainTaskDetail_Comment.html}</td>
+	</tr>
+  </tbody>
+  <tfoot>
+  <tr height="22">
+    <td colspan="3">&nbsp;&nbsp;</td>
+	<td nowrap>
+	  {$form.update.html}&nbsp;&nbsp;{$form.submitForm.html}&nbsp;&nbsp;{$form.Cancel.html}&nbsp;&nbsp;&nbsp;&nbsp;
+	</td>
+  </tr>
+</table>
+</form>

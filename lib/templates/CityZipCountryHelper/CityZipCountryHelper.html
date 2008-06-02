@@ -1,0 +1,36 @@
+<form name="CityZipCountryHelper" method="post" action="{$FormAction}">
+  <table width="100%" border="0" align="center" cellpadding="4" cellspacing="0" class="form">
+    <thead>
+    <tr>
+      <td colspan="2">
+          <input type="hidden" name="formSubmitted" value="1" />
+          <input type="hidden" name="retURL" value="{$retURL}" />
+	    <p>{t}More than one result match, please select a result{/t}:</p>
+      </td>
+    </tr>
+	</thead>
+	<tbody>
+	{section name=Suggestion loop=$SuggestionList}
+    <tr class="{if $smarty.section.Suggestion.index is odd}GridRowOdd{else}GridRowEven{/if}" />
+      <td>
+	  	<input type="radio" name="CountryCity_Id" value="{$SuggestionList[Suggestion]->getId()}"
+            id="ccy_{$SuggestionList[Suggestion]->getId()}" />
+	  </td>
+      <td><label for="ccy_{$SuggestionList[Suggestion]->getId()}">{$SuggestionList[Suggestion]->toString()}</label></td>
+    </tr>
+	{/section}
+	</tbody>
+	<tfoot>
+    <tr>
+      <td colspan="2">
+	    <div align="right">
+	    <input class="button" value="{t}Ok{/t}" type="submit"
+          onclick="return checkForm(document.forms['ActorAddEdit'], requiredFields);" />
+		&nbsp;
+        <input class="button" onclick="window.location.href='{$FormAction}?retURL={$retURL}'" value="{t}Cancel{/t}" type="button" />
+        </div>
+	  </td>
+    </tr>
+	</tfoot>
+  </table>
+</form>

@@ -1,0 +1,54 @@
+<!--$Id -->
+{$form.javascript}
+<form {$form.attributes}>
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+  <thead>
+  <tr>
+	<td colspan ="4">&nbsp;{$form.hidden}</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td width="10%" nowrap="nowrap">{$form.CustomerFrequency_Name.label}:* </td>
+    <td width="40%">{$form.CustomerFrequency_Name.html}</td>
+    <td width="10%" nowrap="nowrap">&nbsp;</td>
+    <td width="40%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap">{$form.CustomerFrequency_Attractivity_ID.label}: </td>
+    <td>{$form.CustomerFrequency_Attractivity_ID.html}</td>
+    <td nowrap="nowrap">{$form.CustomerFrequency_Potential_ID.label}: </td>
+    <td nowrap="nowrap">
+        {$form.CustomerFrequency_Potential_ID.html} <br/>
+        {t}Min.{/t}: <input type="text" name="PotentialMinValue" class="ReadOnlyField"
+            size="4" value="{$PotentialMinValue}" readonly="readonly" id="minValue" />&nbsp;
+        {t}Max.{/t}: <input type="text" name="PotentialMaxValue" class="ReadOnlyField"
+            size="4" value="{$PotentialMaxValue}" readonly="readonly" id="maxValue" />&nbsp;
+        {t}Unit{/t}: <input type="text" name="PotentialUnitType" class="ReadOnlyField"
+            value="{$PotentialUnitType}" readonly="readonly" id="unitType" />
+    </td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap">{$form.CustomerFrequency_Frequency.label}:* </td>
+    <td>{$form.CustomerFrequency_Frequency.html}</td>
+    <td nowrap="nowrap">{$form.CustomerFrequency_Type.label}: </td>
+    <td>{$form.CustomerFrequency_Type.html}</td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap">{$form.CustomerFrequency_BeginDate.label}: </td>
+    <td>{$form.CustomerFrequency_BeginDate.html}</td>
+    <td nowrap="nowrap">{$form.CustomerFrequency_EndDate.label}: </td>
+    <td>{$form.CustomerFrequency_EndDate.html}</td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="4" align="right">
+		<input name="Ok" type="submit" value="{t}Ok{/t}" class="button" />&nbsp;
+		<input name="Cancel" value="{t}Cancel{/t}" type="button"
+            onclick="window.location='{$retURL}'" class="button" />
+    </td>
+  </tr>
+  </tfoot>
+</table>
+</form>

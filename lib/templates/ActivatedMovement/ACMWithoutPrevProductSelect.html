@@ -1,0 +1,24 @@
+<form {$form.attributes}>
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+    <tr>
+      <td>{t}Movement type{/t} : *</td>
+      <td>{$form.MvtType.html}</td>
+    </tr>
+    <tr>
+      <td colspan="2">{t}Select a product{/t} :</td>
+    </tr>
+    <tr>
+      <td>{t}Select a product among list of designations{/t}</td>
+      <td>{$form.productName.html}</td>
+    </tr>
+    <tr>
+      <td>{t}Select a product among list of references{/t}</td>
+      <td><div id="productSelectRef">{$form.product.html}</div></td>
+    </tr>
+    <tr>
+      <td>{t}Select a product by typing its reference{/t}</td>
+      <td>{$form.productText.html}&nbsp;{$form.ok.html}</td>
+    </tr>
+</table>
+
+</form>

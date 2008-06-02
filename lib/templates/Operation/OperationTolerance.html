@@ -1,0 +1,77 @@
+<!-- $Id: OperationTolerance.html,v 1.6 2008-05-07 16:36:51 ben Exp $ -->
+<form name="tolerance" method="post" action="{$FormAction}">
+  <select name="operation" onchange="ConfirmChanges(currentopindex.value);FillToleranceFields(this.value);"></select>
+  <br /><br />
+  <nobr>
+    	<div id="Message" height="40" style="display:none;valign:center;color:red;font-weight:bold;"><br /><br /></div>
+  </nobr>
+  <input type="hidden" name="currentopindex" value="" />
+  <table width ="100%" cellpadding="2" cellspacing="0" class="form">
+    <thead>
+	<tr>
+	  <td colspan="4">&nbsp;</td>
+	</tr>
+	</thead>
+	<tbody>
+    <tr>
+      <td colspan="4">
+        <label><input type="radio" name="type" value="0" checked="checked" />
+        {t}Pre/Post execution tolerance{/t}</label></td>
+    </tr>
+    <tr>
+      <td width="25%">
+        <div align="right">{t}Pre-execution tolerance{/t} : </div>
+      </td>
+      <td width="25%">
+        <input name="frontToleranceh" type="text"
+        onkeypress="document.forms[0].elements['type'][0].checked=true" size="8" maxlength="4" />
+        {t}h{/t} <input name="frontTolerancemn" type="text"
+        onkeypress="document.forms[0].elements['type'][0].checked=true" size="8" maxlength="4" />
+        {t}mn{/t}</td>
+      <td width="25%">
+        <div align="right">{t}Post-execution tolerance{/t} : </div>
+      </td>
+      <td width="25%">
+        <div align="left">
+          <input name="endToleranceh" onkeypress="document.forms[0].elements['type'][0].checked=true" type="text" size="8" maxlength="4" />
+          {t}h{/t}
+          <input name="endTolerancemn" onkeypress="document.forms[0].elements['type'][0].checked=true" type="text" size="8" maxlength="4" />
+        {t}mn{/t}
+		</div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4">
+        <label><input type="radio" name="type" value="1" />
+        {t}Global tolerance{/t}</label> </td>
+    </tr>
+    <tr>
+      <td width="25%">
+        <div align="right">{t}Global tolerance{/t} : </div>
+      </td>
+      <td width="25%">
+        <div align="left">
+          <input name="totaltoleranceh" type="text"
+          onkeypress="document.forms[0].elements['type'][1].checked=true" size="8" maxlength="4" />
+          {t}h{/t}
+          <input name="totaltolerancemn" type="text"
+          onkeypress="document.forms[0].elements['type'][1].checked=true" size="8" maxlength="4" />
+        {t}mn{/t}
+		</div>
+      </td>
+      <td width="15%">&nbsp;</td>
+      <td width="35%">&nbsp;</td>
+    </tr>
+	</tbody>
+    <tfoot>
+    <tr>
+      <td colspan="4">
+          <input type="hidden" name="IsSubmited" value="true" />
+		  <input type="submit" border=0 name="Submit" value="{t}Ok{/t}"
+          onclick="ConfirmChanges(currentopindex.value);" class="Button" />
+      </td>
+    </tr>
+	</tfoot>
+  </table>
+  <div id="HiddenFields"></div>
+</form>

@@ -1,0 +1,15 @@
+    // PrestationCost::toString() {{{
+    
+    /**
+     * toString 
+     * 
+     * Retourne le nom de la prestation associée
+     *
+     * @access public
+     * @return void
+     */
+    public function toString() {
+        return $this->getPrestation()->toString();
+    }
+
+    // }}}

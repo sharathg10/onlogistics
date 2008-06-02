@@ -1,0 +1,27 @@
+<form name="CourseCommand" method="POST" action="{$FormAction}">
+	<table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	  <thead>
+	  <tr> 
+		<td>{t}Please select a customer first{/t}</td>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+	    <td nowrap>
+		   <select name="customerID">
+		     {$CustomerOptions}
+		   </select>
+		</td>
+	  </tbody>
+	  <tfoot>
+	  <tr> 
+	    <td>
+		  <input type="button" value="{t}Cancel{/t}" name="cancel" onClick="window.location='{$retURL}'" class="Button">
+		  &nbsp;
+		  <input type="submit" value="{t}Continue{/t}" name="submitButton" class="Button">
+		</td>
+	  </tr>
+	  </tfoot> 
+	</table>
+</form>
+

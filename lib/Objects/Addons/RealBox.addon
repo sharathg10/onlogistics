@@ -1,0 +1,46 @@
+function GetCommand()
+    {
+        $act = $this->GetActivatedChainTask();
+        $aco = $act->GetActivatedOperation();
+        $ac = $aco->GetActivatedChain();
+        $pciCollection = $ac->GetCommandItemCollection();
+        $pci = $pciCollection->GetItem(0);
+        return $pci->GetCommand();
+    } 
+    
+    /**
+     * Retourne le type de l'entité parente
+     * 
+     * @access public
+     * @return string 
+     **/
+    function getParentType(){
+        $product = $this->GetProduct();
+        if($product instanceof product){
+            return 'product';
+        }
+        $container = $this->GetContainer();
+        if($container instanceof container){
+            return 'container';
+        }
+        return false;
+    }    
+    
+    /**
+     * Retourne l'entité parente, soit un produit, soit un container
+     * 
+     * @access public
+     * @return mixed Product, Container 
+     **/
+    function getParent(){
+        $product = $this->GetProduct();
+        if($product instanceof product){
+            return $product;
+        }
+        $container = $this->GetContainer();
+        if($container instanceof container){
+            return $container;
+        }
+        return false;
+    }
+

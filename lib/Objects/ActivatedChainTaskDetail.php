@@ -1,0 +1,236 @@
+<?php
+
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
+
+/**
+ * This file is part of Onlogistics, a web based ERP and supply chain 
+ * management application. 
+ *
+ * Copyright (C) 2003-2008 ATEOR
+ *
+ * This program is free software: you can redistribute it and/or modify it 
+ * under the terms of the GNU Affero General Public License as published by 
+ * the Free Software Foundation, either version 3 of the License, or (at your 
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public 
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * PHP version 5.1.0+
+ *
+ * @package   Onlogistics
+ * @author    ATEOR dev team <dev@ateor.com>
+ * @copyright 2003-2008 ATEOR <contact@ateor.com> 
+ * @license   http://www.fsf.org/licensing/licenses/agpl-3.0.html GNU AGPL
+ * @version   SVN: $Id$
+ * @link      http://www.onlogistics.org
+ * @link      http://onlogistics.googlecode.com
+ * @since     File available since release 0.1.0
+ * @filesource
+ */
+
+class ActivatedChainTaskDetail extends _ActivatedChainTaskDetail {
+    // Constructeur {{{
+
+    /**
+     * ActivatedChainTaskDetail::__construct()
+     * Constructeur
+     *
+     * @access public
+     * @return void
+     */
+    public function __construct() {
+        parent::__construct();
+    }
+
+    // }}}
+    
+    /**
+     * Retourne l'ACK associee
+     * @access public
+     * @return void 
+     **/
+    function getActivatedChainTask(){
+        $mapper = Mapper::singleton('ActivatedChainTask');
+        $ActivatedChainTask = $mapper->load(array('ActivatedChainTaskDetail'=>$this->getId()));
+        return $ActivatedChainTask;
+    }
+    
+    /**
+     * Met a jour les heures de vol de l'ACKDetail:
+     * Selon si c'est un vol bimoteur ou non, on ne met pas a jour les memes chps
+     * @param $InstructorId integer
+     * @param $impact
+     * @access public
+     * @return void 
+     **/
+    function updateHours($InstructorId) {
+        if ($this->isBiMoteurFlight()) {
+            $this->setPilotHoursBiEngine($_REQUEST['PilotHours']);
+            $this->setPilotHoursBiEngineNight($_REQUEST['PilotHoursNight']);
+            if ($this->isSoloFlight($InstructorId) === false) {
+                $this->setCoPilotHoursBiEngine($_REQUEST['PilotHours']);
+                $this->setCoPilotHoursBiEngineNight($_REQUEST['PilotHoursNight']);
+            }
+            else {
+                $this->setCoPilotHoursBiEngine(0);
+                $this->setCoPilotHoursBiEngineNight(0);
+            }
+        }
+        else {
+            $this->setPilotHours($_REQUEST['PilotHours']);
+            $this->setPilotHoursNight($_REQUEST['PilotHoursNight']);
+            if ($this->isSoloFlight($InstructorId) === false) {
+                $this->setCoPilotHours($_REQUEST['PilotHours']);
+                $this->setCoPilotHoursNight($_REQUEST['PilotHoursNight']);
+            }
+            else {
+                $this->setCoPilotHours(0);
+                $this->setCoPilotHoursNight(0);
+            }
+        }
+    }
+    
+    /**
+     * Met a jour les heures de vol a partir des donnees de l'ACKDetail, 
+     * pour l'Instructor, et l'eleve
+     * Par defaut, $impact est a 1: (1ere validation) on ajoute des heures de vol
+     * Si $impact=-1, on retranche des heures de vol (utilise lors d'une Revalidation)
+     * @param $Command object CourseCommand la Command correspondante
+     * @param $InstructorId integer
+     * @param $impact
+     * @access public
+     * @return void 
+     **/
+    function updateActorsHours($Command, $InstructorId, $impact=1){
+        require_once('Objects/ActivatedChainTaskDetail.const.php');
+        
+        // 1. On traite le Customer
+        $Customer = $Command->getCustomer();
+        // Heures de jour + heures de nuit
+        $totalFlightHours = $this->getPilotHours() + $this->getPilotHoursBiEngine() 
+                            + $this->getPilotHoursNight() + $this->getPilotHoursBiEngineNight();
+        
+        $Customer->updateAttributesWithQty('IFRLanding', 
+                                           $impact * $this->getIFRLanding());
+        
+        $Customer->updateAttributesWithQty('VLAEHours', 
+                                           $impact * $this->getVLAEHours());
+        $Customer->updateAttributesWithQty('PublicHours', 
+                                           $impact * $this->getPublicHours());
+        
+        $attrArray = array('PilotHours', 'PilotHoursBiEngine', 'PilotHoursNight', 
+                           'PilotHoursBiEngineNight', 'PilotHoursIFR');
+        
+        // Si vol solo, on met a jour les attributs XXPilotXXX
+        // Sinon, selon la fonction occupee, XXPilotXXX ou XXCoPilotXXX
+        $prefix = ($this->isSoloFlight($InstructorId)
+                || in_array($this->getCustomerSeat(), array(ActivatedChainTaskDetail::PILOTE, ActivatedChainTaskDetail::PILOTE_INSTRUCTEUR)))?'':'Co';
+        
+        foreach($attrArray as $attr){
+            $getter = 'get' . $prefix . $attr;
+            $Customer->updateAttributesWithQty($prefix . $attr, $impact * $this->$getter());
+        }
+        // Attribut de $Customer impactables par $totalFlightHours
+        if ($this->getCustomerSeat() == ActivatedChainTaskDetail::PILOTE_ELEVE) {
+            $Customer->updateAttributesWithQty('StudentHours', $impact * $totalFlightHours);
+        }
+        elseif ($this->getCustomerSeat() == ActivatedChainTaskDetail::PILOTE_INSTRUCTEUR) {
+            $Customer->updateAttributesWithQty('InstructorHours', $impact * $this->getTechnicalHour());
+        }         
+        
+        // 1. On traite l'Instructor, si besoin
+        $Instructor = Object::load('AeroInstructor', $InstructorId);
+        
+        // Si vol non en solo, cad s'il y a un instructor
+        if ($this->isSoloFlight($InstructorId) === false) {
+            $Instructor->updateAttributesWithQty('IFRLanding', 
+                                           $impact * $this->getIFRLanding());
+            $Instructor->updateAttributesWithQty('PublicHours', 
+                                        $impact * $this->getPublicHours());                                         
+            $Instructor->updateAttributesWithQty('VLAEHours', 
+                                        $impact * $this->getVLAEHours());
+            
+            // Vol  non solo: on met a jour les attributs XXPilotXXX ou XXCoPilotXXX,
+            // selon la fonction occupee
+            $prefix = (in_array($this->getInstructorSeat(), array(ActivatedChainTaskDetail::PILOTE, ActivatedChainTaskDetail::PILOTE_INSTRUCTEUR)))?'':'Co';
+            
+            foreach($attrArray as $attr){
+                $getter = 'get' . $prefix . $attr;
+                $Instructor->updateAttributesWithQty($prefix . $attr, $impact * $this->$getter());
+            }
+            
+            // Attribut de $Instructor impactables par $totalFlightHours
+            if ($this->getInstructorSeat() == ActivatedChainTaskDetail::PILOTE_ELEVE) {
+                $Instructor->updateAttributesWithQty('StudentHours', $impact * $totalFlightHours);
+            }
+            elseif ($this->getInstructorSeat() == ActivatedChainTaskDetail::PILOTE_INSTRUCTEUR) {
+                $Instructor->updateAttributesWithQty('InstructorHours', $impact * $this->getTechnicalHour());
+            }
+            $Instructor->save();
+        }
+        
+        // Si deja facture, on ne peut updater le nbre d'heures commerciales
+        if (!$Command->hasBeenFactured()) {  // Si l'Instructor a ete Pilote ou CoPilote
+            if ($this->isSoloFlight($InstructorId) === false/* && !isset($InstructorSeat)*/) { 
+                // Mis à jour par RealCommercialDuration si saisi
+                if ($this->getRealCommercialDuration() > 0) {
+                    $Instructor->updateAttributesWithQty('CommercialHours', 
+                                                          $impact * $this->getRealCommercialDuration());
+                    $Instructor->save();
+                }
+            }
+        }
+        
+        if ($impact == 1) {
+            $Customer->setLastFlyDate($this->getLanding());
+        }
+        $Customer->save();
+    }
+    
+    /**
+     * retourne true si c'est un vol sur bimoteur, false sinon
+     * @access public
+     * @return boolean 
+     **/
+    function isBiMoteurFlight(){
+        if ($this->getCycleEngine2() > 0 || $this->getCycleEngine2N1() > 0 
+                                         || $this->getCycleEngine2N2() > 0 ) {
+            return true;
+        }
+        return false;
+    }
+    
+    /**
+     * Retourne 'Bi' si c'est un vol sur bimoteur, 'Mono' sinon.
+     * Le seul interet de cette methode est d'eviter de creer un GridColumn
+     * @access public
+     * @return string 
+     **/
+    function getMoteurType(){
+        if ($this->isBiMoteurFlight()) {
+            return 'Bi';
+        }
+        return 'Mono';
+    }
+    
+    /**
+     * Retourne true si vol solo, false sinon
+     * 
+     * @param $InstructorId integer
+     * @access public
+     * @return void 
+     **/
+    function isSoloFlight($InstructorId){
+        $Instructor = Object::load('AeroInstructor', $InstructorId);
+        $soloFly = (Tools::isEmptyObject($Instructor))?true:false;
+        return $soloFly;
+    }
+}
+
+?>

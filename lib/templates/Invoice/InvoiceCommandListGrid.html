@@ -1,0 +1,58 @@
+<!--debut du grid-->
+<script type="text/javascript">
+<!--
+// <![CDATA[
+{$gridJS}
+// ]]>
+-->
+</script>
+<div class="grid">
+    <table width="100%" cellspacing="0" cellpadding="3" border="0">
+        <thead>
+            <tr>
+                {section name=GridHeader loop=$GridHeader}
+                <td nowrap="nowrap"> {$GridHeader[GridHeader].Caption}</td>
+                {/section}
+                <td colspan="2" nowrap="nowrap" >&nbsp;
+                    <input type="checkbox" name="gridItems" value=""
+                    onclick="CheckedAll();RecalculateTotalInvoiceTTC()" />&nbsp;
+                </td>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td align="right"
+                    colspan="{math equation="x + y + z + 2" x=$smarty.section.GridHeader.total y=$NbSubColumn z=$GridHeaderGroupItemsCount}">
+                    {section name=Action loop=$Actions}
+                    &nbsp;{$Actions[Action]}
+                    {/section}&nbsp;&nbsp;
+                    <input type="hidden" name="toRemove" />
+                    <input type="hidden" name="actionId" value="-1" />
+                    <input type="hidden" name="PageIndex" value="-1" />
+                </td>
+            </tr>
+        </tfoot>
+        <tbody>
+            {section name=GridContent loop=$GridRow}
+            {if $smarty.section.GridContent.index is odd}
+            <tr class="grid_row_odd">
+            {else}
+            <tr>
+            {/if}
+                {section name=GridCol loop=$GridRow[GridContent]}
+                {if $GridObjectIds[GridContent] != -1}
+                <td>{$GridRow[GridContent][GridCol]}</td>
+	            {/if}
+	            {/section}
+	            <td>&nbsp;
+                    <input type="checkbox" name="gridItems[]"
+                    value="{$GridObjectIds[GridContent]}"
+                    onclick="RecalculateTotalInvoiceTTC()" />
+                </td>
+                <td><input type="hidden" name="NoLine[]" value="" /></td>
+            </tr>
+            {/section}
+        </tbody>
+</table>
+</div>
+<!--fin du grid-->

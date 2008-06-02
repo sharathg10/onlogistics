@@ -1,0 +1,31 @@
+{$form.javascript}
+<form {$form.attributes}>
+<input type="hidden" name="formSubmitted" value="0">
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form" id="searchForm">
+  <tbody>
+    <tr class="search">
+	  <td width="20%">{$form.State_Country_ID.label}</td>
+      <td width="30%">{$form.State_Country_ID.html}</td>
+      <td width="20%">{$form.State_Name.label}</td>
+      <td width="30%">{$form.State_Name.html}</td>
+    </tr>
+    <tr class="search">
+	  <td>{$form.State_Number.label}</td>
+      <td>{$form.State_Number.html}</td>
+	  <td colspan="2">&nbsp;</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td align="right" colspan="4">
+      <input name="ok" type="submit" value="{t}Save{/t}" id="ok" class="button"
+       onClick="javascript:StateAddEdit.formSubmitted.value=1" />
+      &nbsp;&nbsp;&nbsp;
+      <input value="{t}Back{/t}" type="button"
+        onClick="window.location='CountryCityList.php'"  id="cancel" name="cancel" class="Button" />
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  </td>
+    </tr>
+  </tfoot>
+</table>
+</form>

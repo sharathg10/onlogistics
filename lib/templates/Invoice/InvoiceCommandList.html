@@ -1,0 +1,109 @@
+<!-- debut de section principale @version $Id: InvoiceCommandList.html,v 1.5 2008-05-07 16:36:51 ben Exp $ -->
+<form id="PaymentAddEdit" method="post" action="InvoiceCommandList.php"
+    onsubmit="return validation();">
+{$InvoiceCommandListGrid}
+<table border="0" cellspacing="0" cellpadding="5" width="100%" class="form">
+  <tfoot>
+    <tr>
+        <td>
+          <input type="hidden" name="returnURL" value="{$returnURL}" />
+        {if $CmdType==1 or $CmdType==3 or $CmdType==4}
+          <input name="impression" type="submit" value="{t}Print{/t}"
+            onclick="imprimer();" class="Button" />
+        {/if}
+        </td>
+    </tr>
+  </tfoot>
+</table>
+{if $isClientTransporteurConnected == 0}
+  <br /><br />
+  <table border="0" cellspacing="0" cellpadding="5" width="100%" class="form">
+    <thead>
+    <tr>
+        <td colspan="4">{t}Payment{/t}</td>
+    </tr>
+    </thead>
+  <tfoot>
+	 <tr>
+        <td align="right" colspan="4">
+	   <input type="hidden" name="Hiddenprint" id="Hiddenprint" value="" />
+	   <input type="hidden" name="HiddenCommandState" id="HiddenCommandState"
+         value="{$HiddenCommandState}" />
+	   <input type="hidden" name="CommandId" value="{$CommandId}" />
+	   <input type="hidden" name="SelectedInvoiceId" value="" />
+	   <input type="hidden" name="FormSubmitted" value="" />
+	   {if $isCommercialConnected == 0}
+	   <input name="valider" type="submit" onclick="FormSubmitted.value='true'"
+            value="{t}Pay{/t}" id="valider" class="Button" />
+	   {/if}
+       <!--	{if $CmdType == 1}
+		  <input name="impression" type="submit" value="Imprimer" onClick="imprimer()" class="Button">
+	   {/if}-->
+	   {if $PaymentList == 1}
+		  <input name="valider" type="button" onclick="window.location='PaymentCommandList.php?cmdId={$CommandId}&amp;returnURL={$returnURL}'"
+            value="{t}List of payments{/t}" class="Button" />
+	   {/if}
+	   <input name="annuler" type="button" onclick="window.location='{$returnURL}'"
+         value="{t}Cancel{/t}" class="Button" />
+        </td>
+	 </tr>
+  </tfoot>
+    <tbody>
+    <tr>
+        <td nowrap="nowrap">{t}Existence of an usable credit note{/t} :
+        {if $ToHaveExist eq "Aucun"}{t}None{/t}{else}{t}Yes{/t}{/if}</td>
+        <td><div id="displayButton" style="display:none;">
+  {if $ToHaveExist eq "Aucun"}
+		        &nbsp;
+  {elseif $isCommercialConnected == 0}
+        <input name="openpopup" type="button" value="{t}Show{/t}" class="Button"
+	      onclick="window.open('PaymentToHaveList.php?spcId={$SupplierCustomerId}&amp;RemainingPaymentPriceTTC={$RemainingPaymentPriceTTC}','popback','width=800,height=600,toolbars=no,scrollbars=no,menubars=no,status=no');" />
+  {/if}
+		</div>
+        </td>
+  {if $isCommercialConnected == 0}
+        <td>{t}Usable credit note amount{/t} ({$Currency} {t}incl. VAT{/t}) :</td>
+        <td>
+	   <input type="text" name="ToHaveRemainingTTC" value="0,00" style="width:100%;"
+         class="ReadOnlyField" id="ToHaveRemainingTTC" readonly="readonly" />
+	   <input type="hidden" name="selectedToHaveId" value="0" />
+        </td>
+  {else}
+		<td colspan="2">&nbsp;</td>
+  {/if}
+	 </tr>
+	 <tr>
+        <td width="20%">{t}Reference{/t} :</td>
+        <td width="30%"><input type="text" name="reference" value="" style="width:100%;" /></td>
+        <td width="30%">{t}Total{/t} {$Currency} {t}amount incl. VAT charged{/t} :</td>
+        <td><input type="text" name="InvoiceTotalPriceTTC" value="{$InvoiceTotalPriceTTC}"
+          style="width:100%;" class="ReadOnlyField" readonly="readonly" /></td>
+	 </tr>
+	 <tr>
+        <td>{t}Payment{/t} :</td>
+        <td><select name="Modality" style="width:100%;" onchange="showHiddenBank()" id="modality">
+        {$ModalityList}</select></td>
+        <td>{t}Remaining{/t} {$Currency} {t}to pay{/t} :</td>
+        <td><input type="text" name="RemainingPaymentPriceTTC" value="{$RemainingPaymentPriceTTC}"
+              id="RemainingPaymentPriceTTC" style="width:100%;" class="ReadOnlyField"
+              readonly="readonly" />&nbsp;</td>
+	 </tr>
+	 <tr>
+        <td><div id="bankLabelDiv">{t}Bank{/t} :</div>&nbsp;</td>
+        <td>
+        <div id="bankDiv">
+        <select name="ActorBankDetail" id="actorbankdetail" style="width:100%;">
+        <option value="0">{t}Select a bank{/t}</option>
+        {$ActorBankDetailList}</select></div>&nbsp;</td>
+        <td>{t}Total{/t} {$Currency} {t}paid{/t} :</td>
+        <td><input type="text" name="invoicepriceTTC" id="invoicepriceTTC"
+              value="0" style="width:100%;" /></td>
+	 </tr>
+	 <tr>
+        <td colspan="4">&nbsp;</td>
+	 </tr>
+  </tbody>
+  </table>
+{/if}
+</form>
+<!-- fin de section principale -->

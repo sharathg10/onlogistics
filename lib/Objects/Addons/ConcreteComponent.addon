@@ -1,0 +1,47 @@
+
+    /**
+     * Remplit cptHead en cascade si le CP choisi resulte d'un assemblage
+     * Recursion
+     *
+     * @access public
+     * @return object Collection of ConcreteComponent
+     **/
+    function getChildrenConcreteComponents() {
+        $return = new Collection();
+        $mapper = Mapper::singleton('ConcreteComponent');
+        $coll = $mapper->loadCollection(
+                array('Parent' => $this->getConcreteProductId()));
+        $count = $coll->getCount();
+
+        for($i = 0; $i < $count; $i++) {
+            $ccp = $coll->getItem($i);
+            $return->setItem($ccp);
+            $return = $return->merge($ccp->getChildrenConcreteComponents());
+        }
+        return $return;
+    }
+
+    /**
+     * Remplit cptHead en cascade si le CP choisi resulte d'un assemblage
+     * Recursion
+     *
+     * @param integer $headId un Id de ConcreteProduct
+     * @access public
+     * @return void
+     **/
+    function updateChildsHead($headCP) {
+        $idArray = array();
+        $mapper = Mapper::singleton('ConcreteComponent');
+        $coll = $this->getChildrenConcreteComponents();
+        if (Tools::isEmptyObject($coll)) {
+            return;
+        }
+        $count = $coll->getCount();
+        for($i = 0; $i < $count; $i++) {
+            $ccp = $coll->getItem($i);
+            $idArray[] = $ccp->getConcreteProductId();
+        }
+        // TODO: tester, puis rendre recursif!!!!
+        $headCP->addRemoveChild($idArray);
+        $headCP->save();
+    }

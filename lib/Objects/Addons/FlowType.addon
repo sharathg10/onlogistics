@@ -1,0 +1,56 @@
+
+    // getCommandType() {{{
+
+    public function getCommandType() {
+        $type = $this->getInvoiceType();
+        if($type==self::INVOICE_SUPPLIER_PRODUCT) {
+            return Command::TYPE_SUPPLIER;
+        } elseif($type==self::INVOICE_CUSTOMER_PRODUCT) {
+            return Command::TYPE_CUSTOMER;
+        } elseif($type==self::INVOICE_SUPPLIER_PRESTATION || $type==self::INVOICE_CUSTOMER_PRESTATION) {
+            return Command::TYPE_PRESTATION;
+        } elseif($type==self::INVOICE_SUPPLIER_TRANSPORT || $type==self::INVOICE_CUSTOMER_TRANSPORT) {
+            return Command::TYPE_TRANSPORT;
+        } elseif($type==self::INVOICE_SUPPLIER_COURSE || $type==self::INVOICE_CUSTOMER_COURSE) {
+            return Command::TYPE_COURSE;
+        }
+        return 0;
+    }
+
+    // }}} 
+    // FlowType::getCashBalance() {{{
+
+    /**
+     * getCashBalance 
+     * 
+     * Retourne la trésorerie de se flowType en récupèrant ces Flow et Invoice 
+     * ainsi que les ForecastFlow associè sur la période.
+     *
+     * paramètres:
+     * - beginDate: mysqldate
+     * - endDate: mysqldate
+     * - currency: Currency id
+     *
+     * @param array $params 
+     * @access public
+     * @return void
+     */
+    public function getCashBalance($params=array(), $totals=array()) {
+        $return = array();
+        $return[0] = $this->getName();
+        $return[1] = 0;
+        $return[2] = 0;
+        $return[3] = array();
+        $return[4] = 'FlowType_' . $this->getId();
+        
+        $flowTypeItems = $this->getFlowTypeItemCollection(array(), array('Name'=>SORT_ASC));
+        foreach($flowTypeItems as $flowTypeItem) {
+            list($result, $totals) = $flowTypeItem->getCashBalance($params, $totals);
+            $return[1] += $result[1];
+            $return[2] += $result[2];
+            $return[3][] = $result;
+        }
+        return array($return, $totals);
+    }
+
+    // }}}

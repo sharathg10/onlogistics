@@ -1,0 +1,35 @@
+<div id="{$divId}">
+	<table id="{$divId}Table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	<thead>
+    <tr> 
+      <td colspan="4"> <b>{t}Statistics for period and{/t} {$role}</b></td>
+    </tr>
+    </thead>
+	<tbody>
+	<tr>
+      <td width="20%">{t}Technical hours{/t} :</td>
+      <td width="30%">{$technicalHour}</td>
+      <td width="20%">{t}Nightly hours of flight{/t} :</td>
+      <td width="30%">{$NightHoursOfFlight}</td>
+    </tr>
+	<tr> 
+      <td>{t}Public transport hours of flight{/t} :</td>
+      <td>{$PublicHoursOfFlight}</td>
+      <td>{t}VLAE hours{/t} : </td>
+      <td>{$VLAEHoursOfFlight}</td>
+    </tr>
+	<tr> 
+      <td>{t}Single-engined hours{/t} :</td>
+      <td>{$MonoEngineHoursOfFlight}</td>
+      <td>{t}Twin-engined hours{/t} : </td>
+      <td>{$BiEngineHoursOfFlight}</td>
+    </tr>
+	<tr> 
+      <td>{t}Commercial hours{/t} :</td>
+      <td>{$CommercialHours}</td>
+      <td>&nbsp;</td> 
+      <td>&nbsp;</td>
+    </tr>
+	</tbody>
+	</table>
+</div>

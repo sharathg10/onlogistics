@@ -1,0 +1,51 @@
+{$form.javascript}
+<form {$form.attributes}>
+<input type="hidden" name="formSubmitted" value="0">
+  
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	<tbody>
+  	<tr>
+  		<td width="20%">{$form.TH_Supplier.label}: </td>
+  		<td width="30%">{$form.TH_Supplier.html}</td>
+		<td width="20%">{$form.TH_Customer.label}:</td>
+		<td width="30%">{$form.TH_Customer.html}</td>
+  	</tr>
+	<tr>
+  		<td>{$form.TH_DocumentNo.label}: </td>
+  		<td>{$form.TH_DocumentNo.html}</td>
+  		<td>{$form.TH_Type.label}: </td>
+  		<td>{$form.TH_Type.html}</td>
+  	</tr>
+	<tr>
+		<td>{$form.TH_TotalPriceHT.label}:</td>
+		<td>{$form.TH_TotalPriceHT.html}</td>
+  		<td>{$form.TH_TVA.label}: </td>
+  		<td>{$form.TH_TVA.html}</td>
+  	</tr>
+	<tr>
+		<td>{$form.TH_TotalPriceTTC.label}:</td>
+		<td>{$form.TH_TotalPriceTTC.html}</td>
+  		<td>{$form.TH_Currency.label}: </td>
+  		<td>{$form.TH_Currency.html}</td>
+  	</tr>
+	<tr>
+		<td>{$form.TH_Comment.label}:</td>
+		<td colspan="3">{$form.TH_Comment.html}</td>
+  	</tr>
+	</tbody>
+  </table>
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	<tfoot>
+	<tr> 
+      <td align="right">
+<!--	  <input onclick="javascript:ToHaveAdd.formSubmitted.value=1" name="submitForm" value="Valider" type="submit" />
+	  &nbsp;&nbsp;&nbsp;&nbsp; onclick="javascript:ToHaveAdd.formSubmitted.value=2"  -->
+	  <input name="submitPrintForm" value="{t}Ok{/t}" type="submit" />
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  <input onclick="javascript:window.location='ToHaveList.php'" name="Cancel" value="{t}Cancel{/t}" type="button" />
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  </td>
+    </tr>
+	</tfoot> 
+  </table>
+</form>

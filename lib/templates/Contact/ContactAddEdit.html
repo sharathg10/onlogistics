@@ -1,0 +1,63 @@
+<form name="ContactAddEdit" method="post" action="{$FormAction}">
+
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <thead>
+    <tr>
+      <td colspan="4" style="border:1px outset #AAAAAA">
+        <b>{t}Customer properties{/t}</b>
+          <input type="hidden" name="formSubmitted" value="1" />
+          <input type="hidden" name="retURL" value="{$retURL}" />
+          <input type="hidden" name="origRetURL" value="{$origRetURL}" />
+          <input type="hidden" name="ctcId" value="{$Contact->GetId()}" />
+      </td>
+    </tr>
+	</thead>
+	<tbody>
+    <tr>
+      <td width="20%">{t}Contact name{/t}: </td>
+      <td width="30%">
+	  	<input name="Contact_Name" type="text" id="Contact_Name" style="width:100%" value="{$Contact->GetName()}" />
+	  </td>
+      <td width="20%">{t}Function{/t}: </td>
+      <td width="30%">
+	  	<input name="Contact_Fonction" type="text" id="Contact_Fonction" style="width:100%" value="{$Contact->GetFonction()}" />
+	  </td>
+    </tr>
+    <tr>
+      <td>{t}Communication mode{/t}: </td>
+      <td>
+	    <select name="Contact_CommunicationModality" id="Contact_CommunicationModality" style="width:100%">
+	  		{$CommModeList}
+		</select>
+	  </td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>{t}Phone number{/t}:</td>
+      <td><input name="Contact_Phone" type="text" id="Contact_Phone" style="width:100%" value="{$Contact->GetPhone()}" /></td>
+      <td>{t}Fax number{/t}:</td>
+      <td><input name="Contact_Fax" type="text" id="Contact_Fax" style="width:100%" value="{$Contact->GetFax()}" /></td>
+    </tr>
+    <tr>
+      <td>{t}Mobile phone number{/t}:</td>
+      <td><input name="Contact_Mobile" type="text" id="Contact_Mobile" style="width:100%" value="{$Contact->GetMobile()}" /></td>
+      <td>{t}Email{/t}: </td>
+      <td><input name="Contact_Email" type="text" id="Contact_Email" style="width:100%" value="{$Contact->getEmail()}" /></td>
+    </tr>
+	</tbody>
+	<thead>
+    <tr>
+      <td colspan="4" style="border:1px outset #AAAAAA">
+	    <div align="right">
+          <input class="button" value="{t}Ok{/t}" type="submit"
+          onclick="return checkForm(document.forms['ContactAddEdit'], requiredFields);" />
+          &nbsp;
+          <input class="button" onclick="window.location.href='{$retURL}?retURL={$origRetURL}'"
+          value="{t}Cancel{/t}" type="button" />
+		</div>
+	  </td>
+    </tr>
+	</thead>
+  </table>
+</form>

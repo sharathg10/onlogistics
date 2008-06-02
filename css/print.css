@@ -1,0 +1,47 @@
+.grid_checkbox_column{
+ 	display:none;
+}
+/* si IE 6.0 etait compatible CSS2, on mettrait: input[type=checkbox] */
+img {
+	display:none;
+}
+table {
+   border:2px;
+}
+
+.css_disabled,.nav,#header_top,#header_infos,#timer,#footer,#searchform_container,#help_layer,#custom_display_layer {
+ 	display:none;
+}
+
+/* Classes correspondant à l'affichage des grilles */
+
+.grid table thead td {
+	border-style:solid;
+	border-width:1px;
+	border-color:black;
+	background-color: #FFFFFF;
+	padding: 3px 3px 3px 3px;
+}
+
+.grid table tbody td {
+	border-style:solid;
+	border-width:1px;
+	border-color:black;
+	background-color: #FFFFFF;
+	padding: 3px 3px 3px 3px;
+}
+
+.grid #bear,
+.grid .grid_actions_container,
+.grid table tfoot {
+	display:none;
+}
+
+
+.check {
+	display:none;
+}
+
+.onlyPrintable {
+	display:block;
+}

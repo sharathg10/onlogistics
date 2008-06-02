@@ -1,0 +1,776 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<menu>
+    <item title="Administration" link="home.php?help_page=Administration" >
+        <restrict_to>
+            <profile name="PROFILE_ADMIN" />
+            <profile name="PROFILE_AERO_ADMIN" />
+        </restrict_to>
+        <item title="Cache" link="UpdateCache.php" description="Gestion du cache javascript" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Tolérances opérations" link="OperationTolerance.php" description="Administration des périodes de tolérance des opérations" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Alertes"
+            link="dispatcher.php?entity=Alert" description="Administration des alertes" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Aide" link="dispatcher.php?entity=HelpPage" description="Administration des fichiers d'aide" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Types de produits" link="ProductTypeList.php" description="Administration des types de produit" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Catalogues" link="CatalogList.php" description="Administration des catalogues" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Utilisateurs" link="dispatcher.php?entity=UserAccount" description="Liste des utilisateurs" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Tâches planifiées" link="dispatcher.php?entity=CronTask" description="Administration des tâches planifiées" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Communes" link="CountryCityList.php" description="Liste des communes" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Licences" link="dispatcher.php?entity=LicenceType" description="Liste des types de licence" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Qualifications" link="dispatcher.php?entity=RatingType" description="Liste des qualifications" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Import" link="dispatcher.php?entity=SpreadSheet" description="Modèles d'import" >
+            <restrict_to>
+                <profile name="PROFILE_ROOT" />
+            </restrict_to>
+        </item>
+        <item title="Formulaires commerciaux" link="CommercialFormIndex.php" description="Formulaires commerciaux" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Caractéristiques client" link="CustomerPropertiesIndex.php" description="Caractéristiques client" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+                <item title="Types de produits" link="ProductTypeList.php" description="Administration des types de produit" >
+                    <restrict_to>
+                        <profile name="PROFILE_ADMIN" />
+                        <profile name="PROFILE_AERO_ADMIN" />
+                    </restrict_to>
+                </item>
+                <item title="Catalogues" link="CatalogList.php" description="Administration des catalogues" >
+                    <restrict_to>
+                        <profile name="PROFILE_ADMIN" />
+                        <profile name="PROFILE_AERO_ADMIN" />
+                    </restrict_to>
+                </item>
+        </item>
+        <item title="Acteurs génériques"
+            link="dispatcher.php?entity=Actor&amp;altname=GenericActor" description="Administration des acteurs génériques" >
+            <restrict_to>
+                <profile name="PROFILE_ROOT" />
+            </restrict_to>
+        </item>
+    </item>
+    <item title="Préférences" link="home.php?help_page=Préférences" >
+        <restrict_to>
+            <profile name="PROFILE_ADMIN" />
+            <profile name="PROFILE_AERO_ADMIN" />
+        </restrict_to>
+        <item title="Mouvements" link="PreferencesMovement.php" description="Préférences pour l'exécution des mouvements" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Site web" link="PreferencesWebSite.php" description="Préférences pour la création des acteurs depuis un site web" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Commande" link="PreferencesCommand.php" description="Préférences pour la commande et l'activation des processus" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+    </item>
+    <item title="Modélisation" link="home.php?help_page=Modelisation" >
+        <restrict_to>
+            <profile name="PROFILE_ADMIN" />
+            <profile name="PROFILE_AERO_ADMIN" />
+            <profile name="PROFILE_COMMERCIAL" />
+            <profile name="PROFILE_ADMIN_VENTES" />
+            <profile name="PROFILE_AERO_ADMIN_VENTES" />
+            <profile name="PROFILE_AERO_INSTRUCTOR" />
+            <profile name="PROFILE_AERO_OPERATOR" />
+            <profile name="PROFILE_AERO_CUSTOMER" />
+            <profile name="PROFILE_DIR_COMMERCIAL" />
+        </restrict_to>
+        <item title="Chaînes" link="dispatcher.php?entity=Chain" description="Liste des chaînes" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Produits" link="ProductList.php" description="Liste des produits" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_OPERATOR" />
+            </restrict_to>
+        </item>
+        <item title="SN/LOT" link="ConcreteProductList.php" description="Liste des SN/LOT" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_AERO_OPERATOR" />
+                <profile name="PROFILE_AERO_INSTRUCTOR" />
+                <profile name="PROFILE_AERO_CUSTOMER" />
+            </restrict_to>
+        </item>
+        <item title="Affectations" link="AffectationList.php" description="Liste des affectations" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Acteurs" link="ActorList.php" description="Liste des acteurs" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_COMMERCIAL" />
+                <profile name="PROFILE_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_CUSTOMER" />
+                <profile name="PROFILE_AERO_INSTRUCTOR" />
+                <profile name="PROFILE_DIR_COMMERCIAL" />
+            </restrict_to>
+        </item>
+        <item title="Paramétrage approvisionnement" link="SupplierDelayStock.php" description="Paramétrage de l'approvisionnement" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Zones" link="ZoneList.php" description="Liste des zones" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Prestation" link="PrestationList.php" description="Liste des prestations" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+            </restrict_to>
+        </item>
+        <item title="Types d appareil" link="dispatcher.php?entity=FlyType" description="Liste des types d'appareil" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+    </item>
+    <item title="Calcul des coûts" link="home.php?help_page=Ressources" >
+        <restrict_to>
+            <profile name="PROFILE_ADMIN" />
+            <profile name="PROFILE_AERO_ADMIN" />
+        </restrict_to>
+        <item title="Ressources" link="dispatcher.php?entity=Ressource" description="Liste des ressources" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Modèles de coût" link="dispatcher.php?entity=RessourceGroup" description="Liste des modèles de coût" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+    </item>
+    <item title="Nomenclatures" link="home.php?help_page=Nomenclatures" >
+        <restrict_to>
+            <profile name="PROFILE_ADMIN" />
+            <profile name="PROFILE_AERO_ADMIN" />
+        </restrict_to>
+        <item title="Modèles" link="NomenclatureList.php" description="Liste des nomenclatures modèles" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="SN/Lots" link="NomenclatureConcreteProductList.php" description="Liste des SN/Lots" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+    </item>
+    <item title="Pricing" link="home.php?help_page=Pricing" >
+        <restrict_to>
+            <profile name="PROFILE_ADMIN" />
+            <profile name="PROFILE_AERO_ADMIN" />
+        </restrict_to>
+        <item title="Saisonnalités" link="SaisonalityList.php" description="Liste des saisonnalités" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Promotions" link="PromotionList.php" description="Liste des promotions" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Remises par catégorie" link="ProductHandingByCategoryList.php" description="Liste des remises par catégorie de client" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+            </restrict_to>
+        </item>
+    </item>
+    <item title="Commandes" link="home.php?help_page=Commandes" >
+        <restrict_to>
+            <profile name="PROFILE_ADMIN" />
+            <profile name="PROFILE_ADMIN_VENTES" />
+            <profile name="PROFILE_COMMERCIAL" />
+            <profile name="PROFILE_CUSTOMER" />
+            <profile name="PROFILE_AERO_ADMIN" />
+            <profile name="PROFILE_AERO_CUSTOMER" />
+            <profile name="PROFILE_AERO_ADMIN_VENTES" />
+            <profile name="PROFILE_AERO_INSTRUCTOR" />
+            <profile name="PROFILE_CLIENT_TRANSPORT" />
+            <profile name="PROFILE_DIR_COMMERCIAL" />
+            <profile name="PROFILE_OWNER_CUSTOMER" />
+        </restrict_to>
+        <item title="Catalogue fournisseur" link="SupplierCatalog.php" description="Catalogue fournisseur" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+                <profile name="PROFILE_DIR_COMMERCIAL" />
+            </restrict_to>
+        </item>
+        <item title="Catalogue client" link="CustomerCatalog.php" description="Catalogue client" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_CUSTOMER" />
+                <profile name="PROFILE_COMMERCIAL" />
+                <profile name="PROFILE_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+                <profile name="PROFILE_DIR_COMMERCIAL" />
+                <profile name="PROFILE_OWNER_CUSTOMER" />
+            </restrict_to>
+        </item>
+        <item title="Commande de transport" link="TransportChainList.php" description="Liste des prestations de transport" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_CLIENT_TRANSPORT" />
+                <profile name="PROFILE_DIR_COMMERCIAL" />
+            </restrict_to>
+        </item>
+        <item title="Réservation de cours" link="CourseCommand.php?Cancel=1" description="Commande de cours" >
+            <restrict_to>
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_AERO_CUSTOMER" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_INSTRUCTOR" />
+                <profile name="PROFILE_DIR_COMMERCIAL" />
+            </restrict_to>
+        </item>
+    </item>
+    <item title="Suivi commandes" link="home.php?help_page=Commandes" >
+        <restrict_to>
+            <profile name="PROFILE_ADMIN" />
+            <profile name="PROFILE_ACTOR" />
+            <profile name="PROFILE_ADMIN_VENTES" />
+            <profile name="PROFILE_COMMERCIAL" />
+            <profile name="PROFILE_CUSTOMER" />
+            <profile name="PROFILE_AERO_ADMIN" />
+            <profile name="PROFILE_AERO_ADMIN_VENTES" />
+            <profile name="PROFILE_AERO_CUSTOMER" />
+            <profile name="PROFILE_CLIENT_TRANSPORT" />
+            <profile name="PROFILE_DIR_COMMERCIAL" />
+        </restrict_to>
+        <item title="Commandes produits" link="CommandList.php" description="Etat des commandes" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_ACTOR" />
+                <profile name="PROFILE_ADMIN_VENTES" />
+                <profile name="PROFILE_COMMERCIAL" />
+                <profile name="PROFILE_CUSTOMER" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+                <profile name="PROFILE_DIR_COMMERCIAL" />
+            </restrict_to>
+        </item>
+        <item title="Commandes transport" link="ChainCommandList.php" description="Etat des commandes" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_CLIENT_TRANSPORT" />
+                <profile name="PROFILE_DIR_COMMERCIAL" />
+            </restrict_to>
+        </item>
+        <item title="Réservations cours" link="CourseCommandList.php" description="Suivi commandes de cours" >
+            <restrict_to>
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_CUSTOMER" />
+                <profile name="PROFILE_DIR_COMMERCIAL" />
+            </restrict_to>
+        </item>
+        <item title="Prestations" link="PrestationCommandList.php" description="Facturation de prestations" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_DIR_COMMERCIAL" />
+            </restrict_to>
+        </item>
+    </item>
+    <item title="Avoir" link="ToHaveList.php?help_page=Avoir" >
+        <restrict_to>
+            <profile name="PROFILE_ADMIN" />
+            <profile name="PROFILE_AERO_ADMIN" />
+            <profile name="PROFILE_ADMIN_VENTES" />
+            <profile name="PROFILE_AERO_ADMIN_VENTES" />
+        </restrict_to>
+        <item title="Avoir" link="ToHaveList.php" description="Liste des avoirs" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+            </restrict_to>
+        </item>
+    </item>
+    <item title="Trésorerie" link="home.php?help_page=Trésorerie" >
+        <restrict_to>
+            <profile name="PROFILE_ADMIN" />
+            <profile name="PROFILE_AERO_ADMIN" />
+            <profile name="PROFILE_ADMIN_VENTES" />
+            <profile name="PROFILE_AERO_ADMIN_VENTES" />
+            <profile name="PROFILE_ACCOUNTANT" />
+        </restrict_to>
+        <item title="Compte" link="dispatcher.php?entity=Account" description="Compte" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Modèle comptable" link="dispatcher.php?entity=AccountingType" description="Type comptable" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Modèle de charge et recette" link="FlowTypeList.php" description="Modèle de charge et recette" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_ACCOUNTANT" />
+            </restrict_to>
+        </item>
+        <item title="Banques" link="BankList.php" description="Liste des banques" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Charges et recettes" link="FlowList.php" description="Charges et recettes" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_ACCOUNTANT" />
+            </restrict_to>
+        </item>
+        <item title="Historique" link="InvoiceList.php" description="Historique" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+                <profile name="PROFILE_ACCOUNTANT" />
+            </restrict_to>
+        </item>
+        <item title="Balance" link="AgedTrialBalance.php" description="Balance âgée" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_ACCOUNTANT" />
+            </restrict_to>
+        </item>
+        <item title="Trésorerie" link="CashBalance.php" description="Trésorerie" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+        <item title="Ventilation" link="ApportionmentExport.php" description="Extraction des données de ventilation comptable" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_ACCOUNTANT" />
+            </restrict_to>
+        </item>
+    </item>
+    <item title="O.T." link="home.php?help_page=O.T." >
+        <restrict_to>
+            <profile name="PROFILE_ADMIN" />
+            <profile name="PROFILE_AERO_ADMIN" />
+            <profile name="PROFILE_ACTOR" />
+            <profile name="PROFILE_SUPERVISOR" />
+            <profile name="PROFILE_ADMIN_VENTES" />
+            <profile name="PROFILE_AERO_ADMIN_VENTES" />
+            <profile name="PROFILE_GESTIONNAIRE_STOCK" />
+            <profile name="PROFILE_TRANSPORTEUR" />
+        </restrict_to>
+        <item title="Chaînes planifiées" link="ActivatedChainList.php" description="Liste des chaînes activées" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_ACTOR" />
+                <profile name="PROFILE_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+            </restrict_to>
+        </item>
+        <item title="Administration O.T." link="WorkOrderList.php" description="Administration O.T." >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_ACTOR" />
+                <profile name="PROFILE_SUPERVISOR" />
+                <profile name="PROFILE_ADMIN_VENTES" />
+                <profile name="PROFILE_GESTIONNAIRE_STOCK" />
+                <profile name="PROFILE_TRANSPORTEUR" />
+            </restrict_to>
+        </item>
+        <item title="Regroupement dans un O.T." link="ActivatedChainOperationList.php" description="Regroupement dans un O.T." >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_ACTOR" />
+                <profile name="PROFILE_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+                <profile name="PROFILE_GESTIONNAIRE_STOCK" />
+                <profile name="PROFILE_TRANSPORTEUR" />
+            </restrict_to>
+        </item>
+    </item>
+    <item title="Stock" link="home.php?help_page=Stock" >
+        <restrict_to>
+            <profile name="PROFILE_ADMIN" />
+            <profile name="PROFILE_AERO_ADMIN" />
+            <profile name="PROFILE_SUPPLIER" />
+            <profile name="PROFILE_ACTOR" />
+            <profile name="PROFILE_GESTIONNAIRE_STOCK" />
+            <profile name="PROFILE_SUPPLIER_CONSIGNE" />
+            <profile name="PROFILE_OPERATOR" />
+            <profile name="PROFILE_ADMIN_VENTES" />
+            <profile name="PROFILE_AERO_ADMIN_VENTES" />
+            <profile name="PROFILE_OWNER_CUSTOMER" />
+        </restrict_to>
+        <item title="Quantités en stock" link="StockProductRealandVirtualList.php" description="Quantités en stock" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_SUPPLIER" />
+                <profile name="PROFILE_SUPPLIER_CONSIGNE" />
+                <profile name="PROFILE_GESTIONNAIRE_STOCK" />
+                <profile name="PROFILE_OPERATOR" />
+                <profile name="PROFILE_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+                <profile name="PROFILE_OWNER_CUSTOMER" />
+            </restrict_to>
+        </item>
+        <item title="Etat du stock" link="StockStorageSiteList.php" description="Liste des Sites de Stockage" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_ACTOR" />
+                <profile name="PROFILE_SUPPLIER_CONSIGNE" />
+                <profile name="PROFILE_GESTIONNAIRE_STOCK" />
+                <profile name="PROFILE_OPERATOR" />
+            </restrict_to>
+        </item>
+        <item title="Mouvements attendus" link="ActivatedMovementList.php" description="Mouvements attendus" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_GESTIONNAIRE_STOCK" />
+                <profile name="PROFILE_OPERATOR" />
+                <profile name="PROFILE_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+            </restrict_to>
+        </item>
+        <item title="Mouvements non prévus" link="ActivatedMovementAddWithoutPrevision.php" description="Exécution d'un mouvement sans prévision" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_GESTIONNAIRE_STOCK" />
+                <profile name="PROFILE_OPERATOR" />
+            </restrict_to>
+        </item>
+        <item title="Historique" link="LocationExecutedMovementList.php" description="Liste des mouvements exécutés" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_GESTIONNAIRE_STOCK" />
+                <profile name="PROFILE_SUPPLIER_CONSIGNE" />
+                <profile name="PROFILE_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+                <profile name="PROFILE_OWNER_CUSTOMER" />
+            </restrict_to>
+        </item>
+        <item title="Inventaire" link="InventoryDetailList.php" description="Inventaire" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_GESTIONNAIRE_STOCK" />
+            </restrict_to>
+        </item>
+        <item title="Compta matière" link="StockAccountingExport.php" description="Comptabilité matière" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_TRANSPORTEUR" />
+                <profile name="PROFILE_GESTIONNAIRE_STOCK" />
+            </restrict_to>
+        </item>
+        <item title="OptimAppro" link="SupplyingOptimization.php" description="Optimisation des approvisionnements" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+            </restrict_to>
+        </item>
+    </item>
+    <item title="Documents" link="home.php?help_page=Documents" >
+        <restrict_to>
+            <profile name="PROFILE_ADMIN" />
+            <profile name="PROFILE_AERO_ADMIN" />
+            <profile name="PROFILE_GESTIONNAIRE_STOCK" />
+            <profile name="PROFILE_OPERATOR" />
+            <profile name="PROFILE_ADMIN_VENTES" />
+            <profile name="PROFILE_AERO_ADMIN_VENTES" />
+            <profile name="PROFILE_TRANSPORTEUR" />
+            <profile name="PROFILE_DIR_COMMERCIAL" />
+        </restrict_to>
+        <item title="Modèles" link="DocumentModelList.php" description="Liste des modèles de document" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+            </restrict_to>
+        </item>
+        <item title="Réédition des documents" link="DocumentList.php" description="Réédition des documents" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_GESTIONNAIRE_STOCK" />
+                <profile name="PROFILE_OPERATOR" />
+                <profile name="PROFILE_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+                <profile name="PROFILE_TRANSPORTEUR" />
+                <profile name="PROFILE_DIR_COMMERCIAL" />
+            </restrict_to>
+        </item>
+    </item>
+    <item title="Tableau de bord" link="home.php?help_page=Board" >
+        <restrict_to>
+            <profile name="PROFILE_ADMIN" />
+            <profile name="PROFILE_AERO_ADMIN" />
+            <profile name="PROFILE_DIR_COMMERCIAL" />
+        </restrict_to>
+        <item title="Commercial" link="BoardByCommercial.php" description="CA par commercial" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_DIR_COMMERCIAL" />
+            </restrict_to>
+        </item>
+        <item title="Client" link="BoardByCustomer.php" description="CA par client" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_DIR_COMMERCIAL" />
+            </restrict_to>
+        </item>
+        <item title="Catégorie" link="BoardByCategory.php" description="CA par catégorie" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_DIR_COMMERCIAL" />
+            </restrict_to>
+        </item>
+        <item title="Produit" link="BoardByProduct.php" description="CA par produit" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_DIR_COMMERCIAL" />
+            </restrict_to>
+        </item>
+        <item title="CA fournisseur" link="BoardByCoast.php" description="CA par fournisseur" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_DIR_COMMERCIAL" />
+            </restrict_to>
+        </item>
+        <item title="CA client/fournisseur" link="BoardBySupplier.php" description="Détail du CA client réparti par fournisseur" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_DIR_COMMERCIAL" />
+            </restrict_to>
+        </item>
+        <item title="Activity Based Costing" link="ActivityBasedCosting.php" description="Activity Based Costing" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+            </restrict_to>
+        </item>
+    </item>
+    <item title="Tâches" link="home.php?help_page=Tâches" >
+        <restrict_to>
+            <profile name="PROFILE_ADMIN" />
+            <profile name="PROFILE_AERO_ADMIN" />
+            <profile name="PROFILE_AERO_OPERATOR" />
+            <profile name="PROFILE_AERO_CUSTOMER" />
+            <profile name="PROFILE_AERO_INSTRUCTOR" />
+            <profile name="PROFILE_SUPERVISOR" />
+            <profile name="PROFILE_TRANSPORTEUR" />
+            <profile name="PROFILE_GESTIONNAIRE_STOCK" />
+            <profile name="PROFILE_OPERATOR" />
+        </restrict_to>
+        <item title="Validation" link="ActivatedChainTaskList.php" description="Liste des tâches" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_SUPERVISOR" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_AERO_OPERATOR" />
+                <profile name="PROFILE_AERO_CUSTOMER" />
+                <profile name="PROFILE_AERO_INSTRUCTOR" />
+                <profile name="PROFILE_OPERATOR" />
+            </restrict_to>
+        </item>
+        <item title="Regroupement" link="GroupableBoxActivatedChainTaskList.php" description="Liste des tâches de regroupement à exécuter" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_TRANSPORTEUR" />
+                <profile name="PROFILE_GESTIONNAIRE_STOCK" />
+            </restrict_to>
+        </item>
+        <item title="Historique" link="ActivatedChainTaskHistory.php" description="Liste des tâches" >
+            <restrict_to>
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_AERO_OPERATOR" />
+                <profile name="PROFILE_AERO_CUSTOMER" />
+                <profile name="PROFILE_AERO_INSTRUCTOR" />
+            </restrict_to>
+        </item>
+        <item title="Historique des regroupements" link="BoxList.php" description="Historique des regroupements" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_TRANSPORTEUR" />
+                <profile name="PROFILE_GESTIONNAIRE_STOCK" />
+            </restrict_to>
+        </item>
+        <item title="Planning" link="UnavailabilityPlanning.php?from=tasks" description="Planning" >
+            <restrict_to>
+                <profile name="PROFILE_ADMIN" />
+                <profile name="PROFILE_OPERATOR" />
+            </restrict_to>
+        </item>
+    </item>
+    <item title="Vol" link="home.php?help_page=Vol" >
+        <restrict_to>
+            <profile name="PROFILE_AERO_ADMIN" />
+            <profile name="PROFILE_AERO_ADMIN_VENTES" />
+            <profile name="PROFILE_AERO_CUSTOMER" />
+            <profile name="PROFILE_AERO_INSTRUCTOR" />
+        </restrict_to>
+        <item title="Carnet de vol" link="FlightNotebook.php" description="Carnet de vol" >
+            <restrict_to>
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_CUSTOMER" />
+                <profile name="PROFILE_AERO_INSTRUCTOR" />
+            </restrict_to>
+        </item>
+        <item title="Carnet de route" link="FlyBoardBook.php" description="Carnet de route" >
+            <restrict_to>
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_CUSTOMER" />
+                <profile name="PROFILE_AERO_OPERATOR" />
+            </restrict_to>
+        </item>
+        <item title="Vols prévus" link="ActivatedFlightList.php" description="Liste des vols prévus" >
+            <restrict_to>
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_OPERATOR" />
+                <profile name="PROFILE_AERO_INSTRUCTOR" />
+            </restrict_to>
+        </item>
+        <item title="Vols effectués" link="FlightNotebookAdmin.php" description="Liste des vols effectués" >
+        </item>
+        <item title="Planning" link="UnavailabilityPlanning.php" description="Planning hebdomadaire" >
+            <restrict_to>
+                <profile name="PROFILE_AERO_ADMIN" />
+                <profile name="PROFILE_AERO_ADMIN_VENTES" />
+                <profile name="PROFILE_AERO_CUSTOMER" />
+                <profile name="PROFILE_AERO_OPERATOR" />
+                <profile name="PROFILE_AERO_INSTRUCTOR" />
+            </restrict_to>
+        </item>
+    </item>
+</menu>

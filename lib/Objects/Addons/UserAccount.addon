@@ -1,0 +1,14 @@
+
+    /**
+     * UserAccount::getProfileConstArray
+     * surcharge pour supprimer l'utilisateur root du tableau
+     *
+     * @access public
+     * @param boolean $keys
+     * @return array
+     */
+    public static function getProfileConstArray($keys = false) {
+        $array = parent::getProfileConstArray($keys);
+        unset($array[UserAccount::PROFILE_ROOT]);
+        return $array;
+    }

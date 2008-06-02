@@ -1,0 +1,26 @@
+function getDeparture(){
+        return $this->getDepartureOrArrival('Departure');
+    }
+    function getArrival(){
+        return $this->getDepartureOrArrival('Arrival');
+    }
+    
+    function getDepartureOrArrival($type){
+        $method = 'get' . $type . 'Site';
+        $site = $this->$method();
+        if(false == Tools::isEmptyObject($site)){
+            return $site->toString();
+        }
+        $method = 'get' . $type . 'Actor';
+        $actor = $this->$method();
+        if(false == Tools::isEmptyObject($actor)){
+            return $actor->toString();
+        }
+        $method = 'get' . $type . 'Zone';
+        $zone = $this->$method();
+        if(false == Tools::isEmptyObject($zone)){
+            return $zone->toString();
+        }
+        return 'N/A';
+    }
+

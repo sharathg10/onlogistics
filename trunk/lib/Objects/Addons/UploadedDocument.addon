@@ -1,0 +1,40 @@
+    // UploadedDocument::canBeDeleted() {{{
+
+    /**
+     * Le document ne peut être supprimé s'il est lié à une ou plusieurs
+     * tâches.
+     *
+     * @access public
+     * @return boolean
+     */
+    public function canBeDeleted() {
+        $ack = $this->getActivatedChainTask();
+        if ($ack instanceof ActivatedChainTask) {
+            throw new Exception(sprintf(
+                _('assigned to activated chain task "%s".'),
+                Tools::getValueFromMacro($ack, '%Task.Name%')
+            ));
+        }
+        return parent::canBeDeleted();
+    }
+
+    // }}}
+    // UploadedDocument::getFileName() {{{
+
+    /**
+     * Retourne le nom du fichier stocké sur le disque.
+     *
+     * @access public
+     * @return boolean
+     */
+    public function getFileName() {
+        $mimetype = $this->getMimetype();
+        if (!($mimetype instanceof MimeType)) {
+            // on ne devrait pas être là
+            trigger_error('UploadedDocument with id ' . $this->getId()
+                . ' does not have a mime type !', E_USER_ERROR);
+        }
+        return $this->getId() . '.' . $mimetype->getExtension(); 
+    }
+
+    // }}}

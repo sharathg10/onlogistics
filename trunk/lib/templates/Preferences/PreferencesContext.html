@@ -1,0 +1,38 @@
+<form name="PreferencesContext" method="POST" action="{$formAction}">
+	<table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	  <thead>
+	  <tr>
+		<td colspan="2">{t}Context preferences{/t}</td>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  	<tr>
+	       <td width="30%"><label for="AeroContext">{t}Aeronautic context{/t}</label></td>
+			<td><input type="checkbox" value="1" name="AeroContext"
+                {if $AeroContext} checked="checked"{/if}
+                 id="AeroContext" />&nbsp;
+			</td>
+        </tr>
+	  	<tr>
+	       <td><label for="ConsultingContext">{t}Consulting context{/t}</label></td>
+			<td><input type="checkbox" value="1" name="ConsultingContext"
+                {if $ConsultingContext} checked="checked"{/if}
+                 id="ConsultingContext" />&nbsp;
+			</td>
+        </tr>
+	  	<tr>
+	       <td><label for="ReadyToWearContext">{t}Ready-to-wear context{/t}</label></td>
+			<td><input type="checkbox" value="1" name="ReadyToWearContext"
+                {if $ReadyToWearContext} checked="checked"{/if}
+                 id="ReadyToWearContext" />&nbsp;
+			</td>
+        </tr>
+	  </tbody>
+	  <tfoot>
+	  <tr>
+	    <td align="right" colspan="2">
+	      <input type="submit" name="Ok" value="{t}Ok{/t}" class="button">
+		</td>
+	  </tr>
+	  </tfoot>
+<form>

@@ -1,0 +1,15 @@
+<form name="InvoiceAddEditSeveral" id="InvoiceAddEditSeveral" method="post"
+  action="EditInvoice.php" target="popback"
+  onsubmit="window.open('blank.html', 'popback','width=800,height=600,toolbars=no,scrollbars=no,menubars=no,status=no');">
+<div id="dialog">
+    <span id="dialog_title">&nbsp;{t}Charge several orders{/t}</span>
+    <span id="dialog_image"><img src="images/dialog_information.png" alt="" title=""/></span>
+    <span id="dialog_message">&nbsp;{$message}</span>
+    <span id="dialog_buttons">
+      {$hiddenFields}
+      <input type="hidden" name="print" value="0" />
+      <input type="submit" value="{t}Print invoices{/t}" />
+      <input type="button" value="{t}Back to commands list{/t}" onclick="window.location='CommandList.php'" />
+    </span>
+</div>
+</form>

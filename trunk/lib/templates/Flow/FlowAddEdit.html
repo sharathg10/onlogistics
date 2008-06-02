@@ -1,0 +1,101 @@
+<!--$Id: FlowAddEdit.html,v 1.8 2008-05-07 16:36:51 ben Exp $ -->
+{$form.javascript}
+<form {$form.attributes}>
+    <table width="100%" border="0" cellspacing="0" cellpadding="4"
+        class="form">
+        <thead>
+            <tr>
+                <td colspan ="4">&nbsp;{$form.hidden}</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td width="10%" nowrap="nowrap">{$form.Flow_PieceNo.label}: </td>
+                <td width="40%">{$form.Flow_PieceNo.html}</td>
+                <td colspan="2">&nbsp;</td>
+            </tr>
+            <tr>
+                <td width="10%" nowrap="nowrap">*{$form.Flow_Number.label}: </td>
+                <td width="40%">{$form.Flow_Number.html}</td>
+                <td width="10%" nowrap="nowrap">{$form.Flow_Name.label}: </td>
+                <td width="40%">{$form.Flow_Name.html}</td>
+            </tr>
+            <tr>
+                <td nowrap="nowrap">*{$form.Flow_FlowType_ID.label}: </td>
+                <td>{$form.Flow_FlowType_ID.html}</td>
+                <td nowrap="nowrap">{$form.Flow_EditionDate.label}: </td>
+                <td>{$form.Flow_EditionDate.html}</td>
+            </tr>
+            <tr>
+                <td >{t}Bank{/t} :</td>
+                <td>
+                    <select id="Flow_ActorBankDetail_ID" name="Flow_ActorBankDetail_ID" style="width:100%;">
+                        <option value="0">{t}Select a bank{/t}</option>
+                        {$ActorBankDetailList}
+                    </select>
+                </td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+        </tbody>
+        <thead>
+            <tr>
+                <td colspan ="4">{t}Details of registered items{/t}</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="4"><div class="grid" id="FlowTypeItemDiv">&nbsp;</div></td>
+            </tr>
+        </tbody>
+        <thead>
+            <tr>
+                <td colspan ="4">{t}Total and payments{/t}</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="2"><div class="grid" id="TotalTVADiv">&nbsp;</div></td>
+                <td>{$form.Unused_GlonalHandingAmount.label}</td>
+                <td>{$form.Unused_GlonalHandingAmount.html}</td>
+            </tr>
+            <tr>
+                <td nowrap="nowrap">{$form.Flow_Currency_ID.label}: </td>
+                <td>{$form.Flow_Currency_ID.html}</td>
+                <td nowrap="nowrap">{$form.Unused_TotalHT.label}: </td>
+                <td>{$form.Unused_TotalHT.html}</td>
+            </tr>
+            <tr>
+                <td nowrap="nowrap">{$form.Flow_PaymentDate.label}: </td>
+                <td>{$form.Flow_PaymentDate.html}</td>
+                <td nowrap="nowrap">{$form.Unused_TotalTVA.label}: </td>
+                <td>{$form.Unused_TotalTVA.html}</td>
+            </tr>
+            <tr>
+                <td nowrap="nowrap">{$form.Flow_Handing.label}</td>
+                <td nowrap="nowrap">{$form.Flow_Handing.html}</td>
+                <td nowrap="nowrap">{$form.Flow_TotalTTC.label}: </td>
+                <td>{$form.Flow_TotalTTC.html}</td>
+            </tr>
+            <tr>
+                <td nowrap="nowrap">{$form.Flow_Paid.label}: </td>
+                <td>{$form.Flow_Paid.html}</td>
+                <td nowrap="nowrap">{$form.Unused_ToPay.label}: </td>
+                <td>{$form.Unused_ToPay.html}</td>
+            </tr>
+            <tr>
+                <td colspan="2">&nbsp;</td>
+                <td colspan="2">&nbsp;</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" align="right">
+                    <input name="Ok" type="submit" value="{t}Ok{/t}" class="button" />&nbsp;
+                    <input name="Cancel" value="{t}Cancel{/t}" type="button"
+                    onclick="window.location='{$retURL}'" class="button" />
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</form>

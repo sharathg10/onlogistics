@@ -1,0 +1,32 @@
+    // MimeType::toString() {{{
+
+    /**
+     * Return textual representation of the MimeType.
+     *
+     * @access public
+     * @return string
+     */
+    public function toString()
+    {
+        $name = $this->getDisplayName();
+        if (!empty($name)) {
+            return $name;
+        }
+        return $this->getContentType();
+    }
+
+    // }}}
+    // MimeType::getToStringAttributes() {{{
+
+    /**
+     * Return an array containing the attributes used by toString method
+     *
+     * @access public
+     * @return array
+     */
+    public function getToStringAttribute()
+    {
+        return array('DisplayName', 'ContentType');
+    }
+
+    // }}}

@@ -1,0 +1,159 @@
+/* $Id: compat.css,v 1.6 2008-05-07 16:36:37 ben Exp $ */
+
+img{
+    border: 0px;
+}
+
+/* Classes correspondant à l'affichage des formulaires */
+table.form {
+	border: solid 1px #666666;
+}
+
+table.form thead tr {
+	background-color: #666666;
+	color : #FFFFFF;
+	font-weight: bold;
+}
+
+table.form tbody tr {
+	color : #000000;
+	background-color: #D0D0D0;
+}
+
+
+table.form tbody tr.gridRowOdd {
+	background-color: #E0E0E0;
+}
+
+table.form tbody tr.gridRowEven {
+	background-color: #D0D0D0;
+}
+
+table.form tfoot tr {
+	background-color: #666666;
+	color : #FFFFFF;
+	font-weight: bold;
+}
+
+table.form tfoot tr td {
+	text-align: right;
+}
+
+table.form .Button {
+	cursor: pointer;
+}
+
+
+/* Clases génériques: beau++ */
+h1, h2, h3, h4, h5, h6 {
+	width: 100%;
+	font-weight: bold;
+	color: #666666;
+	padding: 2px 2px 2px 2px;
+}
+
+
+h1 {
+	border: 1px outset #FFFFFF;
+	color: #666666;
+	background-color: #C0C0C0;
+	font-size: 16px;
+}
+
+h2 {
+	border-bottom: 1px solid #C0C0C0;
+	font-size: 15px;
+}
+
+h3 {
+	border-bottom: 1px solid #D0D0D0;
+	font-size: 14px;
+}
+
+h4 {
+	border-bottom: 1px solid #D0D0D0;
+	font-size: 12px;
+}
+
+h5 {
+	font-size: 12px;
+}
+
+h6 {
+	font-size: 11px;
+}
+
+/* Classes correcpondant à l'ajout d'une chaine */
+.GeneralTables, .ProTypTables, .TaskTable {
+	background-color: #DADADA;
+	border: 0px solid #000000;
+	padding : 4px;
+	}
+
+.GeneralTables, .TaskTable {
+	font-size: 12px;
+}
+
+.GeneralTables {
+	background-color: #EEEEEE;
+}
+
+.DanProTypTables {
+	background-color: #C0C0C0;
+	border: 2px solid #FC0002;
+	padding : 4px;
+}
+
+.gris1 {
+	background-color: #666666;
+	color: #FFFFFF;
+	font-weight:bold;
+}
+
+.gris2 {
+	background-color: #999999;
+	color: #FFFFFF;
+}
+
+.gris3 {
+	background-color: #CCCCCC;
+	color: #000000;
+}
+
+.gris4 {
+	background-color: #DDDDDD;
+	color: #000000;
+}
+
+.rouge {
+	color: red;
+	font-weight: bold;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.onlyPrintable {
+	display:none;
+}
+
+/* bouton d'aide contextuelle */
+#context_help {
+	font-size: 10px;
+	font-weight: bold;
+	background: #DADADA url(../images/help.gif) no-repeat left center;
+	color: #666666;
+	border-left: 1px solid #BABABA;
+	border-top: 1px solid #BABABA;
+	border-right: 1px solid #666666;
+	border-bottom: 1px solid #666666;
+	cursor: pointer;
+	width: 200px;
+	padding: 4px;
+	text-align: left;
+	text-indent: 20px;
+}
+
+.help_title {
+	border-bottom: 1px solid #C0C0C0;
+	font-weight: bold;
+}

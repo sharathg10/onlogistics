@@ -1,0 +1,35 @@
+{$form.javascript}
+<form {$form.attributes}>
+{$form.hidden}
+<input type="hidden" name="formSubmitted" value="0">
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form" id="searchForm">
+  <tbody>
+    <tr class="search">
+	  <td width="20%">{$form.Department_Country_ID.label}</td>
+      <td width="30%">{$form.Department_Country_ID.html}</td>
+      <td width="20%">{t}District{/t}</td>
+      <td width="30%"><select name="Department_State_ID"
+            id="state" class="searchField" ><option value="0">Aucune</option></select>
+      </td>
+    </tr>
+    <tr class="search">
+      <td>{$form.Department_Name.label}</td>
+      <td>{$form.Department_Name.html}</td>
+	  <td>{$form.Department_Number.label}</td>
+      <td>{$form.Department_Number.html}</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td align="right" colspan="4">
+      <input name="ok" type="submit" value="{t}Save{/t}" id="ok" class="button"
+       onClick="javascript:DepartmentAddEdit.formSubmitted.value=1" />
+      &nbsp;&nbsp;&nbsp;
+      <input value="{t}Back{/t}" type="button"
+        onClick="window.location='CountryCityList.php'"  id="cancel" name="cancel" class="Button" />
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  </td>
+    </tr>
+  </tfoot>
+</table>
+</form>

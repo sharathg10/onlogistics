@@ -1,0 +1,42 @@
+<div id="{$divId}">
+	<table id="{$divId}Table1" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	<thead>
+    <tr> 
+      <td colspan="4"> <b>{t}Fuel additions{/t}</b></td>
+    </tr>
+    </thead>
+{if count($carburantAddedArray) eq 0 }
+	<tr> 
+      <td>{t}No flight preparation was found for this period{/t}.</td>
+    </tr>
+{else}
+ {foreach key=key item=item from=$carburantAddedArray}
+    <tr> 
+      <td width="50%">{$key}</td>
+      <td width="50%">{$item}</td>
+    </tr>
+ {/foreach}	
+{/if}
+	</tbody>
+	</table>
+	<table id="{$divId}Table2" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	<thead>
+    <tr> 
+      <td colspan="4"> <b>{t}Fuel consumption{/t}</b></td>
+    </tr>
+    </thead>
+{if count($carburantUsedArray) eq 0 }
+	<tr> 
+      <td>{t}No flight was found for this period{/t}.</td>
+    </tr>
+{else}
+ {foreach key=key item=item from=$carburantUsedArray}
+    <tr> 
+      <td width="50%">{$key}</td>
+      <td width="50%">{$item}</td>
+    </tr>
+ {/foreach}	
+{/if}
+	</tbody>
+	</table>
+</div>

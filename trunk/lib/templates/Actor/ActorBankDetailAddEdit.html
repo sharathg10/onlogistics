@@ -1,0 +1,114 @@
+<!-- debut de section principale -->
+<form name="ActorBankDetailAddEdit" method="post" action="ActorBankDetailAddEdit.php" class="generic_form">
+<input type="hidden" name="formSubmitted" value="0">
+<input type="hidden" name="actId" value="{$CommandId}">
+<table border="0" width="100%" cellpadding="4" cellspacing="0">
+  <thead>
+    <tr>
+	  <td colspan="4">{t}Add or update bank{/t}</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="element_label"><div class="form_error">*</div>{t}IBAN number{/t}: </td>
+      <td class="element_html">
+          <input name="ActorBankDetail_Iban" class="textfield required_element" type="text" id="ActorBankDetail_Iban" value="{if $ActorBankDetail != 0}{$ActorBankDetail->getIban()}{/if}">
+      </td>
+      <td class="element_label"><div class="form_error">*</div>{t}Bank name{/t}: </td>
+      <td class="element_html">
+          <input name="ActorBankDetail_BankName" class="textfield required_element" type="text" id="ActorBankDetail_BankName" value="{if $ActorBankDetail != 0}{$ActorBankDetail->getBankName()}{/if}">
+      </td>
+	</tr>
+    <tr>
+      <td class="element_label">{t}Swift code{/t}: </td>
+      <td class="element_html">
+          <input name="ActorBankDetail_Swift" class="textfield" type="text" id="ActorBankDetail_Swift" value="{if $ActorBankDetail != 0}{$ActorBankDetail->getSwift()}{/if}">
+      </td>
+      <td class="element_label">{t}Active{/t}: </td>
+      <td class="element_html">
+        <label>
+        	<input type="radio" name="ActorBankDetail_Active" value="1" {$IsActive}>{t}Yes{/t}
+		</label>&nbsp;&nbsp;
+		<label>
+        	<input type="radio" name="ActorBankDetail_Active" value="0" {$IsNotActive}>{t}No{/t}
+        </label>
+      </td>
+    </tr>
+  <tbody>
+  <thead>
+    <tr>
+      <td colspan="4">{t}Bank address{/t}</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td class="element_label">{t}number{/t}: </td>
+      <td class="element_html">
+          <input name="ActorBankDetail_BankAddressNo" class="textfield" type="text" id="ActorBankDetail_BankAddressNo" value="{if $ActorBankDetail != 0}{$ActorBankDetail->getBankAddressNo()}{/if}"></td>
+	  <td class="element_label">{t}Street type{/t}: </td>
+      <td class="element_html">
+        <select name="ActorBankDetail_BankAddressStreetType" class="select">
+		      <option value="0">{t}None{/t}</option>
+			  {$StreetTypeList}
+	    </select>
+      </td>
+	</tr>
+    <tr>
+      <td class="element_label">{t}Street{/t}: </td>
+      <td class="element_html">
+          <input name="ActorBankDetail_BankAddressStreet" class="textfield" type="text" id="ActorBankDetail_BankAddressStreet" value="{if $ActorBankDetail != 0}{$ActorBankDetail->getBankAddressStreet()}{/if}">
+      </td>
+	  <td class="element_label">{t}Complement{/t}: </td>
+      <td class="element_html">
+          <input name="ActorBankDetail_BankAddressAdd" class="textfield" type="text" id="ActorBankDetail_BankAddressAdd" value="{if $ActorBankDetail != 0}{$ActorBankDetail->getBankAddressAdd()}{/if}">
+      </td>
+	</tr>
+	<tr>
+      <td class="element_label">{t}City{/t}: </td>
+      <td class="element_html">
+          <input name="ActorBankDetail_BankAddressCity" class="textfield" type="text" id="ActorBankDetail_BankAddressCity" value="{if $ActorBankDetail != 0}{$ActorBankDetail->getBankAddressCity()}{/if}">
+      </td>
+		<td class="element_label">{t}Zip code{/t} : </td>
+        <td class="element_html">
+            <input name="ActorBankDetail_BankAddressZipCode" class="textfield" type="text" id="ActorBankDetail_BankAddressZipCode" value="{if $ActorBankDetail != 0}{$ActorBankDetail->getBankAddressZipCode()}{/if}">
+        </td>
+	</tr>
+	<tr>
+      <td class="element_label">{t}Country{/t}: </td>
+      <td class="element_html">
+          <input name="ActorBankDetail_BankAddressCountry" class="textfield" type="text" id="ActorBankDetail_BankAddressCountry" value="{if $ActorBankDetail != 0}{$ActorBankDetail->getBankAddressCountry()}{/if}">
+      </td>
+      <td colspan="2">&nbsp;</td>
+	</tr>
+{if $isDBO eq 1}
+  </tbody>
+  <thead>
+	<tr>
+      <td colspan="4">{t}Account{/t}</td>
+    </tr>
+  </thead>
+  <tbody>
+	<tr>
+      <td class="element_label">{t}Account number{/t} : </td>
+      <td class="element_html">
+          <input name="ActorBankDetail_AccountNumber" class="textfield" type="text" id="ActorBankDetail_AccountNumber" value="{if $ActorBankDetail != 0}{$ActorBankDetail->getAccountNumber()}{/if}">
+      </td>
+      <td colspan="2">&nbsp;</td>
+	</tr>
+{/if}
+  </tbody>
+  <tfoot>
+	<tr>
+      <td colspan="4">
+	    <input name="submitForm" value="{t}Ok{/t}" type="submit" class="button" 
+          onclick="return checkForm(document.forms['ActorBankDetailAddEdit'], new Array(
+              new Array('ActorBankDetail_BankName', REQUIRED, NONE, ActorBankDetailAddEdit_0),
+              new Array('ActorBankDetail_Iban', REQUIRED, NONE, ActorBankDetailAddEdit_1)
+          ));" />
+	    <input onclick="javascript:window.location='{$retURL}'" class="button" name="Cancel" value="{t}Cancel{/t}" type="button" />
+	  </td>
+    </tr>
+  </tfoot>
+</table>
+</form>
+<!-- fin de section principale -->

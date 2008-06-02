@@ -1,0 +1,19 @@
+
+    /**
+     * Retourne true si des acteurs ont ce métier, false si aucun acteur
+     * Requête en dûr car trop gourmand.
+     *
+     * @access public
+     * @return boolean
+     **/
+    public static function getJobWhitchHasActorsCollection() {
+        require_once('SQLRequest.php');
+        $jobIds = array();
+        $rs = request_jobsWhitchHasActors();
+        while (!$rs->EOF) {
+            $jobIds[] = $rs->fields['job'];
+            $rs->moveNext();
+        }
+        $jobIds = (empty($jobIds))?array(0):$jobIds;
+        return Object::loadCollection('Job', array('Id' => $jobIds));
+    }

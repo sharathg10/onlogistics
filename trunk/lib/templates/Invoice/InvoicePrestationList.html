@@ -1,0 +1,68 @@
+{$EditInvoice}
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+  <thead>
+  <tr>
+    <td width="25%">{t}Advanced search{/t}</td>
+	<td><input type="checkbox" name="advancedSearch" value="1"
+		onClick="fw.dom.toggleElement('advancedSearchBlock');" />
+	</td>
+  </tr>
+  </thead>
+</table>
+
+<div id="advancedSearchBlock" style="display:none;">
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+<tr>
+  <td class="element_label" style="width:10%;">
+      <label for="prestationcustomer">{t}Services to charge{/t}&nbsp;</label>:
+  </td>
+  <td class="element_html" style="width:40%;">
+    <select multiple="multiple" size="3" style="width:100%;" class="select" id="prestationcustomer" name="PrestationCustomer[]">
+    </select>
+</td>
+  <td colspan="2">&nbsp;</td>
+  <tr>
+      <td class="element_label" style="width:10%">
+          <label for="productowners">{t}Owners of the products{/t}&nbsp;</label>:
+      </td>
+      <td class="element_html" style="width:40%;">
+        <select style="width:100%;" multiple="multiple" size="3" class="select"
+            id="productOwner" name="ProductOwner[]" onchange="fw.ajax.updateSelect('productOwner', 'product', 'Product', 'Owner');"> 
+          <option value="##">{t}Select{/t}</option>
+          {$actorOptions}
+        </select>
+      </td>
+                <td class="element_label" style="width:10%;">
+                    <label for="product">{t}Products{/t}&nbsp;</label>:
+                </td>
+               <td class="element_html" style="width:40%;">
+                    <select style="width:100%;" multiple="multiple" size="3" class="select" id="product" name="Product[]">
+
+</select>
+                </td>
+            </tr>
+            <tr>
+                <td class="element_label">
+                    <label for="site">{t}Sites{/t}&nbsp;</label>:
+                </td>
+                {literal}
+                <td class="element_html">
+                    <select style="width:100%;" multiple="multiple" size="3"
+                        onchange="fw.ajax.updateSelect('site', 'store', 'Store',
+                        'StorageSite', false, {'Activated':1});" class="select" id="site" name="Site[]">
+                {/literal}
+                        <option value="##">{t}Select{/t}</option>
+{$siteOptions}
+</select>
+                </td>
+                <td class="element_label">
+                    <label for="store">{t}Stores{/t}&nbsp;</label>:
+                </td>
+               <td class="element_html">
+
+                    <select style="width:100%;" multiple="multiple" size="3" class="select" id="store" name="Store[]">
+</select>
+                </td>
+            </tr>
+        </table>
+    </div>

@@ -1,0 +1,35 @@
+    // Zone::getActorCollection() {{{
+
+    /**
+     * Retourne la collection des Actors lies via Site.
+     * A comparer avec Invoice.CommandType
+     * @param mixed $filter
+     * @access public
+     * @return array
+     */
+    public function getActorCollection($filter=false) {
+        $siteCol = $this->getSiteCollection(array(), array(), array('Owner'));
+        $actorColl = new Collection();
+        $actorColl->acceptDuplicate = false;
+        $scount = $siteCol->getCount();
+        for($i = 0; $i < $scount; $i++) {
+            $actor = $siteCol->getItem($i)->getOwner();
+            if (!Tools::isEmptyObject($actor)) {
+                $actorColl->setItem($actor);
+            }
+        }
+        if ($actorColl->getCount() == 0 || !$filter) {
+            return $actorColl;
+        }
+        $idFilter = array('Id' => $actorColl->getItemIds());
+        if ($filter instanceof FilterComponent) {
+            $filter = SearchTools::buildFilterFromArray($idFilter, $filter);
+        } else {
+            $filter = array_merge($idFilter, $filter);
+        }
+
+        $actorColl = Object::loadCollection('Actor', $filter);
+        return $actorColl;
+    }
+
+    // }}}

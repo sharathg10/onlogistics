@@ -1,0 +1,45 @@
+<table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+  <thead>
+	<tr>
+		<td colspan="4" style="border:1px outset #AAAAAA">
+		<b>{t}Details for credit note number {/t} {$DocumentNo} {t}from{/t} {$EditionDate} ( {t}Customer{/t} : {$CustomerName} / {t}Supplier{/t} : {$SupplierName})</b>
+		</td>
+	</tr>
+  </thead>
+  <tbody>
+	<tr>
+		<td><b>{t}Amount excl. VAT{/t}</b></td>
+		<td><b>{t}VAT{/t}</b></td>
+		<td><b>{t}Amount incl. VAT{/t}</b></td>
+		<td><b>{t}Remaining amount incl. VAT{/t}</b></td>
+	</tr>
+	<tr>
+		<td>{$TotalPriceHT} {$Currency}</td>
+		<td>{$TVARate} %</td>
+		<td>{$TotalPriceTTC} {$Currency}</td>
+		<td>{$RemainingTTC} {$Currency}</td>
+	</tr>	
+	<tr>
+		<td><b>{t}Comment{/t}:</b></td>
+		<td colspan="3">
+			{$Comment}<br>
+		</td>
+	</tr>
+</table>
+<br><br>
+{$gridContent}
+
+<table id="table" width="100%" cellspacing="0" class="form" border="0">
+  <tfoot>
+	<tr> 
+      <td align="right">
+	  <input onclick="window.open('ToHaveEdit.php?thId={$thId}','popback','width=800,height=600,toolbars=no,scrollbars=no,menubars=no,status=no')" 
+	  name="printToHave" value="{t}Print{/t}" type="button" />
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  <input onclick="javascript:window.location='ToHaveList.php'" 
+	  name="Cancel" value="{t}Cancel{/t}" type="button" />
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  </td>
+    </tr>
+  </tfoot>
+</table>

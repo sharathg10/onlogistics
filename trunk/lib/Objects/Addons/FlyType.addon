@@ -1,0 +1,22 @@
+    
+    /**
+     * Retourne la collection de AeroConcreteproducts liés au flytype
+     * 
+     * @access public
+     * @return object Collection 
+     **/
+    function getAeroConcreteProductCollection($filter=array(), $order=array()){
+        $return = new Collection();
+        $pdtCollection = $this->getAeroProductCollection();
+        $count = $pdtCollection->getCount();
+        for($i=0; $i<$count; $i++){
+            $pdt = $pdtCollection->getItem($i);
+            $ccpCollection = $pdt->getConcreteProductCollection($filter, $order);
+            $jcount = $ccpCollection->getCount();
+            for($j=0; $j<$jcount; $j++){
+                $ccp = $ccpCollection->getItem($j);
+                $return->setItem($ccp);
+            }
+        }
+        return $return;
+    }

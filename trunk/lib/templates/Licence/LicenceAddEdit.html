@@ -1,0 +1,126 @@
+<form name="LicenceAddEdit" method="POST" action="{$FormAction}">
+    <input type="hidden" name="formSubmitted" value="1" />
+    <input type="hidden" name="flcID" value="{$flcID}" />
+    <input type="hidden" name="actorID" value="{$actorID}" />
+	<table id="table" width="100%" cellpadding="3" cellspacing="0" class="form" border="0">
+	  <thead>
+	  <tr>
+		<td colspan="4">&nbsp;</td>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+		<td>* {t}License name{/t}: </td>
+		<td>
+			<input type="text" name="Licence_Name" value="{$Licence_Name}" />
+		</td>
+		<td>{t}Number{/t}: </td>
+		<td>
+			<input type="text" name="Licence_Number" value="{$Licence_Number}" />
+		</td>
+	  </tr>
+	  <tr>
+		<td>{t}License type{/t}: </td>
+		<td colspan="3">
+			<select name="Licence_LicenceType_ID">
+  				{html_options options=$LicenceTypeArray selected=$Licence_LicenceType}
+			</select>
+		</td>
+	  </tr>
+	  <tr>
+		<td>{t}Validity{/t}: </td>
+		<td>
+			<span id="show_Date1" style="background-color:#E1E8EF;border:1px #000000 dotted;
+				margin: 3px 3px 3px 3px;padding: 3px 3px 3px 3px;text-align: right;">
+				{if $Licence_BeginDate != 0}{$Licence_BeginDate_Display}{else}-- {t}Select a date{/t} --{/if}
+			</span>
+            <input type="hidden" name="Licence_BeginDate" id="f_date_c1" value="{if $Licence_BeginDate != 0}{$Licence_BeginDate}{/if}" />
+            &nbsp;
+			<input type="button" name="f_trigger_c1" id="f_trigger_c1" value="..."
+                style="cursor: pointer;" title="{t}Select a date{/t}" />
+		</td>
+		<td>{t}Duration{/t}: </td>
+		<td>
+			<select name="Licence_Duration">
+  				{html_options options=$Duration selected=$Licence_Duration}
+			</select>&nbsp;
+			<select name="Licence_DurationType">
+  				{html_options options=$DurationType selected=$Licence_DurationType}
+			</select>
+		</td>
+	  </tr>
+	  <tr>
+		<td>{t}Control type{/t}: </td>
+		<td colspan="3">
+			<label>
+			<input type="radio" name="Licence_ToBeChecked" value="{$TOBECHECKED_NEVER}"
+			{if $Licence_ToBeChecked == 0} checked{/if}> {t}None{/t}
+			</label>&nbsp;&nbsp;
+			<label>
+			<input type="radio" name="Licence_ToBeChecked" value="{$TOBECHECKED_ALERT}" {if $Licence_ToBeChecked == 1}
+			checked{/if}> {t}Alert sending{/t}
+			</label>&nbsp;&nbsp;
+			<label>
+			<input type="radio" name="Licence_ToBeChecked" value="{$TOBECHECKED_ALERT_COMMAND}" {if $Licence_ToBeChecked == 2}
+			checked{/if}> {t}Alert sending and order control{/t}
+			</label>
+		</td>
+	  </tr>
+	  <tr>
+		<td>{t}Send alert before validity end date{/t}: </td>
+		<td colspan="3">
+			<select name="DelayForAlertNber">
+  				{html_options options=$Duration selected=$DelayForAlertNber}
+			</select>&nbsp;
+			<select name="DelayForAlertType">
+				<option label="jour(s)" value="0" {if $Licence_DelayForAlert is div by 31}selected="selected"{/if}> {t}Day(s){/t}</option>
+				<option label="mois" value="1" {if $Licence_DelayForAlert is div by 31}selected="selected"{/if}> {t}Month{/t}</option>
+			</select>
+		</td>
+	  </tr>
+	  <tr>
+		<td colspan="4">&nbsp;</td>
+	  </tr>
+	  </tbody>
+	</table>
+	<table id="table" width="100%" cellpadding="3" cellspacing="0" class="form" border="0">
+	  <thead>
+	  <tr>
+		<td colspan="4">{t}List of qualifications{/t}</td>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+	  	<td>
+			{$RatingGrid}
+		</td>
+	  </tr>
+	  </tbody>
+	  <tfoot>
+	  <tr>
+	    <td>
+		  <input type="button" value="{t}Cancel{/t}" name="cancel" onclick="window.location='{$retURL}'" class="Button" />
+		  &nbsp;
+		  <input type="submit" name="Ok" value="{t}Ok{/t}" class="button"
+		  	onclick="return checkForm(this.form, requiredFields);" />
+		</td>
+	  </tr>
+	  </tfoot>
+	</table>
+</form>
+{literal}
+<script type="text/javascript">
+	Calendar.setup({
+        inputField     :    "f_date_c1",         // id of the input field (hidden)
+        ifFormat       :    "%Y-%m-%d %H:%M:00",  // format of the input field
+		displayArea    :    "show_Date1",         // ID of the span where the date is to be shown
+		daFormat       :    "%A %e %B %Y %H:%M",  // format of the displayed date
+        button         :    "f_trigger_c1",       // trigger for the calendar (button ID)
+        align          :    "Tl",                 // alignment (defaults to "Bl")
+		date		   :	"", 				  // date affichee par defaut
+        singleClick    :    true,
+		dateStatusFunc :	dateStatusHandler     // permet d'afficher des dates speciales diffaremment (jours feries)
+												  // et d'en desactiver (en fonction du planning de l'Actor
+    });
+</script>
+{/literal}

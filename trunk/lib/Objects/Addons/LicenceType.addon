@@ -1,0 +1,18 @@
+
+    /**
+     * Vérifie si le type de Licence est supprimable ou non en verifiant s'il 
+     * n'est pas utilise par une licence
+     * 
+     * @access public
+     * @return boolean indique si le type de licence est supprimable
+     */
+    function isDeletable()
+    {
+        $licenceMapper = Mapper::singleton('Licence');
+        $lCollection = $licenceMapper->loadCollection(array('LicenceType' => $this->GetId()));
+        if (!Tools::isEmptyObject($lCollection)) {
+            return false;
+        } 
+
+        return true;
+    } 

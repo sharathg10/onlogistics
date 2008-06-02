@@ -1,0 +1,89 @@
+<form name="CommandExpeditionDetailAddEdit" method="post" action="{$formAction}" style="border:1px outset #AAAAAA">
+
+	<table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	  <thead>
+	  	<tr>
+          <td colspan="4">&nbsp;
+        	<input type="hidden" name="formSubmitted" value="1" />
+        	<input type="hidden" name="retURL" value="{$retURL}" />
+        	<input type="hidden" name="cmdID" value="{$cmdID}" />
+          </td>
+        </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+        <td width="25%">{t}Customer internal order number{/t}: </td>
+		<td width="25%"><input name="CommandExpeditionDetail_CustomerCommandNo" type="text" value="{$CustomerCommandNo}" style="width:100%;" /></td>
+        <td width="25%">{t}Port of embarkation{/t}: </td>
+		<td width="25%"><input name="CommandExpeditionDetail_LoadingPort" type="text" value="{$LoadingPort}" style="width:100%;" /></td>
+	  </tr>
+	  <tr>
+        <td>{t}Goods means of shipment{/t}: </td>
+		<td>
+			<select name="CommandExpeditionDetail_Shipment" style="width:100%;">
+			{$ShipmentOptions}
+			</select>
+		</td>
+        <td >{t}Seasonal family{/t}: </td>
+		<td><input name="CommandExpeditionDetail_Season" type="text" value="{$Season}" style="width:100%;" /></td>
+	  </tr>
+	  <tr>
+        <td>{t}Recipient store code{/t}: </td>
+		<td><input name="CommandExpeditionDetail_DestinatorStore" type="text" value="{$DestinatorStore}" style="width:100%;" /></td>
+        <td >{t}Recipient department{/t}: </td>
+		<td><input name="CommandExpeditionDetail_DestinatorRange" type="text" value="{$DestinatorRange}" style="width:100%;" /></td>
+	  </tr>
+	  <tr>
+        <td>{t}Bay booking number{/t}: </td>
+		<td>
+			<input name="CommandExpeditionDetail_ReservationNo" type="text" value="{$ReservationNo}" style="width:100%;" />
+		</td>
+		<td>{t}Market number{/t}</td>
+		<td>
+			<input name="CommandExpeditionDetail_Deal" type="text" value="{$Deal}" style="width:100%;" />
+        </td>
+	  </tr>
+	  <tr>
+        <td>{t}Packing list number{/t}: </td>
+		<td>
+			<input name="CommandExpeditionDetail_PackingList" type="text" value="{$PackingList}" style="width:100%;" />
+		</td>
+		<td>{t}Airway bill number{/t}: </td>
+		<td>
+			<input name="CommandExpeditionDetail_AirwayBill" type="text" value="{$AirwayBill}" style="width:100%;" />
+        </td>
+	  </tr>
+	  <tr>
+        <td>{t}Supplier code{/t}: </td>
+		<td>
+			<input name="CommandExpeditionDetail_SupplierCode" type="text" value="{$SupplierCode}" style="width:100%;" />
+		</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+	  </tr>
+	  <tr>
+        <td>{t}Parcel weight (kg){/t}: </td>
+		<td>
+			<input name="CommandExpeditionDetail_Weight" type="text" value="{$Weight}" style="width:100%;" />
+		</td>
+		<td>{t}Parcel number{/t}</td>
+		<td>
+		    <input name="CommandExpeditionDetail_NumberOfContainer" type="text" value="{$NumberOfContainer}" style="width:100%;" /></td>
+	  </tr>
+	  <tr>
+        <td>{t}Tracking note{/t}: </td>
+		<td colspan="3">
+			<textarea name="CommandExpeditionDetail_Comment" style="width:100%;">{$Comment}</textarea>
+		</td>
+	  </tr>
+	  </tbody>
+	  <tfoot>
+	  <tr>
+	    <td align="right" colspan="6">
+	      <input type="submit" name="Ok" value="{t}Ok{/t}" class="button" />
+		  <input type="reset" name="Cancel" value="{t}Cancel{/t}" onclick="window.location.href='{$retURL}'" class="button" />
+		</td>
+	  </tr>
+	  </tfoot>
+	</table>
+</form>

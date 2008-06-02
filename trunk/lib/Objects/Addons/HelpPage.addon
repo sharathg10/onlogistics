@@ -1,0 +1,12 @@
+    /**
+     * Méthode addon gérant l'affichage de l'aide
+     *
+     * @access public
+     * @return void
+     **/
+    function render($smarty) {
+        $tpl = new Template();
+        $smarty->assign('Name', $this->getName());
+        $smarty->assign('Body', $this->getBody());
+        return $smarty->fetch('Help.html');
+    }

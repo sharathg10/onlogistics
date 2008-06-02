@@ -1,0 +1,28 @@
+    /**
+     * Retourne la collection de AnswerModel de
+     * la Question trié selon AnswerModelOrder.
+     *
+     * @access public
+     * @return Object Collection
+     */
+    public function getAnswerModelCollection($filter=array(),
+        $order=array('AnswerOrder'=>SORT_ASC))
+    {
+        $collection = new Collection();
+        $paragraphModelMapper = Mapper::singleton('AnswerModel');
+        $linkCol = $this->getLinkQuestionAnswerModelCollection($filter, $order);
+        $count = $linkCol->getCount();
+        for($i=0 ; $i<$count ; $i++) {
+            $item = $linkCol->getItem($i);
+            $collection->setItem($item->getAnswerModel());
+        }
+        return $collection;
+    }
+
+    public function toString() {
+        return $this->getText();
+    }
+
+    public function getToStringAttribute() {
+        return array('Text');
+    }

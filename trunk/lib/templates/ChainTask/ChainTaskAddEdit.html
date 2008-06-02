@@ -1,0 +1,195 @@
+<form name="ChainTaskAddEdit" method="post" action="{$formAction}">
+    <input type="hidden" name="formSubmitted" value="1" />
+    <input type="hidden" name="ctkID" value="{$ctkID}" />
+    <input type="hidden" name="retURL" value="{$retURL}" />
+	<table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	  <thead>
+	  <tr>
+          <td colspan="4">{t}Edit task dates{/t} "{$ChainTask_Name}"
+              ({t}chain{/t}: "{$Chain_Name}"):</td>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+        <td>{t}Current schedule{/t}: </td>
+		<td>
+          <label><input type="radio" name="DepartureInstant_ActualType" value="1"
+            {if $DepartureInstant_Type eq 1} checked="checked"{/if} disabled="disabled" /> {t}Fixed date{/t}</label> &nbsp;
+          <label><input type="radio" name="DepartureInstant_ActualType" value="2"
+            {if $DepartureInstant_Type eq 2} checked="checked"{/if} disabled="disabled"/> {t}Weekly{/t}</label>
+          <label><input type="radio" name="DepartureInstant_ActualType" value="3"
+            {if $DepartureInstant_Type eq 3} checked="checked"{/if} disabled="disabled"/> {t}Everyday at the same hour{/t}</label>
+        </td>
+        <td>{t}New schedule{/t}: </td>
+		<td>
+          <label><input type="radio" name="DepartureInstant_Type" value="1"
+              onclick="updateWidgetsState();"
+              {if $DepartureInstant_Type eq 1} checked="checked"{/if} /> {t}Fixed date{/t}</label> &nbsp;
+          <label><input type="radio" name="DepartureInstant_Type" value="2"
+              onclick="updateWidgetsState();"
+              {if $DepartureInstant_Type eq 2} checked="checked"{/if} /> {t}Weekly{/t}</label>
+          <label><input type="radio" name="DepartureInstant_Type" value="3"
+              onclick="updateWidgetsState();"
+            {if $DepartureInstant_Type eq 3} checked="checked"{/if} /> {t}Everyday at the same hour{/t}</label>
+        </td>
+	  </tr>
+	  <tr>
+        <td>{t}Current departure date{/t}: </td>
+		<td><input type="text" name="DepartureInstant_ActualDate"
+            value="{$DepartureInstant_ActualDate}"
+            class="readOnlyField" readonly="readonly" /></td>
+        <td>{t}New departure date{/t}: </td>
+        <td>
+          <input type="checkbox" name="DepartureInstant_Date_Active" value="1"
+              onclick="switchDate('Departure');"
+              {if $DepartureInstant_Date_Active eq 1} checked="checked"{/if} />&nbsp;
+          {html_select_date prefix="DepartureInstant_Date_"
+            end_year=2050
+            field_order="$dateFormat"
+            month_format="%m"
+            time=$DepartureInstant_Date}
+          {html_select_time use_24_hours=true
+            display_seconds=false
+            minute_interval=15
+            prefix="DepartureInstant_Date_"
+            time=$DepartureInstant_Date}
+        </td>
+	  </tr>
+	  </tr>
+	  <tr>
+        <td>{t}Current arrival date{/t}: </td>
+		<td><input type="text" name="ArrivalInstant_ActualDate"
+            value="{$ArrivalInstant_ActualDate}"
+            class="readOnlyField" readonly="readonly" /></td>
+        <td>{t}New arrival date{/t}: </td>
+        <td>
+          <input type="checkbox" name="ArrivalInstant_Date_Active" value="1"
+              onclick="switchDate('Arrival');"
+              {if $ArrivalInstant_Date_Active eq 1} checked="checked"{/if} />&nbsp;
+          {html_select_date prefix="ArrivalInstant_Date_"
+            end_year=2050
+            field_order="$dateFormat"
+            month_format="%m"
+            time=$ArrivalInstant_Date}
+          {html_select_time use_24_hours=true
+            display_seconds=false
+            minute_interval=15
+            prefix="ArrivalInstant_Date_"
+            time=$ArrivalInstant_Date}
+        </td>
+	  </tr>
+	  <tr>
+        <td>{t}Current weekly departure date{/t}: </td>
+        <td>
+          <input type="text" name="DepartureInstant_ActualDayTime"
+            value="{$DepartureInstant_ActualDayTime}"
+            class="readOnlyField" readonly="readonly" />
+        </td>
+        <td>{t}New weekly departure date{/t}: </td>
+        <td>
+          <input type="checkbox" name="DepartureInstant_DayTime_Active" value="1"
+              onclick="switchDayTime('Departure');"
+              {if $DepartureInstant_DayTime_Active eq 1} checked="checked"{/if} />&nbsp;
+            {t}every{/t}&nbsp;
+          <select name="DepartureInstant_Day">
+            {$DepartureInstant_DayOptions}
+          </select>
+            &nbsp;{t}to{/t}&nbsp;
+          {html_select_time use_24_hours=true
+            display_seconds=false
+            minute_interval=15
+            prefix="DepartureInstant_Time_"
+            time=$DepartureInstant_Time}
+        </td>
+	  </tr>
+	  <tr>
+        <td>{t}Current weekly arrival date{/t}: </td>
+        <td>
+          <input type="text" name="ArrivalInstant_ActualDayTime"
+            value="{$ArrivalInstant_ActualDayTime}"
+            class="readOnlyField" readonly="readonly" />
+        </td>
+        <td>{t}New weekly arrival date{/t}: </td>
+        <td>
+          <input type="checkbox" name="ArrivalInstant_DayTime_Active" value="1"
+              onclick="switchDayTime('Arrival');"
+              {if $ArrivalInstant_DayTime_Active eq 1} checked="checked"{/if} />&nbsp;
+            {t}every{/t}&nbsp;
+            <select name="ArrivalInstant_Day">
+              {$ArrivalInstant_DayOptions}
+            </select>
+            &nbsp;{t}to{/t}&nbsp;
+            {html_select_time use_24_hours=true
+              display_seconds=false
+              minute_interval=15
+              prefix="ArrivalInstant_Time_"
+              time=$ArrivalInstant_Time}
+        </td>
+	  </tr>
+	  <tr>
+        <td>{t}Current daily departure date{/t}: </td>
+        <td>
+          <input type="text" name="DepartureInstant_ActualDailyTime"
+            value="{$DepartureInstant_ActualDailyTime}"
+            class="readOnlyField" readonly="readonly" />
+        </td>
+        <td>{t}New weekly departure date{/t}: </td>
+        <td>
+          <input type="checkbox" name="DepartureInstant_DailyTime_Active" value="1"
+              onclick="switchTime('Departure');"
+              {if $DepartureInstant_DailyTime_Active eq 1} checked="checked"{/if} />&nbsp;
+            {t}everyday at{/t}&nbsp;
+          {html_select_time use_24_hours=true
+            display_seconds=false
+            minute_interval=15
+            prefix="DepartureInstant_DailyTime_"
+            time=$DepartureInstant_DailyTime}
+        </td>
+	  </tr>
+	  <tr>
+        <td>{t}Current daily arrival date{/t}: </td>
+        <td>
+          <input type="text" name="ArrivalInstant_ActualDailyTime"
+            value="{$ArrivalInstant_ActualDailyTime}"
+            class="readOnlyField" readonly="readonly" />
+        </td>
+        <td>{t}New daily arrival date{/t}: </td>
+        <td>
+          <input type="checkbox" name="ArrivalInstant_DailyTime_Active" value="1"
+              onclick="switchTime('Arrival');"
+              {if $ArrivalInstant_DailyTime_Active eq 1} checked="checked"{/if} />&nbsp;
+            {t}everyday at{/t}&nbsp;
+            {html_select_time use_24_hours=true
+              display_seconds=false
+              minute_interval=15
+              prefix="ArrivalInstant_DailyTime_"
+              time=$ArrivalInstant_DailyTime}
+        </td>
+	  </tr>
+	  <tr>
+        <td>{t}Current duration{/t}: </td>
+        <td>
+          <input type="text" name="ChainTask_ActualDuration"
+            value="{$ChainTask_ActualDuration}"
+            class="readOnlyField" readonly="readonly" />
+        </td>
+        <td>{t}New duration{/t}: </td>
+        <td>
+            <input type="text" name="ChainTask_Duration_Hour"
+              value="{$ChainTask_Duration_Hour}" /> {t}Hours and &nbsp;{/t}
+            <input type="text" name="ChainTask_Duration_Minute"
+              value="{$ChainTask_Duration_Minute}" /> {t}min{/t}.
+        </td>
+	  </tr>
+	  </tbody>
+	  <tfoot>
+	  <tr>
+	    <td align="right" colspan="6">
+          <input type="reset" name="Cancel" value="{t}Cancel{/t}"
+            onclick="window.location.href='{$retURL}'" class="button" />
+	      <input type="submit" name="Ok" value="{t}Ok{/t}" class="button" />
+		</td>
+	  </tr>
+	  </tfoot>
+	</table>
+</form>

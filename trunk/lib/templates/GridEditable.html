@@ -1,0 +1,71 @@
+<!-- Grid -->
+<div class="grid">
+    <table width="100%" cellspacing="0" cellpadding="3" border="0">
+        <!-- Header du grid -->
+        <thead>
+        <tr>
+{section name=GridHeader loop=$GridHeader}
+            <td class="grid_{$GridHeader[GridHeader].DataType}">
+                {$GridHeader[GridHeader].Caption|default:'&nbsp;'}
+            </td>
+{/section}
+            <td>&nbsp;</td>
+        </tr>
+        </thead>
+        
+        <!-- Footer du grid -->
+        <tfoot>
+        <tr>
+            <td colspan="{math equation="x + y + 1" x=$GridHeaderCount y=$NbSubColumn}">
+              <div class="grid_actions_container">
+                <span class="grid_actions">
+                    <input type="button" name="Add{$GridEntityName}Button" class="button" 
+                    value="{t}Add{/t}" onclick="add{$GridEntityName}Item();" />
+                </span>
+              </div>
+            </td>
+        </tr>
+        </tfoot>
+
+        <!-- Contenu du grid -->
+        <tbody id="{$GridEntityName}_grid_Body">
+{section name=GridContent loop=$GridRow}
+{if $smarty.section.GridContent.index is odd}
+{if $GridHighlightedRows[$smarty.section.GridContent.index] eq 1}
+        <tr class="grid_row_highlighted_odd{if $GridObjectIdsChecked[GridContent] neq ''} hover{/if}" id="{$GridEntityName}_grid_TR_{$GridObjectIds[GridContent]}">
+{else}
+        <tr class="grid_row_odd{if $GridObjectIdsChecked[GridContent] neq ''} hover{/if}" id="{$GridEntityName}_grid_TR_{$GridObjectIds[GridContent]}">
+{/if}
+{else}
+{if $GridHighlightedRows[$smarty.section.GridContent.index] eq 1}
+        <tr class="grid_row_highlighted_even{if $GridObjectIdsChecked[GridContent] neq ''} hover{/if}" id="{$GridEntityName}_grid_TR_{$GridObjectIds[GridContent]}">
+{else}
+        <tr{if $GridObjectIdsChecked[GridContent] neq ''} class="hover"{/if} id="{$GridEntityName}_grid_TR_{$GridObjectIds[GridContent]}">
+{/if}
+{/if}
+{section name=GridCol loop=$GridRow[GridContent]}
+            <td class="grid_{$GridHeader[GridCol].DataType|default:'alphanumeric'}">{$GridRow[GridContent][GridCol]}</td>
+{/section}
+            <td class="grid_checkbox_column">
+                <input type="hidden" name="{$GridEntityName}_Id[]"
+                    value="{$GridObjectIds[GridContent]}"/>
+{if $WithDeleteButton eq 1}
+                <input type="button" name="deleteButton[]" size="8" class="button" 
+                    value="{t}Delete{/t}" 
+                onclick="removeElement($('{$GridEntityName}_grid_TR_{$GridObjectIds[GridContent]}'));" />
+{else}
+                &nbsp;
+{/if}
+            </td>
+        </tr>
+{sectionelse}
+        <tr id="{$GridEntityName}_grid_TR_none">
+            <td colspan="{math equation="x + y + 1" x=$smarty.section.GridHeader.total y=$NbSubColumn}">
+                <span>{t}No record found{/t}</span>
+            </td>
+        </tr>
+{/section}
+        </tbody>
+    </table>
+</div>
+<!-- Fin grid -->

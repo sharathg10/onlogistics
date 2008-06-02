@@ -1,0 +1,51 @@
+<div id="{$divId}">
+	<table id="{$divId}Table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	<thead>
+    <tr> 
+      <td colspan="4" style="border:1px outset #AAAAAA"> <b>{t}Airplane informations{/t}</b></td>
+    </tr>
+    </thead>
+	<tbody>
+    <tr> 
+      <td width="20%">{t}Owner{/t}:</td>
+      <td width="30%">{$ownerName}</td>
+      <td width="20%">{t}Real potential since new{/t}:</td>
+      <td width="30%">{date_hundredthsOfHourToTime hoh=$RealHourSinceNew}</td>
+    </tr>
+	<tr> 
+      <td>{t}Real potential since overhaul{/t}:</td>
+      <td>{date_hundredthsOfHourToTime hoh=$RealHourSinceOverall}</td>
+	  <td>{t}Real potential since reparation{/t}:</td>
+      <td>{date_hundredthsOfHourToTime hoh=$RealHourSinceRepared}</td>
+    </tr>
+	<tr> 
+      <td>{t}Virtual potential since new{/t}:</td>
+      <td>{date_hundredthsOfHourToTime hoh=$VirtualHourSinceNew}</td>
+      <td>{t}Virtual potential since overhaul{/t}:</td>
+      <td>{date_hundredthsOfHourToTime hoh=$VirtualHourSinceOverall}</td>
+    </tr>
+	</tbody>
+	</table>
+	<table id="prestationTable" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	<thead>
+    <tr> 
+      <td colspan="4"> <b>{t}Next scheduled maintenances{/t}</b></td>
+    </tr>
+    </thead>
+	<tbody>
+{if count($PrestationNameArray) eq 0 }
+	<tr> 
+      <td>{t}No maintenance service scheduled{/t}.</td>
+    </tr>
+{else}
+ {section name=item loop=$PrestationNameArray}
+    <tr> 
+      <td width="50%">{$PrestationNameArray[item]}</td>
+      <td width="50%">{$PrestationDateArray[item]}</td>
+    </tr>
+ {/section}	
+{/if}
+
+	</tbody>
+	</table>
+</div>

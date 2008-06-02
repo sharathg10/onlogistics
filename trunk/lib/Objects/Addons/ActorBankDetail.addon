@@ -1,0 +1,21 @@
+
+    /**
+     * Retourne le nom de la banque et le numéro de compte
+     * concaténés.
+     * @access public
+     * @return string
+     */
+    function toString() {
+        return $this->getBankName() . ' - ' . $this->getAccountNumber();
+    }
+
+    /**
+     * Retourne le nom des attributs représentant l'objet, pointés par toString()
+     *
+     * @static
+     * @return array of strings
+     * @access public
+     */
+    public function getToStringAttribute() {
+        return array('BankName', 'AccountNumber');
+    }

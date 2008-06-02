@@ -1,0 +1,40 @@
+<!-- version : $Id: ProductHandingByCategoryAddEdit.html,v 1.4 2008-05-07 16:36:52 ben Exp $ -->
+<form {$form.attributes}>
+  <input type="hidden" name="formSubmitted" value="1" />
+  <input type="hidden" name="retURL" value="{$retURL}" />
+  <input type="hidden" name="phcID" value="{$phcID}" />
+	
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <thead>
+      <tr><td colspan="4">&nbsp;</td></tr>
+    </thead>
+    <tbody>
+        <tr> 
+            <td>{$form.handing.label}</td>
+            <td>{$form.handing.html}&nbsp;{$form.type.html}</td>
+      </tr>
+      <tr>
+          <td>{$form.currency.label}</td>
+          <td>{$form.currency.html}</td>
+      </tr>
+      <tr> 
+        <td width="50%" rowspan="2">{t}Select one or more categories{/t}:</td>
+        <td width="50%" rowspan="2">
+          <select name="CategoryIds[]" style="width:100%;" multiple size="10">
+            {$CategoryOptions}
+          </select>
+      </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td align="right" colspan="4">
+          <input type="reset" name="Cancel" value="{t}Back{/t}" 
+          onclick="window.location.href='{$retURL}'" class="button" />
+		  <input type="submit" name="Ok" value="{t}Continue{/t}" class="button" 
+          onclick="return checkForm(this.form, requiredFields);" />
+        </td>
+      </tr>
+    </tfoot>  
+  </table>
+</form>

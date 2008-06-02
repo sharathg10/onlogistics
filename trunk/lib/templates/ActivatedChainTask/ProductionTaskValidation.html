@@ -1,0 +1,80 @@
+<form {$form.attributes}>
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form" id="searchForm">
+  <thead>
+	<tr>
+		<td colspan="4">{t}Current task informations{/t}
+        <input type="hidden" name="formSubmitted" value="1" />
+        {$form.hidden}</td>
+	</tr>
+  </thead>
+  <tbody>
+	<tr>
+		<td {$valign} width="20%" nowrap>{$form.CommandNo.label}:</td>
+		<td {$valign} width="30%">{$form.CommandNo.html}</td>
+		<td {$valign}>&nbsp;</td>
+		<td {$valign}>&nbsp;</td>
+	</tr>
+	<tr>
+		<td {$valign}>{$form.TaskState.label}:</td>
+		<td {$valign}>{$form.TaskState.html}</td>
+		<td {$valign} width="20%" nowrap>{$form.TaskNameAndId.label}:</td>
+		<td {$valign} width="30%">{$form.TaskNameAndId.html}</td>
+	</tr>
+    {if $TaskState == 0}
+	<tr>
+		<td {$valign}>{$form.TaskBeginDate.label}:</td>
+		<td {$valign}>{$form.TaskBeginDate.html}</td>
+		<td {$valign}>{$form.TaskEndDate.label}:</td>
+		<td {$valign}>{$form.TaskEndDate.html}</td>
+	</tr>
+	<tr>
+		<td {$valign}>{$form.TaskDuration.label}:</td>
+		<td {$valign}>{$form.TaskDuration.html}</td>
+		<td {$valign}>{$form.TaskOperator.label}:</td>
+		<td {$valign}>{$form.TaskOperator.html}</td>
+	</tr>
+    {else}
+	<tr>
+		<td {$valign}>{$form.TaskRealBeginDate.label}:</td>
+		<td {$valign}>{$form.TaskRealBeginDate.html}</td>
+		<td {$valign}>{$form.TaskRealEndDate.label}:</td>
+		<td {$valign}>{$form.TaskRealEndDate.html}</td>
+	</tr>
+	<tr>
+		<td {$valign}>{$form.TaskRealDuration.label}:</td>
+		<td {$valign}>{$form.TaskRealDuration.html}</td>
+		<td {$valign}>{$form.TaskRealOperator.label}:</td>
+		<td {$valign}>{$form.TaskRealOperator.html}</td>
+	</tr>
+    {/if}
+  </tbody>
+  <thead>
+	<tr>
+		<td colspan="4">{t}Informations for validation{/t}</td>
+	</tr>
+  </thead>
+  <tbody>
+	<tr>
+		<td>{$form.TaskComment.label} :</td>
+		<td>{$form.TaskComment.html}</td>
+		<td>{$form.TaskRealQuantity.label} :</td>
+		<td>{$form.TaskRealQuantity.html}</td>
+	</tr>
+  </tbody>
+  <tfoot>
+  <tr height="22">
+	<td colspan="4" nowrap>
+        {$form.StartTask.html}
+        &nbsp;
+        {$form.StopTask.html}
+        &nbsp;
+        {$form.ReStartTask.html}
+        &nbsp;
+        {$form.FinishTask.html}
+        &nbsp;
+        {$form.Back.html}
+        &nbsp;
+	</td>
+  </tr>
+</table>
+</form>

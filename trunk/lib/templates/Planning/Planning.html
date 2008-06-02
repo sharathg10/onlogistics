@@ -1,0 +1,141 @@
+<!-- Début du template planning -->
+<table width="100%" border="0" cellpadding="1" class="form">
+  <!-- affichage du template avec les variables prédéfinies -->
+  <tr> 
+	<td class="gris2"><input name="WeeklyPlanning_Id" type="hidden" value="{$WeeklyPlanning_Id}"></td>
+	<td class="gris2">{t}Day's work begin{/t}</td>
+	<td class="gris2">{t}Day's work halt{/t}</td>
+	<td class="gris2">{t}Day's work resume{/t}</td>
+	<td class="gris2">{t}Day's work end{/t}</td>
+  </tr>
+  <tr> 
+	<td class="gris2">{t}Monday{/t}:<input name="Monday_DailyPlanning_Id" type="hidden" value="{if $Monday_Id}{$Monday_Id}{else}0{/if}"></td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Monday_DailyPlanning_Start time=$Monday_Start|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Monday_DailyPlanning_Pause time=$Monday_Pause|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Monday_DailyPlanning_Restart time=$Monday_Restart|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Monday_DailyPlanning_End time=$Monday_End|default:"00:00"}</td>
+  </tr>
+  
+  <tr> 
+	<td class="gris2">{t}Tuesday{/t}:<input name="Tuesday_DailyPlanning_Id" type="hidden" value="{if $Tuesday_Id}{$Tuesday_Id}{/if}"></td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Tuesday_DailyPlanning_Start time=$Tuesday_Start|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Tuesday_DailyPlanning_Pause time=$Tuesday_Pause|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Tuesday_DailyPlanning_Restart time=$Tuesday_Restart|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Tuesday_DailyPlanning_End time=$Tuesday_End|default:"00:00"}</td>
+  </tr>
+  
+  <tr> 
+	<td class="gris2">{t}Wednesday{/t}:<input name="Wednesday_DailyPlanning_Id" type="hidden" value="{if $Wednesday_Id}{$Wednesday_Id}{/if}"></td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Wednesday_DailyPlanning_Start time=$Wednesday_Start|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Wednesday_DailyPlanning_Pause time=$Wednesday_Pause|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Wednesday_DailyPlanning_Restart time=$Wednesday_Restart|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Wednesday_DailyPlanning_End time=$Wednesday_End|default:"00:00"}</td>
+  </tr>
+  
+  <tr> 
+	<td class="gris2">{t}Thursday{/t}:<input name="Thursday_DailyPlanning_Id" type="hidden" value="{if $Thursday_Id}{$Thursday_Id}{/if}"></td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Thursday_DailyPlanning_Start time=$Thursday_Start|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Thursday_DailyPlanning_Pause time=$Thursday_Pause|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Thursday_DailyPlanning_Restart time=$Thursday_Restart|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Thursday_DailyPlanning_End time=$Thursday_End|default:"00:00"}</td>
+  </tr>
+  
+  <tr> 
+	<td class="gris2">{t}Friday{/t}:<input name="Friday_DailyPlanning_Id" type="hidden" value="{if $Friday_Id}{$Friday_Id}{/if}"></td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Friday_DailyPlanning_Start time=$Friday_Start|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Friday_DailyPlanning_Pause time=$Friday_Pause|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Friday_DailyPlanning_Restart time=$Friday_Restart|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Friday_DailyPlanning_End time=$Friday_End|default:"00:00"}</td>
+  </tr>
+  
+  <tr> 
+	<td class="gris2">{t}Saturday{/t}:<input name="Saturday_DailyPlanning_Id" type="hidden" value="{if $Saturday_Id}{$Saturday_Id}{/if}"></td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Saturday_DailyPlanning_Start time=$Saturday_Start|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Saturday_DailyPlanning_Pause time=$Saturday_Pause|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Saturday_DailyPlanning_Restart time=$Saturday_Restart|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Saturday_DailyPlanning_End time=$Saturday_End|default:"00:00"}</td>
+  </tr>
+
+  <tr> 
+	<td class="gris2">{t}Sunday{/t}:<input name="Sunday_DailyPlanning_Id" type="hidden" value="{if $Sunday_Id}{$Sunday_Id}{/if}"></td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Sunday_DailyPlanning_Start time=$Sunday_Start|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Sunday_DailyPlanning_Pause time=$Sunday_Pause|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Sunday_DailyPlanning_Restart time=$Sunday_Restart|default:"00:00"}</td>
+	<td>{html_select_time use_24_hours=true display_meridian=false display_seconds=false 
+		 minute_interval=15 prefix=Sunday_DailyPlanning_End time=$Sunday_End|default:"00:00"}</td>
+  </tr>  
+
+</table>
+<!-- Indisponibilités -->
+<br />
+<!-- champs hidden utilisés pour les actions add/edit/delete des unavailability -->
+<input type="hidden" name="UnavailabilityToAdd" value="-1" />
+<input type="hidden" name="UnavailabilityToDelete" value="-1" />
+
+<table width="100%" border="0" cellpadding="3" class="form">
+  <tr>
+    <td colspan="5" class="gris1">
+	  <b>{t}Unavailability periods{/t}</b>
+	</td>
+  </tr>
+  <tr> 
+	<td class="gris2">{t}Beginning date{/t}</td>
+	<td class="gris2">{t}End date{/t}</td>
+	<td class="gris2">{t}Nature{/t}</td>
+	<td class="gris2">{t}Order{/t}</td>
+	<td class="gris2">&nbsp;</td>
+  </tr>
+  {section name=Item loop=$UnavailabilityList}
+  <tr> 
+	<td>{$UnavailabilityList[Item].beginDate}</td>
+	<td>{$UnavailabilityList[Item].endDate}</td>
+	<td>{$UnavailabilityList[Item].purpose}</td>
+	<td>{$UnavailabilityList[Item].commandNo}</td>
+	<td style="width: 180px; text-align:right;" nowrap>
+		<input type="button" name="EditUnavailbility" value="{t}Modify{/t}" 
+		  onClick="javascript:this.form.elements['UnavailabilityToAdd'].value='{$UnavailabilityList[Item].id}';this.form.submit();">
+		<input type="button" name="DelUnavailbility" value="{t}Delete{/t}" 
+		  onClick="javascript:this.form.elements['UnavailabilityToDelete'].value='{$UnavailabilityList[Item].id}';this.form.submit();">	  
+	
+	</td>
+  </tr>
+  {sectionelse}
+  <tr> 
+	<td colspan="5">{t}No unavailability{/t}</td>
+  </tr>  
+  {/section}
+  <tr>
+    <td colspan="5" class="gris1" style="text-align:right;">
+	  <input type="button" name="AddUnavailbility" value="{t}Add a unavailability{/t}" 
+		  onClick="javascript:this.form.elements['UnavailabilityToAdd'].value='0';this.form.submit();">
+	</td>
+  </tr>  
+</table>
+<!-- Fin du template planning -->

@@ -1,0 +1,21 @@
+/**
+     * Recupere les factures associees, via InvoicePayment
+     * @access public
+     * @return void 
+     **/
+    function GetInvoiceCollection(){
+        $InvoiceCollection = new Collection();  // la collection qui sera retournee
+        $InvoiceCollection->acceptDuplicate = false;
+        $InvoicePaymentCollection = $this->GetInvoicePaymentCollection();
+        
+        if (!Tools::isEmptyObject($InvoicePaymentCollection)) {
+            for($i = 0; $i < $InvoicePaymentCollection->getCount(); $i++) {
+                $InvoicePayment = $InvoicePaymentCollection->GetItem($i);
+                $Invoice = $InvoicePayment->GetInvoice();
+                $InvoiceCollection->SetItem($Invoice);
+                unset($Invoice, $InvoicePayment);
+            }    
+        }
+        return $InvoiceCollection;
+    }
+

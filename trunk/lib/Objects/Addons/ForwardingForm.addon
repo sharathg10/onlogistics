@@ -1,0 +1,34 @@
+    /**
+     * Retourne le logo (sous forme base64), ou une string vide
+     * @access public
+     * @return string
+     **/
+    function GetLogo() {
+        require_once('Objects/DocumentModel.php');
+        $DocumentModel = $this->GetDocumentModel();
+        if (Tools::isEmptyObject($DocumentModel)) {
+            return '';
+        }
+        
+        switch($DocumentModel->GetLogoType()) {
+            case DocumentModel::EXPEDITOR:
+                $supplierCustomer = $this->getSupplierCustomer();
+                $Actor = $supplierCustomer->GetSupplier();
+                break;
+            case DocumentModel::DESTINATOR:
+                $supplierCustomer = $this->getSupplierCustomer();
+                $Actor = $supplierCustomer->GetCustomer();
+                break;
+            case DocumentModel::ONE_ACTOR:
+                $Actor = $DocumentModel->GetActor();
+                break;
+            default:
+                return '';
+        } // switch
+
+        if (!Tools::isEmptyObject($Actor)) {
+            $result = (is_null($Actor->GetLogo()))?'':$Actor->GetLogo();
+            return $result;
+        }
+        return '';
+    }

@@ -1,0 +1,67 @@
+<!--$Id: FormModelAddEdit.html,v 1.4 2008-05-07 16:36:51 ben Exp $ -->
+{$form.javascript}
+<form {$form.attributes}>
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+  <thead>
+  <tr>
+	<td colspan ="6">&nbsp;{$form.hidden}</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td width="10%" nowrap>{$form.FormModel_Name.label}: </td>
+    <td width="23%">{$form.FormModel_Name.html}</td>
+	<td width="10%" nowrap>{$form.FormModel_Activ.label}</td>
+    <td width="23%">{$form.FormModel_Activ.html}</td>
+    <td width="10%" nowrap>{$form.FormModel_ActionType.label}: </td>
+    <td width="24%">{$form.FormModel_ActionType.html}</td>
+  </tr>
+  <tr>
+    <td colspan="3">&nbsp;</td>
+    <td colspan="3" align="right">
+     <input name="AddParagraphPopup" type="button" value="{t}Add a paragraph{/t}" class="Button"
+	   onclick="document.forms['FormModelAddEdit'].elements['update'].value=1;
+       document.forms['FormModelAddEdit'].submit();
+       window.open('ParagraphModelSelect.php','popback','width=800,height=300,toolbars=no,scrollbars=no,menubars=no,status=no');" />&nbsp;
+     <input name="AddQuestionPopup" type="button" value="{t}Add a question{/t}" class="Button"
+	   onclick="document.forms['FormModelAddEdit'].elements['update'].value=1;
+       document.forms['FormModelAddEdit'].submit();
+       window.open('QuestionSelect.php','popback','width=800,height=300,toolbars=no,scrollbars=no,menubars=no,status=no');" />&nbsp;
+     <input name="AddAnswerPopup" type="button" value="{t}Add an answer{/t}" class="Button"
+	   onclick="document.forms['FormModelAddEdit'].elements['update'].value=1;
+       document.forms['FormModelAddEdit'].submit();
+       window.open('AnswerModelSelect.php','popback','width=800,height=300,toolbars=no,scrollbars=no,menubars=no,status=no');" />
+    </td>
+  </tr>
+  <tr>
+    <td colspan="6">{$tree}</td>
+  </tr>
+  <tr>
+    <td colspan="3">&nbsp;</td>
+    <td colspan="3" align="right">
+     <input name="AddParagraphPopup" type="button" value="{t}Add a paragraph{/t}" class="Button"
+	   onclick="document.forms['FormModelAddEdit'].elements['update'].value=1;
+       document.forms['FormModelAddEdit'].submit();
+       window.open('ParagraphModelSelect.php','popback','width=800,height=300,toolbars=no,scrollbars=no,menubars=no,status=no');" />&nbsp;
+     <input name="AddQuestionPopup" type="button" value="{t}Add a question{/t}" class="Button"
+	   onclick="document.forms['FormModelAddEdit'].elements['update'].value=1;
+       document.forms['FormModelAddEdit'].submit();
+       window.open('QuestionSelect.php','popback','width=800,height=300,toolbars=no,scrollbars=no,menubars=no,status=no');" />&nbsp;
+     <input name="AddAnswerPopup" type="button" value="{t}Add an answer{/t}" class="Button"
+	   onclick="document.forms['FormModelAddEdit'].elements['update'].value=1;
+       document.forms['FormModelAddEdit'].submit();
+       window.open('AnswerModelSelect.php','popback','width=800,height=300,toolbars=no,scrollbars=no,menubars=no,status=no');" />
+    </td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="6" align="right">
+		<input name="Ok" type="submit" value="{t}Ok{/t}" class="button" />&nbsp;
+		<input name="Cancel" value="{t}Cancel{/t}" type="button"
+            onclick="window.location='{$retURL}'" class="button" />
+    </td>
+  </tr>
+  </tfoot>
+</table>
+</form>

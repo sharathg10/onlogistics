@@ -1,0 +1,58 @@
+
+			Installation de OnLogistics
+			---------------------------
+
+		$Id: INSTALL,v 1.8 2008-05-30 08:51:03 ben Exp $
+
+
+I. Installation de l'appli 
+--------------------------
+
+1) Vérifier la présence des prérequis pour OnLogistics (voir plus bas).
+
+2) Créer une base de donnée pour OnLogistics, et y créer la structure des tables
+   avec config/sql/onlogistics.sql.
+
+3) Créer un répertoire dans lequel l'utilisateur d'apache a le droit 
+   d'écrire (ce sera la var SMARTY_COMPILE_DIR dans le fichier project.conf).
+   Il n'est pas nécessaire que ce fichier soit dans le documentroot d'apache
+   (ce n'est pas recommandé, pour des raisons de sécurité).
+
+4) Placer les sources d'OnLogistics dans un repertoire servi par Apache.
+
+5) Placer les sources du framework et de lib-external dans un repertoire
+   quelconque (pas besoin que ce soit un rep servis par Apache).
+
+6) Copier le fichier config/project.conf.dist dans config/project.conf ,
+   éditer ce fichier et ajuster les paramètres.
+
+7) Pour permettre l'execution de taches planifiees internes à onlogistics, il 
+   faut configurer la crontab du système pour une execution toutes les minutes. 
+   Exemple:
+   0 * * * * root /usr/local/bin/php -q /path/onlogistics/CronTaskManager.php
+
+
+II. Prérequis
+-------------
+- Un système Unix (OnLogistics est testé sur GNU/Linux, OpenBSD et FreeBSD)
+- Apache 1.3 ou 2.x et php 5.1 ou plus en module d'apache (pas en cgi)
+- MySQL 4 ou plus.
+- PHP doit avoir le support natif pour mysql, gd, dom, xmlrpc, json et gettext
+- modules PEAR: HTML_Common, Log, HTML_QuickForm, XML_Util, XML_Parser,
+  XML_Beautifier, Config, Mail, Numbers_Words, Calendar, Date, Net_SMTP,
+  Mail_Mime, HTML_QuickForm_advmultiselect, Net_UserAgent_Detect,
+  Console_CommandLine.
+  note: Console_CommandLine, Numbers_Words et Calendar sont en version beta,
+  donc s'installent avec un "pear install -f".
+- les modules PEAR suivants sont _peut-être_ utiles (ou pas), les installer
+  au cas où : Cache_Lite, HTTP_Upload, HTTP_REQUEST, DB, HTML_Template_IT
+- le path de PEAR doit être dans le include_path de php.ini, 
+  session.use_trans_sid doit être activé, register_argc_argv activé,
+  file_uploads activé, magic_quotes_gpc désactivé.
+  Avec un php > 5+, il faut que register_long_arrays ne soit pas a Off (il est
+  a On par defaut, mais a Off dans le php.ini-recommanded de php-5.1.x)
+- Apache doit laisser les droits AuthConfig et Limit dans le repertoire
+  d'OnLogistics (pour que les restrictions d'acces indiquees dans les fichiers
+  .htaccess fonctionnent).
+
+

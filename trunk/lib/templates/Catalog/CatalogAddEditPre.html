@@ -1,0 +1,29 @@
+<form name="CatalogAddEdit" method="POST" action="{$FormAction}">
+    <input type="hidden" name="productTypesChosen" value="1">
+    <input type="hidden" name="ctgId" value="{if $Catalog != 0}{$Catalog->getId()}{/if}">
+	<table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	  <thead>
+	  <tr> 
+		<td>{t}Select one or more product types{/t}</td>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+	    <td nowrap>
+		   <select name="Catalog_ProductType[]" size="5" multiple>
+		     {$ProductTypeOptions}
+		   </select>
+		</td>
+	  </tbody>
+	  <tfoot>
+	  <tr> 
+	    <td>
+		  <input type="button" value="{t}Cancel{/t}" name="cancel" onClick="window.location='{$retURL}'" class="Button">
+		  &nbsp;
+		  <input type="submit" value="{t}Ok{/t}" name="submitButton" class="Button">
+		</td>
+	  </tr>
+	  </tfoot> 
+	</table>
+</form>
+

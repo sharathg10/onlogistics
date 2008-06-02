@@ -1,0 +1,80 @@
+<form name="FlowTypeAddEdit" method="post" action="{$formAction}" style="border:1px outset #AAAAAA">
+
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <thead>
+      <tr>
+        <td colspan="4">
+            {t}Update of expense/receipt model{/t}
+            <input type="hidden" name="formSubmitted" value="1" />
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td width="10%">{t}Name{/t} *:</td>
+        <td width="40%">
+          <input name="FlowType_Name" type="text" value="{$FlowType_Name}" style="width:100%;" />
+        </td>
+        <td width="10%">{t}Receipt/Expense{/t} *:</td>
+        <td width="40%">
+          <select name="FlowType_Type" >
+          {html_options values=$FlowType_Type_Id_Select selected=$FlowType_Type_Selected output=$FlowType_Type_Select}
+          </select>
+        </td>
+      </tr>
+      <tr>
+        	<td >{t}Bank{/t} :</td>
+			<td>
+				<select name="FlowType_ActorBankDetail_ID" style="width:100%;">
+                <option value="0">{t}Select a bank{/t}</option>
+                {$ActorBankDetailList}</select>
+			</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+	  </tr>
+      <tr>
+        <td colspan="4">
+          <table width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+            <thead>
+              <tr>
+                <td colspan="5">{t}Settings for lines to provide in the Add or update form of this expense/receipt{/t} :</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td width="10%">{t}Name{/t} *:</td>
+                <td width="30%">
+                  <input name="FlowTypeItem_Name" type="text" value="" style="width:100%;" />
+                </td>
+                <td width="10%">{t}VAT{/t} :</td>
+                <td width="30%">
+                  <select name="FlowTypeItem_TVA_ID" >
+                    <option value="##">{t}None{/t}</option>
+                    {foreach from=$TVAOptions item=option}
+                      {$option}<br />
+                    {/foreach}
+                  </select>
+                </td>
+                <td width="20%">
+                  <input type="submit" name="Ajouter" value="{t}Add{/t}" class="button"
+                  onclick="document.FlowTypeAddEdit.formSubmitted.value = 1;" />
+                </td>
+              </tr>
+              <tr>
+                <td colspan="5">{$flowTypeItemGrid}</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td align="right" colspan="4">
+          <input type="submit" name="Ok" value="{t}Ok{/t}" class="button" onclick="document.FlowTypeAddEdit.formSubmitted.value = 2;" />
+          <input type="reset" name="Cancel" value="{t}Cancel{/t}" onclick="window.location.href='{$retURL}'" class="button" />
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+<form>

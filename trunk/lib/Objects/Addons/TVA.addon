@@ -1,0 +1,33 @@
+
+    /**
+     * TVA::toString()
+     *
+     * @access public
+     * @return void
+     **/
+    function toString(){
+        return sprintf("%s (%s%%)", $this->getCategory(), I18N::formatNumber($this->getRate()));
+    }
+
+    /**
+     * Retourne le nom des attributs représentant l'objet, pointés par toString()
+     *
+     * @static
+     * @return array of strings
+     * @access public
+     */
+    public function getToStringAttribute() {
+        return array('Category', 'Rate');
+    }
+    
+    /**
+     * Retourne le taux de TVA tenant compte d'un taux de surtaxe
+     *
+     * @access public
+     * @param float $tvaSurtaxRate
+     * @return float
+     */
+    function getRealTvaRate($tvaSurtaxRate) {
+        return number_format($this->getRate() * (1 + ($tvaSurtaxRate / 100)), 2);
+    }
+    

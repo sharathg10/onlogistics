@@ -1,0 +1,34 @@
+    // WeeklyInstant::getNearestOccurence() {{{
+
+    /**
+     * Renvoie le timestamp correspondant à la première occurence 
+     * valide à partir de $fromThisDate
+     * 
+     * @param integer $fromThisDate TimeStamp correspondant à la date 
+     * minimale de validité
+     * @param boolean $type true si postPivot
+     * @return integer Le timestamp correspondant ou FALSE si aucun ne 
+     * correspond
+     */
+    function getNearestOccurence($date, $type=true)
+    {
+        $departureTime = DateTimeTools::timeToTimeStamp($this->getTime());
+        $refTime       = DateTimeTools::getTimeFromDate($date);
+        $dateAtNoon    = DateTimeTools::getDateAtNoon($date);
+        if($type) {
+            // planning en avant, recherche la prochaine date de transport
+            if ($refTime <= $departureTime) {
+                return $dateAtNoon + $departureTime;
+            }
+            // on a rate l'heure... partira demain
+            return $dateAtNoon + DateTimeTools::ONE_DAY + $departureTime;
+        } else {
+            // retro-planning
+            if ($refTime >= $departureTime) {
+                return $dateAtNoon + $departureTime;
+            }
+            return ($dateAtNoon - DateTimeTools::ONE_DAY) + $departureTime;
+        } 
+    } 
+
+    // }}}

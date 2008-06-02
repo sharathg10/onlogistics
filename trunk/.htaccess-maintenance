@@ -1,0 +1,35 @@
+# Ce .htaccess, a placer a la racine des applis,
+# redirige toute les requetes vers une page
+# "maintenance.html". A utiliser pdt les upgrade par ex.
+
+# Pour pouvoir utiliser des regles mod_rewrite dans les 
+# .htaccess (comme ici), il faut que le rep ou vhost ai 
+# "AllowOverride FileInfo" et "Option FollowSymlinks"
+
+RewriteEngine on
+RewriteCond %{REQUEST_URI} !/maintenance.html$
+RewriteRule $ /maintenance.html [R=302,L]
+
+#!/bin/sh
+# script de mise en place/restauration, pour les mises en prod.
+#
+#hosts="
+#/home/httpd/htdocs/argema.ateor.com
+#/home/httpd/htdocs/current.onlogistics.com
+#/home/httpd/htdocs/demo.onlogistics.com
+#/home/httpd/htdocs/download.ateor.com
+#/home/httpd/htdocs/hopital.onlogistics.com
+#/home/httpd/htdocs/onlogistics-site
+#/home/httpd/htdocs/onlogistics-site-dev
+#/home/httpd/htdocs/recette.onlogistics.com
+#/home/httpd/htdocs/www.onlogistics.com
+#"
+#ht_maint="/home/ben/dot-htaccess-maintenance"
+#
+## pour mettre en place ce .htaccess
+#for i in $hosts; do [ -d $i ] && cp $ht_maint $i/.htaccess; done
+#
+## et pour restaurer l'ancien, suffit d'effacer le .htaccess
+## (et d'atendre le prochain cvs up)
+#for h in $hosts; do [ -f $h/.htaccess ] && rm $h/.htaccess; done
+

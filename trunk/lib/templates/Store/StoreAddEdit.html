@@ -1,0 +1,52 @@
+<form {$form.attributes}>
+<table width="100%" cellspacing="0" cellpadding="4" border="0" class="form">
+  <thead>
+  <tr>
+    <td colspan="4">{$action} {t}store for site{/t} {$StorageSiteName}</td>
+  </tr>
+  </thead>
+{if $AddStore eq 1}
+  <tfoot>
+  <tr>
+    <td colspan="4" align="right">
+		<input name="Ok" type="submit" value="Ok" class="Button" />
+		<input name="Cancel" type="button"
+        onclick="window.location='StorebyStorageSiteList.php?stoId={$StorageSiteId}'"
+        value="{t}Cancel{/t}" class="Button" />
+    </td>
+  </tr>
+  </tfoot>
+{/if}
+  <tbody>
+  <tr>
+    <td>{t}Store name{/t} :{$form.hidden}</td>
+    <td>{$form.StoreName.html}</td>
+    <td>{t}Active{/t} :</td>
+    <td>
+        <input type="hidden" name="inStoreAE" value="1" />
+        <input type="hidden" name="StoreId" value="{$storeId}" />
+    	<input type="radio" name="Activated" id="activated" value="1"
+			 {if $activated}checked="checked"{/if} /><label for="activated">{t}Yes{/t}
+	   </label>&nbsp;&nbsp;&nbsp;&nbsp;
+    	<input type="radio" name="Activated" id="notActivated" value="0"
+			 {if $activated == 0}checked="checked"{/if} /><label for="notActivated">{t}No{/t}
+	   </label>
+    </td>
+  </tr>
+  <tr>
+    <td class="element_label">{t}Owner{/t} :</td>
+    <td colspan="3">{$form.StockOwner.html}</td>
+  </tr>
+  </tbody>
+</table>
+{if $AddStore neq 1}
+<table width="100%" cellspacing="0" cellpadding="4" border="0" class="form">
+  <thead>
+  <tr>
+    <td>{t}Locations{/t}</td>
+  </tr>
+  </thead>
+  <tbody><tr><td></td></tr></tbody>
+</table>
+{/if}
+

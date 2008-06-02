@@ -1,0 +1,23 @@
+    /**
+     * Rend le modele par defaut, pour son type de Document
+     * S'il existait, met l'attribut Default a 0 pour le Modele 
+     * qui etait celui par defaut jusque la
+     * @access public
+     * @return void 
+     **/
+    function BecomeDefault() {
+        if (0 == $this->GetDefault()) {
+            return false;
+        }
+        
+        $mapper = Mapper::singleton('DocumentModel');
+        $DocumentModelTest = $mapper->load(array('DocType' => $this->GetDocType(),
+                                                             'Default' => $this->GetDefault()));
+        if (!Tools::isEmptyObject($DocumentModelTest) && $DocumentModelTest->GetId() != $this->GetId()) {
+            $DocumentModelTest->SetDefault(0);
+            $mapper->Save($DocumentModelTest);
+        }
+        $this->SetDefault(1);
+        return true;
+    }
+

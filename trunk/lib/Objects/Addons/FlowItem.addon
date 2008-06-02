@@ -1,0 +1,31 @@
+    // getDiscountAmount() {{{
+
+    public function getDiscountAmount() {
+        $handing = $this->getHanding();
+        $price = $this->getTotalHT();
+        $discount = $price - CalculatePriceHanding(getHandingType($handing), 
+            $price, 1, $handing);
+        return $discount;
+    }
+
+    // }}}
+    // getTotalTTC() {{{
+
+    /**
+     * getTotalTTC 
+     * 
+     * @access public
+     * @return void
+     */
+    public function getTotalTTC() {
+        $tva = $this->getTVA();
+        $taxes = 0;
+        if($tva instanceof TVA) {
+            $rate = $tva->getRate();
+            $taxes = $this->getTotalHT() * $rate / 100;
+        }
+        return $this->getTotalHT() + $taxes;
+    }
+
+    // }}}
+

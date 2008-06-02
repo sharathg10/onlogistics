@@ -1,0 +1,50 @@
+{$form.javascript}
+<form {$form.attributes}>
+{$form.hidden}
+<input type="hidden" name="formSubmitted" value="0">
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form" id="searchForm">
+  <tbody>
+    <tr class="search">
+	  <td width="20%">{$form.ComponentProductName.label}</td>
+      <td width="30%">{$form.ComponentProductName.html}</td>
+      <td width="20%">{$form.Component_ComponentGroup_ID.label}</td>
+      <td width="30%">{$form.Component_ComponentGroup_ID.html}</td>
+    </tr>
+    <tr class="search">
+	  <td>{$form.Component_Product_ID.label}</td>
+      <td>{$form.Component_Product_ID.html}</td>
+      <td>{$form.Component_Parent_ID.label}</td>
+      <td>{$form.Component_Parent_ID.html}</td>
+    </tr>
+    <tr class="search">
+      <td>{$form.Component_Quantity.label}</td>
+      <td>{$form.Component_Quantity.html}</td>
+	  <td>{$form.Component_Level.label}</td>
+      <td>{$form.Component_Level.html}</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td align="right" colspan="4">
+{if $additionalActions eq "yes"}
+        <input value="{t}Delete{/t}" type="button"
+        onClick="javascript:if(confirm(ChainCommand_0))
+        window.location.href='ComponentDelete.php?nomId='
+        + document.forms[0].nomId.value + '&cmpId[]=' + document.forms[0].cmpId.value;"
+        id="suppr" name="suppr" class="Button" />
+		&nbsp;&nbsp;&nbsp;&nbsp;
+        <input value="{t}Add a child component{/t}" type="button"
+        onClick="window.location='{$addUrl}'"  id="add" name="add" class="Button" />
+		&nbsp;&nbsp;&nbsp;&nbsp;
+{/if}
+      <input name="ok" type="submit" value="{t}Ok{/t}" id="ok" class="button"
+       onClick="javascript:ComponentAddEdit.formSubmitted.value=1" />
+      &nbsp;&nbsp;&nbsp;
+      <input value="{t}Cancel{/t}" type="button"
+        onClick="window.location='{$returnURL}'"  id="cancel" name="cancel" class="Button" />
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  </td>
+    </tr>
+  </tfoot>
+</table>
+</form>

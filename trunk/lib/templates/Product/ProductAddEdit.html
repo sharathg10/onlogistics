@@ -1,0 +1,530 @@
+<form name="ProductAddEdit" method="POST" action="{$formAction}" enctype="multipart/form-data">
+
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <thead>
+  	<tr>
+  		<td colspan="4" style="border:1px outset #AAAAAA">
+          <b>{t}Product properties{/t}</b>
+          <input type="hidden" name="formSubmitted" value="1" />
+          <input type="hidden" name="pdtClass" value="{$pdtClass}" />
+          <input type="hidden" name="pdtId" value="{$pdtId}" />
+          <input type="hidden" name="ClassName" value="{$ClassName}" />
+          <input type="hidden" name="ActorProductAction" value="0" />
+          <input type="hidden" name="ActorProductID" value="0" />
+        </td>
+  	</tr>
+	</thead>
+	<tbody>
+  	<tr>
+  		<td>{t}Reference{/t}: </td>
+  		<td><input type="text" style="width:100%" name="BaseReference"
+          id="BaseReference" value="{$BaseReference}" />
+		<td colspan="2">{t}Active{/t} : &nbsp;
+		{html_radios name='Activated' values=$ActivatedOptions checked=$Activated output=$ActivatedOptionsValues separator="&nbsp;&nbsp;&nbsp;&nbsp;"}
+
+		</td>
+  	</tr>
+  	<tr>
+  		<td>{t}Tracking mode{/t}: </td>
+  		<td>
+			<select name="TracingMode" id="TracingMode" onchange="enableTracingModeRanges(this.value, this.form);">
+			  {$TracingModeOptions}
+			</select>
+		</td>
+		<td>{t}Begin range{/t}:
+			<input type="text" size="15" name="TracingModeBeginRange"
+				value="{$TracingModeBeginRange}" {$TMDisabled} />
+		</td>
+		<td>{t}End range{/t}:
+			<input type="text" size="15" name="TracingModeEndRange"
+				value="{$TracingModeEndRange}" {$TMDisabled} />
+		</td>
+  	</tr>
+  	<tr>
+  		<td>{t}Designation{/t}: </td>
+  		<td colspan="3">
+			<textarea name="Name" id="Name" style="width:100%;height: 40px">{$Name}</textarea>
+		</td>
+  	</tr>
+  	<tr>
+  		<td>{t}Owner{/t}: </td>
+  		<td colspan="3">
+			<select name="Owner" id="Owner" style="width:100%">
+				{$OwnerOptions}
+			</select>
+		</td>
+  	</tr>
+  	<tr>
+  		<td width="25%">{t}Selling unit{/t}: </td>
+  		<td width="25%">
+			<input type="text" size="5" name="SellUnitQuantity" id="SellUnitQuantity" value="{$SellUnitQuantity}" />
+			<select name="SellUnitType" id="SellUnitType" style="width:100%">
+				<option value="">{t}N/A{/t}</option>
+				{$SellUnitTypeOptions}
+			</select>
+		</td>
+  		<td width="25%">{t}Minimum quantity in stock{/t}: </td>
+  		<td width="25%">
+			<input type="text" style="width:100%" name="SellUnitMinimumStoredQuantity" id="SellUnitMinimumStoredQuantity" value="{$SellUnitMinimumStoredQuantity}" />
+		</td>
+  	</tr>
+  	<tr>
+  		<td>{t}Type{/t}: </td>
+  		<td>
+			<input type="hidden" name="ChangeProductType" value="0" />
+			<select name="ProductType" id="ProductType" style="width:100%"
+				onchange="this.form.elements['ChangeProductType'].value=1;this.form.elements['formSubmitted'].value=0;this.form.submit();">
+				<option value="">{t}N/A{/t}</option>
+				{$ProductTypeOptions}
+			</select>
+		</td>
+  		<td>{t}Dangerousness{/t}: </td>
+  		<td>
+			<select name="DangerousProductType" id="DangerousProductType" style="width:100%">
+				<option value="">{t}N/A{/t}</option>
+				{$DangerousProductTypeOptions}
+			</select>
+		</td>
+  	</tr>
+  	<tr>
+  		<td>{t}Category{/t}: </td>
+  		<td>
+			<select name="Category" id="Category" style="width:100%">
+				<option value="" {if $Category eq 0}selected="selected"{/if}>{t}N/A{/t}</option>
+				<option value="1" {if $Category eq 1}selected="selected"{/if}>{t}By stock{/t}</option>
+				<option value="2" {if $Category eq 2}selected="selected"{/if}>{t}By order{/t}</option>
+				<option value="3" {if $Category eq 3}selected="selected"{/if}>{t}Limited quantity{/t}</option>
+			</select>
+		</td>
+  		<td>{t}Interchangeability{/t}:</td>
+  		<td>
+		  <input class="button" onclick="window.open('ProductSubstitutionList.php?pdtId={$pdtId}','popup','width=800,height=600,toolbars=no,scrollbars=yes,menubars=no,status=no');"
+          value="{t}Manage product substitutions{/t}" type="button" />
+        </td>
+  	</tr>
+  	<tr>
+  		<td>{t}VAT rate{/t}: </td>
+  		<td><select name="TVA" id="TVA" style="width:100%">
+				<option value="">{t}N/A{/t}</option>
+				{$TVAOptions}
+			</select>
+		</td>
+  		<td>&nbsp;</td>
+  		<td>&nbsp;</td>
+  	</tr>
+	<tr>
+	{if $isAero}
+	<tr>
+  		<td>{t}Airplane type{/t}: </td>
+  		<td>
+			<select	name="FlyType" style="width:100%">
+			{$flytypeOptions}
+			</select>
+		</td>
+  		<td>&nbsp;</td>
+  		<td>&nbsp;</td>
+  	</tr>
+	{/if}
+  </table>
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <thead>
+  	<tr>
+  		<td colspan="2">
+			<b>{t}Selling unit price excl. VAT by currency{/t}</b>
+		</td>
+  	</tr>
+	</thead>
+	{section name=currency loop=$currencies}
+  	<tr>
+		<td width="25%">{$currencies[currency].Name}: </td>
+		<td>
+			<input type="hidden" name="Currencies[]" value="{$currencies[currency].Id}" />
+			<input type="text" name="Price_{$currencies[currency].Id}"
+				value="{$currencies[currency].PriceValue}" />&nbsp;
+            {$currencies[currency].Symbol} {t}excl. VAT{/t}
+		</td>
+	</tr>
+	{/section}
+  </table>
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <thead>
+  	<tr>
+  		<td>
+			<b>{t}Selling unit properties{/t}</b>
+		</td>
+  	</tr>
+	</thead>
+  </table>
+  <div id="UVProperties">
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <tbody>
+  	<tr>
+  		<td width="25%">{t}Length{/t}: </td>
+  		<td width="25%"><input type="text" style="width:70%" name="SellUnitLength" id="SellUnitLength" value="{$SellUnitLength}" /> {t}M.{/t}</td>
+  		<td width="25%">{t}Width{/t}: </td>
+  		<td width="25%"><input type="text" style="width:70%" name="SellUnitWidth" id="SellUnitWidth" value="{$SellUnitWidth}" /> {t}M.{/t}</td>
+  	</tr>
+  	<tr>
+  		<td>{t}Height{/t}: </td>
+  		<td><input type="text" style="width:70%" name="SellUnitHeight" id="SellUnitHeight" value="{$SellUnitHeight}" /> {t}M.{/t}</td>
+  		<td>{t}Weight{/t}: </td>
+  		<td><input type="text" style="width:70%" name="SellUnitWeight"
+            id="SellUnitWeight" value="{$SellUnitWeight}" /> {t}Kg_abbr{/t}</td>
+  	</tr>
+  	<tr>
+  		<td>{t}Priority dimension{/t}: </td>
+  		<td>
+			<select name="SellUnitMasterDimension" id="SellUnitMasterDimension" style="width:100%">
+				<option value="" {if $SellUnitMasterDimension eq 0}selected="selected"{/if}>{t}N/A{/t}</option>
+				<option value="1" {if $SellUnitMasterDimension eq 1}selected="selected"{/if}>{t}Length{/t}</option>
+				<option value="2" {if $SellUnitMasterDimension eq 2}selected="selected"{/if}>{t}Width{/t}</option>
+				<option value="3" {if $SellUnitMasterDimension eq 3}selected="selected"{/if}>{t}Height{/t}</option>
+			</select>
+		</td>
+  		<td>{t}Stackable ratio{/t}: </td>
+  		<td>
+			<input type="text" style="width:70%" name="SellUnitGerbability" id="SellUnitGerbability" value="{$SellUnitGerbability}" />
+		</td>
+  	</tr>
+  	<tr>
+  		<td>{t}Volume{/t}: </td>
+  		<td><input type="text" style="width:70%" name="Volume" id="Volume" value="{$Volume}" /> {t}L{/t}</td>
+  		<td colspan="2">&nbsp;</td>
+  	</tr>
+
+	<!-- Pas encore implémenté
+  	<tr>
+  		<td>Prix promotionnel: </td>
+  		<td><input type="text" style="width:100%" name="PromotionNewPrice"
+            id="PromotionNewPrice" value="{*$Promotion%NewPrice*}" /></td>
+  		<td>Dates: </td>
+  		<td>
+			{$PromotionStartDate}
+			<br />
+			{$PromotionEndDate}
+		</td>
+  	</tr>
+	-->
+	</tbody>
+  </table>
+  </div>
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <thead>
+  	<tr>
+  		<td>
+			<input id="switchPackaging" 
+              onclick="fw.dom.toggleElement('Conditioning', null, 'switchPackaging');"
+              title="_(Show/Hide)" value="+" type="button" class="togglebutton" />
+			<b>{t}Packaging{/t}</b>
+		</td>
+  	</tr>
+	</thead>
+  </table>
+  <div id="Conditioning" style="display:none;">
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+  	<tbody>
+	<tr>
+  		<td width="25%">{t}Recommended packaging{/t}: </td>
+  		<td width="25%">
+			<select name="ConditioningRecommended" id="ConditioningRecommended" style="width:100%">
+				<option value="">{t}N/A{/t}</option>
+				{$ConditioningRecommendedOptions}
+			</select>
+		</td>
+  		<td width="25%">{t}Conditioned product reference{/t}: </td>
+  		<td width="25%"><input type="text" style="width:100%" name="ConditionedProductReference" id="ConditionedProductReference" value="{$ConditionedProductReference}" /></td>
+  	</tr>
+  	<tr>
+  		<td>&nbsp;</td>
+  		<td>&nbsp;</td>
+  		<td>{t}Number of base unit in packaging{/t}: </td>
+  		<td><input type="text" style="width:100%" name="UnitNumberInConditioning" id="UnitNumberInConditioning" value="{$UnitNumberInConditioning}" /></td>
+  	</tr>
+  	<tr>
+  		<td>&nbsp;</td>
+  		<td>&nbsp;</td>
+  		<td>{t}Packaging stackable ratio{/t}: </td>
+  		<td>
+			<input type="text" style="width:100%" name="ConditioningGerbability" id="ConditioningGerbability" value="{$ConditioningGerbability}" />
+		</td>
+  	</tr>
+  	<tr>
+  		<td>&nbsp;</td>
+  		<td>&nbsp;</td>
+  		<td>{t}Priority dimension of packaging{/t}: </td>
+  		<td>
+			<select name="ConditioningMasterDimension" id="ConditioningMasterDimension" style="width:100%">
+				<option value="" {if $ConditioningMasterDimension eq 0}selected="selected"{/if}>{t}N/A{/t}</option>
+				<option value="1" {if $ConditioningMasterDimension eq 1}selected="selected"{/if}>{t}Length{/t}</option>
+				<option value="2" {if $ConditioningMasterDimension eq 2}selected="selected"{/if}>{t}Width{/t}</option>
+				<option value="3" {if $ConditioningMasterDimension eq 3}selected="selected"{/if}>{t}Height{/t}</option>
+			</select>
+		</td>
+  	</tr>
+	</tbody>
+  </table>
+  </div>
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <thead>
+  	<tr>
+  		<td>
+            <input id="switchPacking"
+              onclick="fw.dom.toggleElement('Packaging', null, 'switchPacking');"
+              title="_(Show/Hide)" value="+" type="button" class="togglebutton" />
+            <b>{t}Packing{/t}</b>
+		</td>
+  	</tr>
+	</thead>
+  </table>
+  <div id="Packaging" style="display: none;">
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <tbody>
+  	<tr>
+  		<td>{t}Recommended packing{/t}: </td>
+  		<td>
+			<select name="PackagingRecommended" id="PackagingRecommended" style="width:100%">
+				<option value="0">{t}N/A{/t}</option>
+				{$PackagingRecommendedOptions}
+			</select>
+		</td>
+  		<td>{t}Packaged product reference{/t}: </td>
+  		<td><input type="text" style="width:100%" name="PackagedProductReference" id="PackagedProductReference" value="{$PackagedProductReference}" /></td>
+  	</tr>
+  	<tr>
+  		<td width="25%">&nbsp;</td>
+  		<td width="25%">&nbsp;</td>
+  		<td width="25%">{t}Number of unit in packing{/t}: </td>
+  		<td width="25%">
+			<input type="text" style="width:40%" name="UnitNumberInPackaging" id="UnitNumberInPackaging" value="{$UnitNumberInPackaging}" />
+			<select name="SellUnitTypeInContainer" id="SellUnitTypeInContainer" style="width:60%">
+				<option value="0">{t}N/A{/t}</option>
+				{$SellUnitTypeInContainerOptions}
+			</select>
+		</td>
+  	</tr>
+  	<tr>
+  		<td>&nbsp;</td>
+  		<td>&nbsp;</td>
+  		<td>{t}packing stackable ratio{/t}: </td>
+  		<td>
+			<input type="text" style="width:100%" name="PackagingGerbability" id="PackagingGerbability" value="{$PackagingGerbability}" />
+		</td>
+  	</tr>
+  	<tr>
+  		<td>&nbsp;</td>
+  		<td>&nbsp;</td>
+  		<td>{t}Priority dimension of packing{/t}: </td>
+  		<td>
+			<select name="PackagingMasterDimension" id="PackagingMasterDimension" style="width:100%">
+				<option value="" {if $PackagingMasterDimension eq 0}selected="selected"{/if}>{t}N/A{/t}</option>
+				<option value="1" {if $PackagingMasterDimension eq 1}selected="selected"{/if}>{t}Length{/t}</option>
+				<option value="2" {if $PackagingMasterDimension eq 2}selected="selected"{/if}>{t}Width{/t}</option>
+				<option value="3" {if $PackagingMasterDimension eq 3}selected="selected"{/if}>{t}Height{/t}</option>
+			</select>
+		</td>
+  	</tr>
+	</tbody>
+  </table>
+  </div>
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <thead>
+  	<tr>
+  		<td>
+            <input id="switchGrouping" 
+              onclick="fw.dom.toggleElement('Grouping', null, 'switchGrouping');"
+              title="_(Show/Hide)" value="+" type="button" class="togglebutton" />
+			<b>{t}Regrouping{/t}</b>
+		</td>
+  	</tr>
+	</thead>
+  </table>
+  <div id="Grouping" style="display: none;">
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <tbody>
+  	<tr>
+  		<td>{t}Recommended regrouping{/t}: </td>
+  		<td>
+			<select name="GroupingRecommended" id="GroupingRecommended" style="width:100%">
+				<option value="">{t}N/A{/t}</option>
+				{$GroupingRecommendedOptions}
+			</select>
+		</td>
+  		<td>{t}Regrouped product reference{/t}: </td>
+  		<td><input type="text" style="width:100%" name="GroupedProductReference" id="GroupedProductReference" value="{$GroupedProductReference}" /></td>
+  	</tr>
+  	<tr>
+  		<td width="25%">&nbsp;</td>
+  		<td width="25%">&nbsp;</td>
+  		<td width="25%">{t}Number of packing unit in regrouping{/t}: </td>
+  		<td width="25%"><input type="text" style="width:100%" name="UnitNumberInGrouping" id="UnitNumberInGrouping" value="{$UnitNumberInGrouping}" /></td>
+  	</tr>
+  	<tr>
+  		<td>&nbsp;</td>
+  		<td>&nbsp;</td>
+  		<td>{t}Regrouping stackable ratio{/t}: </td>
+  		<td>
+			<input type="text" style="width:100%" name="GroupingGerbability" id="GroupingGerbability" value="{$GroupingGerbability}" />
+		</td>
+  	</tr>
+  	<tr>
+  		<td>&nbsp;</td>
+  		<td>&nbsp;</td>
+  		<td>{t}Priority dimension of regrouping{/t}: </td>
+  		<td>
+			<select name="GroupingMasterDimension" id="GroupingMasterDimension" style="width:100%">
+				<option value="" {if $GroupingMasterDimension eq 0}selected="selected"{/if}>{t}N/A{/t}</option>
+				<option value="1" {if $GroupingMasterDimension eq 1}selected="selected"{/if}>{t}Length{/t}</option>
+				<option value="2" {if $GroupingMasterDimension eq 2}selected="selected"{/if}>{t}Width{/t}</option>
+				<option value="3" {if $GroupingMasterDimension eq 3}selected="selected"{/if}>{t}Height{/t}</option>
+			</select>
+		</td>
+  	</tr>
+	</tbody>
+  </table>
+  </div>
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <thead>
+  	<tr>
+  		<td>
+            <input id="switchWineProperties" 
+              onclick="fw.dom.toggleElement('WineProperties', null, 'switchWineProperties');"
+              title="_(Show/Hide)" value="+" type="button" class="togglebutton" />
+			<b>{t}Properties{/t}:</b>
+		</td>
+  	</tr>
+	</thead>
+  </table>
+  <div id="WineProperties" style="display: none;">
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <tbody>
+	{section name=property loop=$properties}
+  	<tr>
+		<td width="25%">{$properties[property].displayName}: </td>
+		<td>
+			{$properties[property].widget}
+		</td>
+	</tr>
+	{/section}
+	</tbody>
+  </table>
+  </div>
+  <!-- layer pour images et description du produit -->
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <thead>
+  	<tr>
+  		<td>
+            <input id="switchWebSiteLayer"
+              onclick="fw.dom.toggleElement('WebSiteLayer', null, 'switchWebSiteLayer');"
+              title="_(Show/Hide)" value="+" type="button" class="togglebutton" />
+			<b>{t}Details for display on website{/t}</b>
+		</td>
+  	</tr>
+	</thead>
+  </table>
+  <div id="WebSiteLayer" style="display: none;">
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <tbody>
+	<tr>
+	    <td>{if $Image != ""}{t}Change image{/t}{else}{t}Image{/t}{/if}: </td>
+        <td>
+          <input type="file" name="Product_Image_File" value="{$Image}" /><br/>
+          <input type="checkbox" name="NoImage" value="1" /> {t}no image{/t}
+        </td>
+        {if $Image != ""}
+        <td>{t}Current image{/t} : </td>
+        <td><img src="image.php?uuid={$BaseReference}&md5=true" class="image" border="0" /></td>
+        {else}
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        {/if}
+	</tr>
+	<tr>
+	   <td>{t}Description{/t} : </td>
+	   <td colspan="3"><textarea name="Product_Description" style="width:100%;">{$Description}</textarea></td>
+	</tr>
+	</tbody>
+  </table>
+  </div>
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <thead>
+  	<tr>
+        <td><b>{t}Suppliers{/t}: </b></td>
+  	</tr>
+	</thead>
+  </table>
+  <div id="Supplier" style="display: block;">
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <tbody>
+	{section name=supplier loop=$suppliers}
+  	<tr class="gridRowOdd">
+        <td colspan="3">
+            <img src="images/arrow.gif" />
+            <strong>{$suppliers[supplier].name}</strong>
+            {if $suppliers[supplier].appriority eq 1}({t}priority supplier{/t}){/if}
+        </td>
+        <td align="right">
+            <input type="button" name="ActorProductEdit" value="{t}Edit{/t}"
+                   onclick="this.form.elements['ActorProductAction'].value='edit';
+                            this.form.elements['ActorProductID'].value='{$suppliers[supplier].apid}';
+                            this.form.submit();" /> &nbsp;
+            <input type="button" name="ActorProductDelete" value="{t}Delete{/t}"
+                   onclick="this.form.elements['ActorProductAction'].value='delete';
+                            this.form.elements['ActorProductID'].value='{$suppliers[supplier].apid}';
+                            this.form.submit();" />
+        </td>
+  	</tr>
+	{/section}
+  	<tr class="gridRowEven">
+        <td colspan="4" align="right">
+            <input type="button" name="ActorProductAdd" value="{t}Add a supplier{/t}"
+                   onclick="this.form.elements['ActorProductAction'].value='add';
+                            this.form.submit();" />
+        </td>
+	</tr>
+	</tbody>
+  </table>
+  </div>
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <thead>
+  	<tr>
+  		<td><b>{t}Customs informations{/t}</b></td>
+  	</tr>
+	</thead>
+  </table>
+  <div id="Customs" style="display: block;">
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <tbody>
+  	<tr>
+  		<td>{t}Customs informations{/t}: </td>
+  		<td colspan="3">
+			<textarea name="CustomsNaming" id="CustomsNaming" style="width:100%;height: 40px">{$CustomsNaming}</textarea>
+		</td>
+  	</tr>
+  	<tr>
+  		<td width="25%">{t}License number{/t}: </td>
+  		<td width="25%">
+			<input type="text" style="width:100%" name="LicenceName" id="LicenceName" value="{$LicenceName}" />
+		</td>
+  		<td width="25%">{t}For year{/t}: </td>
+  		<td width="25%">
+			{html_select_date prefix="Licence" time="$LicenceYear-01-01" start_year="-20"
+			end_year="+20" reverse_years="true" display_days=false display_months=false}
+		</td>
+  	</tr>
+	</tbody>
+  </table>
+  </div>
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	<tfoot>
+	<tr>
+        <td colspan="4" align="right">
+          <input class="button" value="{t}Ok{/t}" type="submit"
+          onclick="return checkForm(document.forms['ProductAddEdit'], requiredFields);" />
+          &nbsp;
+		  <input class="button" onclick="window.location.href='{$returnURL}'"
+          value="{t}Cancel{/t}" type="button" />
+	    </td>
+	</tr>
+	</tfoot>
+  </table>
+</form>

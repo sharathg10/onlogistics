@@ -1,0 +1,240 @@
+<?php
+
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
+
+/**
+ * This file is part of Onlogistics, a web based ERP and supply chain 
+ * management application. 
+ *
+ * Copyright (C) 2003-2008 ATEOR
+ *
+ * This program is free software: you can redistribute it and/or modify it 
+ * under the terms of the GNU Affero General Public License as published by 
+ * the Free Software Foundation, either version 3 of the License, or (at your 
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public 
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * PHP version 5.1.0+
+ *
+ * @package   Onlogistics
+ * @author    ATEOR dev team <dev@ateor.com>
+ * @copyright 2003-2008 ATEOR <contact@ateor.com> 
+ * @license   http://www.fsf.org/licensing/licenses/agpl-3.0.html GNU AGPL
+ * @version   SVN: $Id$
+ * @link      http://www.onlogistics.org
+ * @link      http://onlogistics.googlecode.com
+ * @since     File available since release 0.1.0
+ * @filesource
+ */
+
+class InvoiceItem extends _InvoiceItem {
+    // Constructeur {{{
+
+    /**
+     * InvoiceItem::__construct()
+     * Constructeur
+     *
+     * @access public
+     * @return void
+     */
+    public function __construct() {
+        parent::__construct();
+    }
+
+    // }}}
+
+    /**
+     * InvoiceItem::getLEMConcreteProductCollection()
+     * Retourne une collection de LEMConcreteProduct non annulateurs,
+     * pour l'item de facture, si le produit a un mode de suivi SN ou lot.
+     *
+     * @access public
+     * @return object Collection
+     */
+    function getLEMConcreteProductCollection() {
+        $newCol = new Collection();
+        $mapper = Mapper::singleton('LEMConcreteProduct');
+        $acm = $this->getActivatedMovement();
+        if ($acm instanceof ActivatedMovement){
+            $exm = $acm->getExecutedMovement();
+            if ($exm instanceof ExecutedMovement) {
+                $filter = new FilterComponent();
+                $filter->setItem(new FilterRule('Cancelled',
+                        FilterRule::OPERATOR_LOWER_THAN_OR_EQUALS,
+                        0));
+                $lemIds = $exm->getLocationExecutedMovementCollectionIds($filter);
+                $col = $mapper->loadCollection(
+                    array('LocationExecutedMovement'=>$lemIds));
+                $newCol = $newCol->merge($col);
+            }
+        }
+        return $newCol;
+    }
+
+    /**
+     * CommandItem::HandingType()
+     * Retourne la devise de la remise
+     *
+     * @return string
+     */
+    function handingType() {
+        $handing = $this->getHanding();
+        if (strpos($handing, '/') !== false) {
+            $type = 'frac';
+        } else if (strpos($handing, '%') !== false) {
+            $type = 'percent';
+        } else if (is_numeric($handing)) {
+            $type = 'currency';
+        } else {
+            $type = 'N/A';
+        }
+        return $type;
+    }
+
+    /**
+     * variable de classe pour ne pas calculer n fois le prix
+     *
+     * @var float totalPriceHT
+     */
+    var $totalPriceHT = false;
+
+	/**
+     * Retourne le montant total HT
+     *
+     * @access public
+     * @return float
+     */
+    function getTotalPriceHT() {
+        if (!$this->totalPriceHT) {
+            require_once('CalculatePriceHanding.php');
+    	    $inv = $this->getInvoice();
+            $prestCmdType = array(AbstractDocument::TYPE_SUPPLIER_PRESTATION, AbstractDocument::TYPE_CUSTOMER_PRESTATION);
+            if(in_array($inv->getCommandType(), $prestCmdType)) {
+                $qty = 1;
+            } else {
+                $qty = $this->getQuantity();
+            }
+            $this->totalPriceHT = calculatePriceHanding(
+                $this->HandingType(), $this->getUnitPriceHT(), $qty, $this->getHanding());
+        }
+        return $this->totalPriceHT;
+    }
+
+	/**
+     * Retourne le taux de TVA tenant eventuellement compte de la tva surtaxee
+     *
+     * @access public
+     * @return float
+     */
+    function getRealTvaRate() {
+        $tva = $this->getTVA();
+        if (!($tva instanceof TVA)) {
+            return 0;
+        }
+    	$tvaSurtaxRate = $this->getInvoice()->getTvaSurtaxRate();
+        return $tva->getRealTvaRate($tvaSurtaxRate);
+    }
+    
+	/**
+     * Retourne le montant total de la TVA
+     *
+     * @access public
+     * @return float
+     */
+    function getTotalTVA() {
+        $ht = $this->getTotalPriceHT();
+        $rate = $this->getRealTvaRate();
+        return $ht * $rate / 100;
+    }
+
+    /**
+     * Vérifie si la facture est supprimable ou non, et gere les impacts
+     * a la suppression
+     * Si un autre InvoiceItem d'une autre facture que celle en cours de
+     * suppression, est lié au meme ACM, on passe ACM.HasBeenFactured à partiel,
+     * au lieu de 0. On met aussi a jour les LEM.isFactured
+     *
+     * @access public
+     * @return boolean
+     */
+    function delete() {
+        // on demarre une transaction
+        Database::connection()->startTrans();
+        
+        $acm = $this->getActivatedMovement();
+        if (!Tools::isEmptyObject($acm)) {
+            $mapper = Mapper::singleton('InvoiceItem');
+            $FilterComponentArray = array(); // Tableau de filtres
+            $FilterComponentArray[] = SearchTools::newFilterComponent(
+                    'ActivatedMovement', '', 'Equals', $acm->getId(), 1);
+            $FilterComponentArray[] = SearchTools::newFilterComponent(
+                    'Invoice', '', 'NotEquals', $this->getInvoiceId(), 1);
+
+            $filter = SearchTools::filterAssembler($FilterComponentArray);
+            $invoiceItemColl = $mapper->loadCollection($filter);
+            if (Tools::isEmptyObject($invoiceItemColl)) {
+                $acm->setHasBeenFactured(ActivatedMovement::ACM_NON_FACTURE);
+            }
+            else {
+                $acm->setHasBeenFactured(ActivatedMovement::ACM_FACTURE_PARTIEL);
+            }
+            $acm->save();
+        }
+        // maj occupiedLocation
+        $occupiedLocationCol = $this->getOccupiedLocationCollection();
+        $count = $occupiedLocationCol->getCount();
+        for ($i=0 ; $i<$count ; $i++) {
+            // XXX ne pas supprimer ceci sans ca les OccupiedLocation sont
+            // supprimés!! bugs ?
+            $occupiedLocation = $occupiedLocationCol->getItem($i);
+            $occupiedLocation->setInvoiceItem(false);
+            $occupiedLocation->save();
+            unset($occupiedLocation);
+        }
+        // maj lem
+        $lemCol = $this->getLocationExecutedMovementCollection();
+        $count = $lemCol->getCount();
+        for($i=0 ; $i<$count ; $i++) {
+            $lem = $lemCol->getitem($i);
+            $lem->setPrestationFactured(false);
+            $lem->save();
+            unset($lem);
+        }
+        // La FK LEM.InvoiceItem se met a 0 automatiquement
+       
+        // maj ACO.PrestationFactured
+        $acoColl = $this->getActivatedChainOperationFacturedCollection();
+        $count = $acoColl->getCount();
+        for($i=0 ; $i<$count ; $i++) {
+            $aco = $acoColl->getitem($i);
+            /* Met a jour:
+             * ACO.PrestationFactured = false
+             * ACO->setPrestationCommandDate('0000-00-00 00:00:00')
+             * Ppasse également les box à non facturé si il y a une ack de 
+             * regroupement précédent une aco de transport, ou les lem à non 
+             * facturé si il y a une tache de sortie de stock
+             */
+            $aco->updateWhenDeleteInvoice();
+            $aco->save();
+            unset($aco);
+        }
+       
+        parent::delete();
+        
+        if (Database::connection()->hasFailedTrans()) {
+            trigger_error(Database::connection()->errorMsg(), E_USER_ERROR);
+        }
+        Database::connection()->completeTrans();
+        return true;
+    }
+
+}
+
+?>

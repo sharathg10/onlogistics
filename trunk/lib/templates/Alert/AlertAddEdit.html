@@ -1,0 +1,93 @@
+<!-- Javascript relatif au formulaire -->
+{$form.javascript}
+<!-- Fin Javascript -->
+
+<!-- Formulaire -->
+<form {$form.attributes} class="generic_form">
+
+<table cellspacing="0" cellpadding="5" border="0" id="genericFormTable">
+  <!-- Form header -->
+  <thead>
+    <tr>
+      <td colspan="2">
+              {$formTitle}
+              <!-- Champs cachés -->
+              {foreach from=$form.elements item=element}
+              {if $element.type eq "hidden"}
+              {$element.html}
+              {/if}
+              {/foreach}
+              <!-- Fin champs cachés -->
+            </td>
+    </tr>
+  </thead>
+  <!-- End form header -->
+{foreach from=$form.sections name=sections item=section}
+{if $smarty.foreach.sections.first}
+
+  <!-- Form footer with buttons -->
+  <tfoot>
+    <tr>
+      <td colspan="2">
+  {foreach from=$section.elements name=buttons item=element}
+    {if $smarty.foreach.buttons.last}
+      {$element.html}
+    {else}
+      {$element.html}&nbsp;
+    {/if}
+  {/foreach}
+      </td>
+    </tr>
+  </tfoot>
+{else}
+
+  <!-- Form body -->
+  <tbody>
+  {section name=elements loop=$section.elements}
+    {if $section.elements[elements].name == "Alert_Name"}
+    <tr>
+      <td class="element_label">
+        <span class="form_error">*</span>
+        <label for="{$section.elements[elements].name}">{$section.elements[elements].label}</label>
+      </td>
+      <td class="element_html">
+      {if $section.elements[elements].error}
+        <span class="form_error">{$section.elements[elements].error}</span><br/>
+      {/if}
+        {$section.elements[elements].html}
+      </td>
+    </tr>
+    <tr>
+      <td class="element_label">Sujet: </td>
+      <td class="element_html">
+            <input id="Alert_Subject" class="textfield" name="Subject" type="text"
+              readonly="readonly" value="{$subject}" />
+    </td>
+    </tr>
+    <tr>
+      <td class="element_label">Corps (fixe): </td>
+      <td class="element_html">
+            <textarea id="Body" rows="10" cols="40" class="textarea" name="Body"
+              readonly="readonly">{$body}</textarea>
+      </td>
+    </tr>
+    {/if}
+    {if $section.elements[elements].name == "Alert_BodyAddon" or $section.elements[elements].name == "Alert_Template"}
+    <tr>
+      <td class="element_label"><label for="{$section.elements[elements].name}">
+        {$section.elements[elements].label}</label>
+      </td>
+      <td class="element_html">{$section.elements[elements].html}</td>
+    </tr>
+    {/if}
+  {/section}
+{/if}
+{/foreach}
+{$additionalContent}
+  </tbody>
+  <!-- End form body -->
+</table>
+<p>{$form.requirednote}</p>
+</form>
+<!-- Fin formulaire -->
+

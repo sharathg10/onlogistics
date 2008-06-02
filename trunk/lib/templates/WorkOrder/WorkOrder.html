@@ -1,0 +1,147 @@
+<form name="otcreation" method="POST" action="{$formaction}"
+onsubmit="return validation();">
+  <table width="100%" border="0" cellspacing="0" cellpadding="3" class="form">
+    <thead>
+    <tr>
+	  <td colspan="4">{t}Work order name{/t} :
+          <input type="hidden" name="Valider" value="1" />
+          <input type="hidden" name="Date1" value="" />
+          <input type="hidden" name="Date2" value"" />
+          <input type="hidden" name="maxduration" value"" />
+          <input type="hidden" name="action" value="{$action}" />
+          <input type="hidden" name="Id" value="{$Id}" />
+          <input type="hidden" name="OTid" value="{$Id}" />
+          {section name=hid loop=$SelectedOperation}
+          <input type="hidden" name="SelectedOperations[{$smarty.section.hid.rownum}]" value="{$SelectedOperation[hid]}" />
+          {sectionelse}
+          {/section}
+      </td>
+	</tr>
+	</thead>
+	<tbody>
+    <tr>
+	  <td colspan="4">
+	    <input type="text" name="name" size="80" value="{$name}" />
+	  </td>
+	</tr>
+	</tbody>
+    <thead>
+    <tr>
+      <td colspan="4">
+		<input type="checkbox" name="hasValidityRange" value="1" {$validityPeriod}
+		  onclick="fw.dom.toggleElement('periode', this.checked);" {$disabled} />
+          {t}Validity period{/t}
+	  </td>
+    </tr>
+	</thead>
+	<tbody>
+    <tr>
+	  <td width="100%" colspan="4">
+	  	<div id="periode" style="display:{$displayPeriod}">
+	  		<table width="100%">
+				<tr>
+					<td width="10%">
+       	  				{t}Beginning{/t} :
+      				</td>
+      				<td width="40%">
+					  {$BeginingDate} {$BeginingTime}
+					</td>
+      				<td width="10%">
+       	   				{t}End{/t} :
+      				</td>
+      				<td width="40%">
+					  {$EndDate} {$EndTime}
+					</td>
+				</tr>
+			</table>
+	  	</div>
+	  </td>
+    </tr>
+    </tbody>
+	<thead>
+    <tr>
+	  <td colspan="4">{t}Actor{/t}</td>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+      <td width="10%">
+        {t}Jobs{/t} :
+      </td>
+	  <td width="40%">
+        <select name="job" id="job" onchange="fw.ajax.updateSelectCustom('job', 'actor', 'Actor', 'Job', 'job_getActorCollection');" >
+          <option value="0">{t}Please select an item{/t}</option>
+          {$jobOptions}
+        </select>
+	  </td>
+      <td width="10%">
+        {t}Actors{/t} :
+      </td>
+	  <td width="40%">
+		<select name="actor" id="actor"></select>
+	  </td>
+    </tr>
+	</tbody>
+	<thead>
+    <tr>
+      <td colspan="4">{t}Quantitative limits{/t} :</td>
+    </tr>
+	</thead>
+	<tbody>
+	<tr>
+      <td width="10%">{t}Volume{/t} : </td>
+      <td width="40%">
+        <input type="text" name="maxvol" value="{$maxvol}" style="text-align: right;" /> {t}m3{/t}
+      </td>
+      <td width="10%">{t}Weight{/t} : </td>
+      <td width="40%">
+       <input type="text" name="maxweigth" value="{$maxweigth}" style="text-align: right;" /> {t}Kg{/t}
+      </td>
+    </tr>
+    <tr>
+      <td>{t}Linear meter{/t} : </td>
+      <td>
+        <input type="text" name="maxLM" value="{$maxLM}" style="text-align: right;" /> {t}m2{/t}
+      </td>
+	  <td>{t}Distance{/t} : </td>
+      <td>
+        <input type="text" name="maxdistance" value="{$maxdistance}" style="text-align: right;" /> {t}Km{/t}
+      </td>
+	<tr>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td>{t}Duration{/t} : </td>
+		<td>{$maxduration}</td>
+    </tr>
+	</tbody>
+	<thead>
+	<tr>
+	  <td colspan="4">{t}Comment{/t}</td>
+	</tr>
+	</thead>
+	<tbody>
+    <tr>
+      <td colspan="4">
+		<textarea name="comment" cols="100" rows="3" wrap="VIRTUAL">{$comment}</textarea>
+      </td>
+    </tr>
+	</tbody>
+	<tfoot>
+    <tr valign="baseline">
+      <td align="right" colspan="4">
+	  	{if $detailButtonEnabled eq 1}
+	  	<input class="button" onclick="window.location.href='{$DetailLink}'"
+        value="{t}Details{/t}" type="button" />
+		{/if}&nbsp;
+        <input class="button" value="{t}Ok{/t}" type="submit"
+        onclick="document.otcreation.Date1.value = DateWidgetToTimeStamp(1, '');
+		 document.otcreation.Date2.value = DateWidgetToTimeStamp(2, '');
+		 document.otcreation.maxduration.value = DateWidgetToTimeStamp(3, 'time');" />
+		&nbsp;
+		<input class="button" onclick="window.location.href='{$CancelLink}'"
+        value="{t}Cancel{/t}" type="button" />
+        </td>
+    </tr>
+	</tfoot>
+  </table>
+</form>

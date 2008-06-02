@@ -1,0 +1,213 @@
+<!-- $Id: GroupableBoxListGrid.html,v 1.14 2008-05-07 16:36:51 ben Exp $ -->
+<form class="generic_form" name="GroupableBoxList" action="GroupGroupableBoxes.php" method="post">
+  <input type="hidden" name="retURL" value="{$retURL}" />
+{foreach from=$ackIDs item=curr_id}
+  <input type="hidden" name="ackIDs[]" value="{$curr_id}" />
+{/foreach}
+<input type="hidden" name="boxDate" value="{$smarty.now|date_format:"%Y-%m-%d %T"}" />
+<table width="100%" cellspacing="0" cellpadding="3" border="0">
+  <tbody>
+  <tr>
+    <td nowrap>{t}Reference{/t} : </td>
+    <td><input type="text" name="boxReference" value="" style="width:95%" /></td>
+    <td nowrap>{t}Dimensions{/t} : </td>
+    <td><input type="text" name="boxDimensions" value="" style="width:95%" /></td>
+  </tr>
+  <tr>
+    <td nowrap>{t}Parcels volume{/t} : </td>
+    <td><input type="text" name="boxVolume" value="" style="width:95%"/></td>
+    <td nowrap>{t}Parcel type{/t} : </td>
+    <td>
+	  <select name="boxCoverType" class="select">
+	    <option value="0">{t}Select a container type{/t}</option>
+		{$CoverTypeOptions}
+	  </select>
+    </td>
+  </tr>
+  <tr>
+	<td width="15%" nowrap>{t}Shipper{/t} : <br />{t}Site of collection{/t} : </td>
+    <td width="35%" nowrap>
+	  <select id="boxExpeditor" name="boxExpeditor" class="select">
+	    <option value="0">{t}Select a shipper{/t}</option>
+		{$ExpOptions}
+	  </select>
+	  <br />
+      <select id="boxExpeditorSite" name="boxExpeditorSite" class="select">
+		{$ExpSiteOptions}
+      </select>
+	</td>
+	<td width="15%" nowrap>{t}Addressee{/t} : <br />{t}Delivery site{/t} : </td>
+    <td width="35%" nowrap>
+	  <select id="boxDestinator" name="boxDestinator" class="select">
+	    <option value="0">{t}Select a recipient{/t}</option>
+	    {$DestOptions}
+	  </select>
+	  <br />
+      <select id="boxDestinatorSite" name="boxDestinatorSite" class="select">
+	    {$DestSiteOptions}
+      </select>
+	</td>
+  </tr>
+  <tr>
+    <td>{t}Comment{/t} : </td>
+    <td colspan="3"><textarea name="boxComment"></textarea></td>
+  </tr>
+  </tbody>
+</table>
+<br />
+<!-- Grid -->
+<script type="text/javascript">
+<!--
+// <![CDATA[
+{$gridJS}
+// ]]>
+-->
+</script>
+<div class="grid">
+    <div id="bear">
+{if count($GridRow) eq 0 }
+        {t}No record found{/t}.
+{elseif $GridTotalRowCount eq 1}
+        {t}Page{/t} {$CurrentPageIndex}/{$PageTotal} - {$GridTotalRowCount} {t}record.{/t} &nbsp;
+{else}
+        {t}Page{/t} {$CurrentPageIndex}/{$PageTotal} - {$GridTotalRowCount} {t}records{/t}&nbsp;
+{/if}
+    </div>
+    <table width="100%" cellspacing="0" cellpadding="3" border="0">
+        <!-- Header du grid -->
+        <thead>
+        <tr>
+{section name=GridHeader loop=$GridHeader}
+{if $GridHeader[GridHeader].GroupCount > 0}
+            <td class="group" colspan="{$GridHeader[GridHeader].GroupCount}">
+                {$GridHeader[GridHeader].GroupCaption|default:'&nbsp;'}
+            </td>
+{else}
+            <td {if $RowSpan} rowspan="2"{/if}>
+{if $GridHeader[GridHeader].Link}
+{if $GridHeader[GridHeader].SortOrder eq 'DESC'}
+                <a href="javascript:void(0);" onclick="{$GridHeader[GridHeader].Link}" onmouseover="window.status='{t}Sort descending{/t}';return true;" title="{t}Sort descending{/t}">{$GridHeader[GridHeader].Caption|default:'&nbsp;'}</a>
+                <img src="{$SortAscImage}" />
+{elseif $GridHeader[GridHeader].SortOrder eq 'ASC'}
+                <a href="javascript:void(0);" onclick="{$GridHeader[GridHeader].Link}" onmouseover="window.status='{t}Sort ascending{/t}'; return true;" title="{t}Sort ascending{/t}">{$GridHeader[GridHeader].Caption|default:'&nbsp;'}</a>
+                <img src="{$SortDescImage}" />
+{else}
+                <a href="javascript:void(0);" onclick="{$GridHeader[GridHeader].Link}" onmouseover="window.status='{t}Sort ascending{/t}'; return true;" title="{t}Sort ascending{/t}">{$GridHeader[GridHeader].Caption|default:'&nbsp;'}</a>
+{/if}
+{else}
+                {$GridHeader[GridHeader].Caption|default:'&nbsp;'}
+{/if}
+            </td>
+{/if}
+{/section}
+{if $WithCheckBox eq 1 and count($GridRow) neq 0}
+            <td class="grid_checkbox_column"{if $RowSpan} rowspan="2"{/if}>
+                <input type="checkbox" name="gridItems_AllState"
+                onclick="fw.grid.changeCheckedStateOfAllItems(this);"/>
+            </td>
+{else}
+            <td width="5">&nbsp;</td>
+{/if}
+        </tr>
+{if $GridHeaderGroupsCount}
+        <tr>
+{foreach name=outer item=GridHeaderGroup from=$GridHeaderGroups}
+            <td class="group_item">
+{if $GridHeaderGroup.Link}
+{if $GridHeaderGroup.SortOrder == "ASC"}
+                <a href="javascript:void(0);" onclick="{$GridHeaderGroup.Link}" onmouseover="window.status='{t}Sort ascending{/t}'; return true;" title="{t}Sort ascending{/t}">{$GridHeaderGroup.Caption|default:'&nbsp;'}</a>
+                <img src="{$SortDescImage}" />
+{else}
+                <a href="javascript:void(0);" onclick="{$GridHeaderGroup.Link}" onmouseover="window.status='{t}Sort descending{/t}'; return true;" title="{t}Sort descending{/t}">{$GridHeaderGroup.Caption|default:'&nbsp;'}</a>
+                <img src="{$SortAscImage}" />
+{/if}
+{else}
+                {$GridHeaderGroup.Caption|default:'&nbsp;'}
+{/if}
+            </td>
+{/foreach}
+        </tr>
+{/if}
+        </thead>
+
+        <!-- Footer du grid -->
+        <tfoot>
+        <tr>
+            <td colspan="{math equation="x + y + z + 1" x=$smarty.section.GridHeader.total y=$NbSubColumn z=$GridHeaderGroupItemsCount}">
+{if $DisplayCancelFilter eq true}
+                <span class="grid_filter_button">
+                    <a href="{$dropfiltertarget}" onmouseover="window.status='{t}Reset sorting{/t}'; return true;" title="{t}Reset sorting{/t}"><img src="{$CancelFilterImage}" alt="{t}Reset sorting{/t}" /></a>
+                </span>
+{/if}
+{if $Pager eq true}
+                <span class="grid_pager">
+{if $linkfirstpage eq 1}
+                <a href="javascript:void(0);" onclick="{$FirstPageButton}" onmouseover="window.status='{t}First page{/t}'; return true;" title="{t}First page{/t}"><img src="{$FirstPageButtonImage}" alt="{t}First page{/t}" /></a>
+                <a href="javascript:void(0);" onclick="{$PreviousPageButton}" onmouseover="window.status='{t}Previous page{/t}'; return true;" title="{t}Previous page{/t}"><img src="{$PreviousPageButtonImage}" alt="{t}Previous page{/t}" /></a>
+{else}
+                <img src="{$FirstPageButtonImage}" alt="{t}First page{/t}" />
+                <img src="{$PreviousPageButtonImage}" alt="{t}Previous page{/t}" />
+{/if}
+{if $linklastpage eq 1}
+                <a href="javascript:void(0);" onclick="{$NextPageButton}" onmouseover="window.status='{t}First page{/t}'; return true;" title="{t}Next page{/t}"><img src="{$NextPageButtonImage}" alt="{t}Next page{/t}" /></a>
+                <a href="javascript:void(0);" onclick="{$LastPageButton}" onmouseover="window.status='{t}Previous page{/t}'; return true;" title="{t}Last page{/t}"><img src="{$LastPageButtonImage}" alt="{t}Last page{/t}" /></a>
+{else}
+                <img src="{$NextPageButtonImage}" alt="{t}Next page{/t}" />
+                <img src="{$LastPageButtonImage}" alt="{t}Last page{/t}" />
+{/if}
+                </span>
+{/if}
+                <span class="grid_actions">
+{section name=Action loop=$Actions}
+                    &nbsp;{$Actions[Action]}
+{/section}
+{if $firstGridInPage eq 1 || $withMultipleGridsInForm == false}
+                    <input type="hidden" name="toRemove"/>
+                    <input type="hidden" name="actionId" value="-1" />
+                    <input type="hidden" name="PageIndex" value="-1" />&nbsp;&nbsp;
+{/if}
+                </span>
+            </td>
+        </tr>
+        </tfoot>
+
+        <!-- Contenu du grid -->
+        <tbody>
+{section name=GridContent loop=$GridRow}
+{if $smarty.section.GridContent.index is odd}
+{if $GridHighlightedRows[$smarty.section.GridContent.index] eq 1}
+        <tr class="grid_row_highlighted_odd">
+{else}
+        <tr class="grid_row_odd">
+{/if}
+{else}
+{if $GridHighlightedRows[$smarty.section.GridContent.index] eq 1}
+        <tr class="grid_row_highlighted_even">
+{else}
+        <tr>
+{/if}
+{/if}
+{section name=GridCol loop=$GridRow[GridContent]}
+          <td>{$GridRow[GridContent][GridCol]}</td>
+{/section}
+          <td class="grid_checkbox_column">
+{if $WithCheckBox eq 1}
+            <input type="checkbox" name="gridItems[]" value="{$GridObjectIds[GridContent]}"
+            {$GridObjectIdsChecked[GridContent]}
+            onclick="fw.grid.handleCBDeselect(this);" />
+{else}
+            &nbsp;
+{/if}
+          </td>
+        </tr>
+{sectionelse}
+        <tr>
+            <td colspan="{math equation="x + y + z + 1" x=$smarty.section.GridHeader.total y=$NbSubColumn z=$GridHeaderGroupItemsCount}">
+                <span>{t}No record found{/t}</span>
+            </td>
+        </tr>
+{/section}
+        </tbody>
+    </table>
+</div>
+<!-- Fin grid -->

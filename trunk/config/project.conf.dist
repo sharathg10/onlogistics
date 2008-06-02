@@ -1,0 +1,134 @@
+# $Id: project.conf.dist,v 1.14 2008-06-02 14:33:16 david Exp $
+#
+# Fichier de configuration de OnLogistics
+#
+
+# Constantes du framework
+# ----------------------------------------------------------------------------
+
+# Backend pour la gestion des comptes, 2 backends possibles:
+# - file: les comptes sont stockes dans ce fichier, par ex:
+#   DSN_CUSTOMER1=mysql://user:pass@localhost/customer1
+#   DSN_CUSTOMER2=mysql://user:pass@localhost/customer2
+#   etc...
+# - db: les comptes sont stockes dans une base de donnees prevue a cet effet
+#   (cela n'est pas encore documente).
+ACCOUNTS_BACKEND=file
+
+# Liste des DSN des comptes de l'application
+# (A renseigner uniquement si ACCOUNTS_BACKEND=file):
+#DSN_CUSTOMER1=mysql://user:pass@localhost/customer1
+#DSN_CUSTOMER2=mysql://user:pass@localhost/customer2
+
+# Paramètres de connection à la base de données contenant les comptes
+# onlogistics, le dsn est de type: driver://user:pass@host/dbname
+# (A renseigner uniquement si ACCOUNTS_BACKEND=db)
+#DSN=mysqlt://user:pass@localhost/ol_accounts
+
+# db user, password commun aux bases clients
+# XXX ces 2 constantes doivent être identiques à celles du module
+# onlogistics-admin
+# (A renseigner uniquement si ACCOUNTS_BACKEND=db)
+#DB_LOGIN=username
+#DB_PASSWORD=password
+
+# chemin vers le répertoire racine du framework
+FRAMEWORK_ROOT=/home/httpd/htdocs/ateor-libs/current/pwak
+
+# timeout des sessions (en secondes) paramétré à 30 minutes d'inactivité
+SESSION_TIMEOUT=1800
+
+# XXX harmoniser ces 2 constantes...
+# Environement: 4 valeurs possibles: www, demo, recette ou current
+#ENVIRONMENT=current
+
+# determine si l'application est en phase de développement ou en production
+# Valeur par défaut: 1
+#DEV_VERSION=1
+
+# repertoire contenant les templates smarty
+#
+# valeur par défaut: templates
+SMARTY_TEMPLATE_DIR=lib/templates
+
+# Repértoire pour les fichiers compilés smarty ; veiller à donner un nom
+# different si plusieurs instances de glao sur la même machine. L'utilisateur
+# executant l'application (par ex. l'uid d'apache) doit avoir le droit
+# d'écrire dans ce répertoire.
+# nb: si php en safe-mode, ce rep doit avoir le même owner (uid) que le script
+# php ; ou le même gid que le propriétaire du script si safe_mode_gid
+#
+# valeur par défaut: répertoire temporaire du système d'exploitation
+SMARTY_COMPILE_DIR=/var/glao/current
+
+# Paramètres Mail
+# Décommenter les constantes MAIL_SMTP_{PORT,USER,PWD} si nécessaire.
+# Note: si les constantes MAIL_SMTP_USER et MAIL_SMTP_PWD sont définies ici,
+# l'auth smtp sera effective pour chaque mail envoyé par l'application.
+#MAIL_SMTP_RELAY=localhost	# le relay smtp
+#MAIL_SMTP_PORT=25			# le port smtp
+#MAIL_SMTP_USER=username	# le nom d'utilisateur si auth
+#MAIL_SMTP_PWD=password	    # le mot de passe si auth.
+
+# Adresses mails
+# mail des développeurs
+MAIL_DEV=dev@ateor.com
+
+# adresse FROM des mails envoyés par l'appli
+MAIL_SENDER=current@ateor.com
+
+# booléen qui détermine si oui ou on l'application utilise l'i18n
+# Valeur par défaut: 0
+I18N_ENABLED=1
+
+# Constantes spécifiques à onlogistics
+# ----------------------------------------------------------------------------
+
+# version de onlogistics
+ONLOGISTICS_VERSION=2_0_1-CURRENT
+
+# Adresse du répertoire de téléchargement des applis OnLogistics, elle doit
+# contenir:
+# - les credentials de l'auth http (si besoin)
+# - le nom de l'hote
+# - le chemin vers le répertoire en fonction de la version prod ou current
+DOWNLOAD_ADDRESS=https://download.ateor.com/private/current
+
+# Applications téléchargeables séparées par une virgule.
+# Le format d'une entrée est nom:nomfichier
+# Ex: Application1:monappli1.exe,Application2:monappli2.exe
+AVAILABLE_APPS=Onlogistics-Desktop:onlogistics.exe
+
+# Id de l'utilisateur root
+ROOT_USERID=1
+
+# PROJECT_ROOT est le repertoire racine, contenant le fichier bootstrap.inc.php
+# répertoir relatif au PROJECT_ROOT contenant les libs
+LIB_DIR=lib
+# répertoire relatif au LIB_DIR contenant les fichiers "web accessibles"
+WWW_DIR=.
+# répertoire relatif au LIB_DIR contenant les classes générées
+MODELS_DIR=Objects
+# répertoire relatif au LIB_DIR contenant les classes utilisateurs
+CLASSES_DIR=.
+# répertoire relatif au LIB_DIR contenant les classes grid custom
+CUSTOM_GRID_DIR=CustomGrid
+# répertoire relatif au LIB_DIR contenant les classes controller custom
+CUSTOM_CONTROLLER_DIR=Custom
+# répertoire relatif au LIB_DIR contenant les classes timetable custom
+CUSTOM_TIMETABLE_DIR=CustomTimetable
+
+# template de base des pages (sans le répertoire templates)
+BASE_TEMPLATE=Main.html
+# template de base des popups (sans le répertoire templates)
+BASE_POPUP_TEMPLATE=BlankPopup.html
+# format des données du menu (php ou xml)
+MENU_METADATA_FORMAT=php
+# fichier contenant les données du menu
+MENU_METADATA=menu.inc.php
+
+ONLOGISTICS_API=https://www.onlogistics.com/rpc/api_site.php
+
+# répertoire d'upload pour le module GED d'onlogistics, doit être accessible en
+# écriture par le serveur web et disposer d'assez d'espace libre.
+GED_UPLOAD_DIR=/home/httpd/ged_docs/

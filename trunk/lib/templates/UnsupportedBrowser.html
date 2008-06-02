@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-type" content="text/html;charset=iso-8859-1" />
+    <meta name="author" content="Copyright 2002-2006 ATEOR - All rights reserved." />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+	<title>{$PageTitle}</title>
+    <!-- css styles -->
+    <style type="text/css" media="screen">
+        @import "css/default.css";
+    </style>
+</head>
+
+<body>
+    <div style="text-align: center;">
+        <h3>{$PageContent}</h3>
+        <p>{t}Please click on the button below to download firefox web browser{/t}:</p>
+         <a href="http://getfirefox.com/"
+            title="Get Firefox - Web browsing redefined."><img
+             src="http://www.mozilla.org/products/firefox/buttons/getfirefox_large2.png"
+             width="178" height="60" border="0" alt="Get Firefox"></a>
+         <p><strong>{t}If, for some reason, you cannot install firefox, you can continue using onlogistics with your browser, <br/>but please be aware that some features could not work properly.{/t}
+         </strong>
+         </p>
+         <p>
+         <form id="ForceLogin" method="POST" action="Login.php">
+             <input type="submit" name="ForceLogin" value="{t}Continue with an unsupported browser{/t}" />
+         </form>
+         </p>
+    </div>
+</body>
+</html>

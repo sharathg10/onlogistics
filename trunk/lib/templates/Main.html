@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset={$HtmlCharset}" />
+    <meta name="author" content="Copyright 2002-2006 ATEOR - All rights reserved." />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <title>{$PageTitle}</title>
+     <!-- css styles -->
+    <style type="text/css" media="screen">
+        @import "css/compat.css";
+        @import "css/default.css";
+        @import "css/navigation.css";
+        @import "css/form.css";
+        @import "css/grid.css";
+        @import "css/dialog.css";
+        @import "css/timer.css";
+        @import "css/calendar-glao.css";
+        @import "css/calendar.css";
+        @import "css/Timetable.css";
+{section name=CSS loop=$CustomCSS}
+        @import "{$CustomCSS[CSS]}";
+{/section}
+    </style>
+    <style type="text/css" media="print">
+        @import "css/print.css";
+    </style>
+    <!--[if IE]>
+    <style type="text/css" media="screen">
+        @import "css/ie.css";
+    </style>
+    <![endif]-->
+    <!-- js -->
+    <script type="text/javascript" src="js/MochiKit/MochiKit.js"></script>
+    <script type="text/javascript" src="JS_Messages.php"></script>
+    <script type="text/javascript" src="js/framework.js"></script>
+    <script type="text/javascript" src="JS_AdvMultiSelect.php"></script>
+    <script type="text/javascript" src="js/includes/main.js"></script>
+{if $sajaxJS}
+    <script type="text/javascript">
+//<![CDATA[
+{$sajaxJS}
+//]]>
+    </script>
+{/if}
+{$AJAXJavascript}
+{section name=JS loop=$JavaScript}
+    <script type="text/javascript" src="{$JavaScript[JS]}"></script>
+{/section}
+    <!-- Script pour la gestion de la transparence sur les png 24 -->
+    <script type="text/javascript" src="js/lib-functions/pngfix.js"></script>
+    <!-- Fin script -->
+</head>
+
+<body>
+<div id="main_container">
+    <div class="css_disabled"><h1>Onlogistics</h1><hr/></div>
+
+    <!-- Top header -->
+    <div class="css_disabled"><h2>{t}Links{/t}</h2></div>
+    <div id="header_top">
+        <span id="logo_switch" title="{t}Show/Hide company logo{/t}"></span>
+{if $TimerStats}
+<span id="timer_link" title="">{t}Timer panel{/t}</span>
+{/if}
+        <ul id="links">
+            <li class="support"><a href="mailto:support@onlogistics.com" title="{t}Email our technical support{/t}">{t}Technical support{/t}</a></li>
+{if $IsUserConnected}
+            <li class="download"><a href="Download.php" title="{t}Onlogistics download zone{/t}">{t}Download{/t}</a></li>
+            <li class="language">{t}Language{/t}:&nbsp;
+                <select id="language_select" name="language_select">
+{foreach key=key item=item from=$languages}
+                    <option value="{$key}">{$item}</option>
+{/foreach}
+                </select>
+            </li>
+{/if}
+        </ul>
+    </div>
+
+    <!-- Bottom header -->
+    <div id="header_logo">
+{if $Logo}
+        <img src="{$Logo}" alt="" title=""/>
+{/if}
+{if $Slogan}
+        <div id="slogan">{$Slogan}</div>
+{/if}
+    </div>
+{if $IsUserConnected}
+    <ul id="header_infos">
+        <li class="user_connected">{$UserIdentity} {t}connected{/t}</li>
+        <li class="logout"><a href="Logout.php" title="{t}Close your onlogistics session{/t}">{t}Sign out{/t}</a></li>
+    </ul>
+    <!-- Tabbed menu -->
+    <div class="css_disabled"><h2>{t}Sections{/t}</h2></div>
+{$Menu}
+    <div class="css_disabled"><h2>{t}Main content{/t}</h2></div>
+    <!-- Titre de la page en cours et bouton d'aide -->
+    <div id="nav_right">
+        <span id="page_title">{$PageTitle}</span>
+{if $HelpAvailable == 1}
+<span id="help_button">{t}Contextual help{/t}</span>
+{/if}
+    </div>
+{/if}
+
+    <!-- Main content -->
+    <div id="main_content">
+        <!-- debut de section principale -->
+        {$PageContent}
+        <!-- fin de section principale -->
+    </div>
+
+    <!-- Footer -->
+    <div class="css_disabled"><h2>{t}Copyright{/t}</h2></div>
+    <div id="footer">
+        <small>
+            <a title="Onlogistics website" href="http://www.onlogistics.org">Onlogistics</a> 
+            version {$OnlogisticsVersion} - &copy; 2003-2008 
+            <a title="ATEOR website" href="http://www.ateor.com">ATEOR</a> - licenced under the 
+            <a href="http://www.fsf.org/licensing/licenses/agpl-3.0.html">GNU Affero General Public License</a>
+        </small>
+    </div>
+    <div class="css_disabled"><h2>{t}Contextual help{/t}</h2></div>
+    <div id="help_layer">
+        <img id="help_menubar" src="images/help_bar.gif" alt="{t}Contextual help{/t}"
+          title="{t}Contextual help{/t}" />
+        <img id="help_close_button" src="images/help_close.gif" alt="{t}Close{/t}"
+          title="{t}Close{/t}" />
+        <div id="help_content">
+            {$HelpContent}
+        </div>
+    </div>
+{if $TimerStats}
+{$TimerStats}
+{/if}
+</div>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!--
+Formulaire de facturation cmd de transport
+-->
+<form name="InvoiceChainCommandList" method="post"
+action="InvoiceChainCommandList.php" onsubmit="return validation();" class="form">
+
+    <table border="0" cellspacing="0" cellpadding="5" width="100%" class="form" style="border: 1px #000000 solid;">
+        <thead>
+            <tr>
+                <td colspan="2">
+                    &nbsp; {t}Order billing{/t} : {$CommandNo} ({t}Carriage service{/t})
+                <!--  Champs cachés  -->
+            <input type="hidden" name="packing_tva_rate" value="{$packing_tva_rate|default:'0'}" />
+            <input type="hidden" name="insurance_tva_rate" value="{$insurance_tva_rate|default:'0'}" />
+            <input type="hidden" name="returnURL" value="{$returnURL}" />
+            <input type="hidden"name="UpdateIncur" value="{$UpdateIncur}" />
+         	<input type="hidden" name="HiddenCmdType" value="{$CmdType}" />
+         	<input type="hidden" name="HiddenPaymentCondition" value="{$HiddenPaymentCondition}" />
+         	<input type="hidden" name="MaxIncur" value="{$MaxIncur}" />
+         	<input type="hidden" name="hiddenHasInvoice" value={$HasInvoice} />
+         	<input type="hidden" name="FormSubmitted" value="" />
+            <input type="hidden" name="HiddenCommandID" value="{$HiddenCommandID}" />
+                </td>
+ 	        </tr>
+        </thead>
+
+	    <tbody>
+	        <tr>
+ 		        <td>&nbsp;{t}Invoice number{/t} :&nbsp;
+                    <input type="text" size="15" name="InvoiceNumero" value="" /></td>
+                <td>{t}Customer{/t}: {$Customer}</td>
+ 	        </tr>
+ 	        <tr>
+ 		        <td>&nbsp;{t}Payment conditions{/t} : {$PaymentCondition}</td>
+ 		        <td>{t}Current outstanding debts{/t} {$Currency}: {$UpdateIncur}</td>
+ 	        </tr>
+ 	        <tr>
+ 		        <td>&nbsp;{t}Credit note available{/t} {$Currency}: {$ToHaveTTC}</td>
+ 		        <td>{t}Maximum outstanding debts{/t} {$Currency}: {$MaxIncur}</td>
+ 	        </tr>
+        </tbody>
+    </table>
+    <br>
+    <!--
+    Grid de rappel de la commande (liste des colis)
+    -->
+    {$InvoiceItemGrid}
+
+    <table border="0" cellspacing="0" cellpadding="5" width="100%" class="form">
+        <thead>
+            <tr>
+                <td colspan="7" valign="baseline">&nbsp;</td>
+            </tr>
+        </thead>
+    </table>
+
+    <!--
+    Frais annexes et remises
+    -->
+    <table border="0" cellspacing="0" cellpadding="5" width="100%" class="form">
+        <tbody>
+            <tr>
+                <td width="20%">&nbsp;<strong>{t}Service price{/t} {$Currency}:</strong>&nbsp;</td>
+                <td><input type="text" size="7" name="totalPrestHT" value={$totalPrestHT}
+                    id="totalPrestHT" onkeyup="recalculateTotalPrice()" /></td>
+                <td width="20%">&nbsp;<strong>{t}Global discount{/t} % :</strong>&nbsp;</td>
+                <td><input type="text" size="7" name="GlobalHanding" value={$GlobalHanding}
+                    id="GlobalHanding" onkeyup="recalculateTotalPrice();" /></td>
+            </tr>
+            <tr>
+                <td>&nbsp;<strong>{t}Packing{/t} {$Currency}:</strong>&nbsp;</td>
+                <td><input type="text" size="7" name="Packing" value={$Packing}
+                    id="Packing" onkeyup="recalculateTotalPrice()" /></td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>&nbsp;<strong>{t}Insurance{/t} {$Currency}:&nbsp;</strong></td>
+                <td><input type="text" size="7" name="Insurance" value={$Insurance}
+                    id="Insurance" onkeyup="recalculateTotalPrice()" /></td>
+                <td>&nbsp;<strong>{t}Instalment{/t} {$Currency}:</strong>&nbsp;</td>
+                <td><input type="text" size="10" name="Installment" class="ReadOnlyField"
+                    id="Installment" readonly="readonly" value="{$Installment}" /></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!--
+    Totaux
+    -->
+
+    <table border="0" cellspacing="0" cellpadding="5" width="100%" class="form">
+        <thead>
+            <tr>
+                <td>{t}Total price{/t} {$Currency} {t}excl. VAT{/t} :&nbsp;</td>
+                <td>&nbsp;<input type="text" size="10" name="totalpriceHT" class="ReadOnlyField"
+                    id="totalpriceHT" readonly="readonly" value="{$TotalPriceHT}" /></td>
+                <td>{t}VAT{/t} {$Currency}:&nbsp;</td>
+                <td><input type="text" size="10" name="tvaTotal" class="ReadOnlyField"
+                    id="tvaTotal" readonly="readonly" value="{$TVATotal}" /></td>
+                <td>{t}Total price{/t} {$Currency} {t}incl. VAT{/t} :&nbsp;</td>
+                <td><input type="text" size="10" name="totalpriceTTC" class="ReadOnlyField"
+                    id="totalpriceTTC" readonly="readonly" value="{$TotalPriceTTC}" /></td>
+            </tr>
+            <tr>
+                <td colspan="4">&nbsp;</td>
+                <td> {t}To pay{/t} {$Currency}:&nbsp;</td>
+                <td><input type="text" size="10" name="ToPay" class="ReadOnlyField"
+                    id="ToPay" readonly="readonly" value="{$ToPay}" /></td>
+            </tr>
+        </thead>
+    </table>
+
+    <!--
+    Commentaire
+    -->
+
+    <table border="0" cellspacing="0" cellpadding="5" width="100%" style="margin-top:5pt; margin-bottom:5pt;">
+        <tr>
+            <td align="right" valign=top><b>{t}Comment{/t}:</b></td>
+            <td align="left" width=100%><textarea name="IAEComment" rows=3 cols=50></textarea></td>
+        </tr>
+    </table>
+
+    <!--
+    Actions
+    -->
+
+    <table border="0" cellspacing="0" cellpadding="5" width="100%" class="form">
+        <tfoot>
+            <tr>
+                <td align="right" colspan="7">{strip}
+                <input name="envoyer" type="submit" onclick="FormSubmitted.value='true';"
+                value="{t}Ok{/t}" class="Button" />&nbsp;
+                <input name="annuler" type="button" onclick="window.location='InvoiceCommandList.php?CommandId={$HiddenCommandID}'"
+                 value="{t}List of invoices{/t}" class="Button" />&nbsp;
+                <input name="retour" type="button" onclick="window.location='{$returnURL}'"
+                value="{t}Cancel{/t}" class="Button" />
+                {/strip}</td>
+            </tr>
+        </tfoot>
+    </table>
+</form>
+
+<!--
+    initialisation
+-->
+{literal}
+<script type="text/javascript">
+// <![CDATA[
+recalculateTotalPrice();
+// ]]>
+</script>
+{/literal}
+ <!-- fin formulaire -->

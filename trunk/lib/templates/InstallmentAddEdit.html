@@ -1,0 +1,57 @@
+<!-- debut de section principale -->
+<br>
+<form name="InstallmentAddEdit" method="post" action="InstallmentAddEdit.php">
+	<input type="hidden" name="formSubmitted" value="0" />
+	<input type="hidden" name="returnURL" value="{$returnURL}" />
+	<input type="hidden" name="HiddenUpdateIncur"  value="{$UpdateIncur}" />
+	<input type="hidden" name="HiddenMaxIncur"  value="{$MaxIncur}" />
+	<input type="hidden" name="CommandId" value="{$CommandId}" />
+
+<table border="0" width="100%" cellpadding="4" cellspacing="0" class="form">
+<thead>
+<tr>
+	<td colspan="4" >&nbsp;{t}Add an instalment{/t} {$CommandNo} &nbsp;({t}Addressee{/t}: {$ActorName})</td>
+	<!--<td>&nbsp;</td>
+	<td>&nbsp;: </td>
+	<td>&nbsp;</td>-->
+</tr>
+</thead>
+<tr>
+	<td>{t}Current outstanding debts{/t} &euro; :</td>
+	<td><input type="text" name="UpdateIncur" size="15"  value="{$UpdateIncur}" class="ReadOnlyField"  readonly="readonly" /></td>
+	<td>{t}Maximum outstanding debts{/t} &euro; :</td>
+	<td><input type="text" name="MaxIncur" size="15" value="{$MaxIncur}" class="ReadOnlyField" readonly="readonly" /></td>
+</tr>
+<tbody>
+<tr>
+	<td>{t}Total incl. VAT{/t} &euro; :</td>
+	<td><input type="text" name="TotalTTC" size="15" value="{$TotalTTC}" class="ReadOnlyField" readonly="readonly" /></td>
+	<td>{t}Instalment{/t} &euro; :</td>
+	<td><input type="text" name="Installment" size="15" value="{$installmentAmount}"
+		onkeyup="RecalculateToPay();RecalculateUpdateIncur()"/></td><!--class="FieldWhite"-->
+</tr>
+<tr>
+	<td>{t}To pay{/t} &euro; :</td>
+	<td><input type="text" name="ToPay" size="15" value="{$ToPay}"  class="ReadOnlyField" readonly="readonly" /></td>
+	<td>{t}Bank{/t} :</td>
+    <td><select name="ActorBankDetail" style="width:100%;">
+        <option value="0">{t}Please select a bank{/t}</option>
+        {$ActorBankDetailList}</select></td>
+</tr>
+</tbody>
+</table>
+
+<table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+  <tfoot>
+	<tr>
+      <td align="right">
+	  <input name="submitForm" value="{t}Ok{/t}" type="submit" />
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  <input onclick="javascript:window.location='{$returnURL}'" name="Cancel" value="{t}Cancel{/t}" type="button" />
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  </td>
+    </tr>
+  </tfoot>
+</table>
+</form>
+<!-- fin de section principale -->

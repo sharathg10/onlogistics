@@ -1,0 +1,61 @@
+{$form.javascript}
+<form {$form.attributes}>
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form" id="searchForm">
+  <tfoot>
+    <tr>
+      <td align="right" colspan="4">
+      <input type="hidden" name="formSubmitted" value="0" />
+	  <input type="submit" value="{t}Quantities at the end of the period{/t}"
+        name="qtyByPeriodButton"
+        onclick="this.form.formSubmitted.value=1;
+        return checkForm(this.form, requiredFields);" class="Button" />
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  <input type="submit" value="{t}Entries/Issues for period{/t}"
+        onclick="this.form.formSubmitted.value=2;
+        return checkForm(this.form, requiredFields);" name="ioByDateButton" class="Button" />
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  </td>
+    </tr>
+  </tfoot>
+  <tbody>
+    <tr class="search">
+	  <td class="element_label">{$form.StorageSite.label}:</td>
+      <td class="element_html">{$form.StorageSite.html}</td>
+      <td class="element_label">{t}Stores{/t}:</td>
+      <td class="element_html">
+        {$form.hidden}
+        <select name="Store[]" style="width:100%" id="store" multiple="multiple" size="4">
+            <option value="##">{t}None{/t}</option>
+        </select>
+      </td>
+    </tr>
+    <tr class="search">
+	  <td>{$form.ProductType.label}:</td>
+      <td>{$form.ProductType.html}</td>
+      <td>{t}Criterion{/t}:</td>
+      <td>
+        <select name="Property" style="width:100%" id="property">
+            <option value="##">{t}None{/t}</option>
+        </select>
+      </td>
+    </tr>
+    <tr class="search">
+      <td>{$form.unitType.label}:</td>
+      <td>{$form.unitType.html}</td>
+	  <td>{t}Date range{/t}:</td>
+      <td>{t}from{/t}&nbsp;
+	  {html_select_date prefix="start" time=$smarty.now start_year="-1" reverse_years="true"
+	  month_format="%b"  field_order="$dateFormat" field_separator="" day_value_format="%02d"}
+      &nbsp;{t}to{/t}&nbsp;
+	  {html_select_date prefix="end" time=$smarty.now start_year="-1" reverse_years="true"
+	  month_format="%b"  field_order="$dateFormat" field_separator="" day_value_format="%02d"}
+      &nbsp;</td>
+    </tr>
+    <tr class="search">
+        <td>{$form.ProductOwner.label}: </td>
+        <td>{$form.ProductOwner.html}</td>
+        <td colspan="2">&nbsp;</td>
+    </tr>
+  </tbody>
+</table>
+</form>

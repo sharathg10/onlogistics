@@ -118,6 +118,7 @@ class RTWMaterialAddEdit extends GenericAddEdit {
         $this->form->addElement($elt);
         $this->formDefaults['Supplier_Price'] = $this->object->getUBPrice($supplier);
         */
+        $this->form->setDefaults($this->formDefaults);
     }
 
     // }}}

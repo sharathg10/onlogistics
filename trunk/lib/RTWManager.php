@@ -95,7 +95,8 @@ class RTWManager
             $values['Supplier_Reference'] : '';
         $price = isset($values['Supplier_Price']) ? 
             $values['Supplier_Price'] : 0;
-        $ap = new ActorProduct();
+        $apCol = $product->getActorProductCollection();
+        $ap = $apCol->getCount() > 0 ? $apCol->getItem(0) : new ActorProduct();
         $ap->setActor($supplierId);
         $ap->setProduct($product);
         $ap->setAssociatedProductReference($ref);

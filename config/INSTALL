@@ -37,6 +37,7 @@ II. Prérequis
 - Un système Unix (OnLogistics est testé sur GNU/Linux, OpenBSD et FreeBSD)
 - Apache 1.3 ou 2.x et php 5.1 ou plus en module d'apache (pas en cgi)
 - MySQL 4 ou plus.
+- Une copie du framework PWAK (http://code.google.com/p/pwak/)
 - PHP doit avoir le support natif pour mysql, gd, dom, xmlrpc, json et gettext
 - modules PEAR: HTML_Common, Log, HTML_QuickForm, XML_Util, XML_Parser,
   XML_Beautifier, Config, Mail, Numbers_Words, Calendar, Date, Net_SMTP,

@@ -32,7 +32,7 @@ ACCOUNTS_BACKEND=file
 #DB_LOGIN=username
 #DB_PASSWORD=password
 
-# chemin vers le répertoire racine du framework
+# chemin vers le répertoire racine du framework PWAK
 FRAMEWORK_ROOT=/home/httpd/htdocs/ateor-libs/current/pwak
 
 # timeout des sessions (en secondes) paramétré à 30 minutes d'inactivité

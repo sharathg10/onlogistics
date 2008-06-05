@@ -49,6 +49,24 @@ class RTWModelAddEdit extends GenericAddEdit {
     }
 
     // }}}
+    // RTWModelAddEdit::onBeforeDisplay() {{{
+
+    /**
+     * Appelé avant affichage
+     *
+     * @return void
+     */
+    public function onBeforeDisplay() {
+        if (!$this->object->canBeDeleted()) {
+            Template::errorDialog(
+                _('This model can not be modified because it is already used in one or more orders'),
+                $this->guessReturnURL()
+            );
+            exit(1);
+        }
+    }
+
+    // }}}
     // RTWModelAddEdit::getFilterForMaterial1() {{{
 
     /**

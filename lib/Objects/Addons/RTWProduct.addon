@@ -28,3 +28,52 @@
     }
 
     // }}}
+    // RTWProduct::getProperty() {{{
+
+    /**
+     *
+     * @access public
+     * @return void
+     */
+    public function getProperty($getter)
+    {
+        if (method_exists($this, $getter)) {
+            return $this->$getter();
+        }
+        if (($model = $this->getModel()) instanceof RTWModel) {
+            if (method_exists($model, $getter)) {
+                $ret = $model->$getter();
+                if ($ret instanceof Object) {
+                    return $ret->toString();
+                }
+                return $ret;
+            }
+        }
+        return parent::getProperty($getter);
+    }
+
+    // }}}
+    // RTWProduct::setProperty() {{{
+
+    /**
+     *
+     * @access public
+     * @return void
+     */
+    public function setProperty($setter, $prop_value)
+    {
+        if (method_exists($this, $setter)) {
+            $this->$setter($prop_value);
+            return;
+        }
+        if (($model = $this->getModel()) instanceof RTWModel) {
+            if (method_exists($model, $setter)) {
+                $model->$setter($prop_value);
+                $model->save();
+                return;
+            }
+        }
+        return parent::setProperty($setter, $prop_value);
+    }
+
+    // }}}

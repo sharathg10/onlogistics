@@ -3704,6 +3704,14 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
                 array('fontSize'=>12, 'lineHeight'=>5)
             );
         }
+        $this->pdf->addText(
+            _('Style number') . ': ' . $this->model->getStyleNumber(),
+            array('fontSize'=>12, 'lineHeight'=>5)
+        );
+        $this->pdf->addText(
+            _('Description') . ': ' . $this->model->getDescription(),
+            array('fontSize'=>12, 'lineHeight'=>5)
+        );
         $this->pdf->Ln();
         $this->pdf->Ln();
         $items = array(

@@ -40,6 +40,7 @@ function GetAddressItems($site, $Phone=''){
 	}
 	
 	$streetTypeConst = $site->getStreetTypeConstArray();
+	$result['SiteName'] = $site->getName();
 	$result['StreetNo'] = $site->GetStreetNumber();
 	$result['StreetType'] = 
 	   isset($streetTypeConst[$site->GetStreetType()])?

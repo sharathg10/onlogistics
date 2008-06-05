@@ -60,14 +60,30 @@ class RTWProductManager extends RTWManager
         if (empty($sizeIds)) {
             throw new Exception(_('No products were created because you did not select any available size.'));
         }
+        // supprimer les produits pour lesquels on a viré des tailles
+        $productCol = Object::loadCollection('RTWProduct', new FilterComponent(
+            new FilterRule('Model', FilterRule::OPERATOR_EQUALS, $model->getId()),
+            new FilterRule('Size', FilterRule::OPERATOR_NOT_IN, $sizeIds)
+        ));
+        foreach ($productCol as $p) {
+            $p->delete();
+        }
         foreach ($sizeIds as $sizeId) {
-            $product = new RTWProduct();
-            $product->setName($model->toString());
-            self::setProductDefaults($product);
-            $product->setModel($model);
-            $product->setSize($sizeId);
+            $product = Object::load('RTWProduct', array(
+                'Model' => $model->getId(),
+                'Size'  => $sizeId
+            ));
+            if (!($product instanceof Product)) {
+                $product = new RTWProduct();
+                $product->generateId();
+                self::setProductDefaults($product);
+                $product->setModel($model);
+                $product->setSize($sizeId);
+                // affecte le produit à la chaine
+                self::createAffectation($product, 'lc');
+            }
+            $product->setName($model->getDescription());
             // construit la ref produit
-            $product->generateId();
             $ref = sprintf('%s-%07d', $model->getStyleNumber(), $product->getId());
             $product->setBaseReference($ref);
             // assigne le supplier via ActorProduct
@@ -77,8 +93,6 @@ class RTWProductManager extends RTWManager
                 'Supplier_Price'     => 0
             );
             self::createActorProduct($product, $apData);
-            // affecte le produit à la chaine
-            self::createAffectation($product, 'lc');
             // Creation de la nomenclature
             self::createNomenclature($product);
             $product->save();
@@ -100,13 +114,25 @@ class RTWProductManager extends RTWManager
      */
     protected static function createNomenclature($product)
     {
+        $nomenclature = Object::load('Nomenclature', array('Product'=>$product->getId()));
+        if (!($nomenclature instanceof Nomenclature)) {
+            $nomenclature = new Nomenclature();
+            $nomenclature->setBeginDate(date('Y-m-d 00:00:00'));
+            $nextYear  = mktime(0, 0, 0, date("m"),   date("d"),   date("Y") + 1);
+            $nomenclature->setEndDate(date('Y-m-d 00:00:00', $nextYear));
+            $nomenclature->setVersion('1.0');
+            $nomenclature->setProduct($product);
+        } else {
+            // supprime tous les composants de la nomenclature
+            $cpnMapper = Mapper::singleton('Component');
+            $cpnMapper->delete($nomenclature->getComponentCollectionIds());
+            // supprime la chaine précédemment créée
+            $oldchain = Object::load('Chain', array('Reference' => $product->getBaseReference()));
+            if ($oldchain instanceof Chain) {
+                $oldchain->delete();
+            }
+        }
         $model = $product->getModel();
-        $nomenclature = new Nomenclature();
-        $nomenclature->setBeginDate(date('Y-m-d 00:00:00'));
-        $nextYear  = mktime(0, 0, 0, date("m"),   date("d"),   date("Y") + 1);
-        $nomenclature->setEndDate(date('Y-m-d 00:00:00', $nextYear));
-        $nomenclature->setVersion('1.0');
-        $nomenclature->setProduct($product);
         $nomenclature->save();
         // Le Component de niveau 0
         $component = new Component();
@@ -194,96 +220,6 @@ class RTWProductManager extends RTWManager
         }
     }
 
-    // }}}
-    // RTWProductManager::getPossibilities() {{{
-
-    /**
-     * Retourne un tableau des differentes possibilités pour la création des 
-     * produits.
-     * 
-     * @return array
-     * @access protected
-     * @static
-     */
-    protected static function getPossibilities($model)
-    {
-        $a = $model->getMaterial1CollectionIds();
-        $b = $model->getMaterial2CollectionIds();
-        $c = $model->getAccessory1CollectionIds();
-        $d = $model->getAccessory2CollectionIds();
-        $ret = array();
-        foreach ($a as $aval) {
-            if (!empty($b)) {
-                foreach ($b as $bval) {
-                    if (!empty($c)) {
-                        foreach($c as $cval) {
-                            if (!empty($d)) {
-                                foreach ($d as $dval) {
-                                    $ret[] = array(
-                                        'Material1'  => $aval, 
-                                        'Material2'  => $bval,
-                                        'Accessory1' => $cval,
-                                        'Accessory2' => $dval
-                                    );
-                                }
-                            } else {
-                                $ret[] = array(
-                                    'Material1'  => $aval, 
-                                    'Material2'  => $bval,
-                                    'Accessory1' => $cval,
-                                    'Accessory2' => 0
-                                );
-                            }
-                        }
-                    } else {
-                        $ret[] = array(
-                            'Material1'  => $aval, 
-                            'Material2'  => $bval,
-                            'Accessory1' => 0,
-                            'Accessory2' => 0
-                        );
-                    }
-                }
-            } else if (!empty($c)) {
-                foreach($c as $cval) {
-                    if (!empty($d)) {
-                        foreach ($d as $dval) {
-                            $ret[] = array(
-                                'Material1'  => $aval, 
-                                'Material2'  => 0,
-                                'Accessory1' => $cval,
-                                'Accessory2' => $dval
-                            );
-                        }
-                    } else {
-                        $ret[] = array(
-                            'Material1'  => $aval, 
-                            'Material2'  => 0,
-                            'Accessory1' => $cval,
-                            'Accessory2' => 0
-                        );
-                    }
-                }
-            } else if (!empty($d)) {
-                foreach ($d as $dval) {
-                    $ret[] = array(
-                        'Material1'  => $aval, 
-                        'Material2'  => 0,
-                        'Accessory1' => 0,
-                        'Accessory2' => $dval
-                    );
-                }
-            } else {
-                $ret[] = array(
-                    'Material1'  => $aval, 
-                    'Material2'  => 0,
-                    'Accessory1' => 0,
-                    'Accessory2' => 0
-                );
-            }
-        }
-        return $ret;
-    }
     // }}}
 }
 

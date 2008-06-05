@@ -322,8 +322,9 @@ class Invoice extends _Invoice {
                 $size = false;
             }
             $ref = $rtwProduct->getBaseReference();
-            if (!isset($ret[$ref])) {
-                $ret[$ref] = array(
+            $model = $rtwProduct->getModel();
+            if (!isset($ret[$model->getId()])) {
+                $ret[$model->getId()] = array(
                     $ref,
                     // taille: qte
                     $rtwProduct->getName() . ($size ? "\n".$size->getName()."  ({$item[2]})" : ''),
@@ -337,14 +338,28 @@ class Invoice extends _Invoice {
                     $item[6]
                 );
             } else {
-                $ret[$ref][1] .= ($size ? ", ".$size->getName()."  ({$item[2]})" : '');
-                $ret[$ref][2] += intval($item[2]);
+                $ret[$model->getId()][1] .= ($size ? ", ".$size->getName()."  ({$item[2]})" : '');
+                $ret[$model->getId()][2] += intval($item[2]);
                 foreach (array(4 => 4, 5 => 6) as $retIndex => $itemIndex) {
-                    $ret[$ref][$retIndex] = I18N::formatNumber(
-                        I18N::extractNumber($ret[$ref][$retIndex]) 
+                    $ret[$model->getId()][$retIndex] = I18N::formatNumber(
+                        I18N::extractNumber($ret[$model->getId()][$retIndex]) 
                       + I18N::extractNumber($item[$itemIndex])
                     );
                 }
+            }
+        }
+        foreach ($ret as $i=>&$array) {
+            $model = Object::load('RTWModel', $i);
+            $lines = array();
+            $lines[] = ($insole = $model->getInsole()) instanceof RTWMaterial ? 
+                _('Insole: ') . $insole->toString() : null;
+            $lines[] = ($lining = $model->getLining()) instanceof RTWMaterial ? 
+                _('Lining: ') . $lining->toString() : null;
+            $lines[] = ($undersole = $model->getUnderSole()) instanceof RTWMaterial ? 
+                _('Under-sole: ') . $undersole->toString() : null;
+            $lines = array_filter($lines);
+            if (count($lines)) {
+                $array[1] .= "\n\n" . implode("\n", $lines);
             }
         }
         return array_values($ret);

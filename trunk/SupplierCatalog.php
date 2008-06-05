@@ -43,8 +43,10 @@ require_once('lib-functions/ProductCommandTools.php');
 
 $auth = Auth::Singleton();
 $auth->checkProfiles();
-//Database::connection()->debug = true;
+// Database::connection()->debug = true;
 $errorBody  = _('You have no catalogue defined, please contact your administrator.');
+
+$tradeContext = Preferences::get('TradeContext', array());
 
 // Gestion de l'edition du devis si necessaire
 // ouverture d'un popup en arriere-plan, impression du contenu (pdf), et fermeture de ce popup
@@ -138,6 +140,89 @@ $customArray = array(
         )
     )
 );
+if (in_array('readytowear', $tradeContext)) {
+    $customArray['PressName'] = array(
+        'Name'=>'PressName',
+        'Type'=>'select',
+        'Params'=> array(
+            SearchTools::createArrayIDFromCollection(
+                'RTWPressName',
+                array(),
+                _('Select one or more items')
+            ),
+            'multiple, size="6"'
+        ),
+        'SearchOptions'=>array(
+            'Path'=>'Model.PressName.Id',
+            'Operator'=>'In'
+        )
+    );
+    $customArray['Material1'] = array(
+        'Name'=>'Material1',
+        'Type'=>'select',
+        'Params'=> array(
+            SearchTools::createArrayIDFromCollection(
+                'RTWMaterial',
+                array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL),
+                _('Select one or more items')
+            ),
+            'multiple, size="6"'
+        ),
+        'SearchOptions'=>array(
+            'Path'=>'Model.Material1.Id',
+            'Operator'=>'In'
+        )
+    );
+    $customArray['Material2'] = array(
+        'Name'=>'Material2',
+        'Type'=>'select',
+        'Params'=> array(
+            SearchTools::createArrayIDFromCollection(
+                'RTWMaterial',
+                array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL),
+                _('Select one or more items')
+            ),
+            'multiple, size="6"'
+        ),
+        'SearchOptions'=>array(
+            'Path'=>'Model.Material2.Id',
+            'Operator'=>'In'
+        )
+    );
+    $customArray['Accessory1'] = array(
+        'Name'=>'Accessory1',
+        'Type'=>'select',
+        'Params'=> array(
+            SearchTools::createArrayIDFromCollection(
+                'RTWMaterial',
+                array('MaterialType' => RTWMaterial::TYPE_ACCESSORY),
+                _('Select one or more items')
+            ),
+            'multiple, size="6"'
+        ),
+        'SearchOptions'=>array(
+            'Path'=>'Model.Accessory1.Id',
+            'Operator'=>'In'
+        )
+    );
+    $customArray['Accessory2'] = array(
+        'Name'=>'Accessory2',
+        'Type'=>'select',
+        'Params'=> array(
+            SearchTools::createArrayIDFromCollection(
+                'RTWMaterial',
+                array('MaterialType' => RTWMaterial::TYPE_ACCESSORY),
+                _('Select one or more items')
+            ),
+            'multiple, size="6"'
+        ),
+        'SearchOptions'=>array(
+            'Path'=>'Model.Accessory2.Id',
+            'Operator'=>'In'
+        )
+    );
+}
+
 
 $catalog->buildSearchForm($form, array('Supplier'), $customArray);
 $defaultValues = SearchTools::DataInSessionToDisplay();

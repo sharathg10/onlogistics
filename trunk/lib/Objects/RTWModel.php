@@ -67,7 +67,7 @@ class RTWModel extends _RTWModel {
             return true;
         }
         foreach ($pdtCol as $pdt) {
-            if (!$pdt->canBeDeleted(false)) {
+            if (!$pdt->isDeletable()) {
                 return false;
             }
         }
@@ -119,9 +119,9 @@ class RTWModel extends _RTWModel {
      */
     function toString() {
         if (($pressName = $this->getPressName()) instanceof RTWPressName) {
-            return $pressName->getName() . ' / ' . $this->getStyleNumber();
+            return $pressName->getName();
         }
-        return $this->getStyleNumber();
+        return '';
     }
 
     // }}}
@@ -134,7 +134,7 @@ class RTWModel extends _RTWModel {
      * @return string
      */
     function getToStringAttribute() {
-        return array('PressName', 'StyleNumber');
+        return array('PressName');
     }
 
     // }}}

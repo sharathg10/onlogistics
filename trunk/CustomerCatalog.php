@@ -217,9 +217,25 @@ $customArray = array(
             ),
             'multiple, size="6"'
         )
-    )
+    ),
 );
 if (in_array('readytowear', $tradeContext)) {
+    $customArray['PressName'] = array(
+        'Name'=>'PressName',
+        'Type'=>'select',
+        'Params'=> array(
+            SearchTools::createArrayIDFromCollection(
+                'RTWPressName',
+                array(),
+                _('Select one or more items')
+            ),
+            'multiple, size="6"'
+        ),
+        'SearchOptions'=>array(
+            'Path'=>'Model.PressName.Id',
+            'Operator'=>'In'
+        )
+    );
     $customArray['Material1'] = array(
         'Name'=>'Material1',
         'Type'=>'select',
@@ -230,6 +246,10 @@ if (in_array('readytowear', $tradeContext)) {
                 _('Select one or more items')
             ),
             'multiple, size="6"'
+        ),
+        'SearchOptions'=>array(
+            'Path'=>'Model.Material1.Id',
+            'Operator'=>'In'
         )
     );
     $customArray['Material2'] = array(
@@ -242,6 +262,10 @@ if (in_array('readytowear', $tradeContext)) {
                 _('Select one or more items')
             ),
             'multiple, size="6"'
+        ),
+        'SearchOptions'=>array(
+            'Path'=>'Model.Material2.Id',
+            'Operator'=>'In'
         )
     );
     $customArray['Accessory1'] = array(
@@ -254,6 +278,10 @@ if (in_array('readytowear', $tradeContext)) {
                 _('Select one or more items')
             ),
             'multiple, size="6"'
+        ),
+        'SearchOptions'=>array(
+            'Path'=>'Model.Accessory1.Id',
+            'Operator'=>'In'
         )
     );
     $customArray['Accessory2'] = array(
@@ -266,6 +294,10 @@ if (in_array('readytowear', $tradeContext)) {
                 _('Select one or more items')
             ),
             'multiple, size="6"'
+        ),
+        'SearchOptions'=>array(
+            'Path'=>'Model.Accessory2.Id',
+            'Operator'=>'In'
         )
     );
 }

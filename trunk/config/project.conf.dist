@@ -6,19 +6,22 @@
 # Constantes du framework
 # ----------------------------------------------------------------------------
 
-# Backend pour la gestion des comptes, 2 backends possibles:
-# - file: les comptes sont stockes dans ce fichier, par ex:
-#   DSN_CUSTOMER1=mysql://user:pass@localhost/customer1
-#   DSN_CUSTOMER2=mysql://user:pass@localhost/customer2
+# Choix du backend decrivant les parametres d'acces a la base de donne
+# de chaque "compte" (groupes d'utilisateurs partageants une meme bdd).
+# Deux backends sont actuellement possibles:
+# - file: les parametres des bases de donnees des comptes sont stockes 
+#   dans le present fichier, par ex:
+#   DSN_CUSTOMER1=mysql://user1:pass2@localhost/db_customer1
+#   DSN_CUSTOMER2=mysql://use2r:pass2@localhost/db_customer2
 #   etc...
-# - db: les comptes sont stockes dans une base de donnees prevue a cet effet
-#   (cela n'est pas encore documente).
+# - db: les parametres des comptes sont stockes dans une base de donnees 
+#   prevue a cet effet (cela n'est pas encore documente).
 ACCOUNTS_BACKEND=file
 
-# Liste des DSN des comptes de l'application
+# Liste des DSN des bdd des comptes de l'application
 # (A renseigner uniquement si ACCOUNTS_BACKEND=file):
-#DSN_CUSTOMER1=mysql://user:pass@localhost/customer1
-#DSN_CUSTOMER2=mysql://user:pass@localhost/customer2
+#DSN_CUSTOMER1=mysql://user1:pass2@localhost/db_customer1
+#DSN_CUSTOMER2=mysql://user2:pass2@localhost/db_customer2
 
 # Paramètres de connection à la base de données contenant les comptes
 # onlogistics, le dsn est de type: driver://user:pass@host/dbname

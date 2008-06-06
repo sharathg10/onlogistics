@@ -67,7 +67,7 @@ class RTWModel extends _RTWModel {
             return true;
         }
         foreach ($pdtCol as $pdt) {
-            if (!$pdt->isDeletable()) {
+            if (!$pdt->isDeletable(false)) {
                 return false;
             }
         }

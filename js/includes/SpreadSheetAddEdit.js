@@ -1,7 +1,7 @@
 /**
  * $Source: /home/cvs/onlogistics/js/includes/SpreadSheetAddEdit.js,v $
  * 
- * @version $Id: SpreadSheetAddEdit.js,v 1.9 2008-05-07 16:36:39 ben Exp $
+ * @version $Id$
  * @copyright © 2005 - ATEOR - All rights reserved.
  */
 

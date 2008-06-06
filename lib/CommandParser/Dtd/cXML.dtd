@@ -3,7 +3,7 @@
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -71,7 +71,7 @@
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -595,7 +595,7 @@
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -617,7 +617,7 @@
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -706,7 +706,7 @@
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -810,7 +810,7 @@
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -1577,7 +1577,7 @@
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -2242,7 +2242,7 @@ xml:lang %xmlLangCode; #REQUIRED>
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -2315,7 +2315,7 @@ xml:lang %xmlLangCode; #REQUIRED>
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -2373,7 +2373,7 @@ xml:lang %xmlLangCode; #REQUIRED>
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -2447,7 +2447,7 @@ xml:lang %xmlLangCode; #REQUIRED>
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -2718,7 +2718,7 @@ xml:lang %xmlLangCode; #REQUIRED>
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -2779,7 +2779,7 @@ xml:lang %xmlLangCode; #REQUIRED>
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -2853,7 +2853,7 @@ xml:lang %xmlLangCode; #REQUIRED>
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -3159,7 +3159,7 @@ xml:lang %xmlLangCode; #REQUIRED>
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -3219,7 +3219,7 @@ xml:lang %xmlLangCode; #REQUIRED>
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -3380,7 +3380,7 @@ xml:lang %xmlLangCode; #REQUIRED>
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -3422,7 +3422,7 @@ xml:lang %xmlLangCode; #REQUIRED>
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -3518,7 +3518,7 @@ xml:lang %xmlLangCode; #REQUIRED>
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!-- ====
@@ -3561,7 +3561,7 @@ xml:lang %xmlLangCode; #REQUIRED>
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 
@@ -3574,7 +3574,7 @@ xml:lang %xmlLangCode; #REQUIRED>
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 
@@ -3594,7 +3594,7 @@ xml:lang %xmlLangCode; #REQUIRED>
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -3657,7 +3657,7 @@ xml:lang %xmlLangCode; #REQUIRED>
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -3789,7 +3789,7 @@ xml:lang %xmlLangCode; #REQUIRED>
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--
@@ -3973,7 +3973,7 @@ other namespaces, for example:
     For cXML license agreement information, please see
     http://www.cxml.org/home/license.asp
 
-    $Id: cXML.dtd,v 1.2 2008-05-07 16:36:56 ben Exp $
+    $Id$
 -->
 
 <!--

@@ -1,7 +1,7 @@
 /**
  * $Source: /home/cvs/onlogistics/js/includes/AccountAddEdit.js,v $
  *
- * @version   CVS: $Id: AccountAddEdit.js,v 1.4 2008-05-07 16:36:38 ben Exp $
+ * @version   CVS: $Id$
  * @copyright 2002-2007 ATEOR - All rights reserved
  */
 

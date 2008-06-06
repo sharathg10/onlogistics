@@ -2,7 +2,7 @@
 /**
  * Fonctions relatives au formulaire CustomerAttractivityAddEdit.php.
  *
- * @version $Id: ChainTaskAddEdit.js,v 1.3 2008-05-07 16:36:38 ben Exp $
+ * @version $Id$
  * @copyright © 2006 - ATEOR - All rights reserved.
  */
 

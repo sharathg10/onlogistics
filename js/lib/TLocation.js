@@ -1,5 +1,5 @@
 /**
- * $Id: TLocation.js,v 1.2 2008-05-07 16:36:39 ben Exp $
+ * $Id$
  * Classe definissant l'objet location (lieu)
  *
  */

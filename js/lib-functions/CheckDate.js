@@ -1,5 +1,5 @@
 /**
- * @version $Id: CheckDate.js,v 1.2 2008-05-07 16:36:39 ben Exp $
+ * @version $Id$
  * @copyright 2002-2006 ATEOR - All rights reserved.
  */
 

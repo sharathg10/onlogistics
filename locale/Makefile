@@ -1,7 +1,7 @@
 # Makefile pour l'i18n dans onlogistics.
 # Génère le fichier catalogue merge les fichiers .po et formate les .mo
 #
-# $Id: Makefile,v 1.14 2008-05-07 16:36:53 ben Exp $
+# $Id$
 
 SHELL=/bin/sh
 MSGFMT=msgfmt

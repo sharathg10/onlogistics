@@ -2,7 +2,7 @@
  * $Source: /home/cvs/onlogistics/js/includes/FlowAddEdit.js,v $
  * Fonctions JS pour le script d'ajout/edition de charges/recettes
  *
- * @version $Id: FlowAddEdit.js,v 1.10 2008-05-07 16:36:38 ben Exp $
+ * @version $Id$
  * @copyright © 2006 - ATEOR - All rights reserved.
  */
 

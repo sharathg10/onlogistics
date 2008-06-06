@@ -1,6 +1,6 @@
 /**
  *
- * @version $Id: ChainTaskDetails.js,v 1.12 2008-05-07 16:36:38 ben Exp $
+ * @version $Id$
  * @copyright 2006 ATEOR
  */
 

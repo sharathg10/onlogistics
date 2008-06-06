@@ -1,7 +1,7 @@
 /**
  *
  * @source
- * @version $Id: ForwardingForm.js,v 1.12 2008-05-07 16:36:38 ben Exp $
+ * @version $Id$
  */
 
 var server_data = new Object();

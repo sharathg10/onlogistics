@@ -1,5 +1,5 @@
 /*
- * @version $Id: StockAccountingExport.js,v 1.5 2008-05-07 16:36:39 ben Exp $
+ * @version $Id$
  * @copyright 2006 ATEOR
  **/
 

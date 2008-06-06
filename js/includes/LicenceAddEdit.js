@@ -1,6 +1,6 @@
 /**
  *
- * @version $Id: LicenceAddEdit.js,v 1.2 2008-05-07 16:36:39 ben Exp $
+ * @version $Id$
  * @copyright 2005 ATEOR
  */
 

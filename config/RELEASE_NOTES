@@ -1,4 +1,4 @@
-# $Id: RELEASE_NOTES,v 1.168 2008-06-02 14:33:49 david Exp $
+# $Id$
 #
 # Ce fichier sert à faciliter et automatiser la mise en prod de la prochaine
 # release. On y indique les requètes à appliquer à la base de donée (pour la

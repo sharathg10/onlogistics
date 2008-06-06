@@ -1,6 +1,6 @@
 /**
  *
- * $Id: InvoiceAddEdit.js,v 1.17 2008-05-07 16:36:39 ben Exp $
+ * $Id$
  * @copyright 2006 ATEOR
  */
 

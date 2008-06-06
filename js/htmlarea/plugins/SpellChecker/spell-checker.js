@@ -6,7 +6,7 @@
 // Distributed under the same terms as HTMLArea itself.
 // This notice MUST stay intact for use (see license.txt).
 //
-// $Id: spell-checker.js,v 1.2 2008-05-07 16:36:38 ben Exp $
+// $Id$
 
 function SpellChecker(editor) {
 	this.editor = editor;

@@ -5,7 +5,7 @@
  * Prestation.PrestationCustomer.
  *
  * @todo rendre le tout dynamique
- * @version   CVS: $Id: PrestationAddEdit.js,v 1.10 2008-05-07 16:36:39 ben Exp $
+ * @version   CVS: $Id$
  * @author    Guillaume <guillaume@ateor.com>
  * @copyright 2002-2007 ATEOR - All rights reserved
  */

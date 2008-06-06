@@ -1,7 +1,7 @@
 /**
  * $Source: /home/cvs/onlogistics/js/includes/RessourceGroupAddEdit.js,v $
  * 
- * @version $Id: RessourceGroupAddEdit.js,v 1.12 2008-05-07 16:36:39 ben Exp $
+ * @version $Id$
  * @copyright © 2005 - ATEOR - All rights reserved.
  */
 

@@ -4,7 +4,7 @@
  * Fonctions js nécessaire à la commande de transport (ChainCommand.php)
  * 
  * $Source: /home/cvs/onlogistics/js/includes/ChainCommand.js,v $
- * @version    CVS: $Id: ChainCommand.js,v 1.12 2008-05-07 16:36:38 ben Exp $
+ * @version    CVS: $Id$
  * @copyright  2002-2006 ATEOR - All rights reserved
  */
 

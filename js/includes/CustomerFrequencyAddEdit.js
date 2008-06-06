@@ -1,7 +1,7 @@
 /**
  * Fonctions relatives au formulaire CustomerFrequencyAddEdit.php.
  *
- * @version $Id: CustomerFrequencyAddEdit.js,v 1.7 2008-05-07 16:36:38 ben Exp $
+ * @version $Id$
  * @copyright © 2006 - ATEOR - All rights reserved.
  */
 

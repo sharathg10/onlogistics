@@ -1,6 +1,6 @@
 /**
  *
- * @version $Id: PrestationInvoiceAddEdit.js,v 1.12 2008-05-07 16:36:39 ben Exp $
+ * @version $Id$
  */
 
 var totalHT=0, totalTTC=0. 

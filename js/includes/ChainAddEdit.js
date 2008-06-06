@@ -2,7 +2,7 @@
  * $Source: /home/cvs/onlogistics/js/includes/ChainAddEdit.js,v $
  * Fonctions JS pour le script d'ajout/edition de chaines => ChainAddEdit.php
  * 
- * @version $Id: ChainAddEdit.js,v 1.3 2008-05-07 16:36:38 ben Exp $
+ * @version $Id$
  * @copyright © 2005 - ATEOR - All rights reserved.
  */
 

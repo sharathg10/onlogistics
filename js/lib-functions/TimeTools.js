@@ -6,7 +6,7 @@
  *  60    = 1h. 
  *  150   = 2h. 30min.
  *
- * $Id: TimeTools.js,v 1.2 2008-05-07 16:36:39 ben Exp $
+ * $Id$
  */
 function BeautifyDuration(rawDuration){
 

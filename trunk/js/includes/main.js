@@ -5,7 +5,7 @@
  *
  * Fichier inclus dans toutes les pages de l'application.
  *
- * @version   CVS: $Id: main.js,v 1.10 2008-05-07 16:36:39 ben Exp $
+ * @version   CVS: $Id$
  * @copyright 2002-2006 ATEOR - All rights reserved
  */
 

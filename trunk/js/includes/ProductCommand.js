@@ -2,7 +2,7 @@
  * ProductCommand.php
  *
  * @since 06/11/2002
- * @version $Id: ProductCommand.js,v 1.32 2008-04-15 09:11:25 david Exp $
+ * @version $Id$
  */
 
 var totalHT=0, totalTTC=0.

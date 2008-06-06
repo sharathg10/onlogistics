@@ -2,7 +2,7 @@
  * $Source: /home/cvs/onlogistics/js/includes/PrestationCostAddEdit.js,v $
  * 
  * @todo rendre le tout dynamique
- * @version   CVS: $Id: PrestationCostAddEdit.js,v 1.6 2008-05-07 16:36:39 ben Exp $
+ * @version   CVS: $Id$
  * @author    Guillaume <guillaume@ateor.com>
  * @copyright 2002-2007 ATEOR - All rights reserved
  */

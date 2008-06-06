@@ -1,5 +1,5 @@
  /**
- * $Id: cite.js,v 1.2 2008-05-07 16:36:55 ben Exp $
+ * $Id$
  *
  * @author Moxiecode - based on work by Andrew Tetlaw
  * @copyright Copyright © 2004-2006, Moxiecode Systems AB, All rights reserved.

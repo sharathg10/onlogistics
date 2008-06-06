@@ -12,7 +12,7 @@
  *   } else {
  *      ...
  *   }
- * @version $Id: checkForm.js,v 1.4 2008-05-07 16:36:39 ben Exp $
+ * @version $Id$
  * @copyright 2004 Global-Logistics
  */
 

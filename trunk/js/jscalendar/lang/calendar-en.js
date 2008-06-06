@@ -1,4 +1,4 @@
-// $Id: calendar-en.js,v 1.3 2008-05-07 16:36:39 ben Exp $
+// $Id$
 // ** I18N
 
 // Calendar EN language

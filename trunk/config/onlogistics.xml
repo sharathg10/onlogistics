@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
-<!-- Version: $Id: onlogistics.xml,v 1.188 2008-05-29 09:59:42 david Exp $ -->
+<!-- Version: $Id$ -->
 <application name="onlogistics"
     outputdir="/home/izi/GL/php/onlogistics/lib/Objects"
     addonsdir="/home/izi/GL/php/onlogistics/lib/Objects/Addons"

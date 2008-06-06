@@ -1,7 +1,7 @@
 /**
  * TChainTask.js 
  *
- * @version $Id: TChainTask.js,v 1.9 2008-05-07 16:36:39 ben Exp $
+ * @version $Id$
  * @copyright 2002 - ARECOM International 
  **/
  

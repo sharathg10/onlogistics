@@ -1,6 +1,6 @@
 /**
  *
- * @version $Id: ActorAddEdit.js,v 1.9 2008-05-07 16:36:38 ben Exp $
+ * @version $Id$
  * @copyright 2007 ATEOR
  */
 

@@ -2,7 +2,7 @@
  * Fonctions js necessaires a l'ajout/edition de Category
  * 
  * $Source: /home/cvs/onlogistics/js/includes/CategoryAddEdit.js,v $
- * @version    CVS: $Id: CategoryAddEdit.js,v 1.7 2008-05-07 16:36:38 ben Exp $
+ * @version    CVS: $Id$
  * @copyright  2002-2007 ATEOR - All rights reserved
  */
 

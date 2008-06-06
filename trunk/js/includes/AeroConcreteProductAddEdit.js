@@ -1,6 +1,6 @@
 /**
  *
- * @version $Id: AeroConcreteProductAddEdit.js,v 1.2 2008-05-07 16:36:38 ben Exp $
+ * @version $Id$
  * @copyright 2004 Global-Logistics
  */
 

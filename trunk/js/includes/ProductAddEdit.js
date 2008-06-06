@@ -1,6 +1,6 @@
 /**
  *
- * @version $Id: ProductAddEdit.js,v 1.4 2008-05-07 16:36:39 ben Exp $
+ * @version $Id$
  * @copyright 2007 ATEOR
  */
 

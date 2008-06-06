@@ -1,5 +1,5 @@
 /**
- * @version $Id: AssemblyEdit.js,v 1.3 2008-05-07 16:36:38 ben Exp $
+ * @version $Id$
  * @copyright 2005 ATEOR
  **/
 

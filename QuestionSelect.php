@@ -51,7 +51,7 @@ define('E_ERROR_Q_ORDER',
     _('An answer already exists at this position, please modify the order.'));
 
 if(!isset($_SESSION['FormModel'])) {
-    Template::errorDialog(E_TRY_AGAIN, basename($_SERVER['PHP_SELF']), BASE_POPUP_TEMPLATE);
+    Template::errorDialog(E_ERROR_SESSION, basename($_SERVER['PHP_SELF']), BASE_POPUP_TEMPLATE);
     exit();
 }
 $formModel = $_SESSION['FormModel'];

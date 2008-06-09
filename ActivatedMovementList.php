@@ -161,6 +161,7 @@ if (true === $form->displayGrid()) {
     }*/
 
 	$grid = new Grid();
+	$grid->customizationEnabled = true;
 	$grid->itemPerPage = 50;
 	$grid->javascriptFormOwnerName = 'ActivatedMovementList';  // Pour ne pas avoir d'erreur js
 	//$grid->withNoCheckBox = true;  // Commente pour l'execution par lot
@@ -181,6 +182,8 @@ if (true === $form->displayGrid()) {
 	$grid->NewColumn('FieldMapper', _('Order'),
             array('Macro' => '%ProductCommand.CommandNo%'));
 	$grid->NewColumn('FieldMapper', _('Movement type'),array('Macro' => '%Type%'));
+	$expeditorCol = $grid->NewColumn('FieldMapper', _('Expeditor'), array('Macro' => '%ProductCommand.Expeditor.Name%'));
+	$destinatorCol = $grid->NewColumn('FieldMapper', _('Destinator'), array('Macro' => '%ProductCommand.Destinator.Name%'));
 	$grid->NewColumn('ActivatedMovementReference', _('Reference'),
             array('Sortable' => false));
 	$grid->NewColumn('FieldMapper', _('Designation'), array('Macro'=>'%Product.Name%'));
@@ -192,7 +195,10 @@ if (true === $form->displayGrid()) {
 	$grid->NewColumn('ActivatedMovementList', _('Store'),
             array('Level' => 'Store', 'Sortable' => false));
 	$grid->NewColumn('ActivatedMovementList', _('Location'), array('Sortable' => false));
-	$grid->NewColumn('FieldMapper', _('Beginning date'), array('Macro' => '%StartDate|formatdate%'));
+
+    $grid->hiddenColumnsByDefault = array($destinatorCol->index, $expeditorCol->index);
+
+
 	/* Mise en commentaire provisoire, tant que pas cable avec la plannification
 	$grid->NewColumn('FieldMapper', 'Date fin', array('Macro' => '%EndDate|formatdate%'));  */
 

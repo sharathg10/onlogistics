@@ -2826,6 +2826,10 @@
             usedby="addedit,grid,searchform">
             <const name="TYPE_RAW_MATERIAL" label="Raw material" value="0"/>
             <const name="TYPE_ACCESSORY" label="Accessory" value="1"/>
+            <const name="TYPE_PACKAGING" label="Packaging" value="2"/>
+            <const name="TYPE_THREAD" label="Thread" value="3"/>
+            <const name="TYPE_HEEL" label="Heel" value="4"/>
+            <const name="TYPE_BAMBOO" label="Bamboo" value="5"/>
         </property>
         <property type="foreignkey" name="Color" class="RTWColor" label="Color"
             usedby="grid,addedit,searchform" />

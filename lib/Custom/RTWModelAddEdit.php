@@ -115,6 +115,150 @@ class RTWModelAddEdit extends GenericAddEdit {
     }
 
     // }}}
+    // RTWModelAddEdit::getFilterForHeelReference() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForHeelReference() {
+        return array('MaterialType' => RTWMaterial::TYPE_HEEL);
+    }
+
+    // }}}
+    // RTWModelAddEdit::getFilterForSole() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForSole() {
+        return array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL);
+    }
+
+    // }}}
+    // RTWModelAddEdit::getFilterForBox() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForBox() {
+        return array('MaterialType' => RTWMaterial::TYPE_PACKAGING);
+    }
+
+    // }}}
+    // RTWModelAddEdit::getFilterForHandBag() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForHandBag() {
+        return array('MaterialType' => RTWMaterial::TYPE_PACKAGING);
+    }
+
+    // }}}
+    // RTWModelAddEdit::getFilterForLining() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForLining() {
+        return array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL);
+    }
+
+    // }}}
+    // RTWModelAddEdit::getFilterForInsole() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForInsole() {
+        return array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL);
+    }
+
+    // }}}
+    // RTWModelAddEdit::getFilterForUnderSole() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForUnderSole() {
+        return array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL);
+    }
+
+    // }}}
+    // RTWModelAddEdit::getFilterForLagrima() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForLagrima() {
+        return array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL);
+    }
+
+    // }}}
+    // RTWModelAddEdit::getFilterForHeelCovering() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForHeelCovering() {
+        return array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL);
+    }
+
+    // }}}
+    // RTWModelAddEdit::getFilterForSelvedge() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForSelvedge() {
+        return array('MaterialType' => RTWMaterial::TYPE_THREAD);
+    }
+
+    // }}}
+    // RTWModelAddEdit::getFilterForThread1() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForThread1() {
+        return array('MaterialType' => RTWMaterial::TYPE_THREAD);
+    }
+
+    // }}}
+    // RTWModelAddEdit::getFilterForThread2() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForThread2() {
+        return array('MaterialType' => RTWMaterial::TYPE_THREAD);
+    }
+
+    // }}}
     // RTWModelAddEdit::onAfterHandlePostData() {{{
 
     /**

@@ -713,6 +713,12 @@
             <const name="CHAIN_TYPE_HIRING"
                    label="helicopter rental" value="4" />
         </property>
+        <property type="const" name="AutoAssignTo" default="0" 
+            label="Auto assign to" usedby="addedit">
+            <const name="AUTOASSIGN_NONE" label="Select an item" value="0" />
+            <const name="AUTOASSIGN_PRODUCTS" label="Products" value="1" />
+            <const name="AUTOASSIGN_MATERIALS" label="Materials" value="2" />
+        </property>
         <property type="foreignkey" name="BarCodeType" class="BarCodeType"
             label="Barcode type" usedby="addedit"/>
         <property type="foreignkey" name="SiteTransition"

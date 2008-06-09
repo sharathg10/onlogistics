@@ -157,6 +157,8 @@ CREATE TABLE rTWModelRTWSize (
 
 # nettoyage properties/catalogues
 delete from CatalogCriteria where _Property not in (select _Id from Property);
+# 
+ALTER TABLE Chain ADD COLUMN _AutoAssignTo INT(3) NOT NULL DEFAULT 0;
 
 
 ####################################

@@ -49,6 +49,7 @@ class ActorProduct extends _ActorProduct {
     }
 
     // }}}
+    // ActorProduct::getPriceByActor() {{{
 
     /**
      * Retourne le prix de l'UV dans la devise de l'acteur passé en paramètre
@@ -70,6 +71,9 @@ class ActorProduct extends _ActorProduct {
         return $pbc->getPrice();
     }
 
+    // }}}
+    // ActorProduct::getUBPrice() {{{
+
     /**
      * Product::GetUBPrice()
      * Retourne le prix de l'unité de base du couple acteur/produit
@@ -87,6 +91,9 @@ class ActorProduct extends _ActorProduct {
         }
         return 0;
     }
+
+    // }}}
+    // ActorProduct::getPriceByCurrencyForInventory() {{{
 
     /**
      * retourne le pricebycurrency correspondant à la devise du propriétaire
@@ -134,6 +141,9 @@ class ActorProduct extends _ActorProduct {
         return $pbc;
     }
 
+    // }}}
+    // ActorProduct::getCSVDataSQL() {{{
+
     /**
      * Retourne une requête sql pour la methode OnlogisticsXmlRpcServer::getCSVData()
      *
@@ -146,6 +156,9 @@ class ActorProduct extends _ActorProduct {
         $ret .= 'WHERE apd._Actor=act._Id AND apd._Product=pdt._Id';
         return $ret;
     }
+
+    // }}}
+    // ActorProduct::canBeDeleted() {{{
 
     /**
      * ActorProduct::canBeDeleted()
@@ -178,6 +191,37 @@ class ActorProduct extends _ActorProduct {
         return true;
     }
 
+    // }}}
+    // ActorProduct::getToStringAttribute() {{{
+
+    /**
+     * Retourne le nom des attributs utilisÃ©s par la mÃ©thode toString()
+
+     * @access public
+     * @return array
+     */
+    function getToStringAttribute() {
+        return array('Actor', 'AssociatedProductReference');
+    }
+
+    // }}}
+    // ActorProduct::toString() {{{
+
+    /**
+     * Retourne la representation textuelle de l'ActorProduct
+
+     * @access public
+     * @return string
+     */
+    function toString() {
+        $ret  = $this->getAssociatedProductReference();
+        if (($actor = $this->getActor()) instanceof Actor) {
+            $ret .= ' / ' . $actor->getName();
+        }
+        return $ret;
+    }
+
+    // }}}
 }
 
 ?>

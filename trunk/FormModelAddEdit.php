@@ -57,7 +57,7 @@ if ($fmID > 0) {
     $formModel = new FormModel();
     $formModel->generateId();
 }
-Session::register('FormModel', $formModel);
+Session::register('FormModel', $formModel, 3);
 
 //  Si on a clique sur OK apres saisie  ou confirme la saisie
 

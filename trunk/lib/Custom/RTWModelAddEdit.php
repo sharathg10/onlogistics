@@ -259,6 +259,18 @@ class RTWModelAddEdit extends GenericAddEdit {
     }
 
     // }}}
+    // RTWModelAddEdit::getFilterForBamboo() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForBamboo() {
+        return array('MaterialType' => RTWMaterial::TYPE_HEEL);
+    }
+
+    // }}}
     // RTWModelAddEdit::onAfterHandlePostData() {{{
 
     /**

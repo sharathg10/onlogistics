@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Onlogistics 2.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-09 12:15+0200\n"
-"PO-Revision-Date: 2008-06-09 12:19+0100\n"
+"POT-Creation-Date: 2008-06-09 18:20+0200\n"
+"PO-Revision-Date: 2008-06-09 18:20+0100\n"
 "Last-Translator: David JL <david@ateor.com>\n"
 "Language-Team: ATEOR dev team <dalhia@ateor.com>\n"
 "MIME-Version: 1.0\n"
@@ -209,7 +209,7 @@ msgid " of departure"
 msgstr " de départ"
 
 #: ../lib-functions/ActivatedMovementTools.php:73
-#: ../ActivatedMovementList.php:190
+#: ../ActivatedMovementList.php:193
 #: ../LocationConcreteProductList.php:241
 #: ../StockAccountingExport.php:233
 #: ../LocationExecutedMovementList.php:91
@@ -225,7 +225,7 @@ msgstr "Site"
 #: ../lib/Objects/_CostRange.php:810
 #: ../lib/Objects/_CostRange.php:811
 #: ../lib/DocumentGenerator.php:1689
-#: ../ActivatedMovementList.php:192
+#: ../ActivatedMovementList.php:195
 #: ../LocationConcreteProductList.php:243
 #: ../StockAccountingExport.php:75
 #: ../StockAccountingExport.php:149
@@ -239,7 +239,7 @@ msgstr "Magasin"
 
 #: ../lib-functions/ActivatedMovementTools.php:77
 #: ../lib/DocumentGenerator.php:1689
-#: ../ActivatedMovementList.php:194
+#: ../ActivatedMovementList.php:197
 #: ../ProductByLocationList.php:89
 #: ../LocationConcreteProductList.php:244
 #: ../LocationExecutedMovementList.php:85
@@ -1152,6 +1152,7 @@ msgid "A conflict exists with prices by %s defined for the following services:"
 msgstr "Il y a un conflit avec les prix par %s définis pour les prestations suivantes:"
 
 #: ../lib/Custom/PrestationCostAddEdit.php:308
+#: ../lib/Objects/_Chain.php:303
 #: ../lib/Objects/_RTWProduct.php:185
 #: ../menu.inc.php:258
 #: void:1
@@ -1348,8 +1349,8 @@ msgstr "Ajout/édition de prestations"
 #: ../lib/Custom/TVAAddEdit.php:67
 #: ../lib/Objects/Operation.php:684
 #: ../lib/Objects/Operation.php:685
-#: ../lib/Objects/_Chain.php:1104
-#: ../lib/Objects/_Chain.php:1105
+#: ../lib/Objects/_Chain.php:1144
+#: ../lib/Objects/_Chain.php:1145
 #: ../lib/Objects/_Prestation.php:1058
 #: ../lib/Objects/_Prestation.php:1059
 #: ../lib/Objects/CustomerSituation.php:380
@@ -1436,8 +1437,8 @@ msgstr "Ce modèle ne peut être modifié car il est utilisé dans une ou plusie
 #: ../lib/Custom/RTWMaterialGrid.php:50
 #: ../lib/Custom/PrestationCostGrid.php:107
 #: ../lib/Custom/PrestationCostGrid.php:111
-#: ../lib/Objects/_Chain.php:1068
-#: ../lib/Objects/_Chain.php:1069
+#: ../lib/Objects/_Chain.php:1108
+#: ../lib/Objects/_Chain.php:1109
 #: ../lib/Objects/Alert.const.php:91
 #: ../lib/Objects/Alert.const.php:101
 #: ../lib/Objects/Alert.const.php:111
@@ -1465,7 +1466,7 @@ msgstr "Ce modèle ne peut être modifié car il est utilisé dans une ou plusie
 #: ../InvoicePaymentList.php:66
 #: ../ProductSubstitutionList.php:218
 #: ../ActivatedMovementList.php:88
-#: ../ActivatedMovementList.php:184
+#: ../ActivatedMovementList.php:187
 #: ../ProductByLocationList.php:74
 #: ../ProductByLocationList.php:145
 #: ../InvoiceAddEdit.php:336
@@ -1503,8 +1504,8 @@ msgstr "Référence"
 
 #: ../lib/Custom/ActorProductGrid.php:59
 #: ../lib/Custom/ActorProductGrid.php:66
-#: ../lib/Objects/_Chain.php:1086
-#: ../lib/Objects/_Chain.php:1087
+#: ../lib/Objects/_Chain.php:1126
+#: ../lib/Objects/_Chain.php:1127
 #: ../lib/Objects/RTWElement.php:256
 #: ../lib/Objects/RTWElement.php:257
 #: ../StockStorageSiteList.php:72
@@ -1512,7 +1513,7 @@ msgstr "Référence"
 #: ../AffectationList.php:72
 #: ../SaisonalityPromotionProductList.php:68
 #: ../ActivatedMovementList.php:90
-#: ../ActivatedMovementList.php:186
+#: ../ActivatedMovementList.php:189
 #: ../DocumentModelPropertyAddEdit.php:273
 #: ../ProductByLocationList.php:77
 #: ../InvoiceAddEdit.php:344
@@ -1824,7 +1825,7 @@ msgstr "Filtrer par date"
 #: ../WorkOrderOpeTaskList.php:138
 #: ../ActivatedChainList.php:122
 #: ../ActivatedFlightList.php:193
-#: ../ActivatedMovementList.php:181
+#: ../ActivatedMovementList.php:182
 #: ../ActivityBasedCosting.php:46
 #: ../ActivityBasedCosting.php:99
 #: ../DocumentModelPropertyAddEdit.php:323
@@ -1911,6 +1912,7 @@ msgid "Hour of day"
 msgstr "Heure du jour"
 
 #: ../lib/Custom/ForecastFlowGrid.php:49
+#: ../lib/Objects/_Chain.php:302
 #: ../ChainTaskDetails.php:72
 #: ../ChainActivationTaskDetail.php:117
 #: ../FormModelAddEdit.php:107
@@ -2073,7 +2075,7 @@ msgid "The following questions could not be deleted because they are associated 
 msgstr "Les questions suivantes ne peuvent pas être supprimées car elles sont liées à un paragraphe modèle : %s"
 
 #: ../lib/Custom/PrestationCostGrid.php:53
-#: ../lib/Objects/_Chain.php:261
+#: ../lib/Objects/_Chain.php:245
 msgid "products"
 msgstr "produits"
 
@@ -2215,7 +2217,7 @@ msgstr "Toutes les combinaisons de produits ont été créées avec succès. Voi
 #: ../lib/CustomGrid/Columns/GridColumnBoardCategory.php:90
 #: ../lib/Objects/Product.inc.php:38
 #: ../lib/Objects/CommandItem.inc.php:50
-#: ../lib/Objects/_Chain.php:584
+#: ../lib/Objects/_Chain.php:623
 #: ../lib/Objects/Box.php:71
 #: ../lib/Objects/ActorView.php:121
 #: ../lib/Objects/ActorView.php:139
@@ -2540,8 +2542,8 @@ msgstr "Caractéristiques produit"
 
 #: ../lib/Objects/ProductKind.php:320
 #: ../lib/Objects/ProductKind.php:321
-#: ../lib/Objects/_Chain.php:1149
-#: ../lib/Objects/_Chain.php:1150
+#: ../lib/Objects/_Chain.php:1198
+#: ../lib/Objects/_Chain.php:1199
 #: ../lib/Objects/_CostRange.php:819
 #: ../lib/Objects/_CostRange.php:820
 #: ../lib/DocumentGenerator.php:1319
@@ -2615,71 +2617,81 @@ msgstr "Ajout/modification références produit par client"
 msgid "Customer reference"
 msgstr "Référence client"
 
-#: ../lib/Objects/_Chain.php:262
+#: ../lib/Objects/_Chain.php:246
 msgid "carriage"
 msgstr "transport"
 
-#: ../lib/Objects/_Chain.php:263
+#: ../lib/Objects/_Chain.php:247
 msgid "maintenance"
 msgstr "maintenance"
 
-#: ../lib/Objects/_Chain.php:264
+#: ../lib/Objects/_Chain.php:248
 msgid "class"
 msgstr "cours"
 
-#: ../lib/Objects/_Chain.php:265
+#: ../lib/Objects/_Chain.php:249
 msgid "helicopter rental"
 msgstr "location d'hélicoptère"
 
-#: ../lib/Objects/_Chain.php:585
+#: ../lib/Objects/_Chain.php:304
+#: ../lib/Objects/_RTWMaterial.php:243
+msgid "Materials"
+msgstr "Matières premières"
+
+#: ../lib/Objects/_Chain.php:624
 #: ../lib/Objects/_ActivatedMovement.php:182
 msgid "Created"
 msgstr "Créée"
 
-#: ../lib/Objects/_Chain.php:586
+#: ../lib/Objects/_Chain.php:625
 msgid "Contructed"
 msgstr "Construite"
 
-#: ../lib/Objects/_Chain.php:587
+#: ../lib/Objects/_Chain.php:626
 msgid "Can be activated"
 msgstr "Activable"
 
-#: ../lib/Objects/_Chain.php:910
+#: ../lib/Objects/_Chain.php:949
 #: ../menu.inc.php:252
 msgid "Chains"
 msgstr "Chaînes"
 
-#: ../lib/Objects/_Chain.php:1077
-#: ../lib/Objects/_Chain.php:1078
+#: ../lib/Objects/_Chain.php:1117
+#: ../lib/Objects/_Chain.php:1118
 msgid "Creator"
 msgstr "Créateur"
 
-#: ../lib/Objects/_Chain.php:1095
-#: ../lib/Objects/_Chain.php:1096
+#: ../lib/Objects/_Chain.php:1135
+#: ../lib/Objects/_Chain.php:1136
 msgid "Catalog description"
 msgstr "Description catalogue"
 
-#: ../lib/Objects/_Chain.php:1113
-#: ../lib/Objects/_Chain.php:1114
+#: ../lib/Objects/_Chain.php:1153
+#: ../lib/Objects/_Chain.php:1154
+msgid "Auto assign to"
+msgstr "Assigner automatiquement aux"
+
+#: ../lib/Objects/_Chain.php:1162
+#: ../lib/Objects/_Chain.php:1163
 msgid "Barcode type"
 msgstr "Type de code barre"
 
-#: ../lib/Objects/_Chain.php:1122
-#: ../lib/Objects/_Chain.php:1123
+#: ../lib/Objects/_Chain.php:1171
+#: ../lib/Objects/_Chain.php:1172
 msgid "SiteTransition"
 msgstr ""
 
-#: ../lib/Objects/_Chain.php:1131
-#: ../lib/Objects/_Chain.php:1132
+#: ../lib/Objects/_Chain.php:1180
+#: ../lib/Objects/_Chain.php:1181
 #: ../lib/Objects/_OnlogisticsAccount.php:633
 #: ../lib/Objects/_OnlogisticsAccount.php:634
 #: ../lib/DocumentGenerator.php:2638
 msgid "Creation date"
 msgstr "Date de création"
 
-#: ../lib/Objects/_Chain.php:1140
-#: ../lib/Objects/_Chain.php:1141
-#: ../ActivatedMovementList.php:205
+#: ../lib/Objects/_Chain.php:1189
+#: ../lib/Objects/_Chain.php:1190
+#: ../ActivatedMovementList.php:211
 #: ../ActivityBasedCosting.php:112
 #: ../GroupableBoxActivatedChainTaskList.php:149
 #: ../ChainCommandList.php:109
@@ -2842,7 +2854,7 @@ msgstr "Mode de calcul"
 #: ../lib/Objects/_Prestation.php:1112
 #: ../lib/Objects/_Prestation.php:1113
 #: ../ActivatedMovementList.php:84
-#: ../ActivatedMovementList.php:183
+#: ../ActivatedMovementList.php:184
 #: ../LocationExecutedMovementList.php:116
 #: void:1
 msgid "Movement type"
@@ -2967,7 +2979,7 @@ msgstr "au kilowatt"
 
 #: ../lib/Objects/_ActivatedChainTask.php:1532
 #: ../lib/Objects/Action.php:374
-#: ../ActivatedMovementList.php:207
+#: ../ActivatedMovementList.php:213
 msgid "To do"
 msgstr "A faire"
 
@@ -2975,7 +2987,7 @@ msgstr "A faire"
 #: ../lib/Objects/Action.php:375
 #: ../lib/Objects/_ActivatedMovement.php:183
 #: ../lib/Objects/_ExecutedMovement.php:231
-#: ../ActivatedMovementList.php:208
+#: ../ActivatedMovementList.php:214
 msgid "In progress"
 msgstr "En cours"
 
@@ -3239,7 +3251,7 @@ msgstr "Version"
 #: ../lib/DocumentGenerator.php:1867
 #: ../lib/DocumentGenerator.php:2142
 #: ../PrestationInvoiceAddEdit.php:179
-#: ../ActivatedMovementList.php:189
+#: ../ActivatedMovementList.php:192
 #: ../InvoiceAddEdit.php:364
 #: ../InvoiceChainCommandList.php:225
 #: ../ProductCommand.php:231
@@ -3296,10 +3308,6 @@ msgstr "Fil"
 #: ../lib/Objects/_RTWMaterial.php:125
 msgid "Heel"
 msgstr "Talon"
-
-#: ../lib/Objects/_RTWMaterial.php:243
-msgid "Materials"
-msgstr "Matières premières"
 
 #: ../lib/Objects/_RTWMaterial.php:449
 #: ../lib/Objects/_RTWMaterial.php:450
@@ -4522,7 +4530,7 @@ msgstr "Vols effectués"
 #: ../lib/Objects/Command.const.php:59
 #: ../lib/Objects/_ActivatedMovement.php:186
 #: ../lib/Objects/_Command.php:853
-#: ../ActivatedMovementList.php:210
+#: ../ActivatedMovementList.php:216
 msgid "Locked"
 msgstr "Bloqué"
 
@@ -5076,7 +5084,7 @@ msgid "Not charged"
 msgstr "Non facturé"
 
 #: ../lib/Objects/_ExecutedMovement.php:233
-#: ../ActivatedMovementList.php:209
+#: ../ActivatedMovementList.php:215
 msgid "Partial"
 msgstr "Partiel"
 
@@ -8538,6 +8546,7 @@ msgstr "Date souhaitée (jj/mm/aa hh:mm)"
 
 #: ../ActivatedChainList.php:72
 #: ../ActivatedMovementList.php:103
+#: ../ActivatedMovementList.php:185
 msgid "Expeditor"
 msgstr "Exp&eacute;diteur"
 
@@ -8846,31 +8855,21 @@ msgid "Select one or more movement types"
 msgstr "Sélectionner un ou plusieurs types de mouvements"
 
 #: ../ActivatedMovementList.php:105
+#: ../ActivatedMovementList.php:186
 msgid "Destinator"
 msgstr "Destinataire"
 
-#: ../ActivatedMovementList.php:168
+#: ../ActivatedMovementList.php:169
 msgid "Execute several movements"
 msgstr "Exécuter plusieurs mouvements"
 
-#: ../ActivatedMovementList.php:187
+#: ../ActivatedMovementList.php:190
 #: ../CommandList.php:117
 #: ../ActorProductAddEdit.php:186
 msgid "Purchase reference"
 msgstr "Réf. achat"
 
-#: ../ActivatedMovementList.php:195
-#: ../GroupableBoxActivatedChainTaskList.php:145
-#: ../ActivatedChainTaskHistory.php:133
-#: ../ActivatedChainTaskList.php:245
-#: ../SaisonalityList.php:88
-#: ../PromotionList.php:60
-#: ../GroupableBoxList.php:80
-#: void:1
-msgid "Beginning date"
-msgstr "Date de début"
-
-#: ../ActivatedMovementList.php:203
+#: ../ActivatedMovementList.php:209
 msgid "Execute this movement"
 msgstr "Exécuter ce mouvement"
 
@@ -9207,6 +9206,16 @@ msgstr "Commune d'arrivée"
 #: ../GroupableBoxActivatedChainTaskList.php:99
 msgid "Select a zone"
 msgstr "Sélectionner une zone"
+
+#: ../GroupableBoxActivatedChainTaskList.php:145
+#: ../ActivatedChainTaskHistory.php:133
+#: ../ActivatedChainTaskList.php:245
+#: ../SaisonalityList.php:88
+#: ../PromotionList.php:60
+#: ../GroupableBoxList.php:80
+#: void:1
+msgid "Beginning date"
+msgstr "Date de début"
 
 #: ../GroupableBoxActivatedChainTaskList.php:154
 #: ../GroupableBoxList.php:94
@@ -12738,47 +12747,47 @@ msgstr "Imprimer la liste"
 msgid "Export list in csv format (Excel)"
 msgstr "Exporter la liste au format csv (Excel)"
 
-#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:831
+#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:830
 #: void:1
 msgid "First page"
 msgstr "Première page"
 
-#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:832
+#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:831
 #: void:1
 msgid "Previous page"
 msgstr "Page précédente"
 
-#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:833
+#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:832
 #: void:1
 msgid "Next page"
 msgstr "Page suivante"
 
-#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:834
+#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:833
 #: void:1
 msgid "Last page"
 msgstr "Dernière page"
 
-#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:869
+#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:868
 msgid "page"
 msgstr "page"
 
-#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:930
+#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:929
 msgid "Items number per page"
 msgstr "Nombre d'items par page"
 
-#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:948
+#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:947
 msgid "Columns"
 msgstr "Colonnes"
 
-#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:948
+#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:947
 msgid "Available columns"
 msgstr "Colonnes disponibles"
 
-#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:949
+#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:948
 msgid "Columns to hide"
 msgstr "Colonnes à masquer"
 
-#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:959
+#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:958
 msgid "You can't hide all columns."
 msgstr "Vous ne pouvez pas masquer toutes les colonnes."
 

@@ -3,42 +3,27 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * This file is part of Onlogistics, a web based ERP and supply chain 
- * management application. 
+ * $Source: /home/cvs/codegen/codegentemplates.py,v $
  *
- * Copyright (C) 2003-2008 ATEOR
+ * Ceci est un fichier généré, NE PAS EDITER.
  *
- * This program is free software: you can redistribute it and/or modify it 
- * under the terms of the GNU Affero General Public License as published by 
- * the Free Software Foundation, either version 3 of the License, or (at your 
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public 
- * License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * PHP version 5.1.0+
- *
- * @package   Onlogistics
- * @author    ATEOR dev team <dev@ateor.com>
- * @copyright 2003-2008 ATEOR <contact@ateor.com> 
- * @license   http://www.fsf.org/licensing/licenses/agpl-3.0.html GNU AGPL
- * @version   SVN: $Id$
- * @link      http://www.onlogistics.org
- * @link      http://onlogistics.googlecode.com
- * @since     File available since release 0.1.0
- * @filesource
+ * @copyright 2002-2006 ATEOR - All rights reserved
  */
 
+
+/**
+ * _RTWMaterial class
+ *
+ */
 class _RTWMaterial extends Product {
     // class constants {{{
 
     const TYPE_RAW_MATERIAL = 0;
     const TYPE_ACCESSORY = 1;
+    const TYPE_PACKAGING = 2;
+    const TYPE_THREAD = 3;
+    const TYPE_HEEL = 4;
+    const TYPE_BAMBOO = 5;
 
     // }}}
     // Constructeur {{{
@@ -134,7 +119,11 @@ class _RTWMaterial extends Product {
     public static function getMaterialTypeConstArray($keys = false) {
         $array = array(
             _RTWMaterial::TYPE_RAW_MATERIAL => _("Raw material"), 
-            _RTWMaterial::TYPE_ACCESSORY => _("Accessory")
+            _RTWMaterial::TYPE_ACCESSORY => _("Accessory"), 
+            _RTWMaterial::TYPE_PACKAGING => _("Packaging"), 
+            _RTWMaterial::TYPE_THREAD => _("Thread"), 
+            _RTWMaterial::TYPE_HEEL => _("Heel"), 
+            _RTWMaterial::TYPE_BAMBOO => _("Bamboo")
         );
         asort($array);
         return $keys?array_keys($array):$array;

@@ -104,12 +104,6 @@ class RTWManager
         $ap->setBuyUnitQuantity(1);
         $ap->setPriority(1);
         $ap->save();
-        // prix
-        $pbc = new PriceByCurrency();
-        $pbc->setCurrency(1);
-        $pbc->setPrice($price);
-        $pbc->setActorProduct($ap);
-        $pbc->save();
         $product->setActorProduct($ap);
     }
 

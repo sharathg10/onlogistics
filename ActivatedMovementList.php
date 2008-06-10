@@ -195,9 +195,9 @@ if (true === $form->displayGrid()) {
 	$grid->NewColumn('ActivatedMovementList', _('Store'),
             array('Level' => 'Store', 'Sortable' => false));
 	$grid->NewColumn('ActivatedMovementList', _('Location'), array('Sortable' => false));
+    $grid->NewColumn('FieldMapper', _('Beginning date'), array('Macro' => '%StartDate|formatdate%'));
 
     $grid->hiddenColumnsByDefault = array($destinatorCol->index, $expeditorCol->index);
-
 
 	/* Mise en commentaire provisoire, tant que pas cable avec la plannification
 	$grid->NewColumn('FieldMapper', 'Date fin', array('Macro' => '%EndDate|formatdate%'));  */

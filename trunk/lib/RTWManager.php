@@ -55,19 +55,30 @@ class RTWManager
      * @throw  Exception
      * @static
      */
-    protected static function createAffectation($product, $chainRef)
+    protected static function createAffectation($product, $ref)
     {
-        $chain = Object::load('Chain', array('Reference' => $chainRef));
-        if (!($chain instanceof Chain)) {
-            throw new Exception(sprintf(
-                _('You must create a chain with reference "%s"'),
-                $chainRef
-            ));
+        if ($ref == 'lc') {
+            $chainCol = Object::loadCollection(
+                'Chain',
+                array('AutoAssignTo' => Chain::AUTOASSIGN_PRODUCTS)
+            );
+        } else if ($ref == 'af') {
+            $chainCol = Object::loadCollection(
+                'Chain',
+                array('AutoAssignTo' => Chain::AUTOASSIGN_MATERIALS)
+            );
+        } else {
+            $chainCol = Object::loadCollection(
+                'Chain',
+                array('Reference' => $ref)
+            );
         }
-        $pcl = new ProductChainLink();
-        $pcl->setChain($chain);
-        $pcl->setProduct($product);
-        $pcl->save();
+        foreach ($chainCol as $chain) {
+            $pcl = new ProductChainLink();
+            $pcl->setChain($chain);
+            $pcl->setProduct($product);
+            $pcl->save();
+        }
     }
 
     // }}}

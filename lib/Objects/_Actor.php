@@ -3,37 +3,18 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * This file is part of Onlogistics, a web based ERP and supply chain 
- * management application. 
+ * $Source: /home/cvs/codegen/codegentemplates.py,v $
  *
- * Copyright (C) 2003-2008 ATEOR
+ * Ceci est un fichier généré, NE PAS EDITER.
  *
- * This program is free software: you can redistribute it and/or modify it 
- * under the terms of the GNU Affero General Public License as published by 
- * the Free Software Foundation, either version 3 of the License, or (at your 
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public 
- * License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * PHP version 5.1.0+
- *
- * @package   Onlogistics
- * @author    ATEOR dev team <dev@ateor.com>
- * @copyright 2003-2008 ATEOR <contact@ateor.com> 
- * @license   http://www.fsf.org/licensing/licenses/agpl-3.0.html GNU AGPL
- * @version   SVN: $Id$
- * @link      http://www.onlogistics.org
- * @link      http://onlogistics.googlecode.com
- * @since     File available since release 0.1.0
- * @filesource
+ * @copyright 2002-2006 ATEOR - All rights reserved
  */
 
+
+/**
+ * _Actor class
+ *
+ */
 class _Actor extends Object {
     // class constants {{{
 
@@ -1281,6 +1262,60 @@ class _Actor extends Object {
     }
 
     // }}}
+    // PricingZone foreignkey property + getter/setter {{{
+
+    /**
+     * PricingZone foreignkey
+     *
+     * @access private
+     * @var mixed object PricingZone or integer
+     */
+    private $_PricingZone = false;
+
+    /**
+     * _Actor::getPricingZone
+     *
+     * @access public
+     * @return object PricingZone
+     */
+    public function getPricingZone() {
+        if (is_int($this->_PricingZone) && $this->_PricingZone > 0) {
+            $mapper = Mapper::singleton('PricingZone');
+            $this->_PricingZone = $mapper->load(
+                array('Id'=>$this->_PricingZone));
+        }
+        return $this->_PricingZone;
+    }
+
+    /**
+     * _Actor::getPricingZoneId
+     *
+     * @access public
+     * @return integer
+     */
+    public function getPricingZoneId() {
+        if ($this->_PricingZone instanceof PricingZone) {
+            return $this->_PricingZone->getId();
+        }
+        return (int)$this->_PricingZone;
+    }
+
+    /**
+     * _Actor::setPricingZone
+     *
+     * @access public
+     * @param object PricingZone $value
+     * @return void
+     */
+    public function setPricingZone($value) {
+        if (is_numeric($value)) {
+            $this->_PricingZone = (int)$value;
+        } else {
+            $this->_PricingZone = $value;
+        }
+    }
+
+    // }}}
     // AccountingType foreignkey property + getter/setter {{{
 
     /**
@@ -1974,6 +2009,7 @@ class _Actor extends Object {
             'CompanyType' => Object::TYPE_STRING,
             'CreationDate' => Object::TYPE_DATETIME,
             'Currency' => 'Currency',
+            'PricingZone' => 'PricingZone',
             'AccountingType' => 'AccountingType',
             'CustomerProperties' => 'CustomerProperties',
             'ActorDetail' => 'ActorDetail');

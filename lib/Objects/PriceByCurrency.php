@@ -3,37 +3,18 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * This file is part of Onlogistics, a web based ERP and supply chain 
- * management application. 
+ * $Source: /home/cvs/codegen/codegentemplates.py,v $
  *
- * Copyright (C) 2003-2008 ATEOR
+ * Ceci est un fichier généré, NE PAS EDITER.
  *
- * This program is free software: you can redistribute it and/or modify it 
- * under the terms of the GNU Affero General Public License as published by 
- * the Free Software Foundation, either version 3 of the License, or (at your 
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public 
- * License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * PHP version 5.1.0+
- *
- * @package   Onlogistics
- * @author    ATEOR dev team <dev@ateor.com>
- * @copyright 2003-2008 ATEOR <contact@ateor.com> 
- * @license   http://www.fsf.org/licensing/licenses/agpl-3.0.html GNU AGPL
- * @version   SVN: $Id$
- * @link      http://www.onlogistics.org
- * @link      http://onlogistics.googlecode.com
- * @since     File available since release 0.1.0
- * @filesource
+ * @copyright 2002-2006 ATEOR - All rights reserved
  */
 
+
+/**
+ * PriceByCurrency class
+ *
+ */
 class PriceByCurrency extends Object {
     
     // Constructeur {{{
@@ -47,6 +28,40 @@ class PriceByCurrency extends Object {
      */
     public function __construct() {
         parent::__construct();
+    }
+
+    // }}}
+    // RecommendedPrice float property + getter/setter {{{
+
+    /**
+     * RecommendedPrice float property
+     *
+     * @access private
+     * @var float
+     */
+    private $_RecommendedPrice = 0;
+
+    /**
+     * PriceByCurrency::getRecommendedPrice
+     *
+     * @access public
+     * @return float
+     */
+    public function getRecommendedPrice() {
+        return $this->_RecommendedPrice;
+    }
+
+    /**
+     * PriceByCurrency::setRecommendedPrice
+     *
+     * @access public
+     * @param float $value
+     * @return void
+     */
+    public function setRecommendedPrice($value) {
+        if ($value !== null) {
+            $this->_RecommendedPrice = round(I18N::extractNumber($value), 2);
+        }
     }
 
     // }}}
@@ -246,6 +261,60 @@ class PriceByCurrency extends Object {
     }
 
     // }}}
+    // PricingZone foreignkey property + getter/setter {{{
+
+    /**
+     * PricingZone foreignkey
+     *
+     * @access private
+     * @var mixed object PricingZone or integer
+     */
+    private $_PricingZone = false;
+
+    /**
+     * PriceByCurrency::getPricingZone
+     *
+     * @access public
+     * @return object PricingZone
+     */
+    public function getPricingZone() {
+        if (is_int($this->_PricingZone) && $this->_PricingZone > 0) {
+            $mapper = Mapper::singleton('PricingZone');
+            $this->_PricingZone = $mapper->load(
+                array('Id'=>$this->_PricingZone));
+        }
+        return $this->_PricingZone;
+    }
+
+    /**
+     * PriceByCurrency::getPricingZoneId
+     *
+     * @access public
+     * @return integer
+     */
+    public function getPricingZoneId() {
+        if ($this->_PricingZone instanceof PricingZone) {
+            return $this->_PricingZone->getId();
+        }
+        return (int)$this->_PricingZone;
+    }
+
+    /**
+     * PriceByCurrency::setPricingZone
+     *
+     * @access public
+     * @param object PricingZone $value
+     * @return void
+     */
+    public function setPricingZone($value) {
+        if (is_numeric($value)) {
+            $this->_PricingZone = (int)$value;
+        } else {
+            $this->_PricingZone = $value;
+        }
+    }
+
+    // }}}
     // getTableName() {{{
 
     /**
@@ -287,10 +356,12 @@ class PriceByCurrency extends Object {
      */
     public static function getProperties() {
         $return = array(
+            'RecommendedPrice' => Object::TYPE_DECIMAL,
             'Price' => Object::TYPE_DECIMAL,
             'Currency' => 'Currency',
             'Product' => 'Product',
-            'ActorProduct' => 'ActorProduct');
+            'ActorProduct' => 'ActorProduct',
+            'PricingZone' => 'PricingZone');
         return $return;
     }
 

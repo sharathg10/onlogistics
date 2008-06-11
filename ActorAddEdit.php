@@ -658,6 +658,12 @@ $curOptions  = FormTools::writeOptionsFromObject('Currency', $curId);
 $smarty->assign('CurrencyList', join("\n\t\t", $curOptions));
 $smarty->assign('Currency', $cur instanceof Currency?$cur->getSymbol():'&euro;');
 
+// zone de tarification
+$zoneId = $_SESSION['actor']->getPricingZoneId();
+$zoneOptions  = FormTools::writeOptionsFromObject('PricingZone', $zoneId, 
+    array(), array(), 'toString', array(), true);
+$smarty->assign('PricingZoneList', join("\n\t\t", $zoneOptions));
+
 // sites
 $siteCollection = $_SESSION['actor']->getSiteCollection();
 $siteList = array();

@@ -382,7 +382,7 @@ CREATE TABLE Actor (
   _Siret VARCHAR(255) DEFAULT NULL,
   _IATA VARCHAR(255) DEFAULT NULL,
   _Logo TEXT DEFAULT NULL,
-  _Slogan VARCHAR(255) DEFAULT NULL,
+  _Slogan INT(11) NOT NULL DEFAULT NULL,
   _TVA VARCHAR(255) DEFAULT NULL,
   _RCS VARCHAR(255) DEFAULT NULL,
   _Role VARCHAR(255) DEFAULT NULL,
@@ -401,6 +401,7 @@ CREATE TABLE Actor (
   _CompanyType VARCHAR(255) DEFAULT NULL,
   _CreationDate DATETIME DEFAULT NULL,
   _Currency INT(11) NOT NULL DEFAULT 0,
+  _PricingZone INT(11) NOT NULL DEFAULT 0,
   _AccountingType INT(11) NOT NULL DEFAULT 0,
   _CustomerProperties INT(11) NOT NULL DEFAULT 0,
   _ActorDetail INT(11) NOT NULL DEFAULT 0,
@@ -437,6 +438,7 @@ CREATE INDEX _MainSite ON Actor (_MainSite);
 CREATE INDEX _Category ON Actor (_Category);
 CREATE INDEX _GenericActor ON Actor (_GenericActor);
 CREATE INDEX _Currency ON Actor (_Currency);
+CREATE INDEX _PricingZone ON Actor (_PricingZone);
 CREATE INDEX _AccountingType ON Actor (_AccountingType);
 CREATE INDEX _CustomerProperties ON Actor (_CustomerProperties);
 CREATE INDEX _ActorDetail ON Actor (_ActorDetail);
@@ -2225,16 +2227,31 @@ DROP TABLE IF EXISTS PriceByCurrency;
 CREATE TABLE PriceByCurrency (
   _Id int(11) unsigned NOT NULL default 0,
   _DBId int(11) default 0,
+  _RecommendedPrice DECIMAL(10,2) NOT NULL DEFAULT 0,
   _Price DECIMAL(10,2) NOT NULL DEFAULT 0,
   _Currency INT(11) NOT NULL DEFAULT 0,
   _Product INT(11) NOT NULL DEFAULT 0,
   _ActorProduct INT(11) NOT NULL DEFAULT 0,
+  _PricingZone INT(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (_Id)
 ) TYPE=InnoDB CHARSET=latin1;
 
 CREATE INDEX _Currency ON PriceByCurrency (_Currency);
 CREATE INDEX _Product ON PriceByCurrency (_Product);
 CREATE INDEX _ActorProduct ON PriceByCurrency (_ActorProduct);
+CREATE INDEX _PricingZone ON PriceByCurrency (_PricingZone);
+
+--
+-- Table structure for PricingZone
+--
+DROP TABLE IF EXISTS PricingZone;
+CREATE TABLE PricingZone (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
 
 --
 -- Table structure for Product

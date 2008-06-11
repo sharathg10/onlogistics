@@ -66,8 +66,6 @@ $pdtId = isset($_REQUEST['pdtId'])?$_REQUEST['pdtId']:0;
 $retURL = isset($_REQUEST['retURL'])?$_REQUEST['retURL']:'ProductList.php';
 
 // Variables utilisees plus bas
-$priceByCurrencyMapper = Mapper::singleton('PriceByCurrency');
-$currencyMapper = Mapper::singleton('Currency');
 $productMapper = Mapper::singleton('Product');
 
 if (isset($_SESSION['pdtproduct'])) {
@@ -159,8 +157,6 @@ if ((isset($_POST['formSubmitted']) && $_POST['formSubmitted'] != 0)
 
     // sauvegarde des infos du produit
     saveProductProperties($product);
-    // Gestion des devises
-    saveProductPriceByCurrency($product);
     // Gestion des couples ActorProduct
     saveActorProduct($product, $redirect?false:true);
     // Gestion des eventuels ProductSubstitutions a creer
@@ -328,36 +324,6 @@ for ($i=0; $i<$count; $i++) {
     );
 }
 $smarty->assign('suppliers', $suppliers);
-
-// Devises unité de vente
-$currencies = array();
-$currencyCol = $currencyMapper->loadCollection();
-$count = $currencyCol->getCount();
-for($i = 0; $i < $count; $i++){
-	$currency = $currencyCol->getItem($i);
-    $currencies[$i]['Id'] = $currency->getId();
-    $currencies[$i]['Name'] = $currency->getName();
-    $currencies[$i]['Symbol'] = $currency->getSymbol();
-    // product: prix de l'UV
-    $priceByCurrency = 0;
-    if ($product->getId() > 0) {
-        $priceByCurrency = $priceByCurrencyMapper->load(
-            array(
-                'Product'=>$product->getId(),
-                'Currency'=>$currency->getId()
-            )
-        );
-    }
-    if (isset($_SESSION['pdtPrice_' .  $currency->getId()])) {
-        $value = $_SESSION['pdtPrice_'.$currency->getId()];
-    } else if ($priceByCurrency instanceof PriceByCurrency) {
-        $value = $priceByCurrency->getPrice();
-    } else {
-        $value = 0;
-    }
-    $currencies[$i]['PriceValue'] = $value;
-} // for
-$smarty->assign('currencies', $currencies);
 
 $smarty->assign('returnURL', 'ProductList.php');
 

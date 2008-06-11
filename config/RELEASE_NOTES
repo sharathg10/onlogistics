@@ -157,8 +157,28 @@ CREATE TABLE rTWModelRTWSize (
 
 # nettoyage properties/catalogues
 delete from CatalogCriteria where _Property not in (select _Id from Property);
-# 
+
+# modif chaines
 ALTER TABLE Chain ADD COLUMN _AutoAssignTo INT(3) NOT NULL DEFAULT 0;
+
+# modif prix
+
+ALTER TABLE PriceByCurrency ADD COLUMN 
+    _RecommendedPrice DECIMAL(10,2) NOT NULL DEFAULT 0 AFTER _DBId;
+ALTER TABLE PriceByCurrency ADD COLUMN 
+    _PricingZone INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _PricingZone ON PriceByCurrency (_PricingZone);
+ALTER TABLE Actor ADD COLUMN 
+    _PricingZone INT(11) NOT NULL DEFAULT 0 AFTER _Currency;
+CREATE INDEX _PricingZone ON Actor (_PricingZone);
+
+DROP TABLE IF EXISTS PricingZone;
+CREATE TABLE PricingZone (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
 
 
 ####################################

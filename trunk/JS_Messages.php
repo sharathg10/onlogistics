@@ -313,6 +313,13 @@ $msgs['ZoneAddEdit_1'] = _('Please select at least one site.');
 
 $msgs['FlowTypeAddEdit_0'] = _('You must add expenses and receipts lines');
 
+$msgs['ProductPriceAddEdit_0'] = _('Pricing zone');
+$msgs['ProductPriceAddEdit_1'] = _('Currency');
+$msgs['ProductPriceAddEdit_2'] = _('Recommended price');
+$msgs['ProductPriceAddEdit_3'] = _('Price');
+$msgs['ProductPriceAddEdit_4'] = _('N/A');
+$msgs['ProductPriceAddEdit_5'] = _('This will discard the changes you made for this supplier, continue ?');
+
 header('Content-Type: text/javascript');
 // Pas d'utilisation de JsTools::JSQuoteString() ici, car inutilisable dans
 // Login.php (le config.inc.php redirige JS_Messages.php vers Login.php)

@@ -25,26 +25,6 @@
         {$form.ActorProduct_BuyUnitQuantity.html}</td>
   </tr>
   </tbody>
-  <thead>
-  <tr>
-    <td colspan="3">{t}Purchase price in the different currencies{/t}</td>
-  </tr>
-  </thead>
-  <tbody>
-  {section name=currency loop=$currencies}
-  <tr>
-    <td nowrap="nowrap">{t}Purchase price{/t} {$currencies[currency].Name}: </td>
-    <td>
-        <input type="hidden" name="Currencies[]"
-            value="{$currencies[currency].Id}" />
-        <input type="text" name="PurchasePrice_{$currencies[currency].Id}"
-            size="5" value="{$currencies[currency].PurchasePriceValue}" />
-        &nbsp;{$currencies[currency].Symbol} {t}excl. VAT{/t}
-    </td>
-    <td>&nbsp;</td>
-  </tr>
-  {/section}
-  </tbody>
   <tfoot>
   <tr>
     <td colspan="3" align="right">

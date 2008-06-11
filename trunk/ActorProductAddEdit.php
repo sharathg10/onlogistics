@@ -110,29 +110,10 @@ if (isset($_GET['forcedelete'])) {
     exit;
 }
 
-$pbcCollection = $ap->getPriceByCurrencyCollection();
-
 // traitement du formulaire
 if (isset($_POST['Ok'])) {
     // on rempli l'objet
     FormTools::autoHandlePostData($_POST, $ap);
-    // gestion du prix d'achat
-    foreach($_POST['Currencies'] as $id){
-        // si ce couple n'existe pas on regarde d'abord s'il n'est pas dans la
-        // collection en session
-        $pbc = $pbcCollection->getItemByObjectProperty('CurrencyId', $id);
-        if (!($pbc instanceof PriceByCurrency)) {
-            $pbc = new PriceByCurrency();
-            $pbc->generateId();
-            $forPHP4 = $ap->getId();
-            $pbc->setActorProduct($forPHP4);
-            $pbc->setCurrency($id);
-            $pbc->setPrice(troncature($_POST['PurchasePrice_' . $id]));
-            $pbcCollection->setItem($pbc);
-        } else {
-            $pbc->setPrice(troncature($_POST['PurchasePrice_' . $id]));
-        }
-    }
     // si prioritaire est checké, il faut vérifier qu'il n'y a pas déjà un
     // couple avec ce produit prioritaire
     if (isset($_POST['ActorProduct_Priority'])) {
@@ -192,28 +173,6 @@ $form->addElement('text', 'ActorProduct_BuyUnitQuantity',
     _('Purchase unit quantity'), 'size="5"');
 $form->addElement('checkbox', 'ActorProduct_Priority',
     _('Takes precedence for order'));
-
-// prix d'achat
-$currencies = array();
-$currencyMapper = Mapper::singleton('Currency');
-$currencyCol = $currencyMapper->loadCollection();
-$count = $currencyCol->getCount();
-for($i = 0; $i < $count; $i++){
-    $currency = $currencyCol->getItem($i);
-    $currencies[$i]['Id'] = $currency->getId();
-    $currencies[$i]['Name'] = $currency->getName();
-    $currencies[$i]['Symbol'] = $currency->getSymbol();
-    // actorproduct: prix d'achat
-    $pbc = $pbcCollection->getItemByObjectProperty('CurrencyID',
-        $currency->getId());
-    if ($pbc instanceof PriceByCurrency) {
-        $currencies[$i]['PurchasePriceValue'] = $pbc->getPrice();
-    } else {
-        $currencies[$i]['PurchasePriceValue'] = 0;
-    }
-} // for
-$smarty->assign('currencies', $currencies);
-
 
 // valeurs par défaut
 $defaultValues = FormTools::getDefaultValues($form, $ap);

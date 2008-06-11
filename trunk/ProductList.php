@@ -174,6 +174,18 @@ if (true === $form->displayGrid()) {
         )
     );
     $grid->NewAction('Redirect', array(
+        'Caption' => _('Selling prices'),
+        'Title' => _('Selling prices management'),
+        'URL' => 'dispatcher.php?entity=Product&altname=ProductPrice&action=edit&&objID=%d&retURL=ProductList.php'
+        )
+    );
+    $grid->NewAction('Redirect', array(
+        'Caption' => _('Supplier prices'),
+        'Title' => _('Supplier prices management'),
+        'URL' => 'dispatcher.php?entity=Product&altname=ProductPrice&action=edit&objID=%d&supplier=1&retURL=ProductList.php'
+        )
+    );
+    $grid->NewAction('Redirect', array(
         'Caption' => _('SN/Lot'),
         'Title' => _('Add SN/Lot'),
         'URL' => 'ConcreteProductAddEdit.php?pdtId=%d&retURL=ProductList.php'

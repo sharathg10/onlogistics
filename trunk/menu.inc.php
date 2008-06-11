@@ -267,6 +267,12 @@ $menu_metadata = array(
                         'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_AERO_OPERATOR)
                     ),
                     array(
+                        'title'       => _('Pricing zones'),
+                        'link'        => 'dispatcher.php?entity=PricingZone',
+                        'description' => _('Pricing zones management'),
+                        'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_AERO_OPERATOR)
+                    ),
+                    array(
                         'title'       => _('Caracteristics'),
                         'link'        => 'dispatcher.php?entity=ProductKind',
                         'description' => _('List of product caracteristics'),

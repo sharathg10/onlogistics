@@ -423,6 +423,7 @@
             field="FromActor" linktable="actOperation"
             linkfield="ToOperation"/>
         <property type="foreignkey" name="Currency" class="Currency" />
+        <property type="foreignkey" name="PricingZone" class="PricingZone" />
         <property type="foreignkey" name="AccountingType" class="AccountingType" />
         <property type="foreignkey" name="CustomerProperties" class="CustomerProperties" />
         <property type="foreignkey" name="ActorDetail" class="ActorDetail"
@@ -2112,12 +2113,21 @@
 
     <!-- entity PriceByCurrency -->
     <entity name="PriceByCurrency" tablename="PriceByCurrency">
+        <property type="decimal" name="RecommendedPrice" default="0" />
         <property type="decimal" name="Price" default="0" />
         <property type="foreignkey" name="Currency" class="Currency" />
         <property type="foreignkey" name="Product" class="Product"
             navigable="1" />
         <property type="foreignkey" name="ActorProduct" class="ActorProduct"
             navigable="1" />
+        <property type="foreignkey" name="PricingZone" class="PricingZone"/>
+    </entity>
+
+    <!-- Entity PricingZone -->
+    <entity name="PricingZone" tablename="PricingZone" 
+        features="add,edit,del,grid" label="Pricing zone">
+        <property type="string" name="Name" label="Name" 
+            usedby="addedit,grid" required="1"/>
     </entity>
 
     <!-- entity Product -->

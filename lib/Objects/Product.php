@@ -71,15 +71,31 @@ class Product extends _Product {
             $auth = Auth::singleton();
             $actor = $auth->getActor();
         }
-        // on essaie de récupérer le prix associé à la devise
-        $mapper = Mapper::singleton('PriceByCurrency');
         $currencyID = $actor->getCurrencyId();
-        $pbc = $mapper->load(array('Product' => $this->getId(),
-                'Currency' => $currencyID));
-        if (!($pbc instanceof PriceByCurrency)) {
-            return 0;
+        $zoneID     = $actor->getPricingZoneId();
+        // on essaie d'abord de récupérer le prix associé à la devise *et* à la 
+        // zone paramétrée de l'acteur, s'il y en a une
+        if ($zoneID > 0 && $currencyID > 0) {
+            $pbc = Object::load('PriceByCurrency', array(
+                'Product'     => $this->getId(),
+                'Currency'    => $currencyID,
+                'PricingZone' => $zoneID
+            ));
+            if ($pbc instanceof PriceByCurrency) {
+                return $pbc->getPrice();
+            }
         }
-        return $pbc->getPrice();
+        // sinon, on essaie de récupérer le prix associé à la devise
+        if ($currencyID > 0) {
+            $pbc = Object::load('PriceByCurrency', array(
+                'Product'  => $this->getId(),
+                'Currency' => $currencyID
+            ));
+            if ($pbc instanceof PriceByCurrency) {
+                return $pbc->getPrice();
+            }
+        }
+        return 0;
     }
 
     // }}}

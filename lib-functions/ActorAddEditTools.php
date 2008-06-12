@@ -208,6 +208,7 @@ function includeSessionRequirements(){
     require_once('Objects/Zone.php');
     require_once('Objects/ActorBankDetail.php');
     require_once('Objects/Currency.php');
+    require_once('Objects/PricingZone.php');
     require_once('Objects/ActorBankDetail.php');
     require_once('Objects/CustomerProperties.php');
     require_once('Objects/CustomerFrequency.php');

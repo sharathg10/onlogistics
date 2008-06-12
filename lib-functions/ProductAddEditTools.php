@@ -58,8 +58,6 @@ function includeSessionRequirements(){
     require_once('Objects/TVA.php');
     require_once('Objects/Container.php');
     require_once('Objects/FlyType.php');
-    require_once('Objects/Currency.php');
-    require_once('Objects/PriceByCurrency.php');
 //    require_once('Objects/Image.php');
 }
 
@@ -118,39 +116,8 @@ function saveProductProperties($product){
 }
 
 /**
- * saveProductPriceByCurrency()
- * crée et sauve les PriceByCurrency pour le produit passé en
- * paramètre à partir des données POST du formulaire.
- *
- * @access public
- * @param  object Product
- * @return void
- **/
-function saveProductPriceByCurrency($product){
-    require_once('Objects/PriceByCurrency.php');
-    if (!isset($_POST['Currencies']) || !is_array($_POST['Currencies'])) {
-        return false;
-    }
-    $mapper = Mapper::singleton('PriceByCurrency');
-    foreach($_POST['Currencies'] as $id){
-    	$pbc = $mapper->load(
-            array('Product'=>$product->getId(), 'Currency'=>$id));
-        // si ce couple n'existe pas on le crée
-        if (!($pbc instanceof PriceByCurrency)) {
-            $pbc = new PriceByCurrency();
-            $pbc->setProduct($product->getId());
-            $pbc->setCurrency($id);
-        }
-        // $_POST['Currency_' . $id] est le champs contenant le prix
-        $pbc->setPrice(troncature($_POST['Price_' . $id]));
-        saveInstance($pbc, 'ProductList.php');
-    }
-    return true;
-}
-
-/**
  * saveActorProduct()
- * Sauve les ActorProduct et leurs PriceByCurrency liés au produit passé en
+ * Sauve les ActorProduct.
  * paramètre.
  *
  * @access public
@@ -165,14 +132,6 @@ function saveActorProduct($product, $save=false){
         $ap->setProduct($product->getId());
         if ($save) {
             saveInstance($ap, 'ProductList.php');
-        }
-        $pbcCollection = $ap->getPriceByCurrencyCollection();
-        $jcount = $pbcCollection->getCount();
-        for ($j=0; $j<$jcount; $j++) {
-            $pbc = $pbcCollection->getItem($j);
-            if ($save) {
-                saveInstance($pbc, 'ProductList.php');
-            }
         }
     }
     foreach($apCollection->removedItems as $id) {

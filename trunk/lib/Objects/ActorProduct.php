@@ -55,20 +55,37 @@ class ActorProduct extends _ActorProduct {
      * Retourne le prix de l'UV dans la devise de l'acteur passé en paramètre
      *
      * @access public
-     * @param $actor le client
+     * @param  $actor le client
      * @return float le prix dans la devise définie pour le client
-     **/
-    public function getPriceByActor($actor=false){
+     */
+    public function getPriceByActor($actor=false)
+    {
         $actor = $this->getActor();
-        // on essaie de récupérer le prix associé à la devise
-        $mapper = Mapper::singleton('PriceByCurrency');
         $currencyID = $actor->getCurrencyId();
-        $pbc = $mapper->load(array('ActorProduct'=>$this->getId(),
-            'Currency'=>$currencyID));
-        if (!($pbc instanceof PriceByCurrency)) {
-            return 0;
+        $zoneID     = $actor->getPricingZoneId();
+        // on essaie d'abord de récupérer le prix associé à la devise *et* à la 
+        // zone paramétrée de l'acteur, s'il y en a une
+        if ($zoneID > 0 && $currencyID > 0) {
+            $pbc = Object::load('PriceByCurrency', array(
+                'ActorProduct' => $this->getId(),
+                'Currency'     => $currencyID,
+                'PricingZone'  => $zoneID
+            ));
+            if ($pbc instanceof PriceByCurrency) {
+                return $pbc->getPrice();
+            }
         }
-        return $pbc->getPrice();
+        // sinon, on essaie de récupérer le prix associé à la devise
+        if ($currencyID > 0) {
+            $pbc = Object::load('PriceByCurrency', array(
+                'ActorProduct' => $this->getId(),
+                'Currency'     => $currencyID
+            ));
+            if ($pbc instanceof PriceByCurrency) {
+                return $pbc->getPrice();
+            }
+        }
+        return 0;
     }
 
     // }}}
@@ -108,37 +125,31 @@ class ActorProduct extends _ActorProduct {
         if (!($stockOwner instanceof Actor)) {
             return false;
         }
-        $currency = $stockOwner->getCurrency();
-        $curID = $currency instanceof Currency?$currency->getId():0;
-        // on essaie de trouver le pricebycurrency correspondant à la devise du
-        // propriétaire du stock
-        $pbcMapper = Mapper::singleton('PriceByCurrency');
-        $filter = array('ActorProduct'=>$this->getId(), 'Currency'=>$curID);
-        $pbc = $pbcMapper->load($filter);
-        // s'il n'existe pas on prend le premier défini dans une autre devise...
-        if (!($pbc instanceof PriceByCurrency)) {
-            // on charge la collection de PriceByCurrency
-            $filter = new FilterComponent(
-                new FilterRule(
-                    'ActorProduct',
-                    FilterRule::OPERATOR_EQUALS,
-                    $this->getId()
-                ),
-                new FilterRule(
-                    'Price',
-                    FilterRule::OPERATOR_GREATER_THAN,
-                    0
-                )
-            );
-            $filter->operator = FilterComponent::OPERATOR_AND;
-            $pbcCol = $pbcMapper->loadCollection($filter);
-            if (!Tools::isEmptyObject($pbcCol)) {
-                $pbc = $pbcCol->getItem(0);
-            } else {
-                $pbc = false;
+        $currencyID = $stockOwner->getCurrencyId();
+        $zoneID     = $stockOwner->getPricingZoneId();
+        // on essaie d'abord de récupérer le prix associé à la devise *et* à la 
+        // zone paramétrée de l'acteur, s'il y en a une
+        if ($zoneID > 0 && $currencyID > 0) {
+            $pbc = Object::load('PriceByCurrency', array(
+                'ActorProduct' => $this->getId(),
+                'Currency'     => $currencyID,
+                'PricingZone'  => $zoneID
+            ));
+            if ($pbc instanceof PriceByCurrency) {
+                return $pbc;
             }
         }
-        return $pbc;
+        // sinon, on essaie de récupérer le prix associé à la devise
+        if ($currencyID > 0) {
+            $pbc = Object::load('PriceByCurrency', array(
+                'ActorProduct' => $this->getId(),
+                'Currency'     => $currencyID
+            ));
+            if ($pbc instanceof PriceByCurrency) {
+                return $pbc;
+            }
+        }
+        return false;
     }
 
     // }}}

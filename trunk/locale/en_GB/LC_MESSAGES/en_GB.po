@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Onlogistics 2.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-11 18:15+0200\n"
+"POT-Creation-Date: 2008-06-13 14:19+0200\n"
 "PO-Revision-Date: 2007-05-02 14:56+0100\n"
 "Last-Translator: guillaume <guillaume@ateor.com>\n"
 "Language-Team: ATEOR dev team <dalhia@ateor.com>\n"
@@ -678,9 +678,9 @@ msgstr ""
 
 #: ../lib-functions/StockAccountingExportTools.php:59
 #: ../lib-functions/StockAccountingExportTools.php:69
-#: ../lib/Objects/Product.php:831 ../lib/Objects/Product.php:835
-#: ../lib/Objects/Product.php:842 ../lib/Objects/Product.php:846
-#: ../lib/Objects/Product.php:856 ../lib/Objects/Product.php:862
+#: ../lib/Objects/Product.php:847 ../lib/Objects/Product.php:851
+#: ../lib/Objects/Product.php:858 ../lib/Objects/Product.php:862
+#: ../lib/Objects/Product.php:872 ../lib/Objects/Product.php:878
 #: ../lib/DocumentGenerator.php:564 ../lib/DocumentGenerator.php:696
 #: ../AffectationList.php:74 ../LocationExecutedMovementList.php:270 void:1
 msgid "Selling unit"
@@ -4104,28 +4104,28 @@ msgstr ""
 msgid "replaced by"
 msgstr ""
 
-#: ../lib/Objects/Product.php:191 ../lib/Objects/Product.php:225
-#: ../lib/Objects/Product.php:266
+#: ../lib/Objects/Product.php:207 ../lib/Objects/Product.php:241
+#: ../lib/Objects/Product.php:282
 msgid "No regrouping unit type"
 msgstr ""
 
-#: ../lib/Objects/Product.php:832 ../lib/Objects/Product.php:837
-#: ../lib/Objects/Product.php:844 ../lib/Objects/Product.php:850
-#: ../lib/Objects/Product.php:860 ../lib/Objects/Product.php:868 void:1
+#: ../lib/Objects/Product.php:848 ../lib/Objects/Product.php:853
+#: ../lib/Objects/Product.php:860 ../lib/Objects/Product.php:866
+#: ../lib/Objects/Product.php:876 ../lib/Objects/Product.php:884 void:1
 msgid "Base unit"
 msgstr ""
 
-#: ../lib/Objects/Product.php:836 ../lib/Objects/Product.php:849
-#: ../lib/Objects/Product.php:867 void:1
+#: ../lib/Objects/Product.php:852 ../lib/Objects/Product.php:865
+#: ../lib/Objects/Product.php:883 void:1
 msgid "Packing unit"
 msgstr ""
 
-#: ../lib/Objects/Product.php:843 ../lib/Objects/Product.php:847
-#: ../lib/Objects/Product.php:859 ../lib/Objects/Product.php:865 void:1
+#: ../lib/Objects/Product.php:859 ../lib/Objects/Product.php:863
+#: ../lib/Objects/Product.php:875 ../lib/Objects/Product.php:881 void:1
 msgid "Packaging unit"
 msgstr ""
 
-#: ../lib/Objects/Product.php:857 ../lib/Objects/Product.php:863
+#: ../lib/Objects/Product.php:873 ../lib/Objects/Product.php:879
 #: ../GroupableBoxList.php:84 void:1
 msgid "Regrouping unit"
 msgstr ""
@@ -11429,43 +11429,43 @@ msgstr ""
 msgid "Export list in csv format (Excel)"
 msgstr ""
 
-#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:830 void:1
+#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:831 void:1
 msgid "First page"
 msgstr ""
 
-#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:831 void:1
+#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:832 void:1
 msgid "Previous page"
 msgstr ""
 
-#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:832 void:1
+#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:833 void:1
 msgid "Next page"
 msgstr ""
 
-#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:833 void:1
+#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:834 void:1
 msgid "Last page"
 msgstr ""
 
-#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:868
+#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:869
 msgid "page"
 msgstr ""
 
-#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:929
+#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:930
 msgid "Items number per page"
 msgstr ""
 
-#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:947
+#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:948
 msgid "Columns"
 msgstr ""
 
-#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:947
+#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:948
 msgid "Available columns"
 msgstr ""
 
-#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:948
+#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:949
 msgid "Columns to hide"
 msgstr ""
 
-#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:958
+#: ../../ateor-libs/current/pwak/lib/Grid/Grid.php:959
 msgid "You can't hide all columns."
 msgstr ""
 

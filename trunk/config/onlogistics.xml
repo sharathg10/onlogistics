@@ -1679,6 +1679,8 @@
         <property type="text" name="StringValue_nl_NL"/>
         <!-- tr_TR -->
         <property type="text" name="StringValue_tr_TR"/>
+        <!-- pl_PL -->
+        <property type="text" name="StringValue_pl_PL"/>
 	</entity>
 
     <!-- entity Incoterm -->

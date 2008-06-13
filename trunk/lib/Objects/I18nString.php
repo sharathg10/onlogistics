@@ -3,37 +3,18 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * This file is part of Onlogistics, a web based ERP and supply chain 
- * management application. 
+ * $Source: /home/cvs/codegen/codegentemplates.py,v $
  *
- * Copyright (C) 2003-2008 ATEOR
+ * Ceci est un fichier généré, NE PAS EDITER.
  *
- * This program is free software: you can redistribute it and/or modify it 
- * under the terms of the GNU Affero General Public License as published by 
- * the Free Software Foundation, either version 3 of the License, or (at your 
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public 
- * License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * PHP version 5.1.0+
- *
- * @package   Onlogistics
- * @author    ATEOR dev team <dev@ateor.com>
- * @copyright 2003-2008 ATEOR <contact@ateor.com> 
- * @license   http://www.fsf.org/licensing/licenses/agpl-3.0.html GNU AGPL
- * @version   SVN: $Id$
- * @link      http://www.onlogistics.org
- * @link      http://onlogistics.googlecode.com
- * @since     File available since release 0.1.0
- * @filesource
+ * @copyright 2002-2006 ATEOR - All rights reserved
  */
 
+
+/**
+ * I18nString class
+ *
+ */
 class I18nString extends Object {
     
     // Constructeur {{{
@@ -210,6 +191,38 @@ class I18nString extends Object {
     }
 
     // }}}
+    // StringValue_pl_PL string property + getter/setter {{{
+
+    /**
+     * StringValue_pl_PL string property
+     *
+     * @access private
+     * @var string
+     */
+    private $_StringValue_pl_PL = '';
+
+    /**
+     * I18nString::getStringValue_pl_PL
+     *
+     * @access public
+     * @return string
+     */
+    public function getStringValue_pl_PL() {
+        return $this->_StringValue_pl_PL;
+    }
+
+    /**
+     * I18nString::setStringValue_pl_PL
+     *
+     * @access public
+     * @param string $value
+     * @return void
+     */
+    public function setStringValue_pl_PL($value) {
+        $this->_StringValue_pl_PL = $value;
+    }
+
+    // }}}
     // getTableName() {{{
 
     /**
@@ -255,7 +268,8 @@ class I18nString extends Object {
             'StringValue_fr_FR' => Object::TYPE_TEXT,
             'StringValue_de_DE' => Object::TYPE_TEXT,
             'StringValue_nl_NL' => Object::TYPE_TEXT,
-            'StringValue_tr_TR' => Object::TYPE_TEXT);
+            'StringValue_tr_TR' => Object::TYPE_TEXT,
+            'StringValue_pl_PL' => Object::TYPE_TEXT);
         return $return;
     }
 

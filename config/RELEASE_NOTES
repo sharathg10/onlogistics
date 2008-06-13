@@ -180,6 +180,8 @@ CREATE TABLE PricingZone (
   PRIMARY KEY (_Id)
 ) TYPE=InnoDB CHARSET=latin1;
 
+# ajout polonais
+ALTER TABLE I18nString ADD _StringValue_pl_PL TEXT DEFAULT NULL;
 
 ####################################
 # Ne pas enlever

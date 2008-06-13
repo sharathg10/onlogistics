@@ -351,6 +351,10 @@ class Invoice extends _Invoice {
         foreach ($ret as $i=>&$array) {
             $model = Object::load('RTWModel', $i);
             $lines = array();
+            $lines[] = ($material1 = $model->getMaterial1()) instanceof RTWMaterial ? 
+                _('Material 1: ') . $material1->toString() : null;
+            $lines[] = ($material2 = $model->getMaterial2()) instanceof RTWMaterial ? 
+                _('Material 2: ') . $material2->toString() : null;
             $lines[] = ($insole = $model->getInsole()) instanceof RTWMaterial ? 
                 _('Insole: ') . $insole->toString() : null;
             $lines[] = ($lining = $model->getLining()) instanceof RTWMaterial ? 

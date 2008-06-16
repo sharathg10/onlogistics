@@ -2876,15 +2876,15 @@
 
         <property type="foreignkey" name="ConstructionType"
             label="Construction type" class="RTWConstructionType" 
-            usedby="addedit,grid,searchform" />
+            usedby="addedit,searchform" />
         <property type="foreignkey" name="ConstructionCode"
             label="Construction code" class="RTWConstructionCode" 
             usedby="addedit" />
 
         <property type="foreignkey" name="Label" label="Label (griffe)"
-            class="RTWLabel" usedby="addedit,grid" />
+            class="RTWLabel" usedby="addedit" />
         <property type="foreignkey" name="HeelHeight" label="Heel height"
-            class="RTWHeelHeight" usedby="addedit,grid,searchform" />
+            class="RTWHeelHeight" usedby="addedit,searchform" />
 
         <property type="foreignkey" name="HeelReference" label="Heel reference"
             class="RTWMaterial" usedby="addedit" />
@@ -2907,22 +2907,22 @@
             label="Hand bag quantity" usedby="addedit" />
 
         <property type="foreignkey" name="Material1" label="Material 1"
-            class="RTWMaterial" usedby="addedit" />
+            class="RTWMaterial" usedby="addedit,grid,searchform" />
         <property type="decimal" length="10,3" name="Material1Quantity" 
             label="Material 1 quantity" usedby="addedit" />
 
         <property type="foreignkey" name="Material2" label="Material 2"
-            class="RTWMaterial" usedby="addedit" />
+            class="RTWMaterial" usedby="addedit,grid,searchform" />
         <property type="decimal" length="10,3" name="Material2Quantity" 
             label="Material 2 quantity" usedby="addedit" />
 
         <property type="foreignkey" name="Accessory1" label="Accessory 1"
-            class="RTWMaterial" usedby="addedit" />
+            class="RTWMaterial" usedby="addedit,grid,searchform" />
         <property type="decimal" length="10,3" name="Accessory1Quantity" 
             label="Accessory 1 quantity" usedby="addedit" />
 
         <property type="foreignkey" name="Accessory2" label="Accessory 2"
-            class="RTWMaterial" usedby="addedit" />
+            class="RTWMaterial" usedby="addedit,grid,searchform" />
         <property type="decimal" length="10,3" name="Accessory2Quantity" 
             label="Accessory 2 quantity" usedby="addedit" />
 

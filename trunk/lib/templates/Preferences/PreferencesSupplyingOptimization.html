@@ -1,0 +1,33 @@
+<form name="PreferencesSupplyingOptimization" method="post"
+    action="PreferencesSupplyingOptimization.php"
+    style="border:1px outset #AAAAAA">
+
+	<table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	  <thead>
+	  <tr>
+		<td colspan="2">{t}Pre-calculate possible suppliers in supplying optimization{/t}
+            <input type="hidden" name="formSubmitted" value="1" /> </td>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  	<tr>
+			<td>
+				<label for="radio1">
+                  <input type="radio" name="Preference_PreCalculateOptimApproSuppliers"
+                  id="radio1" value="1" {$yesChecked} />{t}Yes{/t}
+                </label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <label for="radio2">
+                  <input type="radio" name="Preference_PreCalculateOptimApproSuppliers"
+                  id="radio2" value="0" {$noChecked} />{t}No{/t}
+                </label>
+			</td>
+	  </tr>
+	  </tbody>
+	  <tfoot>
+	  <tr>
+	    <td align="right" colspan="2">
+	      <input type="submit" name="Ok" value="{t}Ok{/t}" class="button" />
+		</td>
+	  </tr>
+	  </tfoot>
+<form>

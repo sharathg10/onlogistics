@@ -207,6 +207,12 @@ $menu_metadata = array(
                         'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW)
                     ),
                     array(
+                        'title'       => _('Supplying optimization'),
+                        'link'        => 'PreferencesSupplyingOptimization.php',
+                        'description' => _('Supplying optimization preferences'),
+                        'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW)
+                    ),
+                    array(
                         'title'       => _('Website'),
                         'link'        => 'PreferencesWebSite.php',
                         'description' => _('Preferences for actors created from a linked website'),

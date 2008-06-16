@@ -867,7 +867,7 @@ function getOrderedQtyPerWeekForSupplier($ActorId, $SupplierId, $TimeStampBegin,
         $TimeStampEnd)
 {
     require_once('Objects/MovementType.const.php');
-	$sql = 'SELECT PDT._Id as pdtId, SUM(ACM._Quantity) AS Qty
+	$sql = 'SELECT CMD._IsEstimate as isEstimate, PDT._Id as pdtId, SUM(ACM._Quantity) AS Qty
          FROM Command CMD, Product PDT, ActorProduct AP, ActivatedMovement ACM
          WHERE ACM._ProductCommand=CMD._Id AND ACM._Product=PDT._Id
          AND AP._Product=PDT._Id AND AP._Actor=' . $SupplierId . '
@@ -879,7 +879,7 @@ function getOrderedQtyPerWeekForSupplier($ActorId, $SupplierId, $TimeStampBegin,
          AND UNIX_TIMESTAMP(CMD._WishedStartDate)<' . $TimeStampEnd . '
          AND UNIX_TIMESTAMP(CMD._WishedStartDate)>' . $TimeStampBegin . '
          AND PDT._Activated = 1 AND ACM._Type=' . SORTIE_NORMALE . '
-         GROUP BY PDT._Id;';
+         GROUP BY CMD._IsEstimate, PDT._Id;';
 	return executeSQL($sql);
 }
 
@@ -1118,11 +1118,7 @@ function getDeliveredQtyPerWeekForSupplier($ActorId, $SupplierId, $TimeStampBegi
          LEFT JOIN ExecutedMovement EXM ON ACM._Id=EXM._ActivatedMovement
          WHERE ACM._ProductCommand=CMD._Id AND ACM._Product=PDT._Id
          AND AP._Product=PDT._Id AND AP._Actor=' . $SupplierId . '
-         AND AP._Priority=1 ';
-    if (Preferences::get('EstimateBehaviour', 0) != 1) {
-        $sql .= 'AND CMD._IsEstimate=0 ';
-    }
-    $sql .= 'AND CMD._Expeditor=' . $ActorId . '
+         AND AP._Priority=1 AND CMD._IsEstimate=0 AND CMD._Expeditor=' . $ActorId . '
          AND UNIX_TIMESTAMP(CMD._WishedStartDate)<' . $TimeStampEnd . '
          AND UNIX_TIMESTAMP(CMD._WishedStartDate)>' . $TimeStampBegin . '
          AND PDT._Activated = 1 AND ACM._Type=' . SORTIE_NORMALE . '

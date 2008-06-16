@@ -34,8 +34,8 @@
  * @filesource
  */
 
-class SupplyingOptimizator { // {{{
-
+class SupplyingOptimizator { 
+    // properties {{{
     /**
      *
      * @var    integer $_passedWeekNumber nb de semaine d'historique
@@ -91,10 +91,7 @@ class SupplyingOptimizator { // {{{
      * @access public
      */
     public $wishedStartDates = array();
-
-
-
-
+    // }}}
     // SupplyingOptimizator::__construct() {{{
 
     /**
@@ -178,6 +175,7 @@ class SupplyingOptimizator { // {{{
          * Sert aussi a determiner les Product a prendre en compte: ceux au moins
          * commandes 1 fois ds ces semaines passees ou pour ces semaines futures*/
         $orderedQtyArray = array();
+        $orderedQtyArrayInEstimate = array();
         $internalEntrieQtyArray = $internalExitQtyArray = array();
         $withInternalExit = false;
 
@@ -192,8 +190,22 @@ class SupplyingOptimizator { // {{{
                 if ($j == 0) { // patch moche pour forcer l'obtention d'un dico, pas une liste!!
                     $orderedQtyArray[$rs->fields['pdtId']]["##"] = 0;
                 }
-                $orderedQtyArray[$rs->fields['pdtId']][strval($j)] =
+                if (isset($orderedQtyArray[$rs->fields['pdtId']][strval($j)])) {
+                    $orderedQtyArray[$rs->fields['pdtId']][strval($j)] +=
                         floatval($rs->fields['Qty']);
+                } else {
+                    $orderedQtyArray[$rs->fields['pdtId']][strval($j)] =
+                        floatval($rs->fields['Qty']);
+                }
+                if ($rs->fields['isEstimate'] == 1) {
+                    if (isset($orderedQtyArrayInEstimate[$rs->fields['pdtId']][strval($j)])) {
+                        $orderedQtyArrayInEstimate[$rs->fields['pdtId']][strval($j)] +=
+                            floatval($rs->fields['Qty']);
+                    } else {
+                        $orderedQtyArrayInEstimate[$rs->fields['pdtId']][strval($j)] =
+                            floatval($rs->fields['Qty']);
+                    }
+                }
                 $rs->moveNext();  // strval(): necessaire, sinon, si seulemt la cle 0,
             }                     // ça donne une liste, et pas un dictionnaire!!
             unset($rs);
@@ -233,7 +245,6 @@ class SupplyingOptimizator { // {{{
             }
             unset($rs3);
         }
-
         $weekEndTimestamp = getWeekEndTimeStamp(); // fin de semaine courante
 
         // Commandes client en retard ou a mvter avant fin de semaine courante:
@@ -254,7 +265,8 @@ class SupplyingOptimizator { // {{{
             $rs->moveNext();
         }
         // Pas de donnees a exploiter dans ce cas
-        if (count($orderedQtyArray) == 0 && $withInternalExit === false) {
+        if ((count($orderedQtyArray) == 0 && count($orderedQtyArrayInEstimate) == 0) 
+            && $withInternalExit === false) {
             return false;
         }
 
@@ -339,6 +351,7 @@ class SupplyingOptimizator { // {{{
 
         $return['waitedQtyArray'] = $waitedQtyArray;
         $return['orderedQtyArray'] = $orderedQtyArray;
+        $return['orderedQtyArrayInEstimate'] = $orderedQtyArrayInEstimate;
 
         if ($this->_withExtrapolation == 1) {
             /* Pour chacun des Product concernes,
@@ -411,6 +424,7 @@ class SupplyingOptimizator { // {{{
          Sert aussi a determiner les Product a prendre en compte:
          ceux au moins commandes 1 fois ds/pour les semaines passees ou futures etudiees */
         $OrderedQtyPerWeek = $data['orderedQtyArray'];
+        $OrderedQtyPerWeekInEstimate = $data['orderedQtyArrayInEstimate'];
         // Qtes commandees pour reappro (entrees) par semaine
         $WaitedQtyPerWeek = $data['waitedQtyArray'];
 
@@ -580,6 +594,7 @@ class SupplyingOptimizator { // {{{
         }
         return array(
                 'OrderedQtyPerWeek' => $OrderedQtyPerWeek,
+                'OrderedQtyPerWeekInEstimate' => $OrderedQtyPerWeekInEstimate,
                 'WaitedQtyPerWeek' =>$WaitedQtyPerWeek,
                 'QtyToOrder' => $QtyToOrder,
                 'ProductInfoList' => $ProductInfoList,
@@ -598,7 +613,7 @@ class SupplyingOptimizator { // {{{
      * @static
      * @return array of strings
      **/
-    public static function getSubstitutionInfoList($ProductIdArray, $supplierId) { // {{{
+    public static function getSubstitutionInfoList($ProductIdArray, $supplierId) {
         $SubstitutionInfo = array();  // Contiendra les resultats
 
         foreach($ProductIdArray as $pdtId) {
@@ -620,6 +635,8 @@ class SupplyingOptimizator { // {{{
             }
         }
         return $SubstitutionInfo;
-    } // }}}
-} // }}}
+    }
+    // }}}
+}
+
 ?>

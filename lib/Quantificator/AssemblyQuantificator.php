@@ -148,7 +148,7 @@ class AssemblyQuantificator extends Quantificator
             $cost  = 0;
             for ($i=0; $i<$count; $i++) {
                 $cpn = $cpnCol->getItem($i);
-                $currentQty = $cpn->getQuantityInHead() * $this->quantity;
+                $currentQty = $cpn->getQuantityInHead(true) * $this->quantity;
                 $pdt = $cpn->getProduct();
                 // on ajoute le prix 
                 if ($pdt instanceof Product) {

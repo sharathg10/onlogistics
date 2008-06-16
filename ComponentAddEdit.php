@@ -207,6 +207,7 @@ $form->addElement('select', 'Component_Parent_ID', _('Parent'), $ParentArray,
 $form->addElement('text', 'Component_Level', _('Level'),
         'style="width:100%;background-color:#E1E8EF;border:1px #000000 dotted;" readonly');
 $form->addElement('text', 'Component_Quantity', _('Quantity') . ' *', 'style="width:100%"');
+$form->addElement('text', 'Component_PercentWasted', _('Percent wasted'), 'style="width:100%"');
 $form->addElement('hidden', 'cmpId', $cmpId);
 $form->addElement('hidden', 'nomId', $nomId);
 $form->addElement('hidden', 'Component_Nomenclature_ID', $nomId);
@@ -223,9 +224,12 @@ $form->setDefaults($defaultValues);  // affiche le form avec les val par defaut
 
 /*  Validation du formulaire */
 $form->addRule('Component_Level',
-        _('Please provide a level.'), 'required', '', 'client');
+    _('Please provide a level.'), 'required', '', 'client');
 $form->addRule('Component_Quantity',
-        _('Please provide a quantity.'), 'required', '', 'client');
+    _('Please provide a quantity.'), 'required', '', 'client');
+$form->addRule('Component_PercentWasted', 
+    _('Precent wasted must be a decimal percent'), 'regex', 
+    '/\d+[\.,]?\d*/', 'client');
 $form->setJsWarnings(E_VALIDATE_FORM.' : ',_('Please correct.'));
 
 $form->accept($renderer);  // affecte au form le renderer personnalise

@@ -183,6 +183,21 @@ CREATE TABLE PricingZone (
 # ajout polonais
 ALTER TABLE I18nString ADD _StringValue_pl_PL TEXT DEFAULT NULL;
 
+# modif composant
+ALTER TABLE Component ADD _PercentWasted DECIMAL(10,2) NOT NULL DEFAULT 0 AFTER _Quantity;
+
+# Table structure for ContactRole
+DROP TABLE IF EXISTS ContactRole;
+CREATE TABLE ContactRole (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+ALTER TABLE Contact DROP COLUMN _Fonction;
+ALTER TABLE Contact ADD _Role INT(11) NOT NULL DEFAULT 0;
+
 ####################################
 # Ne pas enlever
 COMMIT;

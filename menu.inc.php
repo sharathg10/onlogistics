@@ -305,6 +305,12 @@ $menu_metadata = array(
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_COMMERCIAL,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_AERO_CUSTOMER,UserAccount::PROFILE_AERO_INSTRUCTOR,UserAccount::PROFILE_DIR_COMMERCIAL,UserAccount::PROFILE_GED_PROJECT_MANAGER, UserAccount::PROFILE_PRODUCT_MANAGER)
             ),
             array(
+                'title'       => _('Contact roles'),
+                'link'        => 'dispatcher.php?entity=ContactRole',
+                'description' => _('Contact roles management'),
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW)
+            ),
+            array(
                 'title'       => _('Supplying settings'),
                 'link'        => 'SupplierDelayStock.php',
                 'description' => _('Supplying settings'),

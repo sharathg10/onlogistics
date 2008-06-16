@@ -1,3 +1,25 @@
+    // Component::getQuantity() {{{
+
+    /**
+     * Surchargee pour retourner la quantite en prenant en compte ou pas le 
+     * pourcentage de gaspillage.
+     *
+     * @param bool $withPercentWasted prendre en compte le % de gaspillage ou 
+     *             non (false par defaut).
+     *
+     * @access public
+     * @return integer
+     */
+    function getQuantity($withPercentWasted = false) {
+        $qty = parent::getQuantity();
+        if ($withPercentWasted && $this->getPercentWasted() > 0) {
+            return $qty + ($qty * ($this->getPercentWasted() / 100));
+        }
+        return $qty;
+    }
+
+    // }}}
+    // Component::getConcreteQuantity() {{{
 
     /**
      * Retourne la somme des Quantity des ConcreteComponent
@@ -205,9 +227,9 @@
      */
     function getQuantityInHead() {
         $parent = $this->getParent();
-        $qty = $this->getQuantity();
+        $qty = $this->getQuantity(true);
         while($parent) {
-            $qty *= $parent->getQuantity();
+            $qty *= $parent->getQuantity(true);
             $parent = $parent->getParent();
         }
         return $qty;
@@ -395,4 +417,3 @@
     }
 
     // }}}
-

@@ -99,7 +99,11 @@
     <tr class="grid_row_odd" style="border-bottom: 1px solid #000;">
 	  <td>{t}Quantities{/t}</td>
 	  {section name=weekNb loop=$wishedStartDateArray}
-	  <td>{$orderedQtyPerWeek[$key][weekNb]}
+      <td>
+          {$orderedQtyPerWeek[$key][weekNb]} 
+          {if $orderedQtyPerWeekInEstimate[$key][weekNb]} 
+          <span style="color: green">({$orderedQtyPerWeekInEstimate[$key][weekNb]})</span>
+          {/if}
         | {$waitedQtyPerWeek[$key][weekNb]}
         | {if $qtyToOrder[$key][weekNb] > 0}<strong>{/if}
           {$qtyToOrder[$key][weekNb]}{if $qtyToOrder[$key][weekNb] > 0}</strong>{/if}

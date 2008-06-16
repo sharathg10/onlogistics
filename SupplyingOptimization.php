@@ -74,6 +74,7 @@ if (isset($_REQUEST['formSubmitted']) && $_REQUEST['formSubmitted'] == 1) {
     $smarty->assign('productInfoList', $productInfoList);
     $smarty->assign('substitutionInfoList', $data['SubstitutionInfoList']);
     $smarty->assign('orderedQtyPerWeek', $data['OrderedQtyPerWeek']);
+    $smarty->assign('orderedQtyPerWeekInEstimate', $data['OrderedQtyPerWeekInEstimate']);
     $smarty->assign('waitedQtyPerWeek', $data['WaitedQtyPerWeek']);
     $smarty->assign('qtyToOrder', $data['QtyToOrder']);
 

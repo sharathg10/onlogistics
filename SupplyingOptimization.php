@@ -153,10 +153,19 @@ require_once('HTML/QuickForm.php');
 $form = new HTML_QuickForm('SupplyingOptimization', 'post', $_SERVER['PHP_SELF']);
 unset($form->_attributes['name']);  // xhtml compliant
 
+$supplierSelect = $form->addElement('select', 'Supplier', _('Supplier'), array(),
+        'style="width:100%" id="Supplier"');
 $supplierArray = SearchTools::createArrayIDFromCollection(
         array('Supplier', 'AeroSupplier'), array('Active'=>1));
-$form->addElement('select', 'Supplier', _('Supplier'), $supplierArray,
-        'style="width:100%" id="Supplier"');
+foreach($supplierArray as $supplierId => $supplierName) {
+    if (Preferences::get('PreCalculateOptimApproSuppliers', false)) {
+        $optimizator = new SupplyingOptimizator(array('supplierId' => $supplierId));
+        $style = $optimizator->getData() ? '' : 'disabled="disabled"';
+    } else {
+        $style = '';
+    }
+    $supplierSelect->addOption($supplierName, $supplierId, $style);
+}
 $form->addElement('text', 'PassedWeekNumber', _('Number of weeks in history'),
         'style="width:100%" id="PassedWeekNumber"');
 $form->addElement('text', 'FutureWeekNumber', _('Number of weeks of forecast'),

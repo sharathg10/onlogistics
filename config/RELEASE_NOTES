@@ -198,6 +198,9 @@ CREATE TABLE ContactRole (
 ALTER TABLE Contact DROP COLUMN _Fonction;
 ALTER TABLE Contact ADD _Role INT(11) NOT NULL DEFAULT 0;
 
+# optim appro
+insert into FW_Preferences values ('PreCalculateOptimApproSuppliers', NULL, 'boolean', NULL, 1, 0, 0, NULL, NULL);
+
 ####################################
 # Ne pas enlever
 COMMIT;

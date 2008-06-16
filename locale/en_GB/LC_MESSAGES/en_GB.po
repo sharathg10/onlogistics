@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Onlogistics 2.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-13 14:19+0200\n"
+"POT-Creation-Date: 2008-06-16 17:35+0200\n"
 "PO-Revision-Date: 2007-05-02 14:56+0100\n"
 "Last-Translator: guillaume <guillaume@ateor.com>\n"
 "Language-Team: ATEOR dev team <dalhia@ateor.com>\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: ../lib/Objects/Grouping.php:77 ../lib/Objects/InvoicePayment.php:273
 #: ../lib/Objects/AnnualTurnoverDiscount.php:196 ../lib/Objects/Zip.php:109
 #: ../lib/Objects/_PrestationCommandItem.php:231
-#: ../lib/Objects/I18nString.php:237 ../lib/Objects/_Location.php:493
+#: ../lib/Objects/I18nString.php:250 ../lib/Objects/_Location.php:493
 #: ../lib/Objects/InvoicesList.php:237
 #: ../lib/Objects/_ProductSubstitution.php:219
 #: ../lib/Objects/InventoryDetail.php:401
@@ -67,9 +67,9 @@ msgstr ""
 #: ../lib/Objects/BarCodeType.php:141 ../lib/Objects/_ProductCommand.php:135
 #: ../lib/Objects/_State.php:195 ../lib/Objects/_ChainCommand.php:288
 #: ../lib/Objects/_Box.php:1083 ../lib/Objects/_MimeType.php:173
-#: ../lib/Objects/Contact.php:411
+#: ../lib/Objects/Contact.php:439
 #: ../lib/Objects/LocationConcreteProduct.php:219
-#: ../lib/Objects/_DocumentModel.php:576 ../lib/Objects/_Component.php:474
+#: ../lib/Objects/_DocumentModel.php:576 ../lib/Objects/_Component.php:489
 #: ../lib/Objects/Country.php:141
 #: ../lib/Objects/DangerousProductLetter.php:141
 #: ../lib/Objects/CityName.php:163 ../lib/Objects/_ActivatedMovement.php:663
@@ -218,7 +218,7 @@ msgstr ""
 
 #: ../lib-functions/AssemblyTools.php:39 ../lib/Objects/Actor.php:182
 #: ../lib/Objects/Actor.php:188 ../JS_Messages.php:199 ../StateAddEdit.php:122
-#: ../ZoneAddEdit.php:165 ../ComponentAddEdit.php:229
+#: ../ZoneAddEdit.php:165 ../ComponentAddEdit.php:233
 #: ../PromotionAddEdit.php:179 ../FlowAddEdit.php:297
 #: ../QuestionSelect.php:145 ../SaisonalityAdd.php:94
 #: ../ComponentGroupAddEdit.php:156 ../NomenclatureAddEdit.php:242
@@ -276,7 +276,7 @@ msgstr ""
 #: ../ActivatedChainList.php:75 ../ActivatedMovementList.php:107
 #: ../ToHaveAdd.php:135 ../SupplierCatalog.php:111
 #: ../SupplierDelayStock.php:96 ../InvoiceList.php:69 ../InvoiceList.php:147
-#: ../BoardBySupplier.php:54 ../SupplyingOptimization.php:157
+#: ../BoardBySupplier.php:54 ../SupplyingOptimization.php:158
 #: ../PrestationCommandList.php:59 ../PrestationCommandList.php:127
 #: ../DocumentList.php:63 ../ToHaveList.php:115 ../BoardByCoast.php:52
 #: ../ActorAddEdit.php:517 ../ActorProductAddEdit.php:165 void:1
@@ -304,7 +304,7 @@ msgstr ""
 #: ../ToHaveAdd.php:139 ../ActionList.php:75 ../ActionList.php:105
 #: ../ChainCommandList.php:90 ../ChainCommandList.php:185
 #: ../ActivatedChainTaskList.php:110 ../ActivatedChainTaskList.php:235
-#: ../EstimateList.php:77 ../EstimateList.php:122 ../menu.inc.php:803
+#: ../EstimateList.php:77 ../EstimateList.php:122 ../menu.inc.php:809
 #: ../InvoiceList.php:67 ../InvoiceList.php:149
 #: ../UnavailabilityPlanning.php:135 ../UnavailabilityPlanning.php:172
 #: ../UnavailabilityPlanning.php:709 ../UnavailabilityPlanning.php:714
@@ -797,6 +797,7 @@ msgstr ""
 #: ../lib/Objects/UploadedDocumentType.php:356
 #: ../lib/Objects/_HelpPage.php:377 ../lib/Objects/_HelpPage.php:378
 #: ../lib/Objects/PricingZone.php:197 ../lib/Objects/PricingZone.php:198
+#: ../lib/Objects/_ContactRole.php:222 ../lib/Objects/_ContactRole.php:223
 #: ../lib/ApportionmentManager.php:305 ../lib/DocumentGenerator.php:3277
 #: ../LicenceList.php:96 ../LicenceList.php:125 ../JS_Messages.php:256
 #: ../ProductTypeList.php:59 ../BoardByCommercial.php:125
@@ -1075,7 +1076,7 @@ msgstr ""
 
 #: ../lib/Custom/RessourceGroupAddEdit.php:133
 #: ../lib/Objects/RessourceRessourceGroup.php:218
-#: ../lib/Objects/Ressource.php:428 ../menu.inc.php:338
+#: ../lib/Objects/Ressource.php:428 ../menu.inc.php:344
 msgid "Resources"
 msgstr ""
 
@@ -1233,7 +1234,7 @@ msgstr ""
 msgid "Copy model"
 msgstr ""
 
-#: ../lib/Custom/ProductRessourceGrid.php:57 ../menu.inc.php:344
+#: ../lib/Custom/ProductRessourceGrid.php:57 ../menu.inc.php:350
 msgid "Product resources"
 msgstr ""
 
@@ -1247,7 +1248,7 @@ msgstr ""
 #: ../lib/Objects/ProductPrestationCost.php:273
 #: ../lib/Objects/ProductPrestationCost.php:274
 #: ../lib/Objects/Ressource.php:156 ../ActivityBasedCosting.php:63
-#: ../menu.inc.php:815 ../BoardByProduct.php:53 ../CommandList.php:289
+#: ../menu.inc.php:821 ../BoardByProduct.php:53 ../CommandList.php:289
 #: ../CommandList.php:290 ../InventoryDetailList.php:127
 #: ../UnavailabilityPlanning.php:152 ../ProductHandingByCategoryList.php:85
 #: ../ConcreteProductList.php:99 void:1
@@ -1730,7 +1731,7 @@ msgstr ""
 msgid "products"
 msgstr ""
 
-#: ../lib/Custom/PrestationCostGrid.php:55 ../menu.inc.php:326
+#: ../lib/Custom/PrestationCostGrid.php:55 ../menu.inc.php:332
 msgid "Airplane types"
 msgstr ""
 
@@ -2120,7 +2121,7 @@ msgstr ""
 
 #: ../lib/Objects/Operation.php:693 ../lib/Objects/Operation.php:694
 #: ../lib/Objects/_ActivatedChainTask.php:2582 ../lib/Objects/Task.php:477
-#: ../menu.inc.php:843 void:1
+#: ../menu.inc.php:849 void:1
 msgid "Tasks"
 msgstr ""
 
@@ -2186,13 +2187,13 @@ msgstr ""
 
 #: ../lib/Objects/_AbstractDocument.php:233
 #: ../lib/Objects/_AbstractDocument.php:237 ../lib/Objects/_Command.php:151
-#: ../menu.inc.php:514 void:1
+#: ../menu.inc.php:520 void:1
 msgid "Carriage service"
 msgstr ""
 
 #: ../lib/Objects/_AbstractDocument.php:234
 #: ../lib/Objects/_AbstractDocument.php:238 ../lib/Objects/_Command.php:153
-#: ../menu.inc.php:520 ../menu.inc.php:522
+#: ../menu.inc.php:526 ../menu.inc.php:528
 msgid "Class booking"
 msgstr ""
 
@@ -2297,8 +2298,8 @@ msgstr ""
 msgid "State"
 msgstr ""
 
-#: ../lib/Objects/CurrencyConverter.php:291 ../menu.inc.php:664
-#: ../menu.inc.php:666
+#: ../lib/Objects/CurrencyConverter.php:291 ../menu.inc.php:670
+#: ../menu.inc.php:672
 msgid "Currency converter"
 msgstr ""
 
@@ -2613,11 +2614,11 @@ msgstr ""
 msgid "Service label for this customer"
 msgstr ""
 
-#: ../lib/Objects/_RTWShape.php:77 ../menu.inc.php:401
+#: ../lib/Objects/_RTWShape.php:77 ../menu.inc.php:407
 msgid "Shapes"
 msgstr ""
 
-#: ../lib/Objects/RTWSize.php:165 ../menu.inc.php:373
+#: ../lib/Objects/RTWSize.php:165 ../menu.inc.php:379
 msgid "Sizes"
 msgstr ""
 
@@ -2635,97 +2636,99 @@ msgstr ""
 msgid "Price by products associated to the service"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:89 ../lib/Objects/_RTWModel.php:2444
-#: ../lib/Objects/_RTWModel.php:2445
+#: ../lib/Objects/RTWModel.php:95 ../lib/Objects/_RTWModel.php:2425
+#: ../lib/Objects/_RTWModel.php:2426
 msgid "Heel reference"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:90 ../lib/Objects/_RTWModel.php:2463
-#: ../lib/Objects/_RTWModel.php:2464
+#: ../lib/Objects/RTWModel.php:96 ../lib/Objects/_RTWModel.php:2444
+#: ../lib/Objects/_RTWModel.php:2445
 msgid "Sole"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:91 ../lib/Objects/_RTWModel.php:2482
-#: ../lib/Objects/_RTWModel.php:2483
+#: ../lib/Objects/RTWModel.php:97 ../lib/Objects/_RTWModel.php:2463
+#: ../lib/Objects/_RTWModel.php:2464
 msgid "Box"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:92 ../lib/Objects/_RTWModel.php:2501
-#: ../lib/Objects/_RTWModel.php:2502
+#: ../lib/Objects/RTWModel.php:98 ../lib/Objects/_RTWModel.php:2482
+#: ../lib/Objects/_RTWModel.php:2483
 msgid "Hand bag"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:93 ../lib/Objects/_RTWModel.php:2520
-#: ../lib/Objects/_RTWModel.php:2521 ../RTWCatalog.php:118
+#: ../lib/Objects/RTWModel.php:99 ../lib/Objects/_RTWModel.php:2501
+#: ../lib/Objects/_RTWModel.php:2502 ../lib/Objects/Invoice.php:355
+#: ../RTWCatalog.php:118
 msgid "Material 1"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:94 ../lib/Objects/_RTWModel.php:2539
-#: ../lib/Objects/_RTWModel.php:2540 ../RTWCatalog.php:119
+#: ../lib/Objects/RTWModel.php:100 ../lib/Objects/_RTWModel.php:2520
+#: ../lib/Objects/_RTWModel.php:2521 ../lib/Objects/Invoice.php:357
+#: ../RTWCatalog.php:119
 msgid "Material 2"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:95 ../lib/Objects/_RTWModel.php:2558
-#: ../lib/Objects/_RTWModel.php:2559 ../RTWCatalog.php:120
+#: ../lib/Objects/RTWModel.php:101 ../lib/Objects/_RTWModel.php:2539
+#: ../lib/Objects/_RTWModel.php:2540 ../RTWCatalog.php:120
 msgid "Accessory 1"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:96 ../lib/Objects/_RTWModel.php:2577
-#: ../lib/Objects/_RTWModel.php:2578 ../RTWCatalog.php:121
+#: ../lib/Objects/RTWModel.php:102 ../lib/Objects/_RTWModel.php:2558
+#: ../lib/Objects/_RTWModel.php:2559 ../RTWCatalog.php:121
 msgid "Accessory 2"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:97 ../lib/Objects/_RTWModel.php:2596
-#: ../lib/Objects/_RTWModel.php:2597
+#: ../lib/Objects/RTWModel.php:103 ../lib/Objects/_RTWModel.php:2577
+#: ../lib/Objects/_RTWModel.php:2578 ../lib/Objects/Invoice.php:361
 msgid "Lining"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:98 ../lib/Objects/_RTWModel.php:2615
-#: ../lib/Objects/_RTWModel.php:2616
+#: ../lib/Objects/RTWModel.php:104 ../lib/Objects/_RTWModel.php:2596
+#: ../lib/Objects/_RTWModel.php:2597 ../lib/Objects/Invoice.php:359
 msgid "Insole"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:99 ../lib/Objects/_RTWModel.php:2634
-#: ../lib/Objects/_RTWModel.php:2635
+#: ../lib/Objects/RTWModel.php:105 ../lib/Objects/_RTWModel.php:2615
+#: ../lib/Objects/_RTWModel.php:2616 ../lib/Objects/Invoice.php:363
 msgid "Under-sole"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:100 ../lib/Objects/_RTWModel.php:2653
-#: ../lib/Objects/_RTWModel.php:2654
+#: ../lib/Objects/RTWModel.php:106 ../lib/Objects/_RTWModel.php:2634
+#: ../lib/Objects/_RTWModel.php:2635
 msgid "Lagrima"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:101 ../lib/Objects/_RTWModel.php:2672
-#: ../lib/Objects/_RTWModel.php:2673
+#: ../lib/Objects/RTWModel.php:107 ../lib/Objects/_RTWModel.php:2653
+#: ../lib/Objects/_RTWModel.php:2654
 msgid "Heel covering"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:102 ../lib/Objects/_RTWModel.php:2691
-#: ../lib/Objects/_RTWModel.php:2692
+#: ../lib/Objects/RTWModel.php:108 ../lib/Objects/_RTWModel.php:2672
+#: ../lib/Objects/_RTWModel.php:2673
 msgid "Selvedge"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:103 ../lib/Objects/_RTWMaterial.php:126
-#: ../lib/Objects/_RTWModel.php:2728 ../lib/Objects/_RTWModel.php:2729
+#: ../lib/Objects/RTWModel.php:109 ../lib/Objects/_RTWMaterial.php:126
+#: ../lib/Objects/_RTWModel.php:2709 ../lib/Objects/_RTWModel.php:2710
 msgid "Bamboo"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:106 ../lib/Objects/_RTWModel.php:2710
-#: ../lib/Objects/_RTWModel.php:2711
+#: ../lib/Objects/RTWModel.php:112 ../lib/Objects/_RTWModel.php:2691
+#: ../lib/Objects/_RTWModel.php:2692
 msgid "Thread 1"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:107 ../lib/Objects/_RTWModel.php:2719
-#: ../lib/Objects/_RTWModel.php:2720
+#: ../lib/Objects/RTWModel.php:113 ../lib/Objects/_RTWModel.php:2700
+#: ../lib/Objects/_RTWModel.php:2701
 msgid "Thread 2"
 msgstr ""
 
-#: ../lib/Objects/Component.php:184 ../lib/Objects/Component.php:224
+#: ../lib/Objects/Component.php:212 ../lib/Objects/Component.php:252
 #: ../NomenclatureDuplicate.php:105 ../NomenclatureAddEdit.php:208
 msgid "Version"
 msgstr ""
 
-#: ../lib/Objects/Component.php:185 ../lib/Objects/Component.php:226
+#: ../lib/Objects/Component.php:213 ../lib/Objects/Component.php:254
 #: ../lib/DocumentGenerator.php:776 ../lib/DocumentGenerator.php:1082
 #: ../lib/DocumentGenerator.php:1142 ../lib/DocumentGenerator.php:1500
 #: ../lib/DocumentGenerator.php:1599 ../lib/DocumentGenerator.php:1867
@@ -2737,7 +2740,7 @@ msgstr ""
 msgid "Qty"
 msgstr ""
 
-#: ../lib/Objects/_RTWLabel.php:77 ../menu.inc.php:415
+#: ../lib/Objects/_RTWLabel.php:77 ../menu.inc.php:421
 msgid "Labels (griffes)"
 msgstr ""
 
@@ -2802,7 +2805,7 @@ msgid "Forecast flow"
 msgstr ""
 
 #: ../lib/Objects/ForecastFlow.php:504 ../lib/Objects/ForecastFlow.php:505
-#: ../lib/Objects/_RTWModel.php:2390 ../lib/Objects/_RTWModel.php:2391
+#: ../lib/Objects/_RTWModel.php:2371 ../lib/Objects/_RTWModel.php:2372
 #: ../lib/DocumentGenerator.php:694 ../lib/DocumentGenerator.php:1081
 #: ../lib/DocumentGenerator.php:2317 ../lib/DocumentGenerator.php:3712
 #: ../ActivatedChainList.php:127 ../TransportChainList.php:88 void:1
@@ -2842,7 +2845,7 @@ msgstr ""
 #: ../lib/Objects/DocumentModelProperty.php:128
 #: ../lib/Objects/_UserAccount.php:379 ../lib/ActionTools.php:117
 #: ../BoardByCommercial.php:53 ../PrestationInvoiceAddEdit.php:137
-#: ../menu.inc.php:797 ../PreferencesWebSite.php:73 ../ProductCommand.php:172
+#: ../menu.inc.php:803 ../PreferencesWebSite.php:73 ../ProductCommand.php:172
 #: ../CommandList.php:159 ../CommandList.php:282
 #: ../PrestationCommandList.php:129 ../ActorList.php:101 ../ActorList.php:277
 #: void:1
@@ -2913,7 +2916,7 @@ msgstr ""
 msgid "No planning assigned to site %s"
 msgstr ""
 
-#: ../lib/Objects/_RTWColor.php:109 ../menu.inc.php:366
+#: ../lib/Objects/_RTWColor.php:109 ../menu.inc.php:372
 msgid "Colors"
 msgstr ""
 
@@ -3049,7 +3052,7 @@ msgid "breaking-down of discount"
 msgstr ""
 
 #: ../lib/Objects/_Account.php:662 ../lib/Objects/_OnlogisticsAccount.php:478
-#: ../menu.inc.php:591
+#: ../menu.inc.php:597
 msgid "Accounts"
 msgstr ""
 
@@ -3400,8 +3403,8 @@ msgstr ""
 #: ../lib/Objects/Alert.const.php:297 ../lib/Objects/Alert.const.php:340
 #: ../lib/Objects/Alert.const.php:376 ../lib/Objects/Alert.const.php:419
 #: ../lib/Objects/_UploadedDocument.php:610
-#: ../lib/Objects/_UploadedDocument.php:611 ../lib/Objects/_RTWModel.php:2765
-#: ../lib/Objects/_RTWModel.php:2766 ../lib/Objects/_RTWModel.php:2771
+#: ../lib/Objects/_UploadedDocument.php:611 ../lib/Objects/_RTWModel.php:2746
+#: ../lib/Objects/_RTWModel.php:2747 ../lib/Objects/_RTWModel.php:2752
 #: ../lib/DocumentGenerator.php:595 ../lib/DocumentGenerator.php:798
 #: ../lib/DocumentGenerator.php:981 ../lib/DocumentGenerator.php:1102
 #: ../lib/DocumentGenerator.php:3512 ../ProductionTaskValidation.php:129
@@ -3790,7 +3793,7 @@ msgstr ""
 msgid "Select one or more states"
 msgstr ""
 
-#: ../lib/Objects/Command.const.php:54 ../menu.inc.php:904
+#: ../lib/Objects/Command.const.php:54 ../menu.inc.php:910
 msgid "Completed flights"
 msgstr ""
 
@@ -3818,7 +3821,7 @@ msgstr ""
 msgid "Unknown"
 msgstr ""
 
-#: ../lib/Objects/RTWHeelHeight.php:77 ../menu.inc.php:422
+#: ../lib/Objects/RTWHeelHeight.php:77 ../menu.inc.php:428
 msgid "Heel heights"
 msgstr ""
 
@@ -3889,12 +3892,12 @@ msgid "Email"
 msgstr ""
 
 #: ../lib/Objects/Contact.const.php:51 ../lib/Objects/_UserAccount.php:1278
-#: ../lib/Objects/_UserAccount.php:1279
+#: ../lib/Objects/_UserAccount.php:1279 void:1
 msgid "Phone"
 msgstr ""
 
 #: ../lib/Objects/Contact.const.php:52 ../lib/Objects/_UserAccount.php:1287
-#: ../lib/Objects/_UserAccount.php:1288
+#: ../lib/Objects/_UserAccount.php:1288 void:1
 msgid "Fax"
 msgstr ""
 
@@ -4162,7 +4165,7 @@ msgstr ""
 msgid "set customer in alert state"
 msgstr ""
 
-#: ../lib/Objects/_RTWSeason.php:77 ../menu.inc.php:380
+#: ../lib/Objects/_RTWSeason.php:77 ../menu.inc.php:386
 msgid "Seasons"
 msgstr ""
 
@@ -4170,7 +4173,7 @@ msgstr ""
 msgid "Element"
 msgstr ""
 
-#: ../lib/Objects/_RTWConstructionType.php:77 ../menu.inc.php:387
+#: ../lib/Objects/_RTWConstructionType.php:77 ../menu.inc.php:393
 msgid "Construction types"
 msgstr ""
 
@@ -4321,124 +4324,124 @@ msgstr ""
 msgid "Reduced"
 msgstr ""
 
-#: ../lib/Objects/RTWPressName.php:77 ../menu.inc.php:408
+#: ../lib/Objects/RTWPressName.php:77 ../menu.inc.php:414
 msgid "Press names"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2196 ../menu.inc.php:481 ../menu.inc.php:603
-#: ../menu.inc.php:775
+#: ../lib/Objects/_RTWModel.php:2177 ../menu.inc.php:487 ../menu.inc.php:609
+#: ../menu.inc.php:781
 msgid "Models"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2354 ../lib/Objects/_RTWModel.php:2355
+#: ../lib/Objects/_RTWModel.php:2335 ../lib/Objects/_RTWModel.php:2336
 #: ../lib/DocumentGenerator.php:3697
 msgid "Season"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2363 ../lib/Objects/_RTWModel.php:2364
+#: ../lib/Objects/_RTWModel.php:2344 ../lib/Objects/_RTWModel.php:2345
 #: ../lib/DocumentGenerator.php:3720
 msgid "Shape"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2372 ../lib/Objects/_RTWModel.php:2373
+#: ../lib/Objects/_RTWModel.php:2353 ../lib/Objects/_RTWModel.php:2354
 msgid "Press name"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2381 ../lib/Objects/_RTWModel.php:2382
+#: ../lib/Objects/_RTWModel.php:2362 ../lib/Objects/_RTWModel.php:2363
 #: ../lib/DocumentGenerator.php:3708
 msgid "Style number"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2399 ../lib/Objects/_RTWModel.php:2400
+#: ../lib/Objects/_RTWModel.php:2380 ../lib/Objects/_RTWModel.php:2381
 #: ../lib/DocumentGenerator.php:3703
 msgid "Manufacturer"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2408 ../lib/Objects/_RTWModel.php:2409
+#: ../lib/Objects/_RTWModel.php:2389 ../lib/Objects/_RTWModel.php:2390
 #: ../lib/DocumentGenerator.php:3718
 msgid "Construction type"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2417 ../lib/Objects/_RTWModel.php:2418
+#: ../lib/Objects/_RTWModel.php:2398 ../lib/Objects/_RTWModel.php:2399
 #: ../lib/DocumentGenerator.php:3719
 msgid "Construction code"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2426 ../lib/Objects/_RTWModel.php:2427
+#: ../lib/Objects/_RTWModel.php:2407 ../lib/Objects/_RTWModel.php:2408
 #: ../lib/DocumentGenerator.php:3721
 msgid "Label (griffe)"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2435 ../lib/Objects/_RTWModel.php:2436
+#: ../lib/Objects/_RTWModel.php:2416 ../lib/Objects/_RTWModel.php:2417
 msgid "Heel height"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2453 ../lib/Objects/_RTWModel.php:2454
+#: ../lib/Objects/_RTWModel.php:2434 ../lib/Objects/_RTWModel.php:2435
 msgid "Heel reference quantity"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2472 ../lib/Objects/_RTWModel.php:2473
+#: ../lib/Objects/_RTWModel.php:2453 ../lib/Objects/_RTWModel.php:2454
 msgid "Sole quantity"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2491 ../lib/Objects/_RTWModel.php:2492
+#: ../lib/Objects/_RTWModel.php:2472 ../lib/Objects/_RTWModel.php:2473
 msgid "Box quantity"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2510 ../lib/Objects/_RTWModel.php:2511
+#: ../lib/Objects/_RTWModel.php:2491 ../lib/Objects/_RTWModel.php:2492
 msgid "Hand bag quantity"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2529 ../lib/Objects/_RTWModel.php:2530
+#: ../lib/Objects/_RTWModel.php:2510 ../lib/Objects/_RTWModel.php:2511
 msgid "Material 1 quantity"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2548 ../lib/Objects/_RTWModel.php:2549
+#: ../lib/Objects/_RTWModel.php:2529 ../lib/Objects/_RTWModel.php:2530
 msgid "Material 2 quantity"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2567 ../lib/Objects/_RTWModel.php:2568
+#: ../lib/Objects/_RTWModel.php:2548 ../lib/Objects/_RTWModel.php:2549
 msgid "Accessory 1 quantity"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2586 ../lib/Objects/_RTWModel.php:2587
+#: ../lib/Objects/_RTWModel.php:2567 ../lib/Objects/_RTWModel.php:2568
 msgid "Accessory 2 quantity"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2605 ../lib/Objects/_RTWModel.php:2606
+#: ../lib/Objects/_RTWModel.php:2586 ../lib/Objects/_RTWModel.php:2587
 msgid "Lining quantity"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2624 ../lib/Objects/_RTWModel.php:2625
+#: ../lib/Objects/_RTWModel.php:2605 ../lib/Objects/_RTWModel.php:2606
 msgid "Insole quantity"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2643 ../lib/Objects/_RTWModel.php:2644
+#: ../lib/Objects/_RTWModel.php:2624 ../lib/Objects/_RTWModel.php:2625
 msgid "Under-sole quantity"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2662 ../lib/Objects/_RTWModel.php:2663
+#: ../lib/Objects/_RTWModel.php:2643 ../lib/Objects/_RTWModel.php:2644
 msgid "Lagrima quantity"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2681 ../lib/Objects/_RTWModel.php:2682
+#: ../lib/Objects/_RTWModel.php:2662 ../lib/Objects/_RTWModel.php:2663
 msgid "Heel covering quantity"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2700 ../lib/Objects/_RTWModel.php:2701
+#: ../lib/Objects/_RTWModel.php:2681 ../lib/Objects/_RTWModel.php:2682
 msgid "Selvedge quantity"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2737 ../lib/Objects/_RTWModel.php:2738
+#: ../lib/Objects/_RTWModel.php:2718 ../lib/Objects/_RTWModel.php:2719
 msgid "Bamboo quantity"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2747 ../lib/Objects/_RTWModel.php:2748
-#: ../lib/Objects/_RTWModel.php:2753 void:1
+#: ../lib/Objects/_RTWModel.php:2728 ../lib/Objects/_RTWModel.php:2729
+#: ../lib/Objects/_RTWModel.php:2734 void:1
 msgid "Image"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2756 ../lib/Objects/_RTWModel.php:2757
+#: ../lib/Objects/_RTWModel.php:2737 ../lib/Objects/_RTWModel.php:2738
 #: ../lib/DocumentGenerator.php:3742
 msgid "Available sizes"
 msgstr ""
@@ -4600,7 +4603,7 @@ msgstr ""
 msgid "Internal issue"
 msgstr ""
 
-#: ../lib/Objects/RTWConstructionCode.php:77 ../menu.inc.php:394
+#: ../lib/Objects/RTWConstructionCode.php:77 ../menu.inc.php:400
 msgid "Construction codes"
 msgstr ""
 
@@ -4771,7 +4774,7 @@ msgid "Expense or receipt"
 msgstr ""
 
 #: ../lib/Objects/_FlowType.php:656 ../lib/Objects/_FlowType.php:657
-#: ../menu.inc.php:809 ../StockProductRealandVirtualList.php:121
+#: ../menu.inc.php:815 ../StockProductRealandVirtualList.php:121
 #: ../PreferencesWebSite.php:77 ../ProductQuantityByCategoryList.php:67
 #: ../BoardByCategory.php:52 ../ActorList.php:109 void:1
 msgid "Category"
@@ -4957,12 +4960,12 @@ msgid "Profile"
 msgstr ""
 
 #: ../lib/Objects/_UserAccount.php:1314 ../lib/Objects/_UserAccount.php:1315
-#: ../menu.inc.php:508 ../menu.inc.php:510 void:1
+#: ../menu.inc.php:514 ../menu.inc.php:516 void:1
 msgid "Customer catalogue"
 msgstr ""
 
 #: ../lib/Objects/_UserAccount.php:1323 ../lib/Objects/_UserAccount.php:1324
-#: ../menu.inc.php:502 ../menu.inc.php:504
+#: ../menu.inc.php:508 ../menu.inc.php:510
 msgid "Supplier catalogue"
 msgstr ""
 
@@ -4982,18 +4985,6 @@ msgstr ""
 #: ../lib/Objects/Invoice.php:213 ../FlyBoardBook.php:135
 #: ../ActivatedFlightList.php:183 void:1
 msgid "Duration"
-msgstr ""
-
-#: ../lib/Objects/Invoice.php:355
-msgid "Insole: "
-msgstr ""
-
-#: ../lib/Objects/Invoice.php:357
-msgid "Lining: "
-msgstr ""
-
-#: ../lib/Objects/Invoice.php:359
-msgid "Under-sole: "
 msgstr ""
 
 #: ../lib/Objects/FlyTypePrestationCost.php:165
@@ -5329,6 +5320,10 @@ msgstr ""
 msgid "Pricing zone"
 msgstr ""
 
+#: ../lib/Objects/_ContactRole.php:115 ../menu.inc.php:308
+msgid "Contact roles"
+msgstr ""
+
 #: ../lib/Quantificator/ProductCommandQuantificator.php:144
 #: ../lib/Quantificator/ChainCommandQuantificator.php:82
 #, php-format
@@ -5379,47 +5374,47 @@ msgstr ""
 msgid "Maximum weight by seat exceeded for selected airplane"
 msgstr ""
 
-#: ../lib/SQLRequest.php:2237
+#: ../lib/SQLRequest.php:2233
 #, php-format
 msgid "an item of invoice \"%s\""
 msgstr ""
 
-#: ../lib/SQLRequest.php:2238
+#: ../lib/SQLRequest.php:2234
 #, php-format
 msgid "the account \"%s\""
 msgstr ""
 
-#: ../lib/SQLRequest.php:2239
+#: ../lib/SQLRequest.php:2235
 #, php-format
 msgid "an item of command \"%s\""
 msgstr ""
 
-#: ../lib/SQLRequest.php:2240
+#: ../lib/SQLRequest.php:2236
 #, php-format
 msgid "an expenses and receipts item (FlowItem id: %s)"
 msgstr ""
 
-#: ../lib/SQLRequest.php:2241
+#: ../lib/SQLRequest.php:2237
 #, php-format
 msgid "an item of a model of expenses and receipts (FlowTypeItem id: %s)"
 msgstr ""
 
-#: ../lib/SQLRequest.php:2242
+#: ../lib/SQLRequest.php:2238
 #, php-format
 msgid "the service \"%s\""
 msgstr ""
 
-#: ../lib/SQLRequest.php:2243
+#: ../lib/SQLRequest.php:2239
 #, php-format
 msgid "the product \"%s\""
 msgstr ""
 
-#: ../lib/SQLRequest.php:2244
+#: ../lib/SQLRequest.php:2240
 #, php-format
 msgid "the document \"%s\""
 msgstr ""
 
-#: ../lib/SQLRequest.php:2259
+#: ../lib/SQLRequest.php:2255
 msgid "Selected VAT cannot be deleted because it is used by "
 msgstr ""
 
@@ -7159,7 +7154,7 @@ msgstr ""
 msgid "Remaining amount incl. VAT"
 msgstr ""
 
-#: ../PaymentToHaveList.php:106 ../menu.inc.php:578
+#: ../PaymentToHaveList.php:106 ../menu.inc.php:584
 msgid "List of credit notes"
 msgstr ""
 
@@ -7213,7 +7208,7 @@ msgstr ""
 msgid "Task validation "
 msgstr ""
 
-#: ../PrestationInvoiceAddEdit.php:49 ../menu.inc.php:566
+#: ../PrestationInvoiceAddEdit.php:49 ../menu.inc.php:572
 msgid "Services invoices"
 msgstr ""
 
@@ -8216,16 +8211,24 @@ msgstr ""
 msgid "Level"
 msgstr ""
 
-#: ../ComponentAddEdit.php:226
+#: ../ComponentAddEdit.php:210
+msgid "Percent wasted"
+msgstr ""
+
+#: ../ComponentAddEdit.php:227
 msgid "Please provide a level."
 msgstr ""
 
-#: ../ComponentAddEdit.php:228
+#: ../ComponentAddEdit.php:229
 msgid "Please provide a quantity."
 msgstr ""
 
+#: ../ComponentAddEdit.php:231
+msgid "Precent wasted must be a decimal percent"
+msgstr ""
+
 #: ../LocationConcreteProductList.php:54 ../menu.inc.php:290
-#: ../menu.inc.php:489
+#: ../menu.inc.php:495
 msgid "List of SN/Lots"
 msgstr ""
 
@@ -8905,7 +8908,7 @@ msgstr ""
 msgid "Property"
 msgstr ""
 
-#: ../StockAccountingExport.php:76 ../menu.inc.php:701 void:1
+#: ../StockAccountingExport.php:76 ../menu.inc.php:707 void:1
 msgid "Stock"
 msgstr ""
 
@@ -9219,7 +9222,7 @@ msgstr ""
 msgid "Product references by customer"
 msgstr ""
 
-#: ../menu.inc.php:288 ../menu.inc.php:487
+#: ../menu.inc.php:288 ../menu.inc.php:493
 msgid "SN/Lots"
 msgstr ""
 
@@ -9239,430 +9242,434 @@ msgstr ""
 msgid "List of actors"
 msgstr ""
 
-#: ../menu.inc.php:308 ../menu.inc.php:310
+#: ../menu.inc.php:310
+msgid "Contact roles management"
+msgstr ""
+
+#: ../menu.inc.php:314 ../menu.inc.php:316
 msgid "Supplying settings"
 msgstr ""
 
-#: ../menu.inc.php:314
+#: ../menu.inc.php:320
 msgid "Zones"
 msgstr ""
 
-#: ../menu.inc.php:316 ../ZoneList.php:52
+#: ../menu.inc.php:322 ../ZoneList.php:52
 msgid "list of zones"
 msgstr ""
 
-#: ../menu.inc.php:320 ../menu.inc.php:564
+#: ../menu.inc.php:326 ../menu.inc.php:570
 msgid "Services"
 msgstr ""
 
-#: ../menu.inc.php:322
+#: ../menu.inc.php:328
 msgid "List of services"
 msgstr ""
 
-#: ../menu.inc.php:328
+#: ../menu.inc.php:334
 msgid "List of airplane types"
 msgstr ""
 
-#: ../menu.inc.php:333
+#: ../menu.inc.php:339
 msgid "Costs"
 msgstr ""
 
-#: ../menu.inc.php:340
+#: ../menu.inc.php:346
 msgid "List of resources"
 msgstr ""
 
-#: ../menu.inc.php:346
+#: ../menu.inc.php:352
 msgid "List of product resources"
 msgstr ""
 
-#: ../menu.inc.php:350
+#: ../menu.inc.php:356
 msgid "Cost models"
 msgstr ""
 
-#: ../menu.inc.php:352
+#: ../menu.inc.php:358
 msgid "List of cost models"
 msgstr ""
 
-#: ../menu.inc.php:359 ../menu.inc.php:361
+#: ../menu.inc.php:365 ../menu.inc.php:367
 msgid "Data management"
 msgstr ""
 
-#: ../menu.inc.php:368
+#: ../menu.inc.php:374
 msgid "Colors management"
 msgstr ""
 
-#: ../menu.inc.php:375
+#: ../menu.inc.php:381
 msgid "Sizes management"
 msgstr ""
 
-#: ../menu.inc.php:382
+#: ../menu.inc.php:388
 msgid "Seasons management"
 msgstr ""
 
-#: ../menu.inc.php:389
+#: ../menu.inc.php:395
 msgid "Construction types management"
 msgstr ""
 
-#: ../menu.inc.php:396
+#: ../menu.inc.php:402
 msgid "Construction codes management"
 msgstr ""
 
-#: ../menu.inc.php:403
+#: ../menu.inc.php:409
 msgid "Shapes management"
 msgstr ""
 
-#: ../menu.inc.php:410
+#: ../menu.inc.php:416
 msgid "Press names management"
 msgstr ""
 
-#: ../menu.inc.php:417
+#: ../menu.inc.php:423
 msgid "Labels (griffes) management"
 msgstr ""
 
-#: ../menu.inc.php:424
+#: ../menu.inc.php:430
 msgid "Heel heights management"
 msgstr ""
 
-#: ../menu.inc.php:431 ../menu.inc.php:433
+#: ../menu.inc.php:437 ../menu.inc.php:439
 msgid "Materials management"
 msgstr ""
 
-#: ../menu.inc.php:438
+#: ../menu.inc.php:444
 msgid "Worksheets"
 msgstr ""
 
-#: ../menu.inc.php:440
+#: ../menu.inc.php:446
 msgid "Worksheets management"
 msgstr ""
 
-#: ../menu.inc.php:449 void:1
+#: ../menu.inc.php:455 void:1
 msgid "Pricing"
 msgstr ""
 
-#: ../menu.inc.php:454
+#: ../menu.inc.php:460
 msgid "Seasonalities"
 msgstr ""
 
-#: ../menu.inc.php:456
+#: ../menu.inc.php:462
 msgid "List of seasonalities"
 msgstr ""
 
-#: ../menu.inc.php:460
+#: ../menu.inc.php:466
 msgid "Offers on sale"
 msgstr ""
 
-#: ../menu.inc.php:462
+#: ../menu.inc.php:468
 msgid "List of offers on sale"
 msgstr ""
 
-#: ../menu.inc.php:466
+#: ../menu.inc.php:472
 msgid "Discounts by category"
 msgstr ""
 
-#: ../menu.inc.php:468
+#: ../menu.inc.php:474
 msgid "List of discounts by customer category"
 msgstr ""
 
-#: ../menu.inc.php:476 ../ChainActivationTaskDetail.php:98 void:1
+#: ../menu.inc.php:482 ../ChainActivationTaskDetail.php:98 void:1
 msgid "Nomenclatures"
 msgstr ""
 
-#: ../menu.inc.php:483
+#: ../menu.inc.php:489
 msgid "List of nomenclatures models"
 msgstr ""
 
-#: ../menu.inc.php:497 void:1
+#: ../menu.inc.php:503 void:1
 msgid "Orders"
 msgstr ""
 
-#: ../menu.inc.php:516
+#: ../menu.inc.php:522
 msgid "List of carriage services"
 msgstr ""
 
-#: ../menu.inc.php:540 void:1
+#: ../menu.inc.php:546 void:1
 msgid "Orders follow-up"
 msgstr ""
 
-#: ../menu.inc.php:545
+#: ../menu.inc.php:551
 msgid "Product orders"
 msgstr ""
 
-#: ../menu.inc.php:547 ../menu.inc.php:553 ../PaymentCommandList.php:72
+#: ../menu.inc.php:553 ../menu.inc.php:559 ../PaymentCommandList.php:72
 msgid "State of orders"
 msgstr ""
 
-#: ../menu.inc.php:551
+#: ../menu.inc.php:557
 msgid "Carriage orders"
 msgstr ""
 
-#: ../menu.inc.php:557
+#: ../menu.inc.php:563
 msgid "Class bookings"
 msgstr ""
 
-#: ../menu.inc.php:559
+#: ../menu.inc.php:565
 msgid "Class bookings follow-up"
 msgstr ""
 
-#: ../menu.inc.php:570
+#: ../menu.inc.php:576
 msgid "Estimates"
 msgstr ""
 
-#: ../menu.inc.php:572
+#: ../menu.inc.php:578
 msgid "List of estimates"
 msgstr ""
 
-#: ../menu.inc.php:576
+#: ../menu.inc.php:582
 msgid "Credit notes"
 msgstr ""
 
-#: ../menu.inc.php:586 ../menu.inc.php:652 ../menu.inc.php:654
+#: ../menu.inc.php:592 ../menu.inc.php:658 ../menu.inc.php:660
 #: ../CashBalance.php:71 void:1
 msgid "Cash flow"
 msgstr ""
 
-#: ../menu.inc.php:593
+#: ../menu.inc.php:599
 msgid "Accounts management"
 msgstr ""
 
-#: ../menu.inc.php:597
+#: ../menu.inc.php:603
 msgid "Banks"
 msgstr ""
 
-#: ../menu.inc.php:599
+#: ../menu.inc.php:605
 msgid "List of banks"
 msgstr ""
 
-#: ../menu.inc.php:608
+#: ../menu.inc.php:614
 msgid "Accounting types"
 msgstr ""
 
-#: ../menu.inc.php:610
+#: ../menu.inc.php:616
 msgid "Accounting types management"
 msgstr ""
 
-#: ../menu.inc.php:614 ../menu.inc.php:616
+#: ../menu.inc.php:620 ../menu.inc.php:622
 msgid "Categories of expenses and receipts"
 msgstr ""
 
-#: ../menu.inc.php:620 ../menu.inc.php:622
+#: ../menu.inc.php:626 ../menu.inc.php:628
 msgid "Expenses and receipts models"
 msgstr ""
 
-#: ../menu.inc.php:628 ../menu.inc.php:630
+#: ../menu.inc.php:634 ../menu.inc.php:636
 msgid "Forecasts of expenses and receipts"
 msgstr ""
 
-#: ../menu.inc.php:634 ../menu.inc.php:636
+#: ../menu.inc.php:640 ../menu.inc.php:642
 msgid "Expenses and receipts"
 msgstr ""
 
-#: ../menu.inc.php:640 ../menu.inc.php:642 ../menu.inc.php:730
-#: ../menu.inc.php:854
+#: ../menu.inc.php:646 ../menu.inc.php:648 ../menu.inc.php:736
+#: ../menu.inc.php:860
 msgid "History"
 msgstr ""
 
-#: ../menu.inc.php:646 ../menu.inc.php:648
+#: ../menu.inc.php:652 ../menu.inc.php:654
 msgid "Accounts receivable aging"
 msgstr ""
 
-#: ../menu.inc.php:658
+#: ../menu.inc.php:664
 msgid "Breaking-down"
 msgstr ""
 
-#: ../menu.inc.php:660 void:1
+#: ../menu.inc.php:666 void:1
 msgid "Breaking-down data export"
 msgstr ""
 
-#: ../menu.inc.php:674 void:1
+#: ../menu.inc.php:680 void:1
 msgid "Work order"
 msgstr ""
 
-#: ../menu.inc.php:679
+#: ../menu.inc.php:685
 msgid "Scheduled chains"
 msgstr ""
 
-#: ../menu.inc.php:681 ../menu.inc.php:868
+#: ../menu.inc.php:687 ../menu.inc.php:874
 msgid "List of activated chains"
 msgstr ""
 
-#: ../menu.inc.php:685
+#: ../menu.inc.php:691
 msgid "Work orders"
 msgstr ""
 
-#: ../menu.inc.php:687
+#: ../menu.inc.php:693
 msgid "Work orders management"
 msgstr ""
 
-#: ../menu.inc.php:691 ../menu.inc.php:693
+#: ../menu.inc.php:697 ../menu.inc.php:699
 msgid "Regrouping in work order"
 msgstr ""
 
-#: ../menu.inc.php:706 ../menu.inc.php:708 void:1
+#: ../menu.inc.php:712 ../menu.inc.php:714 void:1
 msgid "Amount of stock"
 msgstr ""
 
-#: ../menu.inc.php:712
+#: ../menu.inc.php:718
 msgid "Stock state"
 msgstr ""
 
-#: ../menu.inc.php:714
+#: ../menu.inc.php:720
 msgid "List of storage sites"
 msgstr ""
 
-#: ../menu.inc.php:718 ../menu.inc.php:720
+#: ../menu.inc.php:724 ../menu.inc.php:726
 msgid "Expected movements"
 msgstr ""
 
-#: ../menu.inc.php:724
+#: ../menu.inc.php:730
 msgid "Unexpected movements"
 msgstr ""
 
-#: ../menu.inc.php:726
+#: ../menu.inc.php:732
 msgid "Unexpected movement execution"
 msgstr ""
 
-#: ../menu.inc.php:732
+#: ../menu.inc.php:738
 msgid "List of executed movements"
 msgstr ""
 
-#: ../menu.inc.php:736 ../menu.inc.php:738 ../InventoryDetailList.php:113
+#: ../menu.inc.php:742 ../menu.inc.php:744 ../InventoryDetailList.php:113
 #: ../InventoryDetailList.php:115
 msgid "Inventory"
 msgstr ""
 
-#: ../menu.inc.php:742 ../menu.inc.php:744
+#: ../menu.inc.php:748 ../menu.inc.php:750
 msgid "Material accounting"
 msgstr ""
 
-#: ../menu.inc.php:748
+#: ../menu.inc.php:754
 msgid "Supplying optimization"
 msgstr ""
 
-#: ../menu.inc.php:750
+#: ../menu.inc.php:756
 msgid "Supplying quantities optimization"
 msgstr ""
 
-#: ../menu.inc.php:754 void:1
+#: ../menu.inc.php:760 void:1
 msgid "Regrouping"
 msgstr ""
 
-#: ../menu.inc.php:756
+#: ../menu.inc.php:762
 msgid "List of regrouping tasks"
 msgstr ""
 
-#: ../menu.inc.php:760 ../menu.inc.php:762
+#: ../menu.inc.php:766 ../menu.inc.php:768
 msgid "History of regroupings"
 msgstr ""
 
-#: ../menu.inc.php:770 ../menu.inc.php:929 void:1
+#: ../menu.inc.php:776 ../menu.inc.php:935 void:1
 msgid "Documents"
 msgstr ""
 
-#: ../menu.inc.php:777
+#: ../menu.inc.php:783
 msgid "List of document models"
 msgstr ""
 
-#: ../menu.inc.php:782 ../menu.inc.php:784
+#: ../menu.inc.php:788 ../menu.inc.php:790
 msgid "Reprinting of documents"
 msgstr ""
 
-#: ../menu.inc.php:792 void:1
+#: ../menu.inc.php:798 void:1
 msgid "Scoreboard"
 msgstr ""
 
-#: ../menu.inc.php:799
+#: ../menu.inc.php:805
 msgid "Turnover by salesman"
 msgstr ""
 
-#: ../menu.inc.php:805
+#: ../menu.inc.php:811
 msgid "Turnover by customer"
 msgstr ""
 
-#: ../menu.inc.php:811
+#: ../menu.inc.php:817
 msgid "Turnover by category"
 msgstr ""
 
-#: ../menu.inc.php:817
+#: ../menu.inc.php:823
 msgid "Turnover by product"
 msgstr ""
 
-#: ../menu.inc.php:821 ../menu.inc.php:823
+#: ../menu.inc.php:827 ../menu.inc.php:829
 msgid "Turnover by supplier"
 msgstr ""
 
-#: ../menu.inc.php:827
+#: ../menu.inc.php:833
 msgid "Turnover by customer/supplier"
 msgstr ""
 
-#: ../menu.inc.php:829
+#: ../menu.inc.php:835
 msgid "Details of customer turnover sorted by supplier"
 msgstr ""
 
-#: ../menu.inc.php:833 ../menu.inc.php:835
+#: ../menu.inc.php:839 ../menu.inc.php:841
 msgid "Activity based costing"
 msgstr ""
 
-#: ../menu.inc.php:848
+#: ../menu.inc.php:854
 msgid "Validation"
 msgstr ""
 
-#: ../menu.inc.php:850 ../menu.inc.php:856
+#: ../menu.inc.php:856 ../menu.inc.php:862
 msgid "List of tasks"
 msgstr ""
 
-#: ../menu.inc.php:860 ../menu.inc.php:862 ../menu.inc.php:911
+#: ../menu.inc.php:866 ../menu.inc.php:868 ../menu.inc.php:917
 msgid "Time schedule"
 msgstr ""
 
-#: ../menu.inc.php:866
+#: ../menu.inc.php:872
 msgid "Gantt"
 msgstr ""
 
-#: ../menu.inc.php:877
+#: ../menu.inc.php:883
 msgid "Flights"
 msgstr ""
 
-#: ../menu.inc.php:883 ../menu.inc.php:885
+#: ../menu.inc.php:889 ../menu.inc.php:891
 msgid "Log book"
 msgstr ""
 
-#: ../menu.inc.php:890 ../menu.inc.php:892
+#: ../menu.inc.php:896 ../menu.inc.php:898
 msgid "Board book"
 msgstr ""
 
-#: ../menu.inc.php:897
+#: ../menu.inc.php:903
 msgid "Expected flights"
 msgstr ""
 
-#: ../menu.inc.php:899
+#: ../menu.inc.php:905
 msgid "List of expected flights"
 msgstr ""
 
-#: ../menu.inc.php:906
+#: ../menu.inc.php:912
 msgid "List of completed flights"
 msgstr ""
 
-#: ../menu.inc.php:913 ../UnavailabilityPlanning.php:46
+#: ../menu.inc.php:919 ../UnavailabilityPlanning.php:46
 msgid "Weekly schedule"
 msgstr ""
 
-#: ../menu.inc.php:922
+#: ../menu.inc.php:928
 msgid "EDM"
 msgstr ""
 
-#: ../menu.inc.php:923
+#: ../menu.inc.php:929
 msgid "Electronic document management"
 msgstr ""
 
-#: ../menu.inc.php:931
+#: ../menu.inc.php:937
 msgid "List of uploaded documents"
 msgstr ""
 
-#: ../menu.inc.php:936
+#: ../menu.inc.php:942
 msgid "Document Types"
 msgstr ""
 
-#: ../menu.inc.php:938
+#: ../menu.inc.php:944
 msgid "List of document types"
 msgstr ""
 
@@ -10293,23 +10300,23 @@ msgstr ""
 msgid "No order found for last weeks."
 msgstr ""
 
-#: ../SupplyingOptimization.php:137
+#: ../SupplyingOptimization.php:138
 msgid "No suggested quantity to order for the selected date."
 msgstr ""
 
-#: ../SupplyingOptimization.php:159
+#: ../SupplyingOptimization.php:160
 msgid "Number of weeks in history"
 msgstr ""
 
-#: ../SupplyingOptimization.php:161
+#: ../SupplyingOptimization.php:162
 msgid "Number of weeks of forecast"
 msgstr ""
 
-#: ../SupplyingOptimization.php:163
+#: ../SupplyingOptimization.php:164
 msgid "Default delivery within (days)"
 msgstr ""
 
-#: ../SupplyingOptimization.php:166
+#: ../SupplyingOptimization.php:167
 msgid "Forecasts with extrapolation"
 msgstr ""
 
@@ -13804,7 +13811,7 @@ msgid "Contacts"
 msgstr ""
 
 #: void:1
-msgid "Contact"
+msgid "Role"
 msgstr ""
 
 #: void:1

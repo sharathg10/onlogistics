@@ -980,6 +980,7 @@
     <entity name="Component" tablename="Component">
         <property type="int" name="Level" />
         <property type="decimal" length="10,3" name="Quantity" />
+        <property type="decimal" length="10,2" name="PercentWasted" default="0"/>
         <property type="foreignkey" name="Nomenclature" class="Nomenclature"
             navigable="1" ondelete="cascade" />
         <property type="foreignkey" name="Product" class="Product"
@@ -1070,9 +1071,15 @@
         <property type="string" name="Email" />
         <property type="foreignkey" name="CommunicationModality"
             class="CommunicationModality" />
-        <property type="string" name="Fonction" />
+        <property type="foreignkey" name="Role" class="ContactRole"/>
         <property type="manytomany" name="Site" class="Site"
             field="ToContact" linktable="sitContact" linkfield="FromSite"/>
+    </entity>
+
+    <!-- entity ContactRole -->
+    <entity name="ContactRole" tablename="ContactRole" 
+        features="grid,add,edit,del" label="Contact roles">
+        <property type="string" name="Name" label="Name" usedby="grid,addedit"/>
     </entity>
 
     <!-- entity Container -->

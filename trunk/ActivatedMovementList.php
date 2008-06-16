@@ -215,7 +215,7 @@ if (true === $form->displayGrid()) {
                 3 => sprintf($execAction, _('Partial')),
                 4 => _('Locked'))));
 
-    $Order = array('StartDate' => SORT_ASC, 'ProductCommand.CommandNo' => SORT_ASC);
+    $Order = array('StartDate' => SORT_ASC, 'ProductCommand.CommandNo' => SORT_ASC, 'Product.Name' => SORT_ASC);
 
     //$form->setItemsCollection($acmCol);
     $form->displayResult($grid, true, $Filter, $Order, '', array(),

@@ -103,26 +103,44 @@
 	  </td>
     </tr>
 	</thead>
-    {section name=Contact loop=$ContactList}
     <tr class="{if $smarty.section.Contact.index is odd}gridRowOdd{else}gridRowEven{/if}">
-      <td colspan="3">
-	  	{t}Contact{/t} {$smarty.section.Contact.index+1} ({$ContactList[Contact]->getId()}) : &nbsp;
-	  	<a href="javascript:document.forms['SiteAddEdit'].elements['ContactToAdd'].value='{$ContactList[Contact]->getId()}';document.forms['SiteAddEdit'].submit();">
-		{$ContactList[Contact]->GetName()}
-		</a>
-	  </td>
-      <td align="right">
-	    <a href="javascript:document.forms['SiteAddEdit'].elements['ContactToAdd'].value='{$ContactList[Contact]->getId()}';document.forms['SiteAddEdit'].submit();">
-		<img src="images/modifier.gif" border=0 alt="{t}Modify{/t}" /></a>
-	    <a href="javascript:document.forms['SiteAddEdit'].elements['ContactToDelete'].value='{$ContactList[Contact]->getId()}';document.forms['SiteAddEdit'].submit();">
-		<img src="images/sup.gif" border=0 alt="{t}Delete{/t}" /></a>
-	  </td>
-    </tr>
+      <td colspan="4">
+        <table id="table" width="100%" cellpadding="4" cellspacing="0"
+            class="form" border="0" style="border: 0;">
+            <thead>
+            <tr>
+                <td class="gris2">{t}Name{/t}</td>
+                <td class="gris2">{t}Role{/t}</td>
+                <td class="gris2">{t}Phone{/t}</td>
+                <td class="gris2">{t}Fax{/t}</td>
+                <td class="gris2">{t}Email{/t}</td>
+                <td class="gris2">&nbsp;</td>
+            </tr>
+	        </thead>
+    {section name=Contact loop=$ContactList}
+            <tr>
+                <td>
+	  	            <a href="javascript:document.forms['SiteAddEdit'].elements['ContactToAdd'].value='{$ContactList[Contact]->getId()}';document.forms['SiteAddEdit'].submit();">{$ContactList[Contact]->GetName()}</a>
+	            </td>
+                <td>{if $ContactList[Contact]->getRole()}{$ContactList[Contact]->getRole()}{else}N/A{/if}</td>
+                <td>{if $ContactList[Contact]->getPhone()}{$ContactList[Contact]->getPhone()}{else}N/A{/if}</td>
+                <td>{if $ContactList[Contact]->getFax()}{$ContactList[Contact]->getFax()}{else}N/A{/if}</td>
+                <td>{if $ContactList[Contact]->getEmail()}{$ContactList[Contact]->getEmail()}{else}N/A{/if}</td>
+                <td align="right">
+	                <a href="javascript:document.forms['SiteAddEdit'].elements['ContactToAdd'].value='{$ContactList[Contact]->getId()}';document.forms['SiteAddEdit'].submit();">
+		                <img src="images/modifier.gif" border=0 alt="{t}Modify{/t}" /></a>
+	                <a href="javascript:document.forms['SiteAddEdit'].elements['ContactToDelete'].value='{$ContactList[Contact]->getId()}';document.forms['SiteAddEdit'].submit();">
+		                <img src="images/sup.gif" border=0 alt="{t}Delete{/t}" /></a>
+	            </td>
+            </tr>
     {sectionelse}
-    <tr>
-      <td colspan="4">{t}No contact.{/t}</td>
-    </tr>
+            <tr>
+                <td>{t}No contact.{/t}</td>
+            </tr>
     {/section}
+        </table>
+      </td>
+    </tr>
     <tr>
       <td class="gris2" colspan="4" align="right">
 	    <a href="javascript:document.forms['SiteAddEdit'].elements['ContactToAdd'].value='0';document.forms['SiteAddEdit'].submit();">

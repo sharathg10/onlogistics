@@ -3,6 +3,8 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
+ * IMPORTANT: This is a generated file, please do not edit.
+ *
  * This file is part of Onlogistics, a web based ERP and supply chain 
  * management application. 
  *
@@ -34,6 +36,10 @@
  * @filesource
  */
 
+/**
+ * Contact class
+ *
+ */
 class Contact extends Object {
     
     // Constructeur {{{
@@ -264,35 +270,57 @@ class Contact extends Object {
     }
 
     // }}}
-    // Fonction string property + getter/setter {{{
+    // Role foreignkey property + getter/setter {{{
 
     /**
-     * Fonction string property
+     * Role foreignkey
      *
      * @access private
-     * @var string
+     * @var mixed object ContactRole or integer
      */
-    private $_Fonction = '';
+    private $_Role = false;
 
     /**
-     * Contact::getFonction
+     * Contact::getRole
      *
      * @access public
-     * @return string
+     * @return object ContactRole
      */
-    public function getFonction() {
-        return $this->_Fonction;
+    public function getRole() {
+        if (is_int($this->_Role) && $this->_Role > 0) {
+            $mapper = Mapper::singleton('ContactRole');
+            $this->_Role = $mapper->load(
+                array('Id'=>$this->_Role));
+        }
+        return $this->_Role;
     }
 
     /**
-     * Contact::setFonction
+     * Contact::getRoleId
      *
      * @access public
-     * @param string $value
+     * @return integer
+     */
+    public function getRoleId() {
+        if ($this->_Role instanceof ContactRole) {
+            return $this->_Role->getId();
+        }
+        return (int)$this->_Role;
+    }
+
+    /**
+     * Contact::setRole
+     *
+     * @access public
+     * @param object ContactRole $value
      * @return void
      */
-    public function setFonction($value) {
-        $this->_Fonction = $value;
+    public function setRole($value) {
+        if (is_numeric($value)) {
+            $this->_Role = (int)$value;
+        } else {
+            $this->_Role = $value;
+        }
     }
 
     // }}}
@@ -431,7 +459,7 @@ class Contact extends Object {
             'Mobile' => Object::TYPE_STRING,
             'Email' => Object::TYPE_STRING,
             'CommunicationModality' => 'CommunicationModality',
-            'Fonction' => Object::TYPE_STRING);
+            'Role' => 'ContactRole');
         return $return;
     }
 

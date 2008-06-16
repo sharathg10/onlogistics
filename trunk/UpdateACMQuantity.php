@@ -60,7 +60,7 @@ for($i = 0; $i < $acmColl->getCount(); $i++){
             $qty = 1;
             $method = 'getPreviousTaskFromRule';
         } else {
-            $qty = $component->getQuantity();
+            $qty = $component->getQuantity(true);
             $method = 'getNextTaskFromRule';
         }
         $assemblyAck = $ack->$method('isAssemblyTask');

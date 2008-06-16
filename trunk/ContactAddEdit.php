@@ -117,6 +117,12 @@ $smarty->assign('retURL', $retURL);
 $smarty->assign('origRetURL', $origRetURL);
 $smarty->assign('Contact', $contact);
 
+
+$roleID      = $contact->getRoleId();
+$roleOptions = FormTools::writeOptionsFromObject('ContactRole', $roleID, 
+    array(), array(), 'toString', array(), true);
+$smarty->assign('ContactRoleList', implode("\n\t\t", $roleOptions));
+
 $cmdty = $contact->getCommunicationModality();
 $commModOptions = getCommunicationModalityModesAsOptions($cmdty);
 $smarty->assign('CommModeList', join("\n\t\t", $commModOptions));

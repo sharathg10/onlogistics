@@ -20,7 +20,9 @@
 	  </td>
       <td width="20%">{t}Function{/t}: </td>
       <td width="30%">
-	  	<input name="Contact_Fonction" type="text" id="Contact_Fonction" style="width:100%" value="{$Contact->GetFonction()}" />
+	    <select name="Contact_Role_ID" id="Contact_Role_ID" style="width:100%">
+	  		{$ContactRoleList}
+		</select>
 	  </td>
     </tr>
     <tr>

@@ -996,6 +996,7 @@ CREATE TABLE Component (
   _DBId int(11) default 0,
   _Level INT(11) DEFAULT NULL,
   _Quantity DECIMAL(10,3) DEFAULT NULL,
+  _PercentWasted DECIMAL(10,2) NOT NULL DEFAULT 0,
   _Nomenclature INT(11) NOT NULL DEFAULT 0,
   _Product INT(11) NOT NULL DEFAULT 0,
   _Parent INT(11) NOT NULL DEFAULT 0,
@@ -1101,11 +1102,24 @@ CREATE TABLE Contact (
   _Mobile VARCHAR(255) DEFAULT NULL,
   _Email VARCHAR(255) DEFAULT NULL,
   _CommunicationModality INT(11) NOT NULL DEFAULT 0,
-  _Fonction VARCHAR(255) DEFAULT NULL,
+  _Role INT(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (_Id)
 ) TYPE=InnoDB CHARSET=latin1;
 
 CREATE INDEX _CommunicationModality ON Contact (_CommunicationModality);
+CREATE INDEX _Role ON Contact (_Role);
+
+--
+-- Table structure for ContactRole
+--
+DROP TABLE IF EXISTS ContactRole;
+CREATE TABLE ContactRole (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
 
 --
 -- Table structure for Container

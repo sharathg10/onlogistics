@@ -285,7 +285,7 @@ class ProductCommand extends _ProductCommand {
             $cmi->setCommand($this);
             $cmi->setActivatedChain($this->getActivatedChain());
             if ($qtyRatio) {
-                $qty = $cpn->getQuantityInHead() * $refQty;
+                $qty = $cpn->getQuantityInHead(true) * $refQty;
             } else {
                 $qty = $refQty;
             }
@@ -357,7 +357,7 @@ class ProductCommand extends _ProductCommand {
         return $AlertArray;
     }
 
-    function _createActivatedMovement($activatedChainTask, $productId) {
+    function _createActivatedMovement($activatedChainTask, $productId, $percentWasted = false) {
         require_once('Objects/Task.const.php');
         require_once('Objects/Command.const.php');
         require_once('Objects/Product.php');
@@ -392,6 +392,7 @@ class ProductCommand extends _ProductCommand {
         $ActivatedMovement->setProduct($productId);
 
         $quantity = 0;
+        $mustCreateWastedMovement = false;
         // Si mvt interne, on renseigne la Quantity
         if($MovementTypeID == ENTREE_INTERNE || $MovementTypeID == SORTIE_INTERNE) {
             if (!($activatedChainTask instanceof ActivatedChainTask)) {
@@ -408,9 +409,16 @@ class ProductCommand extends _ProductCommand {
                     $method = 'getPreviousTaskFromRule';
                     $cId = $component->getId();
                 } else {
-                    $qty = $component->getQuantity();
+                    if ($percentWasted) {
+                        $qty = $component->getQuantity(true) - $component->getQuantity();
+                    } else {
+                        $qty = $component->getQuantity();
+                    }
                     $method = 'getNextTaskFromRule';
                     $cId = $component->getParentId();
+                    if (!$percentWasted && $component->getPercentWasted() > 0) {
+                        $mustCreateWastedMovement = true;
+                    }
                 }
                 // pour quantifier le mouvement on utilise la quantité assemblèe 
                 // de la tâche d'assemblage suivante ou précédente qui est liée 
@@ -446,6 +454,9 @@ class ProductCommand extends _ProductCommand {
             $ActivatedMovement->setQuantity($quantity);
         }
         $ActivatedMovement->save();
+        if ($mustCreateWastedMovement) {
+            $this->_createActivatedMovement($activatedChainTask, $productId, true);
+        }
         // Mise a jour de la qte virtuelle
         $AlertMailData = $ActivatedMovement->setProductVirtualQuantity();
         return $AlertMailData;

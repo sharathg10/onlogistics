@@ -106,7 +106,7 @@ try {
     if (isset($_SERVER['ONLOGISTICS_CONFIGFILE_PATH'])) {
         $conf = $_SERVER['ONLOGISTICS_CONFIGFILE_PATH'];
     } else {
-        $conf = dirname(__FILE__) . 'config/project.conf';
+        $conf = dirname(__FILE__) . '/config/project.conf';
     }
     parseConfigFile($conf);
     // initialisation de l'I18N

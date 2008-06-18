@@ -19,7 +19,7 @@
 #   database, to simplify mass hosting (yet to be documented).
 ACCOUNTS_BACKEND=file
 
-# Only set this if you have ACCOUNTS_BACKEND=file :
+# Only set this if you have ACCOUNTS_BACKEND=file:
 # Databases DSN for each account:
 #DSN_CUSTOMER1=mysqlt://user1:pass2@localhost/db_customer1
 #DSN_CUSTOMER2=mysqlt://user2:pass2@localhost/db_customer2
@@ -40,7 +40,7 @@ FRAMEWORK_ROOT=/home/httpd/htdocs/ateor-libs/current/pwak
 SESSION_TIMEOUT=1800
 
 # XXX/TODO merge those two constants.
-# ENVIRONMENT as 4 possible values : www, demo, recette or current
+# ENVIRONMENT as 4 possible values: www, demo, recette or current
 #ENVIRONMENT=current
 
 # Set this to 1 if you use OL on a development environnment, 0 if in
@@ -56,7 +56,7 @@ SMARTY_TEMPLATE_DIR=lib/templates
 # on the same host, please use differents directories. The web server 
 # must have write access in this directory (and if php runs in safe-mode,
 # this directory must have the same uid than the owner of this script).
-# default value : system temporary directory.
+# default value: system temporary directory.
 SMARTY_COMPILE_DIR=/var/glao/current
 
 # Mail parameters. Uncomment those settings if necessary, else default 
@@ -75,54 +75,54 @@ MAIL_SENDER=current@ateor.com
 # Boolean. Set to 1 you want to enable i18n support. Default is 0.
 I18N_ENABLED=1
 
-# Constantes specifiques a onlogistics
+# OnLogistics specifics contants
 # ----------------------------------------------------------------------------
 
-# version de onlogistics
+# OnLogistics version (will be displayed on pages' footers)
 ONLOGISTICS_VERSION=2_0_1-CURRENT
 
-# Adresse du repertoire de telechargement des applis OnLogistics, elle doit
-# contenir:
-# - les credentials de l'auth http (si besoin)
-# - le nom de l'hote
-# - le chemin vers le repertoire en fonction de la version prod ou current
+# OnLogistics apps' download URL. Must contain:
+# - credentials, if http auth is required
+# - host name
+# - path to the proper directory (if prod or testing)
 DOWNLOAD_ADDRESS=https://download.ateor.com/private/current
 
-# Applications telechargeables separees par une virgule.
-# Le format d'une entree est nom:nomfichier
-# Ex: Application1:monappli1.exe,Application2:monappli2.exe
+# Downloadables applications, comma separted names.
+# Ex: Application1:myapp1.exe,Application2:myapp2.exe
 AVAILABLE_APPS=Onlogistics-Desktop:onlogistics.exe
 
-# Id de l'utilisateur root
+# root (in the OL application) user id
 ROOT_USERID=1
 
-# PROJECT_ROOT est le repertoire racine, contenant le fichier bootstrap.inc.php
-# repertoir relatif au PROJECT_ROOT contenant les libs
+# In the following comments PROJECT_ROOT reffers to the root directory 
+# that contains the bootstrap.inc.php file (ie. the OL root).
+ 
+# Directory containing libs (relative to PROJECT_ROOT)
 LIB_DIR=lib
-# repertoire relatif au LIB_DIR contenant les fichiers "web accessibles"
+# Directory containing public web files (relative to LIB_DIR)
 WWW_DIR=.
-# repertoire relatif au LIB_DIR contenant les classes generees
+# Directory containing generated classes (relative to LIB_DIR)
 MODELS_DIR=Objects
-# repertoire relatif au LIB_DIR contenant les classes utilisateurs
+# Directory containing user's classes (relative to LIB_DIR)
 CLASSES_DIR=.
-# repertoire relatif au LIB_DIR contenant les classes grid custom
+# Directory containing customs grid classes (relative to LIB_DIR)
 CUSTOM_GRID_DIR=CustomGrid
-# repertoire relatif au LIB_DIR contenant les classes controller custom
+# Directory containing customs controller classes (relative to LIB_DIR)
 CUSTOM_CONTROLLER_DIR=Custom
-# repertoire relatif au LIB_DIR contenant les classes timetable custom
+# Directory containing customs timetable classes (relative to LIB_DIR)
 CUSTOM_TIMETABLE_DIR=CustomTimetable
 
-# template de base des pages (sans le repertoire templates)
+# Base pages template (without templates directory)
 BASE_TEMPLATE=Main.html
-# template de base des popups (sans le repertoire templates)
+# Base template for popups (without templates directory)
 BASE_POPUP_TEMPLATE=BlankPopup.html
-# format des donnees du menu (php ou xml)
+# Menu's description format (php or xml)
 MENU_METADATA_FORMAT=php
-# fichier contenant les donnees du menu
+# File containing menu's description
 MENU_METADATA=menu.inc.php
 
 ONLOGISTICS_API=https://www.onlogistics.com/rpc/api_site.php
 
-# repertoire d'upload pour le module GED d'onlogistics, doit être accessible en
-# ecriture par le serveur web et disposer d'assez d'espace libre.
+# Directory for uploaded files. Only needed if you use GED. Must be writable
+# by the webserver.
 GED_UPLOAD_DIR=/home/httpd/ged_docs/

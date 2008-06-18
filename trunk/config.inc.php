@@ -103,8 +103,11 @@ function getOnlogisticsAccountArray($includeDSN=true)
 
 try {
     // parse main and project config files
-    $conf = isset($_SERVER['ONLOGISTICS_CONFIGFILE_PATH']) ?
-        $_SERVER['ONLOGISTICS_CONFIGFILE_PATH'] : 'config/project.conf';
+    if (isset($_SERVER['ONLOGISTICS_CONFIGFILE_PATH'])) {
+        $conf = $_SERVER['ONLOGISTICS_CONFIGFILE_PATH'];
+    } else {
+        $conf = dirname(__FILE__) . 'config/project.conf';
+    }
     parseConfigFile($conf);
     // initialisation de l'I18N
     if (isset($_COOKIE['_Auth_Lang'])) {

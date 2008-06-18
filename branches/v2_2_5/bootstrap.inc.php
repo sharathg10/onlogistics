@@ -35,7 +35,6 @@
  */
 
 function parseConfigFile($fname) {
-    $fname = dirname(__FILE__) . '/' . $fname;
     if (!file_exists($fname) || !is_readable($fname)) {
         throw new Exception("$fname must exists and must be readable.");
     }

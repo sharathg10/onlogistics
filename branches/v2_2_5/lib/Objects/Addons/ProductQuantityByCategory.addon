@@ -1,0 +1,14 @@
+
+    /**
+     * Retourne true si la quantity passee en param est compatible
+     *
+     * @param integer $qty
+     * @access public
+     * @return boolean
+     */
+    function isValidQuantity($qty) {
+        $notValid = ($this->getMinimumQuantity() > $qty ||
+                ($this->getMinimumQuantityType() == ProductQuantityByCategory::QTY_TYPE_MULTIPLE
+                    && $qty % $this->getMinimumQuantity()) != 0);
+        return !$notValid;
+    }

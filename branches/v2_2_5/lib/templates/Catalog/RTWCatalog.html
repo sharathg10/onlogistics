@@ -1,0 +1,102 @@
+<!--$Id$ -->
+{$form.javascript}
+<form {$form.attributes}>
+{$form.hidden}
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+  <thead>
+  <tr> 
+	<td colspan ="4">&nbsp;</td>
+  </tr>  
+  </thead>
+  <tbody>
+  <tr class="gridRowEven"> 
+    <td style="width:10%" nowrap>{$form.Customer.label}: </td>
+    <td>{$form.Customer.html}</td>
+    <td nowrap>{$form.Model.label}: </td>
+    <td>{$form.Model.html}</td>
+  </tr>
+{if $form.Material1 and $form.Material2}
+  <tr class="gridRowEven"> 
+    <td style="width:10%" nowrap>{$form.Material1.label}: </td>
+    <td>{$form.Material1.html}</td>
+    <td nowrap>{$form.Material2.label}: </td>
+    <td>{$form.Material2.html}</td>
+  </tr>
+{elseif $form.Material1}
+  <tr class="gridRowEven"> 
+    <td style="width:10%" nowrap>{$form.Material1.label}: </td>
+    <td>{$form.Material1.html}</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+{elseif $form.Material2}
+  <tr class="gridRowEven"> 
+    <td style="width:10%" nowrap>{$form.Material2.label}: </td>
+    <td>{$form.Material2.html}</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+{/if}
+{if $form.Accessory1 and $form.Accessory2}
+  <tr class="gridRowEven"> 
+    <td style="width:10%" nowrap>{$form.Accessory1.label}: </td>
+    <td>{$form.Accessory1.html}</td>
+    <td nowrap>{$form.Accessory2.label}: </td>
+    <td>{$form.Accessory2.html}</td>
+  </tr>
+{elseif $form.Accessory1}
+  <tr class="gridRowEven"> 
+    <td style="width:10%" nowrap>{$form.Accessory1.label}: </td>
+    <td>{$form.Accessory1.html}</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+{elseif $form.Accessory2}
+  <tr class="gridRowEven"> 
+    <td style="width:10%" nowrap>{$form.Accessory2.label}: </td>
+    <td>{$form.Accessory2.html}</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+{/if}
+
+  </tbody>
+  <tfoot>
+  <tr> 
+    <td colspan="4">
+		<input name="Search" type="submit" value="{t}Search{/t}" class="button">&nbsp;
+    </td>
+  </tr>
+  </tfoot>
+</table>
+
+{if $Products}
+<br/>
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+  <thead>
+  <tr> 
+      <td>{t}Reference{/t}</td>
+      <td>{t}Quantity{/t}</td>
+  </tr>  
+  </thead>
+  <tbody>
+{foreach from=$Products name=Products key=id item=name}
+  <tr class="gridRowEven"> 
+    <td style="width:90%" nowrap>{$name}</td>
+    <td nowrap><input type="hidden" value="{$id}" name="pdt[]"/>
+        <input type="text" value="0" name="qty_{$id}"/></td>
+  </tr>
+{/foreach}
+  </tbody>
+  <tfoot>
+  <tr> 
+    <td colspan="2">
+		<input name="Order" type="submit" value="{t}Order{/t}" class="button">&nbsp;
+		<input name="Estimate" type="submit" value="{t}Ask for estimate{/t}" class="button">&nbsp;
+    </td>
+  </tr>
+  </tfoot>
+</table>
+{/if}
+</form>
+

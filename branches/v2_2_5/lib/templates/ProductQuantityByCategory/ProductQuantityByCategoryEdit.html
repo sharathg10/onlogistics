@@ -1,0 +1,28 @@
+<form {$form.attributes}>
+{$form.hidden}
+    <input type="hidden" name="formSubmitted" value="1">
+	<table id="table" width="100%" cellpadding="3" cellspacing="0" class="form" border="0">
+	  <tbody>
+	  <tr>
+		<td width="20%">{$form.MinimumQuantity.label}: </td>
+		<td width="25%">{$form.MinimumQuantity.html}</td>
+		<td width="20%">&nbsp;{$form.MinimumQuantityType.label}: </td>
+		<td width="35%">{$form.MinimumQuantityType.html}</td>
+	  </tr>
+	  <tr>
+		<td colspan="4">&nbsp;</td>
+	  </tr>
+	  </tbody>
+      <tfoot>
+	  <tr>
+	    <td colspan="4">
+		  <input type="button" value="{t}Cancel{/t}" name="cancel"
+            onClick="window.location='{$returnURL}'" class="Button">
+		  &nbsp;
+		  <input type="submit" name="Ok" value="{t}Ok{/t}" class="button"
+		  	onclick="return checkForm(this.form, requiredFields);">
+		</td>
+	  </tr>
+	  </tfoot>
+	</table>
+</form>

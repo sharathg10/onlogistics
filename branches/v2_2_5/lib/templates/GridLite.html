@@ -1,0 +1,109 @@
+<!-- Grid -->
+<div class="grid">
+    <table width="100%" cellspacing="0" cellpadding="3" border="0">
+        <!-- Header du grid -->
+        <thead>
+        <tr>
+{section name=GridHeader loop=$GridHeader}
+{if $GridHeader[GridHeader].GroupCount > 0}
+            <td class="group" colspan="{$GridHeader[GridHeader].GroupCount}">
+                {$GridHeader[GridHeader].GroupCaption|default:'&nbsp;'}
+            </td>
+{else}
+            <td {if $RowSpan} rowspan="2"{/if} class="grid_{$GridHeader[GridHeader].DataType}">
+{if $GridHeader[GridHeader].Link}
+{if $GridHeader[GridHeader].SortOrder eq 'DESC'}
+                <a href="javascript:void(0);" onclick="{$GridHeader[GridHeader].Link}"
+                onmouseover="window.status='{t}Sort descending{/t}';return true;"
+                title="{t}Sort descending{/t}">{$GridHeader[GridHeader].Caption|default:'&nbsp;'}</a>
+                <img src="{$SortAscImage}" />
+{elseif $GridHeader[GridHeader].SortOrder eq 'ASC'}
+                <a href="javascript:void(0);" onclick="{$GridHeader[GridHeader].Link}"
+                onmouseover="window.status='{t}Sort ascending{/t}'; return true;"
+                title="{t}Sort ascending{/t}">{$GridHeader[GridHeader].Caption|default:'&nbsp;'}</a>
+                <img src="{$SortDescImage}" />
+{else}
+                <a href="javascript:void(0);" onclick="{$GridHeader[GridHeader].Link}"
+                onmouseover="window.status='{t}Sort ascending{/t}'; return true;"
+                title="{t}Sort ascending{/t}">{$GridHeader[GridHeader].Caption|default:'&nbsp;'}</a>
+{/if}
+{else}
+                {$GridHeader[GridHeader].Caption|default:'&nbsp;'}
+{/if}
+            </td>
+{/if}
+{/section}
+{if $WithCheckBox eq 1 and count($GridRow) neq 0}
+            <td class="grid_checkbox_column"{if $RowSpan} rowspan="2"{/if}>
+                <input type="checkbox" name="gridItems_AllState"
+                onclick="fw.grid.changeCheckedStateOfAllItems(this);"/>
+            </td>
+{else}
+            <td>&nbsp;</td>
+{/if}
+        </tr>
+{if $GridHeaderGroupsCount}
+        <tr>
+{foreach name=outer item=GridHeaderGroup from=$GridHeaderGroups}
+            <td class="group_item">
+{if $GridHeaderGroup.Link}
+{if $GridHeaderGroup.SortOrder == "ASC"}
+                <a href="javascript:void(0);" onclick="{$GridHeaderGroup.Link}"
+                onmouseover="window.status='{t}Sort ascending{/t}'; return true;"
+                title="{t}Sort ascending{/t}">{$GridHeaderGroup.Caption|default:'&nbsp;'}</a>
+                <img src="{$SortDescImage}" />
+{else}
+                <a href="javascript:void(0);" onclick="{$GridHeaderGroup.Link}"
+                onmouseover="window.status='{t}Sort descending{/t}'; return true;"
+                title="{t}Sort descending{/t}">{$GridHeaderGroup.Caption|default:'&nbsp;'}</a>
+                <img src="{$SortAscImage}" />
+{/if}
+{else}
+                {$GridHeaderGroup.Caption|default:'&nbsp;'}
+{/if}
+            </td>
+{/foreach}
+        </tr>
+{/if}
+        </thead>
+        <tfoot class="css_disabled"><td colspan="{math equation="x + y + z + 1" x=$smarty.section.GridHeader.total y=$NbSubColumn z=$GridHeaderGroupItemsCount}"></td></tfoot>
+        <!-- Contenu du grid -->
+        <tbody>
+{section name=GridContent loop=$GridRow}
+{if $smarty.section.GridContent.index is odd}
+{if $GridHighlightedRows[$smarty.section.GridContent.index] eq 1}
+        <tr class="grid_row_highlighted_odd{if $GridObjectIdsChecked[GridContent] neq ''} hover{/if}">
+{else}
+        <tr class="grid_row_odd{if $GridObjectIdsChecked[GridContent] neq ''} hover{/if}">
+{/if}
+{else}
+{if $GridHighlightedRows[$smarty.section.GridContent.index] eq 1}
+        <tr class="grid_row_highlighted_even{if $GridObjectIdsChecked[GridContent] neq ''} hover{/if}">
+{else}
+        <tr{if $GridObjectIdsChecked[GridContent] neq ''} class="hover"{/if}>
+{/if}
+{/if}
+{section name=GridCol loop=$GridRow[GridContent]}
+            <td class="grid_{$GridHeader[GridCol].DataType|default:'alphanumeric'}">{$GridRow[GridContent][GridCol]}</td>
+{/section}
+            <td class="grid_checkbox_column">
+{if $WithCheckBox eq 1}
+                <input type="checkbox" name="gridItems[]"
+                value="{$GridObjectIds[GridContent]}" {$GridObjectIdsChecked[GridContent]}
+                onclick="fw.grid.handleCBDeselect(this);" />
+{else}
+                &nbsp;
+{/if}
+            </td>
+        </tr>
+{sectionelse}
+        <tr>
+            <td colspan="{math equation="x + y + z + 1" x=$smarty.section.GridHeader.total y=$NbSubColumn z=$GridHeaderGroupItemsCount}">
+                <span>{t}No record found{/t}</span>
+            </td>
+        </tr>
+{/section}
+        </tbody>
+    </table>
+</div>
+<!-- Fin grid -->

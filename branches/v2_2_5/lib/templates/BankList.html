@@ -1,0 +1,32 @@
+<!--$Id$ -->
+{$form.javascript}
+<form {$form.attributes}>
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+  <thead>
+  <tr>
+	<td colspan ="4">&nbsp;{$form.hidden}</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td nowrap="nowrap">{$form.ActorBankDetail_Amount.label}: </td>
+    <td>{$form.ActorBankDetail_Amount.html}</td>
+	<td colspan="2">&nbsp;</td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap">{$form.ActorBankDetail_Currency_ID.label}: </td>
+    <td>{$form.ActorBankDetail_Currency_ID.html}</td>
+    <td colspan="2">&nbsp;</td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="4" align="right">
+		<input name="Ok" type="submit" value="{t}Ok{/t}" class="button" />&nbsp;
+		<input name="Cancel" value="{t}Cancel{/t}" type="button"
+            onclick="window.location='{$retURL}'" class="button" />
+    </td>
+  </tr>
+  </tfoot>
+</table>
+</form>

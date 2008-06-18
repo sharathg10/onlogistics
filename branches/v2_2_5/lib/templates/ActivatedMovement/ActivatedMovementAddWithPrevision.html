@@ -1,0 +1,104 @@
+<form id="formActivatedMovement" method="post" action="{$FormAction}">
+  <table width="100%" cellspacing="0" cellpadding="4" class="form" border="0">
+    <thead>
+    <tr>
+      <td class="gris1"><strong>{t}Movement details{/t}:</strong></td>
+    </tr>
+	</thead>
+	<tbody>
+    <tr class="gris4">
+      <td><b>{t}Order{/t} : </b>{$CommandNo}</td>
+	</tr>
+    <tr class="gris4">
+       <td><b>{t}Movement type{/t} : </b>{$MvtTypeName}
+       <input type="hidden" name="fillPopup" value="{$fillPopup}" />
+       <input type="hidden" name="MvtTypeEntrieExit" value="{$MvtTypeEntrieExit}" /></td>
+	</tr>
+	<tr class="gris4">
+        <td><b>{t}Quantity{/t} : </b>{$displayedQuantity} {$SellUnitType}<input type="hidden" name="EnvisagedQuantity" value="{$Quantity}" /></td>
+	</tr>
+	<tr class="gris4">
+      <td><b>{t}Product{/t} : </b>
+{if $TracingMode > 0}
+		({t}Tracking mode{/t}: {$TracingModeName})
+{/if}
+{if $CancellationType != ""}
+	  {$ProductBaseReference}<br />{$ProductName}
+	  </td>
+	</tr>
+{else}
+	<select name="Product"> <!--onchange="javascript:window.location.reload()"  onchange="ChangeProduct.value='yes';FormSubmitted.value='false';$('formActivatedMovement').submit();"-->
+		{$monSelectProductHTML}
+	</select>&nbsp;&nbsp;
+	<input type="button" name="Ok" value="{t}Ok{/t}" class="button"
+		  	onclick="$('formActivatedMovement').ChangeProduct.value='yes';
+    $('formActivatedMovement').FormSubmitted.value='false';
+    $('formActivatedMovement').submit();" />
+	<br />{$ProductName}
+		</td>
+	</tr>
+	  {$EditBL}
+{/if}
+	<tr class="gris4">
+      <td valign="top"><b>{t}Comment{/t} : </b>
+	  <input type="hidden" name="ChangeProduct" value="no" />
+	  <input type="hidden" name="Product_id" value="{$SelectProduct}" />
+      <input type="hidden" name="ActivatedMvtId" value="{$ActivatedMvt}" />
+	  <input type="hidden" name="LEM" value="{$LEM}" />
+	  <input type="hidden" name="CancellationType" value="{$CancellationType}" />
+	  <input type="hidden" name="TracingMode" value="{$TracingMode}" />
+	  <input type="hidden" name="returnURL" value="{$returnURL}" />
+	  </td>
+	</tr>
+	<tr class="gris4">
+	  <td valign="top" align="left">
+        <textarea name="Comment" cols="50" rows="3">{$Comment}</textarea></td>
+	</tr>
+{if $ExecutedMovtId > 0}
+	<tr class="gris4">
+		<td>
+			<input class="button" onclick="window.open('LocationExecutedMovementList.php?exmId={$ExecutedMovtId}','popup','width=800,height=450,toolbars=no,scrollbars=no,menubars=no,status=no');"
+            value="{t}Details of completed movements{/t}" type="button" />
+        </td>
+	</tr>
+{/if}
+{if $MvtTypeEntrieExit == 0}
+	<tr class="gris4">
+		<td>
+		<select name="newLocationId" onchange="$('formActivatedMovement').plus_x.value=1;restoreFormParams('With');$('formActivatedMovement').submit()">
+		<option label="{t}Add a location{/t}" value="0">{t}Select a location{/t}</option>
+		{$HTMLLocationSelect}
+		</select>
+		<input type="hidden" name="from" value="With" />
+		<input type="hidden" name="plus_x" value="" />
+		</td>
+	</tr>
+{/if}
+    </tbody>
+  </table>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>{$ActivatedMvtGrid}</td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+  </table>
+  <table width="100%" cellspacing="0" cellpadding="4" class="form" border="0">
+    <tfoot>
+    <tr>
+      <td align="right">
+        <input type="hidden" name="FormSubmitted" value="Submitted" />
+        <input type="button" name="submitForm" id="submitForm" value="{t}Ok{/t}"
+        onclick="javascript:this.disabled=true;{literal}if(checkBeforeSubmit('With')== true){FormSubmitted.value='true';this.form.submit();}{/literal}" class="Button" />
+	    <input name="annuler" value="{t}Cancel{/t}" type="button" title="{t}Cancel{/t}"
+        class="Button" onclick="window.location='{$returnURL}';" />
+      </td>
+	</tr>
+	</tfoot>
+	<tbody><tr><td></td></tr></tbody>
+  </table>
+  </form>

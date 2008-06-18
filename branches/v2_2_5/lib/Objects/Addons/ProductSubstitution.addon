@@ -1,0 +1,17 @@
+/**
+ * Methode addon qui retourne l'Id du produit par lequel 
+ * ceui passe en param est substituable
+ * @param $pdtId integer
+ * @access public
+ * @return integer 
+ **/
+function GetSubstitutionForProduct($pdtId){
+    if ($pdtId == $this -> GetFromProductId()) {
+        return $this -> GetByProductId();
+    }
+    elseif (($pdtId == $this -> GetByProductId()) && (1 == $this -> GetInterchangeable())) {
+        return $this -> GetFromProductId();
+    }
+    else return FALSE;
+}
+

@@ -1,0 +1,29 @@
+<!-- $Id$ -->
+<form name="UpdateCacheForm" method="post" action="UpdateCache.php">
+  <table border="0" cellspacing="0" cellpadding="3" width="100%" class="form">
+    <thead>
+    <tr>
+      <td colspan="2" class="gris1">
+        {t}Update cache{/t}
+        <input type="hidden" name="formSubmitted" value="1" />
+      </td>
+    </tr>
+	</thead>
+	<tbody>
+    <tr height="40">
+      <td width="90%">&nbsp;{t}Actors/sites javascript cache{/t}</td>
+      <td><input type="submit" name="JS_ActorSite" value="{t}Ok{/t}" class="Button"></td>
+    </tr>
+    <tr height="40">
+      <td width="90%">&nbsp;{t}Actors/sites/jobs javascript cache{/t}</td>
+      <td><input type="submit" name="JS_ActorSiteWithJob" value="{t}Ok{/t}" class="Button" /></td>
+    </tr>
+	</tbody>
+	<tfoot>
+    <tr>
+      <td height="20" class="gris1" colspan="2">
+      </td>
+    </tr>
+	</tfoot>
+  </table>
+</form>

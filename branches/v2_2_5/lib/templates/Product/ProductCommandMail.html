@@ -1,0 +1,147 @@
+OnLogistics - Commercial {$Commercial}<br />
+
+<HR align="left">
+<table width="100%">
+<tr>
+	<td>{t}ORDER{/t} {$commandtype}</td>
+</tr>
+<tr>
+<td>
+{t}From (address){/t}
+<br />
+<b>{$destinator.Name}</b><br />
+<b>{$destinator.SiteName}</b><br />
+{$destinator.StreetNo} {$destinator.StreetType} {$destinator.StreetName} {$destinator.StreetAddons}<br />
+{$destinator.Zip}<br />
+{$destinator.City} - {$destinator.Country}<br />
+{$destinator.Phone}
+</td>
+<td>
+{t}To{/t}
+<br />
+<b>{$expeditor.Name}</b><br />
+<b>{$expeditor.SiteName}</b><br />
+{$expeditor.StreetNo} {$expeditor.StreetType} {$expeditor.StreetName} {$expeditor.StreetAddons}<br />
+{$expeditor.Zip}<br />
+{$expeditor.City} - {$expeditor.Country}<br />
+{$expeditor.Phone}
+</td>
+</tr>
+</table>
+
+<br /><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{t}Sir, Madam,{/t}<br /><br />
+{t}On{/t} {$dateReception} {t}we are pleased to place the following product order{/t}:
+<br /><br />
+{t}Order number{/t}: <b>{$reference}</b> <br />
+{t}Wished date{/t}: <b>{$dateSouhaitee}</b><br />
+{t}Incoterm{/t}: {$incoterm}<br /><br />
+{t}Order details{/t}:<br />
+<table border="1" width="100%">
+	<tr>
+		<th>{t}Product reference{/t}</th>
+		<th>{t}Name{/t}</th>
+		<th>{t}Quantity{/t}</th>
+{if $CommandType eq 1}
+    {if $ProductCommandUEQty eq 1}
+		<th>{t}Qty pack.{/t}</th>
+	{/if}
+		<th>{t}Total base unit{/t}</th>
+{/if}
+{if $cadencedOrder}
+		<th>{t}Wished date{/t}</th>
+{/if}
+		<th>{t}Basis excl. VAT{/t} {$currency}</th>
+		<th>{t}Discount{/t}</th>
+{if $CommandType eq 1}
+		<th> {t}Offer on sale{/t}</th>
+{/if}
+{if $hasTVA}
+		<th>{t}VAT{/t}</th>
+{/if}
+		<th>{t}Amount excl. VAT{/t} {$currency}</th>
+		<th>{t}Amount incl. VAT{/t} {$currency}</th>
+	</tr>
+	{section name=produits loop=$products}
+	<tr>
+		<td>&nbsp;{$products[produits].ref}</td>
+		<td>&nbsp;{$products[produits].name}</td>
+		<td align="right">{$products[produits].quantity}&nbsp;&nbsp;(par {$products[produits].sellUnitQuantity})&nbsp;</td>
+{if $CommandType eq 1}
+     {if $ProductCommandUEQty eq 1}
+        <td align="right">{$products[produits].numberUE}&nbsp;</td>
+     {/if}
+        <td align="right">{$products[produits].numberUB}&nbsp;</td>
+{/if}
+{if $cadencedOrder}
+        <td align="right">{$products[produits].wishedDate}&nbsp;</td>
+{/if}
+		<td align="right">{$products[produits].unitPrice}&nbsp;</td>
+		<td align="right">{$products[produits].Handing}&nbsp;</td>
+{if $CommandType eq 1}
+		<td align="right">{$products[produits].PromotionRate}&nbsp;</td>
+{/if}
+
+{if $hasTVA}
+		<td align="right">{$products[produits].TVARate}&nbsp;</td>
+{/if}
+		<td align="right">{$products[produits].htTotal}&nbsp;</td>
+		<td align="right">{$products[produits].ttcTotal}&nbsp;</td>
+	</tr>
+	{/section}
+	<tr>
+{if $CommandType eq 1}
+    {if $ProductCommandUEQty eq 1}<td colspan="11">
+    {else}<td colspan="10">
+    {/if}
+{else}<td colspan="9">
+{/if}
+		&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;<b>{t}Delivery expenses{/t}: </b>{$Port}&nbsp;{$currency}</td>
+		<td>&nbsp;<b>{t}Packing{/t}: </b>{$Packing}&nbsp;{$currency}</td>
+		<td colspan="2">&nbsp;<b>{t}Insurance{/t}: </b>{$Insurance}&nbsp;{$currency}</td>
+        <td colspan="2">
+            &nbsp;<b>{t}Global discount{/t}:</b> {$GlobalHanding}&nbsp;%
+            {if $HandingByRangePercent}<br/>{$HandingByRangePercent}{/if}
+        </td>
+{if $CommandType eq 1}
+		<td colspan="{if $ProductCommandUEQty eq 1}3{else}2{/if}">
+		  &nbsp;<b>{t}Customer discount{/t}: </b>{$RemExcep} %</td>
+{/if}
+		
+		<td align="right">{$htTotalPrice}&nbsp;</td>				
+		<td align="right">{$ttcTotalPrice}&nbsp;</td>
+	</tr>
+	<tr>
+{if $CommandType eq 1}
+		<td colspan="{if $ProductCommandUEQty eq 1}8{else}7{/if}">&nbsp;{$Comment}</td>
+{else}
+		<td colspan="5">&nbsp;{$Comment}</td>
+{/if}
+		<td colspan="3" valign="top">
+			<table BORDER="1" WIDTH="100%" cellspacing="0">
+				<tr>
+					<td>&nbsp;<b>{t}Instalment{/t} {$currency}</b></td>
+					<td align="right">{$Installment}&nbsp;</td>
+				</tr>
+				<tr>
+					<td>&nbsp;<b>{t}To pay{/t} {$currency}</b></td>
+					<td align="right">{$ToPay}&nbsp;</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+{if $commandtype eq "CLIENT"}
+<p>
+{t}Thank you for choosing our company.{/t}<br />
+{t}The sales department{/t}
+</p>
+{else}
+<p>
+{t}Let us know if we can be of further assistance.{/t}<br />
+{t}The supplying department{/t}
+</p>
+{/if}

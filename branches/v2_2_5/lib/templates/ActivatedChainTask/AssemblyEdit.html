@@ -1,0 +1,108 @@
+<form {$form.attributes}>
+<input type="hidden" name="formSubmitted" value="1" />
+<input type="hidden" name="waitedQuantity" value="{$Quantity}" />
+<input type="hidden" name="tracingMode" value="{$TracingMode}" />
+{$form.hidden}
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+  <tbody>
+	<tr class="search">
+		<td colspan="2">{t}Order{/t} {$CommandNo}</td>
+	</tr>
+	<tr class="search">
+        <td>{t}Task{/t}{$TaskName} {t}of reference{/t} {$BaseReference}
+			({t}Tracking mode{/t}: {$TracingModeName})&nbsp;&nbsp;
+		</td>
+		<td>
+    {if $history eq ''}
+       <img src="images/detail.gif" alt="{t}Part details{/t}" border="0"
+			title="{t}Part details{/t}" onClick="fw.dom.toggleElement('ComponentDetail');" style="cursor: pointer;" />
+	{/if}
+       </td>
+	</tr>
+	<tr class="search">
+		<td width="50%">{t}Expected quantity{/t} : {$Quantity}
+		</td>
+		<td>{t}Actual assembled quantity{/t} :
+       <input type="text" name="realQuantity" value="{$realQuantity}" onKeyUp="updateScreen();" {$readonly} />{$MeasuringUnit}
+		</td>
+	</tr>
+  </tbody>
+</table>
+{section name=item loop=$Pieces}
+<div id="piece_{$smarty.section.item.index}" style="display: none;">
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+  <thead>
+	<tr>
+		<td colspan="2">{t}Booking of assembled components for part{/t}
+			{math equation="x + 1" x=$smarty.section.item.index}/{$Quantity} :
+		</td>
+	</tr>
+  </thead>
+  <tbody>
+	<tr class="search">
+		<td>{t}Assembled part identification{/t} : {$BaseReference}</td>
+		<td>
+		{if $HasTracingMode eq 1}
+			{t}SN/Lot{/t} : {eval var=$SN[$smarty.section.item.index]}
+		{else} &nbsp;
+		{/if}
+		</td>
+	</tr>
+	<tr class="search">
+		<td colspan="2">{t}Assembly details{/t}</td>
+	</tr>
+	<tr class="search">
+		<td colspan="2">{$ccpGridArray[$smarty.section.item.index]}</td>
+	</tr>
+	<tr>
+		<td colspan="2">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="2">&nbsp;</td>
+	</tr>
+  </tbody><!--$smarty.section.item.index-->
+</table>
+</div>
+{/section}
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+  <tfoot>
+  <tr height="22">
+	<td align="right">
+	   {if $history eq ''}
+	   {$form.submitForm.html}&nbsp;&nbsp;
+	   {/if}
+	<input onclick="javascript:window.location='{$returnURL}'" name="Cancel" value="{$cancelLabel}" type="button" />&nbsp;&nbsp;&nbsp;&nbsp;
+	</td>
+  </tr>
+</table>
+
+<div align="center" id="ComponentDetail" style="display:none; position:absolute; top: 40px;height: 250px; width: 350px; padding: 2px;">
+  <nobr>
+  <img src="images/help_bar.gif" width="325" border="0" onMouseOver="dragLayer('ComponentDetail', 0, 0, 470, 22);return true;" style="cursor: move;"><img src="images/help_close.gif" border="0" onClick="fw.dom.toggleElement('ComponentDetail');" style="cursor: pointer;">
+  </nobr>
+  <div align="left">
+	<table style="padding: 5px;">
+	  <tr>
+	    <td><b>> {t}Part to assemble details{/t}</b><br />{t}Total quantities of components by reference{/t}:</td>
+	  </tr>
+	  <tr>
+	<table class="grid" width="100%" cellspacing="0" cellpadding="3" border="0">
+	<thead>
+	  <tr>
+	    <td>{t}Product reference{/t}</td>
+		<td>{t}Total quantity{/t}</td>
+	  </tr>
+	</thead>
+	{foreach key=key item=item from=$qtyArrayForDetail}
+	  <tr>
+		<td>{$key}</td>
+		<td>{$item}</td>
+	  </tr>
+	{/foreach}
+	</table>
+	</tr>
+ </table>
+
+  </div>
+</div>
+</form>

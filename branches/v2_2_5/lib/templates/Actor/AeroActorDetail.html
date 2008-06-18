@@ -1,0 +1,71 @@
+<div id="{$divId}">
+	<table id="{$divId}Table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	<thead>
+    <tr> 
+        <td colspan="4"> <b>{$role}: {t}General information{/t}</b></td>
+    </tr>
+    </thead>
+	<tbody>
+    <tr> 
+      <td width="20%">{t}Weight{/t} :</td>
+      <td width="30%">{$Weight}</td>
+      <td width="20%">{t}Assigned instructor{/t} :</td>
+      <td width="30%">{$InstructorName}</td>
+    </tr>
+	<tr> 
+      <td>{t}Hours of piloting amount{/t} :</td>
+      <td>{math equation="w + x + y + z + a + b + c + d" w=$PilotHours x=$PilotHoursNight y=$PilotHoursBiEngine 
+	  	z=$PilotHoursBiEngineNight a=$CoPilotHours b=$CoPilotHoursNight c=$CoPilotHoursBiEngine 
+	  	d=$CoPilotHoursBiEngineNight assign="totalHours"}
+	  {date_hundredthsOfHourToTime hoh=$totalHours}</td>
+	  <td>{t}Student{/t} : </td>
+      <td>{$IsTrainee|default:""}</td>
+    </tr>
+	<tr> 
+      <td>{t}Instructor hours of flight{/t} :</td>
+      <td>{date_hundredthsOfHourToTime hoh=$InstructorHours}</td>
+      <td>{t}Solo flight allowed{/t} : </td>
+      <td>{$IsSoloFly|default:""}</td>
+    </tr>
+	<tr> 
+      <td>{t}Commandant hours of flight{/t} :</td>
+      <td>{math equation="w + x + y + z" w=$PilotHours x=$PilotHoursNight y=$PilotHoursBiEngine 
+	  	z=$PilotHoursBiEngineNight assign="PilotHours"}
+	  {date_hundredthsOfHourToTime hoh=$PilotHours}</td>
+      <td>{t}Student hours of flight{/t} :</td>
+      <td>{date_hundredthsOfHourToTime hoh=$StudentHours}</td>
+    </tr>
+	<tr> 
+      <td>{t}Dual hours of flight{/t} :</td>
+      <td>{math equation="w + x + y + z" w=$CoPilotHours x=$CoPilotHoursNight y=$CoPilotHoursBiEngine 
+	  	z=$CoPilotHoursBiEngineNight assign="coPilotHours"}
+	  {date_hundredthsOfHourToTime hoh=$coPilotHours}</td>
+      <td>{t}Nightly hours of flight{/t} :</td>
+      <td>{math equation="w + x + y + z" w=$PilotHoursNight x=$CoPilotHoursNight y=$PilotHoursBiEngineNight 
+	  	z=$CoPilotHoursBiEngineNight assign="nightHours"}
+	  {date_hundredthsOfHourToTime hoh=$nightHours}</td>
+    </tr>
+	<tr> 
+      <td>{t}Public transport hours of flight{/t} :</td>
+      <td>{date_hundredthsOfHourToTime hoh=$PublicHours}</td>
+      <td>{t}VLAE hours{/t} : </td>
+      <td>{date_hundredthsOfHourToTime hoh=$VLAEHours}</td>
+    </tr><tr> 
+      <td>{t}Single-engined hours{/t} :</td>
+      <td>{math equation="w + x + y + z" w=$PilotHours x=$CoPilotHours y=$PilotHoursNight 
+	  	z=$CoPilotHoursNight assign="monoEngineHours"}
+	  {date_hundredthsOfHourToTime hoh=$monoEngineHours}</td>
+      <td>{t}Twin-engined hours{/t} : </td>
+      <td>{math equation="w + x + y + z" w=$PilotHoursBiEngine x=$CoPilotHoursBiEngine 
+	  	y=$PilotHoursBiEngineNight z=$CoPilotHoursBiEngineNight assign="biEngineHours"}
+	  {date_hundredthsOfHourToTime hoh=$biEngineHours}</td>
+    </tr>
+	<tr> 
+      <td>{t}Commercial hours{/t} :</td>
+      <td>{date_hundredthsOfHourToTime hoh=$CommercialHours}</td>
+      <td>{t}Last flight date{/t} : </td> 
+      <td>{$LastFlyDate|date_format:"%d/%m/%Y %H:%M"}</td>
+    </tr>
+	</tbody>
+	</table>
+</div>

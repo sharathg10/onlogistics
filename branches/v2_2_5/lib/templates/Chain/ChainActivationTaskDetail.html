@@ -1,0 +1,225 @@
+ <!-- $Id$ -->
+<title>{t}Task details{/t}</title>
+<body  leftmargin="2" topmargin="2" marginwidth="2" marginheight="2">
+<form {$form.attributes}>
+  <div id="TaskDetails">
+<h4>{t}Task details{/t} [$JS_OpName] - [$JS_TaskName]</h4>
+{$form.hidden}
+  <table width="100%" border="0" cellspacing="0" cellpadding="5" class="form">
+	{if $isActivationTask}
+	<!-- DEBUT TACHE ACTIVATION ONLY -->
+	<thead>
+	  <tr>
+	    <td colspan="2">{t}Chain to activate/Command type{/t}</td>
+	  </tr>
+	</thead>
+	<tbody>
+      <tr>
+        <td>{$form.ChainToActivate.html}<input type="hidden" name="HasProductCommandType" value="0" /></td>
+		<td>
+		  <div id="ProductCommandTypeDiv" style="display:block">
+			<label><input type="radio" name="ProductCommandType" value="1"
+			    onclick="fw.dom.toggleElement('displayActivationPerSupplier', !this.checked);
+				this.form.ActivationPerSupplier.checked=false;
+				disableEnableDepartureWidgets(false);" /> {t}Customer order{/t}</label> &nbsp;
+			<label><input type="radio" name="ProductCommandType" value="2"
+			    onclick="fw.dom.toggleElement('displayActivationPerSupplier', this.checked);" />
+                {t}Supplier order{/t}</label>
+		  </div>
+		</td>
+	  </tr>
+	<thead>
+	  <tr>
+	    <td colspan="2">{t}Departure actor/site.{/t}</td>
+	  </tr>
+	</thead>
+	<tbody>
+	  <tr>
+	    <td colspan="2">
+		  <div id="displayActivationPerSupplier" style="display: none;">
+		  <label>
+        	<input type="checkbox" name="ActivationPerSupplier" value="1"
+			onclick="disableEnableDepartureWidgets(this.checked);" />
+            {t}Product supplier{/t}
+		  </label>
+		  </div>
+		</td>
+	  </tr>
+      <tr>
+        <td>
+		  <label>
+        	<input type="radio" name="DepartureActorType" value="0"
+			onclick="fw.dom.toggleElement('displayDepartureActorSelect', !this.checked);" />
+            {t}Departure actor of initial order{/t}
+		  </label>&nbsp;&nbsp;
+		  <label>
+        	<input type="radio" name="DepartureActorType" value="1"
+			onclick="fw.dom.toggleElement('displayDepartureActorSelect', this.checked);displayActorSites('Departure');" />
+            {t}Fixed actor{/t}
+		  </label>&nbsp;&nbsp;
+		</td>
+	  	<td>
+		  <div id="displayDepartureActorSelect" style="display:none">
+          {$form.ChainDepartureActor.html}</div>&nbsp;
+		</td>
+	  </tr>
+	  <tr>
+        <td><label>
+        	<input type="radio" name="DepartureSiteType" value="0"
+			onclick="fw.dom.toggleElement('displayDepartureSiteSelect', !this.checked);" />
+            {t}Departure site of initial order{/t}
+			</label>&nbsp;&nbsp;
+			<label>
+        	<input type="radio" name="DepartureSiteType" value="1"
+			onclick="fw.dom.toggleElement('displayDepartureSiteSelect', this.checked);" />
+            {t}Fixed site{/t}
+			</label>
+		</td>
+	  	<td>
+		  <div id="displayDepartureSiteSelect" style="display:none">
+		  &nbsp;</div>
+		</td>
+	  </tr>
+	</tbody>
+	<thead>
+	  <tr>
+	    <td colspan="2">{t}Arrival actor/site.{/t}</td>
+	  </tr>
+	</thead>
+	<tbody>
+	  <tr>
+        <td><label>
+        	<input type="radio" name="ArrivalActorType" value="0"
+			onclick="fw.dom.toggleElement('displayArrivalActorSelect', !this.checked);" />
+            {t}Arrival actor of initial order{/t}
+			</label>&nbsp;&nbsp;
+			<label>
+        	<input type="radio" name="ArrivalActorType" value="1"
+			onclick="fw.dom.toggleElement('displayArrivalActorSelect', this.checked);displayActorSites('Arrival');" />
+            {t}Fixed actor{/t}
+			</label>
+		</td>
+	  	<td>
+		  <div id="displayArrivalActorSelect" style="display:none">{$form.ChainArrivalActor.html}</div>&nbsp;
+		</td>
+	  </tr>
+	  <tr>
+        <td><label>
+        	<input type="radio" name="ArrivalSiteType" value="0"
+			onclick="fw.dom.toggleElement('displayArrivalSiteSelect', !this.checked);" />
+            {t}Arrival site of initial order{/t}
+			</label>&nbsp;&nbsp;
+			<label>
+        	<input type="radio" name="ArrivalSiteType" value="1"
+			onclick="fw.dom.toggleElement('displayArrivalSiteSelect', this.checked);displayActorSites('Arrival');" />
+            {t}Fixed site{/t}
+			</label>
+		</td>
+	  	<td>
+		  <div id="displayArrivalSiteSelect" style="display:none">
+		  &nbsp;</div>
+		</td>
+	  </tr>
+	</tbody>
+	<thead>
+	  <tr>
+        <td colspan="2">{t}Wished date{/t} :</td>
+      </tr>
+	</thead>
+	<tbody>
+	  <tr>
+		<td><label>
+        	<input type="radio" name="WishedDateType" value="{$WISHED_START_DATE_TYPE_BEGIN_TASK_PLUS_X}"/>{t}Same as activation task beginning date plus X hours{/t}
+			</label>&nbsp;
+		</td>
+		<td>{$form.Delta.label}&nbsp;{$form.Delta.html}</td>
+	  </tr>
+	  <tr>
+        <td colspan="2"><label>
+        	<input type="radio" name="WishedDateType" value="{$WISHED_START_DATE_TYPE_BEGIN_TASK_MINUS_X}"/>{t}Same as activation task beginning date minus X hours{/t}
+			</label>&nbsp;
+		</td>
+      </tr>
+	  <tr>
+        <td colspan="2"><label>
+        	<input type="radio" name="WishedDateType" value="{$WISHED_START_DATE_TYPE_COMMAND_PLUS_X}"/>{t}initial order wished date plus X hours{/t}
+			</label>
+		</td>
+      </tr>
+	  <tr>
+        <td colspan="2"><label>
+        	<input type="radio" name="WishedDateType" value="{$WISHED_START_DATE_TYPE_COMMAND_MINUS_X}"/>{t}initial order wished date minus X hours{/t}
+			</label>
+		</td>
+      </tr>
+	</tbody>
+    <!-- FIN TACHE ACTIVATION ONLY -->
+    {else}
+    <thead>
+        <tr><td colspan="2">&nbsp;</td></tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{$form.PivotDate.label}</td>
+            <td>{$form.PivotDate.html}</td>
+        </tr>
+    </tbody>
+	{/if}
+	<thead>
+	  <tr>
+	    <td colspan="2">{t}Nomenclature{/t}</td>
+      </tr>
+	</thead>
+	<tbody>
+	  <tr>
+        <td>{$form.Nomenclature.label}: </td>
+	    <td>{$form.Nomenclature.html}</td>
+	  </tr>
+	  <tr>
+          <td>{$form.Component.label}: </td>
+	    <td><div id="ComponentSelect">{$form.Component.html}</div></td>
+	  </tr>
+	  <tr>
+        <td
+            colspan="2">{$form.ComponentQuantityRatio.label}:&nbsp;{$form.ComponentQuantityRatio.html}</td>
+	  </tr>
+	</tbody>
+	<thead>
+	  <tr>
+	    <td colspan="2">{t}Task duration/calculation mode{/t}</td>
+      </tr>
+	</thead>
+	<tbody>
+	  <tr>
+	  <td>
+	    {t}Duration{/t}*:&nbsp;{$form.TaskDurationHour.html}&nbsp;{t}h.{/t}&nbsp;{$form.TaskDurationMinute.html}&nbsp;{t}min.{/t}
+	  </td>
+      <td>
+          {$form.DurationType.label}&nbsp;{$form.DurationType.html}
+		</td>
+      </tr>
+	</tbody>
+	<thead>
+	  <tr>
+	    <td colspan="2">{t}Resource model{/t}</td>
+      </tr>
+	</thead>
+	<tbody>
+      <tr>
+        <td>{$form.RessourceGroup.label}</td>
+        <td>{$form.RessourceGroup.html}</td>
+      </tr>
+	</tbody>
+	<tfoot>
+    <tr>
+      <td colspan="2">
+        <input class="button" value="{t}Ok{/t}" type="button" onclick="doOk();" />
+	    &nbsp;
+	    <input class="button" onclick="javascript:self.close();"
+        value="{t}Cancel{/t}" type="button" />
+      </td>
+    </tr>
+	</tfoot>
+  </table>
+<iframe name="RemoteScripting" src="blank.html" width="0" height="0" border="0"></iframe>
+</form>

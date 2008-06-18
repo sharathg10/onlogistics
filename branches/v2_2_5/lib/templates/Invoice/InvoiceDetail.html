@@ -1,0 +1,145 @@
+<!-- debut de section principale -->
+  <form name="InvoiceDetail" method="post" action="{$formAction}">
+   <table border="0" cellspacing="0" cellpadding="5" width="100%" class="form">
+     <thead>
+   		<tr>
+			<td>
+				&nbsp;{t}Order number{/t} : {$CommandNo}
+				<br /><br />
+				&nbsp;{t}Invoice number{/t}&nbsp;:&nbsp;{$InvoiceNo}
+			</td>
+		</tr>
+	  </thead>
+	</table>
+   {$InvoiceItemGrid}
+{if $isCourseCommand != 'yes'}
+   <table border="0" cellspacing="0" cellpadding="5" width="100%" class="form">
+	  <tbody>
+		<tr>
+			<td width="15%" nowrap="nowrap"><b>&nbsp;{t}Delivery expenses{/t} {$Currency} :&nbsp;</b></td>
+			<td width="15%" align="right">{$Port}</td>
+			<td colspan="3">&nbsp;</td>
+		</tr>
+		<tr>
+			<td nowrap="nowrap"><b>&nbsp;{t}Packing{/t} {$Currency} :&nbsp;</b></td>
+			<td align="right">{$Packing}</td>
+			<td colspan="3">&nbsp;</td>
+		</tr>
+		<tr>
+			<td nowrap="nowrap"><b>&nbsp;{t}Insurance{/t} {$Currency} :&nbsp;</b></td>
+			<td align="right">{$Insurance}</td>
+			<td width="45%">&nbsp;</td>
+			{if $HasInvoice == 1}
+			<td><b>{t}Instalment{/t} {$Currency} :&nbsp;</b></td>
+			<td align="right">{$Installment}&nbsp;&nbsp;</td>
+			{else}
+			<td colspan="2">&nbsp;</td>
+			{/if}
+		</tr>
+	  </tbody>
+	</table>
+{/if}
+	<table border="0" cellspacing="0" cellpadding="5" width="100%" class="form">
+	  <thead>
+		<tr>
+			<td width="10%" nowrap="nowrap">&nbsp;{t}Customer discount{/t} % :</td>
+			<td width="5%" align="right" nowrap="nowrap">{$CustomerRemExcep}&nbsp;&nbsp;</td>
+			<td width="10%" nowrap="nowrap">{t}VAT{/t} {$Currency} :</td>
+			{if $TVA!=''}
+			<td colspan="2" width="20%">
+			{$TVA}
+			</td>
+			{else}
+			<td width="12%">
+{foreach key=key item=item from=$tvaRateArray}
+				{$key} % :&nbsp;&nbsp;<br />
+{/foreach}
+{if $TvaSurtaxRate neq '0'} {t}VAT surtax{/t}&nbsp;% :{/if}
+{if $FodecTaxRate neq '0'} <br />{t}FODEC tax{/t}&nbsp;{$FodecTaxRate} % :{/if}
+{if $TaxStamp neq '0'} <br />{t}Tax Stamp{/t}&nbsp;{$Currency} :{/if}
+			&nbsp;</td>
+			<td width="10%" align="right">
+{foreach key=key item=item from=$tvaRateArray}
+				{$item}&nbsp;&nbsp;<br />
+{/foreach}
+{if $TvaSurtaxRate neq '0'} {$TvaSurtaxRate}&nbsp;{/if}
+{if $FodecTaxRate neq '0'} <br />{$FodecTax}{/if}
+{if $TaxStamp neq '0'} <br />{$TaxStamp}{/if}
+			&nbsp;</td>
+			{/if}
+			<td width="26%">&nbsp;</td>
+			<td width="15%" nowrap="nowrap">{t}Total price{/t} {$Currency} {t}Total excl. VAT before global discount{/t} :</td>
+			<td nowrap="nowrap" align="right">{$TotalPriceHTBeforeDiscount}&nbsp;&nbsp;</td>
+			<!--td width="15%" nowrap="nowrap">{t}Total price{/t} {$Currency} {t}excl. VAT{/t} :</td>
+			<td nowrap="nowrap" align="right">{$TotalPriceHT}&nbsp;&nbsp;</td-->
+		</tr>
+		<tr>
+            <td nowrap="nowrap">&nbsp;{t}Global discount{/t} % :
+              {if $HandingByRangePercent}<br/>{$HandingByRangePercent}{/if}
+            </td>
+			<td align="right" nowrap="nowrap">{$GlobalHanding}&nbsp;&nbsp;</td>
+			<td colspan="2">{t}Amount{/t} {$Currency} {t}of global discount{/t} : </td>
+			<td align="right">{$GlobalDiscount}&nbsp;&nbsp;</td>
+			<td>&nbsp;</td>
+			<td width="17%" nowrap="nowrap">{t}Total price{/t} {$Currency} {t}excl. VAT{/t} :</td>
+			<td nowrap="nowrap" align="right">{$TotalPriceHT}&nbsp;&nbsp;</td>
+			<!--td nowrap="nowrap">{t}Total price{/t} {$Currency} {t}incl. VAT{/t} :</td>
+			<td nowrap="nowrap" align="right">{$TotalPriceTTC}&nbsp;&nbsp;</td-->
+		</tr>
+		<tr>
+		    <td colspan="6">&nbsp;</td>
+		    <td nowrap="nowrap">{t}Total price{/t} {$Currency} {t}incl. VAT{/t} :</td>
+			<td nowrap="nowrap" align="right">{$TotalPriceTTC}&nbsp;&nbsp;</td>
+		</tr>
+	{if $isCourseCommand != 'yes'}
+	    {if $HasInvoice == 1}
+		<tr>
+			<td colspan="6">&nbsp;</td>
+			<td>{t}Total to pay{/t} {$Currency} :</td>
+			<td nowrap="nowrap" align="right">{$ToPay}&nbsp;&nbsp;</td>
+		</tr>
+		{/if}
+		<tr>
+			<td colspan="8" align="left">
+				<table border="0" cellspacing="0" cellpadding="5" width="100%">
+				<thead>
+				<tr>
+					<td valign="top" nowrap="nowrap" class="form">
+					{t}Comment{/t} :
+					</td>
+					<td align="left" valign="top">
+						<!-- cmdId=13545000&InvoiceId=20085041 -->
+						<input type="hidden" name="cmdId" value="{$cmdId}" />
+						<input type="hidden" name="InvoiceId" value="{$InvoiceId}" />
+						<input type="hidden" name="EditComment" value="1" />
+						<input type="hidden" name="returnURL" value="{$returnURL}" />
+						<textarea name="IAEComment" rows="3" cols="70">{$IAEComment}</textarea>
+					</td>
+				</tr>
+				</thead>
+				</table>
+			</td>
+		</tr>
+	{/if}
+	  </thead>
+	</table>
+	<table border="0" cellspacing="0" cellpadding="5" width="100%" class="form">
+	  <tfoot>
+		<tr>
+			<td>&nbsp;</td>
+			<td>
+		{if $isCourseCommand == 'yes'}
+				<input type="button" value="{t}Print{/t}" name="print" class="Button"
+				onclick="window.open('EditInvoice.php?InvoiceId={$InvoiceId}&amp;print={$print}','popback','width=800,height=600,toolbars=no,scrollbars=no,menubars=no,status=no')" />
+		  		&nbsp;&nbsp;
+		{/if}
+				<input type="submit" value="{t}Save comment{/t}" name="saveComment" class="Button" />
+				&nbsp;&nbsp;
+				<input type="button" value="{t}Back{/t}" name="cancel" onclick="window.location='{$returnURL}'" class="Button" />
+				&nbsp;&nbsp;
+			</td>
+		</tr>
+	  </tfoot>
+	</table>
+	</form>
+  <!-- fin de section principale -->

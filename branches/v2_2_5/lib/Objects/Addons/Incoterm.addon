@@ -1,0 +1,20 @@
+
+    /**
+     *
+     * @access public
+     * @return void
+     **/
+    function toString(){
+        return sprintf("%s: %s", $this->getCode(), $this->getLabel());
+    }
+
+    /**
+     * Retourne le nom des attributs pointés par toString()
+     *
+     * @static
+     * @access public
+     * @return string
+     */
+    public function getToStringAttribute() {
+        return array('Code','Label');
+    }

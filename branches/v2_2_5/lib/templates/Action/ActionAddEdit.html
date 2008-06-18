@@ -1,0 +1,60 @@
+<!--$Id$ -->
+{$form.javascript}
+<form {$form.attributes}>
+{$form.hidden}
+<input type="hidden" name="formSubmitted" value="1" />
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+  <thead>
+  <tr>
+    <td nowrap>{$form.Action_State.label}: </td>
+    <td>{$form.Action_State.html}</td>
+	<td colspan="2">
+	   <input name="Ok" type="button" onclick="document.forms[0].submit();" value="{t}Ok{/t}" class="button">&nbsp;
+	   <input name="Cancel" value="{t}Cancel{/t}" type="button"
+            onClick="window.location='{$retURL}'" class="button"></td>
+  </tr>
+  </thead>
+  {if $updateCustomerAlert==0}
+      <!-- Action classique avec un formulaire -->
+      <tbody>
+      <tr>
+        <td colspan ="4">{$tree}</td>
+      </tr>
+      <tr>
+        <td colspan="4">&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan ="4">{$formulaire}</td>
+      </tr>
+      <tr>
+        <td colspan="4">&nbsp;</td>
+      </tr>
+      <tr>
+        <td colspan ="1">{$form.Action_Comment.label}</td>
+        <td colspan ="3">{$form.Action_Comment.html}</td>
+      </tr>
+
+      </tbody>
+  {elseif $updateCustomerAlert==1}
+      <!-- Action créé lors du passage du client en alerte dans ActorAE,
+      juste un commentaire, pas de formulaire-->
+      <tbody>
+      <tr>
+        <td colspan ="1">{$form.Action_Comment.label}</td>
+        <td colspan ="3">{$form.Action_Comment.html}</td>
+      </tr>
+      </tbody>
+  {/if}
+  <tfoot>
+  <tr>
+    <td nowrap>{$form.Action_State.label}: </td>
+    <td>{$form.Action_State.html}</td>
+	<td colspan="2">
+	   <input name="Ok" type="button" onclick="document.forms[0].submit();" value="{t}Ok{/t}" class="button" />&nbsp;
+	   <input name="Cancel" value="{t}Cancel{/t}" type="button"
+            onClick="window.location='{$retURL}'" class="button" /></td>
+  </tr>
+  </tfoot>
+</table>
+</form>
+

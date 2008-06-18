@@ -1,0 +1,17 @@
+    // PrestationCommandItem::getPrestationName() {{{
+
+    /**
+     * Méthode ajouté pour trié les commandItem par le nom de la prestation
+     */
+    public function getPrestationName() {
+        $cmd = $this->getCommand();
+        if($cmd instanceof Command) {
+            $customer = $cmd->getCustomerId();
+        } else {
+            $customer = isset($_SESSION['Customer'])?$_SESSION['Customer']:false;
+        }
+        $prestation = $this->getPrestation();
+        return $prestation->getNameForCustomer($customer);
+    }
+
+    // }}}

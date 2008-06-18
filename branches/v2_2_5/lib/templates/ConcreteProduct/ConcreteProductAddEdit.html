@@ -1,0 +1,365 @@
+<form name="ConcreteProductAddEdit" method="POST" action="{$formAction}">
+  <input type="hidden" name="formSubmitted" value="1" />
+  <input type="hidden" name="retURL" value="{$retURL}" />
+
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <thead>
+    <tr>
+        <td colspan="4" style="border:1px outset #AAAAAA">
+            <b>{t}General informations{/t}</b>
+        </td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>* {t}Serial number{/t}: </td>
+        <td>
+            <input type="text" name="{$ClassName}_SerialNumber"
+                id="SerialNumber" value="{$SerialNumber}" style="width:100%" />
+        </td>
+        <td>Etat: </td>
+        <td>
+            <select name="{$ClassName}_State" id="State" style="width:100%">
+                {$StateOptions}
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>{t}Active{/t}</td>
+        <td colspan="3">
+            <div align="left">
+            <label><input type="radio" name="{$ClassName}_Active" value="1"
+                {if $active eq 1}checked="checked"{/if}>{t}Yes{/t}</label>
+            <label><input type="radio" name="{$ClassName}_Active" value="0"
+                {if $active eq 0}checked="checked"{/if}>{t}No{/t}</label>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>{t}Matriculation{/t}: </td>
+        <td>
+            <input type="text" name="{$ClassName}_Immatriculation"
+                id="Immatriculation" value="{$Immatriculation}"
+                 style="width:100%" />
+        </td>
+        <td>{t}Weight/Volume is empty{/t}: </td>
+        <td>
+            <input type="text" name="{$ClassName}_Weight"
+                id="Weight" value="{$Weight}" style="width:100%" />
+        </td>
+    </tr>
+{if $isAero eq 1}
+    <tr>
+        <td>{t}Maximum weight on lift-off{/t}: </td>
+        <td>
+            <input type="text" name="{$ClassName}_MaxWeightOnTakeOff"
+                id="MaxWeightOnTakeOff" value="{$MaxWeightOnTakeOff}"
+                 style="width:100%" />
+        </td>
+        <td>{t}Maximum weight by seat{/t}: </td>
+        <td>
+            <input type="text" name="{$ClassName}_MaxWeightBySeat"
+                id="MaxWeightBySeat" value="{$MaxWeightBySeat}"
+                 style="width:100%" />
+        </td>
+    </tr>
+    <tr>
+        <td>{t}Maximal tank capacity {/t}: </td>
+        <td>
+            <input type="text" name="{$ClassName}_TankCapacity"
+                id="TankCapacity" value="{$TankCapacity}" style="width:100%" />
+        </td>
+        <td><select name="{$ClassName}_TankUnitType" id="TankUnitType">
+                {$UnitOptions}
+            </select></td>
+        <td>&nbsp;</td>
+    </tr>
+{/if}
+    <tr>
+        <td>{t}Date of birth{/t}: </td>
+        <td nowrap>
+        <span id="show_Date1" style="background-color:#E1E8EF;
+            border:1px #000000 dotted;
+            margin: 3px 3px 3px 3px;
+            padding: 3px 3px 3px 3px;
+            text-align: right;">
+          {if $BirthDate eq 0}-- {t}select a date{/t} --{else}
+          {$BirthDate_Display}{/if}
+        </span>
+        <input type="hidden" name="{$ClassName}_BirthDate"
+            id="f_date_c1" value="{$BirthDate}"/>&nbsp;
+        <input type="button" name="f_trigger_c1" id="f_trigger_c1" value="..."
+                style="cursor: pointer;" title="{t}Select a date{/t}" />
+        </td>
+        <td>{t}Commissioning date{/t}: </td>
+        <td nowrap>
+        <span id="show_Date2" style="background-color:#E1E8EF;
+            border:1px #000000 dotted;
+            margin: 3px 3px 3px 3px;
+            padding: 3px 3px 3px 3px;
+            text-align: right;">
+          {if $OnServiceDate eq 0}-- {t}select a date{/t} --{else}
+          {$OnServiceDate_Display}{/if}
+        </span>
+        <input type="hidden" name="{$ClassName}_OnServiceDate"
+            id="f_date_c2" value="{$OnServiceDate}"/>&nbsp;
+        <input type="button" name="f_trigger_c2" id="f_trigger_c2" value="..."
+                style="cursor: pointer;" title="{t}Select a date{/t}" />
+        </td>
+    </tr>
+    <tr>
+        <td>{t}Owner{/t}: </td>
+        <td colspan="3">
+            <select name="{$ClassName}_Owner_ID" id="Owner">
+                <option value="0">{t}None{/t}</option>
+                {$OwnerOptions}
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>{t}Selling price excl. VAT{/t}: </td>
+        <td>
+            <input type="text" name="{$ClassName}_SellingPriceHT"
+                id="SellingPriceHT" value="{$SellingPriceHT}"
+                 style="width:100%" />
+        </td>
+        <td>{t}Purchase price excl. VAT{/t}: </td>
+        <td>
+            <input type="text" name="{$ClassName}_BuyingPriceHT"
+                id="BuyingPriceHT" value="{$BuyingPriceHT}"
+                 style="width:100%" />
+        </td>
+    </tr>
+    </tbody>
+    <thead>
+    <tr>
+        <td colspan="4" style="border:1px outset #AAAAAA"><b>{t}Maintenance{/t}</b></td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>{t}Warranty beginning date{/t}: </td>
+        <td nowrap>
+        <span id="show_Date3" style="background-color:#E1E8EF;
+            border:1px #000000 dotted;
+            margin: 3px 3px 3px 3px;
+            padding: 3px 3px 3px 3px;
+            text-align: right;">
+          {if $WarrantyBeginDate eq 0}-- {t}select a date{/t} --{else}
+          {$WarrantyBeginDate_Display}{/if}
+        </span>
+        <input type="hidden" name="{$ClassName}_WarrantyBeginDate"
+            id="f_date_c3" value="{$WarrantyBeginDate}"/>&nbsp;
+        <input type="button" name="f_trigger_c3" id="f_trigger_c3" value="..."
+                style="cursor: pointer;" title="{t}Select a date{/t}" />
+        </td>
+        <td>{t}Warranty end date{/t}: </td>
+        <td nowrap>
+        <span id="show_Date4" style="background-color:#E1E8EF;
+            border:1px #000000 dotted;
+            margin: 3px 3px 3px 3px;
+            padding: 3px 3px 3px 3px;
+            text-align: right;">
+          {if $WarrantyEndDate eq 0}-- {t}select a date{/t} --{else}
+          {$WarrantyEndDate_Display}{/if}
+        </span>
+        <input type="hidden" name="{$ClassName}_WarrantyEndDate"
+            id="f_date_c4" value="{$WarrantyEndDate}"/>&nbsp;
+        <input type="button" name="f_trigger_c4" id="f_trigger_c4" value="..."
+                style="cursor: pointer;" title="{t}Select a date{/t}" />
+        </td>
+    </tr>
+    <tr>
+        <td>{t}End of life date{/t}:</td>
+        <td colspan="3" nowrap>
+        <span id="show_Date5" style="background-color:#E1E8EF;
+            border:1px #000000 dotted;
+            margin: 3px 3px 3px 3px;
+            padding: 3px 3px 3px 3px;
+            text-align: right;">
+          {if $EndOfLifeDate eq 0}-- {t}select a date{/t} --{else}
+          {$EndOfLifeDate_Display}{/if}
+        </span>
+        <input type="hidden" name="{$ClassName}_EndOfLifeDate"
+            id="f_date_c5" value="{$EndOfLifeDate}"/>&nbsp;
+        <input type="button" name="f_trigger_c5" id="f_trigger_c5" value="..."
+                style="cursor: pointer;" title="{t}Select a date{/t}" />
+        </td>
+    </tr>
+    <tr>
+        <td>{t}FME/related document{/t}: </td>
+        <td>
+            <input type="text" name="{$ClassName}_FME"
+                id="FME" value="{$FME}" style="width:100%" />
+
+        </td>
+        <td colspan="2">
+            <input type="checkbox" name="{$ClassName}_OnCondition"
+                value="1" {if $OnCondition}checked{/if}>&nbsp;
+            {t}On condition{/t}
+        </td>
+    </tr>
+    <tr>
+      <td colspan="4">
+         <table width="100%" border="0" cellspacing="0" cellpadding="0" class="form">
+            <tr><td class="gris1">{t}Real potentials{/t}</td></tr>
+         </table>
+         <table width="100%" border="0" cellpadding="1" class="form">
+           <tr>
+             <td style="width: 25%" class="gris2"></td>
+             <td class="gris2">{t}Hours{/t}</th>
+             <td class="gris2">{t}Cycle{/t}</th>
+             <td class="gris2">{t}Landing{/t}</th>
+           </tr>
+           <tr>
+             <td class="gris2">{t}Since new{/t}</td>
+             <td><input type="text" name="{$ClassName}_RealHourSinceNew_Hours"
+                value="{$RealHourSinceNew_Hours}" size="4"> :
+                <input type="text" name="{$ClassName}_RealHourSinceNew_Minutes"
+                value="{$RealHourSinceNew_Minutes}" size="4"> {t}(HH:MM){/t}</td>
+             <td><input type="text" name="{$ClassName}_RealCycleSinceNew"
+                value="{$RealCycleSinceNew}"></td>
+             <td><input type="text" name="{$ClassName}_RealLandingSinceNew"
+                value="{$RealLandingSinceNew}"></td>
+           </tr>
+           <tr>
+             <td class="gris2">{t}Since full overhaul{/t}</td>
+             <td><input type="text" name="{$ClassName}_RealHourSinceOverall_Hours"
+                value="{$RealHourSinceOverall_Hours}" size="4"> :
+                <input type="text" name="{$ClassName}_RealHourSinceOverall_Minutes"
+                value="{$RealHourSinceOverall_Minutes}" size="4"> {t}(HH:MM){/t}</td>
+             <td><input type="text" name="{$ClassName}_RealCycleSinceOverall"
+                value="{$RealCycleSinceOverall}"></td>
+             <td><input type="text" name="{$ClassName}_RealLandingSinceOverall"
+                value="{$RealLandingSinceOverall}"></td>
+           </tr>
+           <tr>
+             <td class="gris2">{t}Since reparation{/t}</td>
+             <td><input type="text" name="{$ClassName}_RealHourSinceRepared_Hours"
+                value="{$RealHourSinceRepared_Hours}" size="4"> :
+                <input type="text" name="{$ClassName}_RealHourSinceRepared_Minutes"
+                value="{$RealHourSinceRepared_Minutes}" size="4"> {t}(HH:MM){/t}</td>
+             <td><input type="text" name="{$ClassName}_RealCycleSinceRepared"
+                value="{$RealCycleSinceRepared}"></td>
+             <td><input type="text" name="{$ClassName}_RealLandingSinceRepared"
+                value="{$RealLandingSinceRepared}"></td>
+           </tr>
+         </table>
+         <br />
+         <table width="100%" border="0" cellspacing="0" cellpadding="0" class="form">
+            <tr><td class="gris1">{t}Virtual potentials{/t}</td></tr>
+         </table>
+         <table width="100%" border="0" cellpadding="1" class="form">
+           <tr>
+             <td style="width: 25%" class="gris2"></td>
+             <td colspan="3" class="gris2">{t}Hours{/t}</th>
+           </tr>
+           <tr>
+             <td class="gris2">{t}Since new{/t}</td>
+             <td colspan="3"><input type="text"
+                value="{$VirtualHourSinceNew_Hours}:{$VirtualHourSinceNew_Minutes}"
+                class="ReadOnlyField"></td>
+           </tr>
+           <tr>
+             <td class="gris2">{t}Since full overhaul{/t}</td>
+             <td colspan="3"><input type="text"
+                value="{$VirtualHourSinceOverall_Hours}:{$VirtualHourSinceOverall_Minutes}"
+                class="ReadOnlyField"></td>
+           </tr>
+         </table>
+      </td>
+    </tr>
+    </tbody>
+    <thead>
+    <tr>
+        <td colspan="4" style="border:1px outset #AAAAAA"><b>{t}Schedule{/t}</b></td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td colspan="4">
+        {include file="Planning/Planning.html"}
+        </td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td align="right" colspan="4">
+          <input type="submit" name="Ok" value="{t}Ok{/t}" class="button"
+            onclick="return checkForm(this.form, requiredFields);">
+          <input type="reset" name="Cancel" value="{t}Cancel{/t}" onclick="window.location.href='{$retURL}'" class="button">
+        </td>
+    </tr>
+    </tfoot>
+  </table>
+</form>
+<br />
+<small>* {t}mandatory fields if airplane{/t}.</small>
+{literal}
+<!-- script à laisser ici, après le formulaire -->
+<script>
+Calendar.setup({
+    inputField     : "f_date_c1", // id of the input field (hidden)
+    ifFormat       : "%Y-%m-%d", // format of the input field
+    displayArea    : "show_Date1", // ID of the span where the date is to be shown
+    daFormat       : "%A %e %B %Y", // format of the displayed date
+    button         : "f_trigger_c1", // trigger for the calendar (button ID)
+    align          : "Tl", // alignment (defaults to "Bl")
+    date           : "", // date affichee par defaut
+    singleClick    : true/*,
+    dateStatusFunc : dateStatusHandler*/
+   });
+</script>
+<script>
+Calendar.setup({
+    inputField     : "f_date_c2", // id of the input field (hidden)
+    ifFormat       : "%Y-%m-%d", // format of the input field
+    displayArea    : "show_Date2", // ID of the span where the date is to be shown
+    daFormat       : "%A %e %B %Y", // format of the displayed date
+    button         : "f_trigger_c2", // trigger for the calendar (button ID)
+    align          : "Tl", // alignment (defaults to "Bl")
+    date           : "", // date affichee par defaut
+    singleClick    : true/*,
+    dateStatusFunc : dateStatusHandler*/
+   });
+</script>
+<script>
+Calendar.setup({
+    inputField     : "f_date_c3", // id of the input field (hidden)
+    ifFormat       : "%Y-%m-%d", // format of the input field
+    displayArea    : "show_Date3", // ID of the span where the date is to be shown
+    daFormat       : "%A %e %B %Y", // format of the displayed date
+    button         : "f_trigger_c3", // trigger for the calendar (button ID)
+    align          : "Tl", // alignment (defaults to "Bl")
+    date           : "", // date affichee par defaut
+    singleClick    : true/*,
+    dateStatusFunc : dateStatusHandler*/
+   });
+</script>
+<script>
+Calendar.setup({
+    inputField     : "f_date_c4", // id of the input field (hidden)
+    ifFormat       : "%Y-%m-%d", // format of the input field
+    displayArea    : "show_Date4", // ID of the span where the date is to be shown
+    daFormat       : "%A %e %B %Y", // format of the displayed date
+    button         : "f_trigger_c4", // trigger for the calendar (button ID)
+    align          : "Tl", // alignment (defaults to "Bl")
+    date           : "", // date affichee par defaut
+    singleClick    : true/*,
+    dateStatusFunc : dateStatusHandler*/
+   });
+</script>
+<script>
+Calendar.setup({
+    inputField     : "f_date_c5", // id of the input field (hidden)
+    ifFormat       : "%Y-%m-%d", // format of the input field
+    displayArea    : "show_Date5", // ID of the span where the date is to be shown
+    daFormat       : "%A %e %B %Y", // format of the displayed date
+    button         : "f_trigger_c5", // trigger for the calendar (button ID)
+    align          : "Tl", // alignment (defaults to "Bl")
+    date           : "", // date affichee par defaut
+    singleClick    : true/*,
+    dateStatusFunc : dateStatusHandler*/
+   });
+</script>
+{/literal}

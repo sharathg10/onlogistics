@@ -1,0 +1,109 @@
+{$form.javascript}
+<form {$form.attributes}>
+    <input type="hidden" name="formSubmitted" value="1">
+    <input type="hidden" name="znId" value="{$znId}">
+	<table id="form" width="100%" cellpadding="3" cellspacing="0" class="form" border="0">
+	  <tbody>
+	  <tr>
+		<td width="20%">{$form.Zone_Name.label} *:</td>
+		<td width="30%">{$form.Zone_Name.html}</td>
+		<td width="20%">{$form.Country.label}:</td>
+		<td width="30%">{$form.Country.html}</td>
+	  </tr>
+	  <tr>
+		<td>{t}District{/t}: </td>
+		<td>
+			<select name="State" id="state" class="searchField" onchange="fw.ajax.updateSelect('state', 'department', 'Department', 'State');fw.ajax.updateSelectCustom('state', 'countrycity', 'CountryCity', 'State', 'zoneaddedit_getCollection');fw.ajax.updateSelectCustom('state', 'site', 'Site', 'CountryCity.CityName.Department.State', 'zoneaddedit_getCollection');">
+			</select>
+		</td>
+		<td>{t}Department{/t}: </td>
+		<td>
+			<select name="Department" id="department" class="searchField" onchange="fw.ajax.updateSelectCustom('department', 'countrycity', 'CountryCity', 'Department', 'zoneaddedit_getCollection');fw.ajax.updateSelectCustom('department', 'site', 'Site', 'CountryCity.CityName.Department', 'zoneaddedit_getCollection');">
+			</select>
+		</td>
+	  </tr>
+	  <tr>
+		<td>{t}Cities{/t}: </td>
+		<td>
+			<select name="CountryCity[]" id="countrycity" multiple="multiple" size="5" class="searchField" onchange="fw.ajax.updateSelectCustom('countrycity', 'site', 'Site', 'CountryCity', 'zoneaddedit_getCollection');">
+			</select>
+		</td>
+		<td>{t}Sites{/t}: </td>
+		<td>
+			<select name="Site[]" id="site" multiple="multiple" size="5" class="searchField">
+			</select>
+		</td>
+	  </tr>
+	  <tr>
+		<td colspan="4">&nbsp;</td>
+	  </tr>
+	  </tbody>
+	  <tfoot>
+	  <tr>
+		<td colspan="4" align="right">
+            <input name="countrycity_ok" type="submit" value="{t}Assign selected cities{/t}" id="countrycity_ok" class="button" 
+              onclick="return checkBeforeSubmit('countrycity');" />&nbsp;&nbsp;&nbsp;
+            <input name="site_ok" type="submit" value="{t}Assign selected sites{/t}" id="site_ok" class="button" 
+              onclick="return checkBeforeSubmit('site');" />&nbsp;&nbsp;&nbsp;
+            <input name="ok" type="submit" value="{t}Save zone name{/t}" id="ok" class="button" />&nbsp;&nbsp;&nbsp;
+            <input value="{t}Back to list of zones{/t}" type="button"
+            onClick="window.location='{$retURL}'"  id="cancel_top" name="cancel_top" class="Button" />
+            &nbsp;&nbsp;
+        </td>
+	  </tr>
+	  </tfoot>
+	  <tr>
+		<td colspan="4">&nbsp;</td>
+	  </tr>
+	</table>
+</form>
+
+<form name="ccyGrid" method="POST" action="{$FormAction}">
+    <input type="hidden" id="ccySubmitted" name="ccySubmitted" value="1" />
+    <input type="hidden" name="znId" value="{$znId}">
+	<table id="ccyGrid" width="100%" cellpadding="3" cellspacing="0" class="form" border="0">
+	  <thead>
+	  <tr>
+		<td>{t}Included cities{/t}</td>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+	  	<td>
+			{$ccyGrid}
+		</td>
+	  </tr>
+	  </tbody>
+	</table>
+</form>
+
+<form name="siteGrid" method="POST" action="{$FormAction}">
+    <input type="hidden" id="siteSubmitted" name="siteSubmitted" value="1" />
+    <input type="hidden" name="znId" value="{$znId}">
+	<table id="siteGrid" width="100%" cellpadding="3" cellspacing="0" class="form" border="0">
+	  <thead>
+	  <tr>
+		<td>{t}Included sites{/t}</td>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+	  	<td>
+			{$siteGrid}
+		</td>
+	  </tr>
+	  </tbody>
+	</table>
+</form>
+<table id="backbutton" width="100%" cellpadding="3" cellspacing="0" class="form" border="0">
+	  <tfoot>
+	  <tr>
+	  	<td align= "right">
+<input value="{t}Back to list of zones{/t}" type="button"
+onClick="window.location='{$retURL}'"  id="cancel" name="cancel" class="Button" />
+&nbsp;
+		</td>
+	  </tr>
+	  </tfoot>
+	</table>
+

@@ -1,0 +1,3049 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+<!-- Version: $Id$ -->
+<application name="onlogistics"
+    outputdir="/home/izi/GL/php/onlogistics/lib/Objects"
+    addonsdir="/home/izi/GL/php/onlogistics/lib/Objects/Addons"
+    sqloutputdir="/home/izi/GL/php/onlogistics/config/sql">
+    <databaseoptions type="MySQL" name="onlogistics" fieldprefix="_" />
+
+    <!-- entity AbstractDocument -->
+    <entity name="AbstractDocument" tablename="AbstractDocument"
+        parent="1" tostring="DocumentNo">
+        <property type="string" name="DocumentNo" />
+        <property type="datetime" name="EditionDate" />
+        <property type="foreignkey" name="Command" class="Command" navigable="1" />
+        <property type="const" name="CommandType" default="0">
+            <const name="TYPE_SUPPLIER_PRODUCT" label="Supplier order"
+                value="1"/>
+            <const name="TYPE_SUPPLIER_TRANSPORT" label="Carriage service"
+                value="2"/>
+            <const name="TYPE_SUPPLIER_COURSE" label="Class booking"
+                value="3"/>
+            <const name="TYPE_SUPPLIER_PRESTATION" label="Service order"
+                value="4"/>
+            <const name="TYPE_CUSTOMER_PRODUCT" label="Customer order"
+                value="5"/>
+            <const name="TYPE_CUSTOMER_TRANSPORT" label="Carriage service"
+                value="6"/>
+            <const name="TYPE_CUSTOMER_COURSE" label="Class booking"
+                value="7"/>
+            <const name="TYPE_CUSTOMER_PRESTATION" label="Service order"
+                value="8"/>
+        </property>
+        <property type="foreignkey" name="DocumentModel" navigable="1"
+            class="DocumentModel" />
+        <property type="foreignkey" name="SupplierCustomer"
+            class="SupplierCustomer" navigable="1" />
+        <property type="foreignkey" name="Currency" class="Currency" />
+        <property type="foreignkey" name="AccountingTypeActor" class="Actor" />
+        <property type="foreignkey" name="PDFDocument" class="PDFDocument"
+             multiplicity="onetoone" ondelete="cascade" navigable="1" />
+        <property type="string" length="10" name="Locale" />
+    </entity>
+
+    <!-- entity AbstractInstant -->
+    <entity name="AbstractInstant" tablename="AbstractInstant"
+        parent="1" />
+
+    <!-- entity Account -->
+    <entity name="Account" tablename="Account"
+        features="grid,searchform,add,edit,del" label="Accounts">
+        <property type="string" name="Number" label="Account number"
+            shortlabel="Number" usedby="addedit,grid,searchform" required="1" />
+        <property type="string" name="Name" label="Account name"
+            shortlabel="Name" usedby="addedit,grid,searchform"/>
+        <property type="foreignkey" name="Currency" class="Currency"
+            label="Currency" usedby="addedit,grid,searchform" required="1" />
+        <!--property type="foreignkey" name="Owner" class="Actor" required="1"
+            usedby="addedit,grid,searchform"
+            label="Linked to the accounting plan of"
+            shortlabel="Accounting plan"/-->
+        <property type="const" name="BreakdownType" default="0"
+            label="Type of breaking down" usedby="addedit,grid,searchform">
+            <const name="BREAKDOWN_HT" label="breaking-down of amount excl. VAT" value="0" />
+            <const name="BREAKDOWN_TVA" label="breaking-down of VAT amount" value="1" />
+            <const name="BREAKDOWN_TTC" label="breaking-down of amount incl. VAT" value="2" />
+            <const name="BREAKDOWN_DISCOUNT" label="breaking-down of discount"
+                value="3" />
+        </property>
+        <property type="foreignkey" name="TVA" class="TVA" label="VAT"
+            usedby="addedit,grid,searchform" emptyfordelete="1" />
+        <property type="manytomany" name="AccountingType" class="AccountingType"
+            field="FromAccount" linktable="accountAccountingType"
+            linkfield="ToAccountingType" usedby="grid,addedit"
+            label="Accounting model" emptyfordelete="1" />
+        <property type="manytomany" name="FlowType" class="FlowType"
+            field="FromAccount" linktable="accountFlowType"
+            linkfield="ToFlowType" usedby="searchform" emptyfordelete="1" />
+        <property type="manytomany" name="FlowTypeItem" class="FlowTypeItem"
+            field="FromAccount" linktable="accountFlowTypeItem"
+            linkfield="ToFlowTypeItem" usedby="addedit"
+            label="expenses and receipts"
+            section="expenses and receipts"/>
+        <property type="foreignkey" name="ActorBankDetail"
+            class="ActorBankDetail" label="bank"
+            usedby="addedit,grid" section="Bank"/>
+        <property type="text" name="Comment" label="comment"
+            usedby="grid,addedit" section="comment"/>
+    </entity>
+
+    <!-- entity AccountingType -->
+    <entity name="AccountingType" tablename="AccountingType" tostring="Type"
+        features="grid,add,edit,del,searchform" label="Accounting model" >
+        <property type="string" name="Type" usedby="addedit,grid,searchform" label="Name"
+            required="1" unique="1" />
+        <property type="bool" name="MainModel" usedby="addedit,grid"
+            label="Main model" default="0" />
+        <property type="float" name="DistributionKey" usedby="addedit,grid"
+            label="Distribution key" />
+        <property type="foreignkey" name="ActorBankDetail"
+            class="ActorBankDetail" usedby="grid,addedit" label="Bank" />
+    </entity>
+
+    <!-- entity Action -->
+    <entity name="Action" tablename="Action">
+        <property type="foreignkey" name="Commercial" class="UserAccount" navigable="1"/>
+        <property type="foreignkey" name="Actor" class="Actor" />
+        <property type="foreignkey" name="FormModel"
+            class="FormModel" default="0" navigable="1" />
+        <property type="datetime" name="WishedDate" default="0" />
+        <property type="datetime" name="ActionDate" />
+        <!-- Les type d'actions sont définies dans FormModel.ActionType-->
+        <property type="int" name="Type" default="0" />
+        <property type="const" name="State" default="0" >
+            <const name="ACTION_STATE_TODO" label="To do" value="0" />
+            <const name="ACTION_STATE_CURRENT" label="In progress" value="1" />
+            <const name="ACTION_STATE_DO" label="Finished" value="2" />
+            <const name="ACTION_STATE_ALERT" label="In alert" value="3" />
+        </property>
+        <property type="text" name="Comment" />
+    </entity>
+
+    <!-- entity ActivatedChain -->
+    <entity name="ActivatedChain" tablename="ActivatedChain">
+        <property type="string" name="Reference" />
+        <property type="string" name="Description" />
+        <property type="string" name="DescriptionCatalog" />
+        <property type="foreignkey" name="Owner" class="Actor" />
+        <property type="foreignkey" name="SiteTransition"
+            class="ActorSiteTransition" />
+        <property type="foreignkey" name="PivotTask" class="ActivatedChainTask" />
+        <property type="const" name="PivotDateType" default="0" >
+            <const name="PIVOTTASK_BEGIN" label="Beginning" value="1" />
+            <const name="PIVOTTASK_END" label="End" value="2" />
+        </property>
+        <property type="datetime" name="BeginDate" />
+        <property type="datetime" name="EndDate" />
+        <property type="foreignkey" name="OwnerWorkerOrder" class="WorkOrder" />
+        <property type="int" name="ExecutionSequence" default="0" />
+        <property type="foreignkey" name="BarCodeType" class="BarCodeType" />
+        <property type="int" name="Type" default="0" />
+        <property type="manytomany" name="ProductType" class="ProductType"
+            field="FromActivatedChain" linktable="achProductType"
+            linkfield="ToProductType"/>
+        <property type="manytomany" name="DangerousProductType"
+            class="DangerousProductType"
+            field="FromActivatedChain" linktable="achDangerousProductType"
+            linkfield="ToDangerousProductType"/>
+        <property type="manytomany" name="Product" class="Product"
+            field="FromActivatedChain" linktable="achProduct"
+            linkfield="ToProduct"/>
+    </entity>
+
+    <!-- entity ActivatedChainOperation -->
+    <entity name="ActivatedChainOperation"
+        tablename="ActivatedChainOperation">
+        <property type="foreignkey" name="Actor" class="Actor" />
+        <property type="foreignkey" name="Operation" class="Operation" />
+        <property type="foreignkey" name="Ghost" class="ActivatedChainOperation" />
+        <property type="foreignkey" name="ActivatedChain" navigable="1"
+            class="ActivatedChain" ondelete="cascade"/>
+        <property type="foreignkey" name="OwnerWorkerOrder" navigable="1"
+            class="WorkOrder" />
+        <property type="foreignkey" name="RealActor" class="Actor" />
+        <property type="foreignkey" name="ConcreteProduct" navigable="1"
+            class="ConcreteProduct" />
+        <property type="foreignkey" name="RealConcreteProduct" navigable="1"
+            navigablename="RealActivatedChainOperation" class="ConcreteProduct" />
+        <property type="foreignkey" name="FirstTask" class="ActivatedChainTask" />
+        <property type="foreignkey" name="LastTask" class="ActivatedChainTask" />
+        <property type="int" name="Order" default="0" />
+        <property type="int" name="OrderInWorkOrder" default="0" />
+        <property type="int" name="TaskCount" default="0" />
+        <property type="int" name="Massified" default="0" />
+        <property type="int" name="State" default="0" />
+        <property type="const" name="PrestationFactured" default="0" >
+            <const name="FACTURED_NONE" label="Not charged" value="0" />
+            <const name="FACTURED_FULL" label="Completely charged" value="1" />
+            <const name="FACTURED_PARTIAL" label="Partially charged" value="2" />
+        </property>
+        <property type="datetime" name="PrestationCommandDate" />
+        <property type="foreignkey" name="InvoiceItem" class="InvoiceItem" />
+        <property type="foreignkey" name="InvoicePrestation" class="Invoice" 
+            navigable="1" default="0" />
+    </entity>
+
+    <!-- entity ActivatedChainTask -->
+    <entity name="ActivatedChainTask" tablename="ActivatedChainTask"
+        label="Tasks" features="grid,searchform">
+        <property type="int" name="Order" default="0" />
+        <property type="foreignkey" name="Ghost" navigable="1" class="ActivatedChainTask" />
+        <property type="int" name="Interuptible" default="0" />
+        <property type="float" name="RawDuration" default="0" />
+        <property type="const" name="DurationType" default="0" >
+            <const name="DURATIONTYPE_FORFAIT" label="fixed price" value="0" />
+            <const name="DURATIONTYPE_KG" label="Kg" value="1" />
+            <const name="DURATIONTYPE_METER" label="by cube meter" value="2" />
+            <const name="DURATIONTYPE_LM" label="by linear meter" value="3" />
+            <const name="DURATIONTYPE_QUANTITY"
+                   label="by unit" value="4" />
+            <const name="DURATIONTYPE_KM" label="by kilometer" value="5" />
+        </property>
+        <property type="float" name="KilometerNumber" default="0" />
+        <property type="const" name="TriggerMode" default="0" >
+            <const name="TRIGGERMODE_MANUAL" label="Manual" value="0" />
+            <const name="TRIGGERMODE_AUTO" label="Automatic" value="1" />
+            <const name="TRIGGERMODE_TEMP" label="Temporal" value="2" />
+        </property>
+        <property type="int" name="TriggerDelta" default="0" />
+        <property type="decimal" name="RawCost" default="0" />
+        <property type="const" name="CostType" default="0" >
+            <const name="COSTTYPE_FORFAIT" label="fixed price" value="0" />
+            <const name="COSTTYPE_DAILY" label="daily" value="1" />
+            <const name="COSTTYPE_HOURLY" label="hourly" value="2" />
+            <const name="COSTTYPE_KG" label="Kg" value="3" />
+            <const name="COSTTYPE_SQUAREMETTER" label="by square meter" value="4" />
+            <const name="COSTTYPE_CUBEMETTER" label="by cube meter" value="5" />
+            <const name="COSTTYPE_LM" label="by linear meter" value="6" />
+            <const name="COSTTYPE_QUANTITY" label="by unit" value="7" />
+            <const name="COSTTYPE_KM" label="by kilometer" value="8" />
+            <const name="COSTTYPE_KWATT" label="by kilowatt" value="9" />
+        </property>
+        <property type="float" name="Duration" default="0" />
+        <property type="decimal" name="Cost" default="0" />
+        <property type="string" name="Instructions" />
+        <property type="foreignkey" name="Task" class="Task"/>
+        <property type="foreignkey" name="ActorSiteTransition" class="ActorSiteTransition" />
+        <property type="foreignkey" name="DepartureInstant" class="AbstractInstant" />
+        <property type="foreignkey" name="ArrivalInstant" class="AbstractInstant" />
+        <property type="datetime" name="Begin" />
+        <property type="datetime" name="End" />
+        <property type="datetime" name="InterruptionDate" />
+        <property type="datetime" name="RestartDate" />
+        <property type="datetime" name="RealBegin" />
+        <property type="datetime" name="RealEnd" />
+        <property type="float" name="RealDuration" default="0" />
+        <property type="decimal" length="10,3" name="RealQuantity" />
+        <property type="decimal" name="RealCost" />
+        <property type="foreignkey" name="ActivatedOperation" navigable="1"
+            class="ActivatedChainOperation" ondelete="cascade" />
+        <property type="foreignkey" name="ValidationUser" navigable="1"
+             navigablename="ValidatedActivatedChainTask" class="UserAccount" />
+        <property type="foreignkey" name="OwnerWorkerOrder" class="WorkOrder" />
+        <property type="foreignkey" name="ActivatedChainTaskDetail" class="ActivatedChainTaskDetail" />
+        <property type="int" name="Massified" default="0" />
+        <property type="foreignkey" name="DataProvider" class="ActivatedChainTask" />
+        <property type="int" name="WithForecast" default="0" />
+        <property type="const" name="State" default="0">
+            <const name="STATE_TODO" label="To do" value="0" />
+            <const name="STATE_IN_PROGRESS" label="In progress" value="1" />
+            <const name="STATE_FINISHED" label="Finished" value="2" />
+            <const name="STATE_STOPPED" label="Suspended" value="3" />
+        </property>
+        <property type="int" name="ProductCommandType" default="0" />
+        <property type="foreignkey" name="DepartureActor" class="Actor" />
+        <property type="foreignkey" name="DepartureSite" class="Site" />
+        <property type="foreignkey" name="ArrivalActor" class="Actor" />
+        <property type="foreignkey" name="ArrivalSite" class="Site" />
+        <property type="const" name="WishedDateType" default="0" >
+            <const name="WISHED_START_DATE_TYPE_BEGIN_TASK_PLUS_X"
+                   label="Same as activation task beginning date plus X hours"
+                   value="0" />
+            <const name="WISHED_START_DATE_TYPE_BEGIN_TASK_MINUS_X"
+                   label="Same as activation task beginning date minus X hours"
+                   value="1" />
+            <const name="WISHED_START_DATE_TYPE_COMMAND_PLUS_X"
+                   label="initial order wished date plus X hours"
+                   value="2" />
+            <const name="WISHED_START_DATE_TYPE_COMMAND_MINUS_X"
+                   label="initial order wished date minus X hours"
+                   value="3" />
+        </property>
+        <property type="int" name="Delta" default="0" />
+        <property type="bool" name="ComponentQuantityRatio" default="0" />
+        <property type="bool" name="ActivationPerSupplier" default="0" />
+        <property type="decimal" length="10,3" name="AssembledQuantity" />
+        <property type="decimal" length="10,3" name="AssembledRealQuantity" />
+        <property type="foreignkey" name="Component" class="Component" />
+        <property type="foreignkey" name="ChainToActivate" class="Chain"
+            ondelete="cascade" />
+        <property type="foreignkey" name="RessourceGroup" class="RessourceGroup"
+            navigable="1"/>
+        <property type="manytomany" name="UserAccount" class="UserAccount"
+            field="FromActivatedChainTask" linktable="ackUserAccount"
+            linkfield="ToUserAccount"/>
+        <property type="manytomany" name="Component" class="Component"
+            field="FromActivatedChainTask" linktable="ackComponent"
+            linkfield="ToComponent"/>
+        <property type="manytomany" name="ConcreteComponent" class="ConcreteComponent"
+            field="ToActivatedChainTask" linktable="ackConcreteComponent"
+            linkfield="FromConcreteComponent"/>
+    </entity>
+
+    <!-- entity ActivatedChainTaskDetail -->
+    <entity name="ActivatedChainTaskDetail" tablename="ActivatedChainTaskDetail">
+        <property type="decimal" name="OilAdded" />
+        <property type="decimal" name="CarburantRest" />
+        <property type="decimal" name="CarburantAdded" />
+        <property type="decimal" name="CarburantTotal" />
+        <property type="decimal" name="CarburantUsed" />
+        <property type="text" name="Comment" />
+        <property type="const" name="InstructorSeat" default="0" >
+            <const name="AUCUN" label="None" value="0" />
+            <const name="PILOTE" label="Pilot (P)" value="1" />
+            <const name="PILOTE_ELEVE" label="Pilot (EP)" value="2" />
+            <const name="PILOTE_INSTRUCTEUR" label="Pilot (IP)" value="3" />
+            <const name="COPILOTE" label="Co-pilot student (CP)" value="4" />
+        </property>
+        <property type="const" name="CustomerSeat" default="0" >
+            <const name="AUCUN" label="None" value="0" />
+            <const name="PILOTE" label="Pilot (P)" value="1" />
+            <const name="PILOTE_ELEVE" label="Pilot (EP)" value="2" />
+            <const name="PILOTE_INSTRUCTEUR" label="Pilot (IP)" value="3" />
+            <const name="COPILOTE" label="Co-pilot student (CP)" value="4" />
+        </property>
+        <property type="decimal" name="CycleEngine1N1" />
+        <property type="decimal" name="CycleEngine1N2" />
+        <property type="decimal" name="CycleEngine1" />
+        <property type="decimal" name="CycleEngine2N1" />
+        <property type="decimal" name="CycleEngine2N2" />
+        <property type="decimal" name="CycleEngine2" />
+        <property type="int" name="CycleCellule" />
+        <property type="int" name="CycleTreuillage" />
+        <property type="int" name="CycleCharge" />
+        <property type="decimal" name="RealCommercialDuration" />
+        <property type="datetime" name="EngineOn" />
+        <property type="datetime" name="EngineOff" />
+        <property type="datetime" name="TakeOff" />
+        <property type="datetime" name="Landing" />
+        <property type="decimal" name="TechnicalHour" />
+        <property type="decimal" name="CelluleHour" />
+        <property type="const" name="Nature" default="0" >
+            <const name="NATURE_NONE" label="N/A" value="0" />
+            <const name="NATURE_INST" label="Instruction" value="1" />
+            <const name="NATURE_TP" label="Public transport" value="2" />
+            <const name="NATURE_TA" label="Air labour" value="3" />
+            <const name="NATURE_SIM" label="Simulation" value="4" />
+        </property>
+        <property type="int" name="IFRLanding" default="0"/>
+        <property type="int" name="PilotHours" default="0" />
+        <property type="int" name="PilotHoursBiEngine" default="0" />
+        <property type="int" name="CoPilotHours" default="0" />
+        <property type="int" name="CoPilotHoursBiEngine" default="0" />
+        <property type="int" name="PilotHoursNight" default="0" />
+        <property type="int" name="PilotHoursBiEngineNight" default="0" />
+        <property type="int" name="CoPilotHoursNight" default="0" />
+        <property type="int" name="CoPilotHoursBiEngineNight" default="0" />
+        <property type="int" name="PilotHoursIFR" default="0" />
+        <property type="int" name="CoPilotHoursIFR" default="0" />
+        <property type="int" name="PublicHours" default="0" />
+        <property type="int" name="VLAEHours" default="0" />
+        <property type="int" name="TakeOffNumber" default="0" />
+        <property type="int" name="LandingNumber" default="0" />
+    </entity>
+
+    <!-- entity ActivatedMovement -->
+    <entity name="ActivatedMovement" tablename="ActivatedMovement">
+        <property type="datetime" name="StartDate" />
+        <property type="datetime" name="EndDate" />
+        <property type="const" name="State" default="0" >
+            <const name="CREE" label="Created" value="0" />
+            <const name="ACM_EN_COURS" label="In progress" value="1" />
+            <const name="ACM_EXECUTE_TOTALEMENT"
+                   label="Completely executed" value="2" />
+            <const name="ACM_EXECUTE_PARTIELLEMENT"
+                   label="Partially executed" value="3" />
+            <const name="BLOQUE" label="Locked" value="4" />
+        </property>
+        <property type="const" name="HasBeenFactured" default="0" >
+            <const name="ACM_NON_FACTURE" label="Not charged" value="0" />
+            <const name="ACM_FACTURE" label="Completely charged" value="1" />
+            <const name="ACM_FACTURE_PARTIEL" label="Partially charged" value="2" />
+        </property>
+        <property type="decimal" length="10,3" name="Quantity" />
+        <property type="foreignkey" name="Type" class="MovementType" />
+        <property type="foreignkey" name="ProductCommandItem" navigable="0"
+            class="ProductCommandItem" ondelete="cascade" />
+        <property type="foreignkey" name="ActivatedChainTask" class="ActivatedChainTask"
+            ondelete="cascade" />
+        <property type="foreignkey" name="Product" class="Product" default="0" />
+        <property type="foreignkey" name="ProductCommand" class="ProductCommand"
+            default="0" ondelete="cascade" />
+        <property type="manytomany" name="Location" class="Location"
+            field="FromActivatedMovement" linktable="acmLocation"
+            linkfield="ToLocation"/>
+    </entity>
+
+    <!-- entity Actor -->
+    <entity name="Actor" tablename="Actor" parent="1">
+        <property type="string" name="Name" unique="1"/>
+        <property type="bool" name="DatabaseOwner" default="0"/>
+        <property type="const" name="Quality">
+            <const name="QUALITY_NONE" label="None" value="0" />
+            <const name="QUALITY_MLLE" label="Miss" value="1" />
+            <const name="QUALITY_MME" label="Madam" value="2" />
+            <const name="QUALITY_M" label="Sir" value="3" />
+        </property>
+        <property type="string" name="Code" />
+        <property type="string" name="Siret" />
+        <property type="string" name="IATA" />
+        <property type="text" name="Logo" />
+        <property type="string" name="Slogan" i18n="1"/>
+        <property type="string" name="TVA" />
+        <property type="string" name="RCS" />
+        <property type="string" name="Role" />
+        <property type="int" name="Active" default="1" />
+        <property type="int" name="PaymentCondition" default="0" />
+        <property type="foreignkey" name="Incoterm" class="Incoterm" />
+        <property type="int" name="PackageCondition" />
+        <property type="foreignkey" name="Commercial" class="UserAccount" />
+        <property type="string" name="PlanningComment" />
+        <property type="foreignkey" name="MainSite" class="Site" />
+        <property type="foreignkey" name="Category" class="Category"/>
+        <property type="float" name="RemExcep" default="0" />
+        <property type="int" name="Generic" default="0" />
+        <property type="foreignkey" name="GenericActor" navigable="1"
+            class="Actor" />
+        <property type="string" name="Trademark" />
+        <property type="string" name="CompanyType" />
+        <property type="datetime" name="CreationDate" />
+        <property type="manytomany" name="Job" class="Job"
+            field="FromActor" linktable="actJob" linkfield="ToJob"/>
+        <property type="manytomany" name="Operation" class="Operation"
+            field="FromActor" linktable="actOperation"
+            linkfield="ToOperation"/>
+        <property type="foreignkey" name="Currency" class="Currency" />
+        <property type="foreignkey" name="PricingZone" class="PricingZone" />
+        <property type="foreignkey" name="AccountingType" class="AccountingType" />
+        <property type="foreignkey" name="CustomerProperties" class="CustomerProperties" />
+        <property type="foreignkey" name="ActorDetail" class="ActorDetail"
+            navigable="1" multiplicity="onetoone" ondelete="cascade" />
+    </entity>
+
+    <!-- entity ActorBankDetail -->
+    <entity name="ActorBankDetail" tablename="ActorBankDetail">
+        <property type="string" name="Iban" />
+        <property type="string" name="BankName" />
+        <property type="string" name="Swift" />
+        <property type="string" name="BankAddressNo" />
+        <property type="const" name="BankAddressStreetType" default="0">
+            <const name="TYPE_AVENUE" value="1" label="Avenue" />
+            <const name="TYPE_BOULEVARD" value="2" label="Boulevard" />
+            <const name="TYPE_CHEMIN" value="3" label="Lane" />
+            <const name="TYPE_IMPASSE" value="4" label="Blind alley" />
+            <const name="TYPE_PLACE" value="5" label="Place" />
+            <const name="TYPE_ROUTE" value="6" label="Road" />
+            <const name="TYPE_RUE" value="7" label="Street" />
+        </property>
+        <property type="string" name="BankAddressStreet" />
+        <property type="string" name="BankAddressAdd" />
+        <property type="string" name="BankAddressCity" />
+        <property type="string" name="BankAddressZipCode" />
+        <property type="string" name="BankAddressCountry" />
+        <property type="string" name="AccountNumber" />
+        <property type="decimal" name="Amount" default="0" />
+        <property type="date" name="LastUpdate" />
+        <property type="bool" name="Active" default="1" />
+        <property type="foreignkey" name="Actor" class="Actor"
+            navigable="1" ondelete="cascade" />
+        <property type="foreignkey" name="Currency" class="Currency" />
+    </entity>
+
+    <!-- entity ActorDetail -->
+    <entity name="ActorDetail" tablename="ActorDetail">
+        <property type="bool" name="IsInternalAffectation" default="1" />
+        <property type="foreignkey" name="InternalAffectation" class="Actor" />
+        <property type="foreignkey" name="Signatory" class="Actor" />
+        <property type="foreignkey" name="BusinessProvider" class="Actor" />
+    </entity>
+
+    <!-- entity ActorProduct -->
+    <entity name="ActorProduct" tablename="ActorProduct"
+        label="Add/Update product references by customer"
+        features="grid,searchform,add,edit,del">
+        <property type="foreignkey" name="Actor" class="Actor" navigable="1"
+            usedby="grid,addedit,searchform"
+            label="Customer" required="1" ondelete="cascade" />
+        <property type="foreignkey" name="Product" class="Product" navigable="1"
+            usedby="grid,addedit,searchform"
+            label="Product" required="1" ondelete="cascade" />
+        <property type="string" name="AssociatedProductReference"
+            usedby="grid,addedit,searchform"
+            label="Customer reference" required="1" />
+        <property type="decimal" length="10,3" name="BuyUnitQuantity" />
+        <property type="foreignkey" name="BuyUnitType" class="SellUnitType"/>
+        <property type="bool" name="Priority" default="0" />
+    </entity>
+
+    <!-- entity ActorSiteTransition -->
+    <entity name="ActorSiteTransition" tablename="ActorSiteTransition">
+        <property type="foreignkey" name="DepartureZone" class="Zone" />
+        <property type="foreignkey" name="DepartureActor" class="Actor"
+            ondelete="cascade" />
+        <property type="foreignkey" name="DepartureSite" class="Site"
+            ondelete="cascade" />
+        <property type="foreignkey" name="ArrivalZone" class="Zone" />
+        <property type="foreignkey" name="ArrivalActor" class="Actor"
+            ondelete="cascade" />
+        <property type="foreignkey" name="ArrivalSite" class="Site"
+            ondelete="cascade" />
+    </entity>
+
+    <!-- entity AeroActor -->
+    <entity name="AeroActor" extends="Actor" tablename="Actor" parent="1">
+        <property type="float" name="Weight" default="0" />
+        <property type="float" name="Cost" default="0" />
+        <!-- nombre Nombre datterrissage en IFR -->
+        <property type="int" name="IFRLanding" default="0" />
+        <!-- heures monomoteur et bi-moteur de jour pilote et copilote -->
+        <property type="int" name="PilotHours" default="0" />
+        <property type="int" name="PilotHoursBiEngine" default="0" />
+        <property type="int" name="CoPilotHours" default="0" />
+        <property type="int" name="CoPilotHoursBiEngine" default="0" />
+        <!-- heures monomoteur et bi-moteur de nuit pilote et en double -->
+        <property type="int" name="PilotHoursNight" default="0" />
+        <property type="int" name="PilotHoursBiEngineNight" default="0" />
+        <property type="int" name="CoPilotHoursNight" default="0" />
+        <property type="int" name="CoPilotHoursBiEngineNight" default="0" />
+        <!-- heures IFR pilote et copilote -->
+        <property type="int" name="PilotHoursIFR" default="0" />
+        <property type="int" name="CoPilotHoursIFR" default="0" />
+        <!-- heures en tant qu'ï¿½ï¿½e -->
+        <property type="int" name="StudentHours" default="0" />
+        <!-- heures en tant qu'instructeur -->
+        <property type="int" name="InstructorHours" default="0" />
+        <!-- heures publiques, commercial et VLAE -->
+        <property type="int" name="PublicHours" default="0" />
+        <property type="int" name="CommercialHours" default="0" />
+        <property type="int" name="VLAEHours" default="0" />
+        <property type="manytomany" name="AuthorizedFlyType" class="FlyType"
+            field="ToAeroActor" linktable="aacFlyType" linkfield="FromFlyType"/>
+        <property type="manytomany" name="Licence" class="Licence"
+            field="ToAeroActor" linktable="aacLicence"
+            linkfield="FromLicence"/>
+    </entity>
+
+    <!-- entity AeroConcreteProduct -->
+    <entity name="AeroConcreteProduct" extends="ConcreteProduct"
+        tablename="ConcreteProduct">
+        <property type="decimal" name="MaxWeightOnTakeOff" default="0" />
+        <property type="decimal" name="MaxWeightBySeat" default="0" />
+        <property type="decimal" name="RealLandingSinceNew" default="0" />
+        <property type="decimal" name="RealLandingSinceOverall" default="0" />
+        <property type="decimal" name="RealLandingSinceRepared" default="0" />
+        <property type="decimal" name="RealCycleSinceNew" default="0" />
+        <property type="decimal" name="RealCycleSinceOverall" default="0" />
+        <property type="decimal" name="RealCycleSinceRepared" default="0" />
+        <property type="decimal" name="TankCapacity" default="0" />
+        <property type="const" name="TankUnitType" default="0" >
+            <const name="LITRE" label="L" value="1" />
+            <const name="GALLON" label="Gallon" value="2" />
+            <const name="KILOGRAMME" label="Kg" value="0" />
+            <const name="PERCENT" label="%" value="3" />
+        </property>
+    </entity>
+
+    <!-- entity AeroCustomer -->
+    <entity name="AeroCustomer" extends="AeroActor" tablename="Actor">
+        <property type="bool" name="Trainee" default="0" />
+        <property type="bool" name="SoloFly" default="0" />
+        <property type="datetime" name="LastFlyDate" />
+        <property type="foreignkey" name="Instructor" navigable="1"
+            class="AeroInstructor" />
+    </entity>
+
+    <!-- entity AeroInstructor -->
+    <entity name="AeroInstructor" extends="AeroActor" tablename="Actor" />
+
+    <!-- entity AeroOperator -->
+    <entity name="AeroOperator" extends="AeroActor" tablename="Actor" />
+
+    <!-- entity AeroProduct -->
+    <entity name="AeroProduct" extends="Product" tablename="Product">
+        <property type="foreignkey" name="FlyType" navigable="1" class="FlyType" />
+    </entity>
+
+    <!-- entity AeroSupplier -->
+    <entity name="AeroSupplier" extends="AeroActor" tablename="Actor">
+        <property type="string" name="OnlogisticsAccount" default="null" />
+    </entity>
+
+    <!-- entity Alert -->
+    <entity name="Alert" tablename="Alert" features="grid,add,edit,del"
+        label="Alerts" >
+        <property type="string" name="Name" usedby="grid,addedit" label="Name" i18n="1" />
+        <property type="html" name="BodyAddon" usedby="addedit" label="Additional body" />
+        <property type="file" name="Template" usedby="addedit" label="or HTML template" />
+        <property type="manytomany" name="UserAccount" class="UserAccount"
+            field="FromAlert" linktable="alertUserAccount" linkfield="ToUserAccount" />
+    </entity>
+
+    <!-- entity AnnualTurnoverDiscount -->
+    <entity name="AnnualTurnoverDiscount" tablename="AnnualTurnoverDiscount">
+        <property type="decimal" length="10,2" name="Amount"/>
+        <property type="int" length="4" name="Year" />
+        <property type="foreignkey" name="SupplierCustomer"
+            class="SupplierCustomer" navigable="1" />
+    </entity>
+
+    <!-- entity AnnualTurnoverDiscountPercent -->
+    <entity name="AnnualTurnoverDiscountPercent"
+        tablename="AnnualTurnoverDiscountPercent">
+        <property type="decimal" length="10,2" name="Amount"/>
+        <property type="datetime" name="Date" />
+        <property type="foreignkey" name="Category" class="Category"
+            navigable="1" />
+    </entity>
+
+    <!-- entity AnswerModel -->
+    <entity name="AnswerModel" tablename="AnswerModel"
+        features="grid,add,edit,del" >
+        <property type="string" name="Value" usedby="grid,addedit"
+            label="Answer text" required="1" unique="1" />
+        <property type="foreignkey" name="Alert" class="Alert" />
+    </entity>
+
+    <!-- entity BarCodeType -->
+    <entity name="BarCodeType" tablename="BarCodeType">
+        <property type="string" name="Name" />
+        <property type="string" name="Code" />
+    </entity>
+
+    <!-- entity Box -->
+    <entity name="Box" tablename="Box">
+        <property type="string" name="Reference" />
+        <property type="int" name="Level" />
+        <property type="text" name="Comment" />
+        <property type="text" name="Dimensions" />
+        <property type="datetime" name="Date" />
+        <property type="float" name="Weight" default="0" />
+        <property type="float" name="Volume" default="0" />
+        <property type="bool" name="PrestationFactured" default="0" />
+        <property type="foreignkey" name="InvoicePrestation" class="Invoice" default="0" />
+        <property type="foreignkey" name="ParentBox" class="Box" navigable="1" />
+        <property type="foreignkey" name="ActivatedChain"
+            class="ActivatedChain" navigable="1" ondelete="cascade" />
+        <property type="foreignkey" name="CommandItem"
+            class="CommandItem" navigable="1" ondelete="cascade" />
+        <property type="foreignkey" name="LocationExecutedMovement"
+            class="LocationExecutedMovement" navigable="1" ondelete="cascade" />
+        <property type="foreignkey" name="CoverType" class="CoverType" />
+        <property type="foreignkey" name="Expeditor" class="Actor" />
+        <property type="foreignkey" name="ExpeditorSite" class="Site" />
+        <property type="foreignkey" name="Destinator" class="Actor" />
+        <property type="foreignkey" name="DestinatorSite" class="Site" />
+        <property type="foreignkey" name="PackingList" class="PackingList" />
+        <property type="manytomany" name="ActivatedChainTask"
+            class="ActivatedChainTask" field="FromBox"
+            linktable="boxActivatedChainTask" linkfield="ToActivatedChainTask"/>
+    </entity>
+
+    <!-- entity CacheData -->
+    <entity name="CacheData" tablename="CacheData">
+        <property type="longtext" name="Data" />
+    </entity>
+
+    <!-- entity Catalog -->
+    <entity name="Catalog" tablename="Catalog">
+        <property type="string" name="Name" />
+        <property type="int" name="ItemPerPage" default="0" />
+        <property type="string" name="Page" />
+        <property type="bool" name="CadencedOrder" default="0" />
+        <property type="manytomany" name="ProductType" class="ProductType"
+            field="FromCatalog" linktable="ctgProductType"
+            linkfield="ToProductType"/>
+    </entity>
+
+    <!-- entity CatalogCriteria -->
+    <entity name="CatalogCriteria" tablename="CatalogCriteria">
+        <property type="foreignkey" name="Property" class="Property" navigable="1"
+            ondelete="cascade" />
+        <property type="string" name="DisplayName" />
+        <property type="int" name="Index" default="0" />
+        <property type="int" name="Displayable" default="0" />
+        <property type="int" name="Searchable" default="0" />
+        <property type="int" name="SearchIndex" default="0" />
+        <property type="foreignkey" name="Catalog" class="Catalog" ondelete="cascade"
+		 navigable="1" />
+    </entity>
+
+    <!-- entity Category -->
+    <entity name="Category" tablename="Category" trackchanges="1"
+        features="grid,add,edit,del" label="Categories" >
+        <property type="string" name="Name" usedby="grid,addedit" label="Name"
+            required="1" unique="1"/>
+        <property type="foreignkey" name="Attractivity"
+            class="CustomerAttractivity" navigable="1"/>
+        <property type="manytomany" name="ProductHandingByCategory"
+            class="ProductHandingByCategory"
+            field="ToCategory" linktable="phcCategory"
+            linkfield="FromProductHandingByCategory"/>
+        <property type="manytomany" name="Promotion" class="Promotion"
+             field="ToCategory" linktable="prmCategory"
+             linkfield="FromPromotion"/>
+        <property type="string" name="Description" />
+    </entity>
+
+    <!-- entity Chain -->
+    <entity name="Chain" tablename="Chain" label="Chains"
+        features="searchform,grid,add,edit,del">
+        <property type="string" name="Reference" label="Reference"
+            usedby="searchform,grid,addedit" required="1" unique="1"/>
+        <property type="foreignkey" name="Owner" class="Actor" label="Creator"
+            usedby="addedit"/>
+        <property type="string" name="Description" label="Designation"
+            usedby="searchform,grid,addedit" required="1"/>
+        <property type="string" name="DescriptionCatalog"
+            label="Catalog description" usedby="addedit"/>
+        <property type="const" name="Type" default="0" label="Type"
+            usedby="searchform,grid,addedit" required="1">
+            <const name="CHAIN_TYPE_PRODUCT" label="products" value="0" />
+            <const name="CHAIN_TYPE_TRANSPORT" label="carriage" value="1" />
+            <const name="CHAIN_TYPE_MAINTENANCE" label="maintenance" value="2" />
+            <const name="CHAIN_TYPE_COURSE" label="class" value="3" />
+            <const name="CHAIN_TYPE_HIRING"
+                   label="helicopter rental" value="4" />
+        </property>
+        <property type="const" name="AutoAssignTo" default="0" 
+            label="Auto assign to" usedby="addedit">
+            <const name="AUTOASSIGN_NONE" label="Select an item" value="0" />
+            <const name="AUTOASSIGN_PRODUCTS" label="Products" value="1" />
+            <const name="AUTOASSIGN_MATERIALS" label="Materials" value="2" />
+        </property>
+        <property type="foreignkey" name="BarCodeType" class="BarCodeType"
+            label="Barcode type" usedby="addedit"/>
+        <property type="foreignkey" name="SiteTransition"
+            class="ActorSiteTransition" usedby="addedit"/>
+        <property type="foreignkey" name="PivotTask" class="ChainTask" />
+        <property type="int" name="PivotDateType" default="0" />
+        <property type="int" name="CommandSequence" default="0" />
+        <property type="datetime" name="CreatedDate" label="Creation date"
+            usedby="grid"/>
+        <property type="const" name="State" default="0" label="State"
+            usedby="searchform,grid">
+            <const name="CHAIN_STATE_UNSET" label="N/A" value="0" />
+            <const name="CHAIN_STATE_CREATED" label="Created" value="1" />
+            <const name="CHAIN_STATE_BUILT" label="Contructed" value="2" />
+            <const name="CHAIN_STATE_ACTIVABLE" label="Can be activated" value="3" />
+        </property>
+        <property type="manytomany" name="ProductType" class="ProductType"
+            field="FromChain" linktable="chnProductType"
+            linkfield="ToProductType" label="Product type"
+            usedby="addedit"/>
+        <property type="manytomany" name="DangerousProductType"
+            class="DangerousProductType" field="FromChain"
+            linktable="chnDangerousProductType"
+            linkfield="ToDangerousProductType"/>
+    </entity>
+
+    <!-- entity ChainCommand -->
+    <entity name="ChainCommand" tablename="Command" extends="Command">
+        <property type="string" name="InputationNo" />
+        <property type="decimal" name="DeliveryPayment" />
+        <property type="int" name="DateType" default="0" />
+        <property type="foreignkey" name="Chain" class="Chain" />
+    </entity>
+
+    <!-- entity ChainCommandItem -->
+    <entity name="ChainCommandItem" extends="CommandItem"
+        tablename="CommandItem">
+        <property type="foreignkey" name="Command" navigable="1"
+             class="ChainCommand" navigablename="CommandItem" ondelete="cascade" />
+        <property type="foreignkey" name="CoverType" class="CoverType" />
+        <property type="foreignkey" name="ProductType" class="ProductType" />
+    </entity>
+
+    <!-- entity ChainOperation -->
+    <entity name="ChainOperation" tablename="ChainOperation">
+        <property type="foreignkey" name="Actor" class="Actor" />
+        <property type="foreignkey" name="Operation" class="Operation" />
+        <property type="foreignkey" name="Chain" class="Chain" navigable="1"
+            ondelete="cascade" />
+        <property type="int" name="Order" default="0" />
+    </entity>
+
+    <!-- entity ChainTask -->
+    <entity name="ChainTask" tablename="ChainTask">
+        <property type="int" name="Order" default="0" />
+        <property type="int" name="Interuptible" default="0" />
+        <property type="float" name="Duration" default="0" />
+        <property type="const" name="DurationType" default="0" >
+            <const name="DURATIONTYPE_FORFAIT" label="fixed price" value="0" />
+            <const name="DURATIONTYPE_KG" label="Kg" value="1" />
+            <const name="DURATIONTYPE_METER" label="by cube meter" value="2" />
+            <const name="DURATIONTYPE_LM" label="by linear meter" value="3" />
+            <const name="DURATIONTYPE_QUANTITY"
+                   label="by unit" value="4" />
+            <const name="DURATIONTYPE_KM" label="by kilometer" value="5" />
+        </property>
+        <property type="float" name="KilometerNumber" default="0" />
+        <property type="decimal" name="Cost" default="0" />
+        <property type="const" name="CostType" default="0">
+            <const name="COSTTYPE_FORFAIT" label="fixed price" value="0" />
+            <const name="COSTTYPE_DAILY" label="daily" value="1" />
+            <const name="COSTTYPE_HOURLY" label="hourly" value="2" />
+            <const name="COSTTYPE_KG" label="Kg" value="3" />
+            <const name="COSTTYPE_SQUAREMETTER" label="by square meter" value="4" />
+            <const name="COSTTYPE_CUBEMETTER" label="by cube meter" value="5" />
+            <const name="COSTTYPE_LM" label="by linear meter" value="6" />
+            <const name="COSTTYPE_QUANTITY" label="by unit" value="7" />
+            <const name="COSTTYPE_KM" label="by kilometer" value="8" />
+            <const name="COSTTYPE_KWATT" label="by kilowatt" value="9" />
+        </property>
+        <property type="string" name="Instructions" />
+        <property type="const" name="TriggerMode" default="0" >
+            <const name="TRIGGERMODE_MANUAL" label="Manual" value="0" />
+            <const name="TRIGGERMODE_AUTO" label="Automatic" value="1" />
+            <const name="TRIGGERMODE_TEMP" label="Temporal" value="2" />
+        </property>
+        <property type="float" name="TriggerDelta" default="0" />
+        <property type="foreignkey" name="Task" class="Task" />
+        <property type="foreignkey" name="ActorSiteTransition"
+            class="ActorSiteTransition" />
+        <property type="foreignkey" name="DepartureInstant"
+            class="AbstractInstant" />
+        <property type="foreignkey" name="ArrivalInstant"
+            class="AbstractInstant" />
+        <property type="foreignkey" name="Operation" navigable="1"
+            class="ChainOperation" ondelete="cascade" />
+        <property type="int" name="AutoAlert" />
+        <property type="int" name="ProductCommandType" default="0" />
+        <property type="foreignkey" name="DepartureActor" class="Actor" />
+        <property type="foreignkey" name="DepartureSite" class="Site" />
+        <property type="foreignkey" name="ArrivalActor" class="Actor" />
+        <property type="foreignkey" name="ArrivalSite" class="Site" />
+        <property type="const" name="WishedDateType" default="0" >
+            <const name="WISHED_START_DATE_TYPE_BEGIN_TASK_PLUS_X"
+                   label="Same as activation task beginning date minus X hours"
+                   value="0" />
+            <const name="WISHED_START_DATE_TYPE_BEGIN_TASK_MINUS_X"
+                   label="Same as activation task beginning date plus X hours"
+                   value="1" />
+            <const name="WISHED_START_DATE_TYPE_COMMAND_PLUS_X"
+                   label="initial order wished date plus X hours"
+                   value="2" />
+            <const name="WISHED_START_DATE_TYPE_COMMAND_MINUS_X"
+                   label="initial order wished date minus X hours"
+                   value="3" />
+        </property>
+        <property type="int" name="Delta" default="0" />
+        <property type="bool" name="ComponentQuantityRatio" default="0" />
+        <property type="bool" name="ActivationPerSupplier" default="0" />
+        <property type="foreignkey" name="Component" class="Component" />
+        <property type="foreignkey" name="ChainToActivate" class="Chain"
+            ondelete="cascade" />
+        <property type="foreignkey" name="RessourceGroup" class="RessourceGroup"
+            navigable="1"/>
+        <property type="manytomany" name="UserAccount" class="UserAccount"
+            field="FromChainTask" linktable="chtUserAccount"
+            linkfield="ToUserAccount"/>
+        <property type="manytomany" name="Component" class="Component"
+            field="FromChainTask" linktable="chtComponent"
+            linkfield="ToComponent"/>
+    </entity>
+
+    <!-- entity CityName -->
+    <entity name="CityName" tablename="CityName">
+        <property type="string" name="Name" />
+        <property type="foreignkey" name="Department" navigable="1"
+            class="Department" />
+    </entity>
+
+    <!-- entity Command -->
+    <entity name="Command" tablename="Command" parent="1">
+        <property type="string" name="CommandNo" />
+        <property type="const" name="Type" default="0">
+            <const name="TYPE_CUSTOMER" label="Customer order" value="1"/>
+            <const name="TYPE_SUPPLIER" label="Supplier order" value="2"/>
+            <const name="TYPE_TRANSPORT" label="Carriage service" value="3"/>
+            <const name="TYPE_PRESTATION" label="Service order" value="4"/>
+            <const name="TYPE_COURSE" label="Class booking" value="5"/>
+        </property>
+        <property type="datetime" name="CommandDate" />
+        <property type="decimal" name="MerchandiseValue" default="0" />
+        <property type="int" name="AdditionnalGaranties" />
+        <property type="foreignkey" name="Incoterm" class="Incoterm" />
+        <property type="datetime" name="WishedStartDate" />
+        <property type="datetime" name="WishedEndDate" />
+        <property type="string" name="Comment" />
+        <property type="foreignkey" name="Expeditor" class="Actor" />
+        <property type="foreignkey" name="Destinator" class="Actor" />
+        <property type="foreignkey" name="ExpeditorSite" class="Site" />
+        <property type="foreignkey" name="DestinatorSite" class="Site" />
+        <property type="foreignkey" name="Customer" class="Actor" />
+        <property type="foreignkey" name="SupplierCustomer"
+            class="SupplierCustomer" />
+        <property type="foreignkey" name="Commercial" class="UserAccount" />
+        <property type="const" name="State" default="0" >
+            <const name="ACTIVEE" label="Activated" value="0" />
+            <const name="PREP_PARTIELLE" label="Partially prepared" value="1" />
+            <const name="PREP_COMPLETE" label="Completely prepared" value="2" />
+            <const name="LIV_PARTIELLE" label="Partially delivered" value="3" />
+            <const name="LIV_COMPLETE" label="Completely delivered" value="4" />
+            <const name="FACT_PARTIELLE" label="Partially charged" value="5" />
+            <const name="FACT_COMPLETE" label="Completely charged" value="6" />
+            <const name="REGLEMT_PARTIEL" label="Partially paid" value="7" />
+            <const name="REGLEMT_TOTAL" label="Completely paid" value="8" />
+            <const name="BLOCAGE_CDE" label="Locked" value="9" />
+        </property>
+        <property type="decimal" name="Handing" default="0" />
+        <property type="decimal" name="HandingByRangePercent" default="0" />
+        <property type="decimal" name="Port" default="0" />
+        <property type="decimal" name="Packing" default="0" />
+        <property type="decimal" name="Insurance" default="0" />
+        <property type="decimal" name="TotalPriceHT" default="0" />
+        <property type="decimal" name="TotalPriceTTC" default="0" />
+        <property type="int" name="Processed" default="0" />
+        <property type="decimal" name="Installment" default="0" />
+        <property type="decimal" name="CustomerRemExcep" default="0" />
+        <property type="time" name="Duration" />
+        <property type="bool" name="Cadenced" />
+        <property type="bool" name="Closed" />
+        <property type="bool" name="IsEstimate" />
+        <property type="foreignkey" name="CommandExpeditionDetail"
+            class="CommandExpeditionDetail" />
+        <property type="foreignkey" name="Currency" class="Currency" />
+        <property type="foreignkey" name="ActorBankDetail" class="ActorBankDetail" />
+        <property type="foreignkey" name="InstallmentBank" class="ActorBankDetail" />
+        <property type="foreignkey" name="Command" class="Command"
+            multiplicity="onetoone" ondelete="cascade"/>
+        <property type="foreignkey" name="ParentCommand" class="Command"
+            ondelete="cascade"/>
+        <property type="foreignkey" name="ProjectManager" class="ProjectManager" />
+    </entity>
+
+    <!-- entity CommandExpeditionDetail -->
+    <entity name="CommandExpeditionDetail" tablename="CommandExpeditionDetail">
+        <property type="string" name="LoadingPort" />
+        <property type="const" name="Shipment">
+            <const name="SHIPMENT_ROAD" label="By road" value="1" />
+            <const name="SHIPMENT_RAIL" label="Railway" value="2" />
+            <const name="SHIPMENT_AIR" label="Air" value="3" />
+            <const name="SHIPMENT_SEA" label="Sea" value="4" />
+        </property>
+        <property type="string" name="CustomerCommandNo" />
+        <property type="string" name="DestinatorStore" />
+        <property type="string" name="DestinatorRange" />
+        <property type="string" name="ReservationNo" />
+        <property type="string" name="Season" />
+        <property type="text" name="Comment" />
+        <property type="string" name="Deal" />
+        <property type="string" name="AirwayBill" />
+        <property type="string" name="PackingList" />
+        <property type="string" name="SupplierCode" />
+        <property type="decimal" name="Weight" default="0" />
+        <property type="int" name="NumberOfContainer" default="0" />
+    </entity>
+
+    <!-- entity CommandItem -->
+    <entity name="CommandItem" tablename="CommandItem" parent="1">
+        <property type="foreignkey" name="ActivatedChain" navigable="1"
+            class="ActivatedChain" />
+        <property type="foreignkey" name="Command" navigable="1"
+            class="Command" ondelete="cascade" />
+        <property type="float" name="Width" default="0" />
+        <property type="float" name="Height" default="0" />
+        <property type="float" name="Length" default="0" />
+        <property type="float" name="Weight" default="0" />
+        <property type="decimal" length="10,3" name="Quantity" default="0" />
+        <property type="int" name="Gerbability" default="0" />
+        <property type="const" name="MasterDimension" default="0">
+            <const name="MASTER_DIMENSION_LENGTH" label="Length" value="1" />
+            <const name="MASTER_DIMENSION_WIDTH" label="Width" value="2" />
+            <const name="MASTER_DIMENSION_HEIGHT" label="Height" value="3" />
+        </property>
+        <property type="string" name="Comment" />
+        <property type="string" length="10" name="Handing" default="0" />
+        <property type="foreignkey" name="TVA" class="TVA" />
+        <property type="decimal" name="PriceHT" default="0" />
+        <property type="datetime" name="WishedDate" />
+    </entity>
+
+    <!-- entity CommunicationModality -->
+    <entity name="CommunicationModality" tablename="CommunicationModality">
+        <property type="string" name="Phone" />
+        <property type="string" name="Fax" />
+        <property type="string" name="Email" />
+    </entity>
+
+    <!-- entity Component -->
+    <entity name="Component" tablename="Component">
+        <property type="int" name="Level" />
+        <property type="decimal" length="10,3" name="Quantity" />
+        <property type="decimal" length="10,2" name="PercentWasted" default="0"/>
+        <property type="foreignkey" name="Nomenclature" class="Nomenclature"
+            navigable="1" ondelete="cascade" />
+        <property type="foreignkey" name="Product" class="Product"
+            navigable="1"/>
+        <property type="foreignkey" name="Parent" class="Component"
+            navigable="1"/>
+        <property type="foreignkey" name="ComponentGroup" class="ComponentGroup"
+            navigable="1"/>
+    </entity>
+
+    <!-- entity ComponentGroup -->
+    <entity name="ComponentGroup" tablename="ComponentGroup">
+        <property type="string" name="Name" />
+        <property type="foreignkey" name="Nomenclature" class="Nomenclature"
+            navigable="1" ondelete="cascade" />
+    </entity>
+
+    <!-- entity ConcreteComponent -->
+    <entity name="ConcreteComponent" tablename="ConcreteComponent">
+        <property type="decimal" length="10,3" name="Quantity" default="1" />
+        <property type="foreignkey" name="Parent" class="ConcreteProduct" />
+        <property type="foreignkey" name="ConcreteProduct" class="ConcreteProduct"
+            navigable="1" />
+        <property type="manytomany" name="ActivatedChainTask" class="ActivatedChainTask"
+            field="FromConcreteComponent" linktable="ackConcreteComponent"
+            linkfield="ToActivatedChainTask"/>
+    </entity>
+
+    <!-- entity ConcreteProduct -->
+    <entity name="ConcreteProduct" tablename="ConcreteProduct"
+         parent="1" tostring="Immatriculation">
+        <property type="string" name="Immatriculation" />
+        <property type="string" name="SerialNumber" />
+        <property type="decimal" name="Weight" default="0" />
+        <property type="datetime" name="BirthDate" />
+        <property type="datetime" name="OnServiceDate" />
+        <property type="datetime" name="EndOfLifeDate" />
+        <property type="foreignkey" name="Owner" class="Actor" />
+        <property type="bool" name="OnCondition" />
+        <property type="datetime" name="WarrantyBeginDate" />
+        <property type="datetime" name="WarrantyEndDate" />
+        <property type="decimal" name="BuyingPriceHT" default="0" />
+        <property type="decimal" name="SellingPriceHT" default="0" />
+        <property type="const" name="State" default="0" >
+            <const name="EN_MARCHE" label="up" value="0" />
+            <const name="EN_REPARATION" label="in fixing" value="1" />
+            <const name="AU_REBUS" label="waste/discarded" value="2" />
+            <const name="EN_STOCK" label="in stock" value="3" />
+            <const name="EN_LOCATION" label="in rental" value="4" />
+        </property>
+        <property type="string" name="ConformityNumber" />
+        <property type="bool" name="FME" />
+        <property type="decimal" name="RealHourSinceNew" default="0" />
+        <property type="decimal" name="RealHourSinceOverall" default="0" />
+        <property type="decimal" name="RealHourSinceRepared" default="0" />
+        <property type="decimal" name="VirtualHourSinceNew" default="0" />
+        <property type="decimal" name="VirtualHourSinceOverall" default="0" />
+        <property type="bool" name="Active" default="1" />
+        <property type="foreignkey" name="Component" navigable="1"
+            class="Component" />
+        <property type="foreignkey" name="Product" navigable="1"
+            class="Product" ondelete="cascade" />
+        <property type="foreignkey" name="WeeklyPlanning" navigable="1"
+            class="WeeklyPlanning" />
+        <property type="manytomany" name="ConcreteProduct" class="ConcreteProduct"
+            field="Head" linktable="cptHead"
+            linkfield="ConcreteProduct"/>
+    </entity>
+
+    <!-- entity ConcreteProductPrestationCost -->
+    <entity name="ConcreteProductPrestationCost" extends="PrestationCost"
+        tablename="PrestationCost" features="grid,add,edit,del"
+        label="Price by SN/Lot associated to the service">
+        <property type="manytomany" name="ConcreteProduct" class="ConcreteProduct"
+            field="FromConcreteProductPrestationCost" linktable="cppcConcreteProduct"
+            linkfield="ToConcreteProduct" usedby="grid,addedit" label="SN/Lot"/>
+    </entity>
+
+    <!-- entity Conditioning -->
+    <entity name="Conditioning" extends="Container" tablename="Container" />
+
+    <!-- entity Contact -->
+    <entity name="Contact" tablename="Contact">
+        <property type="string" name="Name" />
+        <property type="string" name="Phone" />
+        <property type="string" name="Fax" />
+        <property type="string" name="Mobile" />
+        <property type="string" name="Email" />
+        <property type="foreignkey" name="CommunicationModality"
+            class="CommunicationModality" />
+        <property type="foreignkey" name="Role" class="ContactRole"/>
+        <property type="manytomany" name="Site" class="Site"
+            field="ToContact" linktable="sitContact" linkfield="FromSite"/>
+    </entity>
+
+    <!-- entity ContactRole -->
+    <entity name="ContactRole" tablename="ContactRole" 
+        features="grid,add,edit,del" label="Contact roles">
+        <property type="string" name="Name" label="Name" usedby="grid,addedit"/>
+    </entity>
+
+    <!-- entity Container -->
+    <entity name="Container" tablename="Container" tostring="Reference">
+        <property type="string" name="Reference" />
+        <property type="string" name="SupplierReference" />
+        <property type="foreignkey" name="CoverType" class="CoverType" />
+        <property type="const" name="CoverProperty" default="0" >
+            <const name="COVER_P_NONE" label="N/A" value="0" />
+            <const name="COVER_P_SIMPLE" label="SIMPLE COVER" value="1" />
+            <const name="COVER_P_DOUBLE" label="DOUBLE FOLD" value="2" />
+        </property>
+        <property type="const" name="CoverKind" default="0" >
+            <const name="COVER_K_NONE" label="N/A" value="0" />
+            <const name="COVER_K_WOOD" label="WOOD" value="1" />
+            <const name="COVER_K_PAPERBOARD" label="CARDBOARD" value="2" />
+            <const name="COVER_K_METAL" label="METALLIC" value="3" />
+        </property>
+        <property type="const" name="CoverGroup" default="0" >
+            <const name="COVER_G_NONE" label="N/A" value="0" />
+            <const name="COVER_G_I" label="Group I" value="1" />
+            <const name="COVER_G_II" label="GROUP II" value="2" />
+            <const name="COVER_G_III" label="GROUP III" value="3" />
+        </property>
+        <property type="float" name="MaxAuthorizedWeight" default="0" />
+        <property type="float" name="Weight" default="0" />
+        <property type="float" name="ExternalLength" default="0" />
+        <property type="float" name="ExternalWidth" default="0" />
+        <property type="float" name="ExternalHeight" default="0" />
+        <property type="float" name="InternalLength" default="0" />
+        <property type="float" name="InternalWidth" default="0" />
+        <property type="float" name="InternalHeight" default="0" />
+        <property type="float" name="Volume" default="0" />
+        <property type="float" name="RecipientWeight" default="0" />
+        <property type="int" name="AssemblyKind" default="0" />
+        <property type="string" name="ExternalContainer" />
+        <property type="string" name="InternalContainer" />
+        <property type="string" name="Protection" />
+    </entity>
+
+    <!-- entity CostRange -->
+    <entity name="CostRange" tablename="CostRange" features="add,edit,grid"
+        label="Add/Update service cost">
+       <property type="decimal" name="Cost" default="0" label="Price"
+           length="10,3" usedby="addedit,grid"/>
+       <property type="const" name="CostType" default="0" label="Cost type"
+           usedby="addedit,grid">
+           <const name="TYPE_FIXED" value="0"
+               label="Forfeiture by calendar month" />
+           <const name="TYPE_HOUR" value="1"
+               label="Amount by hour" />
+           <const name="TYPE_HOUR_WEIGHT_RANGE" value="2"
+               label="Amount by hour and by weight range" />
+           <const name="TYPE_HOUR_VOLUME_RANGE" value="3"
+               label="Amount by hour and by volume range" />
+           <const name="TYPE_AMOUNT" value="4"
+               label="Price by range" />
+           <const name="TYPE_AMOUNT_WEIGHT_RANGE" value="5"
+               label="Amount by range and by weight range" />
+           <const name="TYPE_AMOUNT_VOLUME_RANGE" value="6"
+               label="Amount by range and by volume range" />
+           <const name="TYPE_UNIT" value="7"
+               label="Price by unit" />
+           <const name="TYPE_FIXED_WEIGHT_RANGE" value="8"
+               label="Amount by weight range" />
+           <const name="TYPE_FIXED_VOLUME_RANGE" value="9"
+               label="Amount by volume range" />
+           <const name="TYPE_FIXED_BY_LOCATION" value="10"
+               label="Amount by location" />
+           <const name="TYPE_UNIT_FOR_QUANTITY" value="11"
+               label="Price by unit for a quantity" />
+           <const name="TYPE_FIXED_QUANTITY" value="12"
+               label="Amount by range" />
+           <const name="TYPE_UNIT_BY_RANGE_10" value="13"
+               label="Price by weight range by 10" />
+           <const name="TYPE_UNIT_BY_RANGE_100" value="14"
+               label="Price by weight range by 100" />
+       </property>
+       <property type="decimal" name="BeginRange" default="0"
+           usedby="grid,addedit" label="Lower bound"
+           shortlabel="Lower bound"/>
+       <property type="decimal" name="EndRange" default="0"
+           usedby="grid,addedit" label="Upper bound"
+           shortlabel="Upper bound"/>
+       <property type="foreignkey" name="DepartureZone" class="Zone"
+           usedby="grid,addedit" label="Departure zone"/>
+       <property type="foreignkey" name="ArrivalZone" class="Zone"
+           usedby="grid,addedit" label="Arrival zone"/>
+       <property type="foreignkey" name="Store" class="Store"
+           usedby="grid,addedit" label="Store"/>
+       <property type="foreignkey" name="ProductType" class="ProductType"
+           usedby="grid,addedit" label="Product type"/>
+       <property type="foreignkey" name="UnitType" class="SellUnitType"
+           usedby="grid,addedit" label="Unit type" />
+       <property type="foreignkey" name="Prestation" class="Prestation"
+           navigable="1" ondelete="cascade" />
+       <property type="foreignkey" name="PrestationCost"
+           class="PrestationCost" navigable="1" ondelete="cascade" />
+    </entity>
+
+    <!-- entity Country -->
+    <entity name="Country" tablename="Country">
+        <property type="string" name="Name" />
+        <property type="string" name="InterCountryCode" />
+    </entity>
+
+    <!-- entity CountryCity -->
+    <entity name="CountryCity" tablename="CountryCity">
+        <property type="foreignkey" name="Zip" class="Zip" />
+        <property type="foreignkey" name="Country" class="Country" />
+        <property type="foreignkey" name="CityName" class="CityName" />
+        <property type="foreignkey" name="Zone" class="Zone" navigable="1" />
+    </entity>
+
+    <!-- entity CourseCommand -->
+    <entity name="CourseCommand" extends="Command" tablename="Command">
+        <property type="datetime" name="WarrantyEndDate" />
+        <property type="bool" name="SoloFly" default="0" />
+        <property type="bool" name="IsWishedInstructor" default="0" />
+        <property type="foreignkey" name="Instructor" navigable="1"
+            class="AeroInstructor" />
+        <property type="foreignkey" name="AeroConcreteProduct" navigable="1"
+            class="AeroConcreteProduct" />
+        <property type="foreignkey" name="FlyType" class="FlyType" />
+    </entity>
+
+    <!-- entity CoverType -->
+    <entity name="CoverType" tablename="CoverType">
+        <property type="string" name="Name" i18n="1" />
+        <property type="foreignkey" name="UnitType" class="SellUnitType" />
+    </entity>
+
+    <!-- entity CronTask -->
+    <entity name="CronTask" tablename="CronTask"
+        features="grid,add,edit,del" label="Add/Update scheduled task">
+        <property type="string" length="255" name="Name"
+            usedby="grid,addedit" label="Task name"
+            section="Scheduled task definition" required="1"/>
+        <property type="string" length="255" name="ScriptName"
+            usedby="grid,addedit" label="Script"
+            section="Scheduled task definition"/>
+        <property type="int" length="2" name="DayOfMonth" default="0"
+            usedby="addedit" label="day of month"
+            section="Scheduled task periodicity"/>
+        <property type="int" length="2" name="DayOfWeek" default="-1"
+            usedby="addedit" label="day of week"
+            section="Scheduled task periodicity"/>
+        <property type="int" length="2" name="HourOfDay" default="0"
+            usedby="addedit" label="hour of day"
+            section="Scheduled task periodicity"/>
+        <property type="bool" name="Active" default="1"
+            usedby="searchform,grid,addedit" label="Active" 
+            section="Scheduled task definition"/>
+    </entity>
+
+    <!-- entity Currency -->
+    <entity name="Currency" tablename="Currency">
+        <property type="string" length="50" name="Name" i18n="1" />
+        <property type="string" length="10" name="ShortName" />
+        <property type="string" length="10" name="Symbol" />
+    </entity>
+
+    <!-- entity CurrencyConverter -->
+    <entity name="CurrencyConverter" tablename="CurrencyConverter" 
+        features="searchform,grid,add,edit,del" label="Currency converter">
+        <property type="foreignkey" name="FromCurrency" class="Currency" 
+            usedby="grid,addedit,searchform" label="From currency" required="1" />
+        <property type="foreignkey" name="ToCurrency" class="Currency" 
+            usedby="grid,addedit,searchform" label="To currency" required="1" />
+        <property type="date" name="BeginDate" 
+            usedby="searchform,grid,addedit" label="Validity begin" required="1" />
+        <property type="date" name="EndDate" 
+            usedby="grid,addedit" label="Validity end" required="1" />
+        <property type="decimal" length="10,6" name="Rate" default="1" 
+            usedby="grid,addedit" label="Rate" required="1" />
+    </entity>
+    
+    <!-- entity Customer -->
+    <entity name="Customer" extends="Actor" tablename="Actor">
+    </entity>
+
+    <!-- entity CustomerAttractivity -->
+    <entity name="CustomerAttractivity" tablename="CustomerAttractivity">
+        <property type="string" name="Name" />
+        <property type="int" name="Level" default="1" />
+    </entity>
+
+    <!-- entity CustomerFrequency -->
+    <entity name="CustomerFrequency" tablename="CustomerFrequency">
+        <property type="string" name="Name" />
+        <property type="int" name="Frequency" />
+        <property type="const" name="Type" default="1">
+            <const name="TYPE_FREQUENCY_LINEAR" value="1" label="Linear"/>
+            <const name="TYPE_FREQUENCY_SEASONAL" value="2" label="seasonal"/>
+            <const name="TYPE_FREQUENCY_MANUAL" value="3" label="Manual"/>
+        </property>
+        <property type="date" name="BeginDate"/>
+        <property type="date" name="EndDate"/>
+        <property type="foreignkey" name="Attractivity"
+            class="CustomerAttractivity" navigable="1"/>
+        <property type="foreignkey" name="Potential"
+            class="CustomerPotential" navigable="1" />
+    </entity>
+
+    <!-- entity CustomerPotential -->
+    <entity name="CustomerPotential" tablename="CustomerPotential"
+        features="grid,add,edit,del" label="potential" >
+        <property type="string" name="Name" usedby="grid,addedit" label="Name"
+            required="1" />
+        <property type="const" name="UnitType" default="1"
+            usedby="grid,addedit" label="Measure unit" shortlabel="Unit" >
+            <const name="TYPE_POTENTIAL_CA" value="1" label="Turnover"/>
+            <const name="TYPE_POTENTIAL_VA" value="2" label="Value added"/>
+            <const name="TYPE_POTENTIAL_MARGE" value="3" label="Margin"/>
+            <const name="TYPE_POTENTIAL_TONNE" value="4" label="Ton"/>
+        </property>
+        <property type="float" name="MinValue" usedby="grid,addedit"
+            label="Minimum value" shortlabel="Minimum" required="1" />
+        <property type="float" name="MaxValue" usedby="grid,addedit"
+            label="Maximum value" shortlabel="Maximum" required="1" />
+    </entity>
+
+    <!-- entity CustomerProperties -->
+    <entity name="CustomerProperties" tablename="CustomerProperties">
+        <property type="string" name="NAFCode" />
+        <property type="const" name="PriorityLevel" default="1">
+            <const name="PRIORITY_HIGH" label="Major emergency" value="1"/>
+            <const name="PRIORITY_CURRENT" label="Common emergency" value="2"/>
+            <const name="PRIORITY_AVERAGE" label="Medium emergency" value="3"/>
+            <const name="PRIORITY_LOW" label="Low emergency" value="4"/>
+            <const name="PRIORITY_EXTRALOW" label="Distant emergency" value="5"/>
+        </property>
+        <property type="foreignkey" name="Potential"
+            class="CustomerPotential" navigable="1" />
+        <property type="foreignkey" name="Situation"
+            class="CustomerSituation" navigable="1" />
+        <property type="foreignkey" name="PersonalFrequency"
+            class="CustomerFrequency" />
+    </entity>
+
+    <!-- entity CustomerSituation -->
+    <entity name="CustomerSituation" tablename="CustomerSituation"
+        features="grid,add,edit,del" label="Situation" >
+        <property type="string" name="Name" usedby="addedit,grid" label="Name"
+            required="1" />
+        <property type="const" name="Type" default="1" usedby="addedit,grid"
+            label="Type" >
+            <const name="TYPE_SITUATION_NORMAL" value="1" label="Normal"/>
+            <const name="TYPE_SITUATION_ALERT" value="2" label="Alert"/>
+            <const name="TYPE_SITUATION_PROSPECT" value="3" label="Prospect"/>
+            <const name="TYPE_SITUATION_INACTIVE" value="4" label="Inactive"/>
+            <!-- XXX constantes à confirmer par dalhia -->
+        </property>
+        <property type="int" name="InactivityDelay" usedby="addedit,grid"
+            label="Time (in month) when ..."
+            shortlabel="Time (in month)" />
+    </entity>
+
+    <!-- entity DailyInstant -->
+    <entity name="DailyInstant" extends="AbstractInstant" tablename="AbstractInstant">
+        <property type="time" name="Time" />
+    </entity>
+
+    <!-- entity DailyPlanning -->
+    <entity name="DailyPlanning" tablename="DailyPlanning">
+        <property type="time" name="Start" />
+        <property type="time" name="Pause" />
+        <property type="time" name="Restart" />
+        <property type="time" name="End" />
+    </entity>
+
+    <!-- entity DangerousProductGroup -->
+    <entity name="DangerousProductGroup" tablename="DangerousProductGroup">
+        <property type="string" name="Code" />
+        <property type="string" name="Name" i18n="1" />
+        <!-- <property type="const" name="Name" >
+            <const name="GROUP_A" value="1" label="Suffocating" />
+            <const name="GROUP_O" value="2" label="Combustive" />
+            <const name="GROUP_F" value="3" label="Inflammable" />
+            <const name="GROUP_T" value="4" label="Poison" />
+            <const name="GROUP_TF" value="5" label="Poison, inflammable" />
+            <const name="GROUP_TC" value="6" label="Poison, corrosive" />
+            <const name="GROUP_TO" value="7" label="Poison, combustive" />
+            <const name="GROUP_TFC" value="8" label="Poison, inflammable, corrosive" />
+            <const name="GROUP_TOC" value="9" label="Poison, combustive, corrosive" />
+        </property>-->
+    </entity>
+
+    <!-- entity DangerousProductLetter -->
+    <entity name="DangerousProductLetter" tablename="DangerousProductLetter">
+        <property type="string" name="Code" />
+        <property type="string" name="Name" />
+    </entity>
+
+    <!-- entity DangerousProductType -->
+    <entity name="DangerousProductType" tablename="DangerousProductType">
+        <property type="const" name="Class" >
+            <const name="CLASS_NONE" value="0" label="N/A" />
+        </property>
+        <property type="foreignkey" name="Letter"
+            class="DangerousProductLetter" />
+        <property type="foreignkey" name="Group" class="DangerousProductGroup" />
+        <property type="const" name="Number" >
+            <const name="NUMBER_41" value="1"
+            label="CLASS 4.1: INFLAMMABLE SOLIDS"/>
+            <const name="NUMBER_42" value="2"
+            label="CLASS 4.2: MATERIALS PRONE TO SPONTANEOUS INFLAMMATION"/>
+            <const name="NUMBER_43" value="3"
+            label="CLASS 4.3: MATERIALS THAT EMIT INFLAMMABLE GAS WHEN IN CONTACT WITH WATER"/>
+            <const name="NUMBER_51" value="4"
+            label="CLASS 5.1: COMBUSTIBLE MATERIALS"/>
+            <const name="NUMBER_52" value="5"
+            label="CLASS 5.2: ORGANIC PEROXYDES"/>
+            <const name="NUMBER_61" value="6"
+            label="CLASS 6.1: POISON MATERIALS"/>
+            <const name="NUMBER_62" value="7"
+            label="CLASS 6.2: INFECTIOUS MATERIALS"/>
+        </property>
+    </entity>
+
+    <!-- entity DeliveryOrder -->
+    <entity name="DeliveryOrder" extends="AbstractDocument"
+        tablename="AbstractDocument">
+        <property type="foreignkey" name="Invoice" navigable="1" class="Invoice" />
+        <property type="manytomany" name="ExecutedMovement"
+            class="ExecutedMovement" field="FromDeliveryOrder"
+            linktable="adcExecutedMovement" linkfield="ToExecutedMovement"/>
+    </entity>
+
+    <!-- entity Department -->
+    <entity name="Department" tablename="Department">
+        <property type="string" name="Name" />
+        <property type="string" name="Number" />
+        <property type="foreignkey" name="State" class="State" />
+        <property type="foreignkey" name="Country" class="Country" />
+    </entity>
+
+    <!-- entity DocumentModel -->
+    <entity name="DocumentModel" tablename="DocumentModel">
+        <property type="string" name="Name" />
+        <property type="text" name="Footer" />
+        <property type="const" name="LogoType" >
+            <const name="NO_LOGO" label="No logo" value="0" />
+            <const name="EXPEDITOR" label="Order shipper" value="1" />
+            <const name="DESTINATOR" label="Order addressee" value="2" />
+            <const name="ONE_ACTOR" label="Fixed actor" value="3" />
+        </property>
+        <property type="string" name="DocType" />
+        <property type="bool" name="Default" default="0" />
+        <property type="bool" name="DisplayDuplicata" default="1" />
+        <property type="foreignkey" name="Actor" class="Actor" />
+        <property type="int" name="Number" default="1" />
+        <property type="bool" name="DisplayTotalWeight" default="1" />
+        <property type="bool" name="DisplayProductDetail" default="0" />
+    </entity>
+
+    <!-- entity DocumentModelProperty -->
+    <entity name="DocumentModelProperty" tablename="DocumentModelProperty">
+        <property type="const" name="PropertyType" default="0">
+           <const name="CELL_NO_DOC" label="Document number" value="1" />
+           <const name="CELL_NO_COMMAND" label="Order number" value="2" />
+           <const name="CELL_NO_BL" label="Delivery order number" value="3" />
+           <const name="CELL_PACKING_LIST" label="Packing list" value="4" />
+           <const name="CELL_AIRWAY_BILL" label="Air waybill" value="5" />
+           <const name="CELL_CUSTOMER_CODE" label="Customer code" value="6" />
+           <const name="CELL_COMMERCIAL" label="Salesman" value="7" />
+           <const name="CELL_CUSTOMER_TVA" label="VAT number" value="8" />
+           <const name="CELL_REGLEMENT" label="Payment" value="9" />
+           <const name="CELL_PORT_CONDITION" label="Incoterm" value="10" />
+           <const name="CELL_STORE" label="store" value="11" />
+           <const name="CELL_FAMILY" label="Season category" value="12" />
+           <const name="CELL_CUSTOMER_COMMAND_NO" label="Customer order number" value="13" />
+           <const name="CELL_DEAL" label="Deal number" value="14" />
+           <const name="CELL_SUPPLIER_CODE" label="Supplier code" value="15" />
+           <const name="CELL_RESERVATION_NO" label="Booking number" value="16" />
+           <const name="CELL_LOADING_PORT" label="Port of embarkation" value="17" />
+           <const name="CELL_SHIPMENT" label="Freight mode" value="18" />
+           <const name="CELL_VOLUME" label="Parcel volumetry" value="19" />
+           <const name="CELL_TOTAL_PIECE" label="Total number of parts" value="20" />
+        </property>
+        <property type="foreignkey" name="Property" class="Property" />
+        <property type="int" name="Order" default="0" />
+        <property type="foreignkey" name="DocumentModel" class="DocumentModel" navigable="1"/>
+    </entity>
+
+    <!-- entity Entity -->
+    <entity name="Entity" tablename="Entity" features="searchform,grid" label="Entities">
+        <property type="string" name="Name" label="Name" usedby="searchform,grid"/>
+        <property type="bool" name="Public" label="Public" usedby="searchform,grid"/>
+    </entity>
+
+    <!-- entity ExecutedMovement -->
+    <entity name="ExecutedMovement" tablename="ExecutedMovement">
+        <property type="datetime" name="StartDate" />
+        <property type="datetime" name="EndDate" />
+        <property type="foreignkey" name="Type" class="MovementType" />
+        <property type="const" name="State" default="0">
+            <const name="EN_COURS" label="In progress" value="0" />
+            <const name="EXECUTE_TOTALEMENT" label="Finished" value="1" />
+            <const name="EXECUTE_PARTIELLEMENT" label="Partial" value="2" />
+        </property>
+        <property type="string" name="Comment" />
+        <property type="foreignkey" name="RealProduct" class="Product" />
+        <property type="decimal" length="10,3" name="RealQuantity" default="0" />
+        <property type="foreignkey" name="ActivatedMovement" class="ActivatedMovement" />
+    </entity>
+
+    <!-- entity Flow -->
+    <entity name="Flow" tablename="Flow" features="grid,searchform">
+        <property type="string" name="Name" usedby="grid,searchform" label="name"/>
+        <property type="string" length="10" name="Handing" default="0" />
+        <property type="string" name="Number"  usedby="grid,searchform" label="number"/>
+        <property type="int" name="PieceNo" />
+        <property type="foreignkey" name="FlowType" class="FlowType" />
+        <property type="decimal" length="10,2" name="TotalTTC" default="0" />
+        <property type="decimal" length="10,2" name="Paid" default="0" />
+        <property type="foreignkey" name="Currency" class="Currency" />
+        <property type="datetime" name="PaymentDate" usedby="grid,searchform" label="Payment date"/>
+        <property type="datetime" name="EditionDate" />
+        <property type="foreignkey" name="ActorBankDetail" class="ActorBankDetail" />
+    </entity>
+
+    <!-- entity FlowCategory -->
+    <entity name="FlowCategory" tablename="FlowCategory"
+        features="grid,searchform,add,edit,del"
+        label="Categories of expenses or receipts">
+        <property type="string" name="Name" usedby="grid,addedit,searchform"
+            label="Name" required="1" unique="1"/>
+        <property type="foreignkey" class="FlowCategory" name="Parent"
+            navigable="1" usedby="grid,addedit,searchform" label="Parent" />
+        <property type="int" name="DisplayOrder" usedby="grid,addedit"
+            label="Display order"/>
+    </entity>
+
+    <!-- entity FlowItem -->
+    <entity name="FlowItem" tablename="FlowItem">
+        <property type="decimal" length="10,2" name="TotalHT" default="0" />
+        <property type="foreignkey" name="TVA" class="TVA" />
+        <property type="string" length="10" name="Handing" default="0" />
+        <property type="foreignkey" name="Flow" class="Flow" navigable="1"
+             ondelete="cascade"/>
+        <property type="foreignkey" name="Type"
+            navigable="1" class="FlowTypeItem" />
+    </entity>
+
+    <!-- entity FlowType -->
+    <entity name="FlowType" tablename="FlowType"
+        features="add,edit,del,grid,searchform"
+        label="Expenses and receipts types">
+        <property type="string" name="Name" usedby="addedit,grid,searchform"
+            required="1" label="Name" />
+        <property type="foreignkey" name="ActorBankDetail"
+            class="ActorBankDetail" usedby="addedit" label="Bank" />
+        <property type="const" name="Type" default="0"
+            usedby="addedit,grid,searchform" required="1"
+            label="Expense or receipt">
+            <const name="CHARGE" label="Expenses" value="0" />
+            <const name="RECETTE" label="Receipts" value="1" />
+        </property>
+        <property type="foreignkey" name="FlowCategory" class="FlowCategory"
+            usedby="addedit,searchform" label="Category" navigable="1"/>
+        <property type="foreignkey" name="AccountingType" class="AccountingType"
+            usedby="addedit,grid,searchform" label="Accounting type" />
+        <property type="foreignkey" name="ThirdParty" class="Actor"
+            usedby="addedit,grid,searchform" label="Third party" />
+        <property type="const" name="InvoiceType" default="0">
+            <const name="INVOICE_SUPPLIER_PRODUCT" label="Supplier invoice for product order" value="1" />
+            <const name="INVOICE_SUPPLIER_TRANSPORT" label="Supplier invoice for carriage order" value="2" />
+            <const name="INVOICE_SUPPLIER_COURSE" label="Supplier invoice for class order" value="3" />
+            <const name="INVOICE_SUPPLIER_PRESTATION" label="Supplier invoice for service" value="4" />
+            <const name="INVOICE_CUSTOMER_PRODUCT" label="Customer invoice for product order" value="5" />
+            <const name="INVOICE_CUSTOMER_TRANSPORT" label="Customer invoice for carriage order" value="6" />
+            <const name="INVOICE_CUSTOMER_COURSE" label="Customer invoice for class order" value="7" />
+            <const name="INVOICE_CUSTOMER_PRESTATION" label="Customer invoice for service" value="8" />
+        </property>
+    </entity>
+
+    <!-- entity FlowTypeItem -->
+    <entity name="FlowTypeItem" tablename="FlowTypeItem"
+        features="add,edit" label="Expenses and receipts lines">
+        <property type="string" name="Name" usedby="addedit" label="Name"
+            required="1"/>
+        <property type="foreignkey" name="TVA" class="TVA" usedby="addedit"
+            label="VAT"/>
+        <property type="foreignkey" name="FlowType" ondelete="cascade"
+          navigable="1" class="FlowType" />
+        <property type="const" name="BreakdownPart" default="0">
+            <const name="BREAKDOWN_INSURANCE" label="insurance charges" value="1" />
+            <const name="BREAKDOWN_PACKING" label="packing charges" value="2" />
+            <const name="BREAKDOWN_PORT" label="forwarding charges" value="3" />
+            <const name="BREAKDOWN_INVOICE_ITEM" label="invoices items" value="4" />
+        </property>
+    </entity>
+
+    <!-- entity FlyType -->
+    <entity name="FlyType" tablename="FlyType" features="grid,add,edit,del"
+        label="Add/Update airplane type">
+        <property type="string" name="Name"  usedby="grid,addedit" label="Name"
+        required="1" unique="1" />
+    </entity>
+    
+    <!-- entity FlyTypePrestationCost -->
+    <entity name="FlyTypePrestationCost" extends="PrestationCost"
+        tablename="PrestationCost" features="grid,add,edit,del"
+        label="Prices by airplane type associated to the service">
+        <property type="manytomany" name="FlyType" class="FlyType"
+            field="FromFlyTypePrestationCost" linktable="fltpcFlyType"
+            linkfield="ToFlyType" usedby="grid,addedit" label="Airplane type"/>
+    </entity>
+    
+    <!-- entity ForecastFlow -->
+    <entity name="ForecastFlow" tablename="ForecastFlow"
+        features="searchform,grid,add,edit,del" label="Forecast flow">
+        <property type="string" name="Description" required="1"
+            usedby="searchform,grid,addedit" label="Description" />
+        <property type="decimal" length="10,2" name="Amount" usedby="grid,addedit"
+            label="Amount" required="1"/>
+        <property type="date" name="BeginDate" usedby="searchform,grid,addedit"
+            label="Begin date" required="1"/>
+        <property type="date" name="EndDate" usedby="grid,addedit"
+            label="End date" required="1"/>
+        <property type="bool" name="Active" default="1" usedby="searchform,grid,addedit"
+            label="Active" />
+        <property type="foreignkey" name="Currency" class="Currency"
+            usedby="grid,addedit,searchform" label="Currency" required="1"/>
+        <property type="manytomany" name="FlowTypeItem" class="FlowTypeItem"
+            field="FromForecastFlow" linktable="ForecastFlowFlowTypeItem"
+            linkfield="ToFlowTypeItem" usedby="addedit"
+            label="Expenses and receipts models lines" />
+    </entity>
+
+    <!-- entity FormModel -->
+    <entity name="FormModel" tablename="FormModel" >
+        <property type="string" name="Name" />
+        <property type="bool" name="Activ" default="1" />
+        <property type="const" name="ActionType" default="0" >
+            <const name="ACTION_TYPE_PHONING" label="phoning" value="1" />
+            <const name="ACTION_TYPE_MEETING" label="visit" value="2" />
+            <const name="ACTION_TYPE_PHONING_CAMPAIGN" label="phoning campaign" value="3" />
+            <const name="ACTION_TYPE_MAILING_CAMPAIGN" label="mailing campaign" value="4" />
+            <const name="ACTION_TYPE_REPARING" label="repairing" value="5" />
+            <const name="ACTION_TYPE_UPDATE_POTENTIAL_KO"
+                label="potential update refused" value="6" />
+            <const name="ACTION_TYPE_UPDATE_POTENTIAL_OK"
+                label="potential update accepted" value="7" />
+            <const name="ACTION_TYPE_CUSTOMER_ALERT"
+                label="set customer in alert state" value="8" />
+        </property>
+
+    </entity>
+
+    <!-- entity ForwardingForm -->
+    <entity name="ForwardingForm" extends="AbstractDocument"
+        tablename="AbstractDocument">
+        <property type="foreignkey" name="DestinatorSite" class="Site" default="0" />
+        <property type="string" name="CommandNo" default="" />
+        <property type="foreignkey" name="Transporter" class="Actor" />
+        <property type="foreignkey" name="ConveyorArrivalSite" class="Site" />
+        <property type="foreignkey" name="ConveyorDepartureSite" class="Site" />
+    </entity>
+
+    <!-- entity ForwardingFormPacking -->
+    <entity name="ForwardingFormPacking" tablename="ForwardingFormPacking">
+        <property type="foreignkey" name="ForwardingForm"
+            class="ForwardingForm" navigable="1" ondelete="cascade" />
+        <property type="foreignkey" name="CoverType" class="CoverType" default="0"/>
+        <property type="foreignkey" name="Product" class="Product" default="0"/>
+        <property type="int" name="Quantity" default="0" />
+    </entity>
+
+    <!-- entity Grouping -->
+    <entity name="Grouping" extends="Container" tablename="Container" />
+
+    <!-- entity HandingByRange -->
+    <entity name="HandingByRange" tablename="HandingByRange">
+        <property type="decimal" name="Percent" default="0"/>
+        <property type="decimal" name="Minimum" default="0"/>
+        <property type="decimal" name="Maximum" default="0"/>
+        <property type="foreignkey" name="Currency" class="Currency"
+            ondelete="cascade"/>
+        <property type="foreignkey" name="Category" class="Category"
+            navigable="1" ondelete="cascade"/>
+    </entity>
+
+    <!-- entity HelpPage -->
+    <entity name="HelpPage" tablename="HelpPage" features="grid,add,edit,del"
+        label="Help messages" >
+        <property type="string" name="FileName" label="Corresponding page"
+            usedby="grid,addedit" required="1"/>
+        <property type="string" name="Name" label="Name" usedby="grid,addedit"
+            required="1" i18n="1" />
+        <property type="html" name="Body" label="Body" usedby="addedit" i18n="1"/>
+    </entity>
+
+    <!-- entity I18nString -->
+    <entity name="I18nString" tablename="I18nString">
+        <!-- en_GB -->
+        <property type="text" name="StringValue_en_GB"/>
+        <!-- fr_FR -->
+        <property type="text" name="StringValue_fr_FR"/>
+        <!-- de_DE -->
+        <property type="text" name="StringValue_de_DE"/>
+        <!-- nl_NL -->
+        <property type="text" name="StringValue_nl_NL"/>
+        <!-- tr_TR -->
+        <property type="text" name="StringValue_tr_TR"/>
+        <!-- pl_PL -->
+        <property type="text" name="StringValue_pl_PL"/>
+	</entity>
+
+    <!-- entity Incoterm -->
+    <entity name="Incoterm" tablename="Incoterm">
+        <property type="string" length="5" name="Code" />
+        <property type="string" name="Label" />
+        <property type="text" name="Description" i18n="1" />
+        <property type="const" name="TransportType" default="0">
+            <const name="INCOTERM_ALL" label="All" value="0" />
+            <const name="INCOTERM_MARITIME" label="SEA" value="1" />
+        </property>
+    </entity>
+
+    <!-- entity Instant -->
+    <entity name="Instant" extends="AbstractInstant" tablename="AbstractInstant">
+        <property type="datetime" name="Date" />
+    </entity>
+
+    <!-- entity Inventory -->
+    <entity name="Inventory" tablename="Inventory">
+        <property type="datetime" name="BeginDate" />
+        <property type="datetime" name="EndDate" />
+        <property type="foreignkey" name="UserAccount" class="UserAccount" />
+        <property type="string" name="UserName" />
+        <property type="foreignkey" name="StorageSite" class="StorageSite" />
+        <property type="string" name="StorageSiteName" />
+        <property type="foreignkey" name="Store" class="Store" />
+        <property type="string" name="StoreName" />
+    </entity>
+
+    <!-- entity InventoryDetail -->
+    <entity name="InventoryDetail" tablename="InventoryDetail">
+        <property type="foreignkey" name="Product" class="Product" />
+        <property type="string" name="ProductReference" />
+        <property type="string" name="Currency" />
+        <property type="decimal" name="BuyingPriceHT" />
+        <property type="foreignkey" name="Location" class="Location" />
+        <property type="string" name="LocationName" />
+        <property type="decimal" length="10,3" name="Quantity" />
+        <property type="foreignkey" name="Inventory" navigable="1"
+            class="Inventory" ondelete="cascade" />
+    </entity>
+
+    <!-- entity Invoice -->
+    <entity name="Invoice" extends="AbstractDocument"
+        tablename="AbstractDocument">
+        <property type="decimal" name="Port" default="0" />
+        <property type="decimal" name="Packing" default="0" />
+        <property type="decimal" name="Insurance" default="0" />
+        <property type="decimal" name="GlobalHanding" default="0" />
+        <property type="decimal" name="TotalPriceHT" default="0" />
+        <property type="decimal" name="TotalPriceTTC" default="0" />
+        <property type="string" name="PaymentCondition" default="0" />
+        <property type="decimal" name="ToPay" default="0" />
+        <property type="datetime" name="PaymentDate" />
+        <property type="text" name="Comment" />
+        <property type="decimal" name="TvaSurtaxRate" default="0" />
+        <property type="decimal" name="FodecTaxRate" default="0" />
+        <property type="decimal" name="TaxStamp" default="0" />
+    </entity>
+
+    <!-- entity InvoiceItem -->
+    <entity name="InvoiceItem" tablename="InvoiceItem">
+        <property type="string" name="Name" />
+        <property type="string" name="Reference" />
+        <property type="string" name="AssociatedReference" />
+        <property type="string" name="Handing" />
+        <property type="decimal" length="10,3" name="Quantity" default="0" />
+        <property type="foreignkey" name="TVA" class="TVA" />
+        <property type="decimal" name="UnitPriceHT" default="0" />
+        <property type="foreignkey" name="Invoice" navigable="1"
+            class="Invoice"  ondelete="cascade" />
+        <property type="foreignkey" name="ActivatedMovement"
+            class="ActivatedMovement" />
+        <property type="foreignkey" name="Prestation" class="Prestation" />
+        <property type="int" name="PrestationPeriodicity" default="0"/>
+        <property type="decimal" length="10,3" name="PrestationCost" default="0" />
+        <property type="decimal" name="QuantityForPrestationCost" default="0"/>
+        <property type="int" name="CostType" default="-1"/>
+        <property type="manytomany" name="ActivatedChainOperationFactured"
+            class="ActivatedChainOperation" field="FromInvoiceItem"
+            linkfield="ToACO" linktable="FromInvoiceItemToACO" />
+        <property type="foreignkey" name="ProductType" class="ProductType" />
+    </entity>
+
+    <!-- entity InvoicesList : objet non sauvé -->
+    <entity name="InvoicesList" extends="AbstractDocument"
+    tablename="AbstractDocument">
+        <property type="manytomany" name="Invoice" class="Invoice"
+            field="FromInvoicesList" linktable="invoicesListToInvoice"
+            linkfield="ToInvoice"/>
+        <property type="datetime" name="BeginDate" />
+        <property type="datetime" name="EndDate" />
+    </entity>
+
+    <!-- entity InvoicePayment -->
+    <entity name="InvoicePayment" tablename="InvoicePayment">
+        <property type="decimal" name="PriceTTC" default="0" />
+        <property type="foreignkey" name="Invoice" navigable="1"
+            class="Invoice" ondelete="cascade" />
+        <property type="foreignkey" name="Payment" navigable="1"
+            class="Payment" ondelete="cascade" />
+        <property type="foreignkey" name="ToHave" navigable="1"
+            class="ToHave" ondelete="cascade" />
+    </entity>
+
+    <!-- entity Job -->
+    <entity name="Job" tablename="Job">
+        <property type="string" name="Name" i18n="1" />
+        <property type="manytomany" name="Actor" class="Actor"
+            field="ToJob" linktable="actJob" linkfield="FromActor"/>
+    </entity>
+
+    <!-- entity LEMConcreteProduct -->
+    <entity name="LEMConcreteProduct" tablename="LEMConcreteProduct">
+        <property type="foreignkey" name="LocationExecutedMovement"
+            class="LocationExecutedMovement" navigable="1" ondelete="cascade" />
+        <property type="foreignkey" name="ConcreteProduct" navigable="1"
+            class="ConcreteProduct" ondelete="cascade" />
+        <property type="decimal" length="10,3" name="Quantity" default="0" />
+        <!-- Types d'annulation pour un LEMConcreteProduct:
+            - Si mouvement annule, Cancelled = -1,
+            - Si mouvement annulateur, Cancelled = 1,
+            - Sinon 0  -->
+        <property type="const" name="Cancelled" default="0">
+            <const name="LEMCP_NORMAL" label="normal" value="0"/>
+            <const name="LEMCP_CANCELLER" label="That caused cancellation" value="1"/>
+            <const name="LEMCP_CANCELLED" label="Cancelled" value="-1"/>
+        </property>
+        <property type="foreignkey" name="CancelledLEMConcreteProduct"
+            class="LEMConcreteProduct" />
+    </entity>
+
+    <!-- entity Licence -->
+    <entity name="Licence" tablename="Licence">
+        <property type="string" name="Name"/>
+        <property type="string" name="Number" />
+        <property type="datetime" name="BeginDate" />
+        <property type="datetime" name="EndDate" />
+        <property type="int" length="3" name="Duration" default="0" />
+        <property type="int" length="1" name="DurationType" default="0" />
+        <property type="int" name="AlertDateType" default="0" />
+        <property type="int" length="3" name="DelayForAlert" default="0" />
+        <property type="const" length="3" name="ToBeChecked" default="0">
+            <const name="TOBECHECKED_NEVER" label="No control" value="0"/>
+            <const name="TOBECHECKED_ALERT" label="Alert mailing control" value="1"/>
+            <const name="TOBECHECKED_ALERT_COMMAND"
+                label="Alert sending control and order" value="2"/>
+        </property>
+        <property type="foreignkey" name="LicenceType" class="LicenceType" />
+    </entity>
+
+    <!-- entity LicenceType -->
+    <entity name="LicenceType" tablename="LicenceType" features="grid,add,edit,del"
+        label="Add/Update licence type">
+        <property type="string" name="Name" usedby="grid,addedit" label="Name"
+            required="1" unique="1"/>
+    </entity>
+
+    <!-- entity LinkQuestionAnswerModel -->
+    <entity name="LinkQuestionAnswerModel" tablename="LinkQuestionAnswerModel">
+        <property type="int" name="AnswerOrder" />
+        <property type="foreignkey" name="AnswerModel" class="AnswerModel" />
+        <property type="foreignkey" name="Question" class="Question" navigable="1" />
+    </entity>
+
+    <!-- entity LinkFormModelParagraphModel -->
+    <entity name="LinkFormModelParagraphModel" tablename="LinkFormModelParagraphModel">
+        <property type="int" name="ParagraphOrder" />
+        <property type="foreignkey" name="ParagraphModel" class="ParagraphModel" />
+        <property type="foreignkey" name="FormModel" class="FormModel" navigable="1" />
+    </entity>
+
+    <!-- entity LinkParagraphModelQuestion -->
+    <entity name="LinkParagraphModelQuestion" tablename="LinkParagraphModelQuestion" >
+        <property type="int" name="QuestionOrder" />
+        <property type="foreignkey" name="ParagraphModel" class="ParagraphModel" navigable="1" />
+        <property type="foreignkey" name="Question" class="Question" />
+    </entity>
+
+    <!-- entity Location -->
+    <entity name="Location" tablename="Location">
+        <property type="string" name="Name" />
+        <property type="bool" name="Customs" />
+        <property type="foreignkey" name="Store" navigable="1"
+            class="Store" ondelete="cascade" />
+        <property type="bool" name="Activated" default="1" />
+        <property type="manytomany" name="AllowedProduct" class="Product"
+            field="FromLocation" linktable="locProduct" linkfield="ToProduct"/>
+    </entity>
+
+    <!-- entity LocationConcreteProduct -->
+    <entity name="LocationConcreteProduct" tablename="LocationConcreteProduct">
+        <property type="foreignkey" name="ConcreteProduct"
+            class="ConcreteProduct" navigable="1" ondelete="cascade" />
+        <property type="foreignkey" name="Location" navigable="1"
+            class="Location" ondelete="cascade" />
+        <property type="decimal" length="10,3" name="Quantity" default="0" />
+    </entity>
+
+    <!-- entity LocationExecutedMovement -->
+    <entity name="LocationExecutedMovement"
+        tablename="LocationExecutedMovement">
+        <property type="decimal" length="10,3" name="Quantity" default="0" />
+        <property type="bool" name="PrestationFactured" default="0" />
+        <property type="bool" name="TransportPrestationFactured" default="0" />
+        <property type="foreignkey" name="InvoicePrestation" class="Invoice" 
+            navigable="1" default="0" />
+        <property type="datetime" name="Date" />
+        <property type="foreignkey" name="ExecutedMovement" navigable="1"
+            class="ExecutedMovement" ondelete="cascade" />
+        <property type="foreignkey" name="Location" class="Location" />
+        <property type="foreignkey" name="Product" class="Product" />
+        <!-- Types d'annulation pour un LEM:
+            - Si mouvement annule, Cancelled = -1, sinon 0
+            - Si mouvement annulateur,
+                * Cancelled = ANNULATION = 1 si annulation d'un mvt non prevu
+                * Cancelled = REFUS_CLIENT = 2 si refus client
+                * Cancelled = LIVRAISON_IMPOSSIBLE = 3 si livraison impossible
+        ATTENTION: l'attribut Cancelled a donc 2 fonctions differentes selon si
+        le LEM est annule ou annulateur.
+        -->
+        <property type="const" name="Cancelled" default="0">
+            <const name="ANNULATION" label="Cancellation" value="1"/>
+            <const name="REFUS_CLIENT" label="Customer refusal" value="2"/>
+            <const name="LIVRAISON_IMPOSSIBLE" label="Impossible delivery" value="3"/>
+        </property>
+        <property type="foreignkey" name="CancelledMovement"
+            class="LocationExecutedMovement" />
+        <property type="foreignkey" name="ForwardingForm" class="ForwardingForm"
+            navigable="1"/>
+        <property type="foreignkey" name="InvoiceItem" class="InvoiceItem"
+            navigable="1" />
+    </entity>
+
+    <!-- entity LocationProductQuantities -->
+    <entity name="LocationProductQuantities"
+        tablename="LocationProductQuantities">
+        <property type="foreignkey" name="Product" class="Product" navigable="1"
+             ondelete="cascade" />
+        <property type="foreignkey" name="Location" navigable="1"
+            class="Location" ondelete="cascade" />
+        <property type="decimal" length="10,3" name="RealQuantity" default="0" />
+        <property type="bool" name="Activated" default="1" />
+    </entity>
+
+    <!-- entity Manual -->
+    <entity name="Manual" tablename="Manual">
+        <property type="string" name="Name" i18n="1" />
+        <property type="string" name="FrFile" />
+        <property type="string" name="EnFile" />
+    </entity>
+
+    <!-- entity MimeType -->
+    <entity name="MimeType" tablename="MimeType">
+        <property type="string" name="Extension" />
+        <property type="string" name="ContentType" />
+        <property type="string" name="DisplayName" />
+    </entity>
+
+    <!-- entity MiniAmountToOrder -->
+    <entity name="MiniAmountToOrder" tablename="MiniAmountToOrder">
+        <property type="decimal" name="Amount" default="0" />
+        <property type="foreignkey" name="Category" class="Category" navigable="1"
+             ondelete="cascade" />
+        <property type="foreignkey" name="Currency" class="Currency"
+            ondelete="cascade" />
+    </entity>
+
+    <!-- entity MovementType -->
+    <entity name="MovementType" tablename="MovementType">
+        <property type="string" name="Name" i18n="1" />
+        <property type="int" length="1" name="Foreseeable" default="0" />
+        <property type="int" length="1" name="EntrieExit" default="0" />
+    </entity>
+
+    <!-- entity Nomenclature -->
+    <entity name="Nomenclature" tablename="Nomenclature">
+        <property type="string" name="Version" />
+        <property type="datetime" name="BeginDate" />
+        <property type="datetime" name="EndDate" />
+        <property type="bool" name="Buildable" default="1" />
+        <property type="foreignkey" name="Product" class="Product"
+            ondelete="cascade"/>
+    </entity>
+
+	<!-- entity OccupiedLocation -->
+    <entity name="OccupiedLocation" tablename="OccupiedLocation">
+        <property type="date" name="CreationDate" />
+        <property type="date" name="ValidityDate" />
+        <property type="foreignkey" name="InvoiceItem"
+            class="InvoiceItem" navigable="1" />
+        <property type="foreignkey" name="Location" navigable="1"
+            class="Location" ondelete="cascade" />
+        <property type="foreignkey" name="Product" class="Product"
+            navigable="1" ondelete="cascade" />
+        <property type="decimal" length="10,3" name="Quantity" default="0" />
+    </entity>
+
+    <!-- entity Operation -->
+    <entity name="Operation" tablename="Operation" label="Operations"
+        features="searchform,grid,add,edit,del">
+        <property type="string" name="Name" i18n="1" label="Name"
+            usedby="searchform,grid,addedit" required="1"/>
+        <property type="string" name="Symbol" label="Symbol"
+            usedby="grid,addedit" required="1" unique="1"/>
+        <property type="time" name="FrontTolerance" />
+        <property type="time" name="EndTolerance" />
+        <property type="time" name="TotalTolerance" />
+        <property type="bool" name="IsConcreteProductNeeded" />
+        <property type="const" name="Type" default="0" label="Type"
+            usedby="searchform,grid,addedit">
+            <const name="OPERATION_TYPE_DIVERS" label="Various" value="0" />
+            <const name="OPERATION_TYPE_PROD" label="Production" value="1" />
+            <const name="OPERATION_TYPE_CONS" label="Consulting" value="2" />
+        </property>
+        <property type="foreignkey" name="Prestation" class="Prestation" />
+        <property type="manytomany" name="Task" class="Task"
+            field="FromOperation" linktable="oprTask" linkfield="ToTask"
+            label="Tasks" usedby="addedit"/>
+    </entity>
+
+    <!-- entity Packaging -->
+    <entity name="Packaging" extends="Container" tablename="Container" />
+
+    <!-- entity PackingList -->
+    <entity name="PackingList" extends="AbstractDocument"
+        tablename="AbstractDocument">
+        <property type="foreignkey" name="Box" class="Box" />
+    </entity>
+
+    <!-- entity ParagraphModel -->
+    <entity name="ParagraphModel" tablename="ParagraphModel"
+        features="grid,add,edit,del" label="Paragraph model">
+        <property type="string" name="Title" usedby="grid,addedit" label="Title"
+            required="1" unique="1" />
+    </entity>
+
+    <!-- entity Payment -->
+    <entity name="Payment" tablename="Payment">
+        <property type="datetime" name="Date" />
+        <property type="int" name="Modality" default="0" />
+        <property type="string" name="Reference" />
+        <property type="decimal" name="TotalPriceTTC" default="0" />
+        <property type="datetime" name="CancellationDate" />
+        <property type="foreignkey" name="ActorBankDetail" class="ActorBankDetail" />
+    </entity>
+
+    <!-- entity PDFDocument -->
+    <entity name="PDFDocument" tablename="PDFDocument">
+        <property type="longtext" name="Data" />
+    </entity>
+
+    <!-- entity Prestation -->
+    <entity name="Prestation" tablename="Prestation"
+        label="Add/Update service"
+        features="grid,searchform,add,edit,del">
+        <property type="string" name="Name" usedby="grid,addedit,searchform"
+            label="Name" required="1" section="General informations" unique="1" />
+        <property type="const" name="Type" default="0" required="1"
+            usedby="grid,searchform,addedit" label="Type" section="General informations">
+            <const name="PRESTATION_TYPE_MAINTENANCE" label="Maintenance" value="0" />
+            <const name="PRESTATION_TYPE_COURSE" label="Class" value="1" />
+            <const name="PRESTATION_TYPE_HIRING" label="Rental" value="2" />
+            <const name="PRESTATION_TYPE_STOCKAGE" label="Storage" value="3" />
+        </property>
+        <property type="foreignkey" name="Operation" class="Operation"
+            usedby="addedit" label="Operation" section="General informations"/>
+        <property type="foreignkey" name="TVA" class="TVA"
+            usedby="grid,searchform,addedit" label="VAT" section="General informations" />
+        <property type="bool" name="Facturable" default="true" usedby="addedit"
+            label="Chargeable" section="General informations"/>
+        <property type="bool" name="Active" default="true"
+            usedby="searchform,addedit" label="Active" section="General informations"/>
+        <property type="const" name="Periodicity" default="1"
+            usedby="addedit" label="Calculation mode" section="General informations">
+            <const name="PERIODICITY_DAY" label="by day" value="1" />
+            <const name="PERIODICITY_MONTH" label="price/number of days" value="2" />
+        </property>
+        <property type="manytomany" name="MovementType" class="MovementType"
+            field="FromPrestation" linktable="prsToMvtType"
+            linkfield="ToMovementType" usedby="addedit"
+            label="Movement type" section="General informations"/>
+        <property type="decimal" name="Potential" default="0" />
+        <property type="datetime" name="PotentialDate" />
+        <property type="int" name="Tolerance" default="0" />
+        <property type="const" name="ToleranceType" default="0">
+            <const name="PRESTATION_TOLERANCE_TYPE_HOUR" label="Hours" value="1" />
+            <const name="PRESTATION_TOLERANCE_TYPE_DAY" label="Days" value="2" />
+        </property>
+        <property type="int" name="FreePeriod" default="0" />
+        <property type="text" name="Comment" />
+    </entity>
+
+    <!-- entity PrestationCost -->
+    <entity name="PrestationCost" tablename="PrestationCost"
+        features="grid,add,edit,del" >
+        <property type="foreignkey" name="Prestation" class="Prestation"
+            navigable="1" ondelete="cascade" />
+    </entity>
+
+    <!-- entity PrestationCustomer -->
+    <entity name="PrestationCustomer" tablename="PrestationCustomer"
+        features="gris,add,edit"
+        label="Customer(s) associated to the service">
+        <property type="foreignkey" name="Prestation" class="Prestation"
+            navigable="1" ondelete="cascade" />
+        <property type="foreignkey" name="Actor" class="Actor"
+            usedby="grid,addedit" label="Customer" />
+        <property type="string" name="Name" usedby="grid,addedit"
+            label="Service label for this customer" />
+    </entity>
+
+    <!-- entity PrestationCommand -->
+    <entity name="PrestationCommand" extends="Command" tablename="Command">
+        <property type="const" name="State" default="0" >
+            <const name="ACTIVEE" label="Activated" value="0" />
+            <const name="FACT_PARTIELLE" label="Partially charged" value="5" />
+            <const name="FACT_COMPLETE" label="Completely charged" value="6" />
+            <const name="REGLEMT_PARTIEL" label="Partially paid" value="7" />
+            <const name="REGLEMT_TOTAL" label="Completely paid" value="8" />
+        </property>
+    </entity>
+
+    <!-- entity PrestationCommandItem -->
+    <entity name="PrestationCommandItem" extends="CommandItem" tablename="CommandItem">
+        <property type="foreignkey" name="Prestation" class="Prestation" />
+        <property type="decimal" length="10,3" name="UnitPriceHT" default="0" />
+        <property type="decimal" name="QuantityForPrestationCost" default="0"/>
+        <property type="int" name="CostType" />
+    </entity>
+
+    <!-- entity PriceByCurrency -->
+    <entity name="PriceByCurrency" tablename="PriceByCurrency">
+        <property type="decimal" name="RecommendedPrice" default="0" />
+        <property type="decimal" name="Price" default="0" />
+        <property type="foreignkey" name="Currency" class="Currency" />
+        <property type="foreignkey" name="Product" class="Product"
+            navigable="1" />
+        <property type="foreignkey" name="ActorProduct" class="ActorProduct"
+            navigable="1" />
+        <property type="foreignkey" name="PricingZone" class="PricingZone"/>
+    </entity>
+
+    <!-- Entity PricingZone -->
+    <entity name="PricingZone" tablename="PricingZone" 
+        features="add,edit,del,grid" label="Pricing zone">
+        <property type="string" name="Name" label="Name" 
+            usedby="addedit,grid" required="1"/>
+    </entity>
+
+    <!-- entity Product -->
+    <entity name="Product" tablename="Product" parent="1" trackchanges="1">
+        <property type="string" name="Name" i18n="1"/>
+        <property type="string" name="BaseReference" unique="1"/>
+        <property type="float" name="Volume" default="0" />
+        <property type="string" name="CustomsNaming" />
+        <property type="int" name="Category" default="0" />
+        <property type="bool" name="Activated" default="1" />
+        <property type="bool" name="Affected" default="0" />
+        <property type="foreignkey" name="ProductType" class="ProductType" />
+        <property type="const" name="TracingMode" default="0">
+            <const name="TRACINGMODE_None" label="None" value="0" />
+            <const name="TRACINGMODE_SN" label="SN" value="1" />
+            <const name="TRACINGMODE_LOT" label="Lot" value="2" />
+        </property>
+        <property type="int" name="TracingModeBeginRange" />
+        <property type="int" name="TracingModeEndRange" />
+        <property type="foreignkey" name="SellUnitType" class="SellUnitType" />
+        <property type="int" name="FirstRankParcelNumber" default="0" />
+        <property type="decimal" length="10,3" name="SellUnitQuantity" default="0"/>
+        <property type="decimal" length="10,3" name="SellUnitVirtualQuantity" default="0"/>
+        <property type="decimal" length="10,3" name="SellUnitMinimumStoredQuantity" default="0"/>
+        <property type="float" name="SellUnitLength" default="0" />
+        <property type="float" name="SellUnitWidth" default="0" />
+        <property type="float" name="SellUnitHeight" default="0" />
+        <property type="float" name="SellUnitWeight" default="0" />
+        <property type="int" name="SellUnitMasterDimension" default="0" />
+        <property type="int" name="SellUnitGerbability" default="0" />
+        <property type="foreignkey" name="SellUnitTypeInContainer"
+            class="SellUnitType" />
+        <property type="int" name="Turnable" />
+        <property type="foreignkey" name="TVA" class="TVA" />
+        <property type="foreignkey" name="ConditioningRecommended"
+            class="Container" />
+        <property type="int" name="UnitNumberInConditioning" default="0" />
+        <property type="string" name="ConditionedProductReference" />
+        <property type="int" name="ConditioningGerbability" default="0" />
+        <property type="int" name="ConditioningMasterDimension" default="0" />
+        <property type="foreignkey" name="PackagingRecommended" class="Container" />
+        <property type="int" name="UnitNumberInPackaging" default="0" />
+        <property type="string" name="PackagedProductReference" />
+        <property type="int" name="PackagingGerbability" default="0" />
+        <property type="int" name="PackagingMasterDimension" default="0" />
+        <property type="foreignkey" name="GroupingRecommended" class="Container" />
+        <property type="int" name="UnitNumberInGrouping" default="0" />
+        <property type="string" name="GroupedProductReference" />
+        <property type="int" name="GroupingGerbability" default="0" />
+        <property type="int" name="GroupingMasterDimension" default="0" />
+        <property type="string" name="LicenceName" />
+        <property type="int" length="4" name="LicenceYear" />
+        <property type="manytomany" name="Location" class="Location"
+            field="ToProduct" linktable="locProduct" linkfield="FromLocation"/>
+        <property type="manytomany" name="ActivatedChain"
+            class="ActivatedChain" field="ToProduct"
+            linktable="achProduct" linkfield="FromActivatedChain"/>
+        <property type="string" name="Description" />
+        <property type="string" name="Image" />
+        <property type="foreignkey" name="Owner" class="Actor" />
+    </entity>
+
+    <!-- entity ProductChainLink -->
+    <entity name="ProductChainLink" tablename="ProductChainLink">
+        <property type="foreignkey" name="Product" navigable="1"
+            class="Product" ondelete="cascade" />
+        <property type="foreignkey" name="Chain" navigable="1" class="Chain"
+            ondelete="cascade" />
+    </entity>
+
+    <!-- entity ProductCommand -->
+    <entity name="ProductCommand" extends="Command" tablename="Command" />
+
+    <!-- entity ProductCommandItem -->
+    <entity name="ProductCommandItem" extends="CommandItem"
+        tablename="CommandItem">
+        <property type="foreignkey" name="Product" navigable="1" class="Product" />
+        <property type="int" length="11" name="PackagingUnitQuantity" default="null" />
+        <property type="foreignkey" name="ActivatedMovement"
+            class="ActivatedMovement" />
+        <property type="foreignkey" name="Command" navigable="1"
+            navigablename="CommandItem" class="ProductCommand"
+            ondelete="cascade" />
+        <property type="foreignkey" name="Promotion" class="Promotion" />
+    </entity>
+
+    <!-- entity ProductHandingByCategory -->
+    <entity name="ProductHandingByCategory" tablename="ProductHandingByCategory" >
+        <property type="datetime" name="UpdateDate" />
+        <property type="decimal" name="Handing" default="0" />
+        <property type="foreignkey" name="Product" class="Product" />
+        <property type="const" name="Type" default="1">
+            <const name="TYPE_PERCENT" label="%" value="1" />
+            <const name="TYPE_AMOUNT" label="Total" value="2" />
+        </property>
+        <property type="foreignkey" name="Currency" class="Currency" />
+        <property type="manytomany" name="Category" class="Category"
+            field="FromProductHandingByCategory" linktable="phcCategory"
+            linkfield="ToCategory"/>
+    </entity>
+
+    <!-- entity ProductKind -->
+    <entity name="ProductKind" tablename="ProductKind"
+        features="searchform,grid,add,edit,del" label="Product caracteristics">
+        <property type="string" name="Name" i18n="1"
+            usedby="searchform,grid,addedit" label="Name" required="1" />
+        <property type="foreignkey" name="ProductType" class="ProductType"
+            usedby="searchform,grid,addedit" label="Product type" required="1" />
+    </entity>
+
+    <!-- entity ProductPrestationCost -->
+    <entity name="ProductPrestationCost" extends="PrestationCost"
+        tablename="PrestationCost" features="grid,add,edit,del"
+        label="Price by products associated to the service">
+        <property type="manytomany" name="Product" class="Product"
+            field="FromProductPrestationCost" linktable="ppcProduct"
+            linkfield="ToProduct" usedby="grid,addedit" label="Product"
+            required="1"/>
+    </entity>
+
+    <!-- entity ProductQuantityByCategory -->
+    <entity name="ProductQuantityByCategory" tablename="ProductQuantityByCategory" >
+        <property type="decimal" length="10,3" name="MinimumQuantity" default="null" />
+        <property type="const" name="MinimumQuantityType" default="0">
+            <const name="QTY_TYPE_QCONQUE" label="any" value="0" />
+            <const name="QTY_TYPE_MULTIPLE" label="multiple" value="1" />
+        </property>
+        <property type="foreignkey" name="Product" class="Product" navigable="1"
+            ondelete="cascade" />
+        <property type="foreignkey" name="Category" class="Category"
+            navigable="1" ondelete="cascade" />
+    </entity>
+
+    <!-- entity ProductSubstitution -->
+    <entity name="ProductSubstitution" tablename="ProductSubstitution">
+        <property type="foreignkey" name="FromProduct" navigable="1"
+            class="Product" ondelete="cascade" />
+        <property type="foreignkey" name="ByProduct" class="Product"
+            ondelete="cascade" />
+        <property type="bool" name="Interchangeable" default="0" />
+    </entity>
+
+    <!-- entity ProductType -->
+    <entity name="ProductType" tablename="ProductType">
+        <property type="string" name="Name" />
+        <property type="foreignkey" name="GenericProductType"
+            class="ProductType" navigable="1" />
+        <property type="bool" name="Generic" default="0" />
+        <property type="manytomany" name="Property" class="Property"
+            field="FromProductType" linktable="pdtProperty"
+            linkfield="ToProperty" />
+    </entity>
+    
+    <!-- entity ProjectManager -->
+    <entity name="ProjectManager" extends="Actor" tablename="Actor">
+    </entity>
+
+    <!-- entity Promotion -->
+    <entity name="Promotion" tablename="Promotion">
+        <property type="string" name="Name" />
+        <property type="datetime" name="StartDate" />
+        <property type="datetime" name="EndDate" />
+        <property type="decimal" name="Rate" default="0" />
+        <property type="const" name="Type" default="0">
+            <const name="PROMO_TYPE_MONTANT" label="Total" value="0" />
+            <const name="PROMO_TYPE_PERCENT" label="%" value="1" />
+        </property>
+        <property type="decimal" name="ApproImpactRate" default="0" />
+        <property type="manytomany" name="Product" class="Product"
+            field="FromPromotion" linktable="prmProduct"
+            linkfield="ToProduct"/>
+        <property type="manytomany" name="Category" class="Category"
+            field="FromPromotion" linktable="prmCategory"
+            linkfield="ToCategory"/>
+        <property type="foreignkey" name="Currency" class="Currency" />
+    </entity>
+
+    <!-- entity Property -->
+    <entity name="Property" tablename="Property" tostring="DisplayName">
+        <property type="string" name="Name" />
+        <property type="string" name="DisplayName" />
+        <property type="const" name="Type" default="0">
+            <const name="OBJECT_TYPE" label="Foreign key" value="0"/>
+            <const name="STRING_TYPE" label="Chain" value="1"/>
+            <const name="INT_TYPE" label="Integer" value="2"/>
+            <const name="BOOL_TYPE" label="Boolean" value="3"/>
+            <const name="FLOAT_TYPE" label="Float" value="4"/>
+            <const name="DATE_TYPE" label="Date" value="10"/>
+        </property>
+    </entity>
+
+    <!-- entity PropertyValue -->
+    <entity name="PropertyValue" tablename="PropertyValue">
+        <property type="foreignkey" name="Product" class="Product" navigable="1"
+            ondelete="cascade" />
+        <property type="foreignkey" name="Property" class="Property" navigable="1"
+            ondelete="cascade" />
+        <property type="string" name="StringValue" />
+        <property type="int" name="IntValue" default="0" />
+        <property type="float" name="FloatValue" default="0" />
+        <property type="datetime" length="11" name="DateValue" />
+    </entity>
+
+    <!-- entity Question -->
+    <entity name="Question" tablename="Question" features="grid,add,edit,del">
+        <property type="foreignkey" name="Theme" class="Theme" default="0"
+            navigable="1" usedby="grid,addedit" label="Question theme"
+            required="1" shortlabel="Theme" />
+        <property type="string" name="Text" usedby="grid,addedit"
+            label="Question message" required="1" unique="1" shortlabel="Text" />
+        <property type="const" name="AnswerType" default="0"
+            usedby="grid,addedit" label="Answer type" required="1" >
+            <const name="ANSWER_TYPE_TEXT" label="text" value="0" />
+            <const name="ANSWER_TYPE_SINGLE_SELECT" label="select list, single selection" value="1" />
+            <const name="ANSWER_TYPE_MULTI_SELECT" label="select list, multiple selection" value="2" />
+            <const name="ANSWER_TYPE_SINGLE_CHECKBOX" label="List with checkbox (only one possible answer)"
+                   value="3" />
+            <const name="ANSWER_TYPE_CHECKBOX" label="List with checkbox" value="4" />
+            <const name="ANSWER_TYPE_RADIO" label="List with radio button" value="5" />
+        </property>
+        <property type="foreignkey" name="Alert" class="Alert" />
+        <property type="manytomany" name="Category" class="Category"
+            field="FromQuestion" linktable="questionToCategory"
+            linkfield="ToCategory" usedby="addedit" label="Targeted customer categories"/>
+    </entity>
+
+    <!-- entity Rating -->
+    <entity name="Rating" tablename="Rating">
+        <property type="datetime" name="BeginDate" />
+        <property type="datetime" name="EndDate" />
+        <property type="int" length="3" name="Duration" default="0" />
+        <property type="int" length="1" name="DurationType" default="0" />
+        <property type="foreignkey" name="Type" navigable="1" class="RatingType" />
+        <property type="foreignkey" name="FlyType" navigable="1" class="FlyType" />
+        <property type="foreignkey" name="Licence" navigable="1" class="Licence" />
+    </entity>
+
+    <!-- entity RatingType -->
+    <entity name="RatingType" tablename="RatingType" features="grid,add,edit,del"
+        label="Add/Update qualification">
+        <property type="string" name="Name" usedby="grid,addedit" label="Name"/>
+    </entity>
+
+    <!-- entity RealAnswer -->
+    <entity name="RealAnswer" tablename="RealAnswer" >
+        <property type="foreignkey" name="Action" class="Action" navigable="1"/>
+        <property type="foreignkey" name="AnswerModel" class="AnswerModel" />
+        <property type="foreignkey" name="Question" class="Question" />
+        <property type="string" name="Value" />
+    </entity>
+
+    <!-- entity RealBox -->
+    <entity name="RealBox" tablename="RealBox">
+        <property type="foreignkey" name="Grouping" class="Grouping" />
+        <property type="foreignkey" name="ActivatedChainTask" class="ActivatedChainTask" />
+        <property type="string" name="PN" />
+        <property type="string" name="SN" />
+    </entity>
+
+    <!-- entity Ressource -->
+    <entity name="Ressource" tablename="Ressource"
+        features="searchform,grid,add,edit,del" label="Resources">
+        <property type="string" name="Name" usedby="searchform,addedit,grid" label="Name"
+            required="1" unique="1" />
+        <property type="const" name="Type" usedby="searchform,addedit,grid" default="0"
+            label="Resource type">
+            <const name="RESSOURCE_TYPE_ENERGY" label="Energy" value="0" />
+            <const name="RESSOURCE_TYPE_HUMAN" label="Workforce" value="1" />
+            <const name="RESSOURCE_TYPE_ENVIRONMENT" label="Environment" value="2" />
+            <const name="RESSOURCE_TYPE_SUBCONTRACTING" label="Subcontracting" value="3" />
+            <const name="RESSOURCE_TYPE_MACHINE" label="Machine" value="4" />
+            <const name="RESSOURCE_TYPE_MISC" label="Miscellaneous" value="5" />
+            <const name="RESSOURCE_TYPE_PRODUCT" label="Product" value="6" />
+        </property>
+        <property type="decimal" name="Cost" usedby="addedit,grid" label="Cost"
+            default="0"/>
+        <property type="decimal" name="Quantity" default="0"/>
+        <property type="const" name="CostType" usedby="addedit,grid" default="0"
+            label="Cost unit">
+            <const name="COSTTYPE_FORFAIT" label="fixed price" value="0" />
+            <const name="COSTTYPE_DAILY" label="daily" value="1" />
+            <const name="COSTTYPE_HOURLY" label="hourly" value="2" />
+            <const name="COSTTYPE_KG" label="Kg" value="3" />
+            <const name="COSTTYPE_SQUAREMETTER" label="by square meter" value="4" />
+            <const name="COSTTYPE_CUBEMETTER" label="by cube meter" value="5" />
+            <const name="COSTTYPE_LM" label="by linear meter" value="6" />
+            <const name="COSTTYPE_QUANTITY" label="by unit" value="7" />
+            <const name="COSTTYPE_KM" label="by kilometer" value="8" />
+        </property>
+        <property type="foreignkey" name="Product" class="Product"/>
+    </entity>
+
+    <!-- entity RessourceGroup -->
+    <entity name="RessourceGroup" tablename="RessourceGroup"
+        features="searchform,grid,add,edit,del" label="Costs models">
+        <property type="string" name="Name" usedby="searchform,addedit,grid" label="Name"
+            required="1" unique="1" />
+        <property type="bool" name="Active" label="Active" default="1"
+            usedby="grid,addedit"/>
+        <property type="bool" name="AddNomenclatureCosts"
+            label="Include nomenclature costs"
+            default="1" usedby="grid,addedit"/>
+    </entity>
+
+    <!-- entity RessourceRessourceGroup -->
+    <entity name="RessourceRessourceGroup" tablename="RessourceRessourceGroup"
+        label="Resources">
+        <property type="foreignkey" name="Ressource" class="Ressource"
+            navigable="1" ondelete="cascade" label="Resource"/>
+        <property type="foreignkey" name="RessourceGroup" class="RessourceGroup"
+            navigable="1" ondelete="cascade"/>
+        <property type="decimal" name="Rate" usedby="addedit" label="Rate"/>
+    </entity>
+
+    <!-- entity Saisonality -->
+    <entity name="Saisonality" tablename="Saisonality">
+        <property type="datetime" name="StartDate" />
+        <property type="datetime" name="EndDate" />
+        <property type="decimal" name="Rate" default="0" />
+        <property type="manytomany" name="Product" class="Product"
+            field="FromSaisonality" linktable="saiProduct" linkfield="ToProduct"/>
+        <property type="manytomany" name="ProductKind" class="ProductKind"
+            field="FromSaisonality" linktable="saiProductKind"
+            linkfield="ToProductKind"/>
+    </entity>
+
+    <!-- entity SellUnitType -->
+    <entity name="SellUnitType" tablename="SellUnitType" tostring="LongName">
+        <property type="string" name="ShortName" i18n="1" />
+        <property type="string" name="LongName" i18n="1" />
+    </entity>
+
+    <!-- entity Site -->
+    <entity name="Site" tablename="Site" parent="1">
+        <property type="string" name="Name" />
+        <property type="string" name="Email" />
+        <property type="string" name="Fax" />
+        <property type="string" name="Phone" />
+        <property type="string" name="Mobile" />
+        <property type="int" name="PreferedCommunicationMode" />
+        <property type="string" name="StreetNumber" />
+        <property type="const" name="StreetType" default="0">
+            <const name="TYPE_AVENUE" value="1" label="Avenue" />
+            <const name="TYPE_BOULEVARD" value="2" label="Boulevard" />
+            <const name="TYPE_CHEMIN" value="3" label="Lane" />
+            <const name="TYPE_IMPASSE" value="4" label="Blind alley" />
+            <const name="TYPE_PLACE" value="5" label="Place" />
+            <const name="TYPE_ROUTE" value="6" label="Road" />
+            <const name="TYPE_RUE" value="7" label="Street" />
+        </property>
+        <property type="string" name="StreetName" />
+        <property type="string" name="StreetAddons" />
+        <property type="string" name="Cedex" />
+        <property type="string" name="GPS" />
+        <property type="foreignkey" name="CountryCity" class="CountryCity" />
+        <property type="foreignkey" name="Zone" class="Zone" navigable="1" />
+        <property type="foreignkey" name="Planning" class="WeeklyPlanning" />
+        <property type="foreignkey" name="CommunicationModality"
+            class="CommunicationModality" />
+        <property type="foreignkey" name="Owner" navigable="1" class="Actor" />
+        <property type="const" name="Type" default="0">
+            <const name="SITE_TYPE_QUELCONQUE" label="Any" value="0" />
+            <const name="SITE_TYPE_FACTURATION" label="Billing." value="1" />
+            <const name="SITE_TYPE_LIVRAISON" label="Delivery" value="2" />
+            <const name="SITE_TYPE_FACTURATION_LIVRAISON"
+                label="Billing and delivery" value="3" />
+        </property>
+        <property type="manytomany" name="Contact" class="Contact"
+            field="FromSite" linktable="sitContact" linkfield="ToContact"/>
+    </entity>
+
+    <!-- entity SpreadSheet -->
+    <entity name="SpreadSheet" tablename="SpreadSheet"
+        features="searchform,grid,add,edit,del" label="Spreadsheets models">
+        <property type="string" name="Name" label="Name"
+            usedby="searchform,grid,addedit" unique="1" i18n="1" required="1"/>
+        <property type="foreignkey" name="Entity" class="Entity"
+            label="Base entity" usedby="searchform,grid,addedit" required="1"/>
+        <property type="bool" name="Active" label="Active" default="1"
+            usedby="grid,addedit" />
+        <property type="datetime" name="LastModified" />
+    </entity>
+
+    <!-- entity SpreadSheetColumn -->
+    <entity name="SpreadSheetColumn" tablename="SpreadSheetColumn">
+        <property type="string" name="Name" />
+        <property type="string" length="50" name="PropertyName" />
+        <property type="string" length="50" name="FkeyPropertyName" />
+        <!-- correspond aux constantes définies dans framework/Object.php -->
+        <property type="int" length="3" name="PropertyType" />
+        <property type="string" length="50" name="PropertyClass" />
+        <property type="int" length="3" name="Order" default="0"/>
+        <property type="text" name="Comment" />
+        <property type="string" name="Default" />
+        <property type="int" length="5" name="Width" default="0"/>
+        <property type="bool" name="Required" default="0"/>
+        <property type="foreignkey" name="SpreadSheet" class="SpreadSheet"
+            navigable="1" ondelete="cascade" />
+    </entity>
+
+    <!-- entity State -->
+    <entity name="State" tablename="State">
+        <property type="string" name="Name" />
+        <property type="int" name="Number" />
+        <property type="foreignkey" name="Country" class="Country" />
+    </entity>
+
+    <!-- entity StorageSite -->
+    <entity name="StorageSite" extends="Site" tablename="Site">
+        <property type="bool" name="Customs" />
+        <property type="foreignkey" name="StockOwner" class="Actor" navigable="1" />
+    </entity>
+
+    <!-- entity Store -->
+    <entity name="Store" tablename="Store">
+        <property type="bool" name="Customs" />
+        <property type="string" name="Name" />
+        <property type="bool" name="Activated" default="1" />
+        <property type="foreignkey" name="StockOwner" class="Actor" navigable="1" />
+        <property type="foreignkey" name="StorageSite" navigable="1"
+            class="StorageSite" ondelete="cascade" />
+    </entity>
+
+    <!-- entity Supplier -->
+    <entity name="Supplier" extends="Actor" tablename="Actor">
+        <property type="string" name="OnlogisticsAccount" default="null" />
+    </entity>
+
+    <!-- entity SupplierCustomer -->
+    <entity name="SupplierCustomer" tablename="SupplierCustomer" >
+        <property type="decimal" name="MaxIncur" />
+        <property type="decimal" name="UpdateIncur" />
+        <property type="decimal" name="ToHaveTTC" />
+        <property type="const" name="Option" default="0">
+            <const name="NET" label="Net" value="0"/>
+            <const name="FIN_DE_MOIS" label="End of month" value="1"/>
+            <const name="FIN_DE_MOIS_SUIVANT" label="End of next month" value="2"/>
+        </property>
+        <property type="int" name="TotalDays" />
+        <property type="const" name="Modality">
+            <const name="CHEQUE" label="Check" value="0"/>
+            <const name="ESPECE" label="Cash" value="1"/>
+            <const name="CB" label="Credit card" value="2"/>
+            <const name="TRAITE" label="Draft" value="3"/>
+            <const name="VIREMENT" label="Transfer" value="4"/>
+            <const name="AVOIR" label="Assets" value="5"/>
+            <const name="BILLET_ORDRE" label="Promissory note" value="6"/>
+        </property>
+        <property type="const" name="InvoiceByMail" default="0">
+            <const name="INVOICE_BY_MAIL_NONE" label="No mail sending" value="0" />
+            <const name="INVOICE_BY_MAIL_ALERT" label="Send simple alert" value="1" />
+            <const name="INVOICE_BY_MAIL_YES" label="Send an invoice by email" value="2" />
+        </property>
+        <property type="const" name="CustomerProductCommandBehaviour" default="0">
+            <const name="WITH_INVOICE" label="Billable" value="0" />
+            <const name="NO_INVOICE_CLOSED_AFTER_PREPARED"
+                label="Not billable, closed after prepared" value="1" />
+            <const name="NO_INVOICE_CLOSED_AFTER_DELIVERED"
+                label="Not billable, closed after delivery" value="2" />
+        </property>
+        <property type="foreignkey" name="Supplier" class="Actor"
+            ondelete="cascade" />
+        <property type="foreignkey" name="Customer" class="Actor"
+            ondelete="cascade" />
+        <property type="int" name="MaxDeliveryDay" />
+        <property type="int" name="TotalDeliveryDay" />
+        <property type="int" name="DeliveryType" />
+        <property type="bool" name="HasTVA" default="0" />
+        <property type="bool" name="HasTvaSurtax" default="0" />
+        <property type="bool" name="HasFodecTax" default="0" />
+        <property type="bool" name="HasTaxStamp" default="0" />
+        <property type="manytomany" name="DocumentModel" class="DocumentModel"
+            field="FromSupplierCustomer" linktable="spcDocumentModel"
+            linkfield="ToDocumentModel"/>
+    </entity>
+
+    <!-- entity Task -->
+    <entity name="Task" tablename="Task" label="Tasks"
+        features="searchform,grid,add,edit,del">
+        <property type="string" name="Name" i18n="1"
+            usedby="searchform,grid,addedit" required="1"/>
+        <property type="string" name="Symbol" label="Symbol"
+            usedby="grid,addedit" required="1" unique="1"/>
+        <property type="string" name="Instructions"/>
+        <property type="float" name="Duration" default="0"/>
+        <property type="float" name="Cost" default="0"/>
+        <property type="bool" name="ToBeValidated" default="0"
+            label="To be validated" usedby="searchform,grid,addedit"/>
+        <property type="int" name="Type" default="0"/>
+        <property type="bool" name="IsBoxCreator" default="0"/>
+        <property type="manytomany" name="Operation" class="Operation"
+            field="ToTask" linktable="oprTask" linkfield="FromOperation" usedby="addedit"/>
+    </entity>
+
+    <!-- entity Theme -->
+    <entity name="Theme" tablename="Theme" features="grid,add,edit,del"
+        label="Theme">
+        <property type="string" name="Name" usedby="grid,addedit" label="Name"
+            required="1" unique="1" />
+    </entity>
+
+    <!-- entity ToHave -->
+    <entity name="ToHave" extends="AbstractDocument" tablename="AbstractDocument">
+        <property type="const" name="Type">
+            <const name="TOHAVE_RETOUR_MARCHANDISE"
+                label="Return of goods" value="1"/>
+            <const name="TOHAVE_DISCOUNT" label="Discount" value="2"/>
+            <const name="TOHAVE_WITHOUT_COMMAND"
+                label="Not linked to an order" value="3"/>
+            <const name="TOHAVE_DISCOUNT_ANNUAL_TURNOVER"
+                label="Annual turnover discount" value="4"/>
+        </property>
+        <property type="decimal" name="TotalPriceHT" />
+        <property type="decimal" name="TotalPriceTTC" />
+        <property type="decimal" name="RemainingTTC" />
+        <property type="text" name="Comment" />
+        <property type="foreignkey" name="TVA" class="TVA" />
+    </entity>
+
+    <!-- entity TVA -->
+    <entity name="TVA" tablename="TVA" label="VAT" trackchanges="1"
+        features="grid,add,edit">
+        <property type="string" name="Category" i18n="1" label="Name"
+            usedby="grid,addedit" required="1"/>
+        <property type="const" name="Type" label="Type" usedby="grid,addedit" 
+            required="1" unique="1">
+            <const name="TYPE_DELIVERY_EXPENSES" label="Delivery expenses" value="1"/>
+            <const name="TYPE_PACKING" label="Packing" value="2"/>
+            <const name="TYPE_INSURANCE" label="Insurance" value="3"/>
+            <const name="TYPE_OTHER" label="Other" value="4"/>
+            <const name="TYPE_NORMAL" label="Normal" value="5"/>
+            <const name="TYPE_REDUCED" label="Reduced" value="6"/>
+        </property>
+        <property type="decimal" name="Rate" default="0" label="Rate"
+            usedby="grid,addedit" required="1"/>
+    </entity>
+
+    <!-- entity Unavailability -->
+    <entity name="Unavailability" tablename="Unavailability">
+        <property type="string" name="Purpose" />
+        <property type="datetime" name="BeginDate" />
+        <property type="datetime" name="EndDate" />
+        <property type="foreignkey" name="WeeklyPlanning" navigable="1"
+            class="WeeklyPlanning" ondelete="cascade" />
+        <property type="foreignkey" name="Command" class="Command"
+            navigable="1" ondelete="cascade" />
+        <property type="foreignkey" name="ActivatedChainOperation"
+            class="ActivatedChainOperation" navigable="1" ondelete="cascade" />
+    </entity>
+
+    <!-- entity UploadedDocument -->
+    <entity name="UploadedDocument" tablename="UploadedDocument"
+        label="Document" features="searchform,grid,add,edit,del">
+        <property type="string" name="Name" label="Name"
+            usedby="searchform,grid,addedit" required="1"/>
+        <property type="foreignkey" navigable="1" name="Type"
+            class="UploadedDocumentType" usedby="searchform,grid,addedit"
+            label="Document type"/>
+        <property type="text" name="Comment" label="Comment" usedby="addedit"/>
+        <property type="foreignkey" name="MimeType" class="MimeType"
+            label="File type" usedby="grid"/>
+        <property type="foreignkey" name="Customer" navigable="1"
+            class="Actor" label="Customer" usedby="grid,addedit"/>
+        <property type="foreignkey" name="ActivatedChainTask" navigable="1"
+            class="ActivatedChainTask" label="Task" usedby="grid"/>
+        <property type="foreignkey" name="UserAccount" navigable="1"
+            class="UserAccount" label="User account"/>
+        <property type="datetime" name="CreationDate" label="Upload date"
+            usedby="grid"/>
+        <property type="datetime" name="LastModificationDate"
+            label="Last modification date" usedby="grid"/>
+    </entity>
+
+    <!-- entity UploadedDocumentType -->
+    <entity name="UploadedDocumentType" tablename="UploadedDocumentType"
+        label="Document" features="searchform,grid,add,edit,del">
+        <property type="string" name="Name" label="Name" i18n="1"
+            usedby="searchform,grid,addedit" required="1" unique="1"/>
+        <property type="bool" name="Active" default="1"
+            usedby="searchform,grid,addedit" />
+    </entity>
+
+    <!-- entity UserAccount -->
+    <entity name="UserAccount" tablename="UserAccount" tostring="Identity"
+        features="grid,searchform,add,edit,del"
+        label="Add/Update user account">
+        <property type="string" name="Identity" usedby="grid,searchform,addedit"
+            label="Full name" shortlabel="Name" section="User account data"
+            required="1"/>
+        <property type="foreignkey" name="Actor" navigable="1"
+            class="Actor" ondelete="cascade" usedby="addedit,searchform"
+            label="Actor" section="User account data" required="1"/>
+        <property type="string" name="Login" usedby="addedit" label="Username"
+            section="User account data" required="1"/>
+        <property type="password" name="Password" usedby="addedit"
+            label="Password" section="User account data" required="1"/>
+        <property type="string" name="Phone" usedby="addedit" label="Phone"
+             section="User account data"/>
+        <property type="string" name="Fax" usedby="addedit" label="Fax"
+             section="User account data"/>
+        <property type="string" name="Email" usedby="addedit" label="Email"
+             section="User account data"/>
+        <property type="const" name="Profile" usedby="grid,searchform,addedit"
+            label="Profile" section="User account data">
+            <const name="PROFILE_ROOT" value="-1" label="Root user"/>
+            <const name="PROFILE_ADMIN" value="1" label="Admin"/>
+            <const name="PROFILE_ACTOR" value="2" label="Actor"/>
+            <const name="PROFILE_SUPERVISOR" value="3" label="Supervisor"/>
+            <const name="PROFILE_OPERATOR" value="4" label="Operator"/>
+            <const name="PROFILE_COMMERCIAL" value="5" label="Salesman"/>
+            <const name="PROFILE_CUSTOMER" value="6" label="Customer"/>
+            <const name="PROFILE_SUPPLIER" value="7" label="Supplier"/>
+            <const name="PROFILE_ADMIN_VENTES" value="8" label="Sales management"/>
+            <const name="PROFILE_GESTIONNAIRE_STOCK" value="9" label="Stock management"/>
+            <const name="PROFILE_SUPPLIER_CONSIGNE" value="10" label="Deposited supplier"/>
+            <const name="PROFILE_TRANSPORTEUR" value="11" label="Carrier"/>
+            <const name="PROFILE_ADMIN_WITHOUT_CASHFLOW" value="12" label="Admin level 2"/>
+            <const name="PROFILE_AERO_CUSTOMER" value="13" label="Aeronautical customer"/>
+            <const name="PROFILE_AERO_SUPPLIER" value="14" label="Aeronautical supplier"/>
+            <const name="PROFILE_AERO_INSTRUCTOR" value="15" label="Aircraft instructor"/>
+            <const name="PROFILE_AERO_OPERATOR" value="16" label="Aeronautical operator"/>
+            <const name="PROFILE_AERO_ADMIN_VENTES" value="17" label="Aeronautics sales management"/>
+            <const name="PROFILE_CLIENT_TRANSPORT" value="18" label="Carriage customer"/>
+            <const name="PROFILE_ACCOUNTANT" value="19" label="Accountant"/>
+            <const name="PROFILE_DIR_COMMERCIAL" value="20" label="Sales manager"/>
+            <const name="PROFILE_EXTERNAL_CUSTOMER" value="21" label="External customer"/>
+            <const name="PROFILE_OWNER_CUSTOMER" value="22" label="Owner customer"/>
+            <const name="PROFILE_SUBSIDIARY_ACCOUNTANT" value="23"
+                label="Subsidiary accountant"/>
+            <const name="PROFILE_GED_PROJECT_MANAGER" value="24" label="Project manager"/>
+            <const name="PROFILE_PRODUCT_MANAGER" value="25" label="Product manager"/>
+        </property>
+        <property type="foreignkey" name="Catalog" class="Catalog"
+            usedby="addedit" label="Customer catalogue" section="User account data"/>
+        <property type="foreignkey" name="SupplierCatalog" class="Catalog"
+            usedby="addedit" label="Supplier catalogue" section="User account data"/>
+        <property type="manytomany" name="Site" class="Site"
+            field="ToUserAccount" linktable="siteUserAccount"
+            linkfield="FromSite" section="User account data"
+            label="Sites" usedby="addedit" />
+        <property type="manytomany" name="ChainTask" class="ChainTask"
+            field="ToUserAccount" linktable="chtUserAccount"
+            linkfield="FromChainTask"/>
+        <property type="manytomany" name="ActivatedChainTask"
+            class="ActivatedChainTask" field="ToUserAccount"
+            linktable="ackUserAccount" linkfield="FromActivatedChainTask" />
+        <property type="manytomany" name="Alert" class="Alert"
+            field="ToUserAccount" linktable="alertUserAccount"
+            linkfield="FromAlert" />
+    </entity>
+
+    <!-- entity WeeklyInstant -->
+    <entity name="WeeklyInstant" extends="DailyInstant" tablename="AbstractInstant">
+        <property type="int" name="Day" default="0" />
+    </entity>
+
+    <!-- entity WeeklyPlanning -->
+    <entity name="WeeklyPlanning" tablename="WeeklyPlanning">
+        <property type="foreignkey" name="Monday" class="DailyPlanning" />
+        <property type="foreignkey" name="Tuesday" class="DailyPlanning" />
+        <property type="foreignkey" name="Wednesday" class="DailyPlanning" />
+        <property type="foreignkey" name="Thursday" class="DailyPlanning" />
+        <property type="foreignkey" name="Friday" class="DailyPlanning" />
+        <property type="foreignkey" name="Saturday" class="DailyPlanning" />
+        <property type="foreignkey" name="Sunday" class="DailyPlanning" />
+    </entity>
+
+    <!-- entity WorkOrder -->
+    <entity name="WorkOrder" tablename="WorkOrder">
+        <property type="string" name="Name" />
+        <property type="datetime" name="ValidityStart" />
+        <property type="datetime" name="ValidityEnd" />
+        <property type="foreignkey" name="Actor" class="Actor" />
+        <property type="string" name="Comment" />
+        <property type="float" name="MaxVolume" default="0" />
+        <property type="float" name="MaxLM" default="0" />
+        <property type="float" name="MaxWeigth" default="0" />
+        <property type="float" name="MaxDistance" default="0" />
+        <property type="time" name="MaxDuration" default="00:00" />
+        <property type="const" name="State" default="0">
+            <const name="WORK_ORDER_STATE_TOFILL" label="Not closed" value="0"/>
+            <const name="WORK_ORDER_STATE_FULL" label="closed" value="1"/>
+        </property>
+        <property type="datetime" name="ClotureDate" />
+        <property type="int" name="Massified" default="0" />
+        <property type="datetime" name="DepartureDate" />
+        <property type="datetime" name="ArrivalDate" />
+        <property type="float" name="DepartureKm" default="0" />
+        <property type="float" name="ArrivalKm" default="0" />
+    </entity>
+
+    <!-- entity Zip -->
+    <entity name="Zip" tablename="Zip">
+        <property type="string" name="Code" />
+    </entity>
+
+    <!-- entity Zone -->
+    <entity name="Zone" tablename="Zone">
+        <property type="string" name="Name" />
+    </entity>
+
+    <!-- MALOLES -->
+
+    <!-- Entity RTWMaterial -->
+    <entity name="RTWMaterial" extends="Product" tablename="Product"
+        features="add,edit,del,grid,searchform" label="Materials">
+        <property type="string" name="CommercialName"
+            label="Commercial designation"
+            usedby="addedit,grid,searchform" />
+        <!-- nomme MaterialType car Product::Type existe deja -->
+        <property type="const" name="MaterialType" default="0"
+            usedby="addedit,grid,searchform">
+            <const name="TYPE_RAW_MATERIAL" label="Raw material" value="0"/>
+            <const name="TYPE_ACCESSORY" label="Accessory" value="1"/>
+            <const name="TYPE_PACKAGING" label="Packaging" value="2"/>
+            <const name="TYPE_THREAD" label="Thread" value="3"/>
+            <const name="TYPE_HEEL" label="Heel" value="4"/>
+            <const name="TYPE_BAMBOO" label="Bamboo" value="5"/>
+        </property>
+        <property type="foreignkey" name="Color" class="RTWColor" label="Color"
+            usedby="grid,addedit,searchform" />
+        <property type="string" name="Origin" label="origin"
+            usedby="addedit,grid,searchform" />
+    </entity>
+
+    <!-- Entity RTWModel -->
+    <entity name="RTWModel" tablename="RTWModel"
+        features="add,edit,del,grid,searchform" label="Models">
+
+        <property type="foreignkey" name="Season" class="RTWSeason"
+            label="Season" usedby="addedit,grid,searchform" required="1"/>
+        <property type="foreignkey" name="Shape" label="Shape"
+            class="RTWShape" usedby="addedit,grid" required="1"/>
+
+        <property type="foreignkey" name="PressName" label="Press name"
+            class="RTWPressName" usedby="addedit,grid,searchform" required="1"/>
+        <property type="string" name="StyleNumber"
+            label="Style number" usedby="addedit,grid,searchform" required="1"/>
+
+        <property type="string" name="Description"
+            label="Description" usedby="addedit,grid,searchform" />
+        <property type="foreignkey" name="Manufacturer" label="Manufacturer"
+            class="Supplier" required="1" usedby="addedit" />
+
+        <property type="foreignkey" name="ConstructionType"
+            label="Construction type" class="RTWConstructionType" 
+            usedby="addedit,searchform" />
+        <property type="foreignkey" name="ConstructionCode"
+            label="Construction code" class="RTWConstructionCode" 
+            usedby="addedit" />
+
+        <property type="foreignkey" name="Label" label="Label (griffe)"
+            class="RTWLabel" usedby="addedit" />
+        <property type="foreignkey" name="HeelHeight" label="Heel height"
+            class="RTWHeelHeight" usedby="addedit,searchform" />
+
+        <property type="foreignkey" name="HeelReference" label="Heel reference"
+            class="RTWMaterial" usedby="addedit" />
+        <property type="decimal" length="10,3" name="HeelReferenceQuantity" 
+            label="Heel reference quantity" usedby="addedit" />
+
+        <property type="foreignkey" name="Sole" label="Sole"
+            class="RTWMaterial" usedby="addedit" />
+        <property type="decimal" length="10,3" name="SoleQuantity" 
+            label="Sole quantity" usedby="addedit" />
+
+        <property type="foreignkey" name="Box" label="Box"
+            class="RTWMaterial" usedby="addedit" />
+        <property type="decimal" length="10,3" name="BoxQuantity" 
+            label="Box quantity" usedby="addedit" />
+
+        <property type="foreignkey" name="HandBag" label="Hand bag"
+            class="RTWMaterial" usedby="addedit" />
+        <property type="decimal" length="10,3" name="HandBagQuantity" 
+            label="Hand bag quantity" usedby="addedit" />
+
+        <property type="foreignkey" name="Material1" label="Material 1"
+            class="RTWMaterial" usedby="addedit,grid,searchform" />
+        <property type="decimal" length="10,3" name="Material1Quantity" 
+            label="Material 1 quantity" usedby="addedit" />
+
+        <property type="foreignkey" name="Material2" label="Material 2"
+            class="RTWMaterial" usedby="addedit,grid,searchform" />
+        <property type="decimal" length="10,3" name="Material2Quantity" 
+            label="Material 2 quantity" usedby="addedit" />
+
+        <property type="foreignkey" name="Accessory1" label="Accessory 1"
+            class="RTWMaterial" usedby="addedit,grid,searchform" />
+        <property type="decimal" length="10,3" name="Accessory1Quantity" 
+            label="Accessory 1 quantity" usedby="addedit" />
+
+        <property type="foreignkey" name="Accessory2" label="Accessory 2"
+            class="RTWMaterial" usedby="addedit,grid,searchform" />
+        <property type="decimal" length="10,3" name="Accessory2Quantity" 
+            label="Accessory 2 quantity" usedby="addedit" />
+
+        <property type="foreignkey" name="Lining" label="Lining"
+            class="RTWMaterial" usedby="addedit" />
+        <property type="decimal" length="10,3" name="LiningQuantity" 
+            label="Lining quantity" usedby="addedit" />
+
+        <property type="foreignkey" name="Insole" label="Insole"
+            class="RTWMaterial" usedby="addedit" />
+        <property type="decimal" length="10,3" name="InsoleQuantity" 
+            label="Insole quantity" usedby="addedit" />
+
+        <property type="foreignkey" name="UnderSole" label="Under-sole"
+            class="RTWMaterial" usedby="addedit" />
+        <property type="decimal" length="10,3" name="UnderSoleQuantity" 
+            label="Under-sole quantity" usedby="addedit" />
+
+        <property type="foreignkey" name="Lagrima" label="Lagrima"
+            class="RTWMaterial" usedby="addedit" />
+        <property type="decimal" length="10,3" name="LagrimaQuantity" 
+            label="Lagrima quantity" usedby="addedit" />
+
+        <property type="foreignkey" name="HeelCovering" label="Heel covering"
+            class="RTWMaterial" usedby="addedit" />
+        <property type="decimal" length="10,3" name="HeelCoveringQuantity" 
+            label="Heel covering quantity" usedby="addedit" />
+
+        <property type="foreignkey" name="Selvedge" label="Selvedge"
+            class="RTWMaterial" usedby="addedit" />
+        <property type="decimal" length="10,3" name="SelvedgeQuantity" 
+            label="Selvedge quantity" usedby="addedit" />
+
+        <property type="foreignkey" name="Thread1" label="Thread 1"
+            class="RTWMaterial" usedby="addedit" />
+        <property type="foreignkey" name="Thread2" label="Thread 2"
+            class="RTWMaterial" usedby="addedit" />
+
+        <property type="foreignkey" name="Bamboo" label="Bamboo"
+            class="RTWMaterial" usedby="addedit" />
+        <property type="decimal" length="10,3" name="BambooQuantity" 
+            label="Bamboo quantity" usedby="addedit" />
+
+        <property type="image" name="Image" label="Image"
+            usedby="addedit" section="Image"/>
+
+        <property type="manytomany" name="Size" class="RTWSize"
+            field="FromRTWModel" linkfield="ToRTWSize"
+            linktable="rTWModelRTWSize" label="Available sizes"
+            usedby="addedit"/>
+
+        <property type="text" section="Comment" name="Comment" 
+            label="Comment" usedby="addedit"/>
+    </entity>
+
+    <!-- Entity RTWProduct -->
+    <entity name="RTWProduct" extends="Product" tablename="Product"
+        features="add,edit,del,grid,searchform" label="Products">
+        <property type="foreignkey" name="Model" class="RTWModel" label="model"
+            usedby="addedit,grid,searchform" required="1" ondelete="cascade"
+            navigable="1"/>
+        <property type="foreignkey" name="Size" label="Size"
+            class="RTWSize" usedby="addedit" />
+    </entity>
+
+    <!-- Entity RTWElement -->
+    <entity name="RTWElement" tablename="RTWElement" 
+        features="add,edit,del,grid" label="Element" parent="1">
+        <property type="string" name="Name" label="Designation"
+            usedby="addedit,grid" required="1" i18n="1"/>
+    </entity>
+
+    <!-- Entity RTWColor -->
+    <entity name="RTWColor" features="add,edit,del,grid" label="Colors"
+        extends="RTWElement" tablename="RTWElement">
+        <property type="string" name="SupplierReference"
+            label="Supplier reference" usedby="addedit,grid"/>
+    </entity>
+
+    <!-- Entity RTWSeason -->
+    <entity name="RTWSeason" features="add,edit,del,grid" label="Seasons"
+        extends="RTWElement" tablename="RTWElement"/>
+
+    <!-- Entity RTWPressName -->
+    <entity name="RTWPressName" features="add,edit,del,grid" 
+        label="Press names" extends="RTWElement" tablename="RTWElement"/>
+
+    <!-- Entity RTWConstructionType -->
+    <entity name="RTWConstructionType" features="add,edit,del,grid"
+        label="Construction types" extends="RTWElement" tablename="RTWElement"/>
+
+    <!-- Entity RTWConstructionCode -->
+    <entity name="RTWConstructionCode" features="add,edit,del,grid"
+        label="Construction codes" extends="RTWElement" tablename="RTWElement"/>
+
+    <!-- Entity RTWShape -->
+    <entity name="RTWShape" features="add,edit,del,grid" label="Shapes"
+        extends="RTWElement" tablename="RTWElement"/>
+
+    <!-- Entity RTWLabel -->
+    <entity name="RTWLabel" features="add,edit,del,grid"
+        label="Labels (griffes)" extends="RTWElement" tablename="RTWElement"/>
+
+    <!-- Entity RTWHeelHeight -->
+    <entity name="RTWHeelHeight" features="add,edit,del,grid"
+        label="Heel heights" extends="RTWElement" tablename="RTWElement"/>
+
+    <!-- Entity RTWSize -->
+    <entity name="RTWSize" features="add,edit,del,grid"
+        label="Sizes" extends="RTWElement" tablename="RTWElement">
+        <property type="manytomany" name="Model" class="RTWModel"
+            field="ToRTWSize" linkfield="FromRTWModel"
+            linktable="rTWModelRTWSize" emptyfordelete="1" />
+    </entity>
+
+    <!-- FIN MALOLES -->    
+</application>

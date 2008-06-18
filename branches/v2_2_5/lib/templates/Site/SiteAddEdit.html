@@ -1,0 +1,172 @@
+<form name="SiteAddEdit" method="post" action="{$FormAction}">
+
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <thead>
+    <tr>
+      <td colspan="4">
+        <b>{t}Site properties{/t}</b>
+        <input type="hidden" name="formSubmitted" value="1" />
+        <input type="hidden" name="retURL" value="{$retURL}" />
+      </td>
+    </tr>
+	</thead>
+    <tr>
+      <td>{t}Site name{/t} : </td>
+      <td colspan="3">
+	    <input name="Site_Name" type="text" id="Site_Name" style="width:100%"
+		  value="{$Site->getName()}" />
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+	    <input type="checkbox" name="IsStorageSite" value="0" {$IsStorageSite}
+			onclick="isStorageSiteClicked(this.form, {$IsStorageSiteDisabled})" />
+        {t}Storage site{/t}&nbsp;
+		<input type="checkbox" name="IsInvoiceAddress" value="0" onclick="this.value=this.checked;" {$IsInvoiceAddress} />
+        {t}Billing address{/t} &nbsp;
+		<input type="checkbox" name="IsDeliveryAddress" value="0" onclick="this.value=this.checked;" {$IsDeliveryAddress} />
+        {t}Delivery address{/t}
+	  </td>
+	  <td>{t}Delivery zone{/t} : </td>
+      <td colspan="3"> <select name="Site_Zone_ID" style="width:100%">
+	  		<option value="0">{t}None{/t}</option>
+			{$ZoneList}
+		</select> </td>
+    </tr>
+	<tr>
+      <td>{t}Stock owner{/t}:</td>
+      <td colspan="3">
+	    <select name="StockOwner_Id" style="width:100%" {if not $IsStorageSite}disabled{/if}>
+			<option value="0">{t}None{/t}</option>
+			{$OwnerList}
+		</select>
+	  </td>
+	</tr>
+    <tr>
+      <td width="20%">{t}Phone number{/t}:</td>
+      <td width="30%"><input name="Site_Phone" type="text" id="Site_Phone" style="width:100%" value="{$Site->getPhone()}" /></td>
+      <td width="20%">{t}Fax number{/t}:</td>
+      <td width="30%"><input name="Site_Fax" type="text" id="Site_Fax" style="width:100%" value="{$Site->getFax()}" /></td>
+    </tr>
+    <tr>
+      <td>{t}Mobile phone number{/t}:</td>
+      <td><input name="Site_Mobile" type="text" id="Site_Mobile" style="width:100%" value="{$Site->getMobile()}" /></td>
+      <td>{t}Email{/t}: </td>
+      <td><input name="Site_Email" type="text" id="Site_Email" style="width:100%" value="{$Site->getEmail()}" /></td>
+    </tr>
+	<thead>
+    <tr>
+      <td colspan="4"><b>{t}Site address{/t}</b></td>
+    </tr>
+	</thead>
+    <tr>
+      <td>{t}Address{/t}:
+      <td colspan="3"> <input name="Site_StreetNumber" type="text" id="Site_StreetNumber" value="{$Site->getStreetNumber()}" size="10" />
+        &nbsp;
+		<select name="Site_StreetType" id="Site_StreetType">
+		  <option value="">{t}None{/t}</option>
+		  {$StreetTypeList}
+        </select> &nbsp;
+		<input name="Site_StreetName" type="text" id="Site_StreetName" value="{$Site->getStreetName()}" size="50" />
+      </td>
+    </tr>
+    <tr>
+      <td>{t}Address complement{/t}: </td>
+      <td colspan="3"> <input name="Site_StreetAddons" type="text" id="Site_StreetAddons" style="width:100%" value="{$Site->getStreetAddons()}" />
+      </td>
+    </tr>
+    <tr>
+      <td>{t}Zip code{/t}:</td>
+      <td> <input name="Site_CountryCity_Zip_Code" type="text" id="Site_CountryCity_Zip_Code" style="width:100%" value="{if $Zip_Code}{$Zip_Code}{else}{$zipcode}{/if}" />
+      </td>
+      <td>{t}City{/t}:</td>
+      <td> <input name="Site_CountryCity_CityName_Name" type="text" id="Site_CountryCity_City_Name" style="width:100%" value="{if $CityName_Name}{$CityName_Name}{else}{$cityname}{/if}" />
+      </td>
+    </tr>
+    <tr>
+      <td>{t}Cedex{/t}: </td>
+      <td><input name="Site_Cedex" type="text" id="Site_Cedex" style="width:100%" value="{$Site->getCedex()}" />
+      </td>
+      <td>{t}Country{/t}*:</td>
+      <td>
+	  	<select name="Site_CountryCity_Country_Name" style="width:100%">
+			{$CountryList}
+		</select>
+	  </td>
+    </tr>
+	<thead>
+    <tr>
+      <td colspan="4">
+	  	<b>{t}Contacts{/t}</b>
+		<input type="hidden" name="ContactToAdd" value="-1" />
+		<input type="hidden" name="ContactToDelete" value="-1" />
+	  </td>
+    </tr>
+	</thead>
+    <tr class="{if $smarty.section.Contact.index is odd}gridRowOdd{else}gridRowEven{/if}">
+      <td colspan="4">
+        <table id="table" width="100%" cellpadding="4" cellspacing="0"
+            class="form" border="0" style="border: 0;">
+            <thead>
+            <tr>
+                <td class="gris2">{t}Name{/t}</td>
+                <td class="gris2">{t}Role{/t}</td>
+                <td class="gris2">{t}Phone{/t}</td>
+                <td class="gris2">{t}Fax{/t}</td>
+                <td class="gris2">{t}Email{/t}</td>
+                <td class="gris2">&nbsp;</td>
+            </tr>
+	        </thead>
+    {section name=Contact loop=$ContactList}
+            <tr>
+                <td>
+	  	            <a href="javascript:document.forms['SiteAddEdit'].elements['ContactToAdd'].value='{$ContactList[Contact]->getId()}';document.forms['SiteAddEdit'].submit();">{$ContactList[Contact]->GetName()}</a>
+	            </td>
+                <td>{if $ContactList[Contact]->getRole()}{$ContactList[Contact]->getRole()}{else}N/A{/if}</td>
+                <td>{if $ContactList[Contact]->getPhone()}{$ContactList[Contact]->getPhone()}{else}N/A{/if}</td>
+                <td>{if $ContactList[Contact]->getFax()}{$ContactList[Contact]->getFax()}{else}N/A{/if}</td>
+                <td>{if $ContactList[Contact]->getEmail()}{$ContactList[Contact]->getEmail()}{else}N/A{/if}</td>
+                <td align="right">
+	                <a href="javascript:document.forms['SiteAddEdit'].elements['ContactToAdd'].value='{$ContactList[Contact]->getId()}';document.forms['SiteAddEdit'].submit();">
+		                <img src="images/modifier.gif" border=0 alt="{t}Modify{/t}" /></a>
+	                <a href="javascript:document.forms['SiteAddEdit'].elements['ContactToDelete'].value='{$ContactList[Contact]->getId()}';document.forms['SiteAddEdit'].submit();">
+		                <img src="images/sup.gif" border=0 alt="{t}Delete{/t}" /></a>
+	            </td>
+            </tr>
+    {sectionelse}
+            <tr>
+                <td>{t}No contact.{/t}</td>
+            </tr>
+    {/section}
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td class="gris2" colspan="4" align="right">
+	    <a href="javascript:document.forms['SiteAddEdit'].elements['ContactToAdd'].value='0';document.forms['SiteAddEdit'].submit();">
+		<img src="images/ajouter.gif" border=0 alt="{t}Add a contact{/t}" /></a>
+	  </td>
+    </tr>
+	<thead>
+    <tr>
+      <td colspan="4"><strong>{t}Schedule{/t}</strong></td>
+    </tr>
+	</thead>
+	<tbody>
+    <tr>
+      <td colspan="4">{include file="Planning/Planning.html"}</td>
+    </tr>
+	</tbody>
+	<tfoot>
+    <tr>
+      <td colspan="4">
+	    <div align="right">
+		  <input class="button" value="{t}Ok{/t}" type="submit"
+          onclick="return validateform(document.forms['SiteAddEdit'], requiredFields);" />
+          <input class="button" onclick="javascript:onCancel('{$retURL}');" value="{t}Cancel{/t}" type="button" />
+  		</div>
+	  </td>
+    </tr>
+	</tfoot>
+  </table>
+</form>

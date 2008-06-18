@@ -1,0 +1,73 @@
+
+    /**
+     * Retourne le couple SupplierCustomer de la commande telle que:
+     * Supplier=DatabaseOwner et Customer=$this->getCustomer()
+     *
+     * Si le couple n'a pu être trouvé, il est créé à la volée avec des infos
+     * par défaut.
+     *
+     * @access public
+     * @return object SupplierCustomer
+     */
+    function getSupplierCustomer() {
+        $spc = parent::getSupplierCustomer();
+        if (!($spc instanceof SupplierCustomer)) {
+            // le couple n'a pas été trouvé on en crée un par défaut
+            require_once('Objects/SupplierCustomer.php');
+            $spc = new SupplierCustomer();
+            $spc->setModality(SupplierCustomer::CHEQUE);
+            $spc->setTotalDays(30);
+            $spc->setOption(SupplierCustomer::NET);
+            $sup = Auth::getDatabaseOwner();
+            $spc->setSupplier($sup);
+            $cus = $this->getCustomer();
+            $spc->setCustomer($cus);
+            $hastva = ($this->getTotalPriceTTC()-$this->getTotalPriceHT() > 0);
+            $spc->setHasTVA($hastva);
+            if($this->hasBeenInitialized) {
+                $spc->save();
+            }
+            $this->setSupplierCustomer($spc);
+            if($this->hasBeenInitialized) {
+                $this->save();
+            }
+        }
+        return $spc;
+    }
+
+    // ChainCommand::hasAllGoupingTaskToDo() {{{
+
+    /**
+     * Retourne true si toutes les tâches de regroupement sont à STATE_TODO
+     * @access public
+     * @return boolean
+     */
+    public function hasAllGoupingTaskToDo() {
+        // Base sur reel: y a t il eu des regroupements executes?
+        // A ce stade, on ne vérifie pas qu'ils soient non facturée
+        $chainCmdItemColl = $this->getCommandItemCollection();
+        require_once('Objects/Task.inc.php');
+        // Les ids de taches de transport
+        $trsptTaskIds = array(TASK_GROUND_TRANSPORT, TASK_SEA_TRANSPORT,
+            TASK_INLAND_WATERWAY_TRANSPORT, TASK_RAILWAY_TRANSPORT, TASK_AIR_TRANSPORT);
+        $ackFilter = SearchTools::NewFilterComponent('Task', '', 'In', $trsptTaskIds, 1);
+
+        foreach($chainCmdItemColl as $chainCmdItem) {
+            $chain = $chainCmdItem->getActivatedChain();
+            // Les taches de transport
+            $trsptTaskColl = $chain->getActivatedChainTaskCollection($ackFilter);
+            $ackCount = $trsptTaskColl->getCount();
+            foreach($trsptTaskColl as $trsptTask) {
+                // La tache precedente de regroupement
+                $groupingTask = $trsptTask->getPreviousTaskFromRule('isGroupingTask');
+                if ($groupingTask && $groupingTask->getstate() == ActivatedChainTask::STATE_TODO) {
+                    continue;
+                }
+                // il y a au moins un regroupement d'execute pour cette cmde
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // }}}

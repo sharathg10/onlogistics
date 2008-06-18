@@ -1,0 +1,115 @@
+<form method="POST" action="PotentialsEdit.php" name="PotentialsEdit">
+<input type="hidden" name="formSubmitted" value="0">
+<input type="hidden" name="retURL" value="{$retURL}">
+
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form" id="searchForm">
+    <thead>
+        <tr>
+            <td colspan="3">{t}Select an airplane{/t}</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="search">
+            <td>{t}Matriculation{/t}</td>
+            <td>{strip}
+                <select name="Id" onchange="PotentialsEdit.submit();">
+                    {section name=selectArray loop=$selectArray}
+                        <option value="{$selectArray[selectArray].id}" 
+                        {if $selectArray[selectArray].id == $ccpId}
+                            selected>
+                        {else}
+                            >
+                        {/if}
+                        {$selectArray[selectArray].name}
+                        </option>
+                    {/section}
+                </select>
+                {/strip}
+            </td>
+            <td>&nbsp;</td>
+        </tr>
+    </tbody>
+</table>
+
+<table id="table" width="100%" cellpadding="3" cellspacing="0" class="form" border="0">    
+    <thead>
+        <tr>
+            <td>{t}Potentials{/t}</td>
+            <td>{t}Current values{/t}</td>
+            <td>{t}New values{/t}</tD>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>{t}Potential since last overhaul{/t} : </td>
+            <td>
+                {strip}
+                <input type="text" name="Actual_RHSO_Hours" value="{$Actual_RHSO_Hours}" size="2" disabled />
+                &nbsp;:&nbsp;
+                <input type="text" name="Actual_RHSO_Minutes" value="{$Actual_RHSO_Minutes}" size="2" disabled />
+                &nbsp;{t}(HH:MM){/t}
+                {/strip}
+            </td>
+            <td>
+                {strip}
+                <input type="text" name="{$className}_RealHourSinceOverall_Hours" value="" size="2" />
+                &nbsp;:&nbsp; 
+                <input type="text" name="{$className}_RealHourSinceOverall_Minutes" value="" size="2" />
+                &nbsp;{t}(HH:MM){/t}
+                {/strip}
+            </td>
+        </tr>
+        <tr>
+            <td>{t}Potential since last repairing{/t} : </td>
+            <td>
+                {strip}
+                <input type="text" name="Actual_RHSR_Hours" value="{$Actual_RHSR_Hours}" size="2" disabled />
+                &nbsp;:&nbsp;
+                <input type="text" name="Actual_RHSR_Minutes" value="{$Actual_RHSR_Minutes}" size="2" disabled />
+                &nbsp;(HH:MM)
+                {/strip}
+            </td>
+            <td>
+                {strip}
+                <input type="text" name="{$className}_RealHourSinceRepared_Hours" value="" size="2" />
+                &nbsp;:&nbsp;
+                <input type="text" name="{$className}_RealHourSinceRepared_Minutes" value="" size="2" />
+                &nbsp;(HH:MM)
+                {/strip}
+            </td>
+        </tr>
+        <tr>
+            <td>{t}Number of landings since overhaul{/t} : </td>
+            <td><input type="text" name="Actual_RLSO" value="{$Actual_RLSO}" disabled /></td>      
+            <td><input type="text" name="{$className}_RealLandingSinceOverall" value=""/></td>      
+        </tr>
+        <tr>
+            <td>{t}Number of landings since reparation{/t} : </td>
+            <td><input type="text" name="Actual_RLSR" value="{$Actual_RLSR}" disabled /></td>      
+            <td><input type="text" name="{$className}_RealLandingSinceRepared" value=""/></td>
+        </tr>
+        <tr>
+            <td>{t}Number of cycles since overhaul{/t} : </td>
+            <td><input type="text" name="Actual_RCSO" value="{$Actual_RCSO}" disabled /></td>      
+            <td><input type="text" name="{$className}_RealCycleSinceOverall" value=""/></td>
+        </tr>
+        <tr>
+            <td>{t}Number of cycles since reparation{/t} : </td>
+            <td><input type="text" name="Actual_RCSR" value="{$Actual_RCSR}" disabled /></td>      
+            <td><input type="text" name="{$className}_RealCycleSinceRepared" value=""/></td>
+        </tr>
+    </tbody>
+    
+    <tfoot>
+        <tr>
+            <td align="right" colspan="3"> 
+                <input type="submit" name="Ok" value="{t}Update{/t}" onclick="PotentialsEdit.formSubmitted.value=1; return checkForm(PotentialsEdit, requiredFields);" class="button">
+                <input type="reset" name="Cancel" value="{t}Cancel{/t}" onclick="window.location.href='{$retURL}'" class="button">
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+</form>

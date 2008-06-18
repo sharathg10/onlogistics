@@ -1,0 +1,774 @@
+<form name="ActorAddEdit" method="post" action="{$FormAction}" enctype="multipart/form-data">
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <thead>
+    <tr>
+      <td colspan="4" style="border:1px outset #AAAAAA">
+      <input type="hidden" name="formSubmitted" value="1" />
+      <input type="hidden" name="retURL" value="{$retURL}" />
+      <input type="hidden" name="IsCustomerOrSupplier" value="{$IsCustomerOrSupplier}" />
+      <input type="hidden" name="withTvaSurtax" id="withTvaSurtax" value="{$withTvaSurtax}" />
+      <input type="hidden" name="withFodecTax" id="withFodecTax" value="{$withFodecTax}" />
+      <input type="hidden" name="withTaxStamp" id="withTaxStamp" value="{$withTaxStamp}" />
+      <b>{t}General informations{/t}</b>
+      </td>
+    </tr>
+	</thead>
+	<tbody>
+	<tr>
+      <td>{t}Quality{/t} :</td>
+      <td>
+	    <select name="Actor_Quality">
+			{$QualityList}
+		</select>
+	  </td>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>{t}Name{/t} *: </td>
+      <td>
+	  	<input name="Actor_Name" type="text" id="Actor_Name" style="width:100%" value="{if $Actor != 0}{$Actor->getName()}{/if}" />
+      </td>
+      <td width="20%">{t}Code{/t} :</td>
+      <td width="30%">
+	  	<input name="Actor_Code" type="text" id="Actor_Code" style="width:100%" value="{if $Actor != 0}{$Actor->getCode()}{/if}" />
+	  </td>
+    </tr>
+    <tr>
+      <td width="20%">{t}Slogan{/t} :</td>
+      <td>
+	  	<input name="Actor_Slogan" type="text" id="Actor_Slogan" style="width:100%" value="{if $Actor != 0}{$Actor->getSlogan()}{/if}" />
+	  </td>
+	  <td>{t}Logo{/t} :</td>
+	  <td>
+        <input type="file" name="Actor_Logo" />
+        {if $Logo}
+        <br /><a href="javascript:void(0);"
+            onclick="var l=$('logoPreview');
+                l.style.display=l.style.display=='none'?'block':'none';">
+        {t}Preview current logo{/t}</a>
+        {/if}
+      <div style="display:none;" id="logoPreview">
+        <img src="Logo.php?actID={$actId}" alt="Logo" valign="center" />
+      </div>
+	  </td>
+    </tr>
+    <tr>
+      <td width="20%">{t}Type{/t} *:</td>
+      <td width="30%">
+	  	<select name="Actor_ClassName" style="width:100%" onchange="isAeroActor()">
+			{$ClassNameList}
+		</select>
+	  </td>
+      <td>{t}Category{/t} :</td>
+      <td>
+	    <select name="Actor_Category_ID" style="width:100%">
+	  		<option value="0">{t}None{/t}</option>
+			{$CatList}
+		</select>
+	  </td>
+    </tr>
+    <tr>
+      <td>{t}Generic actor{/t} : </td>
+      <td>
+	    <select name="Actor_GenericActor_ID" style="width:100%">
+	  		<option value="0">{t}None{/t}</option>
+			{$GenericActorList}
+		</select>
+	  </td>
+      <td>{t}Accounting model{/t} : </td>
+      <td>
+	    <select name="Actor_AccountingType_ID" style="width:100%">
+	  		<option value="0">{t}None{/t}</option>
+			{$AccountingTypeList}
+		</select>
+	 </td>
+    </tr>
+    <tr>
+      <td>{t}Company type{/t} :</td>
+      <td>
+	  	<select name="Actor_CompanyType">
+			{$CompanyTypeList}
+		</select>
+	  </td>
+      <td>{t}Brand name{/t} :</td>
+      <td>
+	  	<input name="Actor_Trademark" type="text" id="Actor_Trademark" style="width:100%" value="{if $Actor != 0}{$Actor->getTrademark()}{/if}" />
+	  </td>
+    </tr>
+    <tr>
+      <td>{t}SIRET{/t} :</td>
+      <td><input name="Actor_Siret" type="text" id="Actor_Siret" style="width:100%" value="{if $Actor != 0}{$Actor->getSiret()}{/if}" /></td>
+      <td>{t}VAT number{/t} :</td>
+      <td><input name="Actor_TVA" type="text" id="Actor_TVA" style="width:100%" value="{if $Actor != 0}{$Actor->getTVA()}{/if}" /></td>
+    </tr>
+    <tr>
+      <td>{t}RCS{/t} :</td>
+      <td><input name="Actor_RCS" type="text" id="Actor_RCS" style="width:100%" value="{if $Actor != 0}{$Actor->getRCS()}{/if}" /></td>
+      <td>{t}IATA{/t} : </td>
+      <td><input name="Actor_IATA" type="text" id="Actor_IATA" style="width:100%" value="{if $Actor != 0}{$Actor->getIATA()}{/if}" /></td>
+    </tr>
+    <tr>
+      <td>{t}Active{/t} :</td>
+      <td>
+	    <p>
+          <input name="Actor_Active" id="actorNotActive" type="radio" value="1"
+          {if $Actor != 0}{if $Actor->GetActive() == 1 || $Actor->GetName() == ''}checked="checked"{/if}{/if} />
+          <label for="actorNotActive"> {t}Yes{/t}</label>
+          &nbsp;
+          <input  name="Actor_Active" id="actorActive" type="radio" value="0"
+          {if $Actor != 0 && $Actor->GetName() != '' && $Actor->GetActive() == 0}checked="checked"{/if} />
+          <label for="actorActive"> {t}no{/t}</label>
+          <br />
+        </p>
+	  </td>
+      <td>{t}Job{/t} : </td>
+      <td>
+	  	<select multiple="multiple" name="Actor_JobCollection[]" id="Actor_Joblist" size="3" style="width:100%">
+	  		{$JobList}
+	    </select>
+	  </td>
+    </tr>
+    <tr>
+      <td>{t}Currency{/t} : </td>
+      <td>
+	  	<select name="Actor_Currency_ID" style="width: 100%;">
+			{$CurrencyList}
+		</select>
+	  </td>
+      <td>{t}Pricing zone{/t} : </td>
+      <td>
+	  	<select name="Actor_PricingZone_ID" style="width: 100%;">
+			{$PricingZoneList}
+		</select>
+	  </td>
+    </tr>
+	</tbody>
+  </table>
+{if $ConsultingContext != 0}
+  <table id="consultingContextTable" width="100%" cellpadding="4" cellspacing="0"
+    class="form" border="0">
+    <thead>
+    <tr>
+      <td colspan="4" style="border:1px outset #AAAAAA">
+      <b>{t}Operative{/t}</b>
+      </td>
+    </tr>
+	</thead>
+	<tbody>
+	<tr>
+      <td>{t}Signatory{/t} :</td>
+      <td>
+	    <select name="ActorDetail_Signatory_ID" style="width:100%">
+			{$SignatoryList}
+		</select>
+	  </td>
+	  <td>{t}Can be internal affectation{/t} :</td>
+	  <td>
+        <input type="radio" name="ActorDetail_IsInternalAffectation" 
+          id="isInternalAffectation" value="1" {$IsInternalAffectation} />
+        <label for="isInternalAffectation">{t}Yes{/t}
+		</label>&nbsp;&nbsp;
+        <input type="radio" name="ActorDetail_IsInternalAffectation" id="isNotInternalAffectation" value="0"
+          {$IsNotInternalAffectation} />
+        <label for="isNotInternalAffectation">{t}No{/t}</label>
+      </td>
+    </tr>
+    <tr>
+      <td width="20%">{t}Internal affectation{/t} : </td>
+      <td width="30%">
+	    <select name="ActorDetail_InternalAffectation_ID" style="width:100%">
+			{$InternalAffectationList}
+		</select>
+      </td>
+      <td width="20%">{t}Business provider{/t} :</td>
+      <td width="30%">
+	    <select name="ActorDetail_BusinessProvider_ID" style="width:100%">
+			{$BusinessProviderList}
+		</select>
+	  </td>
+    </tr>
+    </tbody>
+  </table>
+{/if}
+<div id="Aero" style="display:(document.forms[0].elements["Actor_ClassName"].value.substring(0, 4)=="Aero")?"block":"none;">
+	<table id="AeroDetail" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	<thead>
+    <tr>
+      <td colspan="4"> <b>{t}Aeronautical data{/t}</b></td>
+    </tr>
+    </thead>
+	<tbody>
+    <tr>
+      <td width="20%">{t}Weight (kg){/t}:</td>
+      <td width="30%">
+	  	<input name="Actor_Weight" type="text" id="Actor_Weight" style="width:100%" value="{$Weight}" />
+	  </td>
+      <td width="20%">{t}Assigned instructor{/t} :</td>
+      <td width="30%">
+	  	<select name="Actor_Instructor_ID" style="width:100%">
+			<option value="0">{t}None{/t} </option>
+			{$InstructorList}
+		</select>
+	  	</td>
+    </tr>
+	<tr>
+	  <td>{t}Student{/t} : </td>
+      <td>
+        	<input type="radio" name="Actor_Trainee" id="actorTrainee" value="1"
+            {$IsTrainee|default:'disabled="disabled"'} /><label for="actorTrainee">{t}Yes{/t}
+		</label>&nbsp;&nbsp;
+        	<input type="radio" name="Actor_Trainee" id="actorNoTrainee" value="0"
+            {$IsNotTrainee|default:'disabled="disabled"'} /><label for="actorNoTrainee">{t}No{/t}
+		</label>
+	  </td>
+      <td>{t}Solo flight allowed{/t} : </td>
+      <td>
+        	<input type="radio" name="Actor_SoloFly" id="actorSoloFly" value="1"
+            {$IsSoloFly|default:'disabled="disabled"'} /><label for="actorSoloFly">{t}Yes{/t}
+		</label>&nbsp;&nbsp;
+        	<input type="radio" name="Actor_SoloFly" id="actorNoSoloFly" value="0"
+            {$IsNotSoloFly|default:'disabled="disabled"'} /><label for="actorNoSoloFly">{t}No{/t}
+		</label>
+	  </td>
+	</tr>
+	<tr>
+      <td>{t}Allowed airplane types{/t} : </td>
+      <td>
+	    <select multiple="multiple" name="Actor_AuthorizedFlyTypeCollection[]" style="width:100%" size="3">
+			<option value="0">{t}None{/t}</option>
+			{$FlyTypeList}
+		</select>
+	  </td>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="4"><small><b>{t}Hour format: HH:MM{/t}</b></small></td>
+    </tr>
+	<tr>
+      <td>{t}Hours of piloting amount{/t} :</td>
+      <td>
+	  {math equation="x + y"
+	  	x=$FirstPilotHours|default:0
+	  	y=$CoPilotHours|default:0
+		assign="total"}
+	  {hour_minute_widget name="Actor_PilotHours" value=$total type=2 disabled=1}
+	  </td>
+      <td>{t}Number of IFR landings{/t} :</td>
+      <td>
+	  <input name="Actor_IFRLanding" type="text" id="Actor_IFRLanding"
+	  	size="9" value="{$IFRLanding}" disabled="disabled" />
+	  </td>
+    </tr>
+	<tr>
+      <td>{t}Instructor hours of flight amount{/t} :</td>
+      <td>
+	  {hour_minute_widget name="Actor_InstructorHours" value=$InstructorHours type=2 disabled=1}
+	  </td>
+      <td>{t}Student hours of flight amount{/t} :</td>
+      <td>
+	  {hour_minute_widget name="Actor_StudentHours" value=$StudentHours type=2 disabled=1}
+	  </td>
+    </tr>
+	<tr>
+      <td>{t}Number of commercial hours{/t} :</td>
+      <td>
+	  {hour_minute_widget name="Actor_CommercialHours" value=$CommercialHours type=2 disabled=1}
+	  </td>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td colspan="4"><b>{t}Single-engined days{/t}</b></td>
+    </tr>
+	<tr>
+      <td>{t}Commandant{/t} :</td>
+      <td>
+	  {hour_minute_widget name="Actor_PilotHours" value=$PilotHours type=2 disabled=1}
+	  </td>
+      <td>{t}Double{/t} :</td>
+      <td>
+	  {hour_minute_widget name="Actor_CoPilotHours" value=$CoPilotHours type=2 disabled=1}
+	  </td>
+    </tr>
+    <tr>
+      <td colspan="4"><b>{t}Single-engined nights{/t}</b></td>
+    </tr>
+	<tr>
+      <td>{t}Commandant{/t} :</td>
+      <td>
+	  {hour_minute_widget name="Actor_PilotHoursNight" value=$PilotHoursNight type=2 disabled=1}
+	  </td>
+      <td>{t}Double{/t} :</td>
+      <td>
+	  {hour_minute_widget name="Actor_CoPilotHoursNight" value=$CoPilotHoursNight type=2 disabled=1}
+	  </td>
+    </tr>
+    <tr>
+      <td colspan="4"><b>{t}Twin-engined days{/t}</b></td>
+    </tr>
+	<tr>
+      <td>{t}Commandant{/t} :</td>
+      <td>
+	  {hour_minute_widget name="Actor_PilotHoursBiEngine" value=$PilotHoursBiEngine type=2 disabled=1}
+	  </td>
+      <td>{t}Double{/t} :</td>
+      <td>
+	  {hour_minute_widget name="Actor_CoPilotHoursBiEngine" value=$CoPilotHoursBiEngine type=2 disabled=1}
+	  </td>
+    </tr>
+    <tr>
+      <td colspan="4"><b>{t}Twin-engined nights{/t}</b></td>
+    </tr>
+	<tr>
+      <td>{t}Commandant{/t} :</td>
+      <td>
+	  {hour_minute_widget name="Actor_PilotHoursBiEngineNight" value=$PilotHoursBiEngineNight type=2 disabled=1}
+	  </td>
+      <td>{t}Double{/t} :</td>
+      <td>
+	  {hour_minute_widget name="Actor_CoPilotHoursBiEngineNight" value=$CoPilotHoursBiEngineNight type=2 disabled=1}
+	  </td>
+    </tr>
+    <tr>
+      <td colspan="4"><b>{t}IFR{/t}</b></td>
+    </tr>
+	<tr>
+      <td>{t}Commandant{/t} :</td>
+      <td>
+	  {hour_minute_widget name="Actor_PilotHoursIFR" value=$PilotHoursIFR type=2 disabled=1}
+	  </td>
+      <td>{t}Double{/t} :</td>
+      <td>
+	  {hour_minute_widget name="Actor_CoPilotHoursIFR" value=$CoPilotHoursIFR type=2 disabled=1}
+	  </td>
+    </tr>
+	</tbody>
+	</table>
+</div>
+<table id="suite1" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <thead>
+    <tr>
+      <td colspan="4"><b>{t}Commercial data and billing data{/t}</b></td>
+    </tr>
+    </thead>
+	<tbody>
+	<tr>
+		<td>{t}Comment{/t} : </td>
+		<td colspan="3"><textarea name="Actor_PlanningComment" cols="100%" rows="2" id="textarea">{if $Actor != 0}{$Actor->getPlanningComment()}{/if}</textarea>
+        </td>
+	</tr>
+    <tr>
+      <td width="20%">{t}Salesman{/t} : </td>
+      <td width="30%">
+	    <select name="Actor_Commercial_ID" style="width:100%">
+			<option value="0">{t}None{/t}</option>
+			{$CommercialList}
+		</select>
+	  </td>
+      <td width="20%">{t}Personal discount (%){/t} : </td>
+      <td width="30%"><input name="Actor_RemExcep" type="text" id="Site_Email" style="width:100%" value="{if $Actor != 0}{$Actor->getRemExcep()}{/if}" /></td>
+    </tr>
+    <tr>
+      <td>{t}Delivery conditions{/t} :</td>
+      <td>
+        <select name="Actor_Incoterm_ID" style="width:100%">
+			{$IncotermList}
+		</select>
+	  </td>
+      <td>{t}Packing conditions{/t} : </td>
+      <td><input name="Actor_PackageCondition" type="text" id="Actor_PackageCondition" style="width:100%" value="{if $Actor != 0}{$Actor->getPackageCondition()}{/if}" /></td>
+    </tr>
+	</tbody>
+    <thead>
+    <tr>
+      <td colspan="4"> <b>{t}Billing and payments{/t}</b></td>
+    </tr>
+    </thead>
+	<tbody>
+    <tr>
+      <td>{t}This actor is your{/t} : </td>
+      <td>
+        	<input type="radio" name="SupplierCustomer_Type" value="0"{$IsCustomer} id="isCustomer"
+			onclick="$('DocumentModel').style.display=this.checked?'block':'none';
+              $('invoiceByMail').style.display=this.checked?'block':'none';
+              $('olAccountLabel').style.display=this.checked?'none':'block';
+              $('olAccountList').style.display=this.checked?'none':'block';
+              {literal}if ($('withTvaSurtax').value==1) { {/literal}
+                $('tvaSurtaxLabel').style.display=this.checked?'block':'none';
+                $('tvaSurtax').style.display=this.checked?'block':'none';
+              {literal}}{/literal};
+              {literal}if ($('withFodecTax').value==1) { {/literal}
+                $('fodecTaxLabel').style.display=this.checked?'block':'none';
+                $('fodecTax').style.display=this.checked?'block':'none';
+              {literal}}{/literal};
+			  {literal}if ($('withTaxStamp').value==1) { {/literal}
+                $('taxStampLabel').style.display=this.checked?'block':'none';
+                $('taxStamp').style.display=this.checked?'block':'none';
+              {literal}}{/literal}"; />
+            <label for="isCustomer">{t}Customer{/t}</label>&nbsp;&nbsp;
+        	<input type="radio" name="SupplierCustomer_Type" value="1"{$IsSupplier} id="isSupplier"
+			onclick="$('DocumentModel').style.display=this.checked?'block':'none';
+              $('invoiceByMail').style.display='none';
+              $('olAccountLabel').style.display=this.checked?'block':'none';
+              $('olAccountList').style.display=this.checked?'block':'none';
+              $('tvaSurtaxLabel').style.display='none';$('tvaSurtax').style.display='none';
+              $('fodecTaxLabel').style.display='none';$('fodecTax').style.display='none';
+              $('taxStampLabel').style.display='none';$('taxStamp').style.display='none';" />
+            <label for="isSupplier">{t}Supplier{/t}</label>&nbsp;&nbsp;
+        	<input type="radio" name="SupplierCustomer_Type" value="-1" id="isNothing"
+			onclick="$('DocumentModel').style.display=this.checked?'none':'block';
+              $('invoiceByMail').style.display='none';$('olAccountLabel').style.display='none';
+              $('olAccountList').style.display='none';
+              $('tvaSurtaxLabel').style.display='none';$('tvaSurtax').style.display='none';
+              $('fodecTaxLabel').style.display='none';$('fodecTax').style.display='none';
+              $('taxStampLabel').style.display='none';$('taxStamp').style.display='none';" />
+            <label for="isNothing">{t}Unrelated{/t}</label>
+	  </td>
+      <td><div id="olAccountLabel" style="display:{if $IsSupplier != ''}block{else}none{/if};">
+        {if $isRootConnected} {t}OnLogistics account{/t} : (@){/if}</div>&nbsp;
+      </td>
+      <td><div id="olAccountList" style="display:{if $IsSupplier != ''}block{else}none{/if};">
+	  	{if $isRootConnected}<select name="Actor_OnlogisticsAccount" onchange="checkActors();" id="Actor_OnlogisticsAccount" style="width:100%">
+			{$OnlogisticsAccountList}
+		</select>{/if}</div>&nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td>{t}Payment modalities{/t} :</td>
+      <td>
+	  	<select name="SupplierCustomer_Modality" style="width:100%">
+			{$ModalityList}
+		</select>
+	  </td>
+      <td>{t}Number of days{/t} :</td>
+      <td>
+	  	<input name="SupplierCustomer_TotalDays" type="text" id="SupplierCustomer_TotalDays"
+          style="width:100%" value="{if $SupplierCustomer != 0}{$SupplierCustomer->getTotalDays()}{/if}" />
+	  </td>
+    </tr>
+    <tr>
+      <td>{t}Option{/t} :</td>
+      <td>
+	    <select name="SupplierCustomer_Option" style="width:100%">
+			{$OptionList}
+		</select>
+	  </td>
+	  <td colspan="2">&nbsp;</td>
+    </tr>
+    <tr>
+      <td>{t}Subject to VAT{/t} : </td>
+      <td>
+        <input type="radio" name="SupplierCustomer_HasTVA" id="hasTva" value="1"
+		  {if $SupplierCustomer_HasTVA}checked="checked"{/if} /><label for="hasTva">{t}Yes{/t}
+		</label>&nbsp;
+        <input type="radio" name="SupplierCustomer_HasTVA" id="hasNoTva" value="0"
+		  {if $SupplierCustomer_HasTVA == 0}checked="checked"{/if} /><label for="hasNoTva">{t}No{/t}
+		</label>
+	  </td>
+      <td><div id="tvaSurtaxLabel" style="display:{if $withTvaSurtax eq 1 and $IsCustomer != ''}block{else}none{/if};">
+        {t}Subject to VAT overtaxed{/t} :&nbsp;</div>
+        <div id="fodecTaxLabel" style="display:{if $withFodecTax eq 1 and $IsCustomer != ''}block{else}none{/if};">
+        {t}Subject to FODEC tax{/t} :&nbsp;</div>
+        <div id="taxStampLabel" style="display:{if $withTaxStamp eq 1 and $IsCustomer != ''}block{else}none{/if};">
+        {t}Subject to tax stamp{/t} :&nbsp;</div>
+      </td>
+      <td><div id="tvaSurtax" style="display:{if $withTvaSurtax eq 1 and $IsCustomer != ''}block{else}none{/if};">
+        <input type="radio" name="SupplierCustomer_HasTvaSurtax" id="hasTvaSurtax" value="1"
+		  {if $SupplierCustomer_HasTvaSurtax}checked="checked"{/if} /><label for="hasTvaSurtax">{t}Yes{/t}
+		</label>&nbsp;
+        <input type="radio" name="SupplierCustomer_HasTvaSurtax" id="hasNoTvaSurtax" value="0"
+		  {if $SupplierCustomer_HasTvaSurtax == 0}checked="checked"{/if} /><label for="hasNoTvaSurtax">{t}No{/t}
+		</label>
+        &nbsp;</div>
+        <div id="fodecTax" style="display:{if $withFodecTax eq 1 and $IsCustomer != ''}block{else}none{/if};">
+        <input type="radio" name="SupplierCustomer_HasFodecTax" id="hasFodecTax" value="1"
+		  {if $SupplierCustomer_HasFodecTax}checked="checked"{/if} /><label for="hasFodecTax">{t}Yes{/t}
+		</label>&nbsp;
+        <input type="radio" name="SupplierCustomer_HasFodecTax" id="hasNoFodecTax" value="0"
+		  {if $SupplierCustomer_HasFodecTax == 0}checked="checked"{/if} /><label for="hasNoFodecTax">{t}No{/t}
+		</label>
+        &nbsp;</div>
+        <div id="taxStamp" style="display:{if $withTaxStamp eq 1 and $IsCustomer != ''}block{else}none{/if};">
+        <input type="radio" name="SupplierCustomer_HasTaxStamp" id="hasTaxStamp" value="1"
+		  {if $SupplierCustomer_HasTaxStamp}checked="checked"{/if} /><label for="hasTaxStamp">{t}Yes{/t}
+		</label>&nbsp;
+        <input type="radio" name="SupplierCustomer_HasTaxStamp" id="hasNoTaxStamp" value="0"
+		  {if $SupplierCustomer_HasTaxStamp == 0}checked="checked"{/if} /><label for="hasNoTaxStamp">{t}No{/t}
+		</label>
+        &nbsp;</div>
+      </td>
+    </tr>
+    <tr>
+      <td>{t}Maximum outstanding debts{/t} ({$Currency}):</td>
+      <td>
+	  	<input name="SupplierCustomer_MaxIncur" type="text" id="SupplierCustomer_MaxIncur" style="width:100%" value="{if $SupplierCustomer != 0}{$SupplierCustomer->getMaxIncur()}{/if}" />
+	  </td>
+      <td>{t}Current outstanding debts{/t} ({$Currency}): </td>
+      <td>
+	    <input name="SupplierCustomer_UpateIncur" class="ReadOnlyField" type="text"
+        id="SupplierCustomer_UpateIncur" style="width:100%" value="{if $SupplierCustomer != 0}{$SupplierCustomer->getUpdateIncur()}{/if}" readonly="readonly" />
+	  </td>
+    </tr>
+	</tbody>
+</table>
+<table id="ActorBankDetail" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <thead>
+    <tr>
+      <td colspan="2"><b>{t}Bank contact{/t}</b>
+        <input type="hidden" name="ActorBankDetailToAdd" value="-1" />
+		<input type="hidden" name="ActorBankDetailToDelete" value="-1" />
+        </td>
+    </tr>
+    </thead>
+	<tbody>
+	{section name=ActorBankDetail loop=$ActorBankDetailList}
+    <tr class="{if $smarty.section.ActorBankDetail.index is even}gridRowOdd{else}gridRowEven{/if}">
+      <td>
+	  	{t}Bank{/t} {$smarty.section.ActorBankDetail.index+1} : &nbsp;
+	  	<a href="javascript:document.forms['ActorAddEdit'].elements['ActorBankDetailToAdd'].value='{$ActorBankDetailList[ActorBankDetail]->getId()}';document.forms['ActorAddEdit'].submit();">
+			{$ActorBankDetailList[ActorBankDetail]->GetBankName()} {$ActorBankDetailList[ActorBankDetail]->GetAccountNumber()}
+		</a>
+	  </td>
+      <td  align="right">
+	    <a href="javascript:document.forms['ActorAddEdit'].elements['ActorBankDetailToAdd'].value='{$ActorBankDetailList[ActorBankDetail]->getId()}';document.forms['ActorAddEdit'].submit();">
+			<img src="images/modifier.gif" border="0" alt="{t}Modify{/t}" />
+		</a>
+	    <a href="javascript:document.forms['ActorAddEdit'].elements['ActorBankDetailToDelete'].value='{$ActorBankDetailList[ActorBankDetail]->getId()}';document.forms['ActorAddEdit'].submit();">
+			<img src="images/sup.gif" border="0" alt="{t}Delete{/t}" />
+		</a>
+	  </td>
+    </tr>
+    {sectionelse}
+    <tr>
+      <td colspan="2">{t}No bank{/t}</td>
+    </tr>
+    {/section}
+	</tbody>
+    <tr>
+      <td colspan="2" align="right" class="gris2">
+	  	<a href="javascript:void(0);">
+			<img src="images/ajouter.gif" alt="{t}Add a bank{/t}"
+				onclick="document.forms['ActorAddEdit'].elements['ActorBankDetailToAdd'].value='0';return checkForm(document.forms['ActorAddEdit'], requiredFields);"
+		  		 onmouseover="window.status='{t}Add a bank{/t}'; return true;"
+				onmouseout="window.status='';return true;" />
+		</a>
+	  </td>
+    </tr>
+</table>
+<div id="DocumentModel" style="display:{$IsCustomerOrSupplier};">
+<table width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	<thead>
+    <tr>
+      <td width="20%"><b>{t}Document models{/t}</b></td>
+	  <td width="30%">&nbsp;</td>
+	  <td width="20%">&nbsp;</td>
+	  <td width="30%">&nbsp;</td>
+    </tr>
+    </thead>
+	<tbody>
+	{section name=key loop=$DocumentTypeArray}
+		{if $smarty.section.key.index mod 2 eq 0}
+    <tr>
+		{/if}
+      <td>{$DocumentTypeArray[key].DocTypeName}: </td>
+	  <td><select name="{$DocumentTypeArray[key].DocType}Model" style="width:100%">
+	  		<option value="0">{t}Select a model{/t}</option>
+			{$DocumentTypeArray[key].Options}
+		</select></td>
+	  {if $smarty.section.item.index mod 2 eq 1}
+    </tr>
+	  {/if}
+	{/section}
+	{if count($DocumentTypeArray) mod 2 eq 1}
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+	</tr>
+	{/if}
+	<tr>
+	 <td colspan="4">
+      <div id="invoiceByMail" style="display:{if $IsCustomer eq ''}none{else}block{/if};">
+        <table width="100%" border="0">
+          <tr>
+            <td width="20%">{t}Invoices reception preference{/t}:</td>
+    	    <td>
+              <input name="SupplierCustomer_InvoiceByMail" id="invoiceByMailNone" type="radio" value="0"
+              {if $SupplierCustomer != 0 && $SupplierCustomer->GetInvoiceByMail() == 0}checked="checked"{/if} />
+              <label for="invoiceByMailNone"> {t}No mail sending{/t}</label>
+              &nbsp;
+              <input  name="SupplierCustomer_InvoiceByMail" id="invoiceByMailAlert" type="radio" value="1"
+              {if $SupplierCustomer != 0 && $SupplierCustomer->GetInvoiceByMail() == 1}checked="checked"{/if} />
+              <label for="invoiceByMailAlert"> {t}Send simple alert{/t}</label>
+              &nbsp;
+              <input  name="SupplierCustomer_InvoiceByMail" id="invoiceByMailYes" type="radio" value="2"
+              {if $SupplierCustomer != 0 && $SupplierCustomer->GetInvoiceByMail() == 2}checked="checked"{/if} />
+              <label for="invoiceByMailYes"> {t}Send an invoice by email{/t}</label>
+            </td>
+          </tr>
+        {if $PdtCustomerCmdBehaviour == 3}
+          <tr>
+            <td width="20%">{t}Product orders behaviour{/t}:</td>
+    	    <td>
+              <input name="SupplierCustomer_CustomerProductCommandBehaviour"
+                id="CPCBehaviour_0" type="radio" value="0"
+                {if $SupplierCustomer != 0 && $SupplierCustomer->GetCustomerProductCommandBehaviour() == 0}checked="checked"{/if} />
+              <label for="CPCBehaviour_0"> {t}Billable{/t}</label>
+              &nbsp;
+              <input  name="SupplierCustomer_CustomerProductCommandBehaviour"
+                id="CPCBehaviour_1" type="radio" value="1"
+                {if $SupplierCustomer != 0 && $SupplierCustomer->GetCustomerProductCommandBehaviour() == 1}checked="checked"{/if} />
+              <label for="CPCBehaviour_1"> {t}Not billable, closed after prepared{/t}</label>
+              &nbsp;
+              <input  name="SupplierCustomer_CustomerProductCommandBehaviour"
+                id="CPCBehaviour_2" type="radio" value="2"
+                {if $SupplierCustomer != 0 && $SupplierCustomer->GetCustomerProductCommandBehaviour() == 2}checked="checked"{/if} />
+              <label for="CPCBehaviour_2"> {t}Not billable, closed after delivery{/t}</label>
+            </td>
+          </tr>
+        {/if}
+        </table>
+      </div>
+     </td>
+    </tr>
+
+	</tbody>
+</table>
+</div>
+<table id="suite2" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <thead>
+    <tr>
+      <td colspan="2">
+	  	<b>{t}Addresses and schedule{/t}</b>
+		<input type="hidden" name="SiteToAdd" value="-1" />
+		<input type="hidden" name="SiteToDelete" value="-1" />
+	  </td>
+	 </tr>
+    </thead>
+	<tbody>
+    {section name=Site loop=$SiteList}
+    <tr class="{if $smarty.section.Site.index is even}gridRowOdd{else}gridRowEven{/if}">
+      <td>
+	  	{t}Site{/t} {$smarty.section.Site.index+1} : &nbsp;
+	  	<a href="javascript:document.forms['ActorAddEdit'].elements['SiteToAdd'].value='{$SiteList[Site]->getId()}';document.forms['ActorAddEdit'].submit();">
+			{$SiteList[Site]->GetName()}
+		</a>
+	  </td>
+      <td align="right">
+	    <a href="javascript:document.forms['ActorAddEdit'].elements['SiteToAdd'].value='{$SiteList[Site]->getId()}';document.forms['ActorAddEdit'].submit();">
+			<img src="images/modifier.gif" alt="{t}Modify{/t}" />
+		</a>
+	    <a href="javascript:document.forms['ActorAddEdit'].elements['SiteToDelete'].value='{$SiteList[Site]->getId()}';document.forms['ActorAddEdit'].submit();">
+			<img src="images/sup.gif" alt="{t}Delete{/t}" />
+		</a>
+	  </td>
+    </tr>
+    {sectionelse}
+    <tr>
+      <td colspan="2">{t}No site{/t}</td>
+    </tr>
+    {/section}
+	</tbody>
+    <tr>
+      <td colspan="2" align="right" class="gris2">
+	  	<a href="javascript:void(0);">
+			<img src="images/ajouter.gif" alt="{t}Add a site{/t}"
+				onclick="document.forms['ActorAddEdit'].elements['SiteToAdd'].value='0';return checkForm(document.forms['ActorAddEdit'], requiredFields);"
+		  		 onmouseover="window.status='{t}Add a site{/t}'; return true;"
+				onmouseout="window.status='';return true;" />
+		</a>
+	  </td>
+    </tr>
+  <thead>
+    <tr>
+        <td colspan="2">{t}Main Site{/t}</td>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td colspan="2">
+            <select id="Actor_MainSite" name="MainSite_ID">
+            {section name=Site loop=$SiteList}
+            <option value="{$SiteList[Site]->getId()}"
+            {if $SiteList[Site]->getId() == $MainSiteId} selected="selected"{/if}
+            >{$SiteList[Site]->getName()}</option>
+            {/section}
+        </select>
+        </td>
+    </tr>
+</tbody>
+  </tr>
+</table>
+{if $withCommRights}
+<table width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+  <thead>
+    <tr>
+      <td colspan="4"> <b>{t}Qualification{/t}</b></td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{t}NAF code{/t} : </td>
+      <td>
+	    <input name="CustomerProperties_NAFCode" type="text"
+        id="CustomerProperties_NAFCode" style="width:100%"
+        value="{if $CustomerProperties != 0}{$CustomerProperties->getNAFCode()}{/if}" />
+	  </td>
+      <td>{t}Situation{/t} :</td>
+      <td>
+	  	<select name="CustomerProperties_Situation_ID" style="width:100%">
+	  		<option value="0">{t}Select a situation{/t}</option>
+			{$CustomerSituationList}
+		</select>
+	  </td>
+    </tr>
+    <tr>
+      <td>{t}Commercial potential{/t} :</td>
+      <td>
+	  	<select name="CustomerProperties_Potential_ID" style="width:100%">
+	  		<option value="0">{t}Select a potential{/t}</option>
+			{$CustomerPotentialList}
+		</select>
+	  </td>
+      <td>{t}Visit frequency{/t} :</td>
+      <td>
+	    <select name="CustomerProperties_PersonalFrequency_ID"
+        style="width:100%" onchange="checkForDefault()">
+	  		<option value="0">{t}None{/t}</option>
+	  		<option value="-1">{t}The default{/t}</option>
+			{$CustomerFrequencyList}
+		</select>
+	  </td>
+    </tr>
+    <tr>
+      <td>{t}Priority order{/t} :</td>
+      <td>
+	  	<input name="CustomerProperties_PriorityLevel" type="text"
+          readonly="readonly" id="CustomerProperties_PriorityLevel" style="width:100%"
+          value="{if $CustomerProperties != 0}{$CustomerProperties->getPriorityLevel()}{/if}" />
+	  </td>
+      <td>{t}Next visit{/t} :</td>
+      <td>
+        <textarea name="ActionDate" type="textarea" readonly="readonly" id="ActionDate" style="width:100%" rows="3">
+{$nextMeeting}
+	    </textarea>
+	  </td>
+    </tr>
+  </tbody>
+</table>
+{/if}
+<table width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+    <tfoot>
+    <tr>
+      <td colspan="2" style="border:1px outset #AAAAAA">
+        <div align="right">
+        <input class="button" value="{t}Ok{/t}" type="submit"
+        onclick="return checkForm(document.forms['ActorAddEdit'], requiredFields);" />
+        &nbsp;
+		<input class="button" onclick="window.location.href='{$retURL}'" value="{t}Cancel{/t}" type="button" />
+        </div>
+      </td>
+    </tr>
+	</tfoot>
+  </table>
+</form>

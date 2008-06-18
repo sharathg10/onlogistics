@@ -1,0 +1,49 @@
+{if $error_msg != ''}
+<br />
+<div id="error_msg">{$error_msg}</div><br />
+{/if}
+<br /><br />
+<form method="post" action="{$formaction}">
+<div id="loginDialog">
+  <div id="loginForm">
+  <input type="hidden" name="redirect" value="{$url}" />
+  {if $ForceLogin eq 1}
+  <input type="hidden" name="ForceLogin" value="1" />
+  {/if}
+  {$extraparams}
+    <div>
+        <img src="images/login.png" alt="{t}Please sign in with your username and password{/t}" />
+    </div>
+    <strong>{t}Please sign in{/t}</strong>
+    <br /><br />
+    <p>&nbsp;</p>
+        <p>
+			<label for="login">{t}Username{/t} : </label>
+			<input name="login" type="text" id="login" accesskey="l" value="{$login}" style="width:150px" />
+		</p>
+		<p>
+			<label for="password">{t}Password{/t} : </label>
+			<input name="password" type="password" id="password" accesskey="p" value="{$password}" style="width:150px" />
+		</p>
+		<p>
+            <label for="login_language_select">{t}Application language{/t} : </label>
+			<select name="language" id="login_language_select" style="width:150px">
+            {foreach key=key item=item from=$languages}
+              <option value="{$key}">{$item}</option>
+            {/foreach}
+            </select>
+		</p>
+		<br />
+        <input type="submit" value="Connection" accesskey="k" name="OK" />
+  </div>
+</div>
+</form>
+{literal}
+<script type="text/javascript">
+//<![CDATA[
+connect(window, 'onload', function() {
+	$('login').focus();
+});
+//]]>
+</script>
+{/literal}

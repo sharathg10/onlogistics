@@ -1,0 +1,18 @@
+    // RatingType::isDeletable() {{{ 
+
+    /**
+     * isDeletable 
+     * 
+     * @access public
+     * @return void
+     */
+    public function isDeletable() {
+        $mapper = Mapper::singleton('Rating');
+        $collection = $mapper->loadCollection(array('Type' => $this->getId()));
+        if (!Tools::isEmptyObject($collection)) {
+            return false;
+        } 
+        return true;
+    }
+
+    // }}}

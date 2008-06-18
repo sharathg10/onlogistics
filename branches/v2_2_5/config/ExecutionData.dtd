@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!-- $id$ -->
+<!ELEMENT command (id, date, number, incoterm, wishedstartdate, merchandisevalue, additionnalgaranties, handing, port, packing, insurance, totalht, totalttc, state, printbl?, printinvoice?, destinator, expeditor, commanditem*)>
+<!ELEMENT id (#PCDATA)>
+<!ELEMENT date (#PCDATA)>
+<!ELEMENT number (#PCDATA)>
+<!ELEMENT incoterm (#PCDATA)>
+<!ELEMENT wishedstartdate (#PCDATA)>
+<!ELEMENT merchandisevalue (#PCDATA)>
+<!ELEMENT additionnalgaranties (#PCDATA)>
+<!ELEMENT handing (#PCDATA)>
+<!ELEMENT port (#PCDATA)>
+<!ELEMENT packing (#PCDATA)>
+<!ELEMENT insurance (#PCDATA)>
+<!ELEMENT totalht (#PCDATA)>
+<!ELEMENT totalttc (#PCDATA)>
+<!ELEMENT state (#PCDATA)>
+<!ELEMENT printbl (#PCDATA)>
+<!ELEMENT printinvoice (#PCDATA)>
+<!ELEMENT destinator (id, name, paymentcondition, deliveryaddress, invoiceaddress)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT paymentcondition (#PCDATA)>
+<!ELEMENT deliveryaddress (streetnumber, streetname, complement, cedex, zipcode, cityname, countryname)>
+<!ELEMENT streetnumber (#PCDATA)>
+<!ELEMENT streetname (#PCDATA)>
+<!ELEMENT complement (#PCDATA)>
+<!ELEMENT cedex (#PCDATA)>
+<!ELEMENT zipcode (#PCDATA)>
+<!ELEMENT cityname (#PCDATA)>
+<!ELEMENT countryname (#PCDATA)>
+<!ELEMENT invoiceaddress (streetnumber, streetname, complement, cedex, zipcode, cityname, countryname)>
+<!ELEMENT expeditor (id, name, paymentcondition, deliveryaddress, invoiceaddress)>
+<!ELEMENT commanditem (id, initialproductname?, initialproductbasereference?,initialsellunitquantity?, productbasereference, productname, productweight, priceht, pricettc, tvarate, sellunittype, packagingnumbercoefficient, sellunitquantity, quantity, totalht, totalttc, activatedmovement?, executedmovement?)>
+<!ELEMENT initialproductname (#PCDATA)>
+<!ELEMENT initialproductbasereference (#PCDATA)>
+<!ELEMENT initialsellunitquantity (#PCDATA)>
+<!ELEMENT productbasereference (#PCDATA)>
+<!ELEMENT productname (#PCDATA)>
+<!ELEMENT productweight (#PCDATA)>
+<!ELEMENT priceht (#PCDATA)>
+<!ELEMENT pricettc (#PCDATA)>
+<!ELEMENT tvarate (#PCDATA)>
+<!ELEMENT sellunittype (#PCDATA)>
+<!ELEMENT packagingnumbercoefficient (#PCDATA)>
+<!ELEMENT sellunitquantity (#PCDATA)>
+<!ELEMENT quantity (#PCDATA)>
+<!ELEMENT activatedmovement (id, type, state, startdate, enddate, quantity, location*)>
+<!ELEMENT type (#PCDATA)>
+<!ELEMENT startdate (#PCDATA)>
+<!ELEMENT enddate (#PCDATA)>
+<!ELEMENT location (name, quantity)>
+<!ELEMENT executedmovement (id, type, reference, quantity, state, comment?, startdate, enddate, location*)>
+<!ELEMENT reference (#PCDATA)>
+<!ELEMENT comment (#PCDATA)>

@@ -1,0 +1,306 @@
+ <!-- $Id$ -->
+ <title>{t}Task details{/t}</title>
+ <body  leftmargin="2" topmargin="2" marginwidth="2" marginheight="2">
+<form name="TaskDetails" method="post">
+
+  <div id="TaskDetails">
+    <table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+	  <thead>
+      <tr>
+        <td colspan="2">{t}Task details{/t}<input type="hidden" name="tagret" /></td>
+      </tr>
+	  </thead>
+	  <tbody>
+      <tr>
+        <td width="50%"><strong>{t}Operation name{/t} : </strong>[$JS_OpName]</td>
+        <td width="50%"><strong>{t}Index{/t} : </strong>[$JS_OpRanking]</td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td><strong>{t}Execution site{/t} : </strong>[$JS_OpPlace]</td>
+      </tr>
+      <tr>
+        <td><strong>{t}Task name{/t} : </strong>[$JS_TaskName]</td>
+        <td><strong>{t}Task index{/t} : </strong>[$JS_TaskRanking]</td>
+      </tr>
+      <tr>
+        <td><strong>{t}previous task{/t} :</strong> [$JS_PreviousTaskName]
+          ([$JS_PreviousTaskPlace])</td>
+        <td><strong>{t}next task{/t} :</strong> [$JS_NextTaskName] ([$JS_NextTaskPlace])</td>
+      </tr>
+      <tr>
+        <td><strong>{t}Deadline date{/t} :</strong></td>
+        <td> <select name="PivotDate" onchange="modifyPivotDate(this.value);">
+            <option value='-1'>{t}No{/t}</option>
+            <option value='{$PIVOTTASK_BEGIN}'>{t}task beginning date/time{/t}</option>
+            <option value='{$PIVOTTASK_END}'>{t}task end date/time{/t}</option>
+          </select> </td>
+      </tr>
+	  </tbody>
+    </table>
+  </div>
+  <div id="ProductionTask" style="display:none">
+    <table width="100%" border="0" cellpadding="4" cellspacing="0" class="form">
+	  <thead>
+      <tr>
+        <td colspan="4">{t}ASSEMBLY{/t} :</td>
+      </tr>
+	  </thead>
+	  <tbody>
+	  <tr>
+	    <td width="20%">{$form.Nomenclature.label}: </td>
+	    <td width="30%">{$form.Nomenclature.html}</td>
+	    <td width="20%">{$form.Component.label}: </td>
+	    <td width="30%">{$form.Component.html}</td>
+	  </tr>
+	  </tbody>
+	</table>
+  </div>
+  <div id="TransportTask" style="display:none">
+    <table width="100%" border="0" cellpadding="4" cellspacing="0" class="form">
+	  <thead>
+      <tr>
+        <td colspan="4">{t}CARRIAGE{/t} :</td>
+      </tr>
+	  </thead>
+	  <tbody>
+      <tr>
+        <td width="9%" nowrap="nowrap">{t}Departure zone{/t} : </td>
+        <td colspan="3"> <select name="DepartureZone" id="DepartureZone"
+          onchange="onUpdateZone('Departure');">
+            <option value="0">{t}All zones{/t}</option>
+            {$zoneOptions}
+          </select></td>
+      </tr>
+      <tr>
+        <td width="9%" nowrap="nowrap">{t}Departure actor{/t} : </td>
+        <td width="36%">
+		  <select name="DepartureActor" id="DepartureActor"
+            onchange="UpdateSiteList('DepartureActor', 'DepartureSite', $('DepartureZone').value);">
+          </select>
+		</td>
+        <td width="9%" nowrap="nowrap">{t}Site{/t} : </td>
+        <td width="36%"> <select name="DepartureSite" id="DepartureSite"></select></td>
+      </tr>
+      <tr>
+        <td width="9%" nowrap="nowrap">{t}Arrival zone{/t} : </td>
+        <td colspan="3"> <select name="ArrivalZone" id="ArrivalZone"
+            onchange="onUpdateZone('Arrival');">
+            <option value="0">{t}All zones{/t}</option>
+            {$zoneOptions}
+          </select></td>
+      </tr>
+      <tr>
+        <td width="9%" nowrap="nowrap">{t}Arrival actor{/t} : </td>
+        <td width="36%">
+		  <select name="ArrivalActor" id="ArrivalActor"
+            onchange="UpdateSiteList('ArrivalActor', 'ArrivalSite', $('ArrivalZone').value);">
+          </select>
+		</td>
+        <td width="9%" nowrap="nowrap">{t}Site{/t} : </td>
+        <td width="36%"> <select name="ArrivalSite" id="ArrivalSite"></select></td>
+      </tr>
+	  <tr>
+        <td nowrap="nowrap">{t}Distance{/t} ({t}Km{/t})* : </td>
+        <td colspan="3"><input name="KilometerNumber" type="text" size="8" value="" /> {t}Km{/t}</td>
+      </tr>
+
+    <tr>
+      <td width="22%">{t}Departure date{/t} :</td>
+      <td>
+        <label><input type="radio" name="FixedDeparture" value="0" checked="checked"
+          onClick="switchDepartureDateVisibility(this.value);">{t}None{/t}</label><br/>
+        <label><input type="radio" name="FixedDeparture" value="1"
+          onClick="switchDepartureDateVisibility(this.value);">{t}Fixed date/time{/t}</label><br/>
+        <label><input type="radio" name="FixedDeparture" value="2"
+          onClick="switchDepartureDateVisibility(this.value);">{t}Weekly{/t}</label><br/>
+        <label><input type="radio" name="FixedDeparture" value="3"
+          onClick="switchDepartureDateVisibility(this.value);">{t}Everyday at the same hour{/t}</label>
+      </td>
+      <td colspan="2">
+	   <table>
+          <tr>
+            <td> <div id="LDepartureFixedDate" style="position:relative;display:none">{$DepartureFixedDate}</div>
+                <div id="LDepartureWeeklyDay" style="position:relative;display:none">
+                  <select name="DepartureWeeklyDay">
+                    <option value="1">{t}Monday{/t}</option>
+                    <option value="2">{t}Tuesday{/t}</option>
+                    <option value="3">{t}Wednesday{/t}</option>
+                    <option value="4">{t}Thursday{/t}</option>
+                    <option value="5">{t}Friday{/t}</option>
+                    <option value="6">{t}Saturday{/t}</option>
+                    <option value="7">{t}Sunday{/t}</option>
+                  </select>
+                </div></td>
+            <td> <div id="LDepartureFixedTime" style="position:relative;display:none">{$DepartureFixedTime}</div></td>
+          </tr>
+        </table>
+	  </td>
+    </tr>
+    <tr>
+      <td width="22%">{t}Arrival date{/t} :</td>
+      <td>
+        <label><input type="radio" name="FixedArrival" value="0" checked="checked"
+          onClick="switchArrivalDateVisibility(this.value);">{t}None{/t}</label><br/>
+        <label><input type="radio" name="FixedArrival" value="1"
+          onClick="switchArrivalDateVisibility(this.value);">{t}Fixed date/time{/t}</label><br/>
+        <label><input type="radio" name="FixedArrival" value="2"
+          onClick="switchArrivalDateVisibility(this.value);">{t}Weekly{/t}</label><br/>
+        <label><input type="radio" name="FixedArrival" value="3"
+          onClick="switchArrivalDateVisibility(this.value);">{t}Everyday at the same hour{/t}</label>
+      </td>
+      <td colspan="2">
+		  <table>
+            <tr>
+              <td> <div id="LArrivalFixedDate" style="position:relative;display:none">{$ArrivalFixedDate}</div>
+                <div id="LArrivalWeeklyDay" style="position:relative;display:none">
+                  <select name="ArrivalWeeklyDay">
+                    <option value="1">{t}Monday{/t}</option>
+                    <option value="2">{t}Tuesday{/t}</option>
+                    <option value="3">{t}Wednesday{/t}</option>
+                    <option value="4">{t}Thursday{/t}</option>
+                    <option value="5">{t}Friday{/t}</option>
+                    <option value="6">{t}Saturday{/t}</option>
+                    <option value="7">{t}Sunday{/t}</option>
+                  </select>
+                </div>
+			  </td>
+              <td>
+			    <div id="LArrivalFixedTime" style="position:relative;display:none">{$ArrivalFixedTime}</div>
+			  </td>
+            </tr>
+          </table>
+		</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+
+  <table width="100%" border="0" cellpadding="4" cellspacing="0" class="form">
+    <thead>
+    <tr valign="baseline" class="gris1">
+      <td colspan="4">
+        <input type="checkbox" name="AutoAlert" onclick="fw.dom.toggleElement('Users',this.checked);" />
+          &nbsp;{t}Alert automatic invoice{/t}
+      </td>
+    </tr>
+	</thead>
+  </table>
+
+<div id='Users' style='display:block'>
+  <table width="100%" border="0" cellpadding="4" cellspacing="0" class="form">
+    <tbody>
+    <tr>
+	  <td>
+		{t}Actors{/t} :
+	  </td>
+	  <td>
+		<select name="AlertedActors[]" id="AlertedActors"
+          onchange="fw.ajax.updateSelect('AlertedActors', 'AlertedUsers', 'UserAccount', 'Actor', true);" multiple="multiple">
+		</select>
+	  </td>
+	  <td>
+		{t}Users{/t} :
+	  </td>
+	  <td>
+		<select name="AlertedUsers[]" id="AlertedUsers" multiple="multiple">
+		</select>
+	  </td>
+    </tr>
+    </tbody>
+ </table>
+</div>
+  <table width="100%" border="0" cellpadding="4" cellspacing="0" class="form">
+    <thead>
+	<tr>
+      <td width="20%" nowrap="nowrap"><strong>{t}Working instructions{/t} : </strong></td>
+      <td colspan="3"><textarea name="WorkInstructions" cols="50%" rows="1">[$JS_TaskInstructions]</textarea>
+      <a href="javascript:void(0);"><img src="images/detail.gif" alt="{t}Work instructions details{/t}" border="0" onclick="popupInstructions();return false;" />
+      </td>
+    </tr>
+	</thead>
+	<tbody>
+    <tr>
+      <td nowrap="nowrap">{t}Task can be interrupted{/t} :
+        <label> </label></td>
+      <td colspan="3"><label>
+        <input name="InteruptibleTask" type="radio" value="0" />
+        {t}no{/t}</label> <label>
+        <input name="InteruptibleTask" type="radio" value="1" checked="checked" />
+        {t}yes{/t}</label> </td>
+    </tr>
+    <tr>
+      <td>{t}Task duration{/t}* : </td>
+      <td width="37%">
+	  	<input name="TaskDurationHour" type="text" value="" size=3 />
+        {t}h{/t}.
+		<input name="TaskDurationMinute" type="text" value="" size=3 />
+        {t}min{/t}.
+	  </td>
+      <td>{t}Calculation mode{/t} :</td>
+      <td><select name="DurationType">
+          <option value="{$DURATIONTYPE_FORFAIT}" selected="selected">{t}fixed price{/t}</option>
+          <option value="{$DURATIONTYPE_KG}">{t}Kg{/t}</option>
+          <option value="{$DURATIONTYPE_METER}">{t}by cube meter{/t}</option>
+          <option value="{$DURATIONTYPE_LM}">{t}by linear meter{/t}</option>
+          <option value="{$DURATIONTYPE_QUANTITY}">{t}by unit{/t}</option>
+          <option value="{$DURATIONTYPE_KM}">{t}by kilometer{/t}</option>
+        </select></td>
+    </tr>
+    <tr>
+      <td>{t}Task cost{/t}* :</td>
+      <td><input name="TaskCost" type="text" value="" /> &euro; </td>
+      <td>{t}Calculation mode{/t} :</td>
+      <td><select name="CostType">
+          <option value="{$COSTTYPE_FORFAIT}" selected="selected">{t}fixed price{/t}</option>
+          <option value="{$COSTTYPE_HOURLY}">{t}By hour{/t}</option>
+          <option value="{$COSTTYPE_KG}">{t}Kg{/t}</option>
+          <option value="{$COSTTYPE_CUBEMETTER}">{t}by cube meter{/t}</option>
+          <option value="{$COSTTYPE_LM}">{t}by linear meter{/t}</option>
+          <option value="{$COSTTYPE_QUANTITY}">{t}by unit{/t}</option>
+          <option value="{$COSTTYPE_KM}">{t}by kilometer{/t}</option>
+        </select></td>
+    </tr>
+    <tr>
+      <td>{$form.RessourceGroup.label}</td>
+      <td>{$form.RessourceGroup.html}</td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td align="left">{t}Trigger mode{/t} :</td>
+      <td> <label><input type="radio" name="TriggerMode" value="{$TRIGGERMODE_MANUAL}" checked="checked" onclick="TriggerDeltaLayer.css.display = 'none'" />
+        {t}Manual{/t}</label>
+        <label><input type="radio" name="TriggerMode" value="{$TRIGGERMODE_AUTO}" onclick="TriggerDeltaLayer.css.display = 'none'" />
+        {t}Automatic{/t}</label>
+        <label><input type="radio" name="TriggerMode" value="{$TRIGGERMODE_TEMP}" onclick="TriggerDeltaLayer.css.display = 'block'" />
+        {t}Temporal{/t}</label> </td>
+      <td colspan="2" align="left">
+	    <div id="TriggerDelta" style="display:none">
+          <table cellpadding="0" cellspacing="0">
+            <tr>
+              <td align="left">{t}Trigger delta{/t} :</td>
+              <td align="left"> <select name="TriggerDeltaSign" id="TriggerDeltaSign">
+                  <option value="+" selected="selected">+</option>
+                  <option value="-">-</option>
+                </select>
+                {$TriggerDeltaWidget} </td>
+            </tr>
+          </table>
+        </div>
+	  </td>
+    </tr>
+	</tbody>
+	<tfoot>
+    <tr>
+      <td align="right" colspan="4">
+		<input class="button" value="{t}Ok{/t}" type="submit"
+        onclick="doOk();" />
+        &nbsp;
+		<input class="button" onclick="doCancel();" value="{t}Cancel{/t}" type="button" />
+	  </td>
+    </tr>
+	</tfoot>
+  </table>
+<iframe name="RemoteScripting" src="blank.html" width="0" height="0" border="0"></iframe>
+</form>

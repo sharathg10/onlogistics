@@ -1,0 +1,45 @@
+<!--
+ * @version $Id$
+ * @copyright 2006 ATEOR
+ -->
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+  <tbody>
+	<tr class="search">
+		<td colspan="2">{t}Order{/t} {$CommandNo}</td>
+	</tr>
+	<tr class="search">
+        <td colspan="2">{t}Material tracking{/t} {$BaseReference}
+			({t}Tracking mode{/t}: aucun)&nbsp;&nbsp;
+		</td>
+	</tr>
+	<tr class="search">
+		<td width="50%">{t}Expected quantity{/t} : {$Quantity}
+		</td>
+		<td>{t}Actual assembled quantity{/t} : {$realQuantity}</td>
+	</tr>
+  </tbody>
+</table>
+<br />
+
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+  <thead>
+	<tr>
+		<td>{t}List of used SN/Lot{/t}</td>
+	</tr>
+  </thead>
+  <tbody>
+	<tr>
+		<td>{$gridContent}</td>
+	</tr>
+  </tbody>
+</table>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+  <tfoot>
+  <tr height="22">
+	<td align="right">
+	<input onclick="javascript:window.location='{$returnURL}'" name="Cancel"
+        value="{t}Back{/t}" type="button" />&nbsp;&nbsp;&nbsp;&nbsp;
+	</td>
+  </tr>
+</table>

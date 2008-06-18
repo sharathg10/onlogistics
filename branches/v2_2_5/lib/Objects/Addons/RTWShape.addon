@@ -1,0 +1,24 @@
+    // RTWShape::canBeDeleted() {{{
+
+    /**
+     * RTWShape::canBeDeleted()
+     * Retourne true si l'objet peut etre detruit en base de donnees.
+     * Un RTWShape ne doit pas etre lie a un RTWModel
+     *
+     * @access public
+     * @return boolean
+     */
+    public function canBeDeleted() {
+        $mapper = Mapper::singleton('RTWModel');
+        $testColl = $mapper->loadCollection(array('Shape' => $this->getId()));
+        
+        if (parent::canBeDeleted() && $testColl->getCount() == 0) {
+            return true;
+        }
+        if ($testColl->getCount() > 0) {
+            throw new Exception('A model already exists for this shape.');
+        }
+        return true;
+    }
+
+    // }}}

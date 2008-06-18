@@ -1,0 +1,33 @@
+<form name="NomenclatureDuplicate" method="post" action="{$formAction}">
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+  <thead>
+  <tr>
+      <td colspan="4">&nbsp;
+        <input type="hidden" name="retURL" value="{$retURL}" />
+        <input type="hidden" name="nomID" value="{$nomID}" /></td>
+  </tr>
+  </thead>
+  <tbody>
+    <tr class="search">
+	  <td width="20%">{$form.Nomenclature_Product_ID.label}</td>
+      <td width="30%">{$form.Nomenclature_Product_ID.html}</td>
+      <td width="20%">{$form.Nomenclature_Version.label}</td>
+      <td width="30%">{$form.Nomenclature_Version.html}</td>
+    </tr>
+    <tr class="search">
+      <td>{$form.Nomenclature_BeginDate.label}</td>
+      <td>{$form.Nomenclature_BeginDate.html}</td>
+	  <td>{$form.Nomenclature_EndDate.label}</td>
+      <td>{$form.Nomenclature_EndDate.html}<br><br></td>
+    </tr>
+  <tfoot>
+  <tr>
+    <td align="right" colspan="4">
+		<input name="ok" type="submit" value="{t}Ok{/t}" class="Button" />&nbsp;
+		<input name="cancel" value="{t}Cancel{/t}" type="button"
+          onclick="window.location='{$retURL}'" class="Button" />
+    </td>
+  </tr>
+  </tfoot>
+</table>
+</form>

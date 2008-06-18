@@ -1,0 +1,155 @@
+<!-- formulaire de commande de cours -->
+<form name="CourseCommand" method="POST" action="{$FormAction}">
+  <input type="hidden" name="formSubmitted" value="1">
+  <input type="hidden" name="retURL" value="{$retURL}">
+  <input type="hidden" name="Date" value="{$smarty.now|date_format:'%Y-%m-%d %T'}">
+  <input type="hidden" name="customerID" value="{$customerID}">
+  <table id="table" width="100%" cellpadding="4" cellspacing="0"
+  	class="form" border="0">
+    <thead>
+      <tr>
+	    <td colspan="4">{t}Customer informations{/t}</td>
+      </tr>
+    </thead>
+    <tbody>
+  	<tr>
+	  <td>{t}Name{/t}: </td>
+	  <td colspan="3">
+	  	<input type="textfield" name="ro1" class="ReadOnlyField"
+	  		value="{$CustomerName|default:'N/A'}"
+			style="width: 100%;text-align: left;" />
+	  </td>
+	</tr>
+  	<tr>
+	  <td>{t}Assigned instructor{/t}: </td>
+	  <td>
+	  	<input type="textfield" name="ro1" class="ReadOnlyField"
+	  		value="{$CustomerInstructor|default:'N/A'}"
+			style="width: 100%;text-align: left;" />
+	  </td>
+	  <td>{t}Solo flight allowed{/t}: </td>
+	  <td>
+	  	<input type="textfield" name="ro2" class="ReadOnlyField"
+	  		value="{if $CustomerSoloFly}{t}Yes{/t}{else}{t}No{/t}{/if}"
+			style="width: 100%;text-align: left;" />
+	  </td>
+	</tr>
+  	<tr>
+	  <td>{t}Maximum outstanding debts{/t}: </td>
+	  <td>
+	  	<input type="textfield" name="ro3" class="ReadOnlyField"
+	  		value="{$CustomerMaxIncur|default:'N/A'}"
+			style="width: 100%;text-align: left;" />
+	  </td>
+	  <td>{t}Current outstanding debts{/t}: </td>
+	  <td>
+	  	<input type="textfield" name="ro4" class="ReadOnlyField"
+	  		value="{$CustomerCurrentIncur|default:'N/A'}"
+			style="width: 100%;text-align: left;" />
+	  </td>
+	</tr>
+    </tbody>
+    <thead>
+      <tr>
+	    <td colspan="4">{t}Order informations{/t}</td>
+      </tr>
+    </thead>
+    <tbody>
+  	<tr>
+	  <td>{t}Airplane type{/t}: </td>
+	  <td>
+	    <select name="FlyType" onchange="updateInstructorSelect(this.value);">
+		  {$FlyTypeOptions}
+		</select>
+      </td>
+	  <td>{t}Wished time{/t}: </td>
+	  <td>
+	    <span id="show_Date" style="background-color:#E1E8EF;
+			border:1px #000000 dotted;
+			margin: 3px 3px 3px 3px;
+			padding: 3px 3px 3px 3px;
+			text-align: right;">
+		  {if $WishedStartDate eq 0}-- {t}select a date{/t} --{else}{$WishedStartDateDisplay}{/if}
+		</span>
+		<input type="hidden" name="WishedStartDate"
+			id="f_date_c" value="{$WishedStartDate}"/>&nbsp;
+		<input type="button" name="f_trigger_c" id="f_trigger_c" value="..."
+            style="cursor: pointer;" title="{t}Select a date{/t}" />
+	  </td>
+	</tr>
+  	<tr>
+	  <td>{t}Wished instructor{/t}: </td>
+	  <td>
+	  	<input type="hidden" name="InstructorID" value="{$InstructorID}">
+	    <select name="Instructor" {$InstructorSelectEnabled}>
+	  	  <option value="0">{t}Any{/t}</option>
+		  {$InstructorOptions}
+		</select>
+	  </td>
+	  <td>{t}Flight duration{/t}: </td>
+	  <td>
+	    {html_select_time display_seconds=false minute_interval=15
+			display_meridian=false time=$Duration|default:"00:00"}
+      </td>
+	</tr>
+	{if $CustomerSoloFly}
+  	<tr>
+	  <td>{t}Solo flight{/t}: </td>
+	  <td>
+	    <label><input type="radio" name="SoloFly" value="0"
+			{if $SoloFly eq 0}checked{/if} />{t}no{/t}</label>&nbsp;
+	    <label><input type="radio" name="SoloFly" value="1"
+			{if $SoloFly}checked{/if} />{t}yes{/t}</label>
+	  </td>
+	  <td>&nbsp;</td>
+	  <td>&nbsp;</td>
+	</tr>
+	{/if}
+    </tbody>
+    <thead>
+      <tr>
+	    <td colspan="4">{t}Comment{/t}</td>
+      </tr>
+    </thead>
+	<tbody>
+  	<tr>
+	  <td colspan="4">{t}Comment (optional){/t}: </td>
+	</tr>
+	<tr>
+	  <td colspan="4">
+	    <textarea name="Comment" style="width: 100%;">{$Comment}</textarea>
+	  </td>
+	</tr>
+    </tbody>
+    <tfoot>
+    <tr>
+      <td align="right" colspan="4">
+	    <input type="submit" name="Cancel" value="{t}Cancel{/t}" class="button" />
+		<!--
+	    <input type="submit" name="Devis" value="Devis" class="button"
+			onclick="return checkForm(document.forms['CourseCommand'], requiredFields);" />
+		-->
+	    <input type="submit" name="Command" value="{t}Order{/t}" class="button"
+			onclick="return checkForm(document.forms['CourseCommand'], requiredFields);" />
+	  </td>
+    </tr>
+    </tfoot>
+  </table>
+</form>
+{literal}
+<!-- script à laisser ici, après le formulaire -->
+<script>
+Calendar.setup({
+    inputField     : "f_date_c", // id of the input field (hidden)
+    ifFormat       : "%Y-%m-%d %H:%M:00", // format of the input field
+	displayArea    : "show_Date", // ID of the span where the date is to be shown
+	daFormat       : "%A %e %B %Y %H:%M", // format of the displayed date
+    button         : "f_trigger_c", // trigger for the calendar (button ID)
+    align          : "Tl", // alignment (defaults to "Bl")
+	date		   : "", // date affichee par defaut
+    singleClick    : true,
+	dateStatusFunc : dateStatusHandler
+   });
+</script>
+{/literal}
+<!-- fin formulaire de commande de cours -->

@@ -1,0 +1,25 @@
+<form name="Detail">
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+  <thead>
+  <tr>
+    <td>{t}Comment details{/t}</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+	<td><textarea cols="90" rows="15" name="detailField"></textarea></td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <td>
+    <input class="button" value="{t}Ok{/t}" type="submit"
+    onclick="self.close();" />
+    &nbsp;
+	<input class="button" onclick="UpdateInstructions();window.close();return false;"
+    value="{t}Cancel{/t}" type="button" />
+	</td>
+  </tr>
+  </tfoot>
+</table>
+</form>

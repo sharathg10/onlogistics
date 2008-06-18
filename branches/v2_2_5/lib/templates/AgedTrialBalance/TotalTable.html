@@ -1,0 +1,35 @@
+<!--$Id$ -->
+<br /> 
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+    <thead>
+        <tr>
+            <td>{t}Date{/t}</td>
+            <td>{t}Total{/t}</td>
+        </tr>
+    </thead>
+    <tbody>
+{foreach from=$totals item=cur key=symbol name=currencies}
+    {foreach from=$cur item=sum key=date name=month}
+    {if $smarty.foreach.month.index % 2 == 0}
+        {assign var="class" value="gridRowEven"}
+    {else}
+        {assign var="class" value="gridRowOdd"}
+    {/if}
+    <tr class='{$class}'>
+        <td>{$date}</td>
+        <td>{$sum} {$symbol}</td>
+    </tr>
+    {/foreach}
+{/foreach}
+    </tbody>
+{if $displayCloseButton}
+    <tfoot>
+        <tr>
+            <td colspan="2">
+                <input type="button" onclick="javascript:window.close();" 
+                name="Close" value="{t}Close{/t}" />
+            </td>
+        </tr>
+    </tfoot>
+{/if}
+</table>

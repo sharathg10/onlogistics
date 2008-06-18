@@ -1,0 +1,95 @@
+{$form.javascript}
+<form {$form.attributes}>
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form" id="searchForm">
+  <tbody>
+    <tr class="search">
+	  <td width="25%">{$form.DocumentModel_Name.label}
+        <input type="hidden" name="formSubmitted" value="1" />
+        <input type="hidden" name="saveProperty" value="0" />
+      </td>
+      <td>{$form.DocumentModel_Name.html}</td>
+    </tr>
+    <tr class="search">
+      <td>{$form.DocumentModel_DocType.label}</td>
+      <td>{$form.DocumentModel_DocType.html}</td>
+    </tr>
+	<tr class="search">
+      <td>{t}Default model{/t}</td>
+      <td>{t}No{/t} <input type=radio name="DocumentModel_Default" value="0" {$DefaultFalse} />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	  	  {t}Yes{/t} <input type=radio name="DocumentModel_Default" value="1" {$DefaultTrue} />
+      </td>
+    </tr>
+    <tr class="search">
+	  <td>{$form.LogoType.label}</td>
+      <td>{$form.LogoType.html}</td>
+    </tr>
+	<tr class="search">
+	  <td>{$form.DocumentModel_Footer.label}</td>
+	  <td>{$form.DocumentModel_Footer.html}</td>
+    </tr>
+<tr class="search">
+      <td>{t}Show duplicate text{/t}</td>
+      <td>{t}No{/t} <input type=radio name="DocumentModel_DisplayDuplicata" value="0" {$DefaultDuplicataFalse} />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {t}Yes{/t} <input type=radio name="DocumentModel_DisplayDuplicata" value="1" {$DefaultDuplicataTrue} /></td>
+    </tr>
+    <tr class="search">
+      <td>{t}Display total weight{/t}</td>
+      <td>{t}No{/t} <input type=radio name="DocumentModel_DisplayTotalWeight" value="0" {$DefaultTotalWeightFalse} />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          {t}Yes{/t} <input type=radio name="DocumentModel_DisplayTotalWeight" value="1" {$DefaultTotalWeightTrue} />
+      </td>
+    </tr>
+    <tr class="search">
+      <td>{t}Display details of products related to a service{/t}</td>
+      <td>{t}No{/t} <input type=radio name="DocumentModel_DisplayProductDetail"
+          value="0" {$DefaultProductDetailFalse} />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          {t}Yes{/t} <input type=radio name="DocumentModel_DisplayProductDetail"
+          value="1" {$DefaultProductDetailTrue} />
+      </td>
+    </tr>
+    <tr class="search">
+      <td colspan="2">{$form.DocumentModel_Number.label}&nbsp;
+      {$form.DocumentModel_Number.html}
+      </td>
+    </tr>
+    </tbody>
+    </table>
+    <table width="100%" border="0" cellspacing="0" cellpadding="4" class="form" id="searchForm">
+    <thead>
+        <tr>
+        <td colspan="2">{t}Personalization{/t}</td>
+        </tr>
+   </thead>
+   <tbody>
+    <tr>
+        <td>{t}Designation field{/t}
+        <td>
+        <input type="button" value="{t}Customize{/t}"
+        onclick="window.open('DocumentModelPropertyAddEdit.php?grid=1', '{t}property_list{/t}', 'scrollbars=yes, location=no, width=790, height=590');" />
+        </td>
+    </tr>
+    <tr>
+        <td>{t}Order informations{/t}</td>
+        <td>
+        <input type="button" value="{t}Customize{/t}"
+        onclick="window.open('DocumentModelPropertyAddEdit.php?grid=2', '{t}property_list{/t}', 'scrollbars=yes, location=no, width=790, height=590');" />
+        </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td align="right" colspan="2">
+        <input class="button" value="{t}Ok{/t}" type="submit"
+        onclick="DocumentModelAddEdit.formSubmitted.value=1;" />
+        &nbsp;&nbsp;
+		<input class="button" onclick="window.location.href='DocumentModelList.php'"
+        value="{t}Cancel{/t}" type="button" />
+	    &nbsp;&nbsp;&nbsp;&nbsp;
+	  </td>
+    </tr>
+  </tfoot>
+</table>
+</form>

@@ -1,0 +1,26 @@
+<!--$Id$ -->
+{$form.javascript}
+<form {$form.attributes} class="generic_form">
+{$form.hidden}
+<input type="hidden" name="formSubmitted" value="1" />
+<table width="100%" border="0" cellspacing="0" cellpadding="4">
+  <thead>
+  <tr>
+    <th>{$form.MimeType_IDs.label.0}</th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+	<td>
+	   <input name="Ok" type="submit" value="{t}Ok{/t}" class="button" />&nbsp;
+    </td>
+  </tr>
+  </tfoot>
+  <tbody>
+  <tr>
+    <td>{$form.MimeType_IDs.html}</td>
+  </tr>
+  </tbody>
+</table>
+</form>
+

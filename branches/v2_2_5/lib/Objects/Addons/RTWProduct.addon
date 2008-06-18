@@ -1,0 +1,79 @@
+    // RTWProduct::toString() {{{
+
+    /**
+     * Retourne le nom du produit, les informations de ses options et sa
+     * taille.
+
+     * @access public
+     * @return string
+     */
+    function toString() {
+        $sep   = '/';
+        $ret   = $this->getName();
+        $model = $this->getModel();
+        if (!($model instanceof RTWModel)) {
+            return $ret;
+        }
+        $attrs = array('Material1', 'Material2', 'Accessory1', 'Accessory2');
+        foreach ($attrs as $attr) {
+            $getter = 'get' . $attr;
+            if (($obj = $model->$getter()) instanceof RTWMaterial) {
+                $ret .= " $sep " . $obj->toString();
+            }
+        }
+        if (($size = $this->getSize()) instanceof RTWSize) {
+            $ret .= " $sep " . _('Size') . ': ' . $size->toString();
+        }
+        return $ret;
+    }
+
+    // }}}
+    // RTWProduct::getProperty() {{{
+
+    /**
+     *
+     * @access public
+     * @return void
+     */
+    public function getProperty($getter)
+    {
+        if (method_exists($this, $getter)) {
+            return $this->$getter();
+        }
+        if (($model = $this->getModel()) instanceof RTWModel) {
+            if (method_exists($model, $getter)) {
+                $ret = $model->$getter();
+                if ($ret instanceof Object) {
+                    return $ret->toString();
+                }
+                return $ret;
+            }
+        }
+        return parent::getProperty($getter);
+    }
+
+    // }}}
+    // RTWProduct::setProperty() {{{
+
+    /**
+     *
+     * @access public
+     * @return void
+     */
+    public function setProperty($setter, $prop_value)
+    {
+        if (method_exists($this, $setter)) {
+            $this->$setter($prop_value);
+            return;
+        }
+        if (($model = $this->getModel()) instanceof RTWModel) {
+            if (method_exists($model, $setter)) {
+                $model->$setter($prop_value);
+                $model->save();
+                return;
+            }
+        }
+        return parent::setProperty($setter, $prop_value);
+    }
+
+    // }}}

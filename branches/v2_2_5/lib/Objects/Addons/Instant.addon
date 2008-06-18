@@ -1,0 +1,27 @@
+    // Instant::getNearestOccurence() {{{
+
+    /**
+     * Renvoie le timestamp correspondant à la première occurence valide à
+     * partir de $fromThisDate
+     * 
+     * @param integer $fromThisDate
+     * @return mixed integer ou bool: le timestamp correspondant ou false
+     * @return integer $type
+     */
+    function getNearestOccurence($fromThisDate, $type=true)
+    {
+        
+        $dateTS = DateTimeTools::MysqlDateToTimeStamp($this->getDate());
+        if($type) {
+            if ($dateTS >= $fromThisDate) {
+                return $dateTS;                    
+            }
+        } else {
+            if ($dateTS <= $fromThisDate) {
+                return $dateTS;
+            }
+        } 
+        return false;
+    }
+
+    // }}}

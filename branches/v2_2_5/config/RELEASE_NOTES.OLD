@@ -1,0 +1,4593 @@
+# @version $Id$
+
+# -------------------------------------------
+# RELEASE 1.1.2
+# -------------------------------------------
+ALTER TABLE ProductHandingByCategory DROP COLUMN _Type;
+DROP TABLE IF EXISTS ProductQuantityByCategory;
+CREATE TABLE ProductQuantityByCategory(
+_Id int( 11 ) unsigned NOT NULL default '0',
+_MinimumQuantity decimal( 10, 3 ) default NULL ,
+_MinimumQuantityType int( 1 ) NOT NULL default 0,
+_Product int( 11 ) NOT NULL default '0',
+_Category int( 11 ) NOT NULL default '0',
+PRIMARY KEY ( _Id )
+) TYPE = InnoDB DEFAULT CHARSET = latin1;
+CREATE INDEX _Product ON ProductQuantityByCategory(
+_Product
+);
+CREATE INDEX _Category ON ProductQuantityByCategory(
+_Category
+);
+ALTER TABLE ProductQuantityByCategory ADD UNIQUE _ProductCategory( _Product, _Category );
+
+-- modif de la table Category
+ALTER TABLE Category ADD
+  _Attractivity INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _Attractivity ON Category (_Attractivity);
+
+--
+-- Table structure for CustomerAttractivity
+--
+DROP TABLE IF EXISTS CustomerAttractivity;
+CREATE TABLE CustomerAttractivity (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Name VARCHAR(255) DEFAULT NULL,
+  _Level INT(11) NOT NULL DEFAULT 1,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+
+--
+-- Table structure for CustomerFrequency
+--
+DROP TABLE IF EXISTS CustomerFrequency;
+CREATE TABLE CustomerFrequency (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Name VARCHAR(255) DEFAULT NULL,
+  _Frequency INT(11) NOT NULL DEFAULT 0,
+  _Type INT(3) NOT NULL DEFAULT 1,
+  _BeginDate DATE DEFAULT NULL,
+  _EndDate DATE DEFAULT NULL,
+  _Attractivity INT(11) NOT NULL DEFAULT 0,
+  _Potential INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _Attractivity ON CustomerFrequency (_Attractivity);
+CREATE INDEX _Potential ON CustomerFrequency (_Potential);
+
+--
+-- Table structure for CustomerPotential
+--
+DROP TABLE IF EXISTS CustomerPotential;
+CREATE TABLE CustomerPotential (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Name VARCHAR(255) DEFAULT NULL,
+  _MaxValue FLOAT DEFAULT NULL,
+  _MinValue FLOAT DEFAULT NULL,
+  _UnitType INT(3) NOT NULL DEFAULT 1,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+
+--
+-- Table structure for CustomerProperties
+--
+DROP TABLE IF EXISTS CustomerProperties;
+CREATE TABLE CustomerProperties (
+  _Id int(11) unsigned NOT NULL default '0',
+  _NAFCode VARCHAR(255) DEFAULT NULL,
+  _PriorityLevel INT(11) NOT NULL DEFAULT 1,
+  _Potential INT(11) NOT NULL DEFAULT 0,
+  _Situation INT(11) NOT NULL DEFAULT 0,
+  _PersonalFrequency INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _Potential ON CustomerProperties (_Potential);
+CREATE INDEX _Situation ON CustomerProperties (_Situation);
+CREATE INDEX _PersonalFrequency ON CustomerProperties (_PersonalFrequency);
+
+ALTER TABLE Actor
+  ADD _CustomerProperties INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _CustomerProperties ON Actor (_CustomerProperties);
+
+--
+-- Table structure for CustomerSituation
+--
+DROP TABLE IF EXISTS CustomerSituation;
+CREATE TABLE CustomerSituation (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Name VARCHAR(255) DEFAULT NULL,
+  _Type INT(3) NOT NULL DEFAULT 1,
+  _InactivityDelay INT(11) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+##
+## sc admin form model
+##
+--
+-- Table structure for FormModel
+--
+DROP TABLE IF EXISTS FormModel;
+CREATE TABLE FormModel (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Name VARCHAR(255) DEFAULT NULL,
+  _Activ INT(1) DEFAULT 1,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- Table structure for ParagraphModel
+--
+DROP TABLE IF EXISTS ParagraphModel;
+CREATE TABLE ParagraphModel (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Title VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- Table structure for Question
+--
+DROP TABLE IF EXISTS Question;
+CREATE TABLE Question (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Text VARCHAR(255) DEFAULT NULL,
+  _Theme INT(11) NOT NULL DEFAULT 0,
+  _CustomerCategory INT(11) NOT NULL DEFAULT 0,
+  _AnswerType INT(3) NOT NULL DEFAULT 0,
+  _Alert INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _Theme ON Question (_Theme);
+CREATE INDEX _CustomerCategory ON Question (_CustomerCategory);
+CREATE INDEX _Alert ON Question (_Alert);
+
+--
+-- Table structure for AnswerModel
+--
+DROP TABLE IF EXISTS AnswerModel;
+CREATE TABLE AnswerModel (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Value VARCHAR(255) DEFAULT NULL,
+  _Alert INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _Alert ON AnswerModel (_Alert);
+
+--
+-- Table structure for Action
+--
+DROP TABLE IF EXISTS Action;
+CREATE TABLE Action (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Commercial INT(11) NOT NULL DEFAULT 0,
+  _Customer INT(11) NOT NULL DEFAULT 0,
+  _AeroCustomer INT(11) NOT NULL DEFAULT 0,
+  _FormModel INT(11) NOT NULL DEFAULT 0,
+  _MeetingDate DATETIME DEFAULT '0',
+  _date DATETIME DEFAULT NULL,
+  _Type INT(3) NOT NULL DEFAULT 0,
+  _State INT(3) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _Commercial ON Action (_Commercial);
+CREATE INDEX _Customer ON Action (_Customer);
+CREATE INDEX _AeroCustomer ON Action (_AeroCustomer);
+CREATE INDEX _FormModel ON Action (_FormModel);
+
+--
+-- Table structure for RealAnswer
+--
+DROP TABLE IF EXISTS RealAnswer;
+CREATE TABLE RealAnswer (
+  _Id int(11) unsigned NOT NULL default '0',
+  _FormModel INT(11) NOT NULL DEFAULT 0,
+  _AnswerModel INT(11) NOT NULL DEFAULT 0,
+  _Question INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _FormModel ON RealAnswer (_FormModel);
+CREATE INDEX _AnswerModel ON RealAnswer (_AnswerModel);
+CREATE INDEX _Question ON RealAnswer (_Question);
+
+--
+-- Table structure for Theme
+--
+DROP TABLE IF EXISTS Theme;
+CREATE TABLE Theme (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- Table structure for LinkQuestionAnswerModel
+--
+DROP TABLE IF EXISTS LinkQuestionAnswerModel;
+CREATE TABLE LinkQuestionAnswerModel (
+  _Id int(11) unsigned NOT NULL default '0',
+  _AnswerOrder INT(11) DEFAULT NULL,
+  _AnswerModel INT(11) NOT NULL DEFAULT 0,
+  _Question INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _AnswerModel ON LinkQuestionAnswerModel (_AnswerModel);
+CREATE INDEX _Question ON LinkQuestionAnswerModel (_Question);
+
+--
+-- Table structure for LinkFormModelParagraphModel
+--
+DROP TABLE IF EXISTS LinkFormModelParagraphModel;
+CREATE TABLE LinkFormModelParagraphModel (
+  _Id int(11) unsigned NOT NULL default '0',
+  _ParagraphOrder INT(11) DEFAULT NULL,
+  _ParagraphModel INT(11) NOT NULL DEFAULT 0,
+  _FormModel INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _ParagraphModel ON LinkFormModelParagraphModel (_ParagraphModel);
+CREATE INDEX _FormModel ON LinkFormModelParagraphModel (_FormModel);
+
+--
+-- Table structure for LinkParagraphModelQuestion
+--
+DROP TABLE IF EXISTS LinkParagraphModelQuestion;
+CREATE TABLE LinkParagraphModelQuestion (
+  _Id int(11) unsigned NOT NULL default '0',
+  _QuestionOrder INT(11) DEFAULT NULL,
+  _ParagraphModel INT(11) NOT NULL DEFAULT 0,
+  _Question INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _ParagraphModel ON LinkParagraphModelQuestion (_ParagraphModel);
+CREATE INDEX _Question ON LinkParagraphModelQuestion (_Question);
+
+--
+-- Table structure for questionToCategory
+--
+DROP TABLE IF EXISTS questionToCategory;
+CREATE TABLE questionToCategory (
+  _FromQuestion int(11) unsigned NOT NULL default '0',
+  _ToCategory int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromQuestion, _ToCategory)
+) TYPE=InnoDB CHARSET=latin1;
+
+# impacts sc ajout mode de calcul de la prestation
+--
+-- modif de la table CostRange
+--
+ALTER TABLE CostRange
+  ADD _DepartureZone INT(11) NOT NULL DEFAULT 0,
+  ADD _ArrivalZone INT(11) NOT NULL DEFAULT 0;
+
+CREATE INDEX _DepartureZone ON CostRange (_DepartureZone);
+CREATE INDEX _ArrivalZone ON CostRange (_ArrivalZone);
+
+# ajout de types d'UV
+INSERT INTO SellUnitType VALUES
+  (9,  "MM", "Millimètre"),
+  (10, "CM", "Centimètre"),
+  (11, "M", "Mètre");
+
+# copie SupplierCustomer._RIB dans ActorBankDetail._Iban
+UPDATE ActorBankDetail ABC, SupplierCustomer SC, Actor A
+  SET ABC._Iban=SC._RIB
+  WHERE ABC._Id=A._ActorBankDetail
+  AND A._Id=SC._Customer;
+
+ALTER table SupplierCustomer DROP _RIB;
+
+
+# -------------------------------------------
+# RELEASE 1.1.1
+# -------------------------------------------
+
+ALTER TABLE CatalogCriteria
+  ADD COLUMN _SearchIndex int(11) NOT NULL DEFAULT 0;
+ALTER TABLE CatalogCriteria
+  ADD COLUMN _Catalog int(11) NOT NULL DEFAULT 0;
+ALTER TABLE CatalogCriteria
+  ADD INDEX _Catalog (_Catalog);
+
+UPDATE CatalogCriteria CC
+SET _Catalog=(SELECT _FromCatalog FROM ctgCatalogCriteria WHERE _ToCatalogCriteria=CC._Id);
+
+# Suppression des orphelins
+DELETE FROM CatalogCriteria WHERE _Catalog=0;
+DROP TABLE ctgCatalogCriteria;
+
+ALTER TABLE TVA
+  CHANGE COLUMN _Rate _Rate decimal(10,2) NOT NULL DEFAULT 0;
+ALTER TABLE CommandItem
+  CHANGE COLUMN _TVA _oldTVA decimal(10,2) NOT NULL DEFAULT '0.00';
+ALTER TABLE CommandItem
+  ADD COLUMN _TVA int(11) NOT NULL DEFAULT 0 AFTER _Handing;
+UPDATE CommandItem CI
+SET _TVA=(SELECT _ID FROM TVA WHERE _Rate=CI._oldTVA)
+WHERE _oldTVA>0;
+ALTER TABLE CommandItem
+  DROP COLUMN _oldTVA;
+ALTER TABLE CommandItem ADD INDEX _TVA (_TVA);
+ALTER TABLE InvoiceItem
+  CHANGE COLUMN _Tva _oldTVA decimal(10,2) NOT NULL DEFAULT '0.00';
+ALTER TABLE InvoiceItem
+  ADD COLUMN _TVA int(11) NOT NULL DEFAULT 0 AFTER _Quantity;
+UPDATE InvoiceItem I
+SET _TVA=(SELECT _ID FROM TVA WHERE _Rate=I._oldTVA)
+WHERE _oldTVA>0;
+ALTER TABLE InvoiceItem
+  DROP COLUMN _oldTVA;
+ALTER TABLE InvoiceItem ADD INDEX _TVA (_TVA);
+
+
+# Modifs liees au sc parametrage compta
+ALTER TABLE Actor
+    ADD COLUMN _AccountingType int(11) DEFAULT 0;
+
+--
+-- Table structure for Account
+--
+DROP TABLE IF EXISTS Account;
+CREATE TABLE Account (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Number VARCHAR(255) NOT NULL,
+  _Name VARCHAR(255) DEFAULT NULL,
+  _Comment TEXT DEFAULT NULL,
+  _Currency INT(11) NOT NULL DEFAULT 0,
+  _TVA INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _Currency ON Account (_Currency);
+CREATE INDEX _TVA ON Account (_TVA);
+
+--
+-- Table structure for AccountingType
+--
+DROP TABLE IF EXISTS AccountingType;
+CREATE TABLE AccountingType (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Type VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+--
+-- Table structure for Flow
+--
+DROP TABLE IF EXISTS Flow;
+CREATE TABLE Flow (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Name VARCHAR(255) NOT NULL,
+  _Number VARCHAR(255) NOT NULL,
+  _FlowType INT(11) NOT NULL DEFAULT 0,
+  _TotalHT DECIMAL(10,2) NOT NULL DEFAULT 0,
+  _TotalTTC DECIMAL(10,2) NOT NULL DEFAULT 0,
+  _TVA INT(11) NULL DEFAULT NULL,
+  _Paid DECIMAL(10,2) NOT NULL DEFAULT 0,
+  _Currency INT(11) NOT NULL DEFAULT 0,
+  _PaymentDate DATETIME NOT NULL,
+  _EditionDate DATETIME NOT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _FlowType ON Flow (_FlowType);
+CREATE INDEX _TVA ON Flow (_TVA);
+CREATE INDEX _Currency ON Flow (_Currency);
+
+--
+-- Table structure for FlowType
+--
+DROP TABLE IF EXISTS FlowType;
+CREATE TABLE FlowType (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Type INT(3) NOT NULL DEFAULT 0,
+  _Name VARCHAR(255) NOT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- Table structure for accountAccountingType
+--
+DROP TABLE IF EXISTS accountAccountingType;
+CREATE TABLE accountAccountingType (
+  _FromAccount int(11) unsigned NOT NULL default '0',
+  _ToAccountingType int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromAccount, _ToAccountingType)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- Table structure for accountFlowType
+--
+DROP TABLE IF EXISTS accountFlowType;
+CREATE TABLE accountFlowType (
+  _FromAccount int(11) unsigned NOT NULL default '0',
+  _ToFlowType int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromAccount, _ToFlowType)
+) TYPE=InnoDB CHARSET=latin1;
+
+# creation du Profile Accountant
+INSERT INTO Profile VALUES (19, 'Comptable');
+
+# refactoring Command.Type, Command.SupplierCustomer, AbstractDocument...
+ALTER TABLE Command
+    ADD COLUMN _Type int(11) NOT NULL DEFAULT 0 AFTER _CommandNo,
+    ADD COLUMN _SupplierCustomer int(11) NOT NULL DEFAULT 0 AFTER _Customer;
+ALTER TABLE AbstractDocument
+    ADD COLUMN _CommandType int(11) NOT NULL DEFAULT 0 AFTER _Command,
+    ADD COLUMN _AccountingTypeActor int(11) NOT NULL DEFAULT 0 AFTER _Currency;
+CREATE INDEX _SupplierCustomer ON Command (_SupplierCustomer);
+CREATE INDEX _AccountingTypeActor ON AbstractDocument (_AccountingTypeActor);
+UPDATE Command SET _Currency=1 WHERE _Currency=0;
+UPDATE Command cmd, Actor act SET cmd._Type=1
+    WHERE cmd._ClassName='ProductCommand'
+      AND cmd._Destinator=act._Id
+      AND act._ClassName='Customer';
+UPDATE Command cmd, Actor act SET cmd._Type=2
+    WHERE cmd._ClassName='ProductCommand'
+      AND cmd._Expeditor=act._Id
+      AND act._ClassName='Supplier';
+UPDATE Command SET _Type=3 WHERE _ClassName='ChainCommand';
+UPDATE Command SET _Type=4 WHERE _ClassName='PrestationCommand';
+UPDATE Command SET _Type=5 WHERE _ClassName='CourseCommand';
+UPDATE Command cmd, SupplierCustomer spc SET cmd._SupplierCustomer=spc._Id
+    WHERE cmd._Expeditor=spc._Supplier AND cmd._Destinator=spc._Customer;
+UPDATE AbstractDocument doc, Command cmd
+    SET doc._CommandType=cmd._Type,
+        doc._SupplierCustomer=cmd._SupplierCustomer,
+        doc._Currency=cmd._Currency
+    WHERE doc._Command=cmd._Id;
+UPDATE AbstractDocument doc, Command cmd
+    SET doc._AccountingTypeActor=cmd._Destinator
+    WHERE doc._Command=cmd._Id AND doc._CommandType in (1,3,5);
+UPDATE AbstractDocument doc, Command cmd
+    SET doc._AccountingTypeActor=cmd._Expeditor
+    WHERE doc._Command=cmd._Id AND doc._CommandType = 2;
+### XXX gérer _AccountingTypeActor pour les commandes de type Prestation (4)
+
+# impacts modif des constantes property
+UPDATE Property SET _Type=0 WHERE _Type=5;
+UPDATE Property SET _Type=10 WHERE _Type=4;
+UPDATE Property SET _Type=4 WHERE _Type=3;
+UPDATE Property SET _Type=3 WHERE _Type=6;
+
+# modif Acteur
+ALTER TABLE Actor
+    ADD COLUMN _DatabaseOwner INT(1) NOT NULL DEFAULT 0 AFTER _Name;
+
+# modif Account
+ALTER TABLE Account
+    ADD COLUMN _BreakdownType INT(1) NOT NULL DEFAULT 0;
+
+# modif sc addenda charge recette
+--
+-- Table structure for FlowTypeItem
+--
+DROP TABLE IF EXISTS FlowTypeItem;
+CREATE TABLE FlowTypeItem (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Name VARCHAR(255) NOT NULL,
+  _TVA INT(11) NULL DEFAULT NULL,
+  _FlowType INT(11) NOT NULL default '0',
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- Table structure for accountFlowTypeItem
+--
+DROP TABLE IF EXISTS accountFlowTypeItem;
+CREATE TABLE accountFlowTypeItem (
+  _FromAccount int(11) unsigned NOT NULL default '0',
+  _ToFlowTypeItem int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromAccount, _ToFlowTypeItem)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- Table structure for FlowItem
+--
+DROP TABLE IF EXISTS FlowItem;
+CREATE TABLE FlowItem (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Type INT(11) NOT NULL default '0',
+  _TotalHT DECIMAL(10,2) NOT NULL DEFAULT 0,
+  _TVA INT(11) NULL DEFAULT NULL,
+  _Flow INT(11) NOT NULL default '0',
+  _FlowType INT(11) NOT NULL default '0',
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+ALTER TABLE Flow
+  DROP COLUMN _TotalHT;
+ALTER TABLE Flow
+  DROP COLUMN _TVA;
+
+# -------------------------------------------
+# RELEASE 1.1.0
+# -------------------------------------------
+DROP TABLE IF EXISTS OccupiedLocation;
+CREATE TABLE OccupiedLocation (
+  _Id int(11) unsigned NOT NULL default '0',
+  _CreationDate DATE DEFAULT NULL,
+  _ValidityDate DATE DEFAULT NULL,
+  _Location INT(11) NOT NULL DEFAULT 0,
+  _InvoiceItem INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _InvoiceItem ON OccupiedLocation (_InvoiceItem);
+CREATE INDEX _Location ON OccupiedLocation (_Location);
+
+#impact prestation transversale
+ALTER TABLE MovementType
+  ADD COLUMN _Prestation int(11) NOT NULL DEFAULT '0';
+ALTER TABLE MovementType
+  ADD INDEX _Prestation (_Prestation);
+ALTER TABLE CommandItem
+  ADD COLUMN _Prestation int(11) NOT NULL DEFAULT '0';
+ALTER TABLE CommandItem
+  ADD INDEX _Prestation (_Prestation);
+ALTER TABLE ActivatedChainOperation
+  ADD COLUMN _PrestationFactured int(1) NOT NULL DEFAULT '0';
+ALTER TABLE ActivatedChainOperation
+  ADD COLUMN _PrestationCommandDate datetime NULL;
+ALTER TABLE LocationExecutedMovement
+  ADD COLUMN _PrestationFactured int(1) NOT NULL DEFAULT '0';
+ALTER TABLE Prestation
+  ADD COLUMN _FreePeriod int(5) NOT NULL DEFAULT 1;
+
+# Impact nombre de doc a imprimer
+ALTER TABLE DocumentModel
+  ADD COLUMN _Number int(2) NOT NULL DEFAULT 1;
+
+ALTER TABLE ackConcreteComponent
+  CHANGE COLUMN _ToConcreteComponent _ToActivatedChainTask int(11) unsigned NOT NULL DEFAULT '0';
+
+# nettoyage, objets inutilisés
+DROP TABLE ExecutedChain, ExecutedChainOperation, ExecutedChainTask, Anomaly,
+    AnomalyType, TaskOperationAnomaly;
+# nettoyage, propriété redondante
+ALTER TABLE Site Drop _ModeCom;
+
+# ajout des nouveaux SellUnitType
+INSERT INTO SellUnitType VALUES (5, 'Kg', 'Kilogramme');
+INSERT INTO SellUnitType VALUES (6, 'L', 'Litre');
+INSERT INTO SellUnitType VALUES (7, 'Gal', 'Gallon');
+INSERT INTO SellUnitType VALUES (8, 'Oz', 'Oz');
+
+# les quantités deviennent des decimal 10,3
+ALTER TABLE ActivatedChainTask
+  CHANGE COLUMN _AssembledQuantity _AssembledQuantity DECIMAL(10,3) DEFAULT NULL,
+  CHANGE COLUMN _AssembledRealQuantity _AssembledRealQuantity DECIMAL(10,3) DEFAULT NULL;
+ALTER TABLE CommandItem
+  CHANGE COLUMN _Quantity _Quantity DECIMAL(10,3) NOT NULL DEFAULT 0;
+ALTER TABLE Component
+  CHANGE COLUMN _Quantity _Quantity DECIMAL(10,3) DEFAULT NULL;
+ALTER TABLE ConcreteComponent
+  CHANGE COLUMN _Quantity _Quantity DECIMAL(10,3) NOT NULL DEFAULT 1;
+ALTER TABLE ExecutedMovement
+  CHANGE COLUMN _RealQuantity _RealQuantity DECIMAL(10,3) NOT NULL DEFAULT 0;
+ALTER TABLE InventoryDetail
+  CHANGE COLUMN _Quantity _Quantity DECIMAL(10,3) DEFAULT NULL;
+ALTER TABLE InvoiceItem
+  CHANGE COLUMN _Quantity _Quantity DECIMAL(10,3) NOT NULL DEFAULT 0;
+ALTER TABLE LEMConcreteProduct
+  CHANGE COLUMN _Quantity _Quantity DECIMAL(10,3) NOT NULL DEFAULT 0;
+ALTER TABLE LocationConcreteProduct
+  CHANGE COLUMN _Quantity _Quantity DECIMAL(10,3) NOT NULL DEFAULT 0;
+ALTER TABLE LocationExecutedMovement
+  CHANGE COLUMN _Quantity _Quantity DECIMAL(10,3) NOT NULL DEFAULT 0;
+ALTER TABLE LocationProductQuantities
+  CHANGE COLUMN _RealQuantity _RealQuantity DECIMAL(10,3) NOT NULL DEFAULT 0;
+ALTER TABLE Product
+  CHANGE COLUMN _SellUnitQuantity _SellUnitQuantity DECIMAL(10,3) NOT NULL DEFAULT 0,
+  CHANGE COLUMN _SellUnitVirtualQuantity _SellUnitVirtualQuantity DECIMAL(10,3) NOT NULL DEFAULT 0,
+  CHANGE COLUMN _SellUnitMinimumStoredQuantity _SellUnitMinimumStoredQuantity DECIMAL(10,3) NOT NULL DEFAULT 0;
+
+# Gestion par des cstes
+DROP TABLE TracingMode;
+ALTER TABLE Product
+  CHANGE COLUMN _TracingMode _TracingMode int(1) NOT NULL DEFAULT '0';
+ALTER TABLE Actor
+  ADD COLUMN _Quality int(1) NOT NULL DEFAULT '0' AFTER _Name;
+
+# SC import
+
+--
+-- Table structure for SpreadSheet
+--
+DROP TABLE IF EXISTS SpreadSheet;
+CREATE TABLE SpreadSheet (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Name VARCHAR(255) DEFAULT NULL,
+  _Entity VARCHAR(255) DEFAULT NULL,
+  _Active INT(1) DEFAULT 1,
+  _LastModified DATETIME DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+
+--
+-- Table structure for SpreadSheetColumn
+--
+DROP TABLE IF EXISTS SpreadSheetColumn;
+CREATE TABLE SpreadSheetColumn (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Name VARCHAR(255) DEFAULT NULL,
+  _PropertyName VARCHAR(255) DEFAULT NULL,
+  _FkeyPropertyName VARCHAR(255) DEFAULT NULL,
+  _PropertyType VARCHAR(255) DEFAULT NULL,
+  _Order INT(3) NOT NULL DEFAULT 0,
+  _Comment TEXT DEFAULT NULL,
+  _Default VARCHAR(255) DEFAULT NULL,
+  _Width INT(5) NOT NULL DEFAULT 0,
+  _Required INT(1) DEFAULT 0,
+  _SpreadSheet INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _SpreadSheet ON SpreadSheetColumn (_SpreadSheet);
+
+# refactoring site/address
+# on crée une table temporaire pour gérer le refactoring des streettype
+DROP TABLE IF EXISTS temp_streettype;
+CREATE TABLE temp_streettype (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Name VARCHAR(255) DEFAULT NULL
+) TYPE=InnoDB CHARSET=latin1;
+INSERT INTO temp_streettype VALUES (0, '');
+INSERT INTO temp_streettype VALUES (1, 'Avenue');
+INSERT INTO temp_streettype VALUES (2, 'Boulevard');
+INSERT INTO temp_streettype VALUES (3, 'Chemin');
+INSERT INTO temp_streettype VALUES (4, 'Impasse');
+INSERT INTO temp_streettype VALUES (5, 'Place');
+INSERT INTO temp_streettype VALUES (6, 'Route');
+INSERT INTO temp_streettype VALUES (7, 'Rue');
+
+REPLACE INTO Address
+  SELECT
+    a._Id, a._StreetNumber, t._Id, a._StreetName, a._StreetAddons, a._Cedex,
+    a._GPS, a._CountryCity
+  FROM
+    temp_streettype t, Address a
+  WHERE t._Name=a._StreetType;
+
+REPLACE INTO ActorBankDetail
+    SELECT
+      a._Id, a._Iban, a._BankName, a._Swift, a._BankAddressNo,
+      t._Id, a._BankAddressStreet, a._BankAddressAdd, a._BankAddressCity,
+      a._BankAddressZipCode, a._BankAddressCountry
+    FROM
+      temp_streettype t, ActorBankDetail a
+    WHERE t._Name=a._BankAddressStreetType;
+
+ALTER table Contact DROP _Address;
+ALTER table Site
+  ADD _StreetNumber VARCHAR(255) DEFAULT NULL AFTER _Address,
+  ADD _StreetType INT(3) NOT NULL DEFAULT 0 AFTER _StreetNumber,
+  ADD _StreetName VARCHAR(255) DEFAULT NULL AFTER _StreetType,
+  ADD _StreetAddons VARCHAR(255) DEFAULT NULL AFTER _StreetName,
+  ADD _Cedex VARCHAR(255) DEFAULT NULL AFTER _StreetAddons,
+  ADD _GPS VARCHAR(255) DEFAULT NULL AFTER _Cedex,
+  ADD _CountryCity INT(11) NOT NULL DEFAULT 0 AFTER _GPS;
+ALTER TABLE ActorBankDetail CHANGE COLUMN  _BankAddressStreetType
+    _BankAddressStreetType INT(3) NOT NULL DEFAULT 0;
+
+REPLACE INTO Site
+  SELECT
+    s._Id, s._ClassName, s._Name, s._Email, s._Fax, s._Phone, s._Mobile,
+    s._PreferedCommunicationMode, s._Address, a._StreetNumber,
+    a._StreetType, a._StreetName, a._StreetAddons, a._Cedex, a._GPS,
+    a._CountryCity, s._Planning, s._CommunicationModality, s._Owner,
+    s._Type, s._Customs, s._StockOwner
+  FROM Address a, Site s
+  WHERE s._Address=a._Id;
+
+ALTER TABLE Site DROP _Address;
+DROP TABLE Address;
+DROP TABLE temp_streettype;
+
+# Modifs i18n
+ALTER TABLE Actor DROP _Language;
+ALTER TABLE UserAccount DROP _Language;
+DROP TABLE IF EXISTS Language;
+CREATE TABLE Language (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Name VARCHAR(255) DEFAULT 'Français',
+  _Code VARCHAR(10) DEFAULT 'fr_FR',
+  _ShortCode VARCHAR(2) DEFAULT 'fr',
+  _Encoding VARCHAR(20) DEFAULT 'ISO-8859-1',
+  _DateFormat VARCHAR(10) DEFAULT 'dMY',
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+INSERT INTO Language (_Id) VALUES (1);
+INSERT INTO Language VALUES (2, 'Anglais (GB)', 'en_GB', 'en', 'ISO-8859-1', 'YMd');
+
+# modif pour doc facture prestation
+ALTER TABLE ActivatedChainOperation
+  ADD COLUMN _InvoiceItem int(11) NOT NULL DEFAULT '0';
+
+# -------------------------------------------
+# RELEASE 1.0.5
+# -------------------------------------------
+--
+-- Table structure for cptHead
+--
+DROP TABLE IF EXISTS cptHead;
+CREATE TABLE cptHead (
+  _ConcreteProduct int(11) unsigned NOT NULL default '0',
+  _Head int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_ConcreteProduct, _Head)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- Table structure for ackConcreteComponent
+--
+DROP TABLE IF EXISTS ackConcreteComponent;
+CREATE TABLE ackConcreteComponent (
+  _FromConcreteComponent int(11) unsigned NOT NULL default '0',
+  _ToConcreteComponent int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromConcreteComponent, _ToConcreteComponent)
+) TYPE=InnoDB CHARSET=latin1;
+
+# Pour SC_Assemblage
+ALTER TABLE ConcreteComponent
+  ADD COLUMN _ParentConcreteProduct int(11) NOT NULL DEFAULT 0;
+
+ALTER TABLE ConcreteProduct ADD _Component INT(11) DEFAULT '0' NOT NULL;
+ALTER TABLE ConcreteComponent
+  DROP COLUMN _Component;
+ALTER TABLE ConcreteComponent
+  DROP COLUMN _Head;
+ALTER TABLE ConcreteComponent
+  CHANGE _ParentConcreteProduct _Parent int (11) DEFAULT '0' NOT NULL;
+TRUNCATE TABLE ConcreteComponent;
+
+# Pour Nomenclature / Assemblage
+ALTER TABLE Component
+  DROP COLUMN _Head;
+ALTER TABLE Nomenclature
+  ADD COLUMN _Buildable int(1) NOT NULL DEFAULT '1' AFTER _EndDate;
+
+# Pour SC_CREATION_CLIENT_TRANSPORT
+INSERT INTO Profile Values(18, 'Client transport');
+
+# Pour sc modif donnes expedition cmd
+ALTER TABLE CommandExpeditionDetail
+    ADD _Weight DECIMAL(10, 2) DEFAULT 0,
+    ADD _NumberOfContainer INT(11) DEFAULT 0;
+
+# Modification liees au sc personamisation des documents
+ALTER TABLE DocumentModel
+    ADD _DisplayDuplicata INT(1) NOT NULL DEFAULT 1;
+
+--
+-- Table structure for DocumentModelProperty
+--
+CREATE TABLE DocumentModelProperty (
+  _Id int(11) unsigned NOT NULL default '0',
+  _PropertyType INT(2) DEFAULT 0,
+  _Property INT(11) NOT NULL DEFAULT 0,
+  _Order INT(11) NOT NULL DEFAULT 0,
+  _DocumentModel INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+
+# Modifications liees au scenario SC_SUPPRESSION_CONCRETEPRODUCT
+ALTER TABLE ConcreteProduct
+    ADD _Active INT(1) DEFAULT 1 AFTER _VirtualHourSinceOverall;
+
+# Modifications liees au scenario SC_TACHE_STOCK_INTERNE
+ALTER TABLE ActivatedMovement
+    ADD _Product INT(11) NOT NULL DEFAULT 0 AFTER _ActivatedChainTask,
+    ADD _ProductCommand INT(11) NOT NULL DEFAULT 0;
+
+CREATE INDEX _Product ON ActivatedMovement (_Product);
+CREATE INDEX _ProductCommand ON ActivatedMovement (_ProductCommand);
+
+INSERT INTO MovementType VALUES(14, 'Entrée interne', 0, 0);
+INSERT INTO MovementType VALUES(15, 'Sortie interne', 0, 1);
+
+UPDATE Task SET _ToBeValidated=1 WHERE _Id=28;
+
+# ajout attribut ChainTask et ActivatedChainTask
+ALTER TABLE ChainTask
+    ADD _Component INT(11) NOT NULL DEFAULT 0,
+    ADD _ComponentQuantityRatio INT(1) DEFAULT 0 AFTER _Delta,
+    ADD _ActivationPerSupplier INT(1) DEFAULT 0 AFTER _ComponentQuantityRatio;
+ALTER TABLE ActivatedChainTask
+    ADD _Component INT(11) NOT NULL DEFAULT 0,
+    ADD _ComponentQuantityRatio INT(1) DEFAULT 0 AFTER _Delta,
+    ADD _ActivationPerSupplier INT(1) DEFAULT 0 AFTER _ComponentQuantityRatio;
+ALTER TABLE ActivatedChainTask
+    ADD _AssembledQuantity INT(11) DEFAULT 0 AFTER _ActivationPerSupplier,
+    ADD _AssembledRealQuantity INT(11) DEFAULT 0 AFTER _AssembledQuantity;
+
+# lien ChainTask <-> Component et ActivatedChainTask <-> Component
+DROP TABLE IF EXISTS chtComponent;
+CREATE TABLE chtComponent (
+  _FromChainTask int(11) unsigned NOT NULL default '0',
+  _ToComponent int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromChainTask, _ToComponent)
+) TYPE=InnoDB CHARSET=latin1;
+
+DROP TABLE IF EXISTS ackComponent;
+CREATE TABLE ackComponent (
+  _FromActivatedChainTask int(11) unsigned NOT NULL default '0',
+  _ToComponent int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromActivatedChainTask, _ToComponent)
+) TYPE=InnoDB CHARSET=latin1;
+
+# Ajout des couples OPE_ASSEMBLAGE <-> TACHE_ASSEMBLAGE
+# et OPE_FABRICATION <-> TACHE ASSEMBLAGE
+INSERT INTO oprTask VALUES (2, 28);
+INSERT INTO oprTask VALUES (11, 28);
+
+# ajout des taches de stock interne
+INSERT INTO Task(_Id, _Name) VALUES(40, 'ENTREE STOCK INTERNE');
+INSERT INTO Task(_Id, _Name) VALUES(41, 'SORTIE STOCK INTERNE');
+INSERT INTO oprTask VALUES (21, 40);
+INSERT INTO oprTask VALUES (21, 41);
+
+# suppression de la table ActivatedChainOperationFilter et des tables de liens
+DROP TABLE ActivatedChainOperationFilter;
+DROP TABLE acfActor;
+DROP TABLE acfOperation;
+
+#
+# -------------------------------------------
+# RELEASE 1.0.4
+# -------------------------------------------
+
+
+ALTER TABLE LocationExecutedMovement
+  ADD COLUMN _isFactured int(1) NOT NULL DEFAULT '0' AFTER _Quantity;
+
+# Passer les 2 requetes SQL suivantes, pour MAJ ce nouvel attribut:
+UPDATE LocationExecutedMovement L, ActivatedMovement A, ExecutedMovement E
+SET L._IsFactured=1
+WHERE L._ExecutedMovement=E._Id AND E._ActivatedMovement=A._Id
+AND A._State=2 AND A._HasBeenFactured=1;
+
+UPDATE LocationExecutedMovement L, ExecutedMovement E, ActivatedMovement A,
+InvoiceItem II, AbstractDocument AD
+SET L._IsFactured=1
+WHERE L._ExecutedMovement=E._Id AND E._ActivatedMovement=A._Id
+AND II._ActivatedMovement=A._Id AND II._Invoice=AD._ID AND A._State=3
+AND A._HasBeenFactured=1 AND AD._EditionDate>=L._Date;
+
+
+ALTER TABLE UserAccount
+  ADD COLUMN _SupplierCatalog int(11) NOT NULL DEFAULT '0';
+ALTER TABLE Actor
+    ADD _Language varchar(15) default 'fr_FR' AFTER _CreationDate;
+ALTER TABLE UserAccount
+    ADD _Language varchar(15) default 'fr_FR' AFTER _Email;
+
+DROP TABLE Perm;
+DROP TABLE pflPerm;
+
+# modifications liées au SC refactoring prestation
+DROP TABLE prsActor;
+DROP TABLE prsConcreteProduct;
+DROP TABLE prsProduct;
+DROP TABLE prsFlyType;
+
+--
+-- table de lien entre prestation et costRange
+--
+CREATE TABLE prsToCostRange (
+  _FromPrestation int(11) unsigned NOT NULL default '0',
+  _ToCostRange int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromPrestation, _ToCostRange)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- table de lien entre ActorPrestationCost et costRange
+--
+CREATE TABLE actPrsCostToCostRange (
+  _FromActorPrestationCost int(11) unsigned NOT NULL default '0',
+  _ToCostRange int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromActorPrestationCost, _ToCostRange)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- table de lien entre ProductPrestationCost et costRange
+--
+CREATE TABLE prdPrsCostToCostRange (
+  _FromProductPrestationCost int(11) unsigned NOT NULL default '0',
+  _ToCostRange int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromProductPrestationCost, _ToCostRange)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- table de lien entre ConcreteProductPrestationCost et costRange
+--
+CREATE TABLE ccpPrsCostToCostRange (
+  _FromConcreteProductPrestationCost int(11) unsigned NOT NULL default '0',
+  _ToCostRange int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromConcreteProductPrestationCost, _ToCostRange)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- table de lien entre FlyTypePrestationCost et costRange
+--
+CREATE TABLE fltPrsCostToCostRange (
+  _FromFlyTypePrestationCost int(11) unsigned NOT NULL default '0',
+  _ToCostRange int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromFlyTypePrestationCost, _ToCostRange)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- table CostRange
+--
+DROP TABLE IF EXISTS CostRange;
+CREATE TABLE CostRange (
+  _Id int(11) unsigned NOT NULL default '0',
+  _CostType int(11) NOT NULL DEFAULT '0',
+  _Cost DECIMAL(10, 2) DEFAULT '0',
+  _BeginRange DECIMAL(10, 2) DEFAULT '0',
+  _EndRange DECIMAL(10, 2) DEFAULT '0',
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- Table structure for Component
+--
+DROP TABLE IF EXISTS Component;
+CREATE TABLE Component (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Level INT(11) DEFAULT NULL,
+  _Quantity INT(11) DEFAULT NULL,
+  _Nomenclature INT(11) NOT NULL DEFAULT '0',
+  _Product INT(11) NOT NULL DEFAULT '0',
+  _Parent INT(11) NOT NULL DEFAULT '0',
+  _Head INT(11) NOT NULL DEFAULT '0',
+  _ComponentGroup INT(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _Nomenclature ON Component (_Nomenclature);
+CREATE INDEX _Product ON Component (_Product);
+CREATE INDEX _Parent ON Component (_Parent);
+CREATE INDEX _Head ON Component (_Head);
+CREATE INDEX _ComponentGroup ON Component (_ComponentGroup);
+
+--
+-- Table structure for ComponentGroup
+--
+DROP TABLE IF EXISTS ComponentGroup;
+CREATE TABLE ComponentGroup (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Name VARCHAR(255) DEFAULT NULL,
+  _Nomenclature INT(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _Nomenclature ON ComponentGroup (_Nomenclature);
+
+--
+-- Table structure for Nomenclature
+--
+DROP TABLE IF EXISTS Nomenclature;
+CREATE TABLE Nomenclature (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Version VARCHAR(255) DEFAULT NULL,
+  _BeginDate DATETIME DEFAULT NULL,
+  _EndDate DATETIME DEFAULT NULL,
+  _Product INT(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _Product ON Nomenclature (_Product);
+
+CREATE TABLE ConcreteComponent (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Quantity INT(11) NOT NULL DEFAULT '1',
+  _Component INT(11) NOT NULL DEFAULT '0',
+  _Head INT(11) NOT NULL DEFAULT '0',
+  _ConcreteProduct INT(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _Component ON ConcreteComponent (_Component);
+CREATE INDEX _Head ON ConcreteComponent (_Head);
+CREATE INDEX _ConcreteProduct ON ConcreteComponent (_ConcreteProduct);
+
+ALTER TABLE ConcreteProduct
+  ADD COLUMN _TankCapacity decimal(10,2) NULL AFTER _RealCycleSinceRepared;
+ALTER TABLE ConcreteProduct
+  ADD COLUMN _TankUnitType int(11) NULL AFTER _TankCapacity;
+
+# modifs AeroActor
+ALTER TABLE Actor
+  DROP _InstructorHoursOfFlight,
+  DROP _FirstPilotHoursOfFlight,
+  DROP _CoPilotHoursOfFlight,
+  DROP _NightHoursOfFlight,
+  DROP _PublicHoursOfFlight,
+  DROP _VLAEHoursOfFlight,
+  DROP _CommercialHours,
+  DROP _StudentHoursOfFlight,
+  DROP _MonoEngineHoursOfFlight,
+  DROP _BiEngineHoursOfFlight;
+
+ALTER TABLE Actor
+  ADD _IFRLanding INT(11) NOT NULL DEFAULT '0' AFTER _Cost,
+  ADD _PilotHours INT(11) NOT NULL DEFAULT '0' AFTER _IFRLanding,
+  ADD _PilotHoursBiEngine INT(11) NOT NULL DEFAULT '0' AFTER _PilotHours,
+  ADD _CoPilotHours INT(11) NOT NULL DEFAULT '0' AFTER _PilotHoursBiEngine,
+  ADD _CoPilotHoursBiEngine INT(11) NOT NULL DEFAULT '0' AFTER _CoPilotHours,
+  ADD _PilotHoursNight INT(11) NOT NULL DEFAULT '0' AFTER _CoPilotHoursBiEngine,
+  ADD _PilotHoursBiEngineNight INT(11) NOT NULL DEFAULT '0' AFTER _PilotHoursNight,
+  ADD _CoPilotHoursNight INT(11) NOT NULL DEFAULT '0' AFTER _PilotHoursBiEngineNight,
+  ADD _CoPilotHoursBiEngineNight INT(11) NOT NULL DEFAULT '0' AFTER _CoPilotHoursNight,
+  ADD _PilotHoursIFR INT(11) NOT NULL DEFAULT '0' AFTER _CoPilotHoursBiEngineNight,
+  ADD _CoPilotHoursIFR INT(11) NOT NULL DEFAULT '0' AFTER _PilotHoursIFR,
+  ADD _StudentHours INT(11) NOT NULL DEFAULT '0' AFTER _CoPilotHoursIFR,
+  ADD _InstructorHours INT(11) NOT NULL DEFAULT '0' AFTER _StudentHours,
+  ADD _PublicHours INT(11) NOT NULL DEFAULT '0' AFTER _InstructorHours,
+  ADD _CommercialHours INT(11) NOT NULL DEFAULT '0' AFTER _PublicHours,
+  ADD _VLAEHours INT(11) NOT NULL DEFAULT '0' AFTER _CommercialHours;
+
+ALTER TABLE ActivatedChainTaskDetail
+  DROP _NightHoursOfFlight,
+  DROP _PublicHoursOfFlight,
+  DROP _VLAEHoursOfFlight,
+  DROP _CarburantRestUnitType,
+  DROP _CarburantAddedUnitType,
+  DROP _CarburantTotalUnitType,
+  DROP _CarburantUsedUnitType;
+
+ALTER TABLE ActivatedChainTaskDetail
+  ADD _Nature INT(11) NOT NULL DEFAULT '0',
+  ADD _IFRLanding INT(11) NOT NULL DEFAULT '0',
+  ADD _PilotHours INT(11) NOT NULL DEFAULT '0',
+  ADD _PilotHoursBiEngine INT(11) NOT NULL DEFAULT '0',
+  ADD _CoPilotHours INT(11) NOT NULL DEFAULT '0',
+  ADD _CoPilotHoursBiEngine INT(11) NOT NULL DEFAULT '0',
+  ADD _PilotHoursNight INT(11) NOT NULL DEFAULT '0',
+  ADD _PilotHoursBiEngineNight INT(11) NOT NULL DEFAULT '0',
+  ADD _CoPilotHoursNight INT(11) NOT NULL DEFAULT '0',
+  ADD _CoPilotHoursBiEngineNight INT(11) NOT NULL DEFAULT '0',
+  ADD _PilotHoursIFR INT(11) NOT NULL DEFAULT '0',
+  ADD _CoPilotHoursIFR INT(11) NOT NULL DEFAULT '0',
+  ADD _StudentHours INT(11) NOT NULL DEFAULT '0',
+  ADD _PublicHours INT(11) NOT NULL DEFAULT '0',
+  ADD _VLAEHours INT(11) NOT NULL DEFAULT '0',
+  ADD _TakeOffNumber INT(11) NOT NULL DEFAULT '0',
+  ADD _LandingNumber INT(11) NOT NULL DEFAULT '0';
+
+# -------------------------------------------
+# RELEASE 11_0_3
+# -------------------------------------------
+
+ALTER TABLE ActivatedMovement
+  ADD COLUMN _ActivatedChainTask int(11) NOT NULL DEFAULT '0';
+ALTER TABLE ActivatedMovement
+  ADD INDEX _ActivatedChainTask (_ActivatedChainTask);
+
+# ATTENTION: Prevoir un script pour remplir ce nouveau champs de ACM
+# Sinon, Fatal error a l'execution des mvts prevus
+
+ALTER TABLE Box
+  ADD COLUMN _Weight float NOT NULL DEFAULT '0' AFTER _Comment,
+  ADD COLUMN _Volume float NOT NULL AFTER _Weight,
+  ADD COLUMN _CoverType int(11) NOT NULL DEFAULT '0';
+CREATE INDEX _CoverType ON Box (_CoverType);
+
+ALTER TABLE Box
+  ADD COLUMN _Expeditor int(11) NOT NULL DEFAULT '0',
+  ADD COLUMN _ExpeditorSite int(11) NOT NULL DEFAULT '0',
+  ADD COLUMN _Destinator int(11) NOT NULL DEFAULT '0',
+  ADD COLUMN _DestinatorSite int(11) NOT NULL DEFAULT '0',
+  ADD COLUMN _PackingList int(11) NOT NULL DEFAULT '0';
+CREATE INDEX _Expeditor ON Box (_Expeditor);
+CREATE INDEX _ExpeditorSite ON Box (_ExpeditorSite);
+CREATE INDEX _Destinator ON Box (_Destinator);
+CREATE INDEX _DestinatorSite ON Box (_DestinatorSite);
+CREATE INDEX _PackingList ON Box (_PackingList);
+
+ALTER TABLE AbstractDocument
+  ADD COLUMN _Box int(11) NOT NULL DEFAULT '0';
+CREATE INDEX _Box ON AbstractDocument (_Box);
+
+ALTER TABLE Box
+    DROP _ActivatedChainTask,
+    ADD _Date DATETIME DEFAULT NULL AFTER _Comment;
+
+--
+-- Table structure for boxActivatedChainTask
+--
+DROP TABLE IF EXISTS boxActivatedChainTask;
+CREATE TABLE boxActivatedChainTask (
+  _FromBox int(11) unsigned NOT NULL default '0',
+  _ToActivatedChainTask int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromBox, _ToActivatedChainTask)
+) TYPE=InnoDB CHARSET=latin1;
+
+INSERT INTO Alert VALUES (100008, 'Changement de référence', 'Commande {$NumCde} : Changement de référence.', 'La référence attendue {$ProductBaseReference} a été remplacée par la référence {$ProductBaseReference}.', NULL);
+
+--
+-- Modif de la table Category
+--
+ALTER TABLE Category
+  ADD UNIQUE (_Name);
+
+--
+-- Modif de la table FlyType
+--
+ALTER TABLE FlyType
+  ADD UNIQUE (_Name);
+
+ALTER TABLE ChainTask
+  ADD _ProductCommandType INT(1) NOT NULL DEFAULT '0';
+ALTER TABLE ChainTask
+  ADD COLUMN _DepartureActor int(11) NOT NULL DEFAULT '0';
+ALTER TABLE ChainTask
+  ADD COLUMN _DepartureSite int(11) NOT NULL DEFAULT '0';
+ALTER TABLE ChainTask
+  ADD COLUMN _ArrivalActor int(11) NOT NULL DEFAULT '0';
+ALTER TABLE ChainTask
+  ADD COLUMN _ArrivalSite int(11) NOT NULL DEFAULT '0';
+ALTER TABLE ChainTask
+  ADD COLUMN _WishedDateType int(11) NOT NULL DEFAULT '0';
+ALTER TABLE ChainTask
+  ADD COLUMN _Delta int(11) NOT NULL DEFAULT '0';
+ALTER TABLE ChainTask
+  ADD COLUMN _ChainToActivate int(11) NOT NULL DEFAULT '0';
+ALTER TABLE ChainTask
+  ADD INDEX _DepartureActor (_DepartureActor);
+ALTER TABLE ChainTask
+  ADD INDEX _DepartureSite (_DepartureSite);
+ALTER TABLE ChainTask
+  ADD INDEX _ArrivalActor (_ArrivalActor);
+ALTER TABLE ChainTask
+  ADD INDEX _ArrivalSite (_ArrivalSite);
+ALTER TABLE ChainTask
+  ADD INDEX _ChainToActivate (_ChainToActivate);
+
+INSERT INTO Task SET _Id=39, _Name='ACTIVATION';
+
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (1,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (2,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (3,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (4,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (5,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (6,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (7,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (8,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (9,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (10,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (11,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (12,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (13,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (14,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (15,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (16,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (17,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (18,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (19,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (20,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (21,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (22,39);
+INSERT INTO oprTask (_FromOperation,_ToTask) VALUES (23,39);
+
+ALTER TABLE ActivatedChainTask
+  ADD _ProductCommandType INT(1) NOT NULL DEFAULT '0';
+ALTER TABLE ActivatedChainTask
+  ADD COLUMN _DepartureActor int(11) NOT NULL DEFAULT '0';
+ALTER TABLE ActivatedChainTask
+  ADD COLUMN _DepartureSite int(11) NOT NULL DEFAULT '0';
+ALTER TABLE ActivatedChainTask
+  ADD COLUMN _ArrivalActor int(11) NOT NULL DEFAULT '0';
+ALTER TABLE ActivatedChainTask
+  ADD COLUMN _ArrivalSite int(11) NOT NULL DEFAULT '0';
+ALTER TABLE ActivatedChainTask
+  ADD COLUMN _WishedDateType int(11) NOT NULL DEFAULT '0';
+ALTER TABLE ActivatedChainTask
+  ADD COLUMN _Delta int(11) NOT NULL DEFAULT '0';
+ALTER TABLE ActivatedChainTask
+  ADD COLUMN _ChainToActivate int(11) NOT NULL DEFAULT '0';
+ALTER TABLE ActivatedChainTask
+  ADD INDEX _DepartureActor (_DepartureActor);
+ALTER TABLE ActivatedChainTask
+  ADD INDEX _DepartureSite (_DepartureSite);
+ALTER TABLE ActivatedChainTask
+  ADD INDEX _ArrivalActor (_ArrivalActor);
+ALTER TABLE ActivatedChainTask
+  ADD INDEX _ArrivalSite (_ArrivalSite);
+ALTER TABLE ActivatedChainTask
+  ADD INDEX _ChainToActivate (_ChainToActivate);
+
+ALTER TABLE SupplierCustomer
+  CHANGE COLUMN _MaxDeliveryDay _MaxDeliveryDay int(11) DEFAULT NULL;
+ALTER TABLE SupplierCustomer
+  CHANGE COLUMN _TotalDeliveryDay _TotalDeliveryDay int(11) DEFAULT NULL;
+ALTER TABLE SupplierCustomer
+  CHANGE COLUMN _DeliveryType _DeliveryType int(11) DEFAULT NULL;
+
+# Modif des donnees:
+UPDATE SupplierCustomer SET _DeliveryType=NULL WHERE ISNULL(_TotalDeliveryDay);
+
+ALTER TABLE aacFlyLicence RENAME TO aacLicence;
+ALTER TABLE aacLicence
+  CHANGE COLUMN _FromFlyLicence _FromLicence int(11) unsigned NOT NULL DEFAULT '0';
+ALTER TABLE FlyLicence RENAME TO Licence;
+ALTER TABLE Licence
+  CHANGE COLUMN _FlyLicenceType _LicenceType int(11) NOT NULL DEFAULT '0';
+ALTER TABLE Licence
+  DROP COLUMN _CertificateBeginDate,
+  DROP COLUMN _CertificateEndDate,
+  DROP COLUMN _CertificateDuration,
+  DROP COLUMN _CertificateDurationType,
+  DROP COLUMN _Certificator;
+ALTER TABLE Licence
+  ADD COLUMN _DelayForAlert int(3) NOT NULL DEFAULT '0' AFTER _AlertDateType;
+ALTER TABLE Licence
+  ADD COLUMN _ToBeChecked int(3) NOT NULL DEFAULT '0' AFTER _DelayForAlert;
+ALTER TABLE Licence ADD INDEX _LicenceType (_LicenceType);
+
+ALTER TABLE Rating
+  CHANGE COLUMN _FlyLicence _Licence int(11) NOT NULL DEFAULT '0';
+
+DROP TABLE IF EXISTS LicenceType;
+CREATE TABLE LicenceType (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+ALTER TABLE Rating ADD _Duration INT(3) DEFAULT '0' NOT NULL AFTER _EndDate ,
+ADD _DurationType INT(1) DEFAULT '0' NOT NULL AFTER _Duration ;
+
+INSERT INTO Alert SET _Id=100010, _Name='Licence échue',
+_Subject='Date de licence ou qualification échue pour {$ActorName}',
+_Body='Les licences ou qualifications suivantes arrivent à échéance pour {$ActorName}:\r\n{$Body}';
+INSERT INTO Alert SET _Id=100011, _Name='Licence échue',
+_Subject='Date de licence ou qualification échue',
+_Body='Les licences ou qualifications suivantes arrivent à échéance:\r\n{$Body}';
+UPDATE IdHashTable SET _Id=100011 WHERE _Table='Alert' AND _Id=100008;
+
+UPDATE Actor SET _Code='' WHERE _Code='0';
+
+ALTER TABLE ChainTask
+    CHANGE _Cost _Cost DECIMAL(10, 2) DEFAULT '0' NOT NULL;
+ALTER TABLE ActivatedChainTask
+    CHANGE _RawCost _RawCost DECIMAL(10, 2) DEFAULT '0' NOT NULL,
+    CHANGE _Cost _Cost DECIMAL(10, 2) DEFAULT '0' NOT NULL;
+# requete pour les catalogues
+UPDATE CatalogCriteria SET _Displayable=1 WHERE 1;
+
+# -------------------------------------------
+# RELEASE 11_0_2 d'aout 2005 (date encore pas fixée):
+# -------------------------------------------
+ALTER TABLE Command
+  CHANGE COLUMN _ConcreteProduct _AeroConcreteProduct int(11) NOT NULL DEFAULT '0';
+ALTER TABLE Command
+  ADD INDEX _AeroConcreteProduct (_AeroConcreteProduct),
+  DROP INDEX _ConcreteProduct;
+ALTER TABLE ConcreteProduct
+  ADD COLUMN _ClassName varchar(255) NULL;
+
+--
+-- Table structure for Box
+--
+DROP TABLE IF EXISTS Box;
+CREATE TABLE Box (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Reference VARCHAR(255) DEFAULT NULL,
+  _Level INT(11) DEFAULT NULL,
+  _Comment TEXT DEFAULT NULL,
+  _ParentBox INT(11) NOT NULL DEFAULT '0',
+  _ActivatedChain INT(11) NOT NULL DEFAULT '0',
+  _ActivatedChainTask INT(11) NOT NULL DEFAULT '0',
+  _CommandItem INT(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _ParentBox ON Box (_ParentBox);
+CREATE INDEX _ActivatedChain ON Box (_ActivatedChain);
+CREATE INDEX _ActivatedChainTask ON Box (_ActivatedChainTask);
+CREATE INDEX _CommandItem ON Box (_CommandItem);
+
+--
+-- Modif de la structure de la table CommandItem
+--
+ALTER TABLE CommandItem ADD _ProductType INT(11) NOT NULL DEFAULT '0';
+CREATE INDEX _ProductType ON CommandItem (_ProductType);
+
+--
+-- Modif de la structure de la table Task
+--
+ALTER TABLE Task ADD _IsBoxCreator INT(1) NOT NULL DEFAULT '0';
+
+--
+-- on affecte les taches de regroupement et de sortie de stock comme taches
+-- génératrices de box
+--
+UPDATE Task SET _IsBoxCreator=1 WHERE _Id=5 OR _Id=32;
+
+# -------------------------------------------
+# RELEASE de juillet 2005 (date encore pas fixée):
+# -------------------------------------------
+
+# 1. Requêtes SC_Pricing_Remise:
+# Passer les requêtes suivantes sur la base de données:
+
+--
+-- Table structure for Currency
+--
+DROP TABLE IF EXISTS Currency;
+CREATE TABLE Currency (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Name VARCHAR(50) DEFAULT NULL,
+  _ShortName VARCHAR(10) DEFAULT NULL,
+  _Symbol VARCHAR(10) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+INSERT INTO Currency VALUES (1, 'Euro', 'EUR', '&euro;');
+INSERT INTO Currency VALUES (2, 'Dollar US', 'USD', '$US');
+INSERT INTO Currency VALUES (3, 'Dollar Canadien', 'CAD', '$CAN');
+INSERT INTO Currency VALUES (4, 'Livre Sterling', 'GBP', '&pound;');
+INSERT INTO Currency VALUES (5, 'Yen', 'JPY', '&yen;');
+
+# req. pour transférer ActorProduct._Price et Product._Price dans
+# PriceByCurrency + après ça supprimer ces 2 champs
+--
+-- Table structure for PriceByCurrency
+--
+DROP TABLE IF EXISTS PriceByCurrency;
+CREATE TABLE PriceByCurrency (
+  _Id int(11) unsigned NOT NULL auto_increment,
+  _Price DECIMAL(10,2) NOT NULL DEFAULT '0',
+  _Currency INT(11) NOT NULL DEFAULT '0',
+  _Product INT(11) NOT NULL DEFAULT '0',
+  _ActorProduct INT(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _Currency ON PriceByCurrency (_Currency);
+CREATE INDEX _Product ON PriceByCurrency (_Product);
+CREATE INDEX _ActorProduct ON PriceByCurrency (_ActorProduct);
+
+--
+-- Requête pour transférer les prix de Product
+--
+INSERT INTO PriceByCurrency(_Currency, _Price, _Product)
+    (SELECT 1 , A._Price, A._Id FROM Product A);
+--
+-- Requête pour transférer les prix de ActorProduct
+--
+INSERT INTO PriceByCurrency(_Currency, _Price, _ActorProduct)
+    (SELECT 1 , A._Price, A._Product FROM ActorProduct A);
+
+--
+-- Enlever l'autoincrement
+--
+ALTER TABLE PriceByCurrency CHANGE _Id _Id INT(11)
+    UNSIGNED DEFAULT '0' NOT NULL;
+
+--
+-- Table structure for ProductHandingByCategory
+--
+DROP TABLE IF EXISTS ProductHandingByCategory;
+CREATE TABLE ProductHandingByCategory (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Type INT(11) NOT NULL DEFAULT '0',
+  _UpdateDate DATETIME DEFAULT NULL,
+  _Handing DECIMAL(10,2) NOT NULL DEFAULT '0',
+  _Product INT(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _Product ON ProductHandingByCategory (_Product);
+
+--
+-- Table structure for phcCategory
+--
+DROP TABLE IF EXISTS phcCategory;
+CREATE TABLE phcCategory (
+  _FromProductHandingByCategory int(11) unsigned NOT NULL default '0',
+  _ToCategory int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromProductHandingByCategory, _ToCategory)
+) TYPE=InnoDB CHARSET=latin1;
+
+ALTER TABLE Actor
+  ADD _Currency INT(11) NOT NULL DEFAULT '0' AFTER _CreationDate;
+CREATE INDEX _Currency ON Actor (_Currency);
+
+ALTER TABLE Product
+    DROP _Price,
+    ADD _LicenceName VARCHAR(255) DEFAULT NULL AFTER _GroupingMasterDimension,
+    ADD _LicenceYear INT(4) DEFAULT NULL AFTER _LicenceName;
+
+DROP TABLE IF EXISTS Licence;
+DROP TABLE IF EXISTS pdtLicence;
+
+ALTER TABLE ActorProduct DROP _Price;
+
+--
+-- Table structure for CommandExpeditionDetail
+--
+DROP TABLE IF EXISTS CommandExpeditionDetail;
+CREATE TABLE CommandExpeditionDetail (
+  _Id int(11) unsigned NOT NULL default '0',
+  _LoadingPort VARCHAR(255) DEFAULT NULL,
+  _Shipment INT(11) DEFAULT NULL,
+  _CustomerCommandNo VARCHAR(255) DEFAULT NULL,
+  _DestinatorStore VARCHAR(255) DEFAULT NULL,
+  _DestinatorRange VARCHAR(255) DEFAULT NULL,
+  _ReservationNo VARCHAR(255) DEFAULT NULL,
+  _Season VARCHAR(255) DEFAULT NULL,
+  _Comment TEXT DEFAULT NULL,
+  _Deal VARCHAR(255) DEFAULT NULL,
+  _AirwayBill VARCHAR(255) DEFAULT NULL,
+  _PackingList VARCHAR(255) DEFAULT NULL,
+  _SupplierCode VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+
+ALTER TABLE Command
+  ADD _CommandExpeditionDetail INT(11) NOT NULL DEFAULT '0' AFTER _Duration,
+  ADD _Currency INT(11) NOT NULL DEFAULT '0' AFTER _CommandExpeditionDetail;
+CREATE INDEX _CommandExpeditionDetail ON Command (_CommandExpeditionDetail);
+CREATE INDEX _Currency ON Command (_Currency);
+
+ALTER TABLE Promotion
+  ADD _Currency INT(11) NOT NULL DEFAULT '0';
+CREATE INDEX _Currency ON Promotion (_Currency);
+
+ALTER TABLE SupplierCustomer
+  ADD _HasTVA INT(1) DEFAULT 0 AFTER _DeliveryType,
+  ADD _ToHaveTTC DECIMAL(10,2) DEFAULT 0 AFTER _HasTVA;
+
+ALTER TABLE AbstractDocument
+  ADD _Type INT(11) DEFAULT '0',
+  ADD _TVA INT(11) NOT NULL DEFAULT '0',
+  ADD _RemainingTTC DECIMAL(10,2) DEFAULT '0',
+  ADD _SupplierCustomer INT(11) NOT NULL DEFAULT '0',
+  ADD _Currency INT(11) NOT NULL DEFAULT '0';
+CREATE INDEX _SupplierCustomer ON AbstractDocument (_SupplierCustomer);
+CREATE INDEX _Currency ON AbstractDocument (_Currency);
+CREATE INDEX _TVA ON AbstractDocument (_TVA);
+
+ALTER TABLE InvoicePayment
+  ADD _ToHave INT(11) DEFAULT '0' AFTER _Payment;
+CREATE INDEX _ToHave ON InvoicePayment (_ToHave);
+
+DROP TABLE IF EXISTS ActorBankDetail;
+CREATE TABLE ActorBankDetail (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Iban varchar(255) default NULL,
+  _BankName varchar(255) default NULL,
+  _Swift varchar(255) default NULL,
+  _BankAddressNo varchar(255) default NULL,
+  _BankAddressStreetType varchar(255) default NULL,
+  _BankAddressStreet varchar(255) default NULL,
+  _BankAddressAdd varchar(255) default NULL,
+  _BankAddressCity varchar(255) default NULL,
+  _BankAddressZipCode varchar(255) default NULL,
+  _BankAddressCountry varchar(255) default NULL,
+  PRIMARY KEY  (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+ALTER TABLE Actor
+  ADD _ActorBankDetail INT(11) DEFAULT '0' AFTER _GenericActor;
+CREATE INDEX _ActorBankDetail ON Actor (_ActorBankDetail);
+
+ALTER TABLE InventoryDetail
+  ADD COLUMN _Currency varchar(10) NULL AFTER _ProductReference,
+  ADD COLUMN _BuyingPriceHT decimal(10,2) NULL AFTER _Currency;
+
+--
+-- Table structure for LocationConcreteProduct
+--
+DROP TABLE IF EXISTS LocationConcreteProduct;
+CREATE TABLE LocationConcreteProduct (
+  _Id int(11) unsigned NOT NULL default '0',
+  _ConcreteProduct INT(11) NOT NULL DEFAULT '0',
+  _Location INT(11) NOT NULL DEFAULT '0',
+  _Quantity INT(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _ConcreteProduct ON LocationConcreteProduct (_ConcreteProduct);
+CREATE INDEX _Location ON LocationConcreteProduct (_Location);
+
+--
+-- Table structure for LEMConcreteProduct
+--
+DROP TABLE IF EXISTS LEMConcreteProduct;
+CREATE TABLE LEMConcreteProduct (
+  _Id int(11) unsigned NOT NULL default '0',
+  _LocationExecutedMovement INT(11) NOT NULL DEFAULT '0',
+  _ConcreteProduct INT(11) NOT NULL DEFAULT '0',
+  _Quantity INT(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _LocationExecutedMovement ON LEMConcreteProduct (_LocationExecutedMovement);
+CREATE INDEX _ConcreteProduct ON LEMConcreteProduct (_ConcreteProduct);
+
+ALTER TABLE LEMConcreteProduct
+  ADD COLUMN _Cancelled int(11) NULL DEFAULT '0',
+  ADD COLUMN _CancelledLEMConcreteProduct int(11) NOT NULL DEFAULT '0';
+CREATE INDEX _CancelledLEMConcreteProduct ON LEMConcreteProduct (_CancelledLEMConcreteProduct);
+
+UPDATE Actor SET _Currency=1 WHERE _Currency=0;
+
+# NE PAS OUBLIER LA TABLE ALERT à REPIQUER DE CURRENT
+
+# -------------------------------------------
+# RELEASE 1.1.3
+# -------------------------------------------
+# Modif Actor-ActorBankDetail:
+ALTER TABLE ActorBankDetail
+  ADD _AccountNumber VARCHAR(255) DEFAULT NULL,
+  ADD _Amount DECIMAL(10,2) NOT NULL DEFAULT 0,
+  ADD _LastUpdate DATE DEFAULT NULL,
+  ADD _Active INT(1) NOT NULL DEFAULT 1,
+  ADD _Actor INT(11) NOT NULL DEFAULT 0,
+  ADD _Currency INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _Actor ON ActorBankDetail (_Actor);
+CREATE INDEX _Currency ON ActorBankDetail (_Currency);
+
+# Modif des donnees
+UPDATE ActorBankDetail ABD, Actor A
+  SET ABD._Actor=A._Id
+  WHERE ABD._Id=A._ActorBankDetail;
+
+ALTER TABLE Actor
+  DROP column _ActorBankDetail;
+
+ALTER TABLE Payment
+  ADD _ActorBankDetail INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _ActorBankDetail ON Payment (_ActorBankDetail);
+
+ALTER TABLE Command
+  ADD _ActorBankDetail INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _ActorBankDetail ON Command (_ActorBankDetail);
+ALTER TABLE Command
+  ADD _InstallmentBank INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _InstallmentBank ON Command (_InstallmentBank);
+
+ALTER TABLE AccountingType
+  ADD _ActorBankDetail INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _ActorBankDetail ON AccountingType (_ActorBankDetail);
+
+ALTER TABLE FlowType
+  ADD _ActorBankDetail INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _ActorBankDetail ON FlowType (_ActorBankDetail);
+
+ALTER TABLE Flow
+  ADD _ActorBankDetail INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _ActorBankDetail ON Flow (_ActorBankDetail);
+
+INSERT INTO Profile SET _Id=20, _Name='DIRECTEUR COMMERCIAL';
+
+
+ALTER TABLE Action
+  CHANGE COLUMN _Customer _Actor int(11) NOT NULL DEFAULT '0';
+ALTER TABLE Action
+  DROP column _AeroCustomer;
+ALTER TABLE Action DROP INDEX _Customer ,
+ADD INDEX _Actor (_Actor);
+ALTER TABLE Action
+  CHANGE COLUMN _MeetingDate _WishedDate datetime DEFAULT NULL;
+ALTER TABLE Action
+  CHANGE COLUMN _date _ActionDate datetime DEFAULT NULL;
+
+# modifs relatives à SC n fournisseurs par produit
+ALTER TABLE ActorProduct
+  ADD _BuyUnitQuantity DECIMAL(10,3) DEFAULT NULL,
+  ADD _BuyUnitType INT(11) NOT NULL DEFAULT 0,
+  ADD _Priority INT(1) DEFAULT 0;
+CREATE INDEX _BuyUnitType ON ActorProduct (_BuyUnitType);
+UPDATE ActorProduct SET _Priority=1 WHERE 1;
+UPDATE ActorProduct ap, Product pdt SET 
+    ap._BuyUnitType = pdt._SellUnitType, 
+    ap._BuyUnitQuantity = pdt._SellUnitQuantity 
+    WHERE ap._Product = pdt._Id;
+ALTER TABLE Property CHANGE COLUMN 
+    _Id _Id int(11) unsigned NOT NULL auto_increment;
+INSERT INTO Property (_Name, _DisplayName, _Type) 
+    VALUES ('SupplierReference', 'Réf. achat', 1);
+INSERT INTO Property (_Name, _DisplayName, _Type) 
+    VALUES ('BuyUnitType', 'Unité d\'achat', 1);
+ALTER TABLE Property CHANGE COLUMN 
+    _Id _Id int(11) unsigned NOT NULL;
+INSERT INTO pdtProperty VALUES 
+    (1000, (select _Id from Property where _Name='SupplierReference')), 
+    (1000, (select _Id from Property where _Name='BuyUnitType'));
+ALTER TABLE Product DROP _Supplier;
+
+ALTER TABLE FormModel
+    ADD _ActionType INT(3) DEFAULT NULL;
+ALTER TABLE RealAnswer
+    DROP COLUMN _FormModel;
+ALTER TABLE RealAnswer
+    ADD _Action INT(11) NOT NULL,
+    ADD _Value VARCHAR(255) DEFAULT NULL;
+
+UPDATE Alert SET _Body="La référence attendue {$OrderedBaseReference} a été remplacée par la référence {$ProductBaseReference}." 
+    WHERE _Id=100008;
+
+# parametrage
+DELETE FROM oprTask WHERE _FromOperation=2 AND _ToTask=42;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (2, 42);
+DELETE FROM oprTask WHERE _FromOperation=2 AND _ToTask=43;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (2, 43);
+DELETE FROM oprTask WHERE _FromOperation=2 AND _ToTask=44;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (2, 44);
+DELETE FROM oprTask WHERE _FromOperation=11 AND _ToTask=40;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (11, 40);
+DELETE FROM oprTask WHERE _FromOperation=11 AND _ToTask=41;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (11, 41);
+DELETE FROM oprTask WHERE _FromOperation=11 AND _ToTask=42;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (11, 42);
+DELETE FROM oprTask WHERE _FromOperation=11 AND _ToTask=43;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (11, 43);
+DELETE FROM oprTask WHERE _FromOperation=11 AND _ToTask=44;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (11, 44);
+DELETE FROM oprTask WHERE _FromOperation=12 AND _ToTask=28;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (12, 28);
+DELETE FROM oprTask WHERE _FromOperation=12 AND _ToTask=40;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (12, 40);
+DELETE FROM oprTask WHERE _FromOperation=12 AND _ToTask=41;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (12, 41);
+DELETE FROM oprTask WHERE _FromOperation=12 AND _ToTask=42;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (12, 42);
+DELETE FROM oprTask WHERE _FromOperation=12 AND _ToTask=43;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (12, 43);
+DELETE FROM oprTask WHERE _FromOperation=12 AND _ToTask=44;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (12, 44);
+DELETE FROM oprTask WHERE _FromOperation=24 AND _ToTask=28;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (24, 28);
+DELETE FROM oprTask WHERE _FromOperation=24 AND _ToTask=39;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (24, 39);
+DELETE FROM oprTask WHERE _FromOperation=24 AND _ToTask=41;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (24, 41);
+DELETE FROM oprTask WHERE _FromOperation=24 AND _ToTask=43;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (24, 43);
+DELETE FROM oprTask WHERE _FromOperation=24 AND _ToTask=44;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (24, 44);
+DELETE FROM oprTask WHERE _FromOperation=25 AND _ToTask=28;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (25, 28);
+DELETE FROM oprTask WHERE _FromOperation=25 AND _ToTask=39;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (25, 39);
+DELETE FROM oprTask WHERE _FromOperation=25 AND _ToTask=40;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (25, 40);
+DELETE FROM oprTask WHERE _FromOperation=25 AND _ToTask=41;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (25, 41);
+DELETE FROM oprTask WHERE _FromOperation=25 AND _ToTask=42;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (25, 42);
+DELETE FROM oprTask WHERE _FromOperation=25 AND _ToTask=44;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (25, 44);
+DELETE FROM oprTask WHERE _FromOperation=26 AND _ToTask=28;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (26, 28);
+DELETE FROM oprTask WHERE _FromOperation=26 AND _ToTask=39;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (26, 39);
+DELETE FROM oprTask WHERE _FromOperation=26 AND _ToTask=40;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (26, 40);
+DELETE FROM oprTask WHERE _FromOperation=26 AND _ToTask=41;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (26, 41);
+DELETE FROM oprTask WHERE _FromOperation=26 AND _ToTask=42;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (26, 42);
+DELETE FROM oprTask WHERE _FromOperation=26 AND _ToTask=43;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (26, 43);
+
+DELETE FROM oprTask WHERE _FromOperation=2 AND _ToTask=30;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (2, 30);
+DELETE FROM oprTask WHERE _FromOperation=11 AND _ToTask=30;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (11, 30);
+DELETE FROM oprTask WHERE _FromOperation=12 AND _ToTask=30;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (12, 30);
+DELETE FROM oprTask WHERE _FromOperation=24 AND _ToTask=30;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (24, 30);
+DELETE FROM oprTask WHERE _FromOperation=25 AND _ToTask=30;
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES (25, 30);
+
+DELETE FROM oprTask WHERE _FromOperation=21 AND _ToTask=34;
+INSERT INTO oprTask (_FromOperation , _ToTask) VALUES (21, 34);
+
+
+# -------------------------------------------
+# RELEASE 1.2.0
+# -------------------------------------------
+
+# SC validation tache de production
+ALTER TABLE ActivatedChainTask
+    ADD _InterruptionDate DATETIME DEFAULT NULL AFTER _End,
+    ADD _RestartDate DATETIME DEFAULT NULL AFTER _InterruptionDate,
+    ADD _RealBegin DATETIME DEFAULT NULL AFTER _RestartDate,
+    ADD _RealEnd DATETIME DEFAULT NULL AFTER _RealBegin,
+    ADD _RealDuration FLOAT NOT NULL DEFAULT 0 AFTER _RealBegin,
+    ADD _RealQuantity DECIMAL(10,3) DEFAULT 0 AFTER _RealDuration;
+
+ALTER TABLE ActivatedMovement ADD
+  _Quantity DECIMAL(10,3) DEFAULT NULL AFTER _State;
+  
+# SC maj situation client
+ALTER TABLE Action
+    ADD _Comment varchar(255);
+    
+INSERT INTO Alert 
+    (_Id, _Name, _Subject, _Body, _Template) 
+    VALUES (100012, 'Passage d\'un client en alerte', 
+    'Client : {$actorName} : Passage manuel en alerte', 
+    'Le client {$actorName} a été passé en alerte par l\'utilisateur {$userAccountName} le {$date} à {$heure}.<br><br>Commentaire saisi : {$actionComment}', 
+    NULL);
+INSERT INTO Alert 
+    (_Id, _Name, _Subject, _Body, _Template) 
+    VALUES (100013, 'Date de visite dépassée', 
+    'Client : {$actorName} : Date limite de visite dépassée', 
+    'la date limite de visite du client {$actorName} fixée au {$date} est dépassée.', 
+    NULL);
+    
+# MAJ des donnees de ACM:
+# Lancer le script UpdateACMQuantity.php commité dans MAIN, archive aussi dans
+# le wiki, sur toutes les bases en prod contenant des ACM internes
+# Supprimer ensuite UpdateACMQuantity.php du cvs.
+
+# -------------------------------------
+# RELEASE 1.2.1
+# -------------------------------------
+# sc modifs gestion banques
+ALTER TABLE Account
+    ADD COLUMN _ActorBankDetail INT(11) DEFAULT NULL;
+
+DROP TABLE IF EXISTS Preference;
+CREATE TABLE Preference (
+  _Id int(11) unsigned NOT NULL default '0',
+  _SupQuantityAuthorized INT(1) DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+# alertes validation tache de production
+INSERT INTO Alert VALUES (
+  100014,
+  'Alerte scan validation des tâches de production',
+  'Erreur dans le traitement des scan validation tâche de production.',
+  "Date: {$date} - Utilisateur: {$userAccountName}.\n{$msg}",
+  NULL
+);
+
+ALTER TABLE Unavailability
+    ADD COLUMN _ActivatedChainOperation INT(11) NOT NULL DEFAULT 0;
+ALTER TABLE Unavailability
+  ADD INDEX _ActivatedChainOperation (_ActivatedChainOperation);
+
+ALTER TABLE AbstractDocument
+    ADD COLUMN _BeginDate DATE DEFAULT NULL,
+    ADD COLUMN _EndDate DATE DEFAULT NULL;
+
+# sc bordereau de livraison
+ALTER TABLE AbstractDocument
+    ADD COLUMN _TotalPacking INT(11) DEFAULT 0;
+ALTER TABLE AbstractDocument
+    ADD COLUMN _DestinatorSite INT(11) DEFAULT NULL;
+
+ALTER TABLE LocationExecutedMovement
+    ADD COLUMN _ForwardingForm INT(11) DEFAULT NULL;
+ALTER TABLE LocationExecutedMovement
+    ADD INDEX _ForwardingForm (_ForwardingForm);
+
+# operation, task, oprTask
+DROP TABLE IF EXISTS `Operation`;
+CREATE TABLE `Operation` (
+  `_Id` int(11) unsigned NOT NULL default '0',
+  `_Name` varchar(255) default NULL,
+  `_Symbol` varchar(255) default NULL,
+  `_Code` varchar(255) default NULL,
+  `_FrontTolerance` time default NULL,
+  `_EndTolerance` time default NULL,
+  `_TotalTolerance` time default NULL,
+  `_IsConcreteProductNeeded` int(1) default '0',
+  `_Prestation` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`_Id`),
+  KEY `_Prestation` (`_Prestation`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `Operation` (`_Id`, `_Name`, `_Symbol`, `_Code`, `_FrontTolerance`, `_EndTolerance`, `_TotalTolerance`, `_IsConcreteProductNeeded`, `_Prestation`) VALUES (1, 'ADMINISTRATION', 'ADMI', '', '00:00:00', '00:00:00', '00:00:00', 0, 0),
+(2, 'ASSEMBLAGE', 'ASSE', '', '00:00:00', '00:00:00', '00:00:00', 0, 2),
+(3, 'CHARGEMENT', 'CHAR', '', '00:00:00', '00:00:00', '00:00:00', 0, 0),
+(4, 'CONDITIONNEMENT', 'COND', '', NULL, NULL, '01:00:00', 0, 0),
+(5, 'DEBALLAGE', 'DEBA', '', '00:00:00', '00:00:00', '00:00:00', 0, 0),
+(6, 'DECHARGEMENT', 'DECH', '', '00:00:00', '00:00:00', '00:00:00', 0, 0),
+(7, 'DECONDITIONNEMENT', 'DECO', '', '00:00:00', '00:00:00', '00:00:00', 0, 0),
+(8, 'DEGROUPEMENT', 'DEGR', '', '00:00:00', '00:00:00', '00:00:00', 0, 0),
+(9, 'DOUANE', 'DOUA', '', '00:00:00', '00:00:00', '00:00:00', 0, 0),
+(10, 'EMBALLAGE', 'EMBA', '', '00:00:00', '00:00:00', '00:00:00', 0, 0),
+(11, 'FABRICATION', 'FABR', '', '00:00:00', '00:00:00', '00:00:00', 0, 0),
+(12, 'MONTAGE', 'MONT', '', '00:00:00', '00:00:00', '00:00:00', 0, 0),
+(13, 'RECEPTION', 'RECE', '', '00:00:00', '00:00:00', '00:00:00', 0, 0),
+(14, 'REGROUPEMENT', 'REGR', '', '00:00:00', '00:00:00', '00:00:00', 0, 0),
+(15, 'TOUTES', 'TTES', '', '00:00:00', '00:00:00', '00:00:00', 0, 0),
+(16, 'TRANSPORT AERIEN', 'TRAE', '', '00:00:00', '00:00:00', '00:00:00', 0, 0),
+(17, 'TRANSPORT FERROVIAIRE', 'TRFE', '', '00:00:00', '00:00:00', '00:00:00', 0, 0),
+(18, 'TRANSPORT FLUVIAL', 'TRFL', '', '00:00:00', '00:00:00', '00:00:00', 0, 0),
+(19, 'TRANSPORT MARITIME', 'TRMA', '', '00:00:00', '00:00:00', '00:00:00', 0, 0),
+(20, 'TRANSPORT TERRESTRE', 'TRTE', '', '00:00:00', '00:00:00', '00:00:00', 0, 0),
+(21, 'STOCKAGE', 'STOC', '', '00:00:00', '00:00:00', '00:00:00', 0, 0),
+(22, 'VOL', 'VOL', 'VOL', NULL, NULL, NULL, 1, 0),
+(23, 'MAINTENANCE', 'MAINTENANCE', 'MAINT', NULL, NULL, NULL, 1, 0),
+(24, 'TOURNAGE', 'TOUR', 'TOUR', NULL, NULL, NULL, 0, 0),
+(25, 'SOUDURE', 'SOUD', 'SOUD', NULL, NULL, NULL, 0, 0),
+(26, 'POLISSAGE', 'POLI', 'POLI', NULL, NULL, NULL, 0, 4),
+(27, 'FRAISAGE', 'FRAIS', 'FRAIS', NULL, NULL, NULL, 0, 0),
+(28, 'CONTROLE PRODUCTION', 'CONT', 'CONT', NULL, NULL, NULL, 0, 3);
+
+DROP TABLE IF EXISTS `Task`;
+CREATE TABLE `Task` (
+  `_Id` int(11) unsigned NOT NULL default '0',
+  `_Name` varchar(255) default NULL,
+  `_Instructions` varchar(255) default NULL,
+  `_Duration` float NOT NULL default '0',
+  `_Cost` float NOT NULL default '0',
+  `_ToBeValidated` int(1) default '0',
+  `_Type` int(11) NOT NULL default '0',
+  `_IsBoxCreator` int(1) NOT NULL default '0',
+  PRIMARY KEY  (`_Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `Task` (`_Id`, `_Name`, `_Instructions`, `_Duration`, `_Cost`, `_ToBeValidated`, `_Type`, `_IsBoxCreator`) VALUES (1, 'CONDITIONNER', '', 0, 0, 0, 0, 0),
+(2, 'DECONDITIONNER', '', 0, 0, 0, 0, 0),
+(3, 'EMBALLER', '', 0, 0, 0, 0, 0),
+(4, 'DEBALLER', '', 0, 0, 0, 0, 0),
+(5, 'REGROUPER', '', 0, 0, 0, 0, 1),
+(6, 'DEGROUPER', '', 0, 0, 0, 0, 0),
+(7, 'CHARGER MARCHANDISE', '', 0, 0, 0, 0, 0),
+(8, 'DECHARGER MARCHANDISE', '', 0, 0, 0, 0, 0),
+(9, 'TRANSPORT TERRESTRE', '', 0, 0, 0, 0, 0),
+(10, 'TRANSPORT MARITIME', '', 0, 0, 0, 0, 0),
+(11, 'TRANSPORT FLUVIAL', '', 0, 0, 0, 0, 0),
+(12, 'TRANSPORT FERROVIAIRE', '', 0, 0, 0, 0, 0),
+(13, 'TRANSPORT ARIEN', '', 0, 0, 0, 0, 0),
+(14, 'ATTENTE', '', 0, 0, 0, 0, 0),
+(15, 'CONTRÔLE', '', 0, 0, 0, 0, 0),
+(16, 'EDITER BORDEREAU DE LIVRAISON', '', 0, 0, 0, 0, 0),
+(17, 'EDITER BORDEREAU D''EXPEDITION', '', 0, 0, 0, 0, 0),
+(18, 'EDITER LETTRE DE VOITURE', '', 0, 0, 0, 0, 0),
+(19, 'EDITER LISTE DE COLISAGE', '', 0, 0, 0, 0, 0),
+(20, 'EDITER ETIQUETTE COLIS', '', 0, 0, 0, 0, 0),
+(21, 'EDITER ETIQUETTE PRODUIT', '', 0, 0, 0, 0, 0),
+(22, 'EDITER ETIQUETTE REGROUPEMENT', '', 0, 0, 0, 0, 0),
+(23, 'EDITER ETIQUETTES DIRECTIONNELLES', '', 0, 0, 0, 0, 0),
+(24, 'EDITER ACCUSE DE RECEPTION', '', 0, 0, 0, 0, 0),
+(25, 'EDITER LETTRE DE TRANSPORT MARITIME', '', 0, 0, 0, 0, 0),
+(26, 'EDITER LETTRE DE TRANSPORT AERIEN', '', 0, 0, 0, 0, 0),
+(27, 'RECEPTIONNER MARCHANDISE', '', 0, 0, 0, 0, 0),
+(28, 'ASSEMBLAGE', '', 0, 0, 1, 0, 0),
+(29, 'MONTAGE', '', 0, 0, 1, 0, 0),
+(30, 'FABRICATION', '', 0, 0, 1, 0, 0),
+(31, 'ENTREE EN STOCK', '', 0, 0, 0, 0, 0),
+(32, 'SORTIE DE STOCK', '', 0, 0, 0, 0, 1),
+(33, 'INVENTAIRE', '', 0, 0, 0, 0, 0),
+(34, 'EDITER FACTURE', NULL, 0, 0, 0, 0, 0),
+(35, 'ENREGISTRER REGLEMENT', NULL, 0, 0, 0, 0, 0),
+(36, 'VOL', NULL, 0, 0, 1, 1, 0),
+(37, 'PREPARATION VOL', NULL, 0, 0, 1, 0, 0),
+(38, 'MAINTENANCE POST VOL', NULL, 0, 0, 0, 2, 0),
+(39, 'ACTIVATION', NULL, 0, 0, 0, 0, 0),
+(40, 'ENTREE STOCK INTERNE', NULL, 0, 0, 0, 0, 0),
+(41, 'SORTIE STOCK INTERNE', NULL, 0, 0, 0, 0, 0),
+(42, 'TOURNAGE', NULL, 0, 0, 1, 0, 0),
+(43, 'SOUDURE', NULL, 0, 0, 1, 0, 0),
+(44, 'POLISSAGE', NULL, 0, 0, 1, 0, 0),
+(45, 'FRAISAGE', NULL, 0, 0, 1, 0, 0),
+(46, 'CONTROLE PRODUCTION', NULL, 0, 0, 1, 0, 0);
+
+DROP TABLE IF EXISTS `oprTask`;
+CREATE TABLE `oprTask` (
+  `_FromOperation` int(11) unsigned NOT NULL default '0',
+  `_ToTask` int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`_FromOperation`,`_ToTask`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `oprTask` (`_FromOperation`, `_ToTask`) VALUES (1, 20),
+(1, 21),
+(1, 22),
+(1, 34),
+(1, 35),
+(1, 39),
+(1, 46),
+(2, 28),
+(2, 30),
+(2, 39),
+(2, 40),
+(2, 41),
+(2, 42),
+(2, 43),
+(2, 44),
+(2, 46),
+(3, 7),
+(3, 15),
+(3, 17),
+(3, 18),
+(3, 19),
+(3, 20),
+(3, 21),
+(3, 22),
+(3, 39),
+(4, 1),
+(4, 15),
+(4, 16),
+(4, 20),
+(4, 21),
+(4, 39),
+(5, 4),
+(5, 15),
+(5, 39),
+(6, 8),
+(6, 14),
+(6, 15),
+(6, 39),
+(7, 2),
+(7, 14),
+(7, 15),
+(7, 39),
+(8, 6),
+(8, 14),
+(8, 15),
+(8, 39),
+(9, 14),
+(9, 15),
+(9, 39),
+(10, 3),
+(10, 14),
+(10, 15),
+(10, 16),
+(10, 17),
+(10, 20),
+(10, 21),
+(10, 39),
+(11, 28),
+(11, 30),
+(11, 39),
+(11, 40),
+(11, 41),
+(11, 42),
+(11, 43),
+(11, 44),
+(11, 46),
+(12, 28),
+(12, 30),
+(12, 39),
+(12, 40),
+(12, 41),
+(12, 42),
+(12, 43),
+(12, 44),
+(12, 46),
+(13, 14),
+(13, 15),
+(13, 39),
+(14, 5),
+(14, 14),
+(14, 15),
+(14, 16),
+(14, 19),
+(14, 20),
+(14, 21),
+(14, 22),
+(14, 39),
+(15, 39),
+(16, 39),
+(17, 39),
+(18, 39),
+(19, 10),
+(19, 39),
+(20, 9),
+(20, 39),
+(21, 14),
+(21, 15),
+(21, 16),
+(21, 20),
+(21, 21),
+(21, 22),
+(21, 23),
+(21, 31),
+(21, 32),
+(21, 33),
+(21, 34),
+(21, 39),
+(21, 40),
+(21, 41),
+(22, 36),
+(22, 37),
+(22, 38),
+(22, 39),
+(23, 38),
+(23, 39),
+(24, 28),
+(24, 30),
+(24, 39),
+(24, 41),
+(24, 42),
+(24, 43),
+(24, 44),
+(24, 46),
+(25, 28),
+(25, 30),
+(25, 39),
+(25, 40),
+(25, 41),
+(25, 42),
+(25, 43),
+(25, 44),
+(25, 46),
+(26, 28),
+(26, 39),
+(26, 40),
+(26, 41),
+(26, 42),
+(26, 43),
+(26, 44),
+(26, 46),
+(27, 45),
+(27, 46),
+(28, 46);
+
+#sc ventilation des frais annexes
+ALTER TABLE FlowType ADD COLUMN _InvoiceType INT(1) DEFAULT 0;
+ALTER TABLE FlowTypeItem ADD COLUMN _BreakdownPart INT(1) DEFAULT 0;
+
+INSERT INTO FlowType VALUES (1001, 0, 'Factures fournisseurs produits', 0, 1);
+INSERT INTO FlowType VALUES (1002, 0, 'Factures fournisseurs transport', 0, 2);
+INSERT INTO FlowType VALUES (1003, 0, 'Factures fournisseurs cours', 0, 3);
+INSERT INTO FlowType VALUES (1004, 0, 'Factures fournisseurs prestation', 0, 4);
+INSERT INTO FlowType VALUES (1005, 1, 'Factures clients produits', 0, 5);
+INSERT INTO FlowType VALUES (1006, 1, 'Factures clients transport', 0, 6);
+INSERT INTO FlowType VALUES (1007, 1, 'Factures clients cours', 0, 7);
+INSERT INTO FlowType VALUES (1008, 1, 'Factures clients prestation', 0, 8);
+
+INSERT INTO FlowTypeItem VALUES (1001, "Frais d\'assurance", 0, 1001, 1);
+INSERT INTO FlowTypeItem VALUES (1002, "Frais d\'emballage", 0, 1001, 2);
+INSERT INTO FlowTypeItem VALUES (1003, "Frais de port", 0, 1001, 3);
+INSERT INTO FlowTypeItem VALUES (1004, "Lignes de facture", 0, 1001, 4);
+
+INSERT INTO FlowTypeItem VALUES (1005, "Frais d\'assurance", 0, 1002, 1);
+INSERT INTO FlowTypeItem VALUES (1006, "Frais d\'emballage", 0, 1002, 2);
+INSERT INTO FlowTypeItem VALUES (1007, "Frais de port", 0, 1002, 3);
+INSERT INTO FlowTypeItem VALUES (1008, "Lignes de facture", 0, 1002, 4);
+
+INSERT INTO FlowTypeItem VALUES (1009, "Frais d\'assurance", 0, 1003, 1);
+INSERT INTO FlowTypeItem VALUES (1010, "Frais d\'emballage", 0, 1003, 2);
+INSERT INTO FlowTypeItem VALUES (1011, "Frais de port", 0, 1003, 3);
+INSERT INTO FlowTypeItem VALUES (1012, "Lignes de facture", 0, 1003, 4);
+
+INSERT INTO FlowTypeItem VALUES (1013, "Frais d\'assurance", 0, 1004, 1);
+INSERT INTO FlowTypeItem VALUES (1014, "Frais d\'emballage", 0, 1004, 2);
+INSERT INTO FlowTypeItem VALUES (1015, "Frais de port", 0, 1004, 3);
+INSERT INTO FlowTypeItem VALUES (1016, "Lignes de facture", 0, 1004, 4);
+
+INSERT INTO FlowTypeItem VALUES (1017, "Frais d\'assurance", 0, 1005, 1);
+INSERT INTO FlowTypeItem VALUES (1018, "Frais d\'emballage", 0, 1005, 2);
+INSERT INTO FlowTypeItem VALUES (1019, "Frais de port", 0, 1005, 3);
+INSERT INTO FlowTypeItem VALUES (1020, "Lignes de facture", 0, 1005, 4);
+
+INSERT INTO FlowTypeItem VALUES (1021, "Frais d\'assurance", 0, 1006, 1);
+INSERT INTO FlowTypeItem VALUES (1022, "Frais d\'emballage", 0, 1006, 2);
+INSERT INTO FlowTypeItem VALUES (1023, "Frais de port", 0, 1006, 3);
+INSERT INTO FlowTypeItem VALUES (1024, "Lignes de facture", 0, 1006, 4);
+
+INSERT INTO FlowTypeItem VALUES (1025, "Frais d\'assurance", 0, 1007, 1);
+INSERT INTO FlowTypeItem VALUES (1026, "Frais d\'emballage", 0, 1007, 2);
+INSERT INTO FlowTypeItem VALUES (1027, "Frais de port", 0, 1007, 3);
+INSERT INTO FlowTypeItem VALUES (1028, "Lignes de facture", 0, 1007, 4);
+
+INSERT INTO FlowTypeItem VALUES (1029, "Frais d\'assurance", 0, 1008, 1);
+INSERT INTO FlowTypeItem VALUES (1030, "Frais d\'emballage", 0, 1008, 2);
+INSERT INTO FlowTypeItem VALUES (1031, "Frais de port", 0, 1008, 3);
+INSERT INTO FlowTypeItem VALUES (1032, "Lignes de facture", 0, 1008, 4);
+
+ALTER TABLE Box
+    ADD COLUMN _LocationExecutedMovement INT(11) NOT NULL DEFAULT 0;
+ALTER TABLE Box
+    ADD INDEX _LocationExecutedMovement (_LocationExecutedMovement);
+    
+# sc PrestationCost 3 dec
+ALTER TABLE CostRange
+  CHANGE COLUMN _Cost _Cost DECIMAL(10,3) DEFAULT 0;
+ALTER TABLE ActorPrestationCost
+  CHANGE COLUMN _Cost _Cost DECIMAL(10,3) DEFAULT 0;
+ALTER TABLE ConcreteProductPrestationCost
+  CHANGE COLUMN _Cost _Cost DECIMAL(10,3) DEFAULT 0;
+ALTER TABLE FlyTypePrestationCost
+  CHANGE COLUMN _Cost _Cost DECIMAL(10,3) DEFAULT 0;
+ALTER TABLE ProductPrestationCost
+  CHANGE COLUMN _Cost _Cost DECIMAL(10,3) DEFAULT 0;
+ALTER TABLE Prestation
+  CHANGE COLUMN _Cost _Cost DECIMAL(10,3) DEFAULT 0;
+
+# maj Invoice.CommandType
+UPDATE AbstractDocument a, Command b SET a._CommandType=2 
+  WHERE a._ClassName='Invoice' AND a._Command=b._Id AND b._Type=2;
+
+UPDATE AbstractDocument a, Command b SET a._CommandType=1 
+  WHERE a._ClassName='Invoice' AND a._Command=b._Id AND b._Type=1;
+
+UPDATE AbstractDocument a, Command b, SupplierCustomer c 
+  SET a._CommandType=3
+  WHERE a._ClassName='Invoice' 
+  AND a._Command=b._Id AND b._Type=3 
+  AND a._SupplierCustomer=c._Id AND c._Supplier=1;
+
+UPDATE AbstractDocument a, Command b, SupplierCustomer c 
+  SET a._CommandType=4
+  WHERE a._ClassName='Invoice' 
+  AND a._Command=b._Id AND b._Type=3 
+  AND a._SupplierCustomer=c._Id AND c._Customer=1;
+
+UPDATE AbstractDocument a, Command b, SupplierCustomer c 
+  SET a._CommandType=5
+  WHERE a._ClassName='Invoice' 
+  AND a._Command=b._Id AND b._Type=4 
+  AND a._SupplierCustomer=c._Id AND c._Supplier=1;
+
+UPDATE AbstractDocument a, Command b, SupplierCustomer c 
+  SET a._CommandType=6
+  WHERE a._ClassName='Invoice' 
+  AND a._Command=b._Id AND b._Type=4 
+  AND a._SupplierCustomer=c._Id AND c._Customer=1;
+
+UPDATE AbstractDocument a, Command b, SupplierCustomer c 
+  SET a._CommandType=7
+  WHERE a._ClassName='Invoice' 
+  AND a._Command=b._Id AND b._Type=5 
+  AND a._SupplierCustomer=c._Id AND c._Supplier=1;
+
+UPDATE AbstractDocument a, Command b, SupplierCustomer c 
+  SET a._CommandType=8
+  WHERE a._ClassName='Invoice' 
+  AND a._Command=b._Id AND b._Type=5 
+  AND a._SupplierCustomer=c._Id AND c._Customer=1;
+
+# -------------------------------------------
+# RELEASE 2.0.0
+# -------------------------------------------
+
+# Armonisation structure bd ol et ol-site
+ALTER TABLE Product
+    ADD COLUMN _Description VARCHAR(255) DEFAULT NULL,
+    ADD COLUMN _Image INT(11) NOT NULL DEFAULT 0,
+    ADD COLUMN _LastModified DATETIME DEFAULT NULL;
+CREATE INDEX _Image ON Product (_Image);
+
+CREATE TABLE Image (
+  _Id int(11) unsigned NOT NULL default '0',
+  _UUID VARCHAR(255) DEFAULT NULL,
+  _Extension VARCHAR(10) DEFAULT NULL,
+  _Data TEXT DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+ALTER TABLE Category
+    ADD COLUMN _Description VARCHAR(255) DEFAULT NULL;
+
+ALTER TABLE LocationExecutedMovement
+    ADD COLUMN _InvoiceItem INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _InvoiceItem ON LocationExecutedMovement (_InvoiceItem);
+
+INSERT INTO Profile values(21, 'Client site web');
+
+ALTER TABLE Category ADD COLUMN _LastModified DATETIME DEFAULT NULL;
+ALTER TABLE Image ADD COLUMN _LastModified DATETIME DEFAULT NULL;
+ALTER TABLE TVA ADD COLUMN _LastModified DATETIME DEFAULT NULL;
+
+# mettre _LastModified à NOW() lors de la mise en prod
+UPDATE Product SET _LastModified=NOW() WHERE 1;
+UPDATE Category SET _LastModified=NOW() WHERE 1;
+UPDATE TVA SET _LastModified=NOW() WHERE 1;
+UPDATE Image SET _LastModified=NOW() WHERE 1;
+
+# refactoring UserAccount/Profile
+DROP TABLE IF EXISTS Profile;
+ALTER TABLE UserAccount CHANGE _Profile _Profile INT(3) NOT NULL DEFAULT '0';
+
+# ajout des preferences pour les acteurs du site web
+ALTER TABLE Preference
+    ADD COLUMN _WSActorGenericActor INT(11) default 0,
+    ADD COLUMN _WSActorCommercial INT(11) default 0,
+    ADD COLUMN _WSActorCategory INT(11) default 0,
+    ADD COLUMN _WSActorAccountingType INT(11) default 0;
+
+ALTER TABLE Product
+    ADD COLUMN _Owner INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _Owner ON Product (_Owner);
+
+DROP TABLE IF EXISTS Manual;
+CREATE TABLE Manual (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Name VARCHAR(255) DEFAULT NULL,
+  _FrFile VARCHAR(255) DEFAULT NULL,
+  _EnFile VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+DROP TABLE IF EXISTS oclProduct;
+CREATE TABLE oclProduct (
+  _FromOccupiedLocation int(11) unsigned NOT NULL default '0',
+  _ToProduct int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromOccupiedLocation, _ToProduct)
+) TYPE=InnoDB CHARSET=latin1;
+
+ALTER TABLE Preference
+    ADD COLUMN _CommandActivateMultipleChains INT(1) default 0;
+
+#ajout mans
+INSERT INTO Manual
+    VALUES (1, 'Menu et navigation', 'MANUEL_MENUETNAVIGATION.pdf', '');
+INSERT INTO Manual
+    VALUES (2, 'Suivi de commandes produit : Facturation, règlement, avoirs', 'MANUEL_SUIVI_COMMANDES_PRODUIT.pdf', '');
+INSERT INTO Manual
+    VALUES (3, 'Catalogue client', 'MANUEL_CATALOGUE_CLIENT.pdf', '');
+INSERT INTO Manual
+    VALUES (4, 'Quantités en stock', 'MANUEL_QUANTITESENSTOCK.pdf', 'UserGuide_QuantityInStock.pdf');
+
+# personnalisation de doc
+ALTER TABLE DocumentModel
+    ADD COLUMN _DisplayTotalWeight INT(1) default 1;
+
+# SC modif import
+ALTER TABLE SpreadSheetColumn
+    ADD COLUMN _PropertyClass VARCHAR(255) default NULL AFTER _PropertyType;
+UPDATE SpreadSheetColumn SET _PropertyClass=_PropertyType, _PropertyType=12
+    WHERE LENGTH(_PropertyType) > 2;
+ALTER TABLE SpreadSheetColumn
+    CHANGE COLUMN _PropertyName _PropertyName VARCHAR(50) DEFAULT NULL,
+    CHANGE COLUMN _FKeyPropertyName _FkeyPropertyName VARCHAR(50) DEFAULT NULL,
+    CHANGE COLUMN _PropertyClass _PropertyClass VARCHAR(50) DEFAULT NULL,
+    CHANGE COLUMN _PropertyType _PropertyType int(3) NOT NULL DEFAULT 0;
+
+# modif liées au BE
+--
+-- Table structure for ForwardingFormPacking
+--
+DROP TABLE IF EXISTS ForwardingFormPacking;
+CREATE TABLE ForwardingFormPacking (
+  _Id int(11) unsigned NOT NULL default '0',
+  _ForwardingForm INT(11) NOT NULL DEFAULT 0,
+  _CoverType INT(11) NOT NULL DEFAULT 0,
+  _Quantity INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _ForwardingForm ON ForwardingFormPacking (_ForwardingForm);
+CREATE INDEX _CoverType ON ForwardingFormPacking (_CoverType);
+# création des ForwardingFormPacking a partir des ForwardingForm
+SET @FFPid=0;
+INSERT INTO ForwardingFormPacking (_Id, _ForwardingForm, _CoverType, _Quantity) SELECT @FFPid:=@FFPid+1, _Id, 2, _TotalPacking FROM AbstractDocument WHERE _ClassName="ForwardingForm";
+# suppression de ForwardingForm._TotalPacking
+ALTER TABLE AbstractDocument
+    DROP COLUMN _TotalPacking;
+
+# gestion des emballages consignés
+INSERT INTO ProductType (_Id, _Name, _GenericProductType, _Generic)
+    VALUES (2000, 'Emballage consigné', 1000, 0);
+
+ALTER TABLE ForwardingFormPacking
+    ADD COLUMN _Product INT(11) NOT NULL DEFAULT 0;
+
+INSERT INTO Task SET _Id=47, _Name='SCIAGE', _ToBeValidated=1;
+INSERT INTO Task SET _Id=48, _Name='MICROBILLAGE', _ToBeValidated=1;
+INSERT INTO Task SET _Id=49, _Name='CHAUDRONNERIE', _ToBeValidated=1;
+INSERT INTO Task SET _Id=50, _Name='AJUSTAGE', _ToBeValidated=1;
+
+INSERT INTO Operation SET _Id=29, _Name='SCIAGE';
+INSERT INTO Operation SET _Id=30, _Name='MICROBILLAGE';
+INSERT INTO Operation SET _Id=31, _Name='CHAUDRONNERIE';
+INSERT INTO Operation SET _Id=32, _Name='AJUSTAGE';
+
+INSERT INTO oprTask SET _FromOperation=29, _ToTask=47;
+INSERT INTO oprTask SET _FromOperation=30, _ToTask=48;
+INSERT INTO oprTask SET _FromOperation=31, _ToTask=49;
+INSERT INTO oprTask SET _FromOperation=32, _ToTask=50;
+
+# -------------------------------------------
+# RELEASE 2.0.1
+# -------------------------------------------
+
+
+# Mercurial
+ALTER TABLE Preference
+    ADD COLUMN _MercurialForClient INT(1) DEFAULT 0;
+
+# SC ABD
+DROP TABLE IF EXISTS Ressource;
+CREATE TABLE Ressource (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Name VARCHAR(255) DEFAULT NULL,
+  _Type INT(3) NOT NULL DEFAULT 0,
+  _Cost DECIMAL(10,2) DEFAULT NULL,
+  _CostType INT(3) NOT NULL DEFAULT 0,
+  _Product INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _Product ON Ressource (_Product);
+
+--
+-- Table structure for RessourceGroup
+--
+DROP TABLE IF EXISTS RessourceGroup;
+CREATE TABLE RessourceGroup (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Name VARCHAR(255) DEFAULT NULL,
+  _Active INT(1) DEFAULT 1,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- Table structure for RessourceRessourceGroup
+--
+DROP TABLE IF EXISTS RessourceRessourceGroup;
+CREATE TABLE RessourceRessourceGroup (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Ressource INT(11) NOT NULL DEFAULT 0,
+  _RessourceGroup INT(11) NOT NULL DEFAULT 0,
+  _Rate DECIMAL(10,2) DEFAULT NULL,
+  _RateType INT(3) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _Ressource ON RessourceRessourceGroup (_Ressource);
+CREATE INDEX _RessourceGroup ON RessourceRessourceGroup (_RessourceGroup);
+
+ALTER TABLE ChainTask ADD COLUMN
+    _RessourceGroup INT(11) NOT NULL DEFAULT 0 AFTER _ChainToActivate;
+CREATE INDEX _RessourceGroup ON ChainTask (_RessourceGroup);
+
+ALTER TABLE ActivatedChainTask 
+    ADD COLUMN _RealCost DECIMAL(10,2) DEFAULT NULL AFTER _RealDuration,
+    ADD COLUMN _RessourceGroup INT(11) NOT NULL DEFAULT 0 AFTER _ChainToActivate;
+CREATE INDEX _RessourceGroup ON ActivatedChainTask (_RessourceGroup);
+
+# SC REMISE EN MONTANT
+ALTER TABLE ProductHandingByCategory 
+    ADD COLUMN _Currency INT(11) DEFAULT 0, 
+    ADD COLUMN _Type INT(1) DEFAULT 1;
+
+# SC Commande Cadencée
+ALTER TABLE Catalog ADD COLUMN
+    _CadencedOrder INT(1) NOT NULL DEFAULT 0 AFTER _Page;
+ALTER TABLE CommandItem ADD COLUMN 
+    _WishedDate DATETIME DEFAULT NULL AFTER _PriceHT;
+ALTER TABLE Command ADD COLUMN 
+    _Cadenced INT(1) NOT NULL DEFAULT '0' AFTER _Duration;
+
+# SC refactoring Zones
+DROP TABLE IF EXISTS lnkZone;
+DROP TABLE IF EXISTS lnkZoneActor;
+DROP TABLE IF EXISTS lnkZoneSite;
+DROP TABLE IF EXISTS ZoneCriteria;
+ALTER TABLE Actor DROP COLUMN _DeliveryZone;
+
+ALTER TABLE Site ADD COLUMN
+    _Zone INT(11) NOT NULL DEFAULT 0 AFTER _CountryCity;
+CREATE INDEX _Zone ON Site (_Zone);
+
+ALTER TABLE CountryCity ADD COLUMN
+    _Zone INT(11) NOT NULL DEFAULT 0 AFTER _CityName;
+CREATE INDEX _Zone ON CountryCity (_Zone);
+
+# ajout ope/task suivi matière + modif fiche suiveuse
+INSERT INTO Operation (_Id, _Name) VALUES (33, "SUIVI MATIERE");
+INSERT INTO Task (_Id, _Name, _ToBeValidated) VALUES (51, "SUIVI MATIERE", 1);
+INSERT INTO oprTask VALUES (33, 51);
+UPDATE Task SET _Instructions='' WHERE _Instructions='Instructions...';
+UPDATE ChainTask SET _Instructions='' WHERE _Instructions='Instructions...';
+UPDATE ActivatedChainTask SET _Instructions='' WHERE _Instructions='Instructions...';
+
+# modifs gestion mots de passe
+# pas encore commité
+ALTER TABLE UserAccount CHANGE COLUMN 
+    _Password _Password VARCHAR(40) DEFAULT NULL;
+UPDATE UserAccount SET _Password=SHA1(_Password);
+
+# modifs OccupiedLocation
+ALTER TABLE OccupiedLocation 
+    ADD COLUMN _Product INT(11) NOT NULL DEFAULT 0 AFTER _Location, 
+    ADD COLUMN _Quantity DECIMAL(10,3) DEFAULT NULL;
+DROP TABLE IF EXISTS oclProduct;
+
+# modif costrange
+ALTER TABLE CostRange 
+    ADD COLUMN _Store INT(11) NOT NULL DEFAULT 0;
+ALTER TABLE CostRange 
+    ADD COLUMN _ProductType INT(11) NOT NULL DEFAULT 0;
+
+# homogénéisation des constantes costtype/durationtype
+ALTER TABLE ActivatedChainTask CHANGE COLUMN 
+    _RawDurationType _DurationType INT(3) NOT NULL DEFAULT 0;
+ALTER TABLE ActivatedChainTask CHANGE COLUMN 
+    _RawCostType _CostType INT(3) NOT NULL DEFAULT 0;
+
+UPDATE ChainTask SET _CostType=8 WHERE _CostType=6;
+UPDATE ChainTask SET _CostType=7 WHERE _CostType=5;
+UPDATE ChainTask SET _CostType=5 WHERE _CostType=3;
+UPDATE ChainTask SET _CostType=3 WHERE _CostType=2;
+UPDATE ChainTask SET _CostType=2 WHERE _CostType=1;
+
+UPDATE ActivatedChainTask SET _CostType=8 WHERE _CostType=6;
+UPDATE ActivatedChainTask SET _CostType=7 WHERE _CostType=5;
+UPDATE ActivatedChainTask SET _CostType=5 WHERE _CostType=3;
+UPDATE ActivatedChainTask SET _CostType=3 WHERE _CostType=2;
+UPDATE ActivatedChainTask SET _CostType=2 WHERE _CostType=1;
+
+# prestion: un movementType peut être associé à plusieurs prestations
+--
+-- Table structure for prsToMvtType
+--
+DROP TABLE IF EXISTS prsToMvtType;
+CREATE TABLE prsToMvtType (
+  _FromPrestation int(11) unsigned NOT NULL default '0',
+  _ToMovementType int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromPrestation, _ToMovementType)
+) TYPE=InnoDB CHARSET=latin1;
+
+REPLACE INTO prsToMvtType
+    SELECT _Prestation, _Id FROM MovementType WHERE _Prestation>0;
+
+ALTER TABLE MovementType
+    DROP COLUMN _Prestation;
+
+# -------------------------------------------
+# RELEASE 2.0.2
+# -------------------------------------------
+
+# suppression de la table Language
+DROP TABLE IF EXISTS Language;
+
+# création de FW_Preferences
+DROP TABLE IF EXISTS FW_Preferences;
+CREATE TABLE FW_Preferences (
+    name varchar(80) PRIMARY KEY UNIQUE NOT NULL,
+    type varchar(10) NOT NULL DEFAULT "string",
+    string_value varchar(255) default NULL,
+    bool_value int(1) default 0,
+    int_value varchar(11) default 0,
+    float_value decimal(10,4) default 0,
+    array_value LONGTEXT default NULL
+);
+# migration des prefs existantes
+INSERT INTO FW_Preferences (name, type, bool_value)
+    VALUES ('SupQuantityAuthorized', 'boolean',
+    (SELECT _SupQuantityAuthorized FROM Preference WHERE _Id=1));
+INSERT INTO FW_Preferences (name, type, bool_value)
+    VALUES ('CommandActivateMultipleChains', 'boolean',
+    (SELECT _CommandActivateMultipleChains FROM Preference WHERE _Id=1));
+INSERT INTO FW_Preferences (name, type, bool_value)
+    VALUES ('MercurialForClient', 'boolean',
+    (SELECT _MercurialForClient FROM Preference WHERE _Id=1));
+INSERT INTO FW_Preferences (name, type, int_value)
+    VALUES ('WSActorGenericActor', 'integer',
+    (SELECT _WSActorGenericActor FROM Preference WHERE _Id=1));
+INSERT INTO FW_Preferences (name, type, int_value)
+    VALUES ('WSActorCommercial', 'integer',
+    (SELECT _WSActorCommercial FROM Preference WHERE _Id=1));
+INSERT INTO FW_Preferences (name, type, int_value)
+    VALUES ('WSActorAccountingType', 'integer',
+    (SELECT _WSActorAccountingType FROM Preference WHERE _Id=1));
+INSERT INTO FW_Preferences (name, type, int_value)
+    VALUES ('WSActorCategory', 'integer',
+    (SELECT _WSActorCategory FROM Preference WHERE _Id=1));
+# suppression de la table Preferences
+DROP TABLE IF EXISTS Preferences;
+
+#Adaptation au particularisme des mvts internes
+UPDATE MovementType SET _Foreseeable=-1 WHERE _Id=14;
+UPDATE MovementType SET _Foreseeable=-1 WHERE _Id=15;
+
+# SCRIPTS PHP A PASSER
+# --------------------
+# apres execution des requetes precedentes
+# les scripts sont dans onlogistics/scripts/
+#
+# UpdateLEM_InvoiceItem.php
+# Si deroulement OK, passer la req suivante:
+# ALTER TABLE LocationExecutedMovement DROP _IsFactured;
+
+# gestion du num de commande dans le BE
+ALTER TABLE AbstractDocument
+    ADD COLUMN _CommandNo VARCHAR(30) DEFAULT "";
+
+
+# -------------------------------------------
+# RELEASE 2.0.3
+# -------------------------------------------
+
+ALTER TABLE Store ADD _Activated INT(1) NOT NULL DEFAULT '1' AFTER _Name;
+
+DROP TABLE IF EXISTS Instant;
+DROP TABLE IF EXISTS WeeklyInstant;
+DROP TABLE IF EXISTS DangerousProductNumber;
+DROP TABLE IF EXISTS DangerousProductClass;
+DROP TABLE IF EXISTS CoverGroup;
+DROP TABLE IF EXISTS CoverKind;
+DROP TABLE IF EXISTS CoverProperty;
+DROP TABLE IF EXISTS CoverOperationType;
+DROP TABLE IF EXISTS cotCoverOperationType;
+UPDATE BarCodeType SET _Name='INDUSTRIAL 2 of 5' WHERE _Id =12;
+
+ALTER TABLE AbstractDocument ADD _Transporter INT(11) NOT NULL DEFAULT 0;
+
+ALTER TABLE HelpPage DROP COLUMN _Body;
+ALTER TABLE HelpPage DROP COLUMN _PDFFile;
+ALTER TABLE HelpPage ADD _BodyAddon LONGTEXT DEFAULT NULL;
+
+ALTER TABLE Alert DROP COLUMN _Subject;
+ALTER TABLE Alert DROP COLUMN _Body;
+ALTER TABLE Alert ADD _BodyAddon LONGTEXT DEFAULT NULL;
+
+ALTER TABLE Incoterm CHANGE _TransportType _TransportType INT(11) NOT NULL DEFAULT '0';
+UPDATE Incoterm SET _TransportType=1 WHERE _Id>=8;
+COMMIT;
+DROP TABLE IF EXISTS alertUserAccount;
+RENAME TABLE AlertUserAccount TO alertUserAccount;
+BEGIN;
+ALTER TABLE alertUserAccount
+    CHANGE COLUMN _Alert _FromAlert int(11) NOT NULL DEFAULT '0';
+ALTER TABLE alertUserAccount
+    CHANGE COLUMN _UserAccount _ToUserAccount int(11) NOT NULL DEFAULT '0';
+ALTER TABLE alertUserAccount DROP COLUMN _Id;
+
+ALTER TABLE SupplierCustomer ADD _InvoiceByMail INT(1) NOT NULL DEFAULT '0';
+
+INSERT INTO Alert (_Id, _Name) SELECT MAX(_Id)+1, 'Facture disponible pour édition' FROM Alert;
+INSERT INTO Alert (_Id, _Name) SELECT MAX(_Id)+1, 'Facture en pièce jointe' FROM Alert;
+
+# passer les acteurs génériques à actif
+UPDATE Actor SET _Active=1 WHERE _Generic=1;
+
+####################################
+# REFACTORING PRESTATION
+####################################
+SET AUTOCOMMIT=0;
+BEGIN;
+
+ALTER TABLE DocumentModel ADD COLUMN _DisplayProductDetail int(1) NOT NULL default '0'; 
+ALTER TABLE Prestation DROP COLUMN _Cost;
+
+--
+-- Table structure for PrestationCost
+--
+DROP TABLE IF EXISTS PrestationCost;
+CREATE TABLE PrestationCost (
+  _Id int(11) unsigned NOT NULL default '0',
+  _ClassName VARCHAR(255) DEFAULT NULL,
+  _Prestation INT(11) NOT NULL DEFAULT 0,
+  _Product INT(11) NOT NULL DEFAULT 0,
+  _FlyType INT(11) NOT NULL DEFAULT 0,
+  _ConcreteProduct INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _Prestation ON PrestationCost (_Prestation);
+CREATE INDEX _Product ON PrestationCost (_Product);
+CREATE INDEX _FlyType ON PrestationCost (_FlyType);
+CREATE INDEX _ConcreteProduct ON PrestationCost (_ConcreteProduct);
+
+--
+-- Table structure for PrestationCustomer
+--
+DROP TABLE IF EXISTS PrestationCustomer;
+CREATE TABLE PrestationCustomer (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Name VARCHAR(255) DEFAULT NULL,
+  _Prestation INT(11) NOT NULL DEFAULT 0,
+  _Actor INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _Prestation ON PrestationCustomer (_Prestation);
+CREATE INDEX _Actor ON PrestationCustomer (_Actor);
+
+ALTER TABLE CostRange
+  ADD COLUMN _Prestation INT(11) NOT NULL DEFAULT 0,
+  ADD COLUMN _PrestationCost INT(11) NOT NULL DEFAULT 0;
+
+ALTER TABLE PrestationCost ADD COLUMN tmp int(11);
+SET @prsCostId=0;
+
+# Deplace les xxxPrestationCost dans PrestationCost
+INSERT INTO PrestationCost (_Id, _ClassName, _Prestation, _Product, _ConcreteProduct, _FlyType, tmp) 
+    SELECT @prsCostId:=@prsCostId+1, 'ProductPrestationCost', _Prestation, _Product, 0, 0, _Id 
+    FROM ProductPrestationCost;
+INSERT INTO PrestationCost (_Id, _ClassName, _Prestation, _Product, _ConcreteProduct, _FlyType, tmp) 
+    SELECT @prsCostId:=@prsCostId+1, 'ConcreteProductPrestationCost', _Prestation, 0, _ConcreteProduct, 0, _Id 
+    FROM ConcreteProductPrestationCost;
+INSERT INTO PrestationCost (_Id, _ClassName, _Prestation, _Product, _ConcreteProduct, _FlyType, tmp) 
+    SELECT @prsCostId:=@prsCostId+1, 'FlyTypePrestationCost', _Prestation, 0, 0, _FlyType, _Id 
+    FROM FlyTypePrestationCost;
+
+# crée les prestationCustomer à partir des actorPrestationcost
+SET @prsCustId=0;
+INSERT INTO PrestationCustomer (_Id, _Name, _Prestation, _Actor) 
+    SELECT @prsCustId:=@prsCustId+1, '', _Prestation, _Actor FROM ActorPrestationCost;
+
+# Met à jour CostRange._PrestationCost pour suppression des tables de liens
+UPDATE CostRange c SET _Prestation=(
+    SELECT a._Prestation FROM ActorPrestationCost a, actPrsCostToCostRange b 
+        WHERE b._FromActorPrestationCost=a._Id
+        AND b._ToCostRange=c._Id) 
+    WHERE _Prestation=0;
+UPDATE CostRange c SET _Prestation=(
+    SELECT a._FromPrestation FROM prsToCostRange a WHERE a._ToCostRange=c._Id) 
+    WHERE _Prestation=0;
+UPDATE CostRange c SET _PrestationCost=(
+    SELECT a._Id FROM PrestationCost a, prdPrsCostToCostRange b 
+        WHERE b._ToCostRange=c._Id AND b._FromProductPrestationCost=a.tmp
+        AND a._ClassName='ProductPrestationCost') 
+    WHERE _Prestation=0 AND _PrestationCost=0;
+UPDATE CostRange c SET _PrestationCost=(
+    SELECT a._Id FROM PrestationCost a, ccpPrsCostToCostRange b 
+        WHERE b._ToCostRange=c._Id AND b._FromConcreteProductPrestationCost=a.tmp 
+        AND a._ClassName='ConcreteProductPrestationCost') 
+    WHERE _Prestation=0 AND _PrestationCost=0;
+UPDATE CostRange c SET _PrestationCost=(
+    SELECT a._Id FROM PrestationCost a, fltPrsCostToCostRange b 
+        WHERE b._ToCostRange=c._Id AND b._FromFlyTypePrestationCost=a.tmp 
+        AND a._ClassName='FlyTypePrestationCost') 
+    WHERE _Prestation=0 AND _PrestationCost=0;
+
+# supprime les col temp
+ALTER TABLE PrestationCost DROP COLUMN tmp;
+# supprime les XXXPrestationCost
+DROP TABLE ActorPrestationCost;
+DROP TABLE ProductPrestationCost;
+DROP TABLE FlyTypePrestationCost;
+DROP TABLE ConcreteProductPrestationCost;
+# supprime les table de liens
+DROP TABLE prsToCostRange;
+DROP TABLE actPrsCostToCostRange;
+DROP TABLE prdPrsCostToCostRange;
+DROP TABLE ccpPrsCostToCostRange;
+DROP TABLE fltPrsCostToCostRange;
+
+# nettoyage
+DELETE FROM CostRange WHERE _Cost=0.000;
+
+DROP TABLE IF EXISTS ppcProduct;
+CREATE TABLE ppcProduct (
+  _FromProductPrestationCost int(11) unsigned NOT NULL default '0',
+  _ToProduct int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromProductPrestationCost, _ToProduct)
+) TYPE=InnoDB CHARSET=latin1;
+
+DROP TABLE IF EXISTS cppcConcreteProduct;
+CREATE TABLE cppcConcreteProduct (
+  _FromConcreteProductPrestationCost int(11) unsigned NOT NULL default '0',
+  _ToConcreteProduct int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromConcreteProductPrestationCost, _ToConcreteProduct)
+) TYPE=InnoDB CHARSET=latin1;
+
+DROP TABLE IF EXISTS fltpcFlyType;
+CREATE TABLE fltpcFlyType (
+  _FromFlyTypePrestationCost int(11) unsigned NOT NULL default '0',
+  _ToFlyType int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromFlyTypePrestationCost, _ToFlyType)
+) TYPE=InnoDB CHARSET=latin1;
+
+INSERT INTO ppcProduct (_FromProductPrestationCost, _ToProduct) SELECT _Id, _Product from PrestationCost where _ClassName="ProductPrestationCost";
+ALTER TABLE PrestationCost DROP COLUMN _Product;
+
+INSERT INTO cppcConcreteProduct (_FromConcreteProductPrestationCost, _ToConcreteProduct) SELECT _Id, _ConcreteProduct from PrestationCost where _ClassName="ConcreteProductPrestationCost";
+ALTER TABLE PrestationCost DROP COLUMN _ConcreteProduct;
+
+INSERT INTO fltpcFlyType (_FromFlyTypePrestationCost, _ToFlyType) SELECT _Id, _FlyType from PrestationCost where _ClassName="FlyTypePrestationCost";
+ALTER TABLE PrestationCost DROP COLUMN _FlyType;
+
+DELETE FROM CostRange WHERE _Prestation=0 and _PrestationCost=0;
+DELETE FROM PrestationCustomer WHERE _Prestation NOT IN (select _Id from
+    Prestation);
+
+# -----------------------------------
+# RELEASE 2_1_0
+# -----------------------------------
+
+# CETTE RQT A ETE PASSEE EN PROD
+#ALTER TABLE Prestation
+#    ADD COLUMN _Periodicity int(1) NOT NULL default 1;
+
+UPDATE HelpPage SET _FileName='CustomerCatalog' WHERE _FileName='ClientCatalog';
+
+# pour i18n
+UPDATE CoverType SET _Name='PARCEL' WHERE _Id=1;
+UPDATE CoverType SET _Name='PALLET' WHERE _Id=2;
+UPDATE CoverType SET _Name='LETTER' WHERE _Id=3;
+UPDATE CoverType SET _Name='BOX' WHERE _Id=4;
+UPDATE CoverType SET _Name='CONTAINER' WHERE _Id=5;
+
+UPDATE DangerousProductGroup SET _Name='Suffocating' WHERE _Id=1;
+UPDATE DangerousProductGroup SET _Name='Combustive' WHERE _Id=2;
+UPDATE DangerousProductGroup SET _Name='Inflammable' WHERE _Id=3;
+UPDATE DangerousProductGroup SET _Name='Poison' WHERE _Id=4;
+UPDATE DangerousProductGroup SET _Name='Poison, inflammable' WHERE _Id=5;
+UPDATE DangerousProductGroup SET _Name='Poison, corrosive' WHERE _Id=6;
+UPDATE DangerousProductGroup SET _Name='Poison, combustive' WHERE _Id=7;
+UPDATE DangerousProductGroup SET _Name='Poison, inflammable, corrosive' WHERE _Id=8;
+UPDATE DangerousProductGroup SET _Name='Poison, combustive, corrosive' WHERE _Id=9;
+
+UPDATE Job SET _Name='CARRIER' WHERE _Id=2;
+UPDATE Job SET _Name='RESTAURATEUR' WHERE _Id=3;
+UPDATE Job SET _Name='CUSTOM OFFICER' WHERE _Id=4;
+UPDATE Job SET _Name='PACKER' WHERE _Id=5;
+UPDATE Job SET _Name='DISTRIBUTOR' WHERE _Id=6;
+UPDATE Job SET _Name='MANUFACTURER' WHERE _Id=7;
+UPDATE Job SET _Name='SUPPLIER' WHERE _Id=8;
+UPDATE Job SET _Name='MISCELLANEOUS' WHERE _Id=9;
+
+UPDATE Manual SET _Name='Navigation and menu' WHERE _Id=1;
+UPDATE Manual SET _Name='Product order follow-up: billing, payment and credit notes' WHERE _Id=2;
+UPDATE Manual SET _Name='Customer catalogue' WHERE _Id=3;
+UPDATE Manual SET _Name='Amount of stock' WHERE _Id=4;
+
+UPDATE MovementType SET _Name='Normal issue' WHERE _Id=1;
+UPDATE MovementType SET _Name='Normal entry' WHERE _Id=2;
+UPDATE MovementType SET _Name='Issue for damage' WHERE _Id=3;
+UPDATE MovementType SET _Name='Entry for surplus' WHERE _Id=4;
+UPDATE MovementType SET _Name='Issue for inventory' WHERE _Id=5;
+UPDATE MovementType SET _Name='Entry for inventory' WHERE _Id=6;
+UPDATE MovementType SET _Name='Issue for move' WHERE _Id=8;
+UPDATE MovementType SET _Name='Entry for move' WHERE _Id=9;
+UPDATE MovementType SET _Name='Issue for sample' WHERE _Id=10;
+UPDATE MovementType SET _Name='Entry for sample' WHERE _Id=11;
+UPDATE MovementType SET _Name='Issue for packaging modification' WHERE _Id=12;
+UPDATE MovementType SET _Name='Entry for packaging modification' WHERE _Id=13;
+UPDATE MovementType SET _Name='Internal entry' WHERE _Id=14;
+UPDATE MovementType SET _Name='Internal issue' WHERE _Id=15;
+
+UPDATE Operation SET _Name='ADMIN' WHERE _Id=1;
+UPDATE Operation SET _Name='ASSEMBLY' WHERE _Id=2;
+UPDATE Operation SET _Name='LOADING' WHERE _Id=3;
+UPDATE Operation SET _Name='PACKAGING' WHERE _Id=4;
+UPDATE Operation SET _Name='UNPACKING' WHERE _Id=5;
+UPDATE Operation SET _Name='UNLOADING' WHERE _Id=6;
+UPDATE Operation SET _Name='UNPACKAGING' WHERE _Id=7;
+UPDATE Operation SET _Name='UNGROUPING' WHERE _Id=8;
+UPDATE Operation SET _Name='CUSTOMS' WHERE _Id=9;
+UPDATE Operation SET _Name='PACKING' WHERE _Id=10;
+UPDATE Operation SET _Name='FABRICATION' WHERE _Id=11;
+UPDATE Operation SET _Name='MOUNTING' WHERE _Id=12;
+UPDATE Operation SET _Name='RECEIVING' WHERE _Id=13;
+UPDATE Operation SET _Name='REGROUPING' WHERE _Id=14;
+UPDATE Operation SET _Name='ALL' WHERE _Id=15;
+UPDATE Operation SET _Name='AIR TRANSPORT' WHERE _Id=16;
+UPDATE Operation SET _Name='RAILWAY TRANSPORT' WHERE _Id=17;
+UPDATE Operation SET _Name='FLUVIAL TRANSPORT' WHERE _Id=18;
+UPDATE Operation SET _Name='SEA TRANSPORT' WHERE _Id=19;
+UPDATE Operation SET _Name='ROAD TRANSPORT' WHERE _Id=20;
+UPDATE Operation SET _Name='STORAGE' WHERE _Id=21;
+UPDATE Operation SET _Name='FLIGHT' WHERE _Id=22;
+UPDATE Operation SET _Name='MAINTENANCE' WHERE _Id=23;
+UPDATE Operation SET _Name='TURNING' WHERE _Id=24;
+UPDATE Operation SET _Name='WELDING' WHERE _Id=25;
+UPDATE Operation SET _Name='POLISHING' WHERE _Id=26;
+UPDATE Operation SET _Name='MILLING' WHERE _Id=27;
+UPDATE Operation SET _Name='PRODUCTION CONTROL' WHERE _Id=28;
+UPDATE Operation SET _Name='SAWING' WHERE _Id=29;
+UPDATE Operation SET _Name='LAPPING' WHERE _Id=30;
+UPDATE Operation SET _Name='BOILER MAKING' WHERE _Id=31;
+UPDATE Operation SET _Name='FITTING' WHERE _Id=32;
+UPDATE Operation SET _Name='MATERIAL TRACKING' WHERE _Id=33;
+
+UPDATE SellUnitType SET _ShortName='Base unit' WHERE _Id=1;
+UPDATE SellUnitType SET _ShortName='Packaging unit' WHERE _Id=2;
+UPDATE SellUnitType SET _ShortName='Packing unit' WHERE _Id=3;
+UPDATE SellUnitType SET _ShortName='Regrouping unit' WHERE _Id=4;
+UPDATE SellUnitType SET _ShortName='Kg' WHERE _Id=5;
+UPDATE SellUnitType SET _ShortName='L' WHERE _Id=6;
+UPDATE SellUnitType SET _ShortName='Gal' WHERE _Id=7;
+UPDATE SellUnitType SET _ShortName='Oz' WHERE _Id=8;
+UPDATE SellUnitType SET _ShortName='MM' WHERE _Id=9;
+UPDATE SellUnitType SET _ShortName='CM' WHERE _Id=10;
+UPDATE SellUnitType SET _ShortName='M' WHERE _Id=11;
+
+UPDATE SellUnitType SET _LongName='Base unit' WHERE _Id=1;
+UPDATE SellUnitType SET _LongName='Packaging unit' WHERE _Id=2;
+UPDATE SellUnitType SET _LongName='Packing unit' WHERE _Id=3;
+UPDATE SellUnitType SET _LongName='Regrouping unit' WHERE _Id=4;
+UPDATE SellUnitType SET _LongName='Kilogramme' WHERE _Id=5;
+UPDATE SellUnitType SET _LongName='Liter' WHERE _Id=6;
+UPDATE SellUnitType SET _LongName='Gallon' WHERE _Id=7;
+UPDATE SellUnitType SET _LongName='Once' WHERE _Id=8;
+UPDATE SellUnitType SET _LongName='Millimeter' WHERE _Id=9;
+UPDATE SellUnitType SET _LongName='Centimeter' WHERE _Id=10;
+UPDATE SellUnitType SET _LongName='Meter' WHERE _Id=11;
+
+UPDATE Task SET _Name='PACKAGE' WHERE _Id=1;
+UPDATE Task SET _Name='UNPACKAGE' WHERE _Id=2;
+UPDATE Task SET _Name='PACK' WHERE _Id=3;
+UPDATE Task SET _Name='UNPACK' WHERE _Id=4;
+UPDATE Task SET _Name='REGROUP' WHERE _Id=5;
+UPDATE Task SET _Name='UNGROUP' WHERE _Id=6;
+UPDATE Task SET _Name='LOAD GOODS' WHERE _Id=7;
+UPDATE Task SET _Name='UNLOAD GOODS' WHERE _Id=8;
+UPDATE Task SET _Name='ROAD TRANSPORT' WHERE _Id=9;
+UPDATE Task SET _Name='SEA TRANSPORT' WHERE _Id=10;
+UPDATE Task SET _Name='FLUVIAL TRANSPORT' WHERE _Id=11;
+UPDATE Task SET _Name='RAILWAY TRANSPORT' WHERE _Id=12;
+UPDATE Task SET _Name='AIR TRANSPORT' WHERE _Id=13;
+UPDATE Task SET _Name='WAITING' WHERE _Id=14;
+UPDATE Task SET _Name='CONTROL' WHERE _Id=15;
+UPDATE Task SET _Name='PRINT DELIVERY ORDER' WHERE _Id=16;
+UPDATE Task SET _Name='PRINT FORWARDING FORM' WHERE _Id=17;
+UPDATE Task SET _Name='PRINT ROAD WAYBILL' WHERE _Id=18;
+UPDATE Task SET _Name='PRINT PACKING LIST' WHERE _Id=19;
+UPDATE Task SET _Name='PRINT PARCEL LABEL' WHERE _Id=20;
+UPDATE Task SET _Name='PRINT PRODUCT LABEL' WHERE _Id=21;
+UPDATE Task SET _Name='PRINT REGROUPING LABEL' WHERE _Id=22;
+UPDATE Task SET _Name='PRINT DIRECTIONAL LABEL' WHERE _Id=23;
+UPDATE Task SET _Name='PRINT RECEIPT' WHERE _Id=24;
+UPDATE Task SET _Name='PRINT SEA WAYBILL' WHERE _Id=25;
+UPDATE Task SET _Name='PRINT AIR WAYBILL' WHERE _Id=26;
+UPDATE Task SET _Name='TAKE DELIVERY OF GOODS' WHERE _Id=27;
+UPDATE Task SET _Name='ASSEMBLY' WHERE _Id=28;
+UPDATE Task SET _Name='MOUNTING' WHERE _Id=29;
+UPDATE Task SET _Name='FABRICATION' WHERE _Id=30;
+UPDATE Task SET _Name='STOCK ENTRY' WHERE _Id=31;
+UPDATE Task SET _Name='STOCK ISSUE' WHERE _Id=32;
+UPDATE Task SET _Name='INVENTORY' WHERE _Id=33;
+UPDATE Task SET _Name='PRINT INVOICE' WHERE _Id=34;
+UPDATE Task SET _Name='ENTER A PAYMENT' WHERE _Id=35;
+UPDATE Task SET _Name='FLIGHT' WHERE _Id=36;
+UPDATE Task SET _Name='FLIGHT PREPARATION' WHERE _Id=37;
+UPDATE Task SET _Name='POST FLIGHT MAINTENANCE' WHERE _Id=38;
+UPDATE Task SET _Name='ACTIVATION' WHERE _Id=39;
+UPDATE Task SET _Name='INTERNAL STOCK ENTRY' WHERE _Id=40;
+UPDATE Task SET _Name='INTERNAL STOCK ISSUE' WHERE _Id=41;
+UPDATE Task SET _Name='TURNING' WHERE _Id=42;
+UPDATE Task SET _Name='WELDING' WHERE _Id=43;
+UPDATE Task SET _Name='POLISHING' WHERE _Id=44;
+UPDATE Task SET _Name='MILLING' WHERE _Id=45;
+UPDATE Task SET _Name='PRODUCTION CONTROL' WHERE _Id=46;
+UPDATE Task SET _Name='SAWING' WHERE _Id=47;
+UPDATE Task SET _Name='LAPPING' WHERE _Id=48;
+UPDATE Task SET _Name='BOILER MAKING' WHERE _Id=49;
+UPDATE Task SET _Name='FITTING' WHERE _Id=50;
+UPDATE Task SET _Name='MATERIAL TRACKING' WHERE _Id=51;
+
+UPDATE TVA SET _Category='NORMAL' WHERE _Id=1;
+UPDATE TVA SET _Category='5.5' WHERE _Id=2;
+UPDATE TVA SET _Category='PACKING' WHERE _Id=4;
+
+UPDATE Alert SET _Name='Virtual quantity reached min. stock' WHERE _Id=5000;
+UPDATE Alert SET _Name='Actual quantity reached min. stock' WHERE _Id=10000;
+UPDATE Alert SET _Name='Virtual stock reached zero' WHERE _Id=15000;
+UPDATE Alert SET _Name='Actual stock reached zero' WHERE _Id=20000;
+UPDATE Alert SET _Name='Partial entry' WHERE _Id=25000;
+UPDATE Alert SET _Name='Partial issue' WHERE _Id=30000;
+UPDATE Alert SET _Name='Outstanding debt amount exceeded after customer order' WHERE _Id=35000;
+UPDATE Alert SET _Name='Outstanding debt amount exceeded after supplier order' WHERE _Id=40000;
+UPDATE Alert SET _Name='Outstanding debt amount exceeded after invoice' WHERE _Id=45000;
+UPDATE Alert SET _Name='Supplier outstanding debt amount exceeded after invoice' WHERE _Id=50000;
+UPDATE Alert SET _Name='Customer order receipt' WHERE _Id=55000;
+UPDATE Alert SET _Name='Supplier order receipt' WHERE _Id=60000;
+UPDATE Alert SET _Name='Deadline for customer payment exceeded' WHERE _Id=65000;
+UPDATE Alert SET _Name='Deadline for supplier payment exceeded' WHERE _Id=70000;
+UPDATE Alert SET _Name='Movement cancellation' WHERE _Id=75000;
+UPDATE Alert SET _Name='Partial movement' WHERE _Id=80000;
+UPDATE Alert SET _Name='Carriage order receipt' WHERE _Id=85000;
+UPDATE Alert SET _Name='Schedule error' WHERE _Id=90000;
+UPDATE Alert SET _Name='Delete order' WHERE _Id=95000;
+UPDATE Alert SET _Name='Stock reinstatement' WHERE _Id=100000;
+UPDATE Alert SET _Name='Class booking receipt' WHERE _Id=100001;
+UPDATE Alert SET _Name='Last class was ten days ago.' WHERE _Id=100002;
+UPDATE Alert SET _Name='Potential exceeded.' WHERE _Id=100003;
+UPDATE Alert SET _Name='Moved quantity exceeds expected quantity' WHERE _Id=100004;
+UPDATE Alert SET _Name='Unexpected movement' WHERE _Id=100005;
+UPDATE Alert SET _Name='Insufficient quantity in stock' WHERE _Id=100006;
+UPDATE Alert SET _Name='Reinstatement after billing' WHERE _Id=100007;
+UPDATE Alert SET _Name='Reference substitution' WHERE _Id=100008;
+UPDATE Alert SET _Name='License out of date' WHERE _Id=100010;
+UPDATE Alert SET _Name='License out of date' WHERE _Id=100011;
+UPDATE Alert SET _Name='Set customer in alert state' WHERE _Id=100012;
+UPDATE Alert SET _Name='Expected visit date exceeded' WHERE _Id=100013;
+UPDATE Alert SET _Name='Alert for production tasks validation' WHERE _Id=100014;
+UPDATE Alert SET _Name='Invoice available for printing' WHERE _Id=100015;
+UPDATE Alert SET _Name='Invoice enclosed' WHERE _Id=100016;
+
+UPDATE HelpPage SET _Name='Alerts management' WHERE _Id=5000;
+UPDATE HelpPage SET _Name='Customer and supplier orders follow-up' WHERE _Id=10000;
+UPDATE HelpPage SET _Name='History of movements' WHERE _Id=15000;
+UPDATE HelpPage SET _Name='How to place a customer order ?' WHERE _Id=20000;
+UPDATE HelpPage SET _Name='Actors management' WHERE _Id=25000;
+UPDATE HelpPage SET _Name='Welcome to onlogistics.com' WHERE _Id=30000;
+UPDATE HelpPage SET _Name='Onlogistics admin' WHERE _Id=35000;
+UPDATE HelpPage SET _Name='Settings for your activity' WHERE _Id=40000;
+UPDATE HelpPage SET _Name='Orders management' WHERE _Id=45000;
+UPDATE HelpPage SET _Name='Stock' WHERE _Id=50000;
+UPDATE HelpPage SET _Name='Help messages management' WHERE _Id=50001;
+UPDATE HelpPage SET _Name='List of users' WHERE _Id=50002;
+UPDATE HelpPage SET _Name='Scoreboard' WHERE _Id=50003;
+UPDATE HelpPage SET _Name='Documents' WHERE _Id=50004;
+UPDATE HelpPage SET _Name='Carriage order' WHERE _Id=50005;
+UPDATE HelpPage SET _Name='Carriage orders follow-up' WHERE _Id=50006;
+
+UPDATE Currency SET _Name='US dollar' WHERE _Id=2;
+UPDATE Currency SET _Name='Canadian dollar' WHERE _Id=3;
+UPDATE Currency SET _Name='Pound sterling' WHERE _Id=4;
+
+# XXX à ne pas faire sur primetex
+ALTER TABLE AbstractDocument 
+    ADD COLUMN _Locale VARCHAR(10) DEFAULT NULL AFTER _AccountingTypeActor;
+UPDATE AbstractDocument SET _Locale="fr_FR";
+
+# RQT PASSEES EN PROD
+#ALTER TABLE CommandItem 
+#    ADD COLUMN _UnitPriceHT decimal(10,3) NOT NULL DEFAULT 0,
+#    ADD COLUMN _CostType INT(2) NOT NULL DEFAULT -1;
+#UPDATE CommandItem SET _UnitPriceHT = _PriceHT / _Quantity WHERE _Prestation>0;
+
+#ALTER TABLE InvoiceItem 
+#    ADD COLUMN _PrestationCost decimal(10,3) NOT NULL DEFAULT 0 AFTER _UnitPriceHT,
+#    ADD COLUMN _PrestationPeriodicity INT(1) NOT NULL DEFAULT 0,
+#    ADD COLUMN _CostType INT(2) NOT NULL DEFAULT -1;
+#UPDATE InvoiceItem SET _PrestationCost = _UnitPriceHt / _Quantity WHERE _Prestation>0;
+#UPDATE InvoiceItem, Prestation 
+#    SET InvoiceItem._PrestationPeriodicity=Prestation._Periodicity 
+#    WHERE InvoiceItem._Prestation=Prestation._Id;
+
+# -----------------------------------
+# RELEASE 2_1_1
+# -----------------------------------
+
+ALTER TABLE Question DROP COLUMN _CustomerCategory;
+UPDATE Command SET _Customer=_Destinator WHERE _ClassName="ChainCommand";
+UPDATE Command SET _SupplierCustomer=0 WHERE _ClassName="ChainCommand";
+
+--
+-- Table structure for siteUserAccount
+--
+DROP TABLE IF EXISTS siteUserAccount;
+CREATE TABLE siteUserAccount (
+  _ToUserAccount int(11) unsigned NOT NULL default '0',
+  _FromSite int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_ToUserAccount, _FromSite)
+) TYPE=InnoDB CHARSET=latin1;
+
+INSERT INTO CoverType VALUES (6, 'ROLL');
+
+# -----------------------------------
+# RELEASE 2_1_2
+# -----------------------------------
+
+ALTER TABLE AbstractDocument ADD COLUMN
+  _PDFDocument INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _PDFDocument ON AbstractDocument (_PDFDocument);
+
+DROP TABLE IF EXISTS PDFDocument;
+CREATE TABLE PDFDocument (
+  _Id int(11) unsigned NOT NULL default '0',
+  _Data LONGTEXT DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+ALTER TABLE AbstractDocument
+    ADD COLUMN _ConveyorArrivalSite INT(11) NOT NULL DEFAULT 0,
+    ADD COLUMN _ConveyorDepartureSite INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _ConveyorArrivalSite ON AbstractDocument (_ConveyorArrivalSite);
+CREATE INDEX _ConveyorDepartureSite ON AbstractDocument (_ConveyorDepartureSite);
+
+ALTER TABLE Command ADD _Closed INT(1) DEFAULT '0' NOT NULL AFTER _Cadenced;
+INSERT INTO FW_Preferences (name,type,string_value,bool_value,int_value,float_value,array_value)
+    VALUES ('CustomerProductCommandBehaviour','integer',NULL,0,'0',0,NULL);
+ALTER TABLE SupplierCustomer ADD _CustomerProductCommandBehaviour INT(1)
+    DEFAULT '0' NOT NULL AFTER _InvoiceByMail;
+
+UPDATE SellUnitType SET _ShortName='Kg_abbr' WHERE _ShortName='Kg';
+
+update Location L  set _Activated=1
+where L._Activated=0 and
+	(select count(*) from LocationProductQuantities LPQ where LPQ._Location=L._Id) > 0;
+update Store S  Set _Activated=1
+where _Activated=0 and
+	(select count(*) from Location L where L._Store=S._Id and L._Activated=1) > 0;
+
+# maj des Invoice.AccountingTypeActor pour els prestations
+UPDATE AbstractDocument A, Command B SET A._AccountingTypeActor=B._Destinator 
+    WHERE A._Command=B._ID AND B._Type=4 AND A._AccountingTypeActor=0;
+
+# -----------------------------------
+# RELEASE 2_1_3
+# -----------------------------------
+
+ALTER TABLE CommandItem
+    ADD COLUMN _QuantityForPrestationCost decimal( 10, 3 ) default 0;
+ALTER TABLE InvoiceItem
+    ADD COLUMN _QuantityForPrestationCost decimal( 10, 3 ) default 0;
+
+# SC stock sur plusieurs bases
+# dbid defaut 0
+ALTER TABLE AbstractDocument ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE AbstractInstant ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Action ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ActivatedChain ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ActivatedChainOperation ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ActivatedChainTask ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ActivatedChainTaskDetail ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ActivatedMovement ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Actor ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ActorBankDetail ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ActorProduct ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ActorSiteTransition ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE AnswerModel ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Box ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Catalog ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE CatalogCriteria ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Category ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Chain ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ChainOperation ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ChainTask ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Command ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE CommandExpeditionDetail ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE CommandItem ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE CommunicationModality ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Component ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ComponentGroup ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ConcreteComponent ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ConcreteProduct ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Contact ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Container ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE CostRange ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE CronTask ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE CustomerAttractivity ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE CustomerFrequency ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE CustomerPotential ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE CustomerProperties ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE CustomerSituation ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE DailyPlanning ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE DangerousProductGroup ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE DangerousProductLetter ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE DangerousProductType ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE DocumentModel ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE DocumentModelProperty ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ExecutedMovement ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Flow ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE FlowItem ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE FlowType ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE FlowTypeItem ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE FlyType ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE FormModel ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ForwardingFormPacking ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE FW_Preferences ADD COLUMN dbid INT(11) DEFAULT 0 AFTER name;
+ALTER TABLE Image ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Inventory ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE InventoryDetail ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE InvoiceItem ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE InvoicePayment ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE LEMConcreteProduct ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Licence ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE LicenceType ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE LinkFormModelParagraphModel ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE LinkParagraphModelQuestion ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE LinkQuestionAnswerModel ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Location ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE LocationConcreteProduct ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE LocationExecutedMovement ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE LocationProductQuantities ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Nomenclature ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE OccupiedLocation ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE PDFDocument ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ParagraphModel ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Payment ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Prestation ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE PrestationCost ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE PrestationCustomer ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE PriceByCurrency ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Product ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ProductChainLink ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ProductHandingByCategory ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ProductKind ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ProductQuantityByCategory ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE ProductSubstitution ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Promotion ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE PropertyValue ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Question ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Rating ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE RatingType ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE RealAnswer ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE RealBox ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Ressource ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE RessourceGroup ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE RessourceRessourceGroup ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Saisonality ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Site ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE SpreadSheet ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE SpreadSheetColumn ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Store ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE SupplierCustomer ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Theme ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Unavailability ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE UserAccount ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE WeeklyPlanning ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE WorkOrder ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Zone ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE Account ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+ALTER TABLE AccountingType ADD COLUMN _DBId INT(11) DEFAULT 0 AFTER _Id;
+# dbid defaut NULL
+ALTER TABLE Alert ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+ALTER TABLE BarCodeType ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+ALTER TABLE CityName ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+ALTER TABLE HelpPage ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+ALTER TABLE Incoterm ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+ALTER TABLE Country ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+ALTER TABLE CountryCity ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+ALTER TABLE CoverType ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+ALTER TABLE Currency ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+ALTER TABLE Department ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+ALTER TABLE Job ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+ALTER TABLE Manual ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+ALTER TABLE MovementType ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+ALTER TABLE Operation ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+ALTER TABLE ProductType ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+ALTER TABLE Property ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+ALTER TABLE SellUnitType ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+ALTER TABLE State ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+ALTER TABLE TVA ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+ALTER TABLE Task ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+ALTER TABLE Zip ADD COLUMN _DBId INT(11) DEFAULT NULL AFTER _Id;
+
+# index uniques
+#CREATE UNIQUE INDEX _Type ON AccountingType (_Type);
+#CREATE UNIQUE INDEX _Name ON Actor (_Name);
+#CREATE UNIQUE INDEX _Value ON AnswerModel (_Value);
+#CREATE UNIQUE INDEX _Name ON LicenceType (_Name);
+#CREATE UNIQUE INDEX _Title ON ParagraphModel (_Title);
+#CREATE UNIQUE INDEX _BaseReference ON Product (_BaseReference);
+#CREATE UNIQUE INDEX _Text ON Question (_Text);
+#CREATE UNIQUE INDEX _Name ON Ressource (_Name);
+#CREATE UNIQUE INDEX _Name ON RessourceGroup (_Name);
+#CREATE UNIQUE INDEX _Name ON SpreadSheet (_Name);
+#CREATE UNIQUE INDEX _Name ON Theme (_Name);
+
+ALTER TABLE Actor ADD _OnlogisticsAccount VARCHAR(255) DEFAULT NULL AFTER _Role;
+
+set @uacId=(select IFNULL(max(_Id)+1,1) from UserAccount);
+set @actId=(select IFNULL(A._Id,0) from Actor A where _DatabaseOwner=1);
+INSERT INTO UserAccount (_Id,_DBId,_Login,_Password,_Identity,_Phone,_Fax,_Email,_Actor,_Profile,_Catalog,_SupplierCatalog)
+VALUES (@uacId
+,NULL,'ecustomer','90c17e814cdbb94ea8be2a4e1a63b69c1107f4af','External customer',NULL,NULL,NULL,IFNULL(@actId,0),21,0,0);
+
+UPDATE FlowType set _DBId=NULL where _Id >= 1001 AND _Id <= 1008;
+UPDATE FlowTypeItem set _DBId=NULL where _Id >= 1001 AND _Id <= 1032;
+
+DROP TABLE IF EXISTS PublicData;
+DROP TABLE IF EXISTS Entity;
+CREATE TABLE Entity (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Name VARCHAR(255) DEFAULT NULL,
+  _Public INT(1) DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+INSERT INTO Entity (_Id, _Name) VALUES (1, 'AbstractDocument');
+INSERT INTO Entity (_Id, _Name) VALUES (2, 'AbstractInstant');
+INSERT INTO Entity (_Id, _Name) VALUES (3, 'Account');
+INSERT INTO Entity (_Id, _Name) VALUES (4, 'AccountingType');
+INSERT INTO Entity (_Id, _Name) VALUES (5, 'Action');
+INSERT INTO Entity (_Id, _Name) VALUES (6, 'ActivatedChain');
+INSERT INTO Entity (_Id, _Name) VALUES (7, 'ActivatedChainOperation');
+INSERT INTO Entity (_Id, _Name) VALUES (8, 'ActivatedChainTask');
+INSERT INTO Entity (_Id, _Name) VALUES (9, 'ActivatedChainTaskDetail');
+INSERT INTO Entity (_Id, _Name) VALUES (10, 'ActivatedMovement');
+INSERT INTO Entity (_Id, _Name) VALUES (11, 'Actor');
+INSERT INTO Entity (_Id, _Name) VALUES (12, 'ActorBankDetail');
+INSERT INTO Entity (_Id, _Name) VALUES (13, 'ActorProduct');
+INSERT INTO Entity (_Id, _Name) VALUES (14, 'ActorSiteTransition');
+INSERT INTO Entity (_Id, _Name) VALUES (15, 'ActorView');
+INSERT INTO Entity (_Id, _Name) VALUES (16, 'AeroActor');
+INSERT INTO Entity (_Id, _Name) VALUES (17, 'AeroConcreteProduct');
+INSERT INTO Entity (_Id, _Name) VALUES (18, 'AeroCustomer');
+INSERT INTO Entity (_Id, _Name) VALUES (19, 'AeroInstructor');
+INSERT INTO Entity (_Id, _Name) VALUES (20, 'AeroOperator');
+INSERT INTO Entity (_Id, _Name) VALUES (21, 'AeroProduct');
+INSERT INTO Entity (_Id, _Name) VALUES (22, 'AeroSupplier');
+INSERT INTO Entity (_Id, _Name) VALUES (23, 'Alert');
+INSERT INTO Entity (_Id, _Name) VALUES (24, 'AnswerModel');
+INSERT INTO Entity (_Id, _Name) VALUES (25, 'BarCodeType');
+INSERT INTO Entity (_Id, _Name) VALUES (26, 'Box');
+INSERT INTO Entity (_Id, _Name) VALUES (27, 'CacheData');
+INSERT INTO Entity (_Id, _Name) VALUES (28, 'Catalog');
+INSERT INTO Entity (_Id, _Name) VALUES (29, 'CatalogCriteria');
+INSERT INTO Entity (_Id, _Name) VALUES (30, 'Category');
+INSERT INTO Entity (_Id, _Name) VALUES (31, 'Chain');
+INSERT INTO Entity (_Id, _Name) VALUES (32, 'ChainCommand');
+INSERT INTO Entity (_Id, _Name) VALUES (33, 'ChainCommandItem');
+INSERT INTO Entity (_Id, _Name) VALUES (34, 'ChainOperation');
+INSERT INTO Entity (_Id, _Name) VALUES (35, 'ChainTask');
+INSERT INTO Entity (_Id, _Name) VALUES (36, 'CityName');
+INSERT INTO Entity (_Id, _Name) VALUES (37, 'Command');
+INSERT INTO Entity (_Id, _Name) VALUES (38, 'CommandExpeditionDetail');
+INSERT INTO Entity (_Id, _Name) VALUES (39, 'CommandItem');
+INSERT INTO Entity (_Id, _Name) VALUES (40, 'CommunicationModality');
+INSERT INTO Entity (_Id, _Name) VALUES (41, 'Component');
+INSERT INTO Entity (_Id, _Name) VALUES (42, 'ComponentGroup');
+INSERT INTO Entity (_Id, _Name) VALUES (43, 'ConcreteComponent');
+INSERT INTO Entity (_Id, _Name) VALUES (44, 'ConcreteProduct');
+INSERT INTO Entity (_Id, _Name) VALUES (45, 'ConcreteProductPrestationCost');
+INSERT INTO Entity (_Id, _Name) VALUES (46, 'Conditioning');
+INSERT INTO Entity (_Id, _Name) VALUES (47, 'Contact');
+INSERT INTO Entity (_Id, _Name) VALUES (48, 'Container');
+INSERT INTO Entity (_Id, _Name) VALUES (49, 'CostRange');
+INSERT INTO Entity (_Id, _Name) VALUES (50, 'Country');
+INSERT INTO Entity (_Id, _Name) VALUES (51, 'CountryCity');
+INSERT INTO Entity (_Id, _Name) VALUES (52, 'CourseCommand');
+INSERT INTO Entity (_Id, _Name) VALUES (53, 'CoverType');
+INSERT INTO Entity (_Id, _Name) VALUES (54, 'CronTask');
+INSERT INTO Entity (_Id, _Name) VALUES (55, 'Currency');
+INSERT INTO Entity (_Id, _Name) VALUES (56, 'Customer');
+INSERT INTO Entity (_Id, _Name) VALUES (57, 'CustomerAttractivity');
+INSERT INTO Entity (_Id, _Name) VALUES (58, 'CustomerFrequency');
+INSERT INTO Entity (_Id, _Name) VALUES (59, 'CustomerPotential');
+INSERT INTO Entity (_Id, _Name) VALUES (60, 'CustomerProperties');
+INSERT INTO Entity (_Id, _Name) VALUES (61, 'CustomerSituation');
+INSERT INTO Entity (_Id, _Name) VALUES (62, 'DailyInstant');
+INSERT INTO Entity (_Id, _Name) VALUES (63, 'DailyPlanning');
+INSERT INTO Entity (_Id, _Name) VALUES (64, 'DangerousProductGroup');
+INSERT INTO Entity (_Id, _Name) VALUES (65, 'DangerousProductLetter');
+INSERT INTO Entity (_Id, _Name) VALUES (66, 'DangerousProductType');
+INSERT INTO Entity (_Id, _Name) VALUES (67, 'DeliveryOrder');
+INSERT INTO Entity (_Id, _Name) VALUES (68, 'Department');
+INSERT INTO Entity (_Id, _Name) VALUES (69, 'DocumentModel');
+INSERT INTO Entity (_Id, _Name) VALUES (70, 'DocumentModelProperty');
+INSERT INTO Entity (_Id, _Name) VALUES (71, 'ExecutedMovement');
+INSERT INTO Entity (_Id, _Name) VALUES (72, 'Flow');
+INSERT INTO Entity (_Id, _Name) VALUES (73, 'FlowItem');
+INSERT INTO Entity (_Id, _Name) VALUES (74, 'FlowType');
+INSERT INTO Entity (_Id, _Name) VALUES (75, 'FlowTypeItem');
+INSERT INTO Entity (_Id, _Name) VALUES (76, 'FlyType');
+INSERT INTO Entity (_Id, _Name) VALUES (77, 'FlyTypePrestationCost');
+INSERT INTO Entity (_Id, _Name) VALUES (78, 'FormModel');
+INSERT INTO Entity (_Id, _Name) VALUES (79, 'ForwardingForm');
+INSERT INTO Entity (_Id, _Name) VALUES (80, 'ForwardingFormPacking');
+INSERT INTO Entity (_Id, _Name) VALUES (81, 'Grouping');
+INSERT INTO Entity (_Id, _Name) VALUES (82, 'HelpPage');
+INSERT INTO Entity (_Id, _Name) VALUES (83, 'Image');
+INSERT INTO Entity (_Id, _Name) VALUES (84, 'Incoterm');
+INSERT INTO Entity (_Id, _Name) VALUES (85, 'Instant');
+INSERT INTO Entity (_Id, _Name) VALUES (86, 'Inventory');
+INSERT INTO Entity (_Id, _Name) VALUES (87, 'InventoryDetail');
+INSERT INTO Entity (_Id, _Name) VALUES (88, 'Invoice');
+INSERT INTO Entity (_Id, _Name) VALUES (89, 'InvoiceItem');
+INSERT INTO Entity (_Id, _Name) VALUES (90, 'InvoicePayment');
+INSERT INTO Entity (_Id, _Name) VALUES (91, 'InvoicesList');
+INSERT INTO Entity (_Id, _Name) VALUES (92, 'Job');
+INSERT INTO Entity (_Id, _Name) VALUES (93, 'LEMConcreteProduct');
+INSERT INTO Entity (_Id, _Name) VALUES (94, 'Licence');
+INSERT INTO Entity (_Id, _Name) VALUES (95, 'LicenceType');
+INSERT INTO Entity (_Id, _Name) VALUES (96, 'LinkFormModelParagraphModel');
+INSERT INTO Entity (_Id, _Name) VALUES (97, 'LinkParagraphModelQuestion');
+INSERT INTO Entity (_Id, _Name) VALUES (98, 'LinkQuestionAnswerModel');
+INSERT INTO Entity (_Id, _Name) VALUES (99, 'Location');
+INSERT INTO Entity (_Id, _Name) VALUES (100, 'LocationConcreteProduct');
+INSERT INTO Entity (_Id, _Name) VALUES (101, 'LocationExecutedMovement');
+INSERT INTO Entity (_Id, _Name) VALUES (102, 'LocationProductQuantities');
+INSERT INTO Entity (_Id, _Name) VALUES (103, 'Manual');
+INSERT INTO Entity (_Id, _Name) VALUES (104, 'MovementType');
+INSERT INTO Entity (_Id, _Name) VALUES (105, 'Nomenclature');
+INSERT INTO Entity (_Id, _Name) VALUES (106, 'OccupiedLocation');
+INSERT INTO Entity (_Id, _Name) VALUES (107, 'OnlogisticsAccount');
+INSERT INTO Entity (_Id, _Name) VALUES (108, 'Operation');
+INSERT INTO Entity (_Id, _Name) VALUES (109, 'PDFDocument');
+INSERT INTO Entity (_Id, _Name) VALUES (110, 'Packaging');
+INSERT INTO Entity (_Id, _Name) VALUES (111, 'PackingList');
+INSERT INTO Entity (_Id, _Name) VALUES (112, 'ParagraphModel');
+INSERT INTO Entity (_Id, _Name) VALUES (113, 'Payment');
+INSERT INTO Entity (_Id, _Name) VALUES (114, 'Prestation');
+INSERT INTO Entity (_Id, _Name) VALUES (115, 'PrestationCommand');
+INSERT INTO Entity (_Id, _Name) VALUES (116, 'PrestationCommandItem');
+INSERT INTO Entity (_Id, _Name) VALUES (117, 'PrestationCost');
+INSERT INTO Entity (_Id, _Name) VALUES (118, 'PrestationCustomer');
+INSERT INTO Entity (_Id, _Name) VALUES (119, 'PriceByCurrency');
+INSERT INTO Entity (_Id, _Name) VALUES (120, 'Product');
+INSERT INTO Entity (_Id, _Name) VALUES (121, 'ProductChainLink');
+INSERT INTO Entity (_Id, _Name) VALUES (122, 'ProductCommand');
+INSERT INTO Entity (_Id, _Name) VALUES (123, 'ProductCommandItem');
+INSERT INTO Entity (_Id, _Name) VALUES (124, 'ProductHandingByCategory');
+INSERT INTO Entity (_Id, _Name) VALUES (125, 'ProductKind');
+INSERT INTO Entity (_Id, _Name) VALUES (126, 'ProductPrestationCost');
+INSERT INTO Entity (_Id, _Name) VALUES (127, 'ProductQuantityByCategory');
+INSERT INTO Entity (_Id, _Name) VALUES (128, 'ProductSubstitution');
+INSERT INTO Entity (_Id, _Name) VALUES (129, 'ProductType');
+INSERT INTO Entity (_Id, _Name) VALUES (130, 'Promotion');
+INSERT INTO Entity (_Id, _Name) VALUES (131, 'Property');
+INSERT INTO Entity (_Id, _Name) VALUES (132, 'PropertyValue');
+INSERT INTO Entity (_Id, _Name) VALUES (133, 'PublicData');
+INSERT INTO Entity (_Id, _Name) VALUES (134, 'Question');
+INSERT INTO Entity (_Id, _Name) VALUES (135, 'Rating');
+INSERT INTO Entity (_Id, _Name) VALUES (136, 'RatingType');
+INSERT INTO Entity (_Id, _Name) VALUES (137, 'RealAnswer');
+INSERT INTO Entity (_Id, _Name) VALUES (138, 'RealBox');
+INSERT INTO Entity (_Id, _Name) VALUES (139, 'Ressource');
+INSERT INTO Entity (_Id, _Name) VALUES (140, 'RessourceGroup');
+INSERT INTO Entity (_Id, _Name) VALUES (141, 'RessourceRessourceGroup');
+INSERT INTO Entity (_Id, _Name) VALUES (142, 'Saisonality');
+INSERT INTO Entity (_Id, _Name) VALUES (143, 'SellUnitType');
+INSERT INTO Entity (_Id, _Name) VALUES (144, 'Site');
+INSERT INTO Entity (_Id, _Name) VALUES (145, 'SpreadSheet');
+INSERT INTO Entity (_Id, _Name) VALUES (146, 'SpreadSheetColumn');
+INSERT INTO Entity (_Id, _Name) VALUES (147, 'State');
+INSERT INTO Entity (_Id, _Name) VALUES (148, 'StorageSite');
+INSERT INTO Entity (_Id, _Name) VALUES (149, 'Store');
+INSERT INTO Entity (_Id, _Name) VALUES (150, 'Supplier');
+INSERT INTO Entity (_Id, _Name) VALUES (151, 'SupplierCustomer');
+INSERT INTO Entity (_Id, _Name) VALUES (152, 'TVA');
+INSERT INTO Entity (_Id, _Name) VALUES (153, 'Task');
+INSERT INTO Entity (_Id, _Name) VALUES (154, 'Theme');
+INSERT INTO Entity (_Id, _Name) VALUES (155, 'ToHave');
+INSERT INTO Entity (_Id, _Name) VALUES (156, 'Unavailability');
+INSERT INTO Entity (_Id, _Name) VALUES (157, 'UserAccount');
+INSERT INTO Entity (_Id, _Name) VALUES (158, 'WeeklyInstant');
+INSERT INTO Entity (_Id, _Name) VALUES (159, 'WeeklyPlanning');
+INSERT INTO Entity (_Id, _Name) VALUES (160, 'WorkOrder');
+INSERT INTO Entity (_Id, _Name) VALUES (161, 'Zip');
+INSERT INTO Entity (_Id, _Name) VALUES (162, 'Zone');
+
+ALTER TABLE SpreadSheet
+  CHANGE COLUMN _Entity _EntityTmp varchar(255) DEFAULT NULL;
+ALTER TABLE SpreadSheet
+  Add COLUMN _Entity INT(11) NOT NULL DEFAULT 0;
+UPDATE SpreadSheet SET _Entity=(SELECT Entity._Id FROM Entity where Entity._Name=SpreadSheet._EntityTmp);
+ALTER TABLE SpreadSheet DROP COLUMN _EntityTmp;
+
+# alert customers
+INSERT INTO Alert VALUES (100017, NULL, 'Customers without order since 30 days', NULL, NULL);
+
+
+# -----------------------------------
+# RELEASE 2_1_4 et 2_1_5
+# -----------------------------------
+
+ALTER TABLE Flow
+    ADD COLUMN _Handing VARCHAR(10) DEFAULT "0",
+    ADD COLUMN _PieceNo INT(11) NOT NULL DEFAULT 0;
+SET @pieceNo=0;
+UPDATE Flow SET _PieceNo=(SELECT @pieceNo:=@pieceNo+1);
+
+ALTER TABLE FlowItem
+    ADD COLUMN _Handing VARCHAR(10) DEFAULT "0";
+
+UPDATE UserAccount SET _Profile=1 WHERE _Profile=12;
+
+ALTER TABLE FlowType
+    ADD COLUMN _ThirdParty INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _ThirdParty ON FlowType (_ThirdParty);
+
+ALTER TABLE InvoiceItem
+    ADD _AssociatedReference VARCHAR(255) AFTER _Reference;
+
+ALTER TABLE Product CHANGE COLUMN _Image _Image varchar(255) DEFAULT NULL;
+UPDATE Product SET _Image=md5(_BaseReference) WHERE _Image <> 0;
+UPDATE Product SET _Image=NULL WHERE _Image=0;
+
+DROP TABLE IF EXISTS FW_UploadedFiles;
+CREATE TABLE FW_UploadedFiles (
+    _DBId INT(11) DEFAULT NULL,
+    _DataB64 LONGTEXT DEFAULT NULL,
+    _DataBLOB LONGBLOB DEFAULT NULL,
+    _Name varchar(255) DEFAULT NULL,
+    _UUID varchar(255) DEFAULT NULL,
+    _MimeType varchar(255) DEFAULT NULL,
+    PRIMARY KEY (_Name)
+)TYPE=InnoDB;
+
+INSERT INTO FW_UploadedFiles (_DBID, _DataB64, _Name, _MimeType, _UUID) 
+    SELECT _DBId, _Data, CONCAT('image', _Id, '.', _Extension), 
+    CONCAT('image/', _Extension), _UUID FROM Image;
+
+DROP TABLE Image;
+
+INSERT INTO Alert VALUES (100018, NULL, 'Forecast of expenses over the board', NULL, NULL);
+INSERT INTO Alert VALUES (100019, NULL, 'Forecast of receipts over the board', NULL, NULL);
+
+# -----------------------------------
+# RELEASE 2_1_6
+# -----------------------------------
+
+DROP TABLE IF EXISTS I18nString;
+CREATE TABLE I18nString (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _StringValue_en_GB TEXT DEFAULT NULL,
+  _StringValue_fr_FR TEXT DEFAULT NULL,
+  _StringValue_de_DE TEXT DEFAULT NULL,
+  _StringValue_nl_NL TEXT DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+#-------------------------------------
+# RELEASE 2_1_7
+#-------------------------------------
+
+# suppression ActivatedChain::State
+ALTER TABLE ActivatedChain DROP COLUMN _State;
+
+INSERT INTO FW_Preferences (name,dbid,type,string_value,bool_value,int_value,float_value,array_value)
+    VALUES ('ChainCommandBillingBehaviour',0,'integer',NULL,NULL,0,NULL,NULL);
+
+ALTER TABLE Box 
+    ADD _PrestationFactured INT(1) DEFAULT '0' NOT NULL;
+
+ALTER TABLE LocationExecutedMovement 
+    ADD _TransportPrestationFactured INT(1) DEFAULT '0' NOT NULL 
+    AFTER _PrestationFactured;
+
+ALTER TABLE AccountingType 
+    ADD COLUMN _DistributionKey DECIMAL(10,2) NOT NULL DEFAULT 0;
+ALTER TABLE AccountingType 
+    ADD COLUMN _MainModel INT(1) NOT NULL DEFAULT 0;
+
+ALTER TABLE CostRange
+    ADD COLUMN _UnitType INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _UnitType ON CostRange(_UnitType);
+
+ALTER TABLE CoverType
+    ADD COLUMN _UnitType INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _UnitType ON CoverType(_UnitType);
+
+ALTER TABLE FlowCategory
+    ADD COLUMN _DisplayOrder INT(11) NOT NULL DEFAULT 0;
+
+ALTER TABLE RessourceRessourceGroup DROP COLUMN _RateType;
+ALTER TABLE RessourceGroup ADD COLUMN _AddNomenclatureCosts INT(1) DEFAULT 0;
+ALTER TABLE Ressource ADD COLUMN _Quantity DECIMAL(10,2) NOT NULL DEFAULT 0 AFTER _Cost;
+
+
+
+DROP TABLE IF EXISTS ForecastFlowFlowTypeItem;
+CREATE TABLE ForecastFlowFlowTypeItem (
+  _FromForecastFlow int(11) unsigned NOT NULL default '0',
+  _ToFlowTypeItem int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromForecastFlow, _ToFlowTypeItem)
+) TYPE=InnoDB CHARSET=latin1;
+
+INSERT INTO ForecastFlowFlowTypeItem (_FromForecastFlow, _ToFlowTypeItem)
+    (SELECT a._FromForecastFlow, b._Id FROM ForecastFlowFlowType a, FlowTypeItem b 
+    WHERE a._ToFlowType=b._FlowType);
+
+DROP TABLE ForecastFlowFlowType;
+
+#---------------------------
+# RELEASE v2_1_8
+#---------------------------
+
+# gestion du type text sur les preferences
+ALTER TABLE FW_Preferences ADD COLUMN text_value LONGTEXT DEFAULT NULL;
+
+# correction du nom de l'unité de regroupement
+UPDATE I18nString SET _StringValue_fr_FR="UR" WHERE _StringValue_en_GB="Regrouping Unit";
+
+ALTER TABLE InvoiceItem
+    ADD COLUMN _ProductType INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _ProductType ON InvoiceItem(_ProductType);
+
+# correction des TVA.Category
+UPDATE I18nString set _StringValue_en_GB = 'INSURANCE' 
+    where _StringValue_fr_FR = 'ASSURANCE' and _Id in (select _Category from TVA);
+UPDATE I18nString set _StringValue_en_GB = 'DELIVERY EXPENSES' 
+    where _StringValue_fr_FR = 'PORT' and _Id in (select _Category from TVA);
+
+## Table structure for FromInvoiceItemToACO
+DROP TABLE IF EXISTS FromInvoiceItemToACO;
+CREATE TABLE FromInvoiceItemToACO (
+  _FromInvoiceItem int(11) unsigned NOT NULL default '0',
+  _ToACO int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromInvoiceItem, _ToACO)
+) TYPE=InnoDB CHARSET=latin1;
+
+DROP TABLE IF EXISTS MiniAmountToOrder;
+CREATE TABLE MiniAmountToOrder (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Amount DECIMAL(10,2) NOT NULL DEFAULT 0,
+  _Category INT(11) NOT NULL DEFAULT 0,
+  _Currency INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _Category ON MiniAmountToOrder (_Category);
+CREATE INDEX _Currency ON MiniAmountToOrder (_Currency);
+
+# gestion remise sur % du chiffre d'affaire annuel
+DROP TABLE IF EXISTS AnnualTurnoverDiscount;
+CREATE TABLE AnnualTurnoverDiscount (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Amount DECIMAL(10,2) DEFAULT NULL,
+  _Year INT(4) DEFAULT NULL,
+  _SupplierCustomer INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+CREATE INDEX _SupplierCustomer ON AnnualTurnoverDiscount (_SupplierCustomer);
+
+DROP TABLE IF EXISTS AnnualTurnoverDiscountPercent;
+CREATE TABLE AnnualTurnoverDiscountPercent (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Amount DECIMAL(10,2) DEFAULT NULL,
+  _Date DATETIME DEFAULT NULL,
+  _Category INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+CREATE INDEX _Category ON AnnualTurnoverDiscountPercent (_Category);
+
+# prestations
+ALTER TABLE Box ADD COLUMN _InvoicePrestation INT(11) NOT NULL DEFAULT 0;
+ALTER TABLE LocationExecutedMovement ADD COLUMN _InvoicePrestation INT(11) NOT NULL DEFAULT 0;
+
+CREATE INDEX _InvoicePrestation ON Box (_InvoicePrestation);
+CREATE INDEX _InvoicePrestation ON LocationExecutedMovement (_InvoicePrestation);
+
+# refactoring plannings
+ALTER TABLE DailyPlanning CHANGE COLUMN _MorningStart _Start TIME  DEFAULT NULL,
+ CHANGE COLUMN _MorningEnd _Pause TIME  DEFAULT NULL,
+ CHANGE COLUMN _AfternoonStart _Restart TIME  DEFAULT NULL,
+ CHANGE COLUMN _AfternoonEnd _End TIME  DEFAULT NULL;
+
+# SC HandingByRange
+ALTER TABLE Command ADD COLUMN 
+    _HandingByRangePercent DECIMAL(10,2) NOT NULL DEFAULT 0 AFTER _Handing;
+DROP TABLE IF EXISTS HandingByRange;
+CREATE TABLE HandingByRange (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Percent DECIMAL(10,2) NOT NULL DEFAULT 0,
+  _Minimum DECIMAL(10,2) NOT NULL DEFAULT 0,
+  _Maximum DECIMAL(10,2) NOT NULL DEFAULT 0,
+  _Currency INT(11) NOT NULL DEFAULT 0,
+  _Category INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+CREATE INDEX _Currency ON HandingByRange (_Currency);
+CREATE INDEX _Category ON HandingByRange (_Category);
+
+update Command set _Currency=1 where _ClassName='ChainCommand' and _Currency=0;
+update AbstractDocument a, Command b set a._Currency=1 
+    where a._Currency=0 and a._Command=b._Id and b._ClassName='ChainCommand';
+
+update Command set _Type=3 where _ClassName='ChainCommand' and _Type=0;
+update AbstractDocument a, Command b, SupplierCustomer c set a._CommandType=6 
+    where a._Command=b._Id and b._ClassName='ChainCommand'
+    and b._SupplierCustomer=c._Id and c._Supplier=1;
+update AbstractDocument a, Command b, SupplierCustomer c set a._CommandType=2 
+    where a._Command=b._Id and b._ClassName='ChainCommand'
+    and b._SupplierCustomer=c._Id and c._Customer=1;
+
+ALTER TABLE CommandItem 
+    ADD COLUMN _PackagingUnitQuantity INT(11)  AFTER _QuantityForPrestationCost;
+
+
+#---------------------------
+# RELEASE v2_1_9
+#---------------------------
+
+ALTER TABLE Actor ADD _Slogan INT(11) DEFAULT 0 AFTER _Logo;
+ALTER TABLE HelpPage CHANGE COLUMN _BodyAddon _Body INT(11) NOT NULL DEFAULT 0;
+ALTER TABLE Command ADD _IsEstimate INT(1) DEFAULT 0 AFTER _Closed;
+ALTER TABLE Command ADD _Command INT(11) NOT NULL DEFAULT 0 AFTER _InstallmentBank;
+ALTER TABLE Command ADD _Chain INT(11) NOT NULL DEFAULT 0;
+
+
+
+#---------------------------
+# RELEASE v2_2_0
+#---------------------------
+
+DROP TABLE IF EXISTS MimeType;
+CREATE TABLE MimeType (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Extension VARCHAR(255) DEFAULT NULL,
+  _ContentType VARCHAR(255) DEFAULT NULL,
+  _DisplayName VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+INSERT INTO MimeType(_Id,_Extension,_ContentType,_DisplayName) VALUES 
+(1,'ai','application/postscript','Postscript Document'),
+(2,'aif','audio/x-aiff',''),
+(3,'aifc','audio/x-aiff',''),
+(4,'aiff','audio/x-aiff',''),
+(5,'asc','text/plain','Plain Text'),
+(6,'au','audio/basic',''),
+(7,'avi','video/x-msvideo','Video File'),
+(8,'bcpio','application/x-bcpio',''),
+(9,'bin','application/octet-stream','Binary File'),
+(10,'bmp','image/bmp','BMP Image'),
+(11,'cdf','application/x-netcdf',''),
+(12,'class','application/octet-stream',''),
+(13,'cpio','application/x-cpio',''),
+(14,'cpt','application/mac-compactpro',''),
+(15,'csh','application/x-csh',''),
+(16,'css','text/css',''),
+(17,'dcr','application/x-director',''),
+(18,'dir','application/x-director',''),
+(19,'dms','application/octet-stream',''),
+(20,'doc','application/msword','Word Document'),
+(21,'dvi','application/x-dvi',''),
+(22,'dxr','application/x-director',''),
+(23,'eps','application/postscript','Encapsulated Postscript'),
+(24,'etx','text/x-setext',''),
+(25,'exe','application/octet-stream',''),
+(26,'ez','application/andrew-inset',''),
+(27,'gif','image/gif','GIF Image'),
+(28,'gtar','application/x-gtar',''),
+(29,'hdf','application/x-hdf',''),
+(30,'hqx','application/mac-binhex40',''),
+(31,'htm','text/html','HTML Webpage'),
+(32,'html','text/html','HTML Webpage'),
+(33,'ice','x-conference/x-cooltalk',''),
+(34,'ief','image/ief',''),
+(35,'iges','model/iges',''),
+(36,'igs','model/iges',''),
+(37,'jpe','image/jpeg','JPEG Image'),
+(38,'jpeg','image/jpeg','JPEG Image'),
+(39,'jpg','image/jpeg','JPEG Image'),
+(40,'js','application/x-javascript',''),
+(41,'kar','audio/midi',''),
+(42,'latex','application/x-latex',''),
+(43,'lha','application/octet-stream',''),
+(44,'lzh','application/octet-stream',''),
+(45,'man','application/x-troff-man',''),
+(46,'mdb','application/access','Access Database'),
+(47,'mdf','application/access','Access Database'),
+(48,'me','application/x-troff-me',''),
+(49,'mesh','model/mesh',''),
+(50,'mid','audio/midi',''),
+(51,'midi','audio/midi',''),
+(52,'mif','application/vnd.mif',''),
+(53,'mov','video/quicktime','Video File'),
+(54,'movie','video/x-sgi-movie','Video File'),
+(55,'mp2','audio/mpeg',''),
+(56,'mp3','audio/mpeg',''),
+(57,'mpe','video/mpeg','Video File'),
+(58,'mpeg','video/mpeg','Video File'),
+(59,'mpg','video/mpeg','Video File'),
+(60,'mpga','audio/mpeg',''),
+(61,'mpp','application/vnd.ms-project',''),
+(62,'ms','application/x-troff-ms',''),
+(63,'msh','model/mesh',''),
+(64,'nc','application/x-netcdf',''),
+(65,'oda','application/oda',''),
+(66,'pbm','image/x-portable-bitmap',''),
+(67,'pdb','chemical/x-pdb',''),
+(68,'pdf','application/pdf','Acrobat PDF'),
+(69,'pgm','image/x-portable-graymap',''),
+(70,'pgn','application/x-chess-pgn',''),
+(71,'png','image/png','PNG Image'),
+(72,'pnm','image/x-portable-anymap',''),
+(73,'ppm','image/x-portable-pixmap',''),
+(74,'ppt','application/vnd.ms-powerpoint','Powerpoint Presentation'),
+(75,'ps','application/postscript','Postscript Document'),
+(76,'qt','video/quicktime','Video File'),
+(77,'ra','audio/x-realaudio',''),
+(78,'ram','audio/x-pn-realaudio',''),
+(79,'ras','image/x-cmu-raster',''),
+(80,'rgb','image/x-rgb',''),
+(81,'rm','audio/x-pn-realaudio',''),
+(82,'roff','application/x-troff',''),
+(83,'rpm','audio/x-pn-realaudio-plugin',''),
+(84,'rtf','text/rtf',''),
+(85,'rtx','text/richtext',''),
+(86,'sgm','text/sgml',''),
+(87,'sgml','text/sgml',''),
+(88,'sh','application/x-sh',''),
+(89,'shar','application/x-shar',''),
+(90,'silo','model/mesh',''),
+(91,'sit','application/x-stuffit',''),
+(92,'skd','application/x-koan',''),
+(93,'skm','application/x-koan',''),
+(94,'skp','application/x-koan',''),
+(95,'skt','application/x-koan',''),
+(96,'smi','application/smil',''),
+(97,'smil','application/smil',''),
+(98,'snd','audio/basic',''),
+(99,'spl','application/x-futuresplash',''),
+(100,'src','application/x-wais-source',''),
+(101,'sv4cpio','application/x-sv4cpio',''),
+(102,'sv4crc','application/x-sv4crc',''),
+(103,'swf','application/x-shockwave-flash',''),
+(104,'t','application/x-troff',''),
+(105,'tar','application/x-tar','Tar or Compressed Tar File'),
+(106,'tcl','application/x-tcl',''),
+(107,'tex','application/x-tex',''),
+(108,'texi','application/x-texinfo',''),
+(109,'texinfo','application/x-texinfo',''),
+(110,'tif','image/tiff','TIFF Image'),
+(111,'tiff','image/tiff','TIFF Image'),
+(112,'tr','application/x-troff',''),
+(113,'tsv','text/tab-separated-values',''),
+(114,'txt','text/plain','Plain Text'),
+(115,'ustar','application/x-ustar',''),
+(116,'vcd','application/x-cdlink',''),
+(117,'vrml','model/vrml',''),
+(118,'vsd','application/vnd.visio',''),
+(119,'wav','audio/x-wav',''),
+(120,'wrl','model/vrml',''),
+(121,'xbm','image/x-xbitmap',''),
+(122,'xls','application/vnd.ms-excel','Excel Spreadsheet'),
+(123,'xml','text/xml',''),
+(124,'xpm','image/x-xpixmap',''),
+(125,'xwd','image/x-xwindowdump',''),
+(126,'xyz','chemical/x-pdb',''),
+(127,'zip','application/zip','ZIP Compressed File'),
+(128,'gz','application/x-gzip','GZIP Compressed File'),
+(129,'tgz','application/x-gzip','Tar or Compressed Tar File'),
+(130,'sxw','application/vnd.sun.xml.writer','OpenOffice.org Writer Document'),
+(131,'stw','application/vnd.sun.xml.writer.template','OpenOffice.org File'),
+(132,'sxc','application/vnd.sun.xml.calc','OpenOffice.org Spreadsheet'),
+(133,'stc','application/vnd.sun.xml.calc.template','OpenOffice.org File'),
+(134,'sxd','application/vnd.sun.xml.draw','OpenOffice.org File'),
+(135,'std','application/vnd.sun.xml.draw.template','OpenOffice.org File'),
+(136,'sxi','application/vnd.sun.xml.impress','OpenOffice.org Presentation'),
+(137,'sti','application/vnd.sun.xml.impress.template','OpenOffice.org File'),
+(138,'sxg','application/vnd.sun.xml.writer.global','OpenOffice.org File'),
+(139,'sxm','application/vnd.sun.xml.math','OpenOffice.org File'),
+(140,'xlt','application/vnd.ms-excel','Excel Template'),
+(141,'dot','application/msword','Word Template'),
+(142,'bz2','application/x-bzip2','BZIP2 Compressed File'),
+(143,'diff','text/plain','Source Diff File'),
+(144,'patch','text/plain','Patch File'),
+(145,'odt','application/vnd.oasis.opendocument.text','OpenDocument Text'),
+(146,'ott','application/vnd.oasis.opendocument.text-template','OpenDocument Text Template'),
+(147,'oth','application/vnd.oasis.opendocument.text-web','HTML Document Template'),
+(148,'odm','application/vnd.oasis.opendocument.text-master','OpenDocument Master Document'),
+(149,'odg','application/vnd.oasis.opendocument.graphics','OpenDocument Drawing'),
+(150,'otg','application/vnd.oasis.opendocument.graphics-template','OpenDocument Drawing Template'),
+(151,'odp','application/vnd.oasis.opendocument.presentation','OpenDocument Presentation'),
+(152,'otp','application/vnd.oasis.opendocument.presentation-template','OpenDocument Presentation Template'),
+(153,'ods','application/vnd.oasis.opendocument.spreadsheet','OpenDocument Spreadsheet'),
+(154,'ots','application/vnd.oasis.opendocument.spreadsheet-template','OpenDocument Spreadsheet Template'),
+(155,'odc','application/vnd.oasis.opendocument.chart','OpenDocument Chart'),
+(156,'odf','application/vnd.oasis.opendocument.formula','OpenDocument Formula'),
+(157,'odb','application/vnd.oasis.opendocument.database','OpenDocument Database'),
+(158,'odi','application/vnd.oasis.opendocument.image','OpenDocument Image'),
+(159,'zip','application/x-zip','ZIP Compressed File'),
+(160,'csv','text/csv','Comma delimited spreadsheet'),
+(161,'msi','application/msword','MSI Installer file'),
+(162,'pps','application/vnd.ms-powerpoint','Powerpoint Presentation');
+
+DROP TABLE IF EXISTS UploadedDocument;
+CREATE TABLE UploadedDocument (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Name VARCHAR(255) DEFAULT NULL,
+  _Type INT(3) DEFAULT NULL,
+  _Comment TEXT DEFAULT NULL,
+  _MimeType INT(11) NOT NULL DEFAULT 0,
+  _Customer INT(11) NOT NULL DEFAULT 0,
+  _ActivatedChainTask INT(11) NOT NULL DEFAULT 0,
+  _UserAccount INT(11) NOT NULL DEFAULT 0,
+  _CreationDate DATETIME DEFAULT NULL,
+  _LastModificationDate DATETIME DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _MimeType ON UploadedDocument (_MimeType);
+CREATE INDEX _Customer ON UploadedDocument (_Customer);
+CREATE INDEX _ActivatedChainTask ON UploadedDocument (_ActivatedChainTask);
+CREATE INDEX _UserAccount ON UploadedDocument (_UserAccount);
+
+DROP TABLE IF EXISTS ActorDetail;
+CREATE TABLE ActorDetail (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _IsInternalAffectation INT(1) DEFAULT 1,
+  _InternalAffectation INT(11) NOT NULL DEFAULT 0,
+  _Signatory INT(11) NOT NULL DEFAULT 0,
+  _BusinessProvider INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _InternalAffectation ON ActorDetail (_InternalAffectation);
+CREATE INDEX _Signatory ON ActorDetail (_Signatory);
+CREATE INDEX _BusinessProvider ON ActorDetail (_BusinessProvider);
+
+ALTER TABLE Actor ADD _ActorDetail INT( 11 ) NOT NULL DEFAULT '0';
+
+set @i18nId=(select IFNULL(max(_Id),1) from I18nString);
+INSERT INTO I18nString VALUES 
+    (@i18nId:=@i18nId+1, NULL, 'Document upload confirmation','Confirmation d\'ajout de document','Document upload confirmation','Document upload confirmation'),
+    (@i18nId:=@i18nId+1, NULL, 'Document update confirmation','Confirmation de modification de document','Document update confirmation','Document update confirmation'),
+    (@i18nId:=@i18nId+1, NULL, 'Document delete confirmation','Confirmation de suppression de document','Document delete confirmation','Document delete confirmation'),
+    (@i18nId:=@i18nId+1, NULL, 'Document assignment confirmation','Confirmation d\'affectation de document','Document assignment confirmation','Document assignment confirmation'),
+    (@i18nId:=@i18nId+1, NULL, 'Document unassignment confirmation','Confirmation de désaffectation de document','Document unassignment confirmation','Document unassignment confirmation');
+set @alertId=(select IFNULL(max(_Id),1) from Alert);
+INSERT INTO Alert (_Id, _Name)  
+    (SELECT 100020,_Id FROM I18nString WHERE _StringValue_en_GB='Document upload confirmation');
+INSERT INTO Alert (_Id, _Name)  
+    (SELECT 100021,_Id FROM I18nString WHERE _StringValue_en_GB='Document update confirmation');
+INSERT INTO Alert (_Id, _Name)  
+    (SELECT 100022,_Id FROM I18nString WHERE _StringValue_en_GB='Document delete confirmation');
+INSERT INTO Alert (_Id, _Name)  
+    (SELECT 100023,_Id FROM I18nString WHERE _StringValue_en_GB='Document assignment confirmation');
+INSERT INTO Alert (_Id, _Name)  
+    (SELECT 100024,_Id FROM I18nString WHERE _StringValue_en_GB='Document unassignment confirmation');
+
+ALTER TABLE Operation ADD _Type INT(11) NOT NULL DEFAULT '0';
+UPDATE Operation SET _Type=1 WHERE _ID IN (2, 11, 12, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42);
+
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Opening', 'Lancement', 'Opening', 'Opening');
+
+INSERT INTO Operation (_Id , _DBId , _Name , _Symbol , _Code , _FrontTolerance , _EndTolerance , _TotalTolerance , _IsConcreteProductNeeded , _Prestation , _Type )
+VALUES (
+'43', NULL , @i18nId, NULL , NULL , NULL , NULL , NULL , '0', '0', '2'
+);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Plan management', 'Gestion dispositif', 'Plan management', 'Plan management');
+
+INSERT INTO Operation (_Id , _DBId , _Name , _Symbol , _Code , _FrontTolerance , _EndTolerance , _TotalTolerance , _IsConcreteProductNeeded , _Prestation , _Type )
+VALUES (
+'44', NULL , @i18nId, NULL , NULL , NULL , NULL , NULL , '0', '0', '2'
+);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Contract receipt', 'Réception contrat', 'Contract receipt', 'Contract receipt');
+
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('62', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Advance fee receipt', 'Réception acompte', 'Advance fee receipt', 'Advance fee receipt');
+
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('61', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Customer case creation', 'Création dossier client', 'Customer case creation', 'Customer case creation');
+
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('63', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Opening meeting schedule', 'Réunion RDL Rdvs', 'Opening meeting schedule', 'Opening meeting schedule');
+
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('64', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Opening meeting', 'RDL tenue', 'Opening meeting', 'Opening meeting');
+
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('65', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Opening meeting report', 'RDL compte rendu', 'Opening meeting report', 'Opening meeting report');
+
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('66', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Application form preparation', 'Préparation dossier de demande', 'Application form preparation', 'Application form preparation');
+
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('67', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'In-house validation', 'Validation interne', 'In-house validation', 'In-house validation');
+
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('68', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Plan development', 'Montage dispositif', 'Plan development', 'Plan development');
+
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('69', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Customer validation', 'Validation client', 'Customer validation', 'Customer validation');
+
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('70', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Case shipment', 'Envoi du dossier', 'Case shipment', 'Case shipment');
+
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('71', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Case follow-up', 'Suivi du dossier', 'Case follow-up', 'Case follow-up');
+
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('72', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Decision', 'Décision', 'Decision', 'Decision');
+
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('73', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Contract follow-up', 'Suivi du contrat', 'Contract follow-up', 'Contract follow-up');
+
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('74', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Liquidation preparation', 'Préparation de la liquidation', 'Liquidation preparation', 'Liquidation preparation');
+
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('75', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Shipment of liquidation case to the customer', 'Envoi du dossier de liquidation au client', 'Shipment of liquidation case to the customer', 'Shipment of liquidation case to the customer');
+
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('76', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Shipment of liquidation case to agency', "Envoi du dossier de liquidation à l'organisme", 'Shipment of liquidation case to agency', 'Shipment of liquidation case to agency');
+
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('77', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Liquidation follow-up', 'Suivi de la liquidation', 'Liquidation follow-up', 'Liquidation follow-up');
+
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('78', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Liquidation billing', 'Facturation de la liquidation', 'Liquidation billing', 'Liquidation billing');
+
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('79', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Customer follow-up', 'Suivi du client', 'Customer follow-up', 'Customer follow-up');
+
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('80', @i18nId, 1);
+
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES 
+(43, 61), 
+(43, 62), 
+(43, 63), 
+(43, 64), 
+(43, 65), 
+(43, 66), 
+(44, 67), 
+(44, 68), 
+(44, 69), 
+(44, 70), 
+(44, 71), 
+(44, 72), 
+(44, 73), 
+(44, 74), 
+(44, 75), 
+(44, 76), 
+(44, 77), 
+(44, 78), 
+(44, 79), 
+(44, 80);
+
+set @i18nId=(select IFNULL(max(_Id),1) from I18nString);
+INSERT INTO I18nString VALUES 
+    (@i18nId:=@i18nId+1, NULL, 'Overdue tasks','Tâches en retard','Overdue tasks','Overdue tasks');
+
+INSERT INTO Alert (_Id, _Name)  
+    (SELECT 100025,_Id FROM I18nString WHERE _StringValue_en_GB='Overdue tasks');
+
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+UPDATE IdHashTable SET _Id= @i18nId WHERE _Table='I18nString';
+
+
+# ajouts 24/12/2007
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Shipment of contract to the customer', 'Envoi du contrat au client', 'Shipment of contract to the customer', 'Shipment of contract to the customer');
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('81', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Shipment of case to the customer', 'Envoi du dossier au client', 'Shipment of case to the customer', 'Shipment of case to the customer');
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('82', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Shipment of case to the agency', 'Envoi du dossier à l\'organisme', 'Shipment of case to the agency', 'Shipment of case to the agency');
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('83', @i18nId, 1);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Agency decision', 'Décision organisme', 'Agency decision', 'Agency decision');
+INSERT INTO Task (_Id , _Name, _ToBeValidated) VALUES ('84', @i18nId, 1);
+
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Liquidation preparation', 'Préparation liquidation', 'Liquidation preparation', 'Liquidation preparation');
+INSERT INTO Operation (_Id , _DBId , _Name , _Symbol , _Code , _FrontTolerance , _EndTolerance , _TotalTolerance , _IsConcreteProductNeeded , _Prestation , _Type )
+VALUES (
+'45', NULL , @i18nId, NULL , NULL , NULL , NULL , NULL , '0', '0', '2'
+);
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Shipment of liquidation case', 'Envoi dossier de liquidation', 'Shipment of liquidation case', 'Shipment of liquidation case');
+INSERT INTO Operation (_Id , _DBId , _Name , _Symbol , _Code , _FrontTolerance , _EndTolerance , _TotalTolerance , _IsConcreteProductNeeded , _Prestation , _Type )
+VALUES (
+'46', NULL , @i18nId, NULL , NULL , NULL , NULL , NULL , '0', '0', '2'
+);
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Contract receiving', 'Reception contrat', 'Contract receiving', 'Contract receiving');
+INSERT INTO Operation (_Id , _DBId , _Name , _Symbol , _Code , _FrontTolerance , _EndTolerance , _TotalTolerance , _IsConcreteProductNeeded , _Prestation , _Type )
+VALUES (
+'47', NULL , @i18nId, NULL , NULL , NULL , NULL , NULL , '0', '0', '2'
+);
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Case creation', 'Création dossier', 'Case creation', 'Case creation');
+INSERT INTO Operation (_Id , _DBId , _Name , _Symbol , _Code , _FrontTolerance , _EndTolerance , _TotalTolerance , _IsConcreteProductNeeded , _Prestation , _Type )
+VALUES (
+'48', NULL , @i18nId, NULL , NULL , NULL , NULL , NULL , '0', '0', '2'
+);
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Meeting schedule', 'Prise de rendez-vous', 'Meeting schedule', 'Meeting schedule');
+INSERT INTO Operation (_Id , _DBId , _Name , _Symbol , _Code , _FrontTolerance , _EndTolerance , _TotalTolerance , _IsConcreteProductNeeded , _Prestation , _Type )
+VALUES (
+'49', NULL , @i18nId, NULL , NULL , NULL , NULL , NULL , '0', '0', '2'
+);
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Plan development', 'Montage dispositif', 'Plan development', 'Plan development');
+INSERT INTO Operation (_Id , _DBId , _Name , _Symbol , _Code , _FrontTolerance , _EndTolerance , _TotalTolerance , _IsConcreteProductNeeded , _Prestation , _Type )
+VALUES (
+'50', NULL , @i18nId, NULL , NULL , NULL , NULL , NULL , '0', '0', '2'
+);
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Validation', 'Validation', 'Validation', 'Validation');
+INSERT INTO Operation (_Id , _DBId , _Name , _Symbol , _Code , _FrontTolerance , _EndTolerance , _TotalTolerance , _IsConcreteProductNeeded , _Prestation , _Type )
+VALUES (
+'51', NULL , @i18nId, NULL , NULL , NULL , NULL , NULL , '0', '0', '2'
+);
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Shipment of case', 'Envoi de dossier', 'Shipment of case', 'Shipment of case');
+INSERT INTO Operation (_Id , _DBId , _Name , _Symbol , _Code , _FrontTolerance , _EndTolerance , _TotalTolerance , _IsConcreteProductNeeded , _Prestation , _Type )
+VALUES (
+'52', NULL , @i18nId, NULL , NULL , NULL , NULL , NULL , '0', '0', '2'
+);
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Follow-up', 'Suivi', 'Follow-up', 'Follow-up');
+INSERT INTO Operation (_Id , _DBId , _Name , _Symbol , _Code , _FrontTolerance , _EndTolerance , _TotalTolerance , _IsConcreteProductNeeded , _Prestation , _Type )
+VALUES (
+'53', NULL , @i18nId, NULL , NULL , NULL , NULL , NULL , '0', '0', '2'
+);
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Agency decision', 'Décision organisme', 'Agency decision', 'Agency decision');
+INSERT INTO Operation (_Id , _DBId , _Name , _Symbol , _Code , _FrontTolerance , _EndTolerance , _TotalTolerance , _IsConcreteProductNeeded , _Prestation , _Type )
+VALUES (
+'54', NULL , @i18nId, NULL , NULL , NULL , NULL , NULL , '0', '0', '2'
+);
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString ( _Id , _DBId , _StringValue_en_GB , _StringValue_fr_FR , _StringValue_de_DE , _StringValue_nl_NL )
+VALUES (@i18nId, '0', 'Liquidation billing', 'Facturation liquidation', 'Liquidation billing', 'Liquidation billing');
+INSERT INTO Operation (_Id , _DBId , _Name , _Symbol , _Code , _FrontTolerance , _EndTolerance , _TotalTolerance , _IsConcreteProductNeeded , _Prestation , _Type )
+VALUES (
+'55', NULL , @i18nId, NULL , NULL , NULL , NULL , NULL , '0', '0', '2'
+);
+
+INSERT INTO oprTask (_FromOperation, _ToTask) VALUES 
+(45, 75), 
+(46, 76), 
+(46, 77),
+(47, 62),
+(47, 61),
+(48, 63),
+(49, 64),
+(50, 67),
+(51, 68),
+(51, 70),
+(52, 81),
+(52, 82),
+(52, 83),
+(53, 72),
+(53, 74),
+(53, 80),
+(53, 78),
+(54, 84),
+(55, 79);
+
+
+ALTER TABLE Box ADD _Dimensions VARCHAR( 255 ) NOT NULL AFTER _Comment;
+
+DROP TABLE IF EXISTS UploadedDocumentType;
+CREATE TABLE UploadedDocumentType (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) DEFAULT 0,
+  _Name INT(11) NOT NULL DEFAULT 0,
+  _Active INT(1) DEFAULT 1,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE UNIQUE INDEX _Name ON UploadedDocumentType (_Name);
+
+ALTER TABLE UploadedDocument CHANGE COLUMN _Type _Type INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _Type ON UploadedDocument (_Type);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'Rapport');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('1', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'Contrat');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('2', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'Contrat commercial');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('3', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'Contrat de travail');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('4', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'Bilan');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('5', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'Statuts');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('6', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'Extrait Kbis');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('7', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'Compte-rendu');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('8', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'Fiche éligibilité');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('9', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'Correspondances secrétariat');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('10', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'Description métier client');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('11', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'CIE - Année N');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('12', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'CIE - Année N+1');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('13', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'CIE - Année N+2');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('14', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'CIR - Année N');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('15', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'CIR - Année N+1');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('16', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'CIR - Année N+2');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('17', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'COFACE - Demande');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('18', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'COFACE - Liquidation Garantie');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('19', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'COFACE - Liquidation Amortissement');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('20', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'SIDEX');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('21', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'APT - Demande');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('22', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'APT - Liquidation');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('23', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'ARI - Demande');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('24', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'ARI - Liquidation');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('25', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'API - Demande');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('26', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'API - Liquidation');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('27', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'JEI');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('28', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'FCPI');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('29', @i18nId);
+
+set @i18nId=(select MAX(_Id) + 1 from I18nString);
+INSERT INTO I18nString (_Id , _StringValue_fr_FR) VALUES (@i18nId, 'Autre');
+INSERT INTO UploadedDocumentType (_Id , _Name) VALUES ('30', @i18nId);
+
+#---------------------------
+# RELEASE v2_2_1
+#---------------------------
+
+ALTER TABLE SupplierCustomer ADD _HasTvaSurtax INT(1) NOT NULL DEFAULT '0' AFTER _HasTVA;
+ALTER TABLE AbstractDocument ADD _TvaSurtaxRate DECIMAL(10,2) NOT NULL DEFAULT '0' AFTER _TVA;
+
+ALTER TABLE SupplierCustomer ADD _HasCodexTax INT(1) NOT NULL DEFAULT '0' AFTER _HasTvaSurtax;
+ALTER TABLE AbstractDocument ADD _CodexTaxRate DECIMAL(10,2) NOT NULL DEFAULT '0' AFTER _TvaSurtaxRate;
+
+ALTER TABLE ForecastFlow ADD _Active INT( 1 ) NOT NULL DEFAULT '1';
+
+DROP TABLE IF EXISTS CurrencyConverter;
+CREATE TABLE CurrencyConverter (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _FromCurrency INT(11) NOT NULL DEFAULT 0,
+  _ToCurrency INT(11) NOT NULL DEFAULT 0,
+  _BeginDate DATE DEFAULT NULL,
+  _EndDate DATE DEFAULT NULL,
+  _Rate DECIMAL(10,6) NOT NULL DEFAULT 1,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _FromCurrency ON CurrencyConverter (_FromCurrency);
+CREATE INDEX _ToCurrency ON CurrencyConverter (_ToCurrency);
+
+# ajout turk
+ALTER TABLE I18nString ADD _StringValue_tr_TR TEXT DEFAULT NULL;
+
+# refactoring ope/task
+ALTER TABLE Task ADD _Symbol VARCHAR(255) DEFAULT NULL;
+ALTER TABLE Operation DROP _Code;
+CREATE UNIQUE INDEX _Symbol ON Operation (_Symbol);
+CREATE UNIQUE INDEX _Symbol ON Task (_Symbol);
+
+# nettoyage ope/task conseil
+delete from I18nString where _Id in (select _Name from Operation where _Id > 44);
+delete from oprTask where _FromOperation in (select _Id from Operation where _Id > 44);
+delete from I18nString where _Id in (select _Name from Task where _Id > 60);
+delete from oprTask where _ToTask in (select _Id from Task where _Id > 60);
+delete from Operation where _Id > 44;
+delete from Task where _Id > 60;
+
+# operations
+UPDATE `Operation` SET _Symbol='ADMI' WHERE _Id=1;
+UPDATE `Operation` SET _Symbol='ASSE' WHERE _Id=2;
+UPDATE `Operation` SET _Symbol='CHAR' WHERE _Id=3;
+UPDATE `Operation` SET _Symbol='COND' WHERE _Id=4;
+UPDATE `Operation` SET _Symbol='DEBA' WHERE _Id=5;
+UPDATE `Operation` SET _Symbol='DECH' WHERE _Id=6;
+UPDATE `Operation` SET _Symbol='DECO' WHERE _Id=7;
+UPDATE `Operation` SET _Symbol='DEGR' WHERE _Id=8;
+UPDATE `Operation` SET _Symbol='DOUA' WHERE _Id=9;
+UPDATE `Operation` SET _Symbol='EMBA' WHERE _Id=10;
+UPDATE `Operation` SET _Symbol='FABR' WHERE _Id=11;
+UPDATE `Operation` SET _Symbol='MONT' WHERE _Id=12;
+UPDATE `Operation` SET _Symbol='RECE' WHERE _Id=13;
+UPDATE `Operation` SET _Symbol='REGR' WHERE _Id=14;
+UPDATE `Operation` SET _Symbol='TTES' WHERE _Id=15;
+UPDATE `Operation` SET _Symbol='TRAE' WHERE _Id=16;
+UPDATE `Operation` SET _Symbol='TRFE' WHERE _Id=17;
+UPDATE `Operation` SET _Symbol='TRFL' WHERE _Id=18;
+UPDATE `Operation` SET _Symbol='TRMA' WHERE _Id=19;
+UPDATE `Operation` SET _Symbol='TRTE' WHERE _Id=20;
+UPDATE `Operation` SET _Symbol='STOC' WHERE _Id=21;
+UPDATE `Operation` SET _Symbol='VOL' WHERE _Id=22;
+UPDATE `Operation` SET _Symbol='MAIN' WHERE _Id=23;
+UPDATE `Operation` SET _Symbol='TOUR' WHERE _Id=24;
+UPDATE `Operation` SET _Symbol='SOUD' WHERE _Id=25;
+UPDATE `Operation` SET _Symbol='POL' WHERE _Id=26;
+UPDATE `Operation` SET _Symbol='FRAI' WHERE _Id=27;
+UPDATE `Operation` SET _Symbol='CONT' WHERE _Id=28;
+UPDATE `Operation` SET _Symbol='SCIA' WHERE _Id=29;
+UPDATE `Operation` SET _Symbol='MICR' WHERE _Id=30;
+UPDATE `Operation` SET _Symbol='CHAU' WHERE _Id=31;
+UPDATE `Operation` SET _Symbol='AJUS' WHERE _Id=32;
+UPDATE `Operation` SET _Symbol='SUIVI' WHERE _Id=33;
+UPDATE `Operation` SET _Symbol='CTAI' WHERE _Id=34;
+UPDATE `Operation` SET _Symbol='CTEP' WHERE _Id=35;
+UPDATE `Operation` SET _Symbol='CTES' WHERE _Id=36;
+UPDATE `Operation` SET _Symbol='TRIT' WHERE _Id=37;
+UPDATE `Operation` SET _Symbol='EPAR' WHERE _Id=38;
+UPDATE `Operation` SET _Symbol='BNOR' WHERE _Id=39;
+UPDATE `Operation` SET _Symbol='BNAR' WHERE _Id=40;
+UPDATE `Operation` SET _Symbol='DECA' WHERE _Id=41;
+UPDATE `Operation` SET _Symbol='PEIN' WHERE _Id=42;
+UPDATE `Operation` SET _Symbol='LAUN' WHERE _Id=43;
+UPDATE `Operation` SET _Symbol='PLM' WHERE _Id=44;
+
+# taches
+UPDATE `Task` SET _Symbol='CONDITION' WHERE _Id=1;
+UPDATE `Task` SET _Symbol='UNCONDITION' WHERE _Id=2;
+UPDATE `Task` SET _Symbol='PACK' WHERE _Id=3;
+UPDATE `Task` SET _Symbol='UNPACK' WHERE _Id=4;
+UPDATE `Task` SET _Symbol='GROUP' WHERE _Id=5;
+UPDATE `Task` SET _Symbol='UNGROUP' WHERE _Id=6;
+UPDATE `Task` SET _Symbol='LOAD' WHERE _Id=7;
+UPDATE `Task` SET _Symbol='UNLOAD' WHERE _Id=8;
+UPDATE `Task` SET _Symbol='GROUND_TRANSPORT' WHERE _Id=9;
+UPDATE `Task` SET _Symbol='SEA_TRANSPORT' WHERE _Id=10;
+UPDATE `Task` SET _Symbol='INLAND_WATERWAY_TRANSPORT' WHERE _Id=11;
+UPDATE `Task` SET _Symbol='RAILWAY_TRANSPORT' WHERE _Id=12;
+UPDATE `Task` SET _Symbol='AIR_TRANSPORT' WHERE _Id=13;
+UPDATE `Task` SET _Symbol='WAITING' WHERE _Id=14;
+UPDATE `Task` SET _Symbol='CHECKING' WHERE _Id=15;
+UPDATE `Task` SET _Symbol='BL_EDITING' WHERE _Id=16;
+UPDATE `Task` SET _Symbol='BE_EDITING' WHERE _Id=17;
+UPDATE `Task` SET _Symbol='LETTRE_VOITURE_EDITING' WHERE _Id=18;
+UPDATE `Task` SET _Symbol='COLISAGE_LIST_EDITING' WHERE _Id=19;
+UPDATE `Task` SET _Symbol='ETIQUETTE_COLIS' WHERE _Id=20;
+UPDATE `Task` SET _Symbol='ETIQUETTE_PROD' WHERE _Id=21;
+UPDATE `Task` SET _Symbol='ETIQUETTE_REGROUPEMENT' WHERE _Id=22;
+UPDATE `Task` SET _Symbol='ETIQUETTE_DIRECTION' WHERE _Id=23;
+UPDATE `Task` SET _Symbol='ACCUSE_RECEPTION' WHERE _Id=24;
+UPDATE `Task` SET _Symbol='SEA_TRANS_LETTER' WHERE _Id=25;
+UPDATE `Task` SET _Symbol='AERIAN_TRANS_LETTER' WHERE _Id=26;
+UPDATE `Task` SET _Symbol='RECEPT' WHERE _Id=27;
+UPDATE `Task` SET _Symbol='ASSEMBLY' WHERE _Id=28;
+UPDATE `Task` SET _Symbol='BUILDING' WHERE _Id=29;
+UPDATE `Task` SET _Symbol='MANUFACTURING' WHERE _Id=30;
+UPDATE `Task` SET _Symbol='STOCK_ENTRY' WHERE _Id=31;
+UPDATE `Task` SET _Symbol='STOCK_EXIT' WHERE _Id=32;
+UPDATE `Task` SET _Symbol='INVENTORY' WHERE _Id=33;
+UPDATE `Task` SET _Symbol='INVOICE_EDITING' WHERE _Id=34;
+UPDATE `Task` SET _Symbol='RECORD_PAYMENT' WHERE _Id=35;
+UPDATE `Task` SET _Symbol='FLY' WHERE _Id=36;
+UPDATE `Task` SET _Symbol='FLY_PREPARATION' WHERE _Id=37;
+UPDATE `Task` SET _Symbol='POST_FLY_MAINTENANCE' WHERE _Id=38;
+UPDATE `Task` SET _Symbol='ACTIVATION' WHERE _Id=39;
+UPDATE `Task` SET _Symbol='INTERNAL_STOCK_ENTRY' WHERE _Id=40;
+UPDATE `Task` SET _Symbol='INTERNAL_STOCK_EXIT' WHERE _Id=41;
+UPDATE `Task` SET _Symbol='TOURNAGE' WHERE _Id=42;
+UPDATE `Task` SET _Symbol='SOUDURE' WHERE _Id=43;
+UPDATE `Task` SET _Symbol='POLISSAGE' WHERE _Id=44;
+UPDATE `Task` SET _Symbol='FRAISAGE' WHERE _Id=45;
+UPDATE `Task` SET _Symbol='CHECKING_PRODUCTION' WHERE _Id=46;
+UPDATE `Task` SET _Symbol='SCIAGE' WHERE _Id=47;
+UPDATE `Task` SET _Symbol='MICROBILLAGE' WHERE _Id=48;
+UPDATE `Task` SET _Symbol='CHAUDRONNERIE' WHERE _Id=49;
+UPDATE `Task` SET _Symbol='AJUSTAGE' WHERE _Id=50;
+UPDATE `Task` SET _Symbol='SUIVI_MATIERE' WHERE _Id=51;
+UPDATE `Task` SET _Symbol='CTAI' WHERE _Id=52;
+UPDATE `Task` SET _Symbol='CTEP' WHERE _Id=53;
+UPDATE `Task` SET _Symbol='CTES' WHERE _Id=54;
+UPDATE `Task` SET _Symbol='TRIT' WHERE _Id=55;
+UPDATE `Task` SET _Symbol='EPAR' WHERE _Id=56;
+UPDATE `Task` SET _Symbol='BNOR' WHERE _Id=57;
+UPDATE `Task` SET _Symbol='BNAR' WHERE _Id=58;
+UPDATE `Task` SET _Symbol='DECA' WHERE _Id=59;
+UPDATE `Task` SET _Symbol='PEIN' WHERE _Id=60;
+
+#---------------------------
+# RELEASE v2_2_2
+#---------------------------
+
+ALTER TABLE TVA ADD _Type INT(11) NOT NULL DEFAULT '0' AFTER _Rate;
+ALTER TABLE AbstractDocument CHANGE _CodexTaxRate _FodecTaxRate DECIMAL( 10, 2 ) NOT NULL DEFAULT '0.00';
+ALTER TABLE SupplierCustomer CHANGE _HasCodexTax _HasFodecTax INT( 1 ) NOT NULL DEFAULT '0';
+
+ALTER TABLE AbstractDocument ADD _TaxStamp DECIMAL( 10, 2 ) NOT NULL DEFAULT '0' AFTER _FodecTaxRate;
+ALTER TABLE SupplierCustomer ADD _HasTaxStamp DECIMAL( 10, 2 ) NOT NULL DEFAULT '0' AFTER _HasFodecTax;
+
+# gestion project manager
+
+ALTER TABLE Command ADD _ProjectManager INT(11) NOT NULL DEFAULT 0 AFTER _Command;
+CREATE INDEX _ProjectManager ON Command (_ProjectManager);
+
+#---------------------------
+# RELEASE v2_2_3
+#---------------------------
+
+ALTER TABLE Product
+  ADD _Model INT(11) NOT NULL DEFAULT 0 AFTER _Owner,
+  ADD _Material1 INT(11) NOT NULL DEFAULT 0 AFTER _Model,
+  ADD _Material2 INT(11) NOT NULL DEFAULT 0 AFTER _Material1,
+  ADD _Accessory1 INT(11) NOT NULL DEFAULT 0 AFTER _Material2,
+  ADD _Accessory2 INT(11) NOT NULL DEFAULT 0 AFTER _Accessory1,
+  ADD _Size INT(11) NOT NULL DEFAULT 0 AFTER _Accessory2,
+  ADD _CommercialName VARCHAR(255) DEFAULT NULL AFTER _Size,
+  ADD _MaterialType INT(3) NOT NULL DEFAULT 0 AFTER _CommercialName,
+  ADD _Origin VARCHAR(255) DEFAULT NULL AFTER _MaterialType,
+  ADD _Color INT(11) NOT NULL DEFAULT 0 AFTER _Origin;
+
+CREATE INDEX _Model ON Product (_Model);
+CREATE INDEX _Material1 ON Product (_Material1);
+CREATE INDEX _Material2 ON Product (_Material2);
+CREATE INDEX _Accessory1 ON Product (_Accessory1);
+CREATE INDEX _Accessory2 ON Product (_Accessory2);
+CREATE INDEX _Size ON Product (_Size);
+CREATE INDEX _Color ON Product (_Color);
+
+--
+-- Table structure for RTWColor
+--
+DROP TABLE IF EXISTS RTWColor;
+CREATE TABLE RTWColor (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Code VARCHAR(255) DEFAULT NULL,
+  _Name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE UNIQUE INDEX _Code ON RTWColor (_Code);
+
+--
+-- Table structure for RTWModel
+--
+DROP TABLE IF EXISTS RTWModel;
+CREATE TABLE RTWModel (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Season INT(11) NOT NULL DEFAULT 0,
+  _Shape INT(11) NOT NULL DEFAULT 0,
+  _Reference VARCHAR(255) DEFAULT NULL,
+  _Name VARCHAR(255) DEFAULT NULL,
+  _Manufacturer INT(11) NOT NULL DEFAULT 0,
+  _Graph VARCHAR(255) DEFAULT NULL,
+  _Price FLOAT DEFAULT NULL,
+  _BuyingPrice FLOAT DEFAULT NULL,
+  _Material1Measurement DECIMAL(10,3) DEFAULT NULL,
+  _Material2Measurement DECIMAL(10,3) DEFAULT NULL,
+  _Accessory1Quantity DECIMAL(10,3) DEFAULT NULL,
+  _Accessory2Quantity DECIMAL(10,3) DEFAULT NULL,
+  _InteriorSole VARCHAR(255) DEFAULT NULL,
+  _ExteriorSole VARCHAR(255) DEFAULT NULL,
+  _Heel VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _Season ON RTWModel (_Season);
+CREATE INDEX _Shape ON RTWModel (_Shape);
+CREATE UNIQUE INDEX _Reference ON RTWModel (_Reference);
+CREATE INDEX _Manufacturer ON RTWModel (_Manufacturer);
+
+--
+-- Table structure for RTWSeason
+--
+DROP TABLE IF EXISTS RTWSeason;
+CREATE TABLE RTWSeason (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Code VARCHAR(255) DEFAULT NULL,
+  _Name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE UNIQUE INDEX _Code ON RTWSeason (_Code);
+
+--
+-- Table structure for RTWShape
+--
+DROP TABLE IF EXISTS RTWShape;
+CREATE TABLE RTWShape (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Code VARCHAR(255) DEFAULT NULL,
+  _Name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE UNIQUE INDEX _Code ON RTWShape (_Code);
+
+--
+-- Table structure for RTWSize
+--
+DROP TABLE IF EXISTS RTWSize;
+CREATE TABLE RTWSize (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Code VARCHAR(255) DEFAULT NULL,
+  _Name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE UNIQUE INDEX _Code ON RTWSize (_Code);
+
+--
+-- Table structure for rTWModelRTWMaterial2
+--
+DROP TABLE IF EXISTS rTWModelRTWMaterial2;
+CREATE TABLE rTWModelRTWMaterial2 (
+  _ToRTWMaterial int(11) unsigned NOT NULL default '0',
+  _FromRTWModel int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_ToRTWMaterial, _FromRTWModel)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- Table structure for rTWModelRTWMaterial1
+--
+DROP TABLE IF EXISTS rTWModelRTWMaterial1;
+CREATE TABLE rTWModelRTWMaterial1 (
+  _ToRTWMaterial int(11) unsigned NOT NULL default '0',
+  _FromRTWModel int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_ToRTWMaterial, _FromRTWModel)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- Table structure for rTWModelRTWAccessory2
+--
+DROP TABLE IF EXISTS rTWModelRTWAccessory2;
+CREATE TABLE rTWModelRTWAccessory2 (
+  _ToRTWMaterial int(11) unsigned NOT NULL default '0',
+  _FromRTWModel int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_ToRTWMaterial, _FromRTWModel)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- Table structure for rTWModelRTWAccessory1
+--
+DROP TABLE IF EXISTS rTWModelRTWAccessory1;
+CREATE TABLE rTWModelRTWAccessory1 (
+  _ToRTWMaterial int(11) unsigned NOT NULL default '0',
+  _FromRTWModel int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_ToRTWMaterial, _FromRTWModel)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- Table structure for rTWModelRTWSize
+--
+DROP TABLE IF EXISTS rTWModelRTWSize;
+CREATE TABLE rTWModelRTWSize (
+  _FromRTWModel int(11) unsigned NOT NULL default '0',
+  _ToRTWSize int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromRTWModel, _ToRTWSize)
+) TYPE=InnoDB CHARSET=latin1;
+
+# autres requetes - hors maloles
+ALTER TABLE `ActivatedChainOperation` ADD `_InvoicePrestation` INT( 11 ) NOT NULL DEFAULT '0';
+ALTER TABLE `ActivatedChainOperation` ADD INDEX ( `_InvoicePrestation` ) ;
+ALTER TABLE CronTask ADD _Active INT(1) DEFAULT 1;
+
+
+####################################
+# Ne pas enlever
+COMMIT;
+####################################

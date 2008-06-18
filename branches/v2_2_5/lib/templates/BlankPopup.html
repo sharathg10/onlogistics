@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html;charset={$HtmlCharset}" />
+    <meta name="author" content="Copyright 2002-2006 ATEOR - All rights reserved." />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+	<title>{$PageTitle}</title>
+    <!-- css styles -->
+    <style type="text/css" media="screen">
+        @import "css/compat.css";
+        @import "css/default.css";
+        @import "css/form.css";
+        @import "css/grid.css";
+        @import "css/dialog.css";
+        @import "css/calendar-glao.css";
+        @import "css/calendar.css";
+{section name=CSS loop=$CustomCSS}
+        @import "{$CustomCSS[CSS]}";
+{/section}
+    </style>
+    <!-- js -->
+    <script type="text/javascript" src="js/MochiKit/MochiKit.js"></script>
+    <script type="text/javascript" src="JS_Messages.php"></script>	
+    <script type="text/javascript" src="js/framework.js"></script>
+{if $sajaxJS}
+    <script type="text/javascript">
+//<![CDATA[
+{$sajaxJS}
+//]]>
+    </script>
+{/if}
+{section name=JS loop=$JavaScript}
+	<script type="text/javascript" src="{$JavaScript[JS]}"></script>
+{/section}
+    <!-- Script pour la gestion de la transparence sur les png 24 -->
+    <script type="text/javascript" src="js/lib-functions/pngfix.js"></script>
+    <!-- Fin script -->
+</head>
+
+<body>
+    <div id="main_content">
+        {$PageContent}
+    </div>
+</body>
+</html>
+<!-- $Id$ -->

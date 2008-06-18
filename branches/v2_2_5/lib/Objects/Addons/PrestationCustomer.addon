@@ -1,0 +1,45 @@
+    // PrestationCustomer::canBeSaved() {{{
+
+    /**
+     * canBeSaved 
+     *
+     * Méthode surchargée pour vérifier (en plus) qu'un acteur n'est pas associé 
+     * plusieurs fois à la même prestation.
+     *
+     * @access public
+     * @return void
+     */
+    public function canBeSaved() {
+        parent::canBeSaved();
+        $col = Object::loadCollection('PrestationCustomer', 
+            array(
+                'Prestation' => $this->getPrestationId(),
+                'Actor' => $this->getActorId()),
+            array(), array('Id'));
+        if($col->getCount() != 0) {
+            throw new Exception(
+                _('An actor can only be associated to the same service once'));
+        }
+    }
+
+    // }}}
+    // PrestationCustomer::toString() {{{
+
+    /**
+     * toString
+     *
+     * retourne le nom de la prestation associée si le nom est vide
+     *
+     * @access public
+     * @return string
+     */
+    public function toString() {
+        $n = $this->getName();
+        if(!empty($n)) {
+            return $n;
+        }
+        $prestation = $this->getPrestation();
+        return $prestation instanceof Prestation?$prestation->getName():'';
+    }
+
+    // }}}

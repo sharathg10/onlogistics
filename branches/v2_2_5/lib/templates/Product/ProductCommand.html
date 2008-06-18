@@ -1,0 +1,258 @@
+{$form.javascript}
+<form {$form.attributes}>
+  <table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+    <thead>
+    <tr>
+      <td colspan="4">
+	  	{t}Order details{/t}
+        <input type="hidden" name="cmdtype" value="{$commandType}" />
+        <input type="hidden" name="port_tva_rate" value="{$port_tva_rate|default:'0'}" />
+        <input type="hidden" name="packing_tva_rate" value="{$packing_tva_rate|default:'0'}" />
+        <input type="hidden" name="insurance_tva_rate" value="{$insurance_tva_rate|default:'0'}" />
+        <input type="hidden" name="SiteAdded" value="0" />
+        <input type="hidden" name="returnURL" value="{$returnURL}" />
+        <input type="hidden" name="HiddenRemExcep" value="{$RemExcep}" />
+        <input type="hidden" name="cadencedOrder" value="{$cadencedOrder}" />
+        <input type="hidden" name="ProductToAdd" value="0" />
+        <input type="hidden" name="MiniAmountToOrder" value="{$MiniAmountToOrder}" id="MiniAmountToOrder" />
+        <input type="hidden" name="Currency" value="{$Currency}" id="Currency" />
+        <input type="hidden" name="ueQtyPref" value="{$ueQtyPref|default:0}" id="ueQtyPref" />
+        <input type="hidden" name="CalendarAwareOfPlanning" value="{$CalendarAwareOfPlanning|default:'0'}" id="CalendarAwareOfPlanning" />
+        <input type="hidden" name="from" value="{$from}" />
+        {if $isEstimate}
+        <input type="hidden" name="isEstimate" value="1" id="isEstimate" />
+        {/if}
+	  </td>
+	</tr>
+	{if $PaymentCondition}
+	<tr>
+      <td colspan="2">
+	    {t}Payment conditions{/t}: {$PaymentCondition}&nbsp;&nbsp;&nbsp;&nbsp;{if $DeliveryZoneLabel} {$DeliveryZoneLabel} {/if}
+	  </td>
+      <td colspan="2">
+      {if $MiniAmountToOrder > 0}
+	    {t}Minimum amount to order excl. VAT{/t} {$Currency}: {$FormattedMiniAmountToOrder}
+	  {/if}&nbsp;
+	    </td>
+    </tr>
+	{/if}
+	{if $PlanningComment}
+	<tr>
+      <td colspan="4"><strong>{$PlanningComment}</strong>&nbsp;</td>
+    </tr>
+	{/if}
+	</thead>
+	<tfoot>
+	<tr>
+		<td colspan="4" align="left"><div align="left">{t}Command summary{/t}</div></td>
+	</tr>
+	</tfoot>
+	<tbody>
+    <tr>
+      <td width="25%"><strong>{$form.cmdNumber.label}: </strong></td>
+      <td width="25%">{$form.cmdNumber.html}</td>
+      <td width="25%"><strong>{$form.cmdIncoterm.label}: </strong></td>
+      <td width="25%">{$form.cmdIncoterm.html}</td>
+    </tr>
+    <tr>
+      <td><b>{$form.cmdExpeditor.label}: </b></td>
+      <td>{$form.cmdExpeditor.html}</td>
+      <td><b>{$form.cmdDestinator.label}: </b></td>
+      <td>{$form.cmdDestinator.html}</td>
+    </tr>
+    <tr>
+      <td><b>{$form.cmdExpeditorSite.label}: </b></td>
+      <td>{$form.cmdExpeditorSite.html}
+        &nbsp;<a href="javascript:void(0);" onclick="var id=document.forms[0].elements['cmdExpeditor'].value; window.open('SiteAddEdit.php?asPopup=1&amp;widgetName=cmdExpeditorSite&amp;actId=' + id, 'Site', 'scrollbars=yes, location=no, width=790, height=590');">
+			<img src="images/ajouter.gif" alt="{t}Add a site{/t}" />
+		</a>
+	  </td>
+      <td><b>{$form.cmdDestinatorSite.label}: </b></td>
+      <td>{$form.cmdDestinatorSite.html}&nbsp;
+		<a href="javascript:void(0);"
+			onclick="var id=document.forms[0].elements['cmdDestinator'].value; window.open('SiteAddEdit.php?asPopup=1&amp;widgetName=cmdDestinatorSite&amp;actId=' + id, 'Site', 'scrollbars=yes, location=no, width=790, height=590');">
+			<img src="images/ajouter.gif" alt="{t}Add a site{/t}" />
+		</a>
+	  </td>
+    </tr>
+{if $consultingContext and $commandType == 1}
+	<tr>
+	  <td><b>{$form.cmdProjectManager.label}: </b></td>
+	  <td>{$form.cmdProjectManager.html}</td>
+	  <td colspan="2">&nbsp;</td>
+    </tr>
+{/if}
+	<tr>
+      <td><b>{t}Current outstanding debts{/t} {$Currency}: </b></td>
+      <td>
+          <input type="text" size="15" name="UpdateIncur"
+          value="{$UpdateIncur}" readonly="readonly" class="ReadOnlyField"
+          style="width:85%;"/>&nbsp;<img src="images/info_16x16.png"
+          onclick="window.open('AgedTrialBalance.php?nosearchform=1&cust={$customerId}',
+          'Aged trial balance','menubar=no, status=no, scrollbars=no, menubar=no, width=400, height=300');",
+          style='cursor:pointer;'/>
+          <input type="hidden" name="HiddenUpdateIncur" value="{$UpdateIncur}"/>
+      </td>
+	  {if $commandType == 1}
+	  <td><b>{$form.cmdCommercial.label}: </b></td>
+	  <td>{$form.cmdCommercial.html}</td>
+	  {else}
+	  <td colspan="2">&nbsp;</td>
+	  {/if}
+    </tr>
+    <tr>
+	  <td><b>{t}Maximum outstanding debts{/t} {$Currency}:</b></td>
+	  <td><input type="text" size="15" name="MaxIncur" value="{$MaxIncur}"
+          readonly="readonly" class="ReadOnlyField" style="width:98%;" /></td>
+      {if $AnnualTurnoverDiscount}
+      <td><b>{t}Discount over annual turnover{/t} {$Currency}:</b></td>
+	  <td><input type="text" size="15" name="AnnualTurnoverDiscount"
+          value="{$AnnualTurnoverDiscount}" readonly="readonly" 
+          class="ReadOnlyField" style="width:98%;" /></td>
+      {else}
+      <td colspan="2">&nbsp;</td>
+      {/if}
+ 	</tr>
+    <tr>
+        <td valign="top"><span style="color:#f00;font-weight:bold;">*&nbsp;</span><strong>{t}Wished date{/t}:</strong></td>
+      <td valign="top"><p>
+          <label>
+          <input type="radio" name="WishedDate" value="0" {if $WishedDate == 0}checked="checked"{/if}
+              onclick="fw.dom.toggleElement('WishedStartDate',true);fw.dom.toggleElement('WishedEndDate',false);" />
+          {t}Date{/t}</label>
+          <label><br/>
+          <input type="radio" name="WishedDate" value="1" {if $WishedDate == 1}checked="checked"{/if}
+              onclick="fw.dom.toggleElement('WishedStartDate',true);fw.dom.toggleElement('WishedEndDate',true);" />
+          {t}Date range{/t}</label>
+          <br /><br/>
+        </p></td>
+      <td colspan="2" valign="top">
+	    <table>
+          <tr>
+            <td><div id="WishedStartDate"><span id="show_Date1"
+				style="background-color:#E1E8EF;border:1px #000000 dotted;
+				margin: 3px 3px 3px 3px;padding: 3px 3px 3px 3px;text-align: right;">
+				{if $FWishedStartDate!=0}{$FWishedStartDate}{else}-- {t}Select a date{/t} --{/if}
+				</span>
+                <input type="hidden" name="StartDate" id="f_date_c1" value="{$WishedStartDate}" />
+                &nbsp;<input type="button" name="f_trigger_c1" id="f_trigger_c1" value="..."
+                style="cursor: pointer;" title="{t}Select a date{/t}" />
+				</div>
+			</td>
+          </tr>
+          <tr>
+            <td><div id="WishedEndDate"><span id="show_Date2"
+				style="background-color:#E1E8EF;border:1px #000000 dotted;
+				margin: 3px 3px 3px 3px;padding: 3px 3px 3px 3px;text-align: right;">
+				{if $FWishedEndDate!=0}{$FWishedEndDate}{else}-- {t}Select a date{/t} --{/if}
+				</span>
+                <input type="hidden" name="EndDate" id="f_date_c2" value="{$WishedEndDate}" />
+                &nbsp;<input type="button" name="f_trigger_c2" id="f_trigger_c2" value="..."
+                style="cursor: pointer;" title="{t}Select a date{/t}" />
+				</div>
+            {literal}
+            <script type="text/javascript">
+//<![CDATA[
+			Calendar.setup({
+		        inputField     :    "f_date_c1",         // id of the input field (hidden)
+		        ifFormat       :    "%Y-%m-%d %H:%M:00",  // format of the input field
+				displayArea    :    "show_Date1",         // ID of the span where the date is to be shown
+				daFormat       :    "%A %e %B %Y %H:%M",  // format of the displayed date
+		        button         :    "f_trigger_c1",       // trigger for the calendar (button ID)
+		        align          :    "Tl",                 // alignment (defaults to "Bl")
+				date		   :	"", // date affichee par defaut
+		        singleClick    :    true,
+				dateStatusFunc :	calendarDisableFunc   // permet d'afficher des dates speciales diffaremment (jours feries)
+														  // et d'en desactiver (en fonction du planning de l'Actor
+		    });
+			Calendar.setup({
+		        inputField     :    "f_date_c2",     	  // id of the input field
+		        ifFormat       :    "%Y-%m-%d %H:%M:00",  // format of the input field
+				displayArea    :    "show_Date2",         // ID of the span where the date is to be shown
+				daFormat       :    "%A %e %B %Y %H:%M",  // format of the displayed date
+		        button         :    "f_trigger_c2",  	  // trigger for the calendar (button ID)
+		        align          :    "Tl",           	  // alignment (defaults to "Bl")
+				date		   :	"", // date affichee par defaut
+		        singleClick    :    true,
+				dateStatusFunc :	dateStatusHandler
+		    });
+//]]>
+			</script>
+            {/literal}
+			</td>
+            </tr>
+        </table>
+	  </td>
+    </tr>
+    {if $cadencedOrder}
+    <tr>
+        <td><strong>{t}Scheduled order{/t}</strong></td>
+        <td><input type="checkbox" name="cadencedOrderCB" id="cadencedOrderCB"
+            onclick="onCadencedOrderCheckboxClicked()" {if $cadencedOrderChecked}checked="checked"{/if} />
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+    </tr>
+    {/if}
+	</tbody>
+  </table>
+  <p>{$cmdProductGrid}
+  <table class="form" width="100%" cellspacing="0" cellpadding="3" border="0">
+	<tr>
+		<td nowrap="nowrap" width="15%"><strong>{$form.Port.label} {$Currency}: </strong></td>
+		<td nowrap="nowrap" width="20%">{$form.Port.html}</td>
+		<td nowrap="nowrap" width="15%"><div id="DisplayRemExcepLabel" style="display:block;"><strong>{t}Customer discount{/t} %:</strong></div></td>
+		<td nowrap="nowrap" width="20%"><div id="DisplayRemExcep" style="display:block;"><b>
+			<input type="text" size="10" name="RemExcep" class="ReadOnlyField" readonly="readonly" /></b></div></td>
+		<td nowrap="nowrap" width="15%"><strong>{t}Amount excl. VAT{/t} {$Currency}: </strong></td>
+		<td nowrap="nowrap" width="15%"><input type="text" style="width:80%" name="TotalHT" 
+          id="TotalHT" class="ReadOnlyField FieldBold" readonly="readonly" /></td>
+	</tr>
+	<tr>
+		<td  nowrap="nowrap"><strong>{$form.Emballage.label} {$Currency}: </strong></td>
+		<td colspan="3">{$form.Emballage.html}</td>
+		<td nowrap="nowrap"><strong>{t}Amount incl. VAT{/t} {$Currency}: </strong></td>
+		<td nowrap="nowrap"><input type="text" style="width:80%" name="TotalTTC" class="ReadOnlyField" readonly="readonly" /></td>
+	</tr>
+	<tr>
+		<td  nowrap="nowrap"><strong>{$form.Assurance.label} {$Currency}: </strong></td>
+		<td colspan="3">{$form.Assurance.html}</td>
+		<td nowrap="nowrap"><strong>{$form.Installment.label} {$Currency}: </strong></td>
+		<td nowrap="nowrap">{$form.Installment.html}</td>
+	</tr>
+	<tr>
+		<td  nowrap="nowrap"><strong>{$form.GlobalHanding.label} %: </strong></td>
+		<td colspan="3">{$form.GlobalHanding.html}</td>
+		<td nowrap="nowrap"><strong>{t}To pay{/t} {$Currency}:   </strong></td>
+		<td nowrap="nowrap"><input type="text" style="width:80%" name="ToPay" class="ReadOnlyField" readonly="readonly" /></td>
+	</tr>
+  </table>
+  </p>
+  <table style="width:100%;" border="0" cellpadding="3" cellspacing="0" class="form">
+    <thead>
+    <tr>
+      <td colspan="2">&nbsp;{$form.cmdComment.label}</td>
+    </tr>
+	</thead>
+	<tbody>
+    <tr>
+      <td colspan="2" height="80">{$form.cmdComment.html}</td>
+    </tr>
+	</tbody>
+	<tfoot>
+    <tr>
+      <td align="right" colspan="2">
+	  	<input type="hidden" name="FormSubmitted" value="" />
+{if $isEstimate}
+        <input type="submit" name="estimateButton" value="{t}Ok{/t}" class="Button" />
+{else}
+        <input type="submit" name="commandButton" value="{t}Ok{/t}" class="Button" />
+{/if}
+		&nbsp;
+        <input name="annuler" type="button" onclick="window.location='{$returnURL}?new=1'"
+          value="{t}Cancel{/t}" class="Button" />
+      </td>
+    </tr>
+	</tfoot>
+  </table>
+</form>

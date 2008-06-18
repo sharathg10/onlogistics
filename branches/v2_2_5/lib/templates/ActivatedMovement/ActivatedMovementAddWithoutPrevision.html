@@ -1,0 +1,81 @@
+<form name="formActivatedMovement" method="post" action="{$FormAction}"
+        onsubmit="submitForm.disabled=true;">
+  <table width="100%" cellspacing="0" cellpadding="4" class="form" border="0">
+    <thead>
+    <tr>
+      <td><strong>{t}Movement details{/t} :</strong></td>
+    </tr>
+	</thead>
+	<tbody>
+    <tr>
+      <td><b>{t}Movement type{/t} : </b>{$MvtTypeName}
+	    <input type="hidden" name="fillPopup" value="{$fillPopup}" />
+        <input type="hidden" name="MvtType" value="{$monSelectMvtType}" />
+	  	<input type="hidden" name="MvtTypeEntrieExit" value="{$MvtTypeEntrieExit}" />
+	    <input type="hidden" name="TracingMode" value="{$TracingMode}" />
+	  </td>
+	</tr>
+	<tr>
+      <td><b>{t}Product{/t} : </b>
+{if $TracingMode > 0}
+		({t}Tracking mode{/t} : {$TracingModeName})
+{/if}
+		{$ProductName}<input type="hidden" name="Product_id" value="{$monSelectProduct}" /></td>
+    </tr>
+	<tr>
+      <td valign="top" width="30"><b>{t}Comment{/t} : </td>
+	</tr>
+	<tr>
+	  <td valign="top" align="left">
+      <textarea name="Comment" cols="50" rows="3">{$Comment}</textarea></td>
+	</tr>
+  	{if $MvtTypeEntrieExit == 0 and $monSelectMvtType != 9}
+    <tr>
+      <td>
+		<select name="newLocationId" onchange="document.formActivatedMovement.plus_x.value=1;restoreFormParams('Without');formActivatedMovement.submit()">
+		<option value="0">{t}Select a location{/t}</option>
+		{$HTMLLocationSelect}
+		</select>
+	  <input type="hidden" name="from" value="Without" />
+	  <input type="hidden" name="plus_x" value="" />
+	  </td>
+	</tr>
+	{/if}
+	</tbody>
+  </table>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td height="5">&nbsp;</td>
+    </tr>
+    <tr>
+      <td>{$ActivatedMvtGrid}</td>
+    </tr>
+  </table>
+  <table width="100%" border="0" cellspacing="0" cellpadding="5" class="form">
+  <tbody>
+    <tr>
+	  <td>
+	  {if $monSelectMvtType == 9}
+	    <b>{t}Select a destination location{/t} :&nbsp;</b>
+	    <select name="newLocationId">
+		  <option value="0">{t}Select a location{/t}</option>
+		  {$HTMLLocationSelect}
+	    </select>
+	  {/if}
+	</td>
+	</tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <td align="right">
+      <input type="hidden" name="FormSubmitted" value="yes" />
+      <input name="submitForm" type="button" value="{t}Ok{/t}"
+	  	onclick="{literal}if(checkBeforeSubmit('Without')== true){FormSubmitted.value='true';this.form.submit();}{/literal}"
+		class="Button" id="submitForm" />
+	  <input name="annuler" value="{t}Cancel{/t}" type="button" class="Button"
+	  onclick="window.location='ActivatedMovementAddWithoutPrevision.php';" />
+    </td>
+   </tr>
+   </tfoot>
+ </table>
+</form>

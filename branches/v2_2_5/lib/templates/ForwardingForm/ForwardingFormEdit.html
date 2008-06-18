@@ -1,0 +1,126 @@
+<!--$Id$ -->
+<form {$form.attributes}>
+  {$form.hidden}
+  <table width="100%" border="0" cellspacing="0" cellpadding="4" 
+    class="form">
+    <thead>
+      <tr>
+        <td colspan="4">{t}Select addressee{/t}</td>
+      </tr>
+    </thead>
+    <!-- champs du formulaire -->
+    <tbody>
+      <tr>
+        <td width="15%">{$form.cmdDestinator.label}</td>
+        <td width="35%">{$form.cmdDestinator.html}</td>
+        <td width="15%">{$form.cmdDestinatorSite.label}</td>
+        <td width="35%">{$form.cmdDestinatorSite.html}</td>
+      </tr>
+      <tr>
+        <td>{$form.CommandNo.label}</td>
+        <td>{$form.CommandNo.html}</td>
+        <td colspan="2">&nbsp;</td>
+      </tr>
+    </tbody>
+    <thead>
+      <tr>
+        <td colspan="4">{t}Select carrier{/t}</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{$form.Transporter.label}</td>
+        <td>{$form.Transporter.html}</td>
+        <td colspan="2">&nbsp;</td>
+      </tr>
+      <tr>
+        <td>{$form.ConveyorDepartureSite.label}</td>
+        <td>{$form.ConveyorDepartureSite.html}</td>
+        <td>{$form.ConveyorArrivalSite.label}</td>
+        <td>{$form.ConveyorArrivalSite.html}</td>
+      </tr>
+    </tbody>
+    <!-- les emballages classiques -->
+    <thead>
+      <tr>
+        <td colspan="4">{t}Shipped parcels{/t}</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="4"><div class="grid">
+          <table id="CoverTypeTABLE" cellspacing="0" cellpadding="0" 
+            border="0" width="100%">
+            <thead>
+              <tr style="color:#ffffff;font-weight:bold;">
+                <td>{t}Parcel type{/t}</td>
+                <td>{t}Quantity{/t}</td>
+                <td width="10%">&nbsp;</td>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <td colspan="3" align="right">
+                  <input type="button" id="addCoverType" 
+                  class="button" value="{t}Add{/t}"/>
+                </td>
+              </tr>
+            </tfoot>
+            <tbody></tbody>
+          </table>
+        </div></td>
+      </tr>
+      <tr>
+        <td colspan="4">&nbsp;</td>
+      </tr>
+    </tbody>
+    <!-- les produits consignés -->
+    <thead>
+      <tr>
+        <td colspan="4">
+          {t}Shipped deposited packings : provide departure locations{/t}
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan="5"><div class="grid">
+          <table id="ProductTABLE" cellspacing="0" cellpadding="0" 
+            border="0" width="100%">
+            <thead>
+              <tr style="color:#ffffff;font-weight:bold;">
+                <td>{t}Deposited packings{/t}</td>
+                <td>{t}Location{/t}</td>
+                <td>{t}Quantity{/t}</td>
+                <td>{t}Amount of stock{/t}</td>
+                <td width="10%">&nbsp;</td>
+              </tr>
+            </thead>
+            <tfoot>
+              <tr>
+                <td colspan="5" align="right">
+                  <input type="button" id="addPDT" 
+                  class="button" value="{t}Add{/t}"/>
+                </td>
+              </tr>
+            </tfoot>
+            <tbody></tbody>
+          </table>
+        </div></td>
+      </tr>
+    </tbody>
+    <!-- action du form -->
+    <tfoot>
+      <tr>
+        <td align="right" colspan="4">
+          <input name="valider" type="button" 
+          onclick="validateForm();" value="{t}Print{/t}" 
+          class="Button" />&nbsp;
+          <input name="annuler" type="button" 
+          onclick="javascript:window.close();" 
+          value="{t}Cancel{/t}" class="Button" />
+        </td>
+      </tr>
+    </tfoot>
+  </table>
+</form>

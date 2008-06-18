@@ -1,0 +1,30 @@
+    // Flow::getDiscountAmount() {{{ 
+
+    /**
+     * getDiscountAmount 
+     *
+     * Calcul la somme de la remise à appliquer au Flow (somme des remises par 
+     * lignes + remise globale)
+     *
+     * @access public
+     * @return void
+     */
+    function getDiscountAmount() {
+        require_once('CalculatePriceHanding.php');
+        $discount = 0;
+        $handing = $this->getHanding();
+        $ht = 0;
+
+        // ajoute les remise par ligne
+        $flowItems = $this->getFlowItemCollection();
+        foreach($flowItems as $id=>$item) {
+            $ht += $item->getTotalHT();
+            $discount += $item->getDiscountAmount();
+        }
+        // calcul la remise globale
+        $discount += $ht - CalculatePriceHanding(getHandingType($handing), 
+            $ht, 1, $handing);
+        return $discount;
+    }
+
+    // }}}

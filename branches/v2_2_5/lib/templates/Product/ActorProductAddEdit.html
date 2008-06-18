@@ -1,0 +1,38 @@
+{$form.javascript}
+<form {$form.attributes}>
+
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+  <thead>
+  <tr>
+    <td colspan ="3">{t}Supplier{/t}{$form.hidden}</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td width="10%" nowrap="nowrap">*{$form.ActorProduct_Actor_ID.label}: </td>
+    <td width="40%">{$form.ActorProduct_Actor_ID.html}</td>
+    <td>{$form.ActorProduct_Priority.html}&nbsp;{$form.ActorProduct_Priority.label}</td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap">{$form.ActorProduct_AssociatedProductReference.label}: </td>
+    <td>{$form.ActorProduct_AssociatedProductReference.html}</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td nowrap="nowrap">*{$form.ActorProduct_BuyUnitType_ID.label}: </td>
+    <td>{$form.ActorProduct_BuyUnitType_ID.html}</td>
+    <td nowrap="nowrap">*{$form.ActorProduct_BuyUnitQuantity.label}:
+        {$form.ActorProduct_BuyUnitQuantity.html}</td>
+  </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+    <td colspan="3" align="right">
+      <input name="Ok" type="submit" value="{t}Ok{/t}" class="button" />&nbsp;
+      <input name="Cancel" value="{t}Cancel{/t}" type="button"
+             onclick="window.location='{$retURL}'" class="button" />
+    </td>
+  </tr>
+  </tfoot>
+</table>
+</form>

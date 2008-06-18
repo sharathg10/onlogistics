@@ -1,0 +1,49 @@
+<!--debut du grid-->
+<script type="text/javascript">
+<!--
+// <![CDATA[
+{$gridJS}
+// ]]>
+-->
+</script>
+<div class="grid">
+    <table width="100%" cellspacing="0" cellpadding="3" border="0" class="form">
+        <thead>
+            <tr>
+{section name=GridHeader loop=$GridHeader}
+	            <td nowrap="nowrap"> {$GridHeader[GridHeader].Caption}</td>
+{/section}
+{if $WithCheckBox eq 1 and count($GridRow) neq 0}
+	            <td colspan="2" nowrap="nowrap" >
+                    &nbsp;<input type="checkbox" name="gridItems_AllState"
+                    onclick="changeCheckedStateOfAllItemsCustom(document.forms[0], this.checked);RecalculateTotal(true);" />&nbsp;
+                </td>
+{else}
+            <td>&nbsp;</td>
+{/if}
+            </tr>
+        </thead>
+        <tbody>
+{section name=GridContent loop=$GridRow}
+{if $smarty.section.GridContent.index is odd}
+        <tr class="gridRowOdd">{else}<tr class="gridRowEven">{/if}
+{section name=GridCol loop=$GridRow[GridContent]}
+{if $GridObjectIds[GridContent] != -1}
+            <td>{$GridRow[GridContent][GridCol]}</td>
+{/if}
+{/section}
+            <td>
+{if $WithCheckBox eq 1}
+                &nbsp;<input type="checkbox" name="gridItems[]" value="{$smarty.section.GridContent.index}"
+                onclick="RecalculateItemTotal(getItemIndex(this));RecalculateTotal()" />
+{else}
+            &nbsp;
+{/if}
+            </td>
+        </tr>
+{/section}
+</tbody>
+</table>
+<!--fin du grid-->
+</div>
+<br />

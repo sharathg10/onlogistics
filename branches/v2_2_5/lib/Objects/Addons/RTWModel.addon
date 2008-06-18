@@ -1,0 +1,89 @@
+    // RTWModel::canBeDeleted() {{{
+
+    /**
+     * Retourne true si l'objet peut être détruit en base de donnees.
+     * Un RTWColor ne doit pas etre lie a un RTWMaterial
+     *
+     * @access public
+     * @return boolean
+     */
+    public function canBeDeleted() {
+        if (!parent::canBeDeleted()) { 
+            return false;
+        }
+        $pdtCol = $this->getRTWProductCollection();
+        if (!$pdtCol->getCount()) {
+            return true;
+        }
+        foreach ($pdtCol as $pdt) {
+            if (!$pdt->isDeletable(false)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // }}}
+    // RTWModel::getMaterialProperties() {{{
+
+    /**
+     * Retourne les proprietes RTWMaterial
+     *
+     * @access public
+     * @return boolean
+     */
+    public function getMaterialProperties($onlyForNomenclature=false) {
+
+        $return = array(
+            'HeelReference' => _('Heel reference'),
+            'Sole'          => _('Sole'),
+            'Box'           => _('Box'),
+            'HandBag'       => _('Hand bag'),
+            'Material1'     => _('Material 1'),
+            'Material2'     => _('Material 2'),
+            'Accessory1'    => _('Accessory 1'),
+            'Accessory2'    => _('Accessory 2'),
+            'Lining'        => _('Lining'),
+            'Insole'        => _('Insole'),
+            'UnderSole'     => _('Under-sole'),
+            'Lagrima'       => _('Lagrima'),
+            'HeelCovering'  => _('Heel covering'),
+            'Selvedge'      => _('Selvedge'),
+            'Bamboo'        => _('Bamboo'),
+        );
+        if (!$onlyForNomenclature) {
+            $return['Thread1'] = _('Thread 1');
+            $return['Thread2'] = _('Thread 2');
+        }
+        return $return;
+    }
+    // }}}
+    // RTWModel::toString() {{{
+
+    /**
+     * Retourne le nom presse + style number du modele.
+     *
+     * @access public
+     * @return string
+     */
+    function toString() {
+        if (($pressName = $this->getPressName()) instanceof RTWPressName) {
+            return $pressName->getName();
+        }
+        return '';
+    }
+
+    // }}}
+    // RTWModel::getToStringAttribute() {{{
+
+    /**
+     * Retourne le nom presse + style number du modele.
+     *
+     * @access public
+     * @return string
+     */
+    function getToStringAttribute() {
+        return array('PressName');
+    }
+
+    // }}}

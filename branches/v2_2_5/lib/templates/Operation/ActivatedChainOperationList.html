@@ -1,0 +1,65 @@
+{$FormStart}{$ChnId}  {$ACOFilterId}
+<form {$form.attributes}>
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form"><!-- style="display:{$DisplaySearchForm}"-->
+  <thead>
+    <tr>
+      <td colspan="4" class="gris1">{t}Search criteria{/t}&nbsp;
+        <input type="hidden" name="formSubmitted" value="1" /></td>
+    </tr>
+  </thead>
+  <tbody>
+  	<tr>
+      <td colspan="4" class="gris2"><b>{t}Generic filters{/t}</b></td>
+    </tr>
+	<tr>
+	    <td valign="top" class="gris4" nowrap="nowrap"><b>{t}Operations{/t} : </b></td>
+	    <td class="gris4">{$form.Operation.html}</td>
+	    <td valign="top" class="gris4" nowrap="nowrap"><b>{t}Assigned actors{/t} : </b></td>
+	    <td class="gris4">{$form.Actor.html}</td>
+    </tr>
+	<tr>
+    <td class="gris4" colspan="2"><b>{t}Filter by beginning date{/t} </b>&nbsp;
+        <input type="checkbox" name="BeginDateOrder" value="1"
+		{$BeginDateOrderChecked} onclick="$('Start').style.display=this.checked?'block':'none';" /></td>
+    <td class="gris4" colspan="2"><div id="Start" style="display: {$DisplayBeginDate};">
+        <b>{t}from{/t}&nbsp;&nbsp;{$form.StartBeginDate.html}&nbsp;&nbsp;
+        {t}to{/t}&nbsp;&nbsp;{$form.EndBeginDate.html}</b></div></td>
+  </tr><!-- <input name="StartDateFilter" type="hidden" value="none"> -->
+  <tr>
+    <td class="gris4" colspan="2"> <b>{t}Filter by end date{/t} </b>&nbsp;
+        <input type="checkbox" name="EndDateOrder" value="1" {$EndDateOrderChecked}
+		 onclick="$('End').style.display=this.checked?'block':'none';" /></td>
+    <td class="gris4" colspan="2"><div id="End" style="display: {$DisplayEndDate};">
+        <b>{t}from{/t}&nbsp;&nbsp;{$form.StartEndDate.html}&nbsp;&nbsp;
+        {t}to{/t}&nbsp;&nbsp;{$form.EndEndDate.html}</b></div></td>
+  </tr>
+  <tr>
+    <td colspan="4" class="gris2"><b>{t}Filters specific to carriage operations{/t}</b></td>
+  </tr>
+  <tr>
+	  <td valign="top" class="gris4" nowrap="nowrap"><b>{t}Departure zone{/t} : </b></td>
+	  <td class="gris4">{$form.DepartureZoneSelect.html}</td>
+	  <td valign="top" class="gris4" nowrap="nowrap"><b> {t}Arrival zone{/t} : </b></td>
+	  <td class="gris4">{$form.ArrivalZoneSelect.html}</td>
+  </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td align="right" colspan="4">
+      <input class="button" value="{t}Search{/t}" type="submit" id="searchbutton" name="SearchButton"
+        onclick="return checkForm(document.forms['ActorAddEdit'], requiredFields);" />
+	  &nbsp;&nbsp;
+	  <input type="button" class="button" name="ResetButton"
+        id="searchresetbutton" value="Nouvelle recherche"
+        onclick="javascript:document.forms['ActivatedChainOperationList'].elements['Operation[]'].selectedIndex=0;
+	    document.forms['ActivatedChainOperationList'].elements['Actor[]'].selectedIndex=0;
+		ActivatedChainOperationList.BeginDateOrder.checked=false;ActivatedChainOperationList.EndDateOrder.checked=false;
+		$('Start').style.display='none';$('End').style.display='none';" />
+      &nbsp;&nbsp;
+	  <input class="button" onclick="window.location.href='{$retURL}'" value="{t}Help{/t}"
+        type="button" name="help"
+        alt="{t}Use the wildcard character (*) to search on part of a word.{/t}" />
+	  </td>
+    </tr>
+  </tfoot>
+</table>

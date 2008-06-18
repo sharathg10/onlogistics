@@ -1,0 +1,72 @@
+{if $DisplayChangeOperationDate eq "block"}
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+  <tr>
+    <td colspan="3" class="gris1">{t}update beginning and end time for selected operation{/t}
+      {$form.hidden}</td>
+  </tr>
+  <tr height="25">
+    <td class="gris4" nowrap="nowrap" width="10%" nowrap><b>{t}Beginning{/t}:</b></td>
+	<td class="gris4" width="25%" nowrap="nowrap" align="right">{$form.DepartureDate.html}</td>
+    <td class="gris4" width="65%">&nbsp;</td>
+  </tr>
+{if $ConfirmMsge != ""}<!-- Affichage du message de confirmation -->
+  <tr height="25">
+    <td class="gris4" nowrap><b>{t}End{/t}:</b></td>
+	<td class="gris4" nowrap="nowrap" align="right">{$form.ArrivalDate.html}</td>
+    <td class="gris4">&nbsp;</td>
+  </tr>
+  <tr height="25">
+    <td class="gris4" colspan="2" nowrap>&nbsp;<b>{$ConfirmMsge}</b></td>
+    <td class="gris4" align="right">
+      <input class="button" value="{t}Ok{/t}" type="submit" />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+  </tr>
+{else}
+  <tr height="25">
+    <td class="gris4" nowrap><b>{t}End{/t}:</b></td>
+	<td class="gris4" nowrap="nowrap" align="right">{$form.ArrivalDate.html}</td>
+    <td class="gris4" align="right">
+      <input class="button" value="{t}Ok{/t}" type="submit" />
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+  </tr>
+{/if}
+</table>
+{else}
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+  <tr height="25">
+    <td class="gris4" nowrap="nowrap" width="8%"><b>{t}Total parcel number{/t}{$isForecast}:</b></td>
+	<td class="gris4" width="30%" nowrap="nowrap">{$TotalPackingNumber}</td>
+    <td class="gris4" width="12%" nowrap><b>{t}Total weight{/t}{$isForecast}:</b></td>
+	<td class="gris4" width="30%">{$TotalPackingWeight}</td>
+  </tr>
+  <tr>
+    <td class="gris4" colspan="4"><sup>P</sup>: {t}estimated data{/t}</td>
+  </tr>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+  <tr>
+    <td colspan="4" class="gris1">{t}Informations to provide after completion of work order{/t}</td>
+  </tr>
+  <tr height="25">
+    <td class="gris4" nowrap="nowrap" width="8%"><b>{t}Beginning{/t}:</b></td>
+	<td class="gris4" width="30%" nowrap="nowrap">{$form.DepartureDate.html}</td>
+    <td class="gris4" width="12%" nowrap><b>&nbsp;{t}Departure Km{/t}:</b></td>
+	<td class="gris4" width="30%">{$form.DepartureKm.html}</td>
+  </tr>
+  <tr height="25">
+    <td class="gris4" nowrap><b>{t}End{/t}:</b></td>
+	<td class="gris4" nowrap="nowrap">{$form.ArrivalDate.html}</td>
+    <td class="gris4" nowrap><b>&nbsp;{t}Arrival Km{/t}:</b></td>
+	<td class="gris4">{$form.ArrivalKm.html}</td>
+  </tr>
+  <tr height="25">
+  	<td class="gris4" colspan="3"><b>{$ConfirmMsge}</b></td>
+    <td class="gris4" align="right">
+{if $readonly eq 0}
+    <input class="button" value="{t}Ok{/t}" type="submit" />
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+{/if}
+	</td>
+  </tr>
+</table>
+{/if}

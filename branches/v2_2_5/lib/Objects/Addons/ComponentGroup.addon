@@ -1,0 +1,28 @@
+
+	/**
+     * Retourne un tableau representant le ComponentGroup et ses Component
+     * En vue d'un affichage en arbre
+     * $headId=0 => Nomenclature modele
+     * $headId>0 => Nomenclature pieces
+     *
+     * @access public
+     * @param boolean $withLink liens vers ComponentAddEdit ssi
+     * Nomenclature->isUsed() == false (Nomenclature modele uniquement)
+     * @param integer $headId id du CP racine de la nomenclature pieces
+     * @return array of strings
+     **/
+    function getTreeItems($withLink=false, $headId=0) {
+        $return = array($this->getName(), 0);
+
+        $coll = $this->getComponentCollection(
+                        array(), array('Product.Basereference' => SORT_ASC));
+        if(!Tools::isEmptyObject($coll)) {
+            $count = $coll->getCount();
+            for($i = 0; $i < $count; $i++) {
+                $cmp = $coll->getItem($i);
+                $return[] = ($headId == 0)?$cmp->getTreeItems($withLink, false):
+                        $cmp->getPieceTreeItems($headId, false);
+            }
+        }
+        return $return;
+    }

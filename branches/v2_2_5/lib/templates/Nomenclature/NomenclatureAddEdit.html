@@ -1,0 +1,45 @@
+{$form.javascript}
+<form {$form.attributes}>
+{$form.hidden}
+<input type="hidden" name="formSubmitted" value="0">
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form" id="searchForm">
+  <tbody>
+    <tr class="search">
+	  <td width="20%">{$form.Nomenclature_Product_ID.label}</td>
+      <td width="30%">{$form.Nomenclature_Product_ID.html}</td>
+      <td width="20%">{$form.Nomenclature_Version.label}</td>
+      <td width="30%">{$form.Nomenclature_Version.html}</td>
+    </tr>
+    <tr class="search">
+      <td>{$form.Nomenclature_BeginDate.label}</td>
+      <td>{$form.Nomenclature_BeginDate.html}</td>
+	  <td>{$form.Nomenclature_EndDate.label}</td>
+      <td>{$form.Nomenclature_EndDate.html}<br><br></td>
+    </tr>
+  </tbody>
+</table>
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form" id="searchForm">
+  <thead>
+  	<tr>
+  		<td>{t}List of defined sets{/t}</td>
+  	</tr>
+  </thead>
+  <tbody>
+    <tr>
+  		<td>{$ComponentGroupGrid}</td>
+  	</tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td align="right" colspan="4">
+      <input name="ok" type="submit" value="{t}Ok{/t}" id="ok" class="button"
+       onClick="javascript:NomenclatureAddEdit.formSubmitted.value=1" />
+      &nbsp;&nbsp;&nbsp;
+      <input value="{t}Cancel{/t}" type="button"
+        onClick="window.location='NomenclatureList.php'"  id="cancel" name="cancel" class="Button" />
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  </td>
+    </tr>
+  </tfoot>
+</table>
+</form>

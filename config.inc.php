@@ -74,9 +74,6 @@ function getOnlogisticsAccountArray($includeDSN=true)
     $accounts = array();
     if (defined('ACCOUNTS_BACKEND') && ACCOUNTS_BACKEND == 'db') {
         // ajout du filtre par environnement
-        if (!defined('ENVIRONMENT')) {
-            define('ENVIRONMENT', 'current');
-        }
         $env = 'OnlogisticsAccount::ENV_' . strtoupper(ENVIRONMENT);
         if (!defined($env)) {
             throw new Exception('Environement inconnu: ' . $env);
@@ -106,7 +103,9 @@ function getOnlogisticsAccountArray($includeDSN=true)
 
 try {
     // parse main and project config files
-    parseConfigFile('config/project.conf');
+    $conf = isset($_SERVER['ONLOGISTICS_CONFIGFILE_PATH']) ?
+        $_SERVER['ONLOGISTICS_CONFIGFILE_PATH'] : 'config/project.conf';
+    parseConfigFile($conf);
     // initialisation de l'I18N
     if (isset($_COOKIE['_Auth_Lang'])) {
         define('LOCALE', $_COOKIE['_Auth_Lang']);
@@ -121,6 +120,13 @@ try {
     ini_set('include_path', 
         ini_get('include_path') . PATH_SEPARATOR . PROJECT_ROOT
         . DIRECTORY_SEPARATOR . 'lib-external');
+    // if prod or demo environment do not show errors
+    if (!defined('ENVIRONMENT')) {
+        define('ENVIRONMENT', 'current');
+    }
+    if (ENVIRONMENT == 'prod' || ENVIRONMENT == 'demo') {
+        ini_set('display_errors', '0');
+    }
     if (defined('ACCOUNTS_BACKEND') && ACCOUNTS_BACKEND == 'db' && !defined('DSN')) {
         throw new Exception('Constante DSN non définie dans le project.conf.');
     }

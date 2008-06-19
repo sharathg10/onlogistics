@@ -105,6 +105,8 @@ try {
     // parse main and project config files
     if (isset($_SERVER['ONLOGISTICS_CONFIGFILE_PATH'])) {
         $conf = $_SERVER['ONLOGISTICS_CONFIGFILE_PATH'];
+    } else if (isset($_ENV['ONLOGISTICS_CONFIGFILE_PATH'])) {
+        $conf = $_ENV['ONLOGISTICS_CONFIGFILE_PATH'];
     } else {
         $conf = dirname(__FILE__) . '/config/project.conf';
     }

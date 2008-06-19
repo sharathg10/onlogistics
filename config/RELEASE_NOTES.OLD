@@ -4588,6 +4588,177 @@ ALTER TABLE CronTask ADD _Active INT(1) DEFAULT 1;
 
 
 ####################################
+# RELEASE v2_2_5
+####################################
+
+ALTER TABLE Command ADD _ParentCommand INT(11) NOT NULL DEFAULT 0 AFTER _Command;
+
+DROP TABLE IF EXISTS RTWModel;
+DROP TABLE IF EXISTS RTWElement;
+DROP TABLE IF EXISTS rTWModelRTWOption;
+DROP TABLE IF EXISTS rTWModelRTWMaterial1;
+DROP TABLE IF EXISTS rTWModelRTWMaterial2;
+DROP TABLE IF EXISTS rTWModelRTWAccessory1;
+DROP TABLE IF EXISTS rTWModelRTWAccessory2;
+DROP TABLE IF EXISTS rTWModelRTWSize;
+
+ALTER TABLE Product DROP COLUMN _Material1;
+ALTER TABLE Product DROP COLUMN _Material2;
+ALTER TABLE Product DROP COLUMN _Accessory1;
+ALTER TABLE Product DROP COLUMN _Accessory2;
+ALTER TABLE Product DROP COLUMN _Size;
+ALTER TABLE Product ADD COLUMN _Size INT(11) NOT NULL DEFAULT 0 AFTER _Model;
+
+--
+-- Table structure for RTWModel
+--
+DROP TABLE IF EXISTS RTWModel;
+CREATE TABLE RTWModel (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Season INT(11) NOT NULL DEFAULT 0,
+  _Shape INT(11) NOT NULL DEFAULT 0,
+  _PressName INT(11) NOT NULL DEFAULT 0,
+  _StyleNumber VARCHAR(255) DEFAULT NULL,
+  _ConstructionType INT(11) NOT NULL DEFAULT 0,
+  _ConstructionCode INT(11) NOT NULL DEFAULT 0,
+  _Description VARCHAR(255) DEFAULT NULL,
+  _Manufacturer INT(11) NOT NULL DEFAULT 0,
+  _Label INT(11) NOT NULL DEFAULT 0,
+  _HeelHeight INT(11) NOT NULL DEFAULT 0,
+  _HeelReference INT(11) NOT NULL DEFAULT 0,
+  _HeelReferenceQuantity DECIMAL(10,3) DEFAULT NULL,
+  _Sole INT(11) NOT NULL DEFAULT 0,
+  _SoleQuantity DECIMAL(10,3) DEFAULT NULL,
+  _Box INT(11) NOT NULL DEFAULT 0,
+  _BoxQuantity DECIMAL(10,3) DEFAULT NULL,
+  _HandBag INT(11) NOT NULL DEFAULT 0,
+  _HandBagQuantity DECIMAL(10,3) DEFAULT NULL,
+  _Material1 INT(11) NOT NULL DEFAULT 0,
+  _Material1Quantity DECIMAL(10,3) DEFAULT NULL,
+  _Material2 INT(11) NOT NULL DEFAULT 0,
+  _Material2Quantity DECIMAL(10,3) DEFAULT NULL,
+  _Accessory1 INT(11) NOT NULL DEFAULT 0,
+  _Accessory1Quantity DECIMAL(10,3) DEFAULT NULL,
+  _Accessory2 INT(11) NOT NULL DEFAULT 0,
+  _Accessory2Quantity DECIMAL(10,3) DEFAULT NULL,
+  _Lining INT(11) NOT NULL DEFAULT 0,
+  _LiningQuantity DECIMAL(10,3) DEFAULT NULL,
+  _Insole INT(11) NOT NULL DEFAULT 0,
+  _InsoleQuantity DECIMAL(10,3) DEFAULT NULL,
+  _UnderSole INT(11) NOT NULL DEFAULT 0,
+  _UnderSoleQuantity DECIMAL(10,3) DEFAULT NULL,
+  _Lagrima INT(11) NOT NULL DEFAULT 0,
+  _LagrimaQuantity DECIMAL(10,3) DEFAULT NULL,
+  _HeelCovering INT(11) NOT NULL DEFAULT 0,
+  _HeelCoveringQuantity DECIMAL(10,3) DEFAULT NULL,
+  _Selvedge INT(11) NOT NULL DEFAULT 0,
+  _SelvedgeQuantity DECIMAL(10,3) DEFAULT NULL,
+  _Thread1 INT(11) NOT NULL DEFAULT 0,
+  _Thread2 INT(11) NOT NULL DEFAULT 0,
+  _Bamboo INT(11) NOT NULL DEFAULT 0,
+  _BambooQuantity DECIMAL(10,3) DEFAULT NULL,
+  _Image VARCHAR(255) DEFAULT NULL,
+  _Comment TEXT DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _Season ON RTWModel (_Season);
+CREATE INDEX _Shape ON RTWModel (_Shape);
+CREATE INDEX _PressName ON RTWModel (_PressName);
+CREATE INDEX _ConstructionType ON RTWModel (_ConstructionType);
+CREATE INDEX _ConstructionCode ON RTWModel (_ConstructionCode);
+CREATE INDEX _Manufacturer ON RTWModel (_Manufacturer);
+CREATE INDEX _Label ON RTWModel (_Label);
+CREATE INDEX _HeelHeight ON RTWModel (_HeelHeight);
+CREATE INDEX _HeelReference ON RTWModel (_HeelReference);
+CREATE INDEX _Sole ON RTWModel (_Sole);
+CREATE INDEX _Box ON RTWModel (_Box);
+CREATE INDEX _HandBag ON RTWModel (_HandBag);
+CREATE INDEX _Material1 ON RTWModel (_Material1);
+CREATE INDEX _Material2 ON RTWModel (_Material2);
+CREATE INDEX _Accessory1 ON RTWModel (_Accessory1);
+CREATE INDEX _Accessory2 ON RTWModel (_Accessory2);
+CREATE INDEX _Lining ON RTWModel (_Lining);
+CREATE INDEX _Insole ON RTWModel (_Insole);
+CREATE INDEX _UnderSole ON RTWModel (_UnderSole);
+CREATE INDEX _Lagrima ON RTWModel (_Lagrima);
+CREATE INDEX _HeelCovering ON RTWModel (_HeelCovering);
+CREATE INDEX _Selvedge ON RTWModel (_Selvedge);
+CREATE INDEX _Thread1 ON RTWModel (_Thread1);
+CREATE INDEX _Thread2 ON RTWModel (_Thread2);
+CREATE INDEX _Bamboo ON RTWModel (_Bamboo);
+
+--
+-- Table structure for RTWElement
+--
+DROP TABLE IF EXISTS RTWElement;
+CREATE TABLE RTWElement (
+  _Id int(11) unsigned NOT NULL default '0',
+  _DBId int(11) default 0,
+  _ClassName VARCHAR(255) DEFAULT NULL,
+  _Name INT(11) NOT NULL DEFAULT '0',
+  _SupplierReference VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- Table structure for rTWModelRTWSize
+--
+DROP TABLE IF EXISTS rTWModelRTWSize;
+CREATE TABLE rTWModelRTWSize (
+  _ToRTWSize int(11) unsigned NOT NULL default '0',
+  _FromRTWModel int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_ToRTWSize, _FromRTWModel)
+) TYPE=InnoDB CHARSET=latin1;
+
+# nettoyage properties/catalogues
+delete from CatalogCriteria where _Property not in (select _Id from Property);
+
+# modif chaines
+ALTER TABLE Chain ADD COLUMN _AutoAssignTo INT(3) NOT NULL DEFAULT 0;
+
+# modif prix
+
+ALTER TABLE PriceByCurrency ADD COLUMN 
+    _RecommendedPrice DECIMAL(10,2) NOT NULL DEFAULT 0 AFTER _DBId;
+ALTER TABLE PriceByCurrency ADD COLUMN 
+    _PricingZone INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _PricingZone ON PriceByCurrency (_PricingZone);
+ALTER TABLE Actor ADD COLUMN 
+    _PricingZone INT(11) NOT NULL DEFAULT 0 AFTER _Currency;
+CREATE INDEX _PricingZone ON Actor (_PricingZone);
+
+DROP TABLE IF EXISTS PricingZone;
+CREATE TABLE PricingZone (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+# ajout polonais
+ALTER TABLE I18nString ADD _StringValue_pl_PL TEXT DEFAULT NULL;
+
+# modif composant
+ALTER TABLE Component ADD _PercentWasted DECIMAL(10,2) NOT NULL DEFAULT 0 AFTER _Quantity;
+
+# Table structure for ContactRole
+DROP TABLE IF EXISTS ContactRole;
+CREATE TABLE ContactRole (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+ALTER TABLE Contact DROP COLUMN _Fonction;
+ALTER TABLE Contact ADD _Role INT(11) NOT NULL DEFAULT 0;
+
+# optim appro
+insert into FW_Preferences values ('PreCalculateOptimApproSuppliers', NULL, 'boolean', NULL, 1, 0, 0, NULL, NULL);
+
+####################################
 # Ne pas enlever
 COMMIT;
 ####################################

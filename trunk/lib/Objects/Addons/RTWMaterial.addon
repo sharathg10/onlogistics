@@ -32,3 +32,43 @@
     }
 
     // }}}
+    // RTWMaterial::canBeDeleted() {{{
+
+    /**
+     * RTWSeason::canBeDeleted()
+     * Retourne true si l'objet peut etre detruit en base de donnees.
+     * Un RTWSeason ne doit pas etre lie a un RTWModel
+     *
+     * @access public
+     * @return boolean
+     */
+    public function canBeDeleted() {
+        $id = $this->getId();
+        $filter = new FilterComponent(
+            new FilterRule('HeelReference', FilterRule::OPERATOR_EQUALS, $id),
+            new FilterRule('Sole', FilterRule::OPERATOR_EQUALS, $id),
+            new FilterRule('Box', FilterRule::OPERATOR_EQUALS, $id),
+            new FilterRule('HandBag', FilterRule::OPERATOR_EQUALS, $id),
+            new FilterRule('Material1', FilterRule::OPERATOR_EQUALS, $id),
+            new FilterRule('Material2', FilterRule::OPERATOR_EQUALS, $id),
+            new FilterRule('Accessory1', FilterRule::OPERATOR_EQUALS, $id),
+            new FilterRule('Accessory2', FilterRule::OPERATOR_EQUALS, $id),
+            new FilterRule('Lining', FilterRule::OPERATOR_EQUALS, $id),
+            new FilterRule('Insole', FilterRule::OPERATOR_EQUALS, $id),
+            new FilterRule('UnderSole', FilterRule::OPERATOR_EQUALS, $id),
+            new FilterRule('Lagrima', FilterRule::OPERATOR_EQUALS, $id),
+            new FilterRule('HeelCovering', FilterRule::OPERATOR_EQUALS, $id),
+            new FilterRule('Selvedge', FilterRule::OPERATOR_EQUALS, $id),
+            new FilterRule('Thread1', FilterRule::OPERATOR_EQUALS, $id),
+            new FilterRule('Thread2', FilterRule::OPERATOR_EQUALS, $id),
+            new FilterRule('Bamboo', FilterRule::OPERATOR_EQUALS, $id),
+            FilterComponent::OPERATOR_OR
+        );
+        $testColl = Object::loadCollection('RTWModel', $filter);
+        if ($testColl->getCount() > 0) {
+            throw new Exception('This material is used in one or more models.');
+        }
+        return true;
+    }
+
+    // }}}

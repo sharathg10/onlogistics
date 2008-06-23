@@ -65,17 +65,16 @@ class RTWModel extends _RTWModel {
      * @return boolean
      */
     public function canBeDeleted() {
-        if (!parent::canBeDeleted()) { 
-            return false;
-        }
-        $pdtCol = $this->getRTWProductCollection();
-        if (!$pdtCol->getCount()) {
-            return true;
-        }
-        foreach ($pdtCol as $pdt) {
-            if (!$pdt->isDeletable(false)) {
-                return false;
+        try {
+            parent::canBeDeleted();
+            $pdtCol = $this->getRTWProductCollection();
+            foreach ($pdtCol as $pdt) {
+                if (!$pdt->isDeletable(false)) {
+                    throw new Exception('');
+                }
             }
+        } catch (Exception $exc) {
+            throw new Exception(_('This model can not be modified because it is already used in one or more orders'));
         }
         return true;
     }

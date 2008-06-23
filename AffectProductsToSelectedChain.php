@@ -52,7 +52,7 @@ if (!isset($_REQUEST['ChnId']) && !isset($_SESSION['ChnId'])) {
 $ChnID = isset($_REQUEST['ChnId'])?$_REQUEST['ChnId']:$_SESSION['ChnId'];
 $session->register('ChnId', $ChnID, 2);
 
-if (!$_SESSION['ProductId']) {
+if (!isset($_SESSION['ProductId'])) {
     /**
      * Impossible de trouver les ids des produits dans la session, on redirige
      * vers la liste des produtis

@@ -57,7 +57,9 @@ class RTWModelAddEdit extends GenericAddEdit {
      * @return void
      */
     public function onBeforeDisplay() {
-        if (!$this->object->canBeDeleted()) {
+        try {
+            $this->object->canBeDeleted();
+        } catch (Exception $exc) {
             Template::errorDialog(
                 _('This model can not be modified because it is already used in one or more orders'),
                 $this->guessReturnURL()
@@ -199,6 +201,18 @@ class RTWModelAddEdit extends GenericAddEdit {
     }
 
     // }}}
+    // RTWModelAddEdit::getFilterForMediaPlanta() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForMediaPlanta() {
+        return array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL);
+    }
+
+    // }}}
     // RTWModelAddEdit::getFilterForLagrima() {{{
 
     /**
@@ -268,6 +282,30 @@ class RTWModelAddEdit extends GenericAddEdit {
      */
     protected function getFilterForBamboo() {
         return array('MaterialType' => RTWMaterial::TYPE_HEEL);
+    }
+
+    // }}}
+    // RTWModelAddEdit::onBeforeHandlePostData() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function onBeforeHandlePostData() {
+        $elts = array('RTWModel_Image', 'RTWModel_ColorImage');
+        foreach ($elts as $elt) {
+            if (isset($_FILES[$elt]) && $_FILES[$elt]['error'] == 0) {
+                if (strtolower($_FILES[$elt]['type']) != 'image/png') {
+                    Template::errorDialog(_('Images must be in "png" format'));
+                    exit(1);
+                }
+                if (intval($_FILES[$elt]['size']) > 1000000) {
+                    Template::errorDialog(_('Images must not exceed 1 megaoctet'));
+                    exit(1);
+                }
+            }
+        }
     }
 
     // }}}

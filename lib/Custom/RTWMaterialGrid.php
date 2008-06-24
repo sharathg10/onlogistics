@@ -50,14 +50,21 @@ class RTWMaterialGrid extends GenericGrid {
             'shortlabel'   => _('Reference'),
             'usedby'       => array('grid')
         ));
-        $name  = array('Name' => array(
-            'label'        => _('Scientific terminology'),
-            'shortlabel'   => _('Scientific terminology'),
-            'usedby'       => array('searchform', 'grid')
+        $name  = array('ReferenceByActor' => array(
+            'label'        => _('Supplier reference'),
+            'shortlabel'   => _('Supplier reference'),
+            'usedby'       => array('grid', 'searchform')
         )); 
         return $ref + $name + $mapping;
     }
 
+    // }}}
+    // RTWMaterialGrid::renderSearchFormReferenceByActor() {{{
+    public function renderSearchFormReferenceByActor() {
+        $this->searchForm->addElement(
+                'text', 'ReferenceByActor', _('Supplier reference'), array(),
+                array('Path' => 'ActorProduct().AssociatedProductReference'));
+    }
     // }}}
 }
 

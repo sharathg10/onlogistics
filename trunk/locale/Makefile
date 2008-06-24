@@ -9,7 +9,7 @@ MSGMERGE=msgmerge
 MSGUNIQ=msguniq
 DOMAIN=messages
 GENSCRIPT=xgettext.sh
-FWDIR?=../../ateor-libs/current/pwak/
+FWDIR?=../../../pwak/trunk/
 LANGS=en_GB fr_FR nl_NL de_DE tr_TR pl_PL
 POTFILES=messages.pot
 

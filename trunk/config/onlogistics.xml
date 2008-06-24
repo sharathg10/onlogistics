@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
 <!-- Version: $Id$ -->
 <application name="onlogistics"
-    outputdir="/home/izi/GL/php/onlogistics/lib/Objects"
-    addonsdir="/home/izi/GL/php/onlogistics/lib/Objects/Addons"
-    sqloutputdir="/home/izi/GL/php/onlogistics/config/sql">
+    outputdir="/home/izi/GL/php/onlogistics/trunk/lib/Objects"
+    addonsdir="/home/izi/GL/php/onlogistics/trunk/lib/Objects/Addons"
+    sqloutputdir="/home/izi/GL/php/onlogistics/trunk/config/sql">
     <databaseoptions type="MySQL" name="onlogistics" fieldprefix="_" />
 
     <!-- entity AbstractDocument -->
@@ -2869,7 +2869,7 @@
         <property type="foreignkey" name="Season" class="RTWSeason"
             label="Season" usedby="addedit,grid,searchform" required="1"/>
         <property type="foreignkey" name="Shape" label="Shape"
-            class="RTWShape" usedby="addedit,grid" required="1"/>
+            class="RTWShape" usedby="addedit,grid,searchform" required="1"/>
 
         <property type="foreignkey" name="PressName" label="Press name"
             class="RTWPressName" usedby="addedit,grid,searchform" required="1"/>
@@ -2948,6 +2948,11 @@
         <property type="decimal" length="10,3" name="UnderSoleQuantity" 
             label="Under-sole quantity" usedby="addedit" />
 
+        <property type="foreignkey" name="MediaPlanta" label="Media planta"
+            class="RTWMaterial" usedby="addedit" />
+        <property type="decimal" length="10,3" name="MediaPlantaQuantity" 
+            label="Media planta quantity" usedby="addedit" />
+
         <property type="foreignkey" name="Lagrima" label="Lagrima"
             class="RTWMaterial" usedby="addedit" />
         <property type="decimal" length="10,3" name="LagrimaQuantity" 
@@ -2973,8 +2978,10 @@
         <property type="decimal" length="10,3" name="BambooQuantity" 
             label="Bamboo quantity" usedby="addedit" />
 
-        <property type="image" name="Image" label="Image"
-            usedby="addedit" section="Image"/>
+        <property type="image" name="Image" label="Black and white image"
+            usedby="addedit" section="Images"/>
+        <property type="image" name="ColorImage" label="Color image"
+            usedby="addedit" section="Images"/>
 
         <property type="manytomany" name="Size" class="RTWSize"
             field="FromRTWModel" linkfield="ToRTWSize"

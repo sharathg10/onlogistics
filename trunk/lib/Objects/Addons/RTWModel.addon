@@ -45,6 +45,7 @@
             'Lining'        => _('Lining'),
             'Insole'        => _('Insole'),
             'UnderSole'     => _('Under-sole'),
+            'MediaPlanta'   => _('Media planta'),
             'Lagrima'       => _('Lagrima'),
             'HeelCovering'  => _('Heel covering'),
             'Selvedge'      => _('Selvedge'),

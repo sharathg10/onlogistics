@@ -3656,7 +3656,11 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
         $this->renderHeader();
         $this->pdf->addPage(); // apres le renderHeader()!
         // XXX TODO
-		//$this->pdf->image(base64_decode($this->model->getImage()), 10, 8, 0, 17, 'jpg');
+        $infos = ImageManager::getFileInfo(md5($this->model->getImage()));
+        if (false !== $infos) {
+            list(,$type) = explode('/', $infos['mimetype']);
+		    $this->pdf->image($infos['data'], 70, 8, 130, 0, $type);
+        }
         $this->_renderContent();
         return $this->pdf;
     }
@@ -3712,6 +3716,11 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
             _('Description') . ': ' . $this->model->getDescription(),
             array('fontSize'=>12, 'lineHeight'=>5)
         );
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
         $this->pdf->Ln();
         $this->pdf->Ln();
         $items = array(

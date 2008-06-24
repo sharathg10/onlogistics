@@ -77,15 +77,14 @@ class RTWMaterial extends _RTWMaterial {
      * @return string
      */
     function toString() {
-        $ret = $this->getName();
-        if ($this->getColor() instanceof RTWColor) {
-            $ret .= ' ' . $this->getColor()->getName();
-        }
         $ref = $this->getReferenceByActor();
-        if (!empty($ref)) {
-            $ret .= ' / ' . $ref;
+        if (empty($ref)) {
+            $ref = $this->getName();
         }
-        return $ret;
+        if ($this->getColor() instanceof RTWColor) {
+            $ref .= ' (' . $this->getColor()->getName() . ')';
+        }
+        return $ref;
     }
 
     // }}}

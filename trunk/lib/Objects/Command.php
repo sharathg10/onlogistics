@@ -599,8 +599,9 @@ class Command extends _Command {
                 $size = false;
             }
             $ref = $rtwProduct->getBaseReference();
-            if (!isset($ret[$ref])) {
-                $ret[$ref] = array(
+            $model = $rtwProduct->getModel();
+            if (!isset($ret[$model->getId()])) {
+                $ret[$model->getId()] = array(
                     $ref,
                     // taille: qte
                     $rtwProduct->getName() . ($size ? "\n".$size->getName().": {$item[2]}" : ''),
@@ -614,10 +615,17 @@ class Command extends _Command {
                     intval($item[5])
                 );
             } else {
-                $ret[$ref][1] .= ($size ? ", ".$size->getName().": {$item[2]}" : '');
-                $ret[$ref][2] += intval($item[2]);
-                $ret[$ref][4] += intval($item[4]);
-                $ret[$ref][5] += intval($item[5]);
+                $ret[$model->getId()][1] .= ($size ? ", ".$size->getName().": {$item[2]}" : '');
+                $ret[$model->getId()][2] += intval($item[2]);
+                $ret[$model->getId()][4] += intval($item[4]);
+                $ret[$model->getId()][5] += intval($item[5]);
+            }
+        }
+        foreach ($ret as $i=>&$array) {
+            $model = Object::load('RTWModel', $i);
+            $legalMentions = $model->getLegalMentions();
+            if (!empty($legalMentions)) {
+                $array[1] .= "\n\n" . $legalMentions;
             }
         }
         return array(array_values($ret), $dataForBL[1]);

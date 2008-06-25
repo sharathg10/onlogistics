@@ -88,6 +88,22 @@ class RTWMaterial extends _RTWMaterial {
     }
 
     // }}}
+    // RTWMaterial::toStringForCustoms() {{{
+
+    /**
+     *
+     * @access public
+     * @return string
+     */
+    function toStringForCustoms() {
+        $ret = $this->getName();
+        if (($origin = $this->getOrigin()) != '') {
+            $ret .= " ($origin)";
+        }
+        return $ret;
+    }
+
+    // }}}
     // RTWMaterial::canBeDeleted() {{{
 
     /**

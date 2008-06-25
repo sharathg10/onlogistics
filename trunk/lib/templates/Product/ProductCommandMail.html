@@ -65,7 +65,11 @@ OnLogistics - Commercial {$Commercial}<br />
 	{section name=produits loop=$products}
 	<tr>
 		<td>&nbsp;{$products[produits].ref}</td>
-		<td>&nbsp;{$products[produits].name}</td>
+        <td>&nbsp;{$products[produits].name}
+            {if $products[produits].legalMentions}
+            <br/><br/>{$products[produits].legalMentions}
+            {/if}
+        </td>
 		<td align="right">{$products[produits].quantity}&nbsp;&nbsp;(par {$products[produits].sellUnitQuantity})&nbsp;</td>
 {if $CommandType eq 1}
      {if $ProductCommandUEQty eq 1}

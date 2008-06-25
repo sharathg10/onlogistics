@@ -798,3 +798,25 @@
         return ($invoiceColl->getItem(0)->getId() == $this->getId());
     }
     // }}}
+    // Invoice::updateCommercialCommission() {{{
+
+    /**
+     * Stocke le pourcentage et le montant de la commission du commercial.
+     *
+     * @access public
+     * @return void
+     */
+    public function updateCommercialCommission() {
+        $cmd = $this->getCommand();
+        if (!($cmd instanceof Command)) {
+            return;
+        }
+        $com = $cmd->getCommercial();
+        if ($com instanceof UserAccount && ($percent = $com->getCommissionPercent()) > 0) {
+            $amount = floatval($this->getTotalPriceHT() * ($percent / 100));
+            $this->setCommercialCommissionPercent($percent);
+            $this->setCommercialCommissionAmount($amount);
+        }
+    }
+
+    // }}}

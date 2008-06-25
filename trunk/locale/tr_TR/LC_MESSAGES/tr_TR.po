@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Onlogistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-24 14:57+0200\n"
+"POT-Creation-Date: 2008-06-25 10:57+0200\n"
 "PO-Revision-Date: 2008-03-09 00:27+0200\n"
 "Last-Translator: Celal Camci <ccamci@iccdanismanlik.com.tr>\n"
 "Language-Team: Ateor dev team <dev@ateor.com>\n"
@@ -208,7 +208,7 @@ msgstr "Mevki"
 #: ../ComponentConcreteProduct.php:125 ../AssemblyDegradedModeDetail.php:98
 #: ../DetailedLocationByProductList.php:154
 #: ../ConcreteComponentAddEdit.php:160 ../AssemblyEdit.php:119
-#: ../CustomerCatalog.php:444 ../LocationByProductList.php:147 void:1
+#: ../CustomerCatalog.php:452 ../LocationByProductList.php:147 void:1
 msgid "Quantity"
 msgstr "Miktar"
 
@@ -275,7 +275,7 @@ msgstr "Sipariş için en azından bir ürün seçmelisiniz."
 msgid "Provided order number is already allocated, please correct."
 msgstr "Verilen sipariş numarası önceden tahsis edilmiştir, lütfen düzeltiniz."
 
-#: ../lib-functions/ProductCommandTools.php:770
+#: ../lib-functions/ProductCommandTools.php:776
 #: ../lib/Custom/RTWMaterialAddEdit.php:98
 #: ../lib/Custom/ProductPriceAddEdit.php:74
 #: ../lib/Custom/ProductPriceAddEdit.php:98 ../lib/Objects/Alert.const.php:181
@@ -291,7 +291,7 @@ msgstr "Verilen sipariş numarası önceden tahsis edilmiştir, lütfen düzelti
 msgid "Supplier"
 msgstr "Tedarikçi"
 
-#: ../lib-functions/ProductCommandTools.php:774
+#: ../lib-functions/ProductCommandTools.php:780
 #: ../lib/Custom/ActorProductGrid.php:42
 #: ../lib/Custom/ActorProductAddEdit.php:46
 #: ../lib/Custom/ActorProductAddEdit.php:58
@@ -325,7 +325,7 @@ msgstr "Tedarikçi"
 msgid "Customer"
 msgstr "Müşteri"
 
-#: ../lib-functions/ProductCommandTools.php:782 ../lib/AlertSender.php:465
+#: ../lib-functions/ProductCommandTools.php:788 ../lib/AlertSender.php:465
 #: ../lib/DocumentGenerator.php:3264 ../lib/DocumentGenerator.php:3430
 #, php-format
 msgid "between %s and %s"
@@ -2258,8 +2258,8 @@ msgstr "Herhangibir"
 #: ../SupplierCatalog.php:199 ../SupplierCatalog.php:215
 #: ../CustomerCatalog.php:181 ../CustomerCatalog.php:201
 #: ../CustomerCatalog.php:216 ../CustomerCatalog.php:230
-#: ../CustomerCatalog.php:246 ../CustomerCatalog.php:262
-#: ../CustomerCatalog.php:278 ../CustomerCatalog.php:294
+#: ../CustomerCatalog.php:246 ../CustomerCatalog.php:263
+#: ../CustomerCatalog.php:280 ../CustomerCatalog.php:297
 #: ../../../pwak/trunk/lib/GenericMessages.php:76
 msgid "Select one or more items"
 msgstr "Bir veya daha fazla öge seç"
@@ -2757,8 +2757,8 @@ msgstr "Hizmete iliskin urunlere göre fiyat"
 msgid "Heel reference"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:96 ../lib/Objects/_RTWModel.php:2591
-#: ../lib/Objects/_RTWModel.php:2592
+#: ../lib/Objects/RTWModel.php:96 ../lib/Objects/RTWModel.php:175
+#: ../lib/Objects/_RTWModel.php:2591 ../lib/Objects/_RTWModel.php:2592
 msgid "Sole"
 msgstr ""
 
@@ -2773,14 +2773,12 @@ msgid "Hand bag"
 msgstr ""
 
 #: ../lib/Objects/RTWModel.php:99 ../lib/Objects/_RTWModel.php:2648
-#: ../lib/Objects/_RTWModel.php:2649 ../lib/Objects/Invoice.php:355
-#: ../RTWCatalog.php:118
+#: ../lib/Objects/_RTWModel.php:2649 ../RTWCatalog.php:118
 msgid "Material 1"
 msgstr ""
 
 #: ../lib/Objects/RTWModel.php:100 ../lib/Objects/_RTWModel.php:2667
-#: ../lib/Objects/_RTWModel.php:2668 ../lib/Objects/Invoice.php:357
-#: ../RTWCatalog.php:119
+#: ../lib/Objects/_RTWModel.php:2668 ../RTWCatalog.php:119
 msgid "Material 2"
 msgstr ""
 
@@ -2794,18 +2792,18 @@ msgstr ""
 msgid "Accessory 2"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:103 ../lib/Objects/_RTWModel.php:2724
-#: ../lib/Objects/_RTWModel.php:2725 ../lib/Objects/Invoice.php:361
+#: ../lib/Objects/RTWModel.php:103 ../lib/Objects/RTWModel.php:173
+#: ../lib/Objects/_RTWModel.php:2724 ../lib/Objects/_RTWModel.php:2725
 msgid "Lining"
 msgstr ""
 
 #: ../lib/Objects/RTWModel.php:104 ../lib/Objects/_RTWModel.php:2743
-#: ../lib/Objects/_RTWModel.php:2744 ../lib/Objects/Invoice.php:359
+#: ../lib/Objects/_RTWModel.php:2744
 msgid "Insole"
 msgstr ""
 
 #: ../lib/Objects/RTWModel.php:105 ../lib/Objects/_RTWModel.php:2762
-#: ../lib/Objects/_RTWModel.php:2763 ../lib/Objects/Invoice.php:363
+#: ../lib/Objects/_RTWModel.php:2763
 msgid "Under-sole"
 msgstr ""
 
@@ -2819,8 +2817,8 @@ msgstr ""
 msgid "Lagrima"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:108 ../lib/Objects/_RTWModel.php:2819
-#: ../lib/Objects/_RTWModel.php:2820
+#: ../lib/Objects/RTWModel.php:108 ../lib/Objects/RTWModel.php:171
+#: ../lib/Objects/_RTWModel.php:2819 ../lib/Objects/_RTWModel.php:2820
 msgid "Heel covering"
 msgstr ""
 
@@ -2842,6 +2840,10 @@ msgstr ""
 #: ../lib/Objects/RTWModel.php:114 ../lib/Objects/_RTWModel.php:2866
 #: ../lib/Objects/_RTWModel.php:2867
 msgid "Thread 2"
+msgstr ""
+
+#: ../lib/Objects/RTWModel.php:168
+msgid "Upper"
 msgstr ""
 
 #: ../lib/Objects/Component.php:212 ../lib/Objects/Component.php:252
@@ -8712,11 +8714,11 @@ msgid "Sold by"
 msgstr "Tarihinde satıldı"
 
 #: ../SupplierCatalog.php:329 ../TransportChainList.php:92
-#: ../CustomerCatalog.php:453 void:1
+#: ../CustomerCatalog.php:461 void:1
 msgid "Ask for estimate"
 msgstr ""
 
-#: ../SupplierCatalog.php:337 ../CustomerCatalog.php:461
+#: ../SupplierCatalog.php:337 ../CustomerCatalog.php:469
 msgid "Order selected items"
 msgstr "Seçilen öğeleri sipariş et"
 
@@ -9927,7 +9929,7 @@ msgid "Virtual qty"
 msgstr "Sanal miktar"
 
 #: ../StockProductRealandVirtualList.php:118 ../ProductCommand.php:233
-#: ../CustomerCatalog.php:440 void:1
+#: ../CustomerCatalog.php:448 void:1
 msgid "Minimum qty"
 msgstr "Minimum miktar"
 
@@ -10304,7 +10306,7 @@ msgstr "Kilitli olmayan"
 msgid "Add or update instalment"
 msgstr "Taksitli ödeme ekle yada güncelle"
 
-#: ../CommandList.php:287 ../CustomerCatalog.php:444
+#: ../CommandList.php:287 ../CustomerCatalog.php:452
 msgid "Selling unit qty"
 msgstr "Satılan birim miktarı"
 

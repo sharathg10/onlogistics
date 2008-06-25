@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Onlogistics 2.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-24 14:57+0200\n"
+"POT-Creation-Date: 2008-06-25 10:57+0200\n"
 "PO-Revision-Date: 2007-05-02 14:56+0100\n"
 "Last-Translator: guillaume <guillaume@ateor.com>\n"
 "Language-Team: ATEOR dev team <dalhia@ateor.com>\n"
@@ -203,7 +203,7 @@ msgstr ""
 #: ../ComponentConcreteProduct.php:125 ../AssemblyDegradedModeDetail.php:98
 #: ../DetailedLocationByProductList.php:154
 #: ../ConcreteComponentAddEdit.php:160 ../AssemblyEdit.php:119
-#: ../CustomerCatalog.php:444 ../LocationByProductList.php:147 void:1
+#: ../CustomerCatalog.php:452 ../LocationByProductList.php:147 void:1
 msgid "Quantity"
 msgstr ""
 
@@ -267,7 +267,7 @@ msgstr ""
 msgid "Provided order number is already allocated, please correct."
 msgstr ""
 
-#: ../lib-functions/ProductCommandTools.php:770
+#: ../lib-functions/ProductCommandTools.php:776
 #: ../lib/Custom/RTWMaterialAddEdit.php:98
 #: ../lib/Custom/ProductPriceAddEdit.php:74
 #: ../lib/Custom/ProductPriceAddEdit.php:98 ../lib/Objects/Alert.const.php:181
@@ -283,7 +283,7 @@ msgstr ""
 msgid "Supplier"
 msgstr ""
 
-#: ../lib-functions/ProductCommandTools.php:774
+#: ../lib-functions/ProductCommandTools.php:780
 #: ../lib/Custom/ActorProductGrid.php:42
 #: ../lib/Custom/ActorProductAddEdit.php:46
 #: ../lib/Custom/ActorProductAddEdit.php:58
@@ -317,7 +317,7 @@ msgstr ""
 msgid "Customer"
 msgstr ""
 
-#: ../lib-functions/ProductCommandTools.php:782 ../lib/AlertSender.php:465
+#: ../lib-functions/ProductCommandTools.php:788 ../lib/AlertSender.php:465
 #: ../lib/DocumentGenerator.php:3264 ../lib/DocumentGenerator.php:3430
 #, php-format
 msgid "between %s and %s"
@@ -2160,8 +2160,8 @@ msgstr ""
 #: ../SupplierCatalog.php:199 ../SupplierCatalog.php:215
 #: ../CustomerCatalog.php:181 ../CustomerCatalog.php:201
 #: ../CustomerCatalog.php:216 ../CustomerCatalog.php:230
-#: ../CustomerCatalog.php:246 ../CustomerCatalog.php:262
-#: ../CustomerCatalog.php:278 ../CustomerCatalog.php:294
+#: ../CustomerCatalog.php:246 ../CustomerCatalog.php:263
+#: ../CustomerCatalog.php:280 ../CustomerCatalog.php:297
 #: ../../../pwak/trunk/lib/GenericMessages.php:76
 msgid "Select one or more items"
 msgstr ""
@@ -2659,8 +2659,8 @@ msgstr ""
 msgid "Heel reference"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:96 ../lib/Objects/_RTWModel.php:2591
-#: ../lib/Objects/_RTWModel.php:2592
+#: ../lib/Objects/RTWModel.php:96 ../lib/Objects/RTWModel.php:175
+#: ../lib/Objects/_RTWModel.php:2591 ../lib/Objects/_RTWModel.php:2592
 msgid "Sole"
 msgstr ""
 
@@ -2675,14 +2675,12 @@ msgid "Hand bag"
 msgstr ""
 
 #: ../lib/Objects/RTWModel.php:99 ../lib/Objects/_RTWModel.php:2648
-#: ../lib/Objects/_RTWModel.php:2649 ../lib/Objects/Invoice.php:355
-#: ../RTWCatalog.php:118
+#: ../lib/Objects/_RTWModel.php:2649 ../RTWCatalog.php:118
 msgid "Material 1"
 msgstr ""
 
 #: ../lib/Objects/RTWModel.php:100 ../lib/Objects/_RTWModel.php:2667
-#: ../lib/Objects/_RTWModel.php:2668 ../lib/Objects/Invoice.php:357
-#: ../RTWCatalog.php:119
+#: ../lib/Objects/_RTWModel.php:2668 ../RTWCatalog.php:119
 msgid "Material 2"
 msgstr ""
 
@@ -2696,18 +2694,18 @@ msgstr ""
 msgid "Accessory 2"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:103 ../lib/Objects/_RTWModel.php:2724
-#: ../lib/Objects/_RTWModel.php:2725 ../lib/Objects/Invoice.php:361
+#: ../lib/Objects/RTWModel.php:103 ../lib/Objects/RTWModel.php:173
+#: ../lib/Objects/_RTWModel.php:2724 ../lib/Objects/_RTWModel.php:2725
 msgid "Lining"
 msgstr ""
 
 #: ../lib/Objects/RTWModel.php:104 ../lib/Objects/_RTWModel.php:2743
-#: ../lib/Objects/_RTWModel.php:2744 ../lib/Objects/Invoice.php:359
+#: ../lib/Objects/_RTWModel.php:2744
 msgid "Insole"
 msgstr ""
 
 #: ../lib/Objects/RTWModel.php:105 ../lib/Objects/_RTWModel.php:2762
-#: ../lib/Objects/_RTWModel.php:2763 ../lib/Objects/Invoice.php:363
+#: ../lib/Objects/_RTWModel.php:2763
 msgid "Under-sole"
 msgstr ""
 
@@ -2721,8 +2719,8 @@ msgstr ""
 msgid "Lagrima"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:108 ../lib/Objects/_RTWModel.php:2819
-#: ../lib/Objects/_RTWModel.php:2820
+#: ../lib/Objects/RTWModel.php:108 ../lib/Objects/RTWModel.php:171
+#: ../lib/Objects/_RTWModel.php:2819 ../lib/Objects/_RTWModel.php:2820
 msgid "Heel covering"
 msgstr ""
 
@@ -2744,6 +2742,10 @@ msgstr ""
 #: ../lib/Objects/RTWModel.php:114 ../lib/Objects/_RTWModel.php:2866
 #: ../lib/Objects/_RTWModel.php:2867
 msgid "Thread 2"
+msgstr ""
+
+#: ../lib/Objects/RTWModel.php:168
+msgid "Upper"
 msgstr ""
 
 #: ../lib/Objects/Component.php:212 ../lib/Objects/Component.php:252
@@ -8513,11 +8515,11 @@ msgid "Sold by"
 msgstr ""
 
 #: ../SupplierCatalog.php:329 ../TransportChainList.php:92
-#: ../CustomerCatalog.php:453 void:1
+#: ../CustomerCatalog.php:461 void:1
 msgid "Ask for estimate"
 msgstr ""
 
-#: ../SupplierCatalog.php:337 ../CustomerCatalog.php:461
+#: ../SupplierCatalog.php:337 ../CustomerCatalog.php:469
 msgid "Order selected items"
 msgstr "Order"
 
@@ -9722,7 +9724,7 @@ msgid "Virtual qty"
 msgstr ""
 
 #: ../StockProductRealandVirtualList.php:118 ../ProductCommand.php:233
-#: ../CustomerCatalog.php:440 void:1
+#: ../CustomerCatalog.php:448 void:1
 msgid "Minimum qty"
 msgstr ""
 
@@ -10096,7 +10098,7 @@ msgstr ""
 msgid "Add or update instalment"
 msgstr ""
 
-#: ../CommandList.php:287 ../CustomerCatalog.php:444
+#: ../CommandList.php:287 ../CustomerCatalog.php:452
 msgid "Selling unit qty"
 msgstr ""
 

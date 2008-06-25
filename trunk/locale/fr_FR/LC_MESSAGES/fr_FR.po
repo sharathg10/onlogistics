@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Onlogistics 2.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-24 14:57+0200\n"
-"PO-Revision-Date: 2008-06-24 15:01+0100\n"
+"POT-Creation-Date: 2008-06-25 10:57+0200\n"
+"PO-Revision-Date: 2008-06-25 10:58+0100\n"
 "Last-Translator: David JL <david@ateor.com>\n"
 "Language-Team: ATEOR dev team <dalhia@ateor.com>\n"
 "MIME-Version: 1.0\n"
@@ -282,7 +282,7 @@ msgstr "Emplacement"
 #: ../DetailedLocationByProductList.php:154
 #: ../ConcreteComponentAddEdit.php:160
 #: ../AssemblyEdit.php:119
-#: ../CustomerCatalog.php:444
+#: ../CustomerCatalog.php:452
 #: ../LocationByProductList.php:147
 #: void:1
 msgid "Quantity"
@@ -359,7 +359,7 @@ msgstr "Vous devez spécifier au moins un produit à commander."
 msgid "Provided order number is already allocated, please correct."
 msgstr "Le numéro de commande saisi est déjà attribué. Veuillez le modifier."
 
-#: ../lib-functions/ProductCommandTools.php:770
+#: ../lib-functions/ProductCommandTools.php:776
 #: ../lib/Custom/RTWMaterialAddEdit.php:98
 #: ../lib/Custom/ProductPriceAddEdit.php:74
 #: ../lib/Custom/ProductPriceAddEdit.php:98
@@ -388,7 +388,7 @@ msgstr "Le numéro de commande saisi est déjà attribué. Veuillez le modifier.
 msgid "Supplier"
 msgstr "Fournisseur"
 
-#: ../lib-functions/ProductCommandTools.php:774
+#: ../lib-functions/ProductCommandTools.php:780
 #: ../lib/Custom/ActorProductGrid.php:42
 #: ../lib/Custom/ActorProductAddEdit.php:46
 #: ../lib/Custom/ActorProductAddEdit.php:58
@@ -447,7 +447,7 @@ msgstr "Fournisseur"
 msgid "Customer"
 msgstr "Client"
 
-#: ../lib-functions/ProductCommandTools.php:782
+#: ../lib-functions/ProductCommandTools.php:788
 #: ../lib/AlertSender.php:465
 #: ../lib/DocumentGenerator.php:3264
 #: ../lib/DocumentGenerator.php:3430
@@ -2573,9 +2573,9 @@ msgstr "Quelconque"
 #: ../CustomerCatalog.php:216
 #: ../CustomerCatalog.php:230
 #: ../CustomerCatalog.php:246
-#: ../CustomerCatalog.php:262
-#: ../CustomerCatalog.php:278
-#: ../CustomerCatalog.php:294
+#: ../CustomerCatalog.php:263
+#: ../CustomerCatalog.php:280
+#: ../CustomerCatalog.php:297
 #: ../../../pwak/trunk/lib/GenericMessages.php:76
 msgid "Select one or more items"
 msgstr "Sélectionnez un ou plusieurs éléments"
@@ -3189,6 +3189,7 @@ msgid "Heel reference"
 msgstr "Référence talon"
 
 #: ../lib/Objects/RTWModel.php:96
+#: ../lib/Objects/RTWModel.php:175
 #: ../lib/Objects/_RTWModel.php:2591
 #: ../lib/Objects/_RTWModel.php:2592
 msgid "Sole"
@@ -3209,7 +3210,6 @@ msgstr "Pochette"
 #: ../lib/Objects/RTWModel.php:99
 #: ../lib/Objects/_RTWModel.php:2648
 #: ../lib/Objects/_RTWModel.php:2649
-#: ../lib/Objects/Invoice.php:355
 #: ../RTWCatalog.php:118
 msgid "Material 1"
 msgstr "Matière première 1"
@@ -3217,7 +3217,6 @@ msgstr "Matière première 1"
 #: ../lib/Objects/RTWModel.php:100
 #: ../lib/Objects/_RTWModel.php:2667
 #: ../lib/Objects/_RTWModel.php:2668
-#: ../lib/Objects/Invoice.php:357
 #: ../RTWCatalog.php:119
 msgid "Material 2"
 msgstr "Matière première 2"
@@ -3237,23 +3236,21 @@ msgid "Accessory 2"
 msgstr "Accessoire 2"
 
 #: ../lib/Objects/RTWModel.php:103
+#: ../lib/Objects/RTWModel.php:173
 #: ../lib/Objects/_RTWModel.php:2724
 #: ../lib/Objects/_RTWModel.php:2725
-#: ../lib/Objects/Invoice.php:361
 msgid "Lining"
 msgstr "Doublure"
 
 #: ../lib/Objects/RTWModel.php:104
 #: ../lib/Objects/_RTWModel.php:2743
 #: ../lib/Objects/_RTWModel.php:2744
-#: ../lib/Objects/Invoice.php:359
 msgid "Insole"
 msgstr "Première intérieure"
 
 #: ../lib/Objects/RTWModel.php:105
 #: ../lib/Objects/_RTWModel.php:2762
 #: ../lib/Objects/_RTWModel.php:2763
-#: ../lib/Objects/Invoice.php:363
 msgid "Under-sole"
 msgstr "Sous-semelle"
 
@@ -3270,6 +3267,7 @@ msgid "Lagrima"
 msgstr "Lagrima"
 
 #: ../lib/Objects/RTWModel.php:108
+#: ../lib/Objects/RTWModel.php:171
 #: ../lib/Objects/_RTWModel.php:2819
 #: ../lib/Objects/_RTWModel.php:2820
 msgid "Heel covering"
@@ -3299,6 +3297,10 @@ msgstr "Fil 1"
 #: ../lib/Objects/_RTWModel.php:2867
 msgid "Thread 2"
 msgstr "Fil 2"
+
+#: ../lib/Objects/RTWModel.php:168
+msgid "Upper"
+msgstr "Tige"
 
 #: ../lib/Objects/Component.php:212
 #: ../lib/Objects/Component.php:252
@@ -9749,13 +9751,13 @@ msgstr "Vendu par"
 
 #: ../SupplierCatalog.php:329
 #: ../TransportChainList.php:92
-#: ../CustomerCatalog.php:453
+#: ../CustomerCatalog.php:461
 #: void:1
 msgid "Ask for estimate"
 msgstr "Demander un devis"
 
 #: ../SupplierCatalog.php:337
-#: ../CustomerCatalog.php:461
+#: ../CustomerCatalog.php:469
 msgid "Order selected items"
 msgstr "Commander"
 
@@ -11058,7 +11060,7 @@ msgstr "Qté virtuelle"
 
 #: ../StockProductRealandVirtualList.php:118
 #: ../ProductCommand.php:233
-#: ../CustomerCatalog.php:440
+#: ../CustomerCatalog.php:448
 #: void:1
 msgid "Minimum qty"
 msgstr "Qté mini."
@@ -11453,7 +11455,7 @@ msgid "Add or update instalment"
 msgstr "Ajouter/Modifier un acompte"
 
 #: ../CommandList.php:287
-#: ../CustomerCatalog.php:444
+#: ../CustomerCatalog.php:452
 msgid "Selling unit qty"
 msgstr "Qté "
 

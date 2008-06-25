@@ -711,8 +711,12 @@ function sendProductCommandMail($ProductCommand, $commandType, $Customer='') {
             'sellUnitQuantity' => $unitQty
         );
         if ($product instanceof RTWProduct) {
+            $mailSmarty->assign('rtw', 1);
             if (($model = $product->getModel()) instanceof RTWModel) {
                 $arr['legalMentions'] = $model->getLegalMentions(true);
+            }
+            if (($size = $product->getSize()) instanceof RTWSize) {
+                $arr['size'] = $size->toString();
             }
         }
         $productArray[] = $arr;

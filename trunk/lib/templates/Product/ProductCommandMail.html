@@ -40,6 +40,9 @@ OnLogistics - Commercial {$Commercial}<br />
 <table border="1" width="100%">
 	<tr>
 		<th>{t}Product reference{/t}</th>
+{if $rtw}
+		<th>{t}Size{/t}</th>
+{/if}
 		<th>{t}Name{/t}</th>
 		<th>{t}Quantity{/t}</th>
 {if $CommandType eq 1}
@@ -62,9 +65,12 @@ OnLogistics - Commercial {$Commercial}<br />
 		<th>{t}Amount excl. VAT{/t} {$currency}</th>
 		<th>{t}Amount incl. VAT{/t} {$currency}</th>
 	</tr>
-	{section name=produits loop=$products}
+{section name=produits loop=$products}
 	<tr>
 		<td>&nbsp;{$products[produits].ref}</td>
+{if $rtw}
+        <td>{$products[produits].size}</td>
+{/if}
         <td>&nbsp;{$products[produits].name}
             {if $products[produits].legalMentions}
             <br/><br/>{$products[produits].legalMentions}
@@ -92,18 +98,9 @@ OnLogistics - Commercial {$Commercial}<br />
 		<td align="right">{$products[produits].htTotal}&nbsp;</td>
 		<td align="right">{$products[produits].ttcTotal}&nbsp;</td>
 	</tr>
-	{/section}
+{/section}
 	<tr>
-{if $CommandType eq 1}
-    {if $ProductCommandUEQty eq 1}<td colspan="11">
-    {else}<td colspan="10">
-    {/if}
-{else}<td colspan="9">
-{/if}
-		&nbsp;</td>
-	</tr>
-	<tr>
-		<td>&nbsp;<b>{t}Delivery expenses{/t}: </b>{$Port}&nbsp;{$currency}</td>
+        <td{if $rtw} colspan="2"{/if}>&nbsp;<b>{t}Delivery expenses{/t}: </b>{$Port}&nbsp;{$currency}</td>
 		<td>&nbsp;<b>{t}Packing{/t}: </b>{$Packing}&nbsp;{$currency}</td>
 		<td colspan="2">&nbsp;<b>{t}Insurance{/t}: </b>{$Insurance}&nbsp;{$currency}</td>
         <td colspan="2">
@@ -124,7 +121,7 @@ OnLogistics - Commercial {$Commercial}<br />
 {else}
 		<td colspan="5">&nbsp;{$Comment}</td>
 {/if}
-		<td colspan="3" valign="top">
+        <td colspan="{if $rtw}4{else}3{/if}" valign="top">
 			<table BORDER="1" WIDTH="100%" cellspacing="0">
 				<tr>
 					<td>&nbsp;<b>{t}Instalment{/t} {$currency}</b></td>

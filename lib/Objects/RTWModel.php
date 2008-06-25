@@ -145,6 +145,39 @@ class RTWModel extends _RTWModel {
     }
 
     // }}}
+    // RTWModel::getLegalMentions() {{{
+
+    /**
+     *
+     * @access public
+     * @return void
+     */
+    public function getLegalMentions($asHtml = false)
+    {
+        $nl    = $asHtml ? '<br/>' : "\n";
+        $lines = array();
+        $upper = array();
+        $mats  = array('Material1', 'Material2', 'Accessory1', 'Accessory2');
+        foreach ($mats as $mat) {
+            $getter = 'get' . $mat;
+            if (($matObj = $this->$getter()) instanceof RTWMaterial) {
+                $upper[] = '    - ' . $matObj->toStringForCustoms();
+            }
+        }
+        if (count($upper)) {
+            $lines[] = _('Upper') . ": $nl" . implode($nl, $upper);
+        }
+        $lines[] = ($heelCov = $this->getHeelCovering()) instanceof RTWMaterial ? 
+            _('Heel covering') . ': ' . $heelCov->toStringForCustoms() : null;
+        $lines[] = ($lining = $this->getLining()) instanceof RTWMaterial ? 
+            _('Lining') . ': ' . $lining->toStringForCustoms() : null;
+        $lines[] = ($sole = $this->getSole()) instanceof RTWMaterial ? 
+            _('Sole') . ': ' . $sole->toStringForCustoms() : null;
+        $lines = array_filter($lines);
+        return implode($nl, $lines);
+    }
+
+    // }}}
 
 }
 

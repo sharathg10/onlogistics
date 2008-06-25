@@ -99,6 +99,9 @@ if (isset($_REQUEST['FormSubmitted']) && $_REQUEST['FormSubmitted'] == 'true') {
     //les conditions de paiement
     $Invoice->setPaymentCondition($_POST['HiddenPaymentCondition']);
 
+    // calcule la commission du commercial
+    $Invoice->updateCommercialCommission();
+
     // on maj les DeliveryOrder de la commande s'ils existent
     updateMixedObjects($Command, $Invoice, $errorUrl);
     saveInstance($Invoice, $errorUrl);

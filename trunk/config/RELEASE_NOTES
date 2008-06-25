@@ -39,6 +39,9 @@ TRUNCATE TABLE IdHashTable;
 ALTER TABLE RTWModel ADD _MediaPlanta INT(11) NOT NULL DEFAULT 0 AFTER _UnderSoleQuantity;
 ALTER TABLE RTWModel ADD _MediaPlantaQuantity DECIMAL(10,3) DEFAULT NULL AFTER _MediaPlanta;
 ALTER TABLE RTWModel ADD _ColorImage VARCHAR(255) DEFAULT NULL AFTER _Image;
+ALTER TABLE UserAccount ADD _CommissionPercent DECIMAL(10,2) NOT NULL DEFAULT 0;
+ALTER TABLE AbstractDocument ADD _CommercialCommissionPercent DECIMAL(10,2) NOT NULL DEFAULT 0 AFTER _TaxStamp;
+ALTER TABLE AbstractDocument ADD _CommercialCommissionAmount DECIMAL(10,2) NOT NULL DEFAULT 0 AFTER _CommercialCommissionPercent;
 
 ####################################
 # Ne pas enlever

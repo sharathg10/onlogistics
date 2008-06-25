@@ -404,6 +404,9 @@ function chargeSeveralCommands($cmdIds) {
     	//les conditions de paiement
         $invoice->setPaymentCondition($sp->getPaymentCondition());
 
+        // calcule la commission du commercial
+        $invoice->updateCommercialCommission();
+
         // MAJ les FK DeliveryOrder.Invoice, cmd.State, invoice.PaymentDate
         updateMixedObjects($cmd, $invoice, $errorUrl);
         saveInstance($invoice, $errorUrl);
@@ -552,7 +555,7 @@ function createInvoice($cmdId) {
 	if (!(false == $DocumentModel)) {
 	    $invoice->setDocumentModel($DocumentModel);
 	}
-
+    // calcul de la commission commerciale
     return $invoice;
 }
 

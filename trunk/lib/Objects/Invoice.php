@@ -3,6 +3,8 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
+ * IMPORTANT: This is a generated file, please do not edit.
+ *
  * This file is part of Onlogistics, a web based ERP and supply chain 
  * management application. 
  *
@@ -34,6 +36,11 @@
  * @filesource
  */
 
+/**
+ * Invoice class
+ *
+ * Class containing addon methods.
+ */
 class Invoice extends _Invoice {
     // Constructeur {{{
 
@@ -49,7 +56,6 @@ class Invoice extends _Invoice {
     }
 
     // }}}
-
     // Invoice::dataForInvoice() {{{
 
     /**
@@ -849,6 +855,28 @@ class Invoice extends _Invoice {
         );
         return ($invoiceColl->getItem(0)->getId() == $this->getId());
     }
+    // }}}
+    // Invoice::updateCommercialCommission() {{{
+
+    /**
+     * Stocke le pourcentage et le montant de la commission du commercial.
+     *
+     * @access public
+     * @return void
+     */
+    public function updateCommercialCommission() {
+        $cmd = $this->getCommand();
+        if (!($cmd instanceof Command)) {
+            return;
+        }
+        $com = $cmd->getCommercial();
+        if ($com instanceof UserAccount && ($percent = $com->getCommissionPercent()) > 0) {
+            $amount = floatval($this->getTotalPriceHT() * ($percent / 100));
+            $this->setCommercialCommissionPercent($percent);
+            $this->setCommercialCommissionAmount($amount);
+        }
+    }
+
     // }}}
 
 }

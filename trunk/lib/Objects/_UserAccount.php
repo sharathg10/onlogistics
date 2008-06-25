@@ -3,6 +3,8 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
+ * IMPORTANT: This is a generated file, please do not edit.
+ *
  * This file is part of Onlogistics, a web based ERP and supply chain 
  * management application. 
  *
@@ -34,6 +36,10 @@
  * @filesource
  */
 
+/**
+ * _UserAccount class
+ *
+ */
 class _UserAccount extends Object {
     // class constants {{{
 
@@ -507,6 +513,40 @@ class _UserAccount extends Object {
             $this->_SupplierCatalog = (int)$value;
         } else {
             $this->_SupplierCatalog = $value;
+        }
+    }
+
+    // }}}
+    // CommissionPercent float property + getter/setter {{{
+
+    /**
+     * CommissionPercent float property
+     *
+     * @access private
+     * @var float
+     */
+    private $_CommissionPercent = 0;
+
+    /**
+     * _UserAccount::getCommissionPercent
+     *
+     * @access public
+     * @return float
+     */
+    public function getCommissionPercent() {
+        return $this->_CommissionPercent;
+    }
+
+    /**
+     * _UserAccount::setCommissionPercent
+     *
+     * @access public
+     * @param float $value
+     * @return void
+     */
+    public function setCommissionPercent($value) {
+        if ($value !== null) {
+            $this->_CommissionPercent = round(I18N::extractNumber($value), 2);
         }
     }
 
@@ -1087,7 +1127,8 @@ class _UserAccount extends Object {
             'Email' => Object::TYPE_STRING,
             'Profile' => Object::TYPE_CONST,
             'Catalog' => 'Catalog',
-            'SupplierCatalog' => 'Catalog');
+            'SupplierCatalog' => 'Catalog',
+            'CommissionPercent' => Object::TYPE_DECIMAL);
         return $return;
     }
 

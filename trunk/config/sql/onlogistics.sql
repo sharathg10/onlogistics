@@ -47,6 +47,8 @@ CREATE TABLE AbstractDocument (
   _TvaSurtaxRate DECIMAL(10,2) NOT NULL DEFAULT 0,
   _FodecTaxRate DECIMAL(10,2) NOT NULL DEFAULT 0,
   _TaxStamp DECIMAL(10,2) NOT NULL DEFAULT 0,
+  _CommercialCommissionPercent DECIMAL(10,2) NOT NULL DEFAULT 0,
+  _CommercialCommissionAmount DECIMAL(10,2) NOT NULL DEFAULT 0,
   _DestinatorSite INT(11) NOT NULL DEFAULT 0,
   _CommandNo VARCHAR(255) DEFAULT '',
   _Transporter INT(11) NOT NULL DEFAULT 0,
@@ -2276,7 +2278,7 @@ CREATE TABLE Product (
   _Id int(11) unsigned NOT NULL default '0',
   _DBId int(11) default 0,
   _ClassName VARCHAR(255) DEFAULT NULL,
-  _Name VARCHAR(255) DEFAULT NULL,
+  _Name INT(11) NOT NULL DEFAULT NULL,
   _BaseReference VARCHAR(255) DEFAULT NULL,
   _Volume FLOAT NOT NULL DEFAULT 0,
   _CustomsNaming VARCHAR(255) DEFAULT NULL,
@@ -2922,6 +2924,7 @@ CREATE TABLE UserAccount (
   _Profile INT(3) DEFAULT NULL,
   _Catalog INT(11) NOT NULL DEFAULT 0,
   _SupplierCatalog INT(11) NOT NULL DEFAULT 0,
+  _CommissionPercent DECIMAL(10,2) NOT NULL DEFAULT 0,
   PRIMARY KEY (_Id)
 ) TYPE=InnoDB CHARSET=latin1;
 

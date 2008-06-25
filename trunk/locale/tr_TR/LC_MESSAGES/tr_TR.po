@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Onlogistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-25 10:57+0200\n"
+"POT-Creation-Date: 2008-06-25 18:18+0200\n"
 "PO-Revision-Date: 2008-03-09 00:27+0200\n"
 "Last-Translator: Celal Camci <ccamci@iccdanismanlik.com.tr>\n"
 "Language-Team: Ateor dev team <dev@ateor.com>\n"
@@ -45,7 +45,7 @@ msgstr ""
 #: ../lib/Objects/DocumentModelProperty.php:314
 #: ../lib/Objects/AeroSupplier.php:109 ../lib/Objects/_AeroActor.php:865
 #: ../lib/Objects/_SupplierCustomer.php:995
-#: ../lib/Objects/PrestationCommand.php:142 ../lib/Objects/_Invoice.php:807
+#: ../lib/Objects/PrestationCommand.php:142 ../lib/Objects/_Invoice.php:881
 #: ../lib/Objects/_ProductCommandItem.php:383 ../lib/Objects/Supplier.php:109
 #: ../lib/Objects/_Question.php:430
 #: ../lib/Objects/_ProductQuantityByCategory.php:277
@@ -94,7 +94,7 @@ msgstr ""
 #: ../lib/Objects/AeroCustomer.php:235 ../lib/Objects/_ComponentGroup.php:221
 #: ../lib/Objects/_ActivatedChainOperation.php:1108
 #: ../lib/Objects/_Currency.php:219 ../lib/Objects/_CountryCity.php:293
-#: ../lib/Objects/Invoice.php:206 ../lib/Objects/Customer.php:77
+#: ../lib/Objects/Invoice.php:212 ../lib/Objects/Customer.php:77
 #: ../lib/Objects/_Department.php:307 ../lib/Objects/Licence.php:522
 #: ../lib/Objects/DangerousProductGroup.php:187 ../lib/Objects/_Flow.php:565
 #: ../lib/Objects/PDFDocument.php:136
@@ -118,12 +118,12 @@ msgstr ""
 msgid "None"
 msgstr "None"
 
-#: ../lib-functions/InvoiceItemTools.php:452
+#: ../lib-functions/InvoiceItemTools.php:455
 #, php-format
 msgid "The following orders are not billable: <ul><li>%s</li></ul>"
 msgstr "Takip eden sipariş faturalanamaz: <ul><li>%s</li></ul>"
 
-#: ../lib-functions/InvoiceItemTools.php:453
+#: ../lib-functions/InvoiceItemTools.php:456
 #, php-format
 msgid ""
 "The following orders are locked because outstanding debts amount exceeds "
@@ -132,7 +132,7 @@ msgstr ""
 "Takip eden sipariş kilitlendi çünkü ödenmemiş borç miktarı maximum değerı "
 "aştı: <ul><li>%s</li></ul>"
 
-#: ../lib-functions/InvoiceItemTools.php:454
+#: ../lib-functions/InvoiceItemTools.php:457
 #, php-format
 msgid ""
 "For the following orders invoice could not be sent by email because no user "
@@ -141,15 +141,15 @@ msgstr ""
 "Takip eden siparişlerin faturaları email ile gönderilemez çünkü hiçbir user "
 "onu kabul etmek için ayarlanmadı: <ul><li>%s</li></ul>"
 
-#: ../lib-functions/InvoiceItemTools.php:469
+#: ../lib-functions/InvoiceItemTools.php:472
 msgid "Click on the button below to print invoices."
 msgstr "Faturaları yazdırmak için asağıdaki butona basınız."
 
-#: ../lib-functions/InvoiceItemTools.php:476 void:1
+#: ../lib-functions/InvoiceItemTools.php:479 void:1
 msgid "Charge several orders"
 msgstr "Çeşitli siparişler faturala"
 
-#: ../lib-functions/InvoiceItemTools.php:530
+#: ../lib-functions/InvoiceItemTools.php:533
 #: ../lib-functions/InvoicePrestationTools.php:106
 #: ../InvoiceChainCommandList.php:75
 msgid "A document with the same number already exists, please correct."
@@ -275,12 +275,12 @@ msgstr "Sipariş için en azından bir ürün seçmelisiniz."
 msgid "Provided order number is already allocated, please correct."
 msgstr "Verilen sipariş numarası önceden tahsis edilmiştir, lütfen düzeltiniz."
 
-#: ../lib-functions/ProductCommandTools.php:776
+#: ../lib-functions/ProductCommandTools.php:780
 #: ../lib/Custom/RTWMaterialAddEdit.php:98
 #: ../lib/Custom/ProductPriceAddEdit.php:74
 #: ../lib/Custom/ProductPriceAddEdit.php:98 ../lib/Objects/Alert.const.php:181
 #: ../lib/Objects/Alert.const.php:205 ../lib/Objects/Alert.const.php:207
-#: ../lib/Objects/_UserAccount.php:381 ../lib/Objects/Actor.inc.php:42
+#: ../lib/Objects/_UserAccount.php:387 ../lib/Objects/Actor.inc.php:42
 #: ../ActivatedChainList.php:75 ../ActivatedMovementList.php:107
 #: ../ToHaveAdd.php:135 ../SupplierCatalog.php:111
 #: ../SupplierDelayStock.php:96 ../InvoiceList.php:69 ../InvoiceList.php:147
@@ -291,7 +291,7 @@ msgstr "Verilen sipariş numarası önceden tahsis edilmiştir, lütfen düzelti
 msgid "Supplier"
 msgstr "Tedarikçi"
 
-#: ../lib-functions/ProductCommandTools.php:780
+#: ../lib-functions/ProductCommandTools.php:784
 #: ../lib/Custom/ActorProductGrid.php:42
 #: ../lib/Custom/ActorProductAddEdit.php:46
 #: ../lib/Custom/ActorProductAddEdit.php:58
@@ -305,14 +305,14 @@ msgstr "Tedarikçi"
 #: ../lib/Objects/Alert.const.php:416 ../lib/Objects/Alert.const.php:423
 #: ../lib/Objects/_UploadedDocument.php:628
 #: ../lib/Objects/_UploadedDocument.php:629
-#: ../lib/Objects/_UserAccount.php:380 ../lib/Objects/Actor.inc.php:40
+#: ../lib/Objects/_UserAccount.php:386 ../lib/Objects/Actor.inc.php:40
 #: ../lib/DocumentGenerator.php:2274 ../ActivatedChainList.php:76
 #: ../ActivatedFlightList.php:88 ../ActivatedFlightList.php:94
 #: ../ActivatedFlightList.php:186 ../BoardByCustomer.php:53
 #: ../ToHaveAdd.php:139 ../ActionList.php:75 ../ActionList.php:105
 #: ../ChainCommandList.php:90 ../ChainCommandList.php:185
 #: ../ActivatedChainTaskList.php:110 ../ActivatedChainTaskList.php:235
-#: ../EstimateList.php:77 ../EstimateList.php:122 ../menu.inc.php:815
+#: ../EstimateList.php:77 ../EstimateList.php:122 ../menu.inc.php:835
 #: ../InvoiceList.php:67 ../InvoiceList.php:149
 #: ../UnavailabilityPlanning.php:135 ../UnavailabilityPlanning.php:172
 #: ../UnavailabilityPlanning.php:709 ../UnavailabilityPlanning.php:714
@@ -325,7 +325,7 @@ msgstr "Tedarikçi"
 msgid "Customer"
 msgstr "Müşteri"
 
-#: ../lib-functions/ProductCommandTools.php:788 ../lib/AlertSender.php:465
+#: ../lib-functions/ProductCommandTools.php:792 ../lib/AlertSender.php:465
 #: ../lib/DocumentGenerator.php:3264 ../lib/DocumentGenerator.php:3430
 #, php-format
 msgid "between %s and %s"
@@ -823,7 +823,7 @@ msgstr "Yıllık ciro iskonto yüzdesi"
 #: ../lib/Objects/_FlowType.php:629 ../lib/Objects/_FlowType.php:630
 #: ../lib/Objects/Ressource.php:540 ../lib/Objects/Ressource.php:541
 #: ../lib/Objects/RessourceGroup.php:472 ../lib/Objects/RessourceGroup.php:473
-#: ../lib/Objects/_UserAccount.php:1243 ../lib/Objects/SpreadSheet.php:447
+#: ../lib/Objects/_UserAccount.php:1284 ../lib/Objects/SpreadSheet.php:447
 #: ../lib/Objects/SpreadSheet.php:448 ../lib/Objects/CustomerPotential.php:468
 #: ../lib/Objects/CustomerPotential.php:469
 #: ../lib/Objects/UploadedDocumentType.php:355
@@ -863,7 +863,8 @@ msgstr "Kategori ile ilgili partnerlerin listesi"
 #: ../BankList.php:86 ../FlowAddEdit.php:249 ../BoardByProduct.php:60
 #: ../BoardBySupplier.php:60 ../BoardByCategory.php:58
 #: ../AgedTrialBalance.php:59 ../AgedTrialBalance.php:149
-#: ../CashBalance.php:53 ../BoardByCoast.php:57 void:1
+#: ../CashBalance.php:53 ../BoardByCoast.php:57
+#: ../CommercialCommissions.php:53 ../CommercialCommissions.php:100 void:1
 msgid "Currency"
 msgstr "Para birimi"
 
@@ -1121,7 +1122,7 @@ msgstr ""
 
 #: ../lib/Custom/RessourceGroupAddEdit.php:133
 #: ../lib/Objects/RessourceRessourceGroup.php:218
-#: ../lib/Objects/Ressource.php:428 ../menu.inc.php:350
+#: ../lib/Objects/Ressource.php:428 ../menu.inc.php:356
 msgid "Resources"
 msgstr "Kaynaklar"
 
@@ -1197,8 +1198,8 @@ msgstr ""
 "zorundadır."
 
 #: ../lib/Custom/UserAccountAddEdit.php:141
-#: ../lib/Objects/_UserAccount.php:376 ../lib/Objects/_UserAccount.php:1251
-#: ../lib/Objects/_UserAccount.php:1252 ../lib/Objects/Actor.inc.php:39
+#: ../lib/Objects/_UserAccount.php:382 ../lib/Objects/_UserAccount.php:1292
+#: ../lib/Objects/_UserAccount.php:1293 ../lib/Objects/Actor.inc.php:39
 #: ../crons/AlertLicenceOutOfDate.php:107 ../GanttDiagram.php:86
 #: ../ActivatedChainTaskList.php:251 ../ChainTaskList.php:90
 #: ../UnavailabilityPlanning.php:699 ../WorkOrderList.php:179
@@ -1246,7 +1247,7 @@ msgstr "Model kopyala"
 #: ../InvoicePaymentList.php:66 ../ProductSubstitutionList.php:218
 #: ../ActivatedMovementList.php:88 ../ActivatedMovementList.php:187
 #: ../ProductByLocationList.php:74 ../ProductByLocationList.php:145
-#: ../InvoiceAddEdit.php:336 ../SaisonalityAdd.php:239
+#: ../InvoiceAddEdit.php:339 ../SaisonalityAdd.php:239
 #: ../TransportChainList.php:72 ../TransportChainList.php:86
 #: ../ProductHandingByCategoryAddEditE3.php:183
 #: ../StockProductRealandVirtualList.php:53
@@ -1273,7 +1274,7 @@ msgstr "Referans"
 #: ../AffectationList.php:72 ../SaisonalityPromotionProductList.php:68
 #: ../ActivatedMovementList.php:90 ../ActivatedMovementList.php:189
 #: ../DocumentModelPropertyAddEdit.php:273 ../ProductByLocationList.php:77
-#: ../InvoiceAddEdit.php:344 ../SaisonalityAdd.php:240
+#: ../InvoiceAddEdit.php:347 ../SaisonalityAdd.php:240
 #: ../TransportChainList.php:73 ../ProductHandingByCategoryAddEditE3.php:184
 #: ../NomenclatureAddEdit.php:80 ../StockProductRealandVirtualList.php:54
 #: ../StockProductRealandVirtualList.php:102
@@ -1288,7 +1289,7 @@ msgstr "Referans"
 msgid "Designation"
 msgstr "Etiket ismi"
 
-#: ../lib/Custom/ProductRessourceGrid.php:57 ../menu.inc.php:356
+#: ../lib/Custom/ProductRessourceGrid.php:57 ../menu.inc.php:362
 msgid "Product resources"
 msgstr "Ürün kaynakları"
 
@@ -1302,7 +1303,7 @@ msgstr "Ürün kaynakları"
 #: ../lib/Objects/ProductPrestationCost.php:273
 #: ../lib/Objects/ProductPrestationCost.php:274
 #: ../lib/Objects/Ressource.php:156 ../ActivityBasedCosting.php:63
-#: ../menu.inc.php:827 ../BoardByProduct.php:53 ../CommandList.php:289
+#: ../menu.inc.php:847 ../BoardByProduct.php:53 ../CommandList.php:289
 #: ../CommandList.php:290 ../InventoryDetailList.php:127
 #: ../UnavailabilityPlanning.php:152 ../ProductHandingByCategoryList.php:85
 #: ../ConcreteProductList.php:99 void:1
@@ -1487,7 +1488,7 @@ msgstr "Operasyon"
 #: ../BoardByCategory.php:60 ../PrestationCommandList.php:61
 #: ../AgedTrialBalance.php:60 ../FlightNotebook.php:103 ../CashBalance.php:46
 #: ../CourseCommandList.php:77 ../DocumentList.php:66 ../ToHaveList.php:67
-#: ../BoardByCoast.php:59
+#: ../BoardByCoast.php:59 ../CommercialCommissions.php:71
 msgid "Filter by date"
 msgstr "Tarihe göre filtrele"
 
@@ -1516,7 +1517,8 @@ msgstr "Tarihe göre filtrele"
 #: ../UnavailabilityPlanning.php:704 ../PrestationCommandList.php:120
 #: ../GroupableBoxList.php:69 ../DocumentList.php:139
 #: ../ActivatedChainOperationList.php:105
-#: ../ActivatedChainOperationList.php:214 void:1
+#: ../ActivatedChainOperationList.php:214 ../CommercialCommissions.php:90
+#: void:1
 msgid "Order"
 msgstr "Sipariş"
 
@@ -1853,7 +1855,7 @@ msgstr ""
 msgid "products"
 msgstr "ürünler"
 
-#: ../lib/Custom/PrestationCostGrid.php:55 ../menu.inc.php:338
+#: ../lib/Custom/PrestationCostGrid.php:55 ../menu.inc.php:344
 msgid "Airplane types"
 msgstr "Uçak tipleri"
 
@@ -2008,7 +2010,7 @@ msgstr ""
 #: ../lib/Objects/Container.php:342 ../lib/AlertSender.php:406
 #: ../lib/AlertSender.php:470 ../crons/AlertTenDaysSinceLastFly.php:75
 #: ../JS_Messages.php:320 ../InstallmentAddEdit.php:145
-#: ../InstallmentAddEdit.php:146 ../InvoiceAddEdit.php:389
+#: ../InstallmentAddEdit.php:146 ../InvoiceAddEdit.php:392
 #: ../WorkOrderList.php:183 ../WorkOrderList.php:186 ../ActorAddEdit.php:704
 #: ../ActivatedChainOperationList.php:221
 #: ../ActivatedChainOperationList.php:224
@@ -2229,7 +2231,7 @@ msgstr ""
 
 #: ../lib/Objects/Operation.php:693 ../lib/Objects/Operation.php:694
 #: ../lib/Objects/_ActivatedChainTask.php:2582 ../lib/Objects/Task.php:477
-#: ../menu.inc.php:855 void:1
+#: ../menu.inc.php:875 void:1
 msgid "Tasks"
 msgstr "Görevler"
 
@@ -2295,13 +2297,13 @@ msgstr "Tedarikçi siparişi"
 
 #: ../lib/Objects/_AbstractDocument.php:233
 #: ../lib/Objects/_AbstractDocument.php:237 ../lib/Objects/_Command.php:151
-#: ../menu.inc.php:526 void:1
+#: ../menu.inc.php:532 void:1
 msgid "Carriage service"
 msgstr "Nakliye servisi"
 
 #: ../lib/Objects/_AbstractDocument.php:234
 #: ../lib/Objects/_AbstractDocument.php:238 ../lib/Objects/_Command.php:153
-#: ../menu.inc.php:532 ../menu.inc.php:534
+#: ../menu.inc.php:538 ../menu.inc.php:540
 msgid "Class booking"
 msgstr "Ders reservasyonu"
 
@@ -2328,7 +2330,7 @@ msgid "Add/Update product references by customer"
 msgstr "Müşteriye göre ürün referansları Ekle/Güncelle"
 
 #: ../lib/Objects/_ActorProduct.php:526 ../lib/Objects/_ActorProduct.php:527
-#: ../InvoiceAddEdit.php:340
+#: ../InvoiceAddEdit.php:343
 msgid "Customer reference"
 msgstr "Müşteri referansı"
 
@@ -2406,8 +2408,8 @@ msgstr "Oluşum tarihi"
 msgid "State"
 msgstr "Şehir"
 
-#: ../lib/Objects/CurrencyConverter.php:291 ../menu.inc.php:676
-#: ../menu.inc.php:678
+#: ../lib/Objects/CurrencyConverter.php:291 ../menu.inc.php:682
+#: ../menu.inc.php:684
 msgid "Currency converter"
 msgstr ""
 
@@ -2464,7 +2466,7 @@ msgstr "Float"
 #: ../ActionList.php:111 ../ChainCommandList.php:175 ../CommandList.php:289
 #: ../CommandList.php:290 ../PrestationCommandList.php:121
 #: ../FlightNotebook.php:161 ../DocumentList.php:142 ../ToHaveList.php:117
-#: void:1
+#: ../CommercialCommissions.php:94 void:1
 msgid "Date"
 msgstr "Tarih"
 
@@ -2683,9 +2685,9 @@ msgstr "İptal edildi"
 #: ../lib/Objects/Alert.const.php:182 ../lib/Objects/Alert.const.php:206
 #: ../lib/Objects/Alert.const.php:435 ../lib/Objects/Alert.const.php:445
 #: ../lib/Objects/DocumentModel.inc.php:49 ../lib/DocumentGenerator.php:734
-#: ../InvoicePaymentList.php:46 ../InvoiceAddEdit.php:496
+#: ../InvoicePaymentList.php:46 ../InvoiceAddEdit.php:499
 #: ../InvoiceChainCommandList.php:296 ../InvoiceList.php:139
-#: ../InvoiceMail.php:46
+#: ../InvoiceMail.php:46 ../CommercialCommissions.php:91
 msgid "Invoice"
 msgstr "Fatura"
 
@@ -2730,11 +2732,11 @@ msgstr "Bu müşteri için hizmet numarası"
 msgid "Contact roles"
 msgstr ""
 
-#: ../lib/Objects/_RTWShape.php:77 ../menu.inc.php:413
+#: ../lib/Objects/_RTWShape.php:77 ../menu.inc.php:419
 msgid "Shapes"
 msgstr ""
 
-#: ../lib/Objects/RTWSize.php:165 ../menu.inc.php:385
+#: ../lib/Objects/RTWSize.php:165 ../menu.inc.php:391
 msgid "Sizes"
 msgstr ""
 
@@ -2856,14 +2858,14 @@ msgstr "Versiyon"
 #: ../lib/DocumentGenerator.php:1142 ../lib/DocumentGenerator.php:1500
 #: ../lib/DocumentGenerator.php:1599 ../lib/DocumentGenerator.php:1867
 #: ../lib/DocumentGenerator.php:2142 ../PrestationInvoiceAddEdit.php:179
-#: ../ActivatedMovementList.php:192 ../InvoiceAddEdit.php:364
+#: ../ActivatedMovementList.php:192 ../InvoiceAddEdit.php:367
 #: ../InvoiceChainCommandList.php:225 ../ProductCommand.php:231
 #: ../LocationExecutedMovementList.php:316 ../InvoiceDetail.php:88
 #: ../InventoryDetailList.php:129 ../ChainCommandInvoiceDetail.php:80 void:1
 msgid "Qty"
 msgstr "Miktar"
 
-#: ../lib/Objects/_RTWLabel.php:77 ../menu.inc.php:427
+#: ../lib/Objects/_RTWLabel.php:77 ../menu.inc.php:433
 msgid "Labels (griffes)"
 msgstr ""
 
@@ -2966,12 +2968,13 @@ msgid "Customer code"
 msgstr "Müşteri kodu"
 
 #: ../lib/Objects/DocumentModelProperty.php:128
-#: ../lib/Objects/_UserAccount.php:379 ../lib/ActionTools.php:117
+#: ../lib/Objects/_UserAccount.php:385 ../lib/ActionTools.php:117
 #: ../BoardByCommercial.php:53 ../PrestationInvoiceAddEdit.php:137
-#: ../menu.inc.php:809 ../PreferencesWebSite.php:73 ../ProductCommand.php:172
+#: ../menu.inc.php:815 ../PreferencesWebSite.php:73 ../ProductCommand.php:172
 #: ../CommandList.php:159 ../CommandList.php:282
 #: ../PrestationCommandList.php:129 ../ActorList.php:101 ../ActorList.php:277
-#: void:1
+#: ../SalesmenCommissionSettings.php:67 ../CommercialCommissions.php:47
+#: ../CommercialCommissions.php:97 void:1
 msgid "Salesman"
 msgstr "Satış elemanı"
 
@@ -3039,7 +3042,7 @@ msgstr "Parçaların toplam sayısı"
 msgid "No planning assigned to site %s"
 msgstr "Bölgeye hiçbir planlama tahsis edilmedi %s"
 
-#: ../lib/Objects/_RTWColor.php:109 ../menu.inc.php:378
+#: ../lib/Objects/_RTWColor.php:109 ../menu.inc.php:384
 msgid "Colors"
 msgstr ""
 
@@ -3175,7 +3178,7 @@ msgid "breaking-down of discount"
 msgstr "İndirimin  başa baş noktası"
 
 #: ../lib/Objects/_Account.php:662 ../lib/Objects/_OnlogisticsAccount.php:478
-#: ../menu.inc.php:603
+#: ../menu.inc.php:609
 msgid "Accounts"
 msgstr "Hesaplar"
 
@@ -3920,7 +3923,7 @@ msgstr "Kilitlenen sipariş"
 msgid "Select one or more states"
 msgstr "Bir veya daha fazla şehir seçiniz "
 
-#: ../lib/Objects/Command.const.php:54 ../menu.inc.php:916
+#: ../lib/Objects/Command.const.php:54 ../menu.inc.php:936
 msgid "Completed flights"
 msgstr "Tamamlanan uçuşlar"
 
@@ -3992,7 +3995,7 @@ msgstr "Metin"
 msgid "Targeted customer categories"
 msgstr "Hedeflenen müşteri kategorisi"
 
-#: ../lib/Objects/RTWHeelHeight.php:77 ../menu.inc.php:434
+#: ../lib/Objects/RTWHeelHeight.php:77 ../menu.inc.php:440
 msgid "Heel heights"
 msgstr ""
 
@@ -4005,7 +4008,7 @@ msgid "multiple"
 msgstr "çok"
 
 #: ../lib/Objects/RTWProduct.php:76 ../lib/Objects/_RTWProduct.php:296
-#: ../lib/Objects/_RTWProduct.php:297
+#: ../lib/Objects/_RTWProduct.php:297 void:1
 msgid "Size"
 msgstr ""
 
@@ -4013,18 +4016,18 @@ msgstr ""
 msgid "In alert"
 msgstr "Alarm durumu"
 
-#: ../lib/Objects/Contact.const.php:50 ../lib/Objects/_UserAccount.php:1296
-#: ../lib/Objects/_UserAccount.php:1297 void:1
+#: ../lib/Objects/Contact.const.php:50 ../lib/Objects/_UserAccount.php:1337
+#: ../lib/Objects/_UserAccount.php:1338 void:1
 msgid "Email"
 msgstr "Email"
 
-#: ../lib/Objects/Contact.const.php:51 ../lib/Objects/_UserAccount.php:1278
-#: ../lib/Objects/_UserAccount.php:1279 void:1
+#: ../lib/Objects/Contact.const.php:51 ../lib/Objects/_UserAccount.php:1319
+#: ../lib/Objects/_UserAccount.php:1320 void:1
 msgid "Phone"
 msgstr "Telefon"
 
-#: ../lib/Objects/Contact.const.php:52 ../lib/Objects/_UserAccount.php:1287
-#: ../lib/Objects/_UserAccount.php:1288 void:1
+#: ../lib/Objects/Contact.const.php:52 ../lib/Objects/_UserAccount.php:1328
+#: ../lib/Objects/_UserAccount.php:1329 void:1
 msgid "Fax"
 msgstr "Fax"
 
@@ -4298,7 +4301,7 @@ msgstr "potensiyel güncelleme kabul edildi"
 msgid "set customer in alert state"
 msgstr "müşteriyi alarm durumuna ayarla"
 
-#: ../lib/Objects/_RTWSeason.php:77 ../menu.inc.php:392
+#: ../lib/Objects/_RTWSeason.php:77 ../menu.inc.php:398
 msgid "Seasons"
 msgstr ""
 
@@ -4306,7 +4309,7 @@ msgstr ""
 msgid "Element"
 msgstr ""
 
-#: ../lib/Objects/_RTWConstructionType.php:77 ../menu.inc.php:399
+#: ../lib/Objects/_RTWConstructionType.php:77 ../menu.inc.php:405
 msgid "Construction types"
 msgstr ""
 
@@ -4457,17 +4460,17 @@ msgstr ""
 msgid "Reduced"
 msgstr ""
 
-#: ../lib/Objects/RTWPressName.php:77 ../menu.inc.php:420
+#: ../lib/Objects/RTWPressName.php:77 ../menu.inc.php:426
 msgid "Press names"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2321 ../menu.inc.php:493 ../menu.inc.php:615
-#: ../menu.inc.php:787
+#: ../lib/Objects/_RTWModel.php:2321 ../menu.inc.php:499 ../menu.inc.php:621
+#: ../menu.inc.php:793
 msgid "Models"
 msgstr "Modeller"
 
 #: ../lib/Objects/_RTWModel.php:2482 ../lib/Objects/_RTWModel.php:2483
-#: ../lib/DocumentGenerator.php:3701
+#: ../lib/DocumentGenerator.php:3701 ../CommercialCommissions.php:64
 msgid "Season"
 msgstr ""
 
@@ -4730,7 +4733,7 @@ msgstr "Dahili giriş"
 msgid "Internal issue"
 msgstr "Dahili çıkış"
 
-#: ../lib/Objects/RTWConstructionCode.php:77 ../menu.inc.php:406
+#: ../lib/Objects/RTWConstructionCode.php:77 ../menu.inc.php:412
 msgid "Construction codes"
 msgstr ""
 
@@ -4920,7 +4923,7 @@ msgid "Expense or receipt"
 msgstr "Gider veya gelir"
 
 #: ../lib/Objects/_FlowType.php:656 ../lib/Objects/_FlowType.php:657
-#: ../menu.inc.php:821 ../StockProductRealandVirtualList.php:121
+#: ../menu.inc.php:841 ../StockProductRealandVirtualList.php:121
 #: ../PreferencesWebSite.php:77 ../ProductQuantityByCategoryList.php:67
 #: ../BoardByCategory.php:52 ../ActorList.php:109 void:1
 msgid "Category"
@@ -4985,146 +4988,146 @@ msgstr "Maliyet modelleri"
 msgid "Include nomenclature costs"
 msgstr "Terminoloji maliyetleri dahil"
 
-#: ../lib/Objects/_UserAccount.php:374
+#: ../lib/Objects/_UserAccount.php:380
 msgid "Root user"
 msgstr "Root kullanıcı"
 
-#: ../lib/Objects/_UserAccount.php:375 ../menu.inc.php:40 void:1
+#: ../lib/Objects/_UserAccount.php:381 ../menu.inc.php:40 void:1
 msgid "Admin"
 msgstr "Admin"
 
-#: ../lib/Objects/_UserAccount.php:377
+#: ../lib/Objects/_UserAccount.php:383
 msgid "Supervisor"
 msgstr "Supervisor"
 
-#: ../lib/Objects/_UserAccount.php:378 ../lib/Objects/Actor.inc.php:44
+#: ../lib/Objects/_UserAccount.php:384 ../lib/Objects/Actor.inc.php:44
 #: ../ProductionTaskValidation.php:118 ../UnavailabilityPlanning.php:114
 msgid "Operator"
 msgstr "Operatör"
 
-#: ../lib/Objects/_UserAccount.php:382
+#: ../lib/Objects/_UserAccount.php:388
 msgid "Sales management"
 msgstr "Satış yönetimi"
 
-#: ../lib/Objects/_UserAccount.php:383
+#: ../lib/Objects/_UserAccount.php:389
 msgid "Stock management"
 msgstr "Stok yönetimi"
 
-#: ../lib/Objects/_UserAccount.php:384
+#: ../lib/Objects/_UserAccount.php:390
 msgid "Deposited supplier"
 msgstr "Depolama yapan tedarikçi"
 
-#: ../lib/Objects/_UserAccount.php:385 ../lib/DocumentGenerator.php:2994
+#: ../lib/Objects/_UserAccount.php:391 ../lib/DocumentGenerator.php:2994
 #: ../ForwardingFormEdit.php:353
 msgid "Carrier"
 msgstr "Taşıyıcı"
 
-#: ../lib/Objects/_UserAccount.php:386
+#: ../lib/Objects/_UserAccount.php:392
 msgid "Admin level 2"
 msgstr "Admin seviye 2"
 
-#: ../lib/Objects/_UserAccount.php:387 ../ActorAddEdit.php:529
+#: ../lib/Objects/_UserAccount.php:393 ../ActorAddEdit.php:529
 msgid "Aeronautical customer"
 msgstr "Havacılık müşterisi"
 
-#: ../lib/Objects/_UserAccount.php:388 ../ActorAddEdit.php:531
+#: ../lib/Objects/_UserAccount.php:394 ../ActorAddEdit.php:531
 msgid "Aeronautical supplier"
 msgstr "Havacılık tedarikçisi"
 
-#: ../lib/Objects/_UserAccount.php:389
+#: ../lib/Objects/_UserAccount.php:395
 msgid "Aircraft instructor"
 msgstr "Uçak eğitmeni"
 
-#: ../lib/Objects/_UserAccount.php:390 ../ActorAddEdit.php:530
+#: ../lib/Objects/_UserAccount.php:396 ../ActorAddEdit.php:530
 msgid "Aeronautical operator"
 msgstr "Havacılık operatörü"
 
-#: ../lib/Objects/_UserAccount.php:391
+#: ../lib/Objects/_UserAccount.php:397
 msgid "Aeronautics sales management"
 msgstr "Havacılık satış yönetimi"
 
-#: ../lib/Objects/_UserAccount.php:392
+#: ../lib/Objects/_UserAccount.php:398
 msgid "Carriage customer"
 msgstr "Nakliye müşterisi"
 
-#: ../lib/Objects/_UserAccount.php:393
+#: ../lib/Objects/_UserAccount.php:399
 msgid "Accountant"
 msgstr "Muhasebeci"
 
-#: ../lib/Objects/_UserAccount.php:394
+#: ../lib/Objects/_UserAccount.php:400
 msgid "Sales manager"
 msgstr "Satış manageri"
 
-#: ../lib/Objects/_UserAccount.php:395
+#: ../lib/Objects/_UserAccount.php:401
 msgid "External customer"
 msgstr "Harici müşteri"
 
-#: ../lib/Objects/_UserAccount.php:396
+#: ../lib/Objects/_UserAccount.php:402
 msgid "Owner customer"
 msgstr "Mal sahibi müşteri"
 
-#: ../lib/Objects/_UserAccount.php:397
+#: ../lib/Objects/_UserAccount.php:403
 msgid "Subsidiary accountant"
 msgstr "Yardımcı muhasebeci"
 
-#: ../lib/Objects/_UserAccount.php:398 ../lib/Objects/Actor.inc.php:41
+#: ../lib/Objects/_UserAccount.php:404 ../lib/Objects/Actor.inc.php:41
 #: ../ActivatedChainTaskList.php:123 ../ProductCommand.php:183
 #: ../CommandList.php:130 ../UnavailabilityPlanning.php:129
 #: ../ActorAddEdit.php:536
 msgid "Project manager"
 msgstr ""
 
-#: ../lib/Objects/_UserAccount.php:399
+#: ../lib/Objects/_UserAccount.php:405
 msgid "Product manager"
 msgstr ""
 
-#: ../lib/Objects/_UserAccount.php:1064
+#: ../lib/Objects/_UserAccount.php:1104
 msgid "Add/Update user account"
 msgstr "Kullanıcı hesabı Ekle/Güncelle"
 
-#: ../lib/Objects/_UserAccount.php:1242
+#: ../lib/Objects/_UserAccount.php:1283
 msgid "Full name"
 msgstr "Tam isim"
 
-#: ../lib/Objects/_UserAccount.php:1248 ../lib/Objects/_UserAccount.php:1257
-#: ../lib/Objects/_UserAccount.php:1266 ../lib/Objects/_UserAccount.php:1275
-#: ../lib/Objects/_UserAccount.php:1284 ../lib/Objects/_UserAccount.php:1293
-#: ../lib/Objects/_UserAccount.php:1302 ../lib/Objects/_UserAccount.php:1311
-#: ../lib/Objects/_UserAccount.php:1320 ../lib/Objects/_UserAccount.php:1329
-#: ../lib/Objects/_UserAccount.php:1338
+#: ../lib/Objects/_UserAccount.php:1289 ../lib/Objects/_UserAccount.php:1298
+#: ../lib/Objects/_UserAccount.php:1307 ../lib/Objects/_UserAccount.php:1316
+#: ../lib/Objects/_UserAccount.php:1325 ../lib/Objects/_UserAccount.php:1334
+#: ../lib/Objects/_UserAccount.php:1343 ../lib/Objects/_UserAccount.php:1352
+#: ../lib/Objects/_UserAccount.php:1361 ../lib/Objects/_UserAccount.php:1370
+#: ../lib/Objects/_UserAccount.php:1379
 msgid "User account data"
 msgstr "Kullanıcı hesabı verisi"
 
-#: ../lib/Objects/_UserAccount.php:1260 ../lib/Objects/_UserAccount.php:1261
+#: ../lib/Objects/_UserAccount.php:1301 ../lib/Objects/_UserAccount.php:1302
 #: void:1
 msgid "Username"
 msgstr "Kullanıcı ismi"
 
-#: ../lib/Objects/_UserAccount.php:1269 ../lib/Objects/_UserAccount.php:1270
+#: ../lib/Objects/_UserAccount.php:1310 ../lib/Objects/_UserAccount.php:1311
 #: void:1
 msgid "Password"
 msgstr "Parola"
 
-#: ../lib/Objects/_UserAccount.php:1305 ../lib/Objects/_UserAccount.php:1306
+#: ../lib/Objects/_UserAccount.php:1346 ../lib/Objects/_UserAccount.php:1347
 msgid "Profile"
 msgstr "Profil"
 
-#: ../lib/Objects/_UserAccount.php:1314 ../lib/Objects/_UserAccount.php:1315
-#: ../menu.inc.php:520 ../menu.inc.php:522 void:1
+#: ../lib/Objects/_UserAccount.php:1355 ../lib/Objects/_UserAccount.php:1356
+#: ../menu.inc.php:526 ../menu.inc.php:528 void:1
 msgid "Customer catalogue"
 msgstr "Müşteri kataloğu"
 
-#: ../lib/Objects/_UserAccount.php:1323 ../lib/Objects/_UserAccount.php:1324
-#: ../menu.inc.php:514 ../menu.inc.php:516
+#: ../lib/Objects/_UserAccount.php:1364 ../lib/Objects/_UserAccount.php:1365
+#: ../menu.inc.php:520 ../menu.inc.php:522
 msgid "Supplier catalogue"
 msgstr "Tedarikçi kataloğu"
 
-#: ../lib/Objects/_UserAccount.php:1332 ../lib/Objects/_UserAccount.php:1333
+#: ../lib/Objects/_UserAccount.php:1373 ../lib/Objects/_UserAccount.php:1374
 #: void:1
 msgid "Sites"
 msgstr "Mevki"
 
-#: ../lib/Objects/Invoice.php:207 ../lib/Objects/Actor.inc.php:43
+#: ../lib/Objects/Invoice.php:213 ../lib/Objects/Actor.inc.php:43
 #: ../ActivatedFlightList.php:102 ../ActivatedFlightList.php:189
 #: ../UnavailabilityPlanning.php:189 ../UnavailabilityPlanning.php:707
 #: ../FlightNotebook.php:89 ../CourseCommandList.php:153
@@ -5132,7 +5135,7 @@ msgstr "Mevki"
 msgid "Instructor"
 msgstr "Eğitmen"
 
-#: ../lib/Objects/Invoice.php:213 ../FlyBoardBook.php:135
+#: ../lib/Objects/Invoice.php:219 ../FlyBoardBook.php:135
 #: ../ActivatedFlightList.php:183 void:1
 msgid "Duration"
 msgstr "Süreç"
@@ -5232,7 +5235,7 @@ msgid "Number of parcels"
 msgstr "Kolilerin sayısı"
 
 #: ../lib/Objects/Actor.inc.php:54 ../PrestationInvoiceAddEdit.php:224
-#: ../ProductCommandSupplier.php:267 ../InvoiceAddEdit.php:471
+#: ../ProductCommandSupplier.php:267 ../InvoiceAddEdit.php:474
 #: ../InvoiceChainCommandList.php:243 ../ProductCommand.php:304
 #: ../ActorIncurAddEdit.php:147 ../ActorIncurAddEdit.php:160
 msgid "Undefined"
@@ -5990,7 +5993,7 @@ msgid "Details of locations charged in storage service."
 msgstr "Stoklama servisi için ödenen mevkinin ayrıntıları"
 
 #: ../lib/DocumentGenerator.php:1718 ../PrestationInvoiceAddEdit.php:186
-#: ../InvoiceAddEdit.php:381 ../InvoiceDetail.php:83
+#: ../InvoiceAddEdit.php:384 ../InvoiceDetail.php:83
 msgid "Unit price excl. VAT"
 msgstr "KDV hariç birim fiyat"
 
@@ -6216,7 +6219,7 @@ msgstr "From (adres)"
 msgid "To"
 msgstr "To"
 
-#: ../lib/DocumentGenerator.php:3279 ../InvoiceAddEdit.php:345 void:1
+#: ../lib/DocumentGenerator.php:3279 ../InvoiceAddEdit.php:348 void:1
 msgid "Basis excl. VAT"
 msgstr "KDV hariç matrah"
 
@@ -7345,7 +7348,7 @@ msgstr "Kredi notu numarası"
 msgid "Remaining amount incl. VAT"
 msgstr "KDV dahil kalan miktar"
 
-#: ../PaymentToHaveList.php:106 ../menu.inc.php:590
+#: ../PaymentToHaveList.php:106 ../menu.inc.php:596
 msgid "List of credit notes"
 msgstr "Kredi notları listesi"
 
@@ -7399,15 +7402,15 @@ msgstr "Görevlerin listesine geri dön"
 msgid "Task validation "
 msgstr "Görev onaylama"
 
-#: ../PrestationInvoiceAddEdit.php:49 ../menu.inc.php:578
+#: ../PrestationInvoiceAddEdit.php:49 ../menu.inc.php:584
 msgid "Services invoices"
 msgstr "Hizmet faturaları"
 
-#: ../PrestationInvoiceAddEdit.php:113 ../InvoiceAddEdit.php:154
+#: ../PrestationInvoiceAddEdit.php:113 ../InvoiceAddEdit.php:157
 msgid "Invoice could not be sent by email because no user "
 msgstr "Fatura email ile gönderilemez çünkü kullanıcı yoktur"
 
-#: ../PrestationInvoiceAddEdit.php:114 ../InvoiceAddEdit.php:155
+#: ../PrestationInvoiceAddEdit.php:114 ../InvoiceAddEdit.php:158
 msgid "is set to receive it."
 msgstr "kabul etmek için set edildi."
 
@@ -7445,7 +7448,7 @@ msgid "Insurances charges"
 msgstr "Sigorta ücreti"
 
 #: ../PrestationInvoiceAddEdit.php:174 ../ProductCommandSupplier.php:213
-#: ../InvoiceAddEdit.php:354 ../ProductCommand.php:227 ../InvoiceDetail.php:86
+#: ../InvoiceAddEdit.php:357 ../ProductCommand.php:227 ../InvoiceDetail.php:86
 #: ../CourseInvoiceDetail.php:79
 msgid "% VAT"
 msgstr "% KDV"
@@ -8243,37 +8246,37 @@ msgstr "Bir para birimi seçiniz"
 msgid "Billing impossible."
 msgstr "Mümkün olmayan faturalama."
 
-#: ../InvoiceAddEdit.php:159
+#: ../InvoiceAddEdit.php:162
 msgid "Invoice was successfully sent by e-mail."
 msgstr "Fatura e-mail ile başarıyla gönderildi."
 
-#: ../InvoiceAddEdit.php:167 ../InvoiceChainCommandList.php:170
+#: ../InvoiceAddEdit.php:170 ../InvoiceChainCommandList.php:170
 msgid "Please select an order for billing."
 msgstr "Lütfen faturalama için bir sipariş seçiniz."
 
-#: ../InvoiceAddEdit.php:182 ../InvoiceChainCommandList.php:185
+#: ../InvoiceAddEdit.php:185 ../InvoiceChainCommandList.php:185
 msgid ""
 "Order is locked because outstanding debts amount exceeds its maximum value."
 msgstr ""
 "Sipariş kilitlendi çünkü tahsil edilmeyen borç miktarı maximum limiti aştı."
 
-#: ../InvoiceAddEdit.php:188
+#: ../InvoiceAddEdit.php:191
 msgid "This order is not billable."
 msgstr "Bu sipariş faturalanamaz."
 
-#: ../InvoiceAddEdit.php:372
+#: ../InvoiceAddEdit.php:375
 msgid "Offer on sale "
 msgstr "Satış teklifi"
 
-#: ../InvoiceAddEdit.php:377
+#: ../InvoiceAddEdit.php:380
 msgid "Disc."
 msgstr "Diskount"
 
-#: ../InvoiceAddEdit.php:383 ../InvoiceDetail.php:99
+#: ../InvoiceAddEdit.php:386 ../InvoiceDetail.php:99
 msgid "Deliv."
 msgstr "Teslimat"
 
-#: ../InvoiceAddEdit.php:388 ../InvoiceDetail.php:104
+#: ../InvoiceAddEdit.php:391 ../InvoiceDetail.php:104
 msgid "Yes (Partial)"
 msgstr "Evet (Kısmi)"
 
@@ -8438,7 +8441,7 @@ msgid "Consumed fuel"
 msgstr "Tamamen harcanmış fuel"
 
 #: ../LocationConcreteProductList.php:54 ../menu.inc.php:296
-#: ../menu.inc.php:501
+#: ../menu.inc.php:507
 msgid "List of SN/Lots"
 msgstr "SN/Lots listesi"
 
@@ -9141,7 +9144,7 @@ msgstr "site"
 msgid "Property"
 msgstr "Özellik"
 
-#: ../StockAccountingExport.php:76 ../menu.inc.php:713 void:1
+#: ../StockAccountingExport.php:76 ../menu.inc.php:719 void:1
 msgid "Stock"
 msgstr "Stok"
 
@@ -9395,7 +9398,7 @@ msgstr "Faaliyetler"
 msgid "Movement execution preferences"
 msgstr "Faaliyet uygulama tercihleri"
 
-#: ../menu.inc.php:210 ../menu.inc.php:760
+#: ../menu.inc.php:210 ../menu.inc.php:766
 msgid "Supplying optimization"
 msgstr "Tedarik optimizasyonu"
 
@@ -9467,7 +9470,7 @@ msgstr "Müşteriye göre referanslar"
 msgid "Product references by customer"
 msgstr "Müşteriye göre ürün referansları"
 
-#: ../menu.inc.php:294 ../menu.inc.php:499
+#: ../menu.inc.php:294 ../menu.inc.php:505
 msgid "SN/Lots"
 msgstr "SN/Lots"
 
@@ -9492,425 +9495,437 @@ msgid "Contact roles management"
 msgstr ""
 
 #: ../menu.inc.php:320 ../menu.inc.php:322
+msgid "Salesmen commission settings"
+msgstr ""
+
+#: ../menu.inc.php:326 ../menu.inc.php:328
 msgid "Supplying settings"
 msgstr "Tedarik ayarları"
 
-#: ../menu.inc.php:326
+#: ../menu.inc.php:332
 msgid "Zones"
 msgstr "Zonlar"
 
-#: ../menu.inc.php:328 ../ZoneList.php:52
+#: ../menu.inc.php:334 ../ZoneList.php:52
 msgid "list of zones"
 msgstr "Zonların listesi"
 
-#: ../menu.inc.php:332 ../menu.inc.php:576
+#: ../menu.inc.php:338 ../menu.inc.php:582
 msgid "Services"
 msgstr "Servisler"
 
-#: ../menu.inc.php:334
+#: ../menu.inc.php:340
 msgid "List of services"
 msgstr "Servislerin listesi"
 
-#: ../menu.inc.php:340
+#: ../menu.inc.php:346
 msgid "List of airplane types"
 msgstr "Uçak modelleri listesi"
 
-#: ../menu.inc.php:345
+#: ../menu.inc.php:351
 msgid "Costs"
 msgstr "Maliyetler"
 
-#: ../menu.inc.php:352
+#: ../menu.inc.php:358
 msgid "List of resources"
 msgstr "Kaynak listesi"
 
-#: ../menu.inc.php:358
+#: ../menu.inc.php:364
 msgid "List of product resources"
 msgstr "Ürün kaynak listesi"
 
-#: ../menu.inc.php:362
+#: ../menu.inc.php:368
 msgid "Cost models"
 msgstr "Maliyet örnekleri"
 
-#: ../menu.inc.php:364
+#: ../menu.inc.php:370
 msgid "List of cost models"
 msgstr "Maliyet örnekleri listesi"
 
-#: ../menu.inc.php:371 ../menu.inc.php:373
+#: ../menu.inc.php:377 ../menu.inc.php:379
 msgid "Data management"
 msgstr ""
 
-#: ../menu.inc.php:380
+#: ../menu.inc.php:386
 msgid "Colors management"
 msgstr ""
 
-#: ../menu.inc.php:387
+#: ../menu.inc.php:393
 msgid "Sizes management"
 msgstr ""
 
-#: ../menu.inc.php:394
+#: ../menu.inc.php:400
 msgid "Seasons management"
 msgstr ""
 
-#: ../menu.inc.php:401
+#: ../menu.inc.php:407
 msgid "Construction types management"
 msgstr ""
 
-#: ../menu.inc.php:408
+#: ../menu.inc.php:414
 msgid "Construction codes management"
 msgstr ""
 
-#: ../menu.inc.php:415
+#: ../menu.inc.php:421
 msgid "Shapes management"
 msgstr ""
 
-#: ../menu.inc.php:422
+#: ../menu.inc.php:428
 msgid "Press names management"
 msgstr ""
 
-#: ../menu.inc.php:429
+#: ../menu.inc.php:435
 msgid "Labels (griffes) management"
 msgstr ""
 
-#: ../menu.inc.php:436
+#: ../menu.inc.php:442
 msgid "Heel heights management"
 msgstr ""
 
-#: ../menu.inc.php:443 ../menu.inc.php:445
+#: ../menu.inc.php:449 ../menu.inc.php:451
 msgid "Materials management"
 msgstr ""
 
-#: ../menu.inc.php:450
+#: ../menu.inc.php:456
 msgid "Worksheets"
 msgstr ""
 
-#: ../menu.inc.php:452
+#: ../menu.inc.php:458
 msgid "Worksheets management"
 msgstr ""
 
-#: ../menu.inc.php:461 void:1
+#: ../menu.inc.php:467 void:1
 msgid "Pricing"
 msgstr "Fiyatlandırma"
 
-#: ../menu.inc.php:466
+#: ../menu.inc.php:472
 msgid "Seasonalities"
 msgstr "Mevsimlikler"
 
-#: ../menu.inc.php:468
+#: ../menu.inc.php:474
 msgid "List of seasonalities"
 msgstr "Mevsimliklerin listesi"
 
-#: ../menu.inc.php:472
+#: ../menu.inc.php:478
 msgid "Offers on sale"
 msgstr "Satış teklifleri"
 
-#: ../menu.inc.php:474
+#: ../menu.inc.php:480
 msgid "List of offers on sale"
 msgstr "Satış teklifleri listesi"
 
-#: ../menu.inc.php:478
+#: ../menu.inc.php:484
 msgid "Discounts by category"
 msgstr "Kategoriye göre indirim"
 
-#: ../menu.inc.php:480
+#: ../menu.inc.php:486
 msgid "List of discounts by customer category"
 msgstr "Müşteri kategorisine göre indirim listesi"
 
-#: ../menu.inc.php:488 ../ChainActivationTaskDetail.php:98 void:1
+#: ../menu.inc.php:494 ../ChainActivationTaskDetail.php:98 void:1
 msgid "Nomenclatures"
 msgstr "Terminolojiler"
 
-#: ../menu.inc.php:495
+#: ../menu.inc.php:501
 msgid "List of nomenclatures models"
 msgstr "Terminoloji modelleri listesi"
 
-#: ../menu.inc.php:509 void:1
+#: ../menu.inc.php:515 void:1
 msgid "Orders"
 msgstr "Sipariş"
 
-#: ../menu.inc.php:528
+#: ../menu.inc.php:534
 msgid "List of carriage services"
 msgstr "Taşıyıcı servis listesi"
 
-#: ../menu.inc.php:552 void:1
+#: ../menu.inc.php:558 void:1
 msgid "Orders follow-up"
 msgstr "Sipariş takibi"
 
-#: ../menu.inc.php:557
+#: ../menu.inc.php:563
 msgid "Product orders"
 msgstr "Ürün siparişleri"
 
-#: ../menu.inc.php:559 ../menu.inc.php:565 ../PaymentCommandList.php:72
+#: ../menu.inc.php:565 ../menu.inc.php:571 ../PaymentCommandList.php:72
 msgid "State of orders"
 msgstr "Sipariş şehri"
 
-#: ../menu.inc.php:563
+#: ../menu.inc.php:569
 msgid "Carriage orders"
 msgstr "Nakliye emirleri"
 
-#: ../menu.inc.php:569
+#: ../menu.inc.php:575
 msgid "Class bookings"
 msgstr "Ders rezervasyonları"
 
-#: ../menu.inc.php:571
+#: ../menu.inc.php:577
 msgid "Class bookings follow-up"
 msgstr "Ders rezervasyonları takibi"
 
-#: ../menu.inc.php:582
+#: ../menu.inc.php:588
 msgid "Estimates"
 msgstr ""
 
-#: ../menu.inc.php:584
+#: ../menu.inc.php:590
 msgid "List of estimates"
 msgstr ""
 
-#: ../menu.inc.php:588
+#: ../menu.inc.php:594
 msgid "Credit notes"
 msgstr "Kredi notları"
 
-#: ../menu.inc.php:598 ../menu.inc.php:664 ../menu.inc.php:666
+#: ../menu.inc.php:604 ../menu.inc.php:670 ../menu.inc.php:672
 #: ../CashBalance.php:71 void:1
 msgid "Cash flow"
 msgstr "Nakit akışı"
 
-#: ../menu.inc.php:605
+#: ../menu.inc.php:611
 msgid "Accounts management"
 msgstr "Muhasebe yönetimi"
 
-#: ../menu.inc.php:609
+#: ../menu.inc.php:615
 msgid "Banks"
 msgstr "Bankalar"
 
-#: ../menu.inc.php:611
+#: ../menu.inc.php:617
 msgid "List of banks"
 msgstr "Banka listeleri"
 
-#: ../menu.inc.php:620
+#: ../menu.inc.php:626
 msgid "Accounting types"
 msgstr "Muhasebe çeşitleri"
 
-#: ../menu.inc.php:622
+#: ../menu.inc.php:628
 msgid "Accounting types management"
 msgstr "Muhasebe çeşidi yönetimi"
 
-#: ../menu.inc.php:626 ../menu.inc.php:628
+#: ../menu.inc.php:632 ../menu.inc.php:634
 msgid "Categories of expenses and receipts"
 msgstr "Gelir ve gider kategorileri"
 
-#: ../menu.inc.php:632 ../menu.inc.php:634
+#: ../menu.inc.php:638 ../menu.inc.php:640
 msgid "Expenses and receipts models"
 msgstr "Gelir ve gider modelleri"
 
-#: ../menu.inc.php:640 ../menu.inc.php:642
+#: ../menu.inc.php:646 ../menu.inc.php:648
 msgid "Forecasts of expenses and receipts"
 msgstr "Gelir ve gider tahminleri"
 
-#: ../menu.inc.php:646 ../menu.inc.php:648
+#: ../menu.inc.php:652 ../menu.inc.php:654
 msgid "Expenses and receipts"
 msgstr "Gelir ve giderler"
 
-#: ../menu.inc.php:652 ../menu.inc.php:654 ../menu.inc.php:742
-#: ../menu.inc.php:866
+#: ../menu.inc.php:658 ../menu.inc.php:660 ../menu.inc.php:748
+#: ../menu.inc.php:886
 msgid "History"
 msgstr "Geçmiş"
 
-#: ../menu.inc.php:658 ../menu.inc.php:660
+#: ../menu.inc.php:664 ../menu.inc.php:666
 msgid "Accounts receivable aging"
 msgstr "Alacak hesapları sıralaması"
 
-#: ../menu.inc.php:670
+#: ../menu.inc.php:676
 msgid "Breaking-down"
 msgstr "Kırılma noktası"
 
-#: ../menu.inc.php:672 void:1
+#: ../menu.inc.php:678 void:1
 msgid "Breaking-down data export"
 msgstr "Kırılma noktası data export"
 
-#: ../menu.inc.php:686 void:1
+#: ../menu.inc.php:692 void:1
 msgid "Work order"
 msgstr "Sipariş emri"
 
-#: ../menu.inc.php:691
+#: ../menu.inc.php:697
 msgid "Scheduled chains"
 msgstr "Zamanlanmış zincir"
 
-#: ../menu.inc.php:693 ../menu.inc.php:880
+#: ../menu.inc.php:699 ../menu.inc.php:900
 msgid "List of activated chains"
 msgstr "Aktif edilmiş zincir listesi"
 
-#: ../menu.inc.php:697
+#: ../menu.inc.php:703
 msgid "Work orders"
 msgstr "Sipariş emirleri"
 
-#: ../menu.inc.php:699
+#: ../menu.inc.php:705
 msgid "Work orders management"
 msgstr "Sipariş emirleri yönetimi"
 
-#: ../menu.inc.php:703 ../menu.inc.php:705
+#: ../menu.inc.php:709 ../menu.inc.php:711
 msgid "Regrouping in work order"
 msgstr "Sipriş emrine göre yeniden gruplama"
 
-#: ../menu.inc.php:718 ../menu.inc.php:720 void:1
+#: ../menu.inc.php:724 ../menu.inc.php:726 void:1
 msgid "Amount of stock"
 msgstr "Stok miktarı"
 
-#: ../menu.inc.php:724
+#: ../menu.inc.php:730
 msgid "Stock state"
 msgstr "Stok durumu"
 
-#: ../menu.inc.php:726
+#: ../menu.inc.php:732
 msgid "List of storage sites"
 msgstr "Depolama yerleri listesi"
 
-#: ../menu.inc.php:730 ../menu.inc.php:732
+#: ../menu.inc.php:736 ../menu.inc.php:738
 msgid "Expected movements"
 msgstr "Beklenen hareketler"
 
-#: ../menu.inc.php:736
+#: ../menu.inc.php:742
 msgid "Unexpected movements"
 msgstr "Beklenmeyen faaliyetler"
 
-#: ../menu.inc.php:738
+#: ../menu.inc.php:744
 msgid "Unexpected movement execution"
 msgstr "Beklenmeyen hareketlerin uygulaması"
 
-#: ../menu.inc.php:744
+#: ../menu.inc.php:750
 msgid "List of executed movements"
 msgstr "Gerçekleşmiş eylemlerin listesi"
 
-#: ../menu.inc.php:748 ../menu.inc.php:750 ../InventoryDetailList.php:113
+#: ../menu.inc.php:754 ../menu.inc.php:756 ../InventoryDetailList.php:113
 #: ../InventoryDetailList.php:115
 msgid "Inventory"
 msgstr "Envanter"
 
-#: ../menu.inc.php:754 ../menu.inc.php:756
+#: ../menu.inc.php:760 ../menu.inc.php:762
 msgid "Material accounting"
 msgstr "Malzeme hesabı"
 
-#: ../menu.inc.php:762
+#: ../menu.inc.php:768
 msgid "Supplying quantities optimization"
 msgstr "Tedarik miktarları optimizasyonu"
 
-#: ../menu.inc.php:766 void:1
+#: ../menu.inc.php:772 void:1
 msgid "Regrouping"
 msgstr "Yeniden gruplama"
 
-#: ../menu.inc.php:768
+#: ../menu.inc.php:774
 msgid "List of regrouping tasks"
 msgstr "Yeniden gruplama görev listesi"
 
-#: ../menu.inc.php:772 ../menu.inc.php:774
+#: ../menu.inc.php:778 ../menu.inc.php:780
 msgid "History of regroupings"
 msgstr "Yeniden gruplama geçmişi"
 
-#: ../menu.inc.php:782 ../menu.inc.php:941 void:1
+#: ../menu.inc.php:788 ../menu.inc.php:961 void:1
 msgid "Documents"
 msgstr "Belgeler"
 
-#: ../menu.inc.php:789
+#: ../menu.inc.php:795
 msgid "List of document models"
 msgstr "Belge örnekleri listesi"
 
-#: ../menu.inc.php:794 ../menu.inc.php:796
+#: ../menu.inc.php:800 ../menu.inc.php:802
 msgid "Reprinting of documents"
 msgstr "Belgelerin yeniden yazdırılması"
 
-#: ../menu.inc.php:804 void:1
+#: ../menu.inc.php:810 void:1
 msgid "Scoreboard"
 msgstr "Skorbord"
 
-#: ../menu.inc.php:811
+#: ../menu.inc.php:817
+msgid "salesman"
+msgstr ""
+
+#: ../menu.inc.php:821 ../menu.inc.php:823
 msgid "Turnover by salesman"
 msgstr "Pazarlamacı cirosu"
 
-#: ../menu.inc.php:817
+#: ../menu.inc.php:827 ../menu.inc.php:829
+msgid "Salesmen commissions"
+msgstr ""
+
+#: ../menu.inc.php:837
 msgid "Turnover by customer"
 msgstr "Müşteri göre iş hacmi"
 
-#: ../menu.inc.php:823
+#: ../menu.inc.php:843
 msgid "Turnover by category"
 msgstr "Kategoriye göre iş hacmi"
 
-#: ../menu.inc.php:829
+#: ../menu.inc.php:849
 msgid "Turnover by product"
 msgstr "Ürüne göre ciro"
 
-#: ../menu.inc.php:833 ../menu.inc.php:835
+#: ../menu.inc.php:853 ../menu.inc.php:855
 msgid "Turnover by supplier"
 msgstr "Tedarikçi iş hacmi"
 
-#: ../menu.inc.php:839
+#: ../menu.inc.php:859
 msgid "Turnover by customer/supplier"
 msgstr "Müşteri/tedarikçi iş hacmi"
 
-#: ../menu.inc.php:841
+#: ../menu.inc.php:861
 msgid "Details of customer turnover sorted by supplier"
 msgstr "Tedarikçilerin sırasına göre müşteri cirosu detayları"
 
-#: ../menu.inc.php:845 ../menu.inc.php:847
+#: ../menu.inc.php:865 ../menu.inc.php:867
 msgid "Activity based costing"
 msgstr "Faaliyet temelli maliyet hesabı"
 
-#: ../menu.inc.php:860
+#: ../menu.inc.php:880
 msgid "Validation"
 msgstr "Onay"
 
-#: ../menu.inc.php:862 ../menu.inc.php:868
+#: ../menu.inc.php:882 ../menu.inc.php:888
 msgid "List of tasks"
 msgstr "Görevlerin listesi"
 
-#: ../menu.inc.php:872 ../menu.inc.php:874 ../menu.inc.php:923
+#: ../menu.inc.php:892 ../menu.inc.php:894 ../menu.inc.php:943
 msgid "Time schedule"
 msgstr "Zaman çizelgesi"
 
-#: ../menu.inc.php:878
+#: ../menu.inc.php:898
 msgid "Gantt"
 msgstr ""
 
-#: ../menu.inc.php:889
+#: ../menu.inc.php:909
 msgid "Flights"
 msgstr "Uçuşlar"
 
-#: ../menu.inc.php:895 ../menu.inc.php:897
+#: ../menu.inc.php:915 ../menu.inc.php:917
 msgid "Log book"
 msgstr "Log defteri"
 
-#: ../menu.inc.php:902 ../menu.inc.php:904
+#: ../menu.inc.php:922 ../menu.inc.php:924
 msgid "Board book"
 msgstr "Kart defteri"
 
-#: ../menu.inc.php:909
+#: ../menu.inc.php:929
 msgid "Expected flights"
 msgstr "Beklenen uçuşlar"
 
-#: ../menu.inc.php:911
+#: ../menu.inc.php:931
 msgid "List of expected flights"
 msgstr "Beklenen uçuş listesi"
 
-#: ../menu.inc.php:918
+#: ../menu.inc.php:938
 msgid "List of completed flights"
 msgstr "Tamamlanan uçuş listesi"
 
-#: ../menu.inc.php:925 ../UnavailabilityPlanning.php:46
+#: ../menu.inc.php:945 ../UnavailabilityPlanning.php:46
 msgid "Weekly schedule"
 msgstr "Haftalık çizelge"
 
-#: ../menu.inc.php:934
+#: ../menu.inc.php:954
 msgid "EDM"
 msgstr ""
 
-#: ../menu.inc.php:935
+#: ../menu.inc.php:955
 msgid "Electronic document management"
 msgstr ""
 
-#: ../menu.inc.php:943
+#: ../menu.inc.php:963
 msgid "List of uploaded documents"
 msgstr ""
 
-#: ../menu.inc.php:948
+#: ../menu.inc.php:968
 msgid "Document Types"
 msgstr ""
 
-#: ../menu.inc.php:950
+#: ../menu.inc.php:970
 msgid "List of document types"
 msgstr ""
 
@@ -11672,6 +11687,18 @@ msgstr "Ödenmemis borçlar and ödeme yönetimi"
 #: ../WorkOrderOpeTaskDelete.php:54
 msgid "You are not allowed to modify this work order."
 msgstr "Bu sipariş emrini değiştirmeye izniniz yok."
+
+#: ../SalesmenCommissionSettings.php:70
+msgid "Commission percent by invoice"
+msgstr ""
+
+#: ../CommercialCommissions.php:98
+msgid "Commission percent"
+msgstr ""
+
+#: ../CommercialCommissions.php:99
+msgid "Commission amount"
+msgstr ""
 
 #: ../../../pwak/trunk/lib/Grid/Actions/Renderers/GridActionRendererSelectForSingleSelection.php:43
 msgid "For selected item: "

@@ -3835,81 +3835,91 @@ class LookbookGenerator extends WorksheetGenerator { // {{{
         $this->pdf->Ln();
         $this->pdf->Ln();
         $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
         $this->pdf->addText(
             _('Date') . ': ' . I18N::formatDate(time(), I18N::DATE_LONG),
             array('fontSize'=>12, 'lineHeight'=>5)
         );
-        if ($this->model->getSeason() instanceof RTWSeason) {
-            $this->pdf->addText(
-                _('Season') . ': ' . $this->model->getSeason()->toString(),
-                array('fontSize'=>12, 'lineHeight'=>5)
-            );
-        }
-        if ($this->model->getShape() instanceof RTWShape) {
-            $this->pdf->addText(
-                _('Shape') . ': ' . $this->model->getShape()->toString(),
-                array('fontSize'=>12, 'lineHeight'=>5)
-            );
-        }
-        if ($this->model->getPressName() instanceof RTWPressName) {
-            $this->pdf->addText(
-                _('Press name') . ': ' . $this->model->getPressName()->toString(),
-                array('fontSize'=>12, 'lineHeight'=>5)
-            );
-        }
-        $this->pdf->addText(
-            _('Style number') . ': ' . $this->model->getStyleNumber(),
-            array('fontSize'=>12, 'lineHeight'=>5)
+        $items = array(
+            'Season'      => _('Season'),
+            'Shape'       => _('Shape'),
+            'PressName'   => _('Press name'),
+            'Description' => _('Description'),
+            'HeelHeight'  => _('Heel Height'),
         );
-        $this->pdf->addText(
-            _('Description') . ': ' . $this->model->getDescription(),
-            array('fontSize'=>12, 'lineHeight'=>5)
-        );
-        if ($this->model->getHeelHeight() instanceof RTWHeelHeight) {
-            $this->pdf->addText(
-                _('Press name') . ': ' . $this->model->getHeelHeight()->toString(),
-                array('fontSize'=>12, 'lineHeight'=>5)
-            );
+        foreach ($items as $k => $v) {
+            $getter = 'get' . $k;
+            $obj = $this->model->$getter();
+            if ($obj instanceof Object || is_string($obj)) {
+                $this->pdf->addText(
+                     $v . ': ' . (($obj instanceof Object) ? $obj->toString() : $obj),
+                     array('fontSize'=>12, 'lineHeight'=>5)
+                );
+            }
         }
         $sizes = $this->model->getSizeCollection();
         if (count($sizes) > 0) {
             $this->pdf->addText(
-                _('Available sizes') . ': ' . implode(', ', array_values($sizes->toArray())),
-                array('fontSize'=>12, 'lineHeight'=>5)
+                 _('Available sizes') . ': ' .
+                 implode(', ', array_values($sizes->toArray())), 
+                 array('fontSize'=>12, 'lineHeight'=>5)
             );
         }
         $this->pdf->Ln();
         $this->pdf->Ln();
         $products = $this->model->getRTWProductCollection();
         if (count($products) > 0) {
-            $this->pdf->tableHeader(array(_('Products')=>190), 0);
-            foreach ($products as $product) {
-                $this->pdf->Ln();
-                $size = $product->getSize() instanceof RTWSize ? $product->getSize()->toString() : '';
-                $header = sprintf('%s / %s / %s', 
-                    $product->getBaseReference(),
-                    $product->getName(),
-                    $size
+            $product = $products->getItem(0);
+            $this->pdf->tableHeader(array(
+                _('Style number')      => 24,
+                _('Material 1')        => 31,
+                _('Material 2')        => 31,
+                _('Accessory 1')       => 28,
+                _('Accessory 2')       => 28,
+                _('Price')             => 24,
+                _('Recommended price') => 24
+            ), 0);
+            $pbcCol = $product->getPriceByCurrencyCollection(array(
+                'PricingZone' => $this->zoneId
+            ));
+            $padding = '';
+            $rprice  = '';
+            $price   = '';
+            foreach ($pbcCol as $pbc) {
+                $rprice .= $padding . I18N::formatCurrency(
+                    TextTools::entityDecode($pbc->getCurrency()->getSymbol()),
+                    $pbc->getRecommendedPrice()
                 );
-                $this->pdf->tableBody(array(0 => array($header)));
-                $pbcCol = $product->getPriceByCurrencyCollection(array(
-                    'PricingZone' => $this->zoneId
-                ));
-                foreach ($pbcCol as $pbc) {
-                    $str = _('Recommended price') . ': ' .  
-                        I18N::formatCurrency(
-                            TextTools::entityDecode($pbc->getCurrency()->getSymbol()),
-                            $pbc->getRecommendedPrice()
-                        ) . "\n" . _('Price') . ': ' .  
-                        I18N::formatCurrency(
-                            TextTools::entityDecode($pbc->getCurrency()->getSymbol()),
-                            $pbc->getPrice()
-                        );
-                    $this->pdf->tableBody(array(0 => array($str)));
-                }
+                $price  .= I18N::formatCurrency(
+                    TextTools::entityDecode($pbc->getCurrency()->getSymbol()),
+                    $pbc->getPrice()
+                );
+                $padding = "\n";
             }
+            $mat1 = ($m = $this->model->getMaterial1()) instanceof RTWMaterial ?
+                $m->getCommercialName() : '';
+            $mat2 = ($m = $this->model->getMaterial2()) instanceof RTWMaterial ?
+                $m->getCommercialName() : '';
+            $acc1 = ($m = $this->model->getAccessory1()) instanceof RTWMaterial ?
+                $m->getCommercialName() : '';
+            $acc2 = ($m = $this->model->getAccessory1()) instanceof RTWMaterial ?
+                $m->getCommercialName() : '';
+
+            $this->pdf->tableBody(array(0 => array(
+                $this->model->getStyleNumber(),
+                $mat1,
+                $mat2,
+                $acc1,
+                $acc2,
+                $price,
+                $rprice
+            )));
         }
-        $this->pdf->Ln();
     }
 } // }}}
 

@@ -801,7 +801,14 @@ $menu_metadata = array(
                 'link'        => 'DocumentList.php',
                 'description' => _('Reprinting of documents'),
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_GESTIONNAIRE_STOCK,UserAccount::PROFILE_OPERATOR,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_TRANSPORTEUR,UserAccount::PROFILE_DIR_COMMERCIAL)
-            )
+            ),
+            array(
+                'title'       => _('Lookbook printing'),
+                'link'        => 'dispatcher.php?entity=RTWModel&altname=RTWModelForLookbook',
+                'description' => _('Lookbook printing'),
+                'restrict_to_context' => array('readytowear'),
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_TRANSPORTEUR,UserAccount::PROFILE_DIR_COMMERCIAL)
+            ),
         )
     ),
     // }}}

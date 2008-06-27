@@ -3695,7 +3695,6 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
         $this->pdf->Ln();
         $this->pdf->Ln();
         $this->pdf->Ln();
-        $this->pdf->Ln();
         $this->pdf->addText(
             _('Date') . ': ' . I18N::formatDate(time(), I18N::DATE_LONG),
             array('fontSize'=>12, 'lineHeight'=>5)
@@ -3720,7 +3719,6 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
             _('Description') . ': ' . $this->model->getDescription(),
             array('fontSize'=>12, 'lineHeight'=>5)
         );
-        $this->pdf->Ln();
         $this->pdf->Ln();
         $items = array(
             'ConstructionType' => _('Construction type'),
@@ -3755,7 +3753,6 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
             _('Observations') => 35,
             $this->model->getComment() => 155), 
         0);
-        $this->pdf->Ln();
     }
 } // }}}
 

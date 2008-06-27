@@ -3655,9 +3655,8 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
         $this->pdf->SetFillColor(220);
         $this->renderHeader();
         $this->pdf->addPage(); // apres le renderHeader()!
-        // XXX TODO
         $infos = ImageManager::getFileInfo(md5($this->model->getImage()));
-        if (false !== $infos) {
+        if (is_array($infos) && !empty($infos['data'])) {
             list(,$type) = explode('/', $infos['mimetype']);
 		    $this->pdf->image($infos['data'], 70, 8, 130, 0, $type);
         }
@@ -3759,5 +3758,160 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
         $this->pdf->Ln();
     }
 } // }}}
+
+/**
+ * LookbookGenerator.
+ * Classe utilisée pour les fiches techniques.
+ *
+ */
+class LookbookGenerator extends WorksheetGenerator { // {{{
+    /**
+     * Constructor
+     *
+     * @param  object $model l'objet RTWModel
+     * @access protected
+     */
+    public function __construct($modelCollection, $zoneId) {
+        // doc fictif car on ne sauve pas ces fiches suiveuses
+        $document = new AbstractDocument();
+        $cur = false; // pas important ici...
+        parent::__construct($document, false, false, $cur, '');
+        $this->pdf->showExpeditor   = false;
+        $this->pdf->showPageNumbers = false;
+        $this->modelCollection = $modelCollection;
+        $this->zoneId = $zoneId;
+        $this->model = false;
+    }
+
+    /**
+     * Construit le doc pdf
+     *
+     * @access public
+     * @return void
+     */
+    public function render() {
+        $this->pdf->SetFillColor(220);
+        $this->renderHeader();
+        foreach ($this->modelCollection as $model) {
+            $this->pdf->addPage(); // apres le renderHeader()!
+            $this->model = $model;
+            $infos = ImageManager::getFileInfo(md5($this->model->getColorImage()));
+            if (is_array($infos) && !empty($infos['data'])) {
+                list(,$type) = explode('/', $infos['mimetype']);
+		        $this->pdf->image($infos['data'], 70, 8, 130, 0, $type);
+            }
+            $this->_renderContent();
+        }
+        return $this->pdf;
+    }
+
+    /**
+     *
+     * @access public
+     * @return void
+     */
+    public function renderHeader() {
+        $this->pdf->docTitle = $this->docName;
+        $this->pdf->fontSize['HEADER'] = 30;
+        $dbOwner = Auth::getDatabaseOwner();
+        $this->pdf->logo = base64_decode($dbOwner->getLogo());
+        //$this->pdf->header();  // inutile: appele par addPage()
+    }
+
+    /**
+     * Tableau 'principal'
+     * @access protected
+     * @return void
+     */
+    protected function _renderContent() {
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->addText(
+            _('Lookbook') . ' ' . $this->model->toString(),
+            array('fontSize'=>14, 'lineHeight'=>8)
+        );
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->addText(
+            _('Date') . ': ' . I18N::formatDate(time(), I18N::DATE_LONG),
+            array('fontSize'=>12, 'lineHeight'=>5)
+        );
+        if ($this->model->getSeason() instanceof RTWSeason) {
+            $this->pdf->addText(
+                _('Season') . ': ' . $this->model->getSeason()->toString(),
+                array('fontSize'=>12, 'lineHeight'=>5)
+            );
+        }
+        if ($this->model->getShape() instanceof RTWShape) {
+            $this->pdf->addText(
+                _('Shape') . ': ' . $this->model->getShape()->toString(),
+                array('fontSize'=>12, 'lineHeight'=>5)
+            );
+        }
+        if ($this->model->getPressName() instanceof RTWPressName) {
+            $this->pdf->addText(
+                _('Press name') . ': ' . $this->model->getPressName()->toString(),
+                array('fontSize'=>12, 'lineHeight'=>5)
+            );
+        }
+        $this->pdf->addText(
+            _('Style number') . ': ' . $this->model->getStyleNumber(),
+            array('fontSize'=>12, 'lineHeight'=>5)
+        );
+        $this->pdf->addText(
+            _('Description') . ': ' . $this->model->getDescription(),
+            array('fontSize'=>12, 'lineHeight'=>5)
+        );
+        if ($this->model->getHeelHeight() instanceof RTWHeelHeight) {
+            $this->pdf->addText(
+                _('Press name') . ': ' . $this->model->getHeelHeight()->toString(),
+                array('fontSize'=>12, 'lineHeight'=>5)
+            );
+        }
+        $sizes = $this->model->getSizeCollection();
+        if (count($sizes) > 0) {
+            $this->pdf->addText(
+                _('Available sizes') . ': ' . implode(', ', array_values($sizes->toArray())),
+                array('fontSize'=>12, 'lineHeight'=>5)
+            );
+        }
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $products = $this->model->getRTWProductCollection();
+        if (count($products) > 0) {
+            $this->pdf->tableHeader(array(_('Products')=>190), 0);
+            foreach ($products as $product) {
+                $this->pdf->Ln();
+                $size = $product->getSize() instanceof RTWSize ? $product->getSize()->toString() : '';
+                $header = sprintf('%s / %s / %s', 
+                    $product->getBaseReference(),
+                    $product->getName(),
+                    $size
+                );
+                $this->pdf->tableBody(array(0 => array($header)));
+                $pbcCol = $product->getPriceByCurrencyCollection(array(
+                    'PricingZone' => $this->zoneId
+                ));
+                foreach ($pbcCol as $pbc) {
+                    $str = _('Recommended price') . ': ' .  
+                        I18N::formatCurrency(
+                            TextTools::entityDecode($pbc->getCurrency()->getSymbol()),
+                            $pbc->getRecommendedPrice()
+                        ) . "\n" . _('Price') . ': ' .  
+                        I18N::formatCurrency(
+                            TextTools::entityDecode($pbc->getCurrency()->getSymbol()),
+                            $pbc->getPrice()
+                        );
+                    $this->pdf->tableBody(array(0 => array($str)));
+                }
+            }
+        }
+        $this->pdf->Ln();
+    }
+} // }}}
+
 
 ?>

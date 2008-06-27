@@ -3658,7 +3658,7 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
         $infos = ImageManager::getFileInfo(md5($this->model->getImage()));
         if (is_array($infos) && !empty($infos['data'])) {
             list(,$type) = explode('/', $infos['mimetype']);
-		    $this->pdf->image($infos['data'], 70, 8, 130, 0, $type);
+		    $this->pdf->image($infos['data'], 90, 8, 110, 0, $type);
         }
         $this->_renderContent();
         return $this->pdf;
@@ -3691,6 +3691,11 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
         );
         $this->pdf->Ln();
         $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
         $this->pdf->addText(
             _('Date') . ': ' . I18N::formatDate(time(), I18N::DATE_LONG),
             array('fontSize'=>12, 'lineHeight'=>5)
@@ -3715,11 +3720,6 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
             _('Description') . ': ' . $this->model->getDescription(),
             array('fontSize'=>12, 'lineHeight'=>5)
         );
-        $this->pdf->Ln();
-        $this->pdf->Ln();
-        $this->pdf->Ln();
-        $this->pdf->Ln();
-        $this->pdf->Ln();
         $this->pdf->Ln();
         $this->pdf->Ln();
         $items = array(
@@ -3798,7 +3798,7 @@ class LookbookGenerator extends WorksheetGenerator { // {{{
             $infos = ImageManager::getFileInfo(md5($this->model->getColorImage()));
             if (is_array($infos) && !empty($infos['data'])) {
                 list(,$type) = explode('/', $infos['mimetype']);
-		        $this->pdf->image($infos['data'], 70, 8, 130, 0, $type);
+		        $this->pdf->image($infos['data'], 90, 8, 110, 0, $type);
             }
             $this->_renderContent();
         }

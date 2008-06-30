@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Onlogistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-25 19:49+0200\n"
+"POT-Creation-Date: 2008-06-30 18:41+0200\n"
 "PO-Revision-Date: 2008-03-09 00:27+0200\n"
 "Last-Translator: Celal Camci <ccamci@iccdanismanlik.com.tr>\n"
 "Language-Team: Ateor dev team <dev@ateor.com>\n"
@@ -321,7 +321,7 @@ msgstr "Tedarikçi"
 #: ../CourseCommandList.php:64 ../CourseCommandList.php:151
 #: ../DocumentList.php:61 ../ToHaveList.php:65 ../ToHaveList.php:113
 #: ../ActorAddEdit.php:516 ../CustomerCatalog.php:158 ../RTWCatalog.php:94
-#: ../menu.inc.php:835 void:1
+#: ../menu.inc.php:842 void:1
 msgid "Customer"
 msgstr "Müşteri"
 
@@ -1215,11 +1215,11 @@ msgstr "Mevcut siteler"
 msgid "Allowed sites"
 msgstr "İzin verilen siteler"
 
-#: ../lib/Custom/RTWModelAddEdit.php:300
+#: ../lib/Custom/RTWModelAddEdit.php:138
 msgid "Images must be in \"png\" format"
 msgstr ""
 
-#: ../lib/Custom/RTWModelAddEdit.php:304
+#: ../lib/Custom/RTWModelAddEdit.php:142
 msgid "Images must not exceed 1 megaoctet"
 msgstr ""
 
@@ -1306,7 +1306,7 @@ msgstr "Ürün kaynakları"
 #: ../BoardByProduct.php:53 ../CommandList.php:289 ../CommandList.php:290
 #: ../InventoryDetailList.php:127 ../UnavailabilityPlanning.php:152
 #: ../ProductHandingByCategoryList.php:85 ../ConcreteProductList.php:99
-#: ../menu.inc.php:847 void:1
+#: ../menu.inc.php:854 void:1
 msgid "Product"
 msgstr "Ürün "
 
@@ -1741,6 +1741,37 @@ msgstr "Muhasebe modeli ile ilişkili ortakların listesi"
 #: ../lib/Custom/AlertGrid.php:65
 msgid "Update alert settings for user"
 msgstr "Kullanıcı için alarm ayarlarını güncelle"
+
+#: ../lib/Custom/RTWModelForLookbookGrid.php:64
+#: ../lib/Custom/RTWModelForLookbookGrid.php:65
+#: ../lib/Objects/_RTWModel.php:2482 ../lib/Objects/_RTWModel.php:2483
+#: ../lib/DocumentGenerator.php:3704 ../lib/DocumentGenerator.php:3846
+#: ../SalesmenCommission.php:64
+msgid "Season"
+msgstr ""
+
+#: ../lib/Custom/RTWModelForLookbookGrid.php:73
+#: ../lib/Custom/RTWModelForLookbookGrid.php:74
+#: ../lib/Objects/_RTWModel.php:2509 ../lib/Objects/_RTWModel.php:2510
+#: ../lib/DocumentGenerator.php:3715 ../lib/DocumentGenerator.php:3876
+msgid "Style number"
+msgstr ""
+
+#: ../lib/Custom/RTWModelForLookbookGrid.php:82
+#: ../lib/Custom/RTWModelForLookbookGrid.php:83
+#: ../lib/Objects/_RTWModel.php:2500 ../lib/Objects/_RTWModel.php:2501
+#: ../lib/DocumentGenerator.php:3848
+msgid "Press name"
+msgstr ""
+
+#: ../lib/Custom/RTWModelForLookbookGrid.php:118
+#: ../lib/Objects/PricingZone.php:90 ../JS_Messages.php:316 void:1
+msgid "Pricing zone"
+msgstr ""
+
+#: ../lib/Custom/RTWModelForLookbookGrid.php:134
+msgid "Print lookbook"
+msgstr ""
 
 #: ../lib/Custom/UploadedDocumentAddEdit.php:66
 msgid "File to upload"
@@ -2230,7 +2261,7 @@ msgstr ""
 
 #: ../lib/Objects/Operation.php:693 ../lib/Objects/Operation.php:694
 #: ../lib/Objects/_ActivatedChainTask.php:2582 ../lib/Objects/Task.php:477
-#: ../menu.inc.php:875 void:1
+#: ../menu.inc.php:882 void:1
 msgid "Tasks"
 msgstr "Görevler"
 
@@ -2460,10 +2491,11 @@ msgstr "Float"
 #: ../lib/ApportionmentManager.php:302 ../lib/DocumentGenerator.php:939
 #: ../lib/DocumentGenerator.php:1465 ../lib/DocumentGenerator.php:1642
 #: ../lib/DocumentGenerator.php:1863 ../lib/DocumentGenerator.php:2020
-#: ../lib/DocumentGenerator.php:3696 ../PaymentToHaveList.php:87
-#: ../FlyBoardBook.php:125 ../ActivatedFlightList.php:177
-#: ../ActionList.php:111 ../ChainCommandList.php:175
-#: ../SalesmenCommission.php:97 ../CommandList.php:289 ../CommandList.php:290
+#: ../lib/DocumentGenerator.php:3699 ../lib/DocumentGenerator.php:3842
+#: ../PaymentToHaveList.php:87 ../FlyBoardBook.php:125
+#: ../ActivatedFlightList.php:177 ../ActionList.php:111
+#: ../ChainCommandList.php:175 ../SalesmenCommission.php:97
+#: ../CommandList.php:289 ../CommandList.php:290
 #: ../PrestationCommandList.php:121 ../FlightNotebook.php:161
 #: ../DocumentList.php:142 ../ToHaveList.php:117 void:1
 msgid "Date"
@@ -2548,10 +2580,6 @@ msgstr "faturaların öğeleri"
 #: ../lib/Objects/_FlowTypeItem.php:338
 msgid "Expenses and receipts lines"
 msgstr "Gider ve gelirler satırları"
-
-#: ../lib/Objects/PricingZone.php:90 ../JS_Messages.php:316 void:1
-msgid "Pricing zone"
-msgstr ""
 
 #: ../lib/Objects/_ActivatedChainTask.php:285
 #: ../lib/Objects/_ActivatedChainTask.php:500 ../lib/Objects/ChainTask.php:227
@@ -2774,22 +2802,26 @@ msgid "Hand bag"
 msgstr ""
 
 #: ../lib/Objects/RTWModel.php:99 ../lib/Objects/_RTWModel.php:2648
-#: ../lib/Objects/_RTWModel.php:2649 ../RTWCatalog.php:118
+#: ../lib/Objects/_RTWModel.php:2649 ../lib/DocumentGenerator.php:3877
+#: ../RTWCatalog.php:118
 msgid "Material 1"
 msgstr ""
 
 #: ../lib/Objects/RTWModel.php:100 ../lib/Objects/_RTWModel.php:2667
-#: ../lib/Objects/_RTWModel.php:2668 ../RTWCatalog.php:119
+#: ../lib/Objects/_RTWModel.php:2668 ../lib/DocumentGenerator.php:3878
+#: ../RTWCatalog.php:119
 msgid "Material 2"
 msgstr ""
 
 #: ../lib/Objects/RTWModel.php:101 ../lib/Objects/_RTWModel.php:2686
-#: ../lib/Objects/_RTWModel.php:2687 ../RTWCatalog.php:120
+#: ../lib/Objects/_RTWModel.php:2687 ../lib/DocumentGenerator.php:3879
+#: ../RTWCatalog.php:120
 msgid "Accessory 1"
 msgstr ""
 
 #: ../lib/Objects/RTWModel.php:102 ../lib/Objects/_RTWModel.php:2705
-#: ../lib/Objects/_RTWModel.php:2706 ../RTWCatalog.php:121
+#: ../lib/Objects/_RTWModel.php:2706 ../lib/DocumentGenerator.php:3880
+#: ../RTWCatalog.php:121
 msgid "Accessory 2"
 msgstr ""
 
@@ -2931,8 +2963,9 @@ msgstr "Tahmini hareket"
 #: ../lib/Objects/ForecastFlow.php:504 ../lib/Objects/ForecastFlow.php:505
 #: ../lib/Objects/_RTWModel.php:2518 ../lib/Objects/_RTWModel.php:2519
 #: ../lib/DocumentGenerator.php:694 ../lib/DocumentGenerator.php:1081
-#: ../lib/DocumentGenerator.php:2317 ../lib/DocumentGenerator.php:3716
-#: ../ActivatedChainList.php:127 ../TransportChainList.php:88 void:1
+#: ../lib/DocumentGenerator.php:2317 ../lib/DocumentGenerator.php:3719
+#: ../lib/DocumentGenerator.php:3849 ../ActivatedChainList.php:127
+#: ../TransportChainList.php:88 void:1
 msgid "Description"
 msgstr "Tanımlama"
 
@@ -2973,7 +3006,7 @@ msgstr "Müşteri kodu"
 #: ../SalesmenCommission.php:94 ../ProductCommand.php:172
 #: ../CommandList.php:159 ../CommandList.php:282
 #: ../PrestationCommandList.php:129 ../ActorList.php:101 ../ActorList.php:277
-#: ../SalesmenCommissionSettings.php:67 ../menu.inc.php:815 void:1
+#: ../SalesmenCommissionSettings.php:67 ../menu.inc.php:822 void:1
 msgid "Salesman"
 msgstr "Satış elemanı"
 
@@ -3922,7 +3955,7 @@ msgstr "Kilitlenen sipariş"
 msgid "Select one or more states"
 msgstr "Bir veya daha fazla şehir seçiniz "
 
-#: ../lib/Objects/Command.const.php:54 ../menu.inc.php:936
+#: ../lib/Objects/Command.const.php:54 ../menu.inc.php:943
 msgid "Completed flights"
 msgstr "Tamamlanan uçuşlar"
 
@@ -4468,42 +4501,28 @@ msgstr ""
 msgid "Models"
 msgstr "Modeller"
 
-#: ../lib/Objects/_RTWModel.php:2482 ../lib/Objects/_RTWModel.php:2483
-#: ../lib/DocumentGenerator.php:3701 ../SalesmenCommission.php:64
-msgid "Season"
-msgstr ""
-
 #: ../lib/Objects/_RTWModel.php:2491 ../lib/Objects/_RTWModel.php:2492
-#: ../lib/DocumentGenerator.php:3729
+#: ../lib/DocumentGenerator.php:3726 ../lib/DocumentGenerator.php:3847
 msgid "Shape"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2500 ../lib/Objects/_RTWModel.php:2501
-msgid "Press name"
-msgstr ""
-
-#: ../lib/Objects/_RTWModel.php:2509 ../lib/Objects/_RTWModel.php:2510
-#: ../lib/DocumentGenerator.php:3712
-msgid "Style number"
-msgstr ""
-
 #: ../lib/Objects/_RTWModel.php:2527 ../lib/Objects/_RTWModel.php:2528
-#: ../lib/DocumentGenerator.php:3707
+#: ../lib/DocumentGenerator.php:3710
 msgid "Manufacturer"
 msgstr ""
 
 #: ../lib/Objects/_RTWModel.php:2536 ../lib/Objects/_RTWModel.php:2537
-#: ../lib/DocumentGenerator.php:3727
+#: ../lib/DocumentGenerator.php:3724
 msgid "Construction type"
 msgstr ""
 
 #: ../lib/Objects/_RTWModel.php:2545 ../lib/Objects/_RTWModel.php:2546
-#: ../lib/DocumentGenerator.php:3728
+#: ../lib/DocumentGenerator.php:3725
 msgid "Construction code"
 msgstr ""
 
 #: ../lib/Objects/_RTWModel.php:2554 ../lib/Objects/_RTWModel.php:2555
-#: ../lib/DocumentGenerator.php:3730
+#: ../lib/DocumentGenerator.php:3727
 msgid "Label (griffe)"
 msgstr ""
 
@@ -4588,7 +4607,7 @@ msgid "Color image"
 msgstr ""
 
 #: ../lib/Objects/_RTWModel.php:2912 ../lib/Objects/_RTWModel.php:2913
-#: ../lib/DocumentGenerator.php:3751
+#: ../lib/DocumentGenerator.php:3748 ../lib/DocumentGenerator.php:3865
 msgid "Available sizes"
 msgstr ""
 
@@ -4833,7 +4852,7 @@ msgid "Add/Update service cost"
 msgstr "Servis maliyeti Ekle/Güncelle"
 
 #: ../lib/Objects/_CostRange.php:753 ../lib/Objects/_CostRange.php:754
-#: ../JS_Messages.php:319
+#: ../lib/DocumentGenerator.php:3881 ../JS_Messages.php:319
 msgid "Price"
 msgstr "Fiyat"
 
@@ -4924,7 +4943,7 @@ msgstr "Gider veya gelir"
 #: ../lib/Objects/_FlowType.php:656 ../lib/Objects/_FlowType.php:657
 #: ../StockProductRealandVirtualList.php:121 ../PreferencesWebSite.php:77
 #: ../ProductQuantityByCategoryList.php:67 ../BoardByCategory.php:52
-#: ../ActorList.php:109 ../menu.inc.php:841 void:1
+#: ../ActorList.php:109 ../menu.inc.php:848 void:1
 msgid "Category"
 msgstr "Kategori"
 
@@ -5669,7 +5688,7 @@ msgstr "borç"
 msgid "No products were created because you did not select any available size."
 msgstr ""
 
-#: ../lib/RTWProductManager.php:165
+#: ../lib/RTWProductManager.php:170
 #, php-format
 msgid "You must create a chain with reference \"%s\""
 msgstr ""
@@ -6151,7 +6170,7 @@ msgstr "Efektif süreç"
 msgid "Date and operator"
 msgstr "Tarih and operatör"
 
-#: ../lib/DocumentGenerator.php:2861 ../lib/DocumentGenerator.php:3756
+#: ../lib/DocumentGenerator.php:2861 ../lib/DocumentGenerator.php:3753
 msgid "Observations"
 msgstr "Gözlemler"
 
@@ -6243,8 +6262,20 @@ msgstr ""
 msgid "Estimate number"
 msgstr ""
 
-#: ../lib/DocumentGenerator.php:3690
+#: ../lib/DocumentGenerator.php:3689
 msgid "Worksheet"
+msgstr ""
+
+#: ../lib/DocumentGenerator.php:3827
+msgid "Lookbook"
+msgstr ""
+
+#: ../lib/DocumentGenerator.php:3850
+msgid "Heel Height"
+msgstr ""
+
+#: ../lib/DocumentGenerator.php:3882 ../JS_Messages.php:318
+msgid "Recommended price"
 msgstr ""
 
 #: ../rpc/XmlRpcServer.php:1488
@@ -7245,10 +7276,6 @@ msgstr "Lütfen en az bir yer seçiniz."
 #: ../JS_Messages.php:314
 msgid "You must add expenses and receipts lines"
 msgstr "Gelir ve gider çizgilerini eklemelisiniz."
-
-#: ../JS_Messages.php:318
-msgid "Recommended price"
-msgstr ""
 
 #: ../JS_Messages.php:321
 msgid "This will discard the changes you made for this supplier, continue ?"
@@ -9930,7 +9957,7 @@ msgstr "Gelir ve giderlerin örnek kopyası"
 msgid "Monthly schedule"
 msgstr "Aylık çizelge"
 
-#: ../UnavailabilityPlanning.php:46 ../menu.inc.php:945
+#: ../UnavailabilityPlanning.php:46 ../menu.inc.php:952
 msgid "Weekly schedule"
 msgstr "Haftalık çizelge"
 
@@ -11499,7 +11526,7 @@ msgid "Expenses and receipts"
 msgstr "Gelir ve giderler"
 
 #: ../menu.inc.php:658 ../menu.inc.php:660 ../menu.inc.php:748
-#: ../menu.inc.php:886
+#: ../menu.inc.php:893
 msgid "History"
 msgstr "Geçmiş"
 
@@ -11523,7 +11550,7 @@ msgstr "Sipariş emri"
 msgid "Scheduled chains"
 msgstr "Zamanlanmış zincir"
 
-#: ../menu.inc.php:699 ../menu.inc.php:900
+#: ../menu.inc.php:699 ../menu.inc.php:907
 msgid "List of activated chains"
 msgstr "Aktif edilmiş zincir listesi"
 
@@ -11587,7 +11614,7 @@ msgstr "Yeniden gruplama görev listesi"
 msgid "History of regroupings"
 msgstr "Yeniden gruplama geçmişi"
 
-#: ../menu.inc.php:788 ../menu.inc.php:961 void:1
+#: ../menu.inc.php:788 ../menu.inc.php:968 void:1
 msgid "Documents"
 msgstr "Belgeler"
 
@@ -11599,107 +11626,111 @@ msgstr "Belge örnekleri listesi"
 msgid "Reprinting of documents"
 msgstr "Belgelerin yeniden yazdırılması"
 
-#: ../menu.inc.php:810 void:1
+#: ../menu.inc.php:806 ../menu.inc.php:808
+msgid "Lookbook printing"
+msgstr ""
+
+#: ../menu.inc.php:817 void:1
 msgid "Scoreboard"
 msgstr "Skorbord"
 
-#: ../menu.inc.php:817
+#: ../menu.inc.php:824
 msgid "salesman"
 msgstr ""
 
-#: ../menu.inc.php:821 ../menu.inc.php:823
+#: ../menu.inc.php:828 ../menu.inc.php:830
 msgid "Turnover by salesman"
 msgstr "Pazarlamacı cirosu"
 
-#: ../menu.inc.php:827 ../menu.inc.php:829
+#: ../menu.inc.php:834 ../menu.inc.php:836
 msgid "Salesmen commissions"
 msgstr ""
 
-#: ../menu.inc.php:837
+#: ../menu.inc.php:844
 msgid "Turnover by customer"
 msgstr "Müşteri göre iş hacmi"
 
-#: ../menu.inc.php:843
+#: ../menu.inc.php:850
 msgid "Turnover by category"
 msgstr "Kategoriye göre iş hacmi"
 
-#: ../menu.inc.php:849
+#: ../menu.inc.php:856
 msgid "Turnover by product"
 msgstr "Ürüne göre ciro"
 
-#: ../menu.inc.php:853 ../menu.inc.php:855
+#: ../menu.inc.php:860 ../menu.inc.php:862
 msgid "Turnover by supplier"
 msgstr "Tedarikçi iş hacmi"
 
-#: ../menu.inc.php:859
+#: ../menu.inc.php:866
 msgid "Turnover by customer/supplier"
 msgstr "Müşteri/tedarikçi iş hacmi"
 
-#: ../menu.inc.php:861
+#: ../menu.inc.php:868
 msgid "Details of customer turnover sorted by supplier"
 msgstr "Tedarikçilerin sırasına göre müşteri cirosu detayları"
 
-#: ../menu.inc.php:865 ../menu.inc.php:867
+#: ../menu.inc.php:872 ../menu.inc.php:874
 msgid "Activity based costing"
 msgstr "Faaliyet temelli maliyet hesabı"
 
-#: ../menu.inc.php:880
+#: ../menu.inc.php:887
 msgid "Validation"
 msgstr "Onay"
 
-#: ../menu.inc.php:882 ../menu.inc.php:888
+#: ../menu.inc.php:889 ../menu.inc.php:895
 msgid "List of tasks"
 msgstr "Görevlerin listesi"
 
-#: ../menu.inc.php:892 ../menu.inc.php:894 ../menu.inc.php:943
+#: ../menu.inc.php:899 ../menu.inc.php:901 ../menu.inc.php:950
 msgid "Time schedule"
 msgstr "Zaman çizelgesi"
 
-#: ../menu.inc.php:898
+#: ../menu.inc.php:905
 msgid "Gantt"
 msgstr ""
 
-#: ../menu.inc.php:909
+#: ../menu.inc.php:916
 msgid "Flights"
 msgstr "Uçuşlar"
 
-#: ../menu.inc.php:915 ../menu.inc.php:917
+#: ../menu.inc.php:922 ../menu.inc.php:924
 msgid "Log book"
 msgstr "Log defteri"
 
-#: ../menu.inc.php:922 ../menu.inc.php:924
+#: ../menu.inc.php:929 ../menu.inc.php:931
 msgid "Board book"
 msgstr "Kart defteri"
 
-#: ../menu.inc.php:929
+#: ../menu.inc.php:936
 msgid "Expected flights"
 msgstr "Beklenen uçuşlar"
 
-#: ../menu.inc.php:931
+#: ../menu.inc.php:938
 msgid "List of expected flights"
 msgstr "Beklenen uçuş listesi"
 
-#: ../menu.inc.php:938
+#: ../menu.inc.php:945
 msgid "List of completed flights"
 msgstr "Tamamlanan uçuş listesi"
 
-#: ../menu.inc.php:954
+#: ../menu.inc.php:961
 msgid "EDM"
 msgstr ""
 
-#: ../menu.inc.php:955
+#: ../menu.inc.php:962
 msgid "Electronic document management"
 msgstr ""
 
-#: ../menu.inc.php:963
+#: ../menu.inc.php:970
 msgid "List of uploaded documents"
 msgstr ""
 
-#: ../menu.inc.php:968
+#: ../menu.inc.php:975
 msgid "Document Types"
 msgstr ""
 
-#: ../menu.inc.php:970
+#: ../menu.inc.php:977
 msgid "List of document types"
 msgstr ""
 

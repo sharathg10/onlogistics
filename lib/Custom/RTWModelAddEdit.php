@@ -57,11 +57,109 @@ class RTWModelAddEdit extends GenericAddEdit {
      * @return void
      */
     public function onBeforeDisplay() {
-        if (!$this->object->canBeDeleted()) {
+        try {
+            $this->object->canBeDeleted();
+        } catch (Exception $exc) {
             Template::errorDialog(
                 _('This model can not be modified because it is already used in one or more orders'),
                 $this->guessReturnURL()
             );
+            exit(1);
+        }
+    }
+
+    // }}}
+    // RTWModelAddEdit::delete() {{{
+
+    /**
+     * Méthode qui gère l'action delete, supprime l'objet dans une transaction.
+     *
+     * @access protected
+     * @return void
+     */
+    protected function delete() {
+        $this->onBeforeDelete();
+        Database::connection()->startTrans();
+        $mapper = Mapper::singleton($this->clsname);
+        $emptyForDeleteProperties = call_user_func(array($this->clsname,
+            'getEmptyForDeleteProperties'));
+        $notDeletedObjects = array();
+        // il y a des check auto on supprime un à un car les verif ne sont
+        // pas faites par Mapper::delete() mais par Object::delete()
+        $col = $mapper->loadCollection(array('Id'=>$this->objID));
+        $count = $col->getCount();
+        for($i=0 ; $i<$count ; $i++) {
+            $o = $col->getItem($i);
+            try {
+                $pdtCol = $o->getRTWProductCollection();
+                foreach ($pdtCol as $pdt) {
+                    foreach ($pdt->getChainCollection() as $chain) {
+                        if ($chain->getReference() == $pdt->getBaseReference()) {
+                            $chain->delete();
+                        }
+                    }
+                }
+                $o->delete();
+            } catch (Exception $exc) {
+                $notDeletedObjects[] = $o->toString(); //. ': ' . $exc->getMessage();
+            }
+        }
+        if (Database::connection()->hasFailedTrans()) {
+            $err = Database::connection()->errorMsg();
+            trigger_error($err, E_USER_WARNING);
+            Database::connection()->rollbackTrans();
+            Template::errorDialog(E_ERROR_SQL . '.<br/>' . $err, $this->guessReturnURL());
+            exit;
+        }
+        Database::connection()->completeTrans();
+        if(!empty($notDeletedObjects)) {
+            Template::infoDialog(
+                sprintf(I_NOT_DELETED_WITH_LIST,
+                implode('</li><li>', $notDeletedObjects)),
+                $this->guessReturnURL());
+            exit;
+        }
+        $this->onAfterDelete();
+    }
+
+    // }}}
+    // RTWModelAddEdit::onBeforeHandlePostData() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function onBeforeHandlePostData() {
+        $elts = array('RTWModel_Image', 'RTWModel_ColorImage');
+        foreach ($elts as $elt) {
+            if (isset($_FILES[$elt]) && $_FILES[$elt]['error'] == 0) {
+                if (strtolower($_FILES[$elt]['type']) != 'image/png') {
+                    Template::errorDialog(_('Images must be in "png" format'));
+                    exit(1);
+                }
+                if (intval($_FILES[$elt]['size']) > 1000000) {
+                    Template::errorDialog(_('Images must not exceed 1 megaoctet'));
+                    exit(1);
+                }
+            }
+        }
+    }
+
+    // }}}
+    // RTWModelAddEdit::onAfterHandlePostData() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function onAfterHandlePostData() {
+        require_once 'RTWProductManager.php';
+        try {
+            RTWProductManager::createProducts($this->object);
+        } catch (Exception $exc) {
+            Template::errorDialog($exc->getMessage(), $this->guessReturnURL());
             exit(1);
         }
     }
@@ -199,6 +297,18 @@ class RTWModelAddEdit extends GenericAddEdit {
     }
 
     // }}}
+    // RTWModelAddEdit::getFilterForMediaPlanta() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForMediaPlanta() {
+        return array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL);
+    }
+
+    // }}}
     // RTWModelAddEdit::getFilterForLagrima() {{{
 
     /**
@@ -268,24 +378,6 @@ class RTWModelAddEdit extends GenericAddEdit {
      */
     protected function getFilterForBamboo() {
         return array('MaterialType' => RTWMaterial::TYPE_HEEL);
-    }
-
-    // }}}
-    // RTWModelAddEdit::onAfterHandlePostData() {{{
-
-    /**
-     * 
-     * @access protected
-     * @return void
-     */
-    protected function onAfterHandlePostData() {
-        require_once 'RTWProductManager.php';
-        try {
-            RTWProductManager::createProducts($this->object);
-        } catch (Exception $exc) {
-            Template::errorDialog($exc->getMessage(), $this->guessReturnURL());
-            exit(1);
-        }
     }
 
     // }}}

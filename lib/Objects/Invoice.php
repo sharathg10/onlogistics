@@ -3,6 +3,8 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
+ * IMPORTANT: This is a generated file, please do not edit.
+ *
  * This file is part of Onlogistics, a web based ERP and supply chain 
  * management application. 
  *
@@ -34,6 +36,11 @@
  * @filesource
  */
 
+/**
+ * Invoice class
+ *
+ * Class containing addon methods.
+ */
 class Invoice extends _Invoice {
     // Constructeur {{{
 
@@ -49,7 +56,6 @@ class Invoice extends _Invoice {
     }
 
     // }}}
-
     // Invoice::dataForInvoice() {{{
 
     /**
@@ -350,20 +356,9 @@ class Invoice extends _Invoice {
         }
         foreach ($ret as $i=>&$array) {
             $model = Object::load('RTWModel', $i);
-            $lines = array();
-            $lines[] = ($material1 = $model->getMaterial1()) instanceof RTWMaterial ? 
-                _('Material 1') . ': ' . $material1->toString() : null;
-            $lines[] = ($material2 = $model->getMaterial2()) instanceof RTWMaterial ? 
-                _('Material 2') . ': ' . $material2->toString() : null;
-            $lines[] = ($insole = $model->getInsole()) instanceof RTWMaterial ? 
-                _('Insole') . ': ' . $insole->toString() : null;
-            $lines[] = ($lining = $model->getLining()) instanceof RTWMaterial ? 
-                _('Lining') . ': ' . $lining->toString() : null;
-            $lines[] = ($undersole = $model->getUnderSole()) instanceof RTWMaterial ? 
-                _('Under-sole') . ': ' . $undersole->toString() : null;
-            $lines = array_filter($lines);
-            if (count($lines)) {
-                $array[1] .= "\n\n" . implode("\n", $lines);
+            $legalMentions = $model->getLegalMentions();
+            if (!empty($legalMentions)) {
+                $array[1] .= "\n\n" . $legalMentions;
             }
         }
         return array_values($ret);
@@ -860,6 +855,28 @@ class Invoice extends _Invoice {
         );
         return ($invoiceColl->getItem(0)->getId() == $this->getId());
     }
+    // }}}
+    // Invoice::updateCommercialCommission() {{{
+
+    /**
+     * Stocke le pourcentage et le montant de la commission du commercial.
+     *
+     * @access public
+     * @return void
+     */
+    public function updateCommercialCommission() {
+        $cmd = $this->getCommand();
+        if (!($cmd instanceof Command)) {
+            return;
+        }
+        $com = $cmd->getCommercial();
+        if ($com instanceof UserAccount && ($percent = $com->getCommissionPercent()) > 0) {
+            $amount = floatval($this->getTotalPriceHT() * ($percent / 100));
+            $this->setCommercialCommissionPercent($percent);
+            $this->setCommercialCommissionAmount($amount);
+        }
+    }
+
     // }}}
 
 }

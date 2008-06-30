@@ -50,6 +50,242 @@ class RTWModelGrid extends GenericGrid
     }
     
     // }}} 
+    // RTWModelGrid::onBeforeDisplay() {{{
+
+    /**
+     * Appelé avant affichage
+     *
+     * @return void
+     */
+    public function onBeforeDisplay() {
+        try {
+            $this->object->canBeDeleted();
+        } catch (Exception $exc) {
+            Template::errorDialog(
+                _('This model can not be modified because it is already used in one or more orders'),
+                $this->guessReturnURL()
+            );
+            exit(1);
+        }
+    }
+
+    // }}}
+    // RTWModelGrid::getFilterForMaterial1() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForMaterial1() {
+        return array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL);
+    }
+
+    // }}}
+    // RTWModelGrid::getFilterForMaterial2() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForMaterial2() {
+        return $this->getFilterForMaterial1();
+    }
+
+    // }}}
+    // RTWModelGrid::getFilterForAccessory1() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForAccessory1() {
+        return array('MaterialType' => RTWMaterial::TYPE_ACCESSORY);
+    }
+
+    // }}}
+    // RTWModelGrid::getFilterForAccessory2() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForAccessory2() {
+        return $this->getFilterForAccessory1();
+    }
+
+    // }}}
+    // RTWModelGrid::getFilterForHeelReference() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForHeelReference() {
+        return array('MaterialType' => RTWMaterial::TYPE_HEEL);
+    }
+
+    // }}}
+    // RTWModelGrid::getFilterForSole() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForSole() {
+        return array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL);
+    }
+
+    // }}}
+    // RTWModelGrid::getFilterForBox() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForBox() {
+        return array('MaterialType' => RTWMaterial::TYPE_PACKAGING);
+    }
+
+    // }}}
+    // RTWModelGrid::getFilterForHandBag() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForHandBag() {
+        return array('MaterialType' => RTWMaterial::TYPE_PACKAGING);
+    }
+
+    // }}}
+    // RTWModelGrid::getFilterForLining() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForLining() {
+        return array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL);
+    }
+
+    // }}}
+    // RTWModelGrid::getFilterForInsole() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForInsole() {
+        return array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL);
+    }
+
+    // }}}
+    // RTWModelGrid::getFilterForUnderSole() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForUnderSole() {
+        return array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL);
+    }
+
+    // }}}
+    // RTWModelGrid::getFilterForMediaPlanta() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForMediaPlanta() {
+        return array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL);
+    }
+
+    // }}}
+    // RTWModelGrid::getFilterForLagrima() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForLagrima() {
+        return array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL);
+    }
+
+    // }}}
+    // RTWModelGrid::getFilterForHeelCovering() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForHeelCovering() {
+        return array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL);
+    }
+
+    // }}}
+    // RTWModelGrid::getFilterForSelvedge() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForSelvedge() {
+        return array('MaterialType' => RTWMaterial::TYPE_THREAD);
+    }
+
+    // }}}
+    // RTWModelGrid::getFilterForThread1() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForThread1() {
+        return array('MaterialType' => RTWMaterial::TYPE_THREAD);
+    }
+
+    // }}}
+    // RTWModelGrid::getFilterForThread2() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForThread2() {
+        return array('MaterialType' => RTWMaterial::TYPE_THREAD);
+    }
+
+    // }}}
+    // RTWModelGrid::getFilterForBamboo() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForBamboo() {
+        return array('MaterialType' => RTWMaterial::TYPE_HEEL);
+    }
+
+    // }}}
     // RTWModelGrid::additionalGridActions() {{{
 
     /**

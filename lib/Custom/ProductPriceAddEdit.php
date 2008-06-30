@@ -49,7 +49,7 @@ class ProductPriceAddEdit extends GenericAddEdit {
      * @return void
      */
     public function __construct($params) {
-        $params['use_session'] = true;
+        $params['use_session'] = false;
         $params['profiles'] = array(UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW);
         parent::__construct($params);
         $this->addJSRequirements(
@@ -81,7 +81,7 @@ class ProductPriceAddEdit extends GenericAddEdit {
     }
 
     // }}}
-    // ProductPriceAddEdit::renderSupplier() {{{
+    // ProductPriceAddEdit::renderActorProduct() {{{
 
     /**
      * Appelée avant affichage

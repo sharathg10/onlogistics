@@ -3,13 +3,38 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * $Source: /home/cvs/codegen/codegentemplates.py,v $
+ * IMPORTANT: This is a generated file, please do not edit.
  *
- * Ceci est un fichier généré, NE PAS EDITER.
+ * This file is part of Onlogistics, a web based ERP and supply chain 
+ * management application. 
  *
- * @copyright 2002-2006 ATEOR - All rights reserved
+ * Copyright (C) 2003-2008 ATEOR
+ *
+ * This program is free software: you can redistribute it and/or modify it 
+ * under the terms of the GNU Affero General Public License as published by 
+ * the Free Software Foundation, either version 3 of the License, or (at your 
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public 
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * PHP version 5.1.0+
+ *
+ * @package   Onlogistics
+ * @author    ATEOR dev team <dev@ateor.com>
+ * @copyright 2003-2008 ATEOR <contact@ateor.com> 
+ * @license   http://www.fsf.org/licensing/licenses/agpl-3.0.html GNU AGPL
+ * @version   SVN: $Id$
+ * @link      http://www.onlogistics.org
+ * @link      http://onlogistics.googlecode.com
+ * @since     File available since release 0.1.0
+ * @filesource
  */
-
 
 /**
  * _RTWModel class
@@ -1484,6 +1509,93 @@ class _RTWModel extends Object {
     }
 
     // }}}
+    // MediaPlanta foreignkey property + getter/setter {{{
+
+    /**
+     * MediaPlanta foreignkey
+     *
+     * @access private
+     * @var mixed object RTWMaterial or integer
+     */
+    private $_MediaPlanta = false;
+
+    /**
+     * _RTWModel::getMediaPlanta
+     *
+     * @access public
+     * @return object RTWMaterial
+     */
+    public function getMediaPlanta() {
+        if (is_int($this->_MediaPlanta) && $this->_MediaPlanta > 0) {
+            $mapper = Mapper::singleton('RTWMaterial');
+            $this->_MediaPlanta = $mapper->load(
+                array('Id'=>$this->_MediaPlanta));
+        }
+        return $this->_MediaPlanta;
+    }
+
+    /**
+     * _RTWModel::getMediaPlantaId
+     *
+     * @access public
+     * @return integer
+     */
+    public function getMediaPlantaId() {
+        if ($this->_MediaPlanta instanceof RTWMaterial) {
+            return $this->_MediaPlanta->getId();
+        }
+        return (int)$this->_MediaPlanta;
+    }
+
+    /**
+     * _RTWModel::setMediaPlanta
+     *
+     * @access public
+     * @param object RTWMaterial $value
+     * @return void
+     */
+    public function setMediaPlanta($value) {
+        if (is_numeric($value)) {
+            $this->_MediaPlanta = (int)$value;
+        } else {
+            $this->_MediaPlanta = $value;
+        }
+    }
+
+    // }}}
+    // MediaPlantaQuantity float property + getter/setter {{{
+
+    /**
+     * MediaPlantaQuantity float property
+     *
+     * @access private
+     * @var float
+     */
+    private $_MediaPlantaQuantity = null;
+
+    /**
+     * _RTWModel::getMediaPlantaQuantity
+     *
+     * @access public
+     * @return float
+     */
+    public function getMediaPlantaQuantity() {
+        return $this->_MediaPlantaQuantity;
+    }
+
+    /**
+     * _RTWModel::setMediaPlantaQuantity
+     *
+     * @access public
+     * @param float $value
+     * @return void
+     */
+    public function setMediaPlantaQuantity($value) {
+        $this->_MediaPlantaQuantity = ($value===null || $value === '')?
+            null:round(I18N::extractNumber($value), 3);
+    }
+
+    // }}}
     // Lagrima foreignkey property + getter/setter {{{
 
     /**
@@ -1972,6 +2084,38 @@ class _RTWModel extends Object {
     }
 
     // }}}
+    // ColorImage string property + getter/setter {{{
+
+    /**
+     * ColorImage string property
+     *
+     * @access private
+     * @var string
+     */
+    private $_ColorImage = '';
+
+    /**
+     * _RTWModel::getColorImage
+     *
+     * @access public
+     * @return string
+     */
+    public function getColorImage() {
+        return $this->_ColorImage;
+    }
+
+    /**
+     * _RTWModel::setColorImage
+     *
+     * @access public
+     * @param string $value
+     * @return void
+     */
+    public function setColorImage($value) {
+        $this->_ColorImage = $value;
+    }
+
+    // }}}
     // Size one to many relation + getter/setter {{{
 
     /**
@@ -2223,6 +2367,8 @@ class _RTWModel extends Object {
             'InsoleQuantity' => Object::TYPE_DECIMAL,
             'UnderSole' => 'RTWMaterial',
             'UnderSoleQuantity' => Object::TYPE_DECIMAL,
+            'MediaPlanta' => 'RTWMaterial',
+            'MediaPlantaQuantity' => Object::TYPE_DECIMAL,
             'Lagrima' => 'RTWMaterial',
             'LagrimaQuantity' => Object::TYPE_DECIMAL,
             'HeelCovering' => 'RTWMaterial',
@@ -2234,6 +2380,7 @@ class _RTWModel extends Object {
             'Bamboo' => 'RTWMaterial',
             'BambooQuantity' => Object::TYPE_DECIMAL,
             'Image' => Object::TYPE_IMAGE,
+            'ColorImage' => Object::TYPE_IMAGE,
             'Comment' => Object::TYPE_TEXT);
         return $return;
     }
@@ -2343,7 +2490,7 @@ class _RTWModel extends Object {
             'Shape'=>array(
                 'label'        => _('Shape'),
                 'shortlabel'   => _('Shape'),
-                'usedby'       => array('addedit', 'grid'),
+                'usedby'       => array('addedit', 'grid', 'searchform'),
                 'required'     => true,
                 'inplace_edit' => false,
                 'add_button'   => false,
@@ -2630,6 +2777,25 @@ class _RTWModel extends Object {
                 'section'      => '',
                 'dec_num'      => 3
             ),
+            'MediaPlanta'=>array(
+                'label'        => _('Media planta'),
+                'shortlabel'   => _('Media planta'),
+                'usedby'       => array('addedit'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => ''
+            ),
+            'MediaPlantaQuantity'=>array(
+                'label'        => _('Media planta quantity'),
+                'shortlabel'   => _('Media planta quantity'),
+                'usedby'       => array('addedit'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => '',
+                'dec_num'      => 3
+            ),
             'Lagrima'=>array(
                 'label'        => _('Lagrima'),
                 'shortlabel'   => _('Lagrima'),
@@ -2725,13 +2891,22 @@ class _RTWModel extends Object {
                 'dec_num'      => 3
             ),
             'Image'=>array(
-                'label'        => _('Image'),
-                'shortlabel'   => _('Image'),
+                'label'        => _('Black and white image'),
+                'shortlabel'   => _('Black and white image'),
                 'usedby'       => array('addedit'),
                 'required'     => false,
                 'inplace_edit' => false,
                 'add_button'   => false,
-                'section'      => _('Image')
+                'section'      => _('Images')
+            ),
+            'ColorImage'=>array(
+                'label'        => _('Color image'),
+                'shortlabel'   => _('Color image'),
+                'usedby'       => array('addedit'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => _('Images')
             ),
             'Size'=>array(
                 'label'        => _('Available sizes'),

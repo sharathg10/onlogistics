@@ -243,7 +243,8 @@ if (in_array('readytowear', $tradeContext)) {
             SearchTools::createArrayIDFromCollection(
                 'RTWMaterial',
                 array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL),
-                _('Select one or more items')
+                _('Select one or more items'),
+                'CommercialName'
             ),
             'multiple, size="6"'
         ),
@@ -259,7 +260,8 @@ if (in_array('readytowear', $tradeContext)) {
             SearchTools::createArrayIDFromCollection(
                 'RTWMaterial',
                 array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL),
-                _('Select one or more items')
+                _('Select one or more items'),
+                'CommercialName'
             ),
             'multiple, size="6"'
         ),
@@ -275,7 +277,8 @@ if (in_array('readytowear', $tradeContext)) {
             SearchTools::createArrayIDFromCollection(
                 'RTWMaterial',
                 array('MaterialType' => RTWMaterial::TYPE_ACCESSORY),
-                _('Select one or more items')
+                _('Select one or more items'),
+                'CommercialName'
             ),
             'multiple, size="6"'
         ),
@@ -291,7 +294,8 @@ if (in_array('readytowear', $tradeContext)) {
             SearchTools::createArrayIDFromCollection(
                 'RTWMaterial',
                 array('MaterialType' => RTWMaterial::TYPE_ACCESSORY),
-                _('Select one or more items')
+                _('Select one or more items'),
+                'CommercialName'
             ),
             'multiple, size="6"'
         ),
@@ -424,7 +428,11 @@ if (true === $form->displayGrid($displayGrid)) {
                 'Args' => array(isset($customerInstance)?$customerInstance:0),
                 'ColumnMacro' => '',
                 'Sortable' => false
-            )
+            ),
+            'Material1'  => array('ColumnMacro' => '%Model.Material1.CommercialName%'),
+            'Material2'  => array('ColumnMacro' => '%Model.Material2.CommercialName%'),
+            'Accessory1' => array('ColumnMacro' => '%Model.Accessory1.CommercialName%'),
+            'Accessory2' => array('ColumnMacro' => '%Model.Accessory2.CommercialName%'),
          )
      );
     if (in_array('readytowear', $tradeContext)) {

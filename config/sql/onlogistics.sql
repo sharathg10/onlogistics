@@ -47,6 +47,8 @@ CREATE TABLE AbstractDocument (
   _TvaSurtaxRate DECIMAL(10,2) NOT NULL DEFAULT 0,
   _FodecTaxRate DECIMAL(10,2) NOT NULL DEFAULT 0,
   _TaxStamp DECIMAL(10,2) NOT NULL DEFAULT 0,
+  _CommercialCommissionPercent DECIMAL(10,2) NOT NULL DEFAULT 0,
+  _CommercialCommissionAmount DECIMAL(10,2) NOT NULL DEFAULT 0,
   _DestinatorSite INT(11) NOT NULL DEFAULT 0,
   _CommandNo VARCHAR(255) DEFAULT '',
   _Transporter INT(11) NOT NULL DEFAULT 0,
@@ -2276,7 +2278,7 @@ CREATE TABLE Product (
   _Id int(11) unsigned NOT NULL default '0',
   _DBId int(11) default 0,
   _ClassName VARCHAR(255) DEFAULT NULL,
-  _Name VARCHAR(255) DEFAULT NULL,
+  _Name INT(11) NOT NULL DEFAULT NULL,
   _BaseReference VARCHAR(255) DEFAULT NULL,
   _Volume FLOAT NOT NULL DEFAULT 0,
   _CustomsNaming VARCHAR(255) DEFAULT NULL,
@@ -2922,6 +2924,7 @@ CREATE TABLE UserAccount (
   _Profile INT(3) DEFAULT NULL,
   _Catalog INT(11) NOT NULL DEFAULT 0,
   _SupplierCatalog INT(11) NOT NULL DEFAULT 0,
+  _CommissionPercent DECIMAL(10,2) NOT NULL DEFAULT 0,
   PRIMARY KEY (_Id)
 ) TYPE=InnoDB CHARSET=latin1;
 
@@ -3046,6 +3049,8 @@ CREATE TABLE RTWModel (
   _InsoleQuantity DECIMAL(10,3) DEFAULT NULL,
   _UnderSole INT(11) NOT NULL DEFAULT 0,
   _UnderSoleQuantity DECIMAL(10,3) DEFAULT NULL,
+  _MediaPlanta INT(11) NOT NULL DEFAULT 0,
+  _MediaPlantaQuantity DECIMAL(10,3) DEFAULT NULL,
   _Lagrima INT(11) NOT NULL DEFAULT 0,
   _LagrimaQuantity DECIMAL(10,3) DEFAULT NULL,
   _HeelCovering INT(11) NOT NULL DEFAULT 0,
@@ -3057,6 +3062,7 @@ CREATE TABLE RTWModel (
   _Bamboo INT(11) NOT NULL DEFAULT 0,
   _BambooQuantity DECIMAL(10,3) DEFAULT NULL,
   _Image VARCHAR(255) DEFAULT NULL,
+  _ColorImage VARCHAR(255) DEFAULT NULL,
   _Comment TEXT DEFAULT NULL,
   PRIMARY KEY (_Id)
 ) TYPE=InnoDB CHARSET=latin1;
@@ -3080,6 +3086,7 @@ CREATE INDEX _Accessory2 ON RTWModel (_Accessory2);
 CREATE INDEX _Lining ON RTWModel (_Lining);
 CREATE INDEX _Insole ON RTWModel (_Insole);
 CREATE INDEX _UnderSole ON RTWModel (_UnderSole);
+CREATE INDEX _MediaPlanta ON RTWModel (_MediaPlanta);
 CREATE INDEX _Lagrima ON RTWModel (_Lagrima);
 CREATE INDEX _HeelCovering ON RTWModel (_HeelCovering);
 CREATE INDEX _Selvedge ON RTWModel (_Selvedge);

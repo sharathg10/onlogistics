@@ -8,17 +8,16 @@
      * @return boolean
      */
     public function canBeDeleted() {
-        if (!parent::canBeDeleted()) { 
-            return false;
-        }
-        $pdtCol = $this->getRTWProductCollection();
-        if (!$pdtCol->getCount()) {
-            return true;
-        }
-        foreach ($pdtCol as $pdt) {
-            if (!$pdt->isDeletable(false)) {
-                return false;
+        try {
+            parent::canBeDeleted();
+            $pdtCol = $this->getRTWProductCollection();
+            foreach ($pdtCol as $pdt) {
+                if (!$pdt->isDeletable(false)) {
+                    throw new Exception('');
+                }
             }
+        } catch (Exception $exc) {
+            throw new Exception(_('This model can not be modified because it is already used in one or more orders'));
         }
         return true;
     }
@@ -46,6 +45,7 @@
             'Lining'        => _('Lining'),
             'Insole'        => _('Insole'),
             'UnderSole'     => _('Under-sole'),
+            'MediaPlanta'   => _('Media planta'),
             'Lagrima'       => _('Lagrima'),
             'HeelCovering'  => _('Heel covering'),
             'Selvedge'      => _('Selvedge'),
@@ -84,6 +84,39 @@
      */
     function getToStringAttribute() {
         return array('PressName');
+    }
+
+    // }}}
+    // RTWModel::getLegalMentions() {{{
+
+    /**
+     *
+     * @access public
+     * @return void
+     */
+    public function getLegalMentions($asHtml = false)
+    {
+        $nl    = $asHtml ? '<br/>' : "\n";
+        $lines = array();
+        $upper = array();
+        $mats  = array('Material1', 'Material2', 'Accessory1', 'Accessory2');
+        foreach ($mats as $mat) {
+            $getter = 'get' . $mat;
+            if (($matObj = $this->$getter()) instanceof RTWMaterial) {
+                $upper[] = '    - ' . $matObj->toStringForCustoms();
+            }
+        }
+        if (count($upper)) {
+            $lines[] = _('Upper') . ": $nl" . implode($nl, $upper);
+        }
+        $lines[] = ($heelCov = $this->getHeelCovering()) instanceof RTWMaterial ? 
+            _('Heel covering') . ': ' . $heelCov->toStringForCustoms() : null;
+        $lines[] = ($lining = $this->getLining()) instanceof RTWMaterial ? 
+            _('Lining') . ': ' . $lining->toStringForCustoms() : null;
+        $lines[] = ($sole = $this->getSole()) instanceof RTWMaterial ? 
+            _('Sole') . ': ' . $sole->toStringForCustoms() : null;
+        $lines = array_filter($lines);
+        return implode($nl, $lines);
     }
 
     // }}}

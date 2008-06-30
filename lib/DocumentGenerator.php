@@ -3655,8 +3655,11 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
         $this->pdf->SetFillColor(220);
         $this->renderHeader();
         $this->pdf->addPage(); // apres le renderHeader()!
-        // XXX TODO
-		//$this->pdf->image(base64_decode($this->model->getImage()), 10, 8, 0, 17, 'jpg');
+        $infos = ImageManager::getFileInfo(md5($this->model->getImage()));
+        if (is_array($infos) && !empty($infos['data'])) {
+            list(,$type) = explode('/', $infos['mimetype']);
+		    $this->pdf->image($infos['data'], 90, 8, 110, 0, $type);
+        }
         $this->_renderContent();
         return $this->pdf;
     }
@@ -3688,6 +3691,10 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
         );
         $this->pdf->Ln();
         $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
         $this->pdf->addText(
             _('Date') . ': ' . I18N::formatDate(time(), I18N::DATE_LONG),
             array('fontSize'=>12, 'lineHeight'=>5)
@@ -3712,7 +3719,6 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
             _('Description') . ': ' . $this->model->getDescription(),
             array('fontSize'=>12, 'lineHeight'=>5)
         );
-        $this->pdf->Ln();
         $this->pdf->Ln();
         $items = array(
             'ConstructionType' => _('Construction type'),
@@ -3747,8 +3753,172 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
             _('Observations') => 35,
             $this->model->getComment() => 155), 
         0);
-        $this->pdf->Ln();
     }
 } // }}}
+
+/**
+ * LookbookGenerator.
+ * Classe utilisée pour les fiches techniques.
+ *
+ */
+class LookbookGenerator extends WorksheetGenerator { // {{{
+    /**
+     * Constructor
+     *
+     * @param  object $model l'objet RTWModel
+     * @access protected
+     */
+    public function __construct($modelCollection, $zoneId) {
+        // doc fictif car on ne sauve pas ces fiches suiveuses
+        $document = new AbstractDocument();
+        $cur = false; // pas important ici...
+        parent::__construct($document, false, false, $cur, '');
+        $this->pdf->showExpeditor   = false;
+        $this->pdf->showPageNumbers = false;
+        $this->modelCollection = $modelCollection;
+        $this->zoneId = $zoneId;
+        $this->model = false;
+    }
+
+    /**
+     * Construit le doc pdf
+     *
+     * @access public
+     * @return void
+     */
+    public function render() {
+        $this->pdf->SetFillColor(220);
+        $this->renderHeader();
+        foreach ($this->modelCollection as $model) {
+            $this->pdf->addPage(); // apres le renderHeader()!
+            $this->model = $model;
+            $infos = ImageManager::getFileInfo(md5($this->model->getColorImage()));
+            if (is_array($infos) && !empty($infos['data'])) {
+                list(,$type) = explode('/', $infos['mimetype']);
+		        $this->pdf->image($infos['data'], 90, 8, 110, 0, $type);
+            }
+            $this->_renderContent();
+        }
+        return $this->pdf;
+    }
+
+    /**
+     *
+     * @access public
+     * @return void
+     */
+    public function renderHeader() {
+        $this->pdf->docTitle = $this->docName;
+        $this->pdf->fontSize['HEADER'] = 30;
+        $dbOwner = Auth::getDatabaseOwner();
+        $this->pdf->logo = base64_decode($dbOwner->getLogo());
+        //$this->pdf->header();  // inutile: appele par addPage()
+    }
+
+    /**
+     * Tableau 'principal'
+     * @access protected
+     * @return void
+     */
+    protected function _renderContent() {
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->addText(
+            _('Lookbook') . ' ' . $this->model->toString(),
+            array('fontSize'=>14, 'lineHeight'=>8)
+        );
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $this->pdf->addText(
+            _('Date') . ': ' . I18N::formatDate(time(), I18N::DATE_LONG),
+            array('fontSize'=>12, 'lineHeight'=>5)
+        );
+        $items = array(
+            'Season'      => _('Season'),
+            'Shape'       => _('Shape'),
+            'PressName'   => _('Press name'),
+            'Description' => _('Description'),
+            'HeelHeight'  => _('Heel Height'),
+        );
+        foreach ($items as $k => $v) {
+            $getter = 'get' . $k;
+            $obj = $this->model->$getter();
+            if ($obj instanceof Object || is_string($obj)) {
+                $this->pdf->addText(
+                     $v . ': ' . (($obj instanceof Object) ? $obj->toString() : $obj),
+                     array('fontSize'=>12, 'lineHeight'=>5)
+                );
+            }
+        }
+        $sizes = $this->model->getSizeCollection();
+        if (count($sizes) > 0) {
+            $this->pdf->addText(
+                 _('Available sizes') . ': ' .
+                 implode(', ', array_values($sizes->toArray())), 
+                 array('fontSize'=>12, 'lineHeight'=>5)
+            );
+        }
+        $this->pdf->Ln();
+        $this->pdf->Ln();
+        $products = $this->model->getRTWProductCollection();
+        if (count($products) > 0) {
+            $product = $products->getItem(0);
+            $this->pdf->tableHeader(array(
+                _('Style number')      => 24,
+                _('Material 1')        => 31,
+                _('Material 2')        => 31,
+                _('Accessory 1')       => 28,
+                _('Accessory 2')       => 28,
+                _('Price')             => 24,
+                _('Recommended price') => 24
+            ), 0);
+            $pbcCol = $product->getPriceByCurrencyCollection(array(
+                'PricingZone' => $this->zoneId
+            ));
+            $padding = '';
+            $rprice  = '';
+            $price   = '';
+            foreach ($pbcCol as $pbc) {
+                $rprice .= $padding . I18N::formatCurrency(
+                    TextTools::entityDecode($pbc->getCurrency()->getSymbol()),
+                    $pbc->getRecommendedPrice()
+                );
+                $price  .= I18N::formatCurrency(
+                    TextTools::entityDecode($pbc->getCurrency()->getSymbol()),
+                    $pbc->getPrice()
+                );
+                $padding = "\n";
+            }
+            $mat1 = ($m = $this->model->getMaterial1()) instanceof RTWMaterial ?
+                $m->getCommercialName() : '';
+            $mat2 = ($m = $this->model->getMaterial2()) instanceof RTWMaterial ?
+                $m->getCommercialName() : '';
+            $acc1 = ($m = $this->model->getAccessory1()) instanceof RTWMaterial ?
+                $m->getCommercialName() : '';
+            $acc2 = ($m = $this->model->getAccessory1()) instanceof RTWMaterial ?
+                $m->getCommercialName() : '';
+
+            $this->pdf->tableBody(array(0 => array(
+                $this->model->getStyleNumber(),
+                $mat1,
+                $mat2,
+                $acc1,
+                $acc2,
+                $price,
+                $rprice
+            )));
+        }
+    }
+} // }}}
+
 
 ?>

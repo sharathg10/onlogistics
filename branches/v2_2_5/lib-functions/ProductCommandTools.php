@@ -695,7 +695,7 @@ function sendProductCommandMail($ProductCommand, $commandType, $Customer='') {
         } else {
             $promoRate = '';
         }
-        $productArray[] = array (
+        $arr = array (
             'ref' => $productRef,
             'name' => $product->getName(),
             'quantity' => $ProductCmdItem->getQuantity(),
@@ -710,6 +710,16 @@ function sendProductCommandMail($ProductCommand, $commandType, $Customer='') {
             'wishedDate' => I18N::formatDate($ProductCmdItem->getWishedDate()),
             'sellUnitQuantity' => $unitQty
         );
+        if ($product instanceof RTWProduct) {
+            $mailSmarty->assign('rtw', 1);
+            if (($model = $product->getModel()) instanceof RTWModel) {
+                $arr['legalMentions'] = $model->getLegalMentions(true);
+            }
+            if (($size = $product->getSize()) instanceof RTWSize) {
+                $arr['size'] = $size->toString();
+            }
+        }
+        $productArray[] = $arr;
     } //for
 
     // calcul des frais de port, emballage et assurance ht puis ttc

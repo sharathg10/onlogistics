@@ -317,6 +317,12 @@ $menu_metadata = array(
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW)
             ),
             array(
+                'title'       => _('Salesmen commission settings'),
+                'link'        => 'SalesmenCommissionSettings.php',
+                'description' =>  _('Salesmen commission settings'),
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_DIR_COMMERCIAL)
+            ),
+            array(
                 'title'       => _('Supplying settings'),
                 'link'        => 'SupplierDelayStock.php',
                 'description' => _('Supplying settings'),
@@ -795,7 +801,14 @@ $menu_metadata = array(
                 'link'        => 'DocumentList.php',
                 'description' => _('Reprinting of documents'),
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_GESTIONNAIRE_STOCK,UserAccount::PROFILE_OPERATOR,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_TRANSPORTEUR,UserAccount::PROFILE_DIR_COMMERCIAL)
-            )
+            ),
+            array(
+                'title'       => _('Lookbook printing'),
+                'link'        => 'dispatcher.php?entity=RTWModel&altname=RTWModelForLookbook',
+                'description' => _('Lookbook printing'),
+                'restrict_to_context' => array('readytowear'),
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_TRANSPORTEUR,UserAccount::PROFILE_DIR_COMMERCIAL)
+            ),
         )
     ),
     // }}}
@@ -807,9 +820,23 @@ $menu_metadata = array(
         'children'    => array(
             array(
                 'title'       => _('Salesman'),
-                'link'        => 'BoardByCommercial.php',
-                'description' => _('Turnover by salesman'),
-                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_DIR_COMMERCIAL)
+                'link'        => 'home.php?help_page=Board',
+                'description' => _('salesman'),
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_DIR_COMMERCIAL),
+                'children' => array(
+                    array(
+                        'title'       => _('Turnover by salesman'),
+                        'link'        => 'BoardByCommercial.php',
+                        'description' => _('Turnover by salesman'),
+                        'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_DIR_COMMERCIAL)
+                    ),
+                    array(
+                        'title'       => _('Salesmen commissions'),
+                        'link'        => 'SalesmenCommission.php',
+                        'description' => _('Salesmen commissions'),
+                        'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_DIR_COMMERCIAL)
+                    )
+                )
             ),
             array(
                 'title'       => _('Customer'),

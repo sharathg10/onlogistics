@@ -3,8 +3,6 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * IMPORTANT: This is a generated file, please do not edit.
- *
  * This file is part of Onlogistics, a web based ERP and supply chain 
  * management application. 
  *
@@ -29,48 +27,33 @@
  * @author    ATEOR dev team <dev@ateor.com>
  * @copyright 2003-2008 ATEOR <contact@ateor.com> 
  * @license   http://www.fsf.org/licensing/licenses/agpl-3.0.html GNU AGPL
- * @version   SVN: $Id$
+ * @version   SVN: $Id: WorksheetEdit.php 9 2008-06-06 09:12:09Z izimobil $
  * @link      http://www.onlogistics.org
  * @link      http://onlogistics.googlecode.com
  * @since     File available since release 0.1.0
  * @filesource
  */
 
-/**
- * UserAccount class
- *
- * Class containing addon methods.
- */
-class UserAccount extends _UserAccount {
-    // Constructeur {{{
+session_cache_limiter('private');
 
-    /**
-     * UserAccount::__construct()
-     * Constructeur
-     *
-     * @access public
-     * @return void
-     */
-    public function __construct() {
-        parent::__construct();
-    }
+require_once('config.inc.php');
+require_once('DocumentGenerator.php');
 
-    // }}}
+$auth = Auth::Singleton();
+$retURL = isset($_REQUEST['retURL'])?$_REQUEST['retURL']:'home.php';
 
-    /**
-     * UserAccount::getProfileConstArray
-     * surcharge pour supprimer l'utilisateur root du tableau
-     *
-     * @access public
-     * @param boolean $keys
-     * @return array
-     */
-    public static function getProfileConstArray($keys = false) {
-        $array = parent::getProfileConstArray($keys);
-        unset($array[UserAccount::PROFILE_ROOT]);
-        return $array;
-    }
-
+if (!isset($_REQUEST['modelIDs']) || empty($_REQUEST['modelIDs'])) {
+    Template::errorDialog(I_NEED_SELECT_ITEM, $retURL);
+    exit(1);
 }
+if (!isset($_REQUEST['zoneId']) || $_REQUEST['zoneId'] == 0) {
+    Template::errorDialog(E_ERROR_GENERIC, $retURL);
+    exit(1);
+}
+
+$modelCol = Object::loadCollection('RTWModel', array('Id' => $_REQUEST['modelIDs']));
+$gen = new LookbookGenerator($modelCol, $_REQUEST['zoneId']);
+$pdf = $gen->render();
+$pdf->output();
 
 ?>

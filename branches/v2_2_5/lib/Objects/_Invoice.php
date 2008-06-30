@@ -3,6 +3,8 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
+ * IMPORTANT: This is a generated file, please do not edit.
+ *
  * This file is part of Onlogistics, a web based ERP and supply chain 
  * management application. 
  *
@@ -34,6 +36,10 @@
  * @filesource
  */
 
+/**
+ * _Invoice class
+ *
+ */
 class _Invoice extends AbstractDocument {
     
     // Constructeur {{{
@@ -490,6 +496,74 @@ class _Invoice extends AbstractDocument {
     }
 
     // }}}
+    // CommercialCommissionPercent float property + getter/setter {{{
+
+    /**
+     * CommercialCommissionPercent float property
+     *
+     * @access private
+     * @var float
+     */
+    private $_CommercialCommissionPercent = 0;
+
+    /**
+     * _Invoice::getCommercialCommissionPercent
+     *
+     * @access public
+     * @return float
+     */
+    public function getCommercialCommissionPercent() {
+        return $this->_CommercialCommissionPercent;
+    }
+
+    /**
+     * _Invoice::setCommercialCommissionPercent
+     *
+     * @access public
+     * @param float $value
+     * @return void
+     */
+    public function setCommercialCommissionPercent($value) {
+        if ($value !== null) {
+            $this->_CommercialCommissionPercent = round(I18N::extractNumber($value), 2);
+        }
+    }
+
+    // }}}
+    // CommercialCommissionAmount float property + getter/setter {{{
+
+    /**
+     * CommercialCommissionAmount float property
+     *
+     * @access private
+     * @var float
+     */
+    private $_CommercialCommissionAmount = 0;
+
+    /**
+     * _Invoice::getCommercialCommissionAmount
+     *
+     * @access public
+     * @return float
+     */
+    public function getCommercialCommissionAmount() {
+        return $this->_CommercialCommissionAmount;
+    }
+
+    /**
+     * _Invoice::setCommercialCommissionAmount
+     *
+     * @access public
+     * @param float $value
+     * @return void
+     */
+    public function setCommercialCommissionAmount($value) {
+        if ($value !== null) {
+            $this->_CommercialCommissionAmount = round(I18N::extractNumber($value), 2);
+        }
+    }
+
+    // }}}
     // ActivatedChainOperation one to many relation + getter/setter {{{
 
     /**
@@ -833,7 +907,9 @@ class _Invoice extends AbstractDocument {
             'Comment' => Object::TYPE_TEXT,
             'TvaSurtaxRate' => Object::TYPE_DECIMAL,
             'FodecTaxRate' => Object::TYPE_DECIMAL,
-            'TaxStamp' => Object::TYPE_DECIMAL);
+            'TaxStamp' => Object::TYPE_DECIMAL,
+            'CommercialCommissionPercent' => Object::TYPE_DECIMAL,
+            'CommercialCommissionAmount' => Object::TYPE_DECIMAL);
         return $ownOnly?$return:array_merge(parent::getProperties(), $return);
     }
 

@@ -189,7 +189,7 @@ class Command extends _Command {
     {
         $chain->setCommandSequence($chain->getCommandSequence() + 1);
         $chain->save();
-        $serial = $chain->getReference() . '-' . chain->getCommandSequence();
+        $serial = $chain->getReference() . '-' . $chain->getCommandSequence();
         if ($this->getIsEstimate()) {
             $serial = 'D_'.$serial;
         }

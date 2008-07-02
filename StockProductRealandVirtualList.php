@@ -141,7 +141,7 @@ if (true === $form->displayGrid()) {
 		$Collection->currentPage = $rs->_currentPage;
 	}
 
-	while (!$rs->EOF) {
+	while ($rs && !$rs->EOF) {
 		$pq = new ProductQuantity();
 		$pq->setId($rs->fields['pdtId']);
 		$pq->setBaseReference($rs->fields['baseReference']);
@@ -172,9 +172,9 @@ if (true === $form->displayGrid()) {
 	}
 	// Placé apres les setItem(), sinon, écrasé...
 	if (!isset($_REQUEST['export'])) {  // si pas dans le cadre d'un export
-		$Collection->totalCount = $rs->maxRecordCount();
+		$Collection->totalCount = $rs ? $rs->maxRecordCount() : 0;
 	}
-	if ($withDate) {
+	if ($rs && $withDate) {
 		// Les LEM:
 		// Si pas de critere sur le Product, intervention de la pagination:
 		// inutile de parcourir les LEM concernant les Product hors pagination!

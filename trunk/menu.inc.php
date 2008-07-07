@@ -821,7 +821,6 @@ $menu_metadata = array(
                 'restrict_to_context' => array('readytowear'),
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_TRANSPORTEUR,UserAccount::PROFILE_DIR_COMMERCIAL)
             ),
-            /*
             array(
                 'title'       => _('Document appendices'),
                 'link'        => 'dispatcher.php?entity=DocumentAppendix',
@@ -829,7 +828,6 @@ $menu_metadata = array(
                 'restrict_to_context' => array('readytowear'),
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_TRANSPORTEUR,UserAccount::PROFILE_DIR_COMMERCIAL)
             ),
-            */
         )
     ),
     // }}}

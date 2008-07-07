@@ -304,7 +304,8 @@ class RTWModelGrid extends GenericGrid
         $this->grid->NewAction('Redirect', array(
             'Caption' => _('Print worksheet'),
             'TargetPopup' => true,
-            'URL' => 'WorksheetEdit.php?modelId=%d&retURL='.$_SERVER['PHP_SELF']
+            'URL' => 'WorksheetEdit.php?retURL='.$_SERVER['PHP_SELF'],
+            'TransmitedArrayName' => 'modelIDs'
         ));
     }
 

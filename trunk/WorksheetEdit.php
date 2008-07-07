@@ -42,18 +42,21 @@ require_once('DocumentGenerator.php');
 $auth = Auth::Singleton();
 $retURL = isset($_REQUEST['retURL'])?$_REQUEST['retURL']:'home.php';
 
-if (!isset($_REQUEST['modelId'])) {
-    Template::errorDialog(I_NEED_SINGLE_ITEM, $retURL);
+if (!isset($_REQUEST['modelIDs']) || empty($_REQUEST['modelIDs'])) {
+    Template::errorDialog(I_NEED_SELECT_ITEM, $retURL);
     exit(1);
 }
 
-$model = Object::load('RTWModel', $_REQUEST['modelId']);
-if (!($model instanceof RTWModel)) {
+$modelCollection = Object::loadCollection(
+    'RTWModel',
+    array('Id' => $_REQUEST['modelIDs'])
+);
+if (!count($modelCollection)) {
     Template::errorDialog(E_NO_RECORD_FOUND, $retURL);
     exit(1);
 }
 
-$gen = new WorksheetGenerator($model);
+$gen = new WorksheetGenerator($modelCollection);
 $pdf = $gen->render();
 $pdf->output();
 

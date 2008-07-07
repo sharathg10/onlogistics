@@ -499,7 +499,7 @@ class DeliveryOrderGenerator extends CommandDocumentGenerator { // {{{
         $this->renderCustomsBlocs();
         $this->_renderContent();
         $this->renderTotal1Bloc();
-        $this->_renderComment();
+        $this->renderComment();
         $this->renderFooter();
         $this->renderSNLotBloc();
         return $this->pdf;
@@ -581,14 +581,14 @@ class DeliveryOrderGenerator extends CommandDocumentGenerator { // {{{
     }
 
     // }}}
-    // DeliveryOrder::_renderComment() {{{
+    // DeliveryOrder::renderComment() {{{
 
     /**
      * Ajoute le commentaire de la commande
      * @access protected
      * @return void
      */
-    protected function _renderComment() {
+    protected function renderComment() {
         $comment = $this->command->getComment();
         if (!empty($comment)) {
             $this->pdf->tableHeader(
@@ -674,7 +674,7 @@ class RTWDeliveryOrderGenerator extends DeliveryOrderGenerator { // {{{
         $this->renderCustomsBlocs();
         $this->_renderContent();
         $this->renderTotal1Bloc();
-        $this->_renderComment();
+        $this->renderComment();
         $this->renderFooter();
         return $this->pdf;
     }
@@ -721,6 +721,7 @@ class RTWDeliveryOrderGenerator extends DeliveryOrderGenerator { // {{{
  *
  */
 class InvoiceGenerator extends CommandDocumentGenerator { // {{{
+    // InvoiceGenerator::__construct() {{{
     /**
      * Constructor
      *
@@ -733,6 +734,8 @@ class InvoiceGenerator extends CommandDocumentGenerator { // {{{
         parent::__construct($document, $isReedition, $autoPrint,
                             _('Invoice'));
     }
+    // }}}
+    // InvoiceGenerator::render() {{{
 
     /**
      * Construit la facture pdf
@@ -757,9 +760,12 @@ class InvoiceGenerator extends CommandDocumentGenerator { // {{{
         $this->renderTotal1Bloc($pdfDoc);
         $this->renderTotal2Bloc($pdfDoc);
         $this->renderSNLotBloc($pdfDoc);
-        $this->_renderComment($pdfDoc);
+        $this->renderComment($pdfDoc);
+        //$this->renderAppendices($pdfDoc);
         return $pdfDoc;
     }
+    // }}}
+    // InvoiceGenerator::_renderContent() {{{
 
     /**
      * Construit le contenu du pdf
@@ -800,7 +806,7 @@ class InvoiceGenerator extends CommandDocumentGenerator { // {{{
             $pdfDoc->ln(8);
         }
     }
-
+    // }}}
     // InvoiceGenerator::renderTotal1Bloc() {{{
 
     /**
@@ -959,7 +965,6 @@ class InvoiceGenerator extends CommandDocumentGenerator { // {{{
         $pdfDoc->tableHeader($data);
     }
     // }}}
-    
     // InvoiceGenerator::renderComment() {{{
 
     /**
@@ -968,7 +973,7 @@ class InvoiceGenerator extends CommandDocumentGenerator { // {{{
      * @access protected
      * @return void
      */
-    protected function _renderComment($pdfDoc=false) {
+    protected function renderComment($pdfDoc=false) {
         $pdfDoc = (!$pdfDoc)?$this->pdf:$pdfDoc;
         $comment = $this->document->getComment();
         if (!empty($comment)) {
@@ -983,7 +988,50 @@ class InvoiceGenerator extends CommandDocumentGenerator { // {{{
     }
 
     // }}}
+    // InvoiceGenerator::renderAppendices() {{{
 
+    /**
+     * Ajoute les annexes au document.
+     *
+     * @param Object $pdfDoc PDFDocumentRender utilise lors d'edition de n factures
+     * @access protected
+     * @return void
+     */
+    protected function renderAppendices($pdfDoc = false) {
+        $appendices = $this->destinator->getDocumentAppendixCollection();
+        $count = 0;
+        foreach ($appendices as $appendix) {
+            $img = $appendix->getImage();
+            if (!empty($img)) {
+                $infos = ImageManager::getFileInfo(md5($appendix->getImage()));
+                if (is_array($infos) && !empty($infos['data'])) {
+                    list(,$type) = explode('/', $infos['mimetype']);
+                    $pdfDoc->addPage();
+                    $pdfDoc->image('/home/izi/GL/php/onlogistics/trunk/annexe.png'/*$infos['data']*/, 0, 0, 210, 297, $type);
+                }
+            } else {
+                if ($count == 0) {
+                    $pdfDoc->addPage();
+                    $pdfDoc->ln();
+                    $pdfDoc->ln();
+                    $pdfDoc->ln();
+                }
+                $count++;
+                $title = $appendix->getTitle();
+                $body  = $appendix->getBody();
+                if (!empty($title)) {
+                    $pdfDoc->tableHeader(array($title => 190), 1);
+                }
+                if (!empty($body)) {
+                    $pdfDoc->tableBody(array(0 => array($body)));
+                }
+                $pdfDoc->ln();
+            }
+        }
+    }
+
+    // }}}
+    // InvoiceGenerator::getExpeditorBankDetail() {{{
     /**
      * Récupère les detail de l'adresse de la banque
      * de l'expediteur
@@ -1013,6 +1061,8 @@ class InvoiceGenerator extends CommandDocumentGenerator { // {{{
         $abd->getBankAddressZipCode(), $abd->getBankAddressCountry());
         return $data;
     }
+    // }}}
+    // InvoiceGenerator::getBLFieldValue() {{{
 
     /**
      * Retourne la valeur à afficher dans l'en-tête des données de la facture
@@ -1032,6 +1082,7 @@ class InvoiceGenerator extends CommandDocumentGenerator { // {{{
         }
         return $value;
     }
+    // }}}
 } // }}}
 
 /**
@@ -1063,7 +1114,8 @@ class RTWInvoiceGenerator extends InvoiceGenerator { // {{{
         $this->_renderContent($pdfDoc);
         $this->renderTotal1Bloc($pdfDoc);
         $this->renderTotal2Bloc($pdfDoc);
-        $this->_renderComment($pdfDoc);
+        $this->renderComment($pdfDoc);
+        //$this->renderAppendices($pdfDoc);
         return $pdfDoc;
     }
 
@@ -1282,7 +1334,7 @@ class ChainCommandInvoiceGenerator extends InvoiceGenerator { // {{{
         $this->renderTotal1Bloc($pdfDoc);
         $this->renderTotal2Bloc($pdfDoc);
         $this->renderSNLotBloc($pdfDoc);
-        $this->_renderComment($pdfDoc);
+        $this->renderComment($pdfDoc);
         return $pdfDoc;
     }
 
@@ -1577,7 +1629,7 @@ class PrestationInvoiceGenerator extends InvoiceGenerator { // {{{
         $this->_renderTransportDetails();*/
         $this->renderTotal1Bloc();
         $this->renderTotal2Bloc();
-        $this->_renderComment();
+        $this->renderComment();
         //$this->_renderACOList();
         //$this->_renderStockageList();
         $this->renderFooter();
@@ -3635,14 +3687,15 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
      * @param  object $model l'objet RTWModel
      * @access protected
      */
-    public function __construct($model) {
+    public function __construct($modelCollection) {
         // doc fictif car on ne sauve pas ces fiches suiveuses
         $document = new AbstractDocument();
         $cur = false; // pas important ici...
         parent::__construct($document, false, false, $cur, '');
         $this->pdf->showExpeditor   = false;
         $this->pdf->showPageNumbers = false;
-        $this->model = $model;
+        $this->modelCollection = $modelCollection;
+        $this->model = false;
     }
 
     /**
@@ -3653,14 +3706,17 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
      */
     public function render() {
         $this->pdf->SetFillColor(220);
-        $this->renderHeader();
-        $this->pdf->addPage(); // apres le renderHeader()!
-        $infos = ImageManager::getFileInfo(md5($this->model->getImage()));
-        if (is_array($infos) && !empty($infos['data'])) {
-            list(,$type) = explode('/', $infos['mimetype']);
-		    $this->pdf->image($infos['data'], 90, 8, 110, 0, $type);
+        foreach ($this->modelCollection as $model) {
+            $this->model = $model;
+            $this->renderHeader();
+            $this->pdf->addPage(); // apres le renderHeader()!
+            $infos = ImageManager::getFileInfo(md5($this->model->getImage()));
+            if (is_array($infos) && !empty($infos['data'])) {
+                list(,$type) = explode('/', $infos['mimetype']);
+		        $this->pdf->image($infos['data'], 90, 8, 110, 0, $type);
+            }
+            $this->_renderContent();
         }
-        $this->_renderContent();
         return $this->pdf;
     }
 
@@ -3738,9 +3794,11 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
         $items = $this->model->getMaterialProperties();
         foreach ($items as $attrName => $label) {
             $getter = 'get' . $attrName;
+            $qtyGetter = 'get' . $attrName . 'Quantity';
             $mat    = $this->model->$getter();
-            $value  = ($mat instanceof RTWMaterial) ? $mat->toString() : 'N/A';
-            $this->pdf->tableHeader(array($label => 35, $value => 155), 0);
+            $value  = ($mat instanceof RTWMaterial) ? $mat->toString() : _('N/A');
+            $qty    = ($mat instanceof RTWMaterial) ? $this->model->$qtyGetter() : '';
+            $this->pdf->tableHeader(array($label => 35, $value => 135, (string)$qty => 20), 0);
         }
         $sizes = $this->model->getSizeCollection();
         if (count($sizes) > 0) {

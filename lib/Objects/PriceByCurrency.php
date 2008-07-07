@@ -364,7 +364,7 @@ class PriceByCurrency extends Object {
      * @return string
      */
     public static function getObjectLabel() {
-        return _('Prix');
+        return _('Price');
     }
 
     // }}}

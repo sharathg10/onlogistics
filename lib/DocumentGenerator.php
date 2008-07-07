@@ -761,7 +761,7 @@ class InvoiceGenerator extends CommandDocumentGenerator { // {{{
         $this->renderTotal2Bloc($pdfDoc);
         $this->renderSNLotBloc($pdfDoc);
         $this->renderComment($pdfDoc);
-        //$this->renderAppendices($pdfDoc);
+        $this->renderAppendices($pdfDoc);
         return $pdfDoc;
     }
     // }}}
@@ -1000,6 +1000,7 @@ class InvoiceGenerator extends CommandDocumentGenerator { // {{{
     protected function renderAppendices($pdfDoc = false) {
         $appendices = $this->destinator->getDocumentAppendixCollection();
         $count = 0;
+        $inImage = false;
         foreach ($appendices as $appendix) {
             $img = $appendix->getImage();
             if (!empty($img)) {
@@ -1007,16 +1008,17 @@ class InvoiceGenerator extends CommandDocumentGenerator { // {{{
                 if (is_array($infos) && !empty($infos['data'])) {
                     list(,$type) = explode('/', $infos['mimetype']);
                     $pdfDoc->addPage();
-                    $pdfDoc->image('/home/izi/GL/php/onlogistics/trunk/annexe.png'/*$infos['data']*/, 0, 0, 210, 297, $type);
+                    $pdfDoc->image('data://' . $infos['mimetype'] . ';base64,' 
+                        . base64_encode($infos['data']), 0, 0, 210, 297, $type);
                 }
+                $inImage = true;
             } else {
-                if ($count == 0) {
+                if ($count == 0 || $inImage) {
                     $pdfDoc->addPage();
                     $pdfDoc->ln();
                     $pdfDoc->ln();
                     $pdfDoc->ln();
                 }
-                $count++;
                 $title = $appendix->getTitle();
                 $body  = $appendix->getBody();
                 if (!empty($title)) {
@@ -1026,7 +1028,10 @@ class InvoiceGenerator extends CommandDocumentGenerator { // {{{
                     $pdfDoc->tableBody(array(0 => array($body)));
                 }
                 $pdfDoc->ln();
+                $inImage = false;
             }
+            $count++;
+            $this->pdf->footer = '';
         }
     }
 
@@ -1115,7 +1120,7 @@ class RTWInvoiceGenerator extends InvoiceGenerator { // {{{
         $this->renderTotal1Bloc($pdfDoc);
         $this->renderTotal2Bloc($pdfDoc);
         $this->renderComment($pdfDoc);
-        //$this->renderAppendices($pdfDoc);
+        $this->renderAppendices($pdfDoc);
         return $pdfDoc;
     }
 

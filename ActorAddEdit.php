@@ -617,6 +617,12 @@ $jobOptions  = FormTools::writeOptionsFromObject(
         'Job', $jobIds, array(), array('Name' => SORT_ASC));
 $smarty->assign('JobList', join("\n\t\t", $jobOptions));
 
+// document appendices
+$docAppendicesIds = $_SESSION['actor']->getDocumentAppendixCollectionIds();
+$docAppendicesOptions  = FormTools::writeOptionsFromObject(
+    'DocumentAppendix', $docAppendicesIds, array(), array('Code' => SORT_ASC));
+$smarty->assign('DocumentAppendixList', join("\n\t\t", $docAppendicesOptions));
+
 // commerciaux: tous les user accounts dont l'acteur est l'acteur
 // connecté et dont le profil est 'commercial'.
 

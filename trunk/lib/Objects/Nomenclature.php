@@ -49,7 +49,7 @@ class Nomenclature extends _Nomenclature {
     }
 
     // }}}
-
+    // Nomenclature::isUsed() {{{
     /**
      * Retourne true ou false selon s'il existe des ConcreteProduct relies
      * a cette Nomenclature

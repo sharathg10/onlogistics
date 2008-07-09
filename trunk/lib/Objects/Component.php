@@ -205,7 +205,8 @@ class Component extends _Component {
     function getTreeItems($withLink=false, $recursive=true) {
         $Product = $this->getProduct();
         $tracingModeArray = Product::getTracingModeConstArray();
-        $info = $Product->getBaseReference() . ' | ' . $Product->getName();
+        $method = $this->getLevel() ? 'toString' : 'getName';
+        $info = $Product->getBaseReference() . ' | ' . $Product->$method();
         $info .= ($Product->getTracingMode() == 0)?' ':
                 ' (' . $tracingModeArray[$Product->getTracingMode()] . ') ';
         $info .= ($this->getLevel() == 0)?
@@ -245,7 +246,8 @@ class Component extends _Component {
         $Product = $this->getProduct();
         $headCP = Object::load('ConcreteProduct', $headId);
         $tracingModeArray = Product::getTracingModeConstArray();
-        $info = $Product->getBaseReference() . ' | ' . $Product->getName();
+        $method = $this->getLevel() ? 'toString' : 'getName';
+        $info = $Product->getBaseReference() . ' | ' . $Product->$method();
         $info .= ($Product->getTracingMode() == 0)?' ':
                 ' (' . $tracingModeArray[$Product->getTracingMode()] . ') ';
         $info .= ($this->getLevel() == 0)?

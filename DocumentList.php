@@ -47,11 +47,13 @@ $form = new SearchForm('AbstractDocument');
 $profileforFullList = array(UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,
         UserAccount::PROFILE_ADMIN_VENTES, UserAccount::PROFILE_AERO_ADMIN_VENTES, UserAccount::PROFILE_DIR_COMMERCIAL);
 if(in_array($Auth->getProfile(), $profileforFullList)) {
-    $documentList = AbstractDocument::getDocumentsList();
+    $documentList = AbstractDocument::getDocumentList();
 } else {
-    $documentList = array('PackingList'=>_('Packing list'),
-                          'DeliveryOrder'=>_('Delivery order'),
-                          'ForwardingForm'=>_('Forwarding form'));
+    $documentList = array(
+        'PackingList'    => _('Packing list'),
+        'DeliveryOrder'  => _('Delivery order'),
+        'ForwardingForm' => _('Forwarding form')
+    );
 }
 $form->addElement('select', 'ClassName', _('Document type'), array($documentList));
 $form->AddBlankElement();  // pour la mise en page
@@ -109,6 +111,7 @@ if (true == $form->displayGrid()){// || $form->isFirstArrival()) {
             'TargetPopup' => true,
         	'URL' => 'DocumentReedit.php?id=%d',
             'ReturnURL' => 'javascript:window.close();'));
+    /*
     $grid->NewAction('Redirect', array(
             'Caption' => _('Order receipt'),
             'Title' => _('Print order receipt'),
@@ -116,6 +119,7 @@ if (true == $form->displayGrid()){// || $form->isFirstArrival()) {
     	    'URL' => 'CommandReceiptEdit.php?id=%d',
             'ReturnURL' => 'javascript:window.close();',
             'Profiles' => $profileforFullList));
+    */
 
     $grid->NewAction('Redirect', array(
             'Caption' => _('Send invoice'),

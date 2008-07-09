@@ -49,12 +49,14 @@ class AbstractDocument extends _AbstractDocument {
     }
 
     // }}}
+    // getLogo() {{{
+
     /**
      * Retourne le logo (sous forme base64), ou une string vide
      * @access public
      * @return string
      **/
-    function GetLogo() {
+    function getLogo() {
         require_once('Objects/DocumentModel.php');
         $DocumentModel = $this->GetDocumentModel();
         if (Tools::isEmptyObject($DocumentModel)) {
@@ -89,12 +91,16 @@ class AbstractDocument extends _AbstractDocument {
         return '';
     }
 
+    // }}}
+    // getFooter() {{{
+
     /**
      * Retourne le logo (sous forme base64), ou une string vide
+     *
      * @access public
      * @return string
-     **/
-    function GetFooter() {
+     */
+    function getFooter() {
         $DocumentModel = $this->GetDocumentModel();
         if (Tools::isEmptyObject($DocumentModel)) {
             return '';
@@ -102,7 +108,10 @@ class AbstractDocument extends _AbstractDocument {
         return $DocumentModel->GetFooter();
     }
 
-    function FindDocumentModel() {
+    // }}}
+    // findDocumentModel() {{{
+
+    function findDocumentModel() {
         $docModel = $this->getDocumentModel();
         if (!Tools::isEmptyObject($docModel)) {
             return clone $docModel;  // une copie...
@@ -138,6 +147,9 @@ class AbstractDocument extends _AbstractDocument {
         return false;
     }
 
+    // }}}
+    // getDocumentList() {{{
+
     /**
      * Retourne un tableau de correspondance entre le
      * ClassName et le nom du document.
@@ -145,14 +157,20 @@ class AbstractDocument extends _AbstractDocument {
      * @return array
      * @access public
      */
-    function getDocumentsList()
+    function getDocumentList()
     {
-        return array('Invoice'=>_('Invoice'),
-            'PackingList'=>_('Packing list'),
-            'ToHave'=>_('Credit note'),
-            'DeliveryOrder'=>_('Delivery order'),
-            'ForwardingForm'=>_('Forwarding form'));
+        return array(
+            'CommandReceipt' => _('Command receipt'),
+            'Invoice'        => _('Invoice'),
+            'PackingList'    => _('Packing list'),
+            'ToHave'         => _('Credit note'),
+            'DeliveryOrder'  => _('Delivery order'),
+            'ForwardingForm' => _('Forwarding form')
+        );
     }
+
+    // }}}
+    // getDocumentReeditionURL() {{{
 
     /**
      * Retourne l'url de reedition pour le document
@@ -163,19 +181,20 @@ class AbstractDocument extends _AbstractDocument {
      * @return string|array
      * @access public
      */
-    function getDocumentsReeditionURL($docType=false)
+    function getDocumentReeditionURL($docType=false)
     {
-        $URLArray = array('Invoice' => 'EditInvoice.php?print=1&InvoiceId=%d',
-            'PackingList' =>'PackingListEdit.php?reedit=1&pId=%d',
-            'ToHave' => 'ToHaveEdit.php?reedit=1&thId=%d',
-            'DeliveryOrder' => 'DeliveryOrderEdit.php?reedit=1&idBL=%d',
-            'ForwardingForm'=>'ForwardingFormEdit.php?print=1&reedit=1&doc=%d');
-        if($docType && isset($URLArray[$docType])) {
-            return $URLArray[$docType];
-        }
-        return $URLArray;
+        $urls = array(
+            'CommandReceipt' => 'CommandReceiptEdit.php?print=1&id=%d',
+            'Invoice'        => 'EditInvoice.php?print=1&InvoiceId=%d',
+            'PackingList'    => 'PackingListEdit.php?reedit=1&pId=%d',
+            'ToHave'         => 'ToHaveEdit.php?reedit=1&thId=%d',
+            'DeliveryOrder'  => 'DeliveryOrderEdit.php?reedit=1&idBL=%d',
+            'ForwardingForm' => 'ForwardingFormEdit.php?print=1&reedit=1&doc=%d'
+        );
+        return isset($urls[$docType]) ? $urls[$docType] : false;
     }
-
+    
+    // }}}
 }
 
 ?>

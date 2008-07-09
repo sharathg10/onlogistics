@@ -295,27 +295,31 @@ class AlertSender{
      * @static
      * @return void
      **/
-    public static function send_ALERT_CLIENT_COMMAND_RECEIPT($params, $uacCol, $siteIds=array()){
-        $alert = self::_loadAlert(ALERT_CLIENT_COMMAND_RECEIPT);
-        $alert->prepare($params);
+    public static function send_ALERT_PRODUCT_COMMAND_RECEIPT($commandReceipt, $uacCol, $siteIds=array()) 
+    {
+        if ($commandReceipt->getCommandType() == Command::TYPE_SUPPLIER) {
+            $alert = self::_loadAlert(ALERT_SUPPLIER_COMMAND_RECEIPT);
+        } else {
+            $alert = self::_loadAlert(ALERT_CLIENT_COMMAND_RECEIPT);
+        }
+        $body  = sprintf(
+            _("Please find enclosed the receipt for order \"%s\".\n\nThe department of sales."),
+            $commandReceipt->getDocumentNo()
+        );
+        $alert->prepare(array(
+            'NumCde' => $commandReceipt->getDocumentNo(),
+            'body'   => $body
+        ));
         $filter = self::getFilterForUserAccount($alert, $siteIds);
-        self::_send($alert, $uacCol, true, $filter);
-    }
-
-    // }}}
-    // send_ALERT_SUPPLIER_COMMAND_RECEIPT() {{{
-
-    /**
-     *
-     * @access public
-     * @static
-     * @return void
-     **/
-    public static function send_ALERT_SUPPLIER_COMMAND_RECEIPT($params, $uacCol, $siteIds=array()){
-        $alert = self::_loadAlert(ALERT_SUPPLIER_COMMAND_RECEIPT);
-        $alert->prepare($params);
-        $filter = self::getFilterForUserAccount($alert, $siteIds);
-        self::_send($alert, $uacCol, true, $filter);
+        require_once('GenerateDocument.php');
+        $pdfContent = generateDocument($commandReceipt, 0, 'S');
+        $attachment = array(
+            'content' => $pdfContent,
+            'contentType' => 'application/pdf',
+            'fileName' => 'command_receipt.pdf',
+            'isFile' => false
+        );
+        self::_send($alert, $uacCol, false, $filter, $attachment);
     }
 
     // }}}
@@ -1098,8 +1102,10 @@ class AlertSender{
      * @return void
      **/
     public static function _send($alert, $additionnalRecipients = false, $isHTML = false,
-        $filter = array()){
-        $result = $alert->send($additionnalRecipients, $isHTML, $filter);
+        $filter = array(), $attachments=array(), $notification=false, $from='') 
+    {
+        $result = $alert->send($additionnalRecipients, $isHTML, $filter, 
+                               $attachments, $notification, $from);
         if (true != $result) {
             $msg = Tools::isException($result)?$result->getMessage():'';
             trigger_error(

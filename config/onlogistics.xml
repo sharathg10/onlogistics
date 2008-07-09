@@ -972,6 +972,10 @@
         <property type="datetime" name="WishedDate" />
     </entity>
 
+    <!-- entity CommandReceipt -->
+    <entity name="CommandReceipt" extends="AbstractDocument" 
+        tablename="AbstractDocument"/>
+
     <!-- entity CommunicationModality -->
     <entity name="CommunicationModality" tablename="CommunicationModality">
         <property type="string" name="Phone" />

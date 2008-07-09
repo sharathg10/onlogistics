@@ -36,13 +36,21 @@
 
 require_once('config.inc.php');
 require_once('Objects/AbstractDocument.php');
+
 $auth = Auth::singleton();
-$auth->checkProfiles(
-    array(UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,
-          UserAccount::PROFILE_ADMIN_VENTES, UserAccount::PROFILE_AERO_ADMIN_VENTES, UserAccount::PROFILE_ACCOUNTANT,
-          UserAccount::PROFILE_AERO_INSTRUCTOR, UserAccount::PROFILE_AERO_CUSTOMER, UserAccount::PROFILE_DIR_COMMERCIAL,
-          UserAccount::PROFILE_GESTIONNAIRE_STOCK, UserAccount::PROFILE_OPERATOR, UserAccount::PROFILE_TRANSPORTEUR)
-);
+$auth->checkProfiles(array(
+    UserAccount::PROFILE_ADMIN,
+    UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,
+    UserAccount::PROFILE_ADMIN_VENTES, 
+    UserAccount::PROFILE_AERO_ADMIN_VENTES,
+    UserAccount::PROFILE_ACCOUNTANT,
+    UserAccount::PROFILE_AERO_INSTRUCTOR,
+    UserAccount::PROFILE_AERO_CUSTOMER, 
+    UserAccount::PROFILE_DIR_COMMERCIAL,
+    UserAccount::PROFILE_GESTIONNAIRE_STOCK, 
+    UserAccount::PROFILE_OPERATOR, 
+    UserAccount::PROFILE_TRANSPORTEUR
+));
 
 if(!isset($_GET['id'])) {
     Template::errorDialog(
@@ -50,26 +58,27 @@ if(!isset($_GET['id'])) {
         'javascript:window.close();',
         BASE_POPUP_TEMPLATE
     );
-    exit;
+    exit(1);
 }
-$mapper = Mapper::singleton('AbstractDocument');
-$doc = $mapper->load(array('Id'=>$_GET['id']));
 
+$doc = Object::load('AbstractDocument', array('Id' => $_GET['id']));
 if (!($doc instanceof AbstractDocument)) {
-	die('error');
+    Template::errorDialog(
+        _('An error occurred, please try again later.'),
+        'javascript:window.close();',
+        BASE_POPUP_TEMPLATE
+    );
+    exit(1);
 }
 
 $pdfDoc = $doc->getPDFDocument();
 if (!($pdfDoc instanceof PDFDocument) || ($data = $pdfDoc->getData()) == null) {
-    $url = $doc->getDocumentsReeditionURL(get_class($doc));
-    // construction de l'url pour reedition du doc
+    $url = $doc->getDocumentReeditionURL(get_class($doc));
     Tools::redirectTo(sprintf($url, $_GET['id']));
     exit(0);
 }
 
 header('Content-Type: application/pdf');
-if(headers_sent())
-    die('Some data has already been output to browser, can\'t send PDF file');
 header('Content-Length: '.strlen($data));
 header('Content-disposition: inline; filename="reedition.pdf"');
 echo $data;

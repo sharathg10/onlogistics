@@ -57,6 +57,10 @@ CREATE TABLE actDocumentAppendix (
   PRIMARY KEY (_FromActor, _ToDocumentAppendix)
 ) TYPE=InnoDB CHARSET=latin1;
 
+
+set @id=(select IFNULL(max(_Id),0) from DocumentModel);
+INSERT INTO `DocumentModel` VALUES (@id+1,0,'RECEPISSE DE COMMANDE','',1,'CommandReceipt',1,0,1,1,1,0);
+
 ####################################
 # Ne pas enlever
 COMMIT;

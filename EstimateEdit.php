@@ -80,7 +80,7 @@ if (($dmodel = $commandReceipt->findDocumentModel())) {
 }
 $commandReceipt->save();
 if ($command instanceof ProductCommand) {
-    $doc = new ProductCommandEstimateReceiptGenerator($commandReceipt);
+    $doc = new CommandEstimateReceiptGenerator($commandReceipt);
 } else if ($command instanceof ChainCommand) {
     $doc = new ChainCommandEstimateReceiptGenerator($commandReceipt);
 } else {

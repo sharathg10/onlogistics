@@ -3388,7 +3388,7 @@ class CommandReceiptGenerator extends CommandDocumentGenerator {
     }
     
     // }}}
-    // CommandReceiptGenerator::getData() {{{
+    // CommandReceiptGenerator::getDataForRTW() {{{
 
     protected function getDataForRTW() {
         $commandType = $this->command->getType();
@@ -3400,28 +3400,27 @@ class CommandReceiptGenerator extends CommandDocumentGenerator {
         for($i=0 ; $i<$count ; $i++) {
             $commandItem = $commandItemCol->getItem($i);
             $product = $commandItem->getProduct();
+            if ($product instanceof RTWMaterial) {
+                // commande matière: on appelle getData plutôt
+                return $this->getData();
+            }
             $model   = $product->getModel();
-            $productRef = $commandType==Command::TYPE_CUSTOMER?
-                $product->getBaseReference():
-                $product->getReferenceByActor($supplier);
-            $unitQty = $commandType==Command::TYPE_CUSTOMER?
-                $product->getSellUnitQuantity():
-                $product->getBuyUnitQuantity($supplier);
+            $productRef = $model->getStyleNumber();
             if (!(($size = $product->getSize()) instanceof RTWSize)) {
                 $size = false;
             }
             if (isset($registry[$model->getId()])) {
-                $registry[$model->getId()][1] .= ($size ? ", ".$size->getName().": $unitQty" : '');
-                $registry[$model->getId()][2] += intval($unitQty);
+                $registry[$model->getId()][1] .= ($size ? ", ".$size->getName().": " . $commandItem->getQuantity() : '');
+                $registry[$model->getId()][2] += $commandItem->getQuantity();
                 $registry[$model->getId()][3] += $commandItem->getPriceHT();
                 $registry[$model->getId()][4] += $commandItem->getHanding();
                 $registry[$model->getId()][5] += $commandItem->getTotalHT();
                 $registry[$model->getId()][6] += $commandItem->getTotalTTC();
             } else {
                 $registry[$model->getId()] = array(
-                    $productRef,
-                    $product->getName() . ($size ? "\n".$size->getName().": $unitQty" : ''),
-                    $commandItem->getQuantity() . ' (' . _('by') . ' ' . $unitQty . ')',
+                    $model->getStyleNumber(),
+                    $product->getName() . ($size ? "\n".$size->getName().": " . $commandItem->getQuantity(): ''),
+                    $commandItem->getQuantity(),
                     $commandItem->getPriceHT(),
                     $commandItem->getHanding(),
                     $commandItem->getTotalHT(),

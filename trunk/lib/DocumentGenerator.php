@@ -3631,13 +3631,13 @@ class ChainCommandReceiptGenerator extends CommandReceiptGenerator {
 
     // }}}
 } // }}}
-// ProductCommandEstimateReceipt {{{
+// CommandEstimateReceiptGenerator {{{
 /**
  * classe de génération des devis pour les commandes produits
  *
  */
-class ProductCommandEstimateReceiptGenerator extends CommandReceiptGenerator {
-    // ProductCommandEstimateReceiptGenerator::__construct() {{{
+class CommandEstimateReceiptGenerator extends CommandReceiptGenerator {
+    // CommandEstimateReceiptGenerator::__construct() {{{
 
     /**
      * Constructeur.

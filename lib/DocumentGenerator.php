@@ -3329,19 +3329,32 @@ class CommandReceiptGenerator extends CommandDocumentGenerator {
         }
 
         $header = array(_('Reference') => 30,
-                        _('Name')       => 30,
-                        _('Quantity')  => 20,
-                        _('Basis excl. VAT') . ' ' . $this->currency    => 20,
-                        _('Discount')    => 30,
-                        _('Amount excl. VAT') . ' ' . $this->currency   => 30,
-                        _('Amount incl. VAT') . ' ' . $this->currency  => 30);
-        $data = array();
+                        _('Description of goods') => 65,
+                        _('Qty')  => 15,
+                        _('Unit Price net of tax') . ' ' . $this->currency=>15,
+                        _('Disc.')    => 13,
+                        _('Amount excl. VAT') . ' ' . $this->currency   => 20,
+                        _('Amount incl. VAT') . ' ' . $this->currency  => 20);
+        if (in_array('readytowear', Preferences::get('TradeContext', array()))) {
+            $data = $this->getDataForRTW();
+        } else {
+            $data = $this->getData();
+        }
+        $this->pdf->tableHeader($header, 1);
+        $this->pdf->tableBody($data, $header);
+        $this->pdf->Ln(8);
+    }
+
+    // }}}
+    // CommandReceiptGenerator::getData() {{{
+
+    protected function getData() {
         $commandType = $this->command->getType();
         $supplierCustomer = $this->command->getSupplierCustomer();
         $supplier = $supplierCustomer->getSupplier();
-
         $commandItemCol = $this->command->getCommandItemCollection();
         $count = $commandItemCol->getcount();
+        $data = array();
         for($i=0 ; $i<$count ; $i++) {
             $commandItem = $commandItemCol->getItem($i);
             $product = $commandItem->getProduct();
@@ -3352,7 +3365,7 @@ class CommandReceiptGenerator extends CommandDocumentGenerator {
                 $product->getSellUnitQuantity():
                 $product->getBuyUnitQuantity($supplier);
             // Pas d'affichage des separateurs des milliers ici
-            $data [] = array(
+            $data[] = array(
                 $productRef,
                 $product->getName(),
                 $commandItem->getQuantity() . ' (' . _('by') . ' ' .
@@ -3362,13 +3375,74 @@ class CommandReceiptGenerator extends CommandDocumentGenerator {
                 $promoRate . ' ' . $symbol,*/
                 $commandItem->getHanding(),
                 $commandItem->getTotalHT(true),
-                $commandItem->getTotalTTC(true));
+                $commandItem->getTotalTTC(true)
+            );
         }
-        $this->pdf->tableHeader($header, 1);
-        $this->pdf->tableBody($data, $header);
-        $this->pdf->Ln(8);
+        foreach ($data as &$array) {
+            $array[3] = I18N::formatNumber($array[3]);
+            $array[4] = I18N::formatNumber($array[4]);
+            $array[5] = I18N::formatNumber($array[5]);
+            $array[6] = I18N::formatNumber($array[6]);
+        }
+        return $data;
     }
+    
+    // }}}
+    // CommandReceiptGenerator::getData() {{{
 
+    protected function getDataForRTW() {
+        $commandType = $this->command->getType();
+        $supplierCustomer = $this->command->getSupplierCustomer();
+        $supplier = $supplierCustomer->getSupplier();
+        $commandItemCol = $this->command->getCommandItemCollection();
+        $count = $commandItemCol->getcount();
+        $registry = array();
+        for($i=0 ; $i<$count ; $i++) {
+            $commandItem = $commandItemCol->getItem($i);
+            $product = $commandItem->getProduct();
+            $model   = $product->getModel();
+            $productRef = $commandType==Command::TYPE_CUSTOMER?
+                $product->getBaseReference():
+                $product->getReferenceByActor($supplier);
+            $unitQty = $commandType==Command::TYPE_CUSTOMER?
+                $product->getSellUnitQuantity():
+                $product->getBuyUnitQuantity($supplier);
+            if (!(($size = $product->getSize()) instanceof RTWSize)) {
+                $size = false;
+            }
+            if (isset($registry[$model->getId()])) {
+                $registry[$model->getId()][1] .= ($size ? ", ".$size->getName().": $unitQty" : '');
+                $registry[$model->getId()][2] += intval($unitQty);
+                $registry[$model->getId()][3] += $commandItem->getPriceHT();
+                $registry[$model->getId()][4] += $commandItem->getHanding();
+                $registry[$model->getId()][5] += $commandItem->getTotalHT();
+                $registry[$model->getId()][6] += $commandItem->getTotalTTC();
+            } else {
+                $registry[$model->getId()] = array(
+                    $productRef,
+                    $product->getName() . ($size ? "\n".$size->getName().": $unitQty" : ''),
+                    $commandItem->getQuantity() . ' (' . _('by') . ' ' . $unitQty . ')',
+                    $commandItem->getPriceHT(),
+                    $commandItem->getHanding(),
+                    $commandItem->getTotalHT(),
+                    $commandItem->getTotalTTC()
+                );
+            }
+        }
+        foreach ($registry as $i=>&$array) {
+            $model = Object::load('RTWModel', $i);
+            $legalMentions = $model->getLegalMentions();
+            if (!empty($legalMentions)) {
+                $array[1] .= "\n\n" . $legalMentions;
+            }
+            $array[3] = I18N::formatNumber($array[3]);
+            $array[4] = I18N::formatNumber($array[4]);
+            $array[5] = I18N::formatNumber($array[5]);
+            $array[6] = I18N::formatNumber($array[6]);
+        }
+        return array_values($registry);
+    }
+    
     // }}}
     // CommandReceiptGenerator::renderTotalBlock() {{{
 

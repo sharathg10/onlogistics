@@ -4019,13 +4019,13 @@ class LookbookGenerator extends WorksheetGenerator {
                 $padding = "\n";
             }
             $mat1 = ($m = $this->model->getMaterial1()) instanceof RTWMaterial ?
-                $m->getCommercialName() : '';
+                $m->getCommercialNameAndColor() : '';
             $mat2 = ($m = $this->model->getMaterial2()) instanceof RTWMaterial ?
-                $m->getCommercialName() : '';
+                $m->getCommercialNameAndColor() : '';
             $acc1 = ($m = $this->model->getAccessory1()) instanceof RTWMaterial ?
-                $m->getCommercialName() : '';
+                $m->getCommercialNameAndColor() : '';
             $acc2 = ($m = $this->model->getAccessory1()) instanceof RTWMaterial ?
-                $m->getCommercialName() : '';
+                $m->getCommercialNameAndColor() : '';
 
             $this->pdf->tableBody(array(0 => array(
                 $this->model->getStyleNumber(),

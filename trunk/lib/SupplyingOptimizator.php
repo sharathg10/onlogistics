@@ -186,7 +186,7 @@ class SupplyingOptimizator {
             $rs = getOrderedQtyPerWeekForSupplier($this->_customerId,
                     $this->_supplierId, $this->_tsArray[$j], $TimeStampEnd);
 
-            while (!$rs->EOF){
+            while ($rs && !$rs->EOF){
                 if ($j == 0) { // patch moche pour forcer l'obtention d'un dico, pas une liste!!
                     $orderedQtyArray[$rs->fields['pdtId']]["##"] = 0;
                 }
@@ -230,7 +230,7 @@ class SupplyingOptimizator {
             // Si $week>=1 => on recupere les entrees et sorties internes *non encore livrees*
             $rs3 = getInternalActivatedMovementPerWeek(
                     $this->_supplierId, $this->_tsArray[$j], $TimeStampEnd, $j);
-            while (!$rs3->EOF) {
+            while ($rs3 && !$rs3->EOF) {
                 $qty = floatval($rs3->fields['qty']);
                 if ($qty > 0) {
                     $internalEntrieQtyArray[$rs3->fields['pdtId']][strval($j)] = $qty;
@@ -256,7 +256,7 @@ class SupplyingOptimizator {
         // donc sert aussi à estimer le stock en fin de semaine 0
         $rs = getLateOrderedQty($this->_supplierId, $this->_customerId, $weekEndTimestamp);
         $orderedQtyBeforeEndOfWeek = array();
-        while (!$rs->EOF) {
+        while ($rs && !$rs->EOF) {
             // initialisation
             if (!isset($orderedQtyArray[$rs->fields['pdtId']])) {
                 $orderedQtyArray[$rs->fields['pdtId']] = array();
@@ -285,7 +285,7 @@ class SupplyingOptimizator {
             //  resultset suite a req SQL, sur $allProductIdArray!!
             $rs = getWaitedQtyPerWeek($allProductIdArray, $this->_customerId,
                     $this->_tsArray[$j+1], $this->_tsArray[$j]);
-            while (!$rs->EOF){
+            while ($rs && !$rs->EOF){
                 $waitedQtyArray[$rs->fields['pdtId']][$j] = floatval($rs->fields['qty']);
                 $rs->moveNext();
             }
@@ -297,7 +297,7 @@ class SupplyingOptimizator {
         $rs = getWaitedQtyPerWeek($allProductIdArray,
                 $this->_customerId, $weekEndTimestamp);
         $waitedQtyBeforeEndOfWeek = array();
-        while (!$rs->EOF) {
+        while ($rs && !$rs->EOF) {
             $waitedQtyBeforeEndOfWeek[$rs->fields['pdtId']] = floatval($rs->fields['qty']);
             $rs->moveNext();
         }
@@ -337,7 +337,7 @@ class SupplyingOptimizator {
         */
         $internalExitQtyBeforeEndOfWeek = array();
         $rs = getInternalMvtQtyBeforeEndOfWeek($allProductIdArray, $weekEndTimestamp);
-        while (!$rs->EOF) {
+        while ($rs && !$rs->EOF) {
             $qty = floatval($rs->fields['qty']);
             if ($qty > 0) {  // Entree interne
                 // Reporte sur semaine 0
@@ -374,7 +374,7 @@ class SupplyingOptimizator {
         $productIdSorted = array();
         // Stock a l'instant now
         $rs = getProductInfoList($allProductIdArray, $this->_supplierId);
-        while (!$rs->EOF){
+        while ($rs && !$rs->EOF){
             $stockQty[$rs->fields['pdtId']] = floatval($rs->fields['QR']);
             if (!isset($internalExitQtyBeforeEndOfWeek[$rs->fields['pdtId']])) {
                 $internalExitQtyBeforeEndOfWeek[$rs->fields['pdtId']] = 0;

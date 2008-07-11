@@ -47,6 +47,23 @@
     }
 
     // }}}
+    // RTWMaterial::getCommercialNameAndColor() {{{
+
+    /**
+     * Retourne le nom commercial et la couleur.
+
+     * @access public
+     * @return string
+     */
+    function getCommercialNameAndColor() {
+        $ref = $this->getCommercialName();
+        if ($this->getColor() instanceof RTWColor) {
+            $ref .= ' (' . $this->getColor()->getName() . ')';
+        }
+        return $ref;
+    }
+
+    // }}}
     // RTWMaterial::canBeDeleted() {{{
 
     /**

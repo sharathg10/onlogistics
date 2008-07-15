@@ -52,6 +52,7 @@ require_once('Quantificator/ChainCommandQuantificator.php');
 require_once('Quantificator/ProductCommandQuantificator.php');
 require_once('Quantificator/AssemblyQuantificator.php');
 require_once('AlertSender.php');
+require_once('GenerateDocument.php');
 require_once('FormatNumber.php');
 
 // }}}
@@ -785,8 +786,34 @@ class CommandManager{
             $customer = $this->auth->getActor();
             $this->_debug('* Envoi du récépissé de la commande de produit ' .
                 $command->getCommandNo());
-            sendProductCommandMail($command, $this->productCommandType,
-                $customer);
+            $commandReceipt = new CommandReceipt();
+            $commandReceipt->setCommand($command);
+            $commandReceipt->setCommandType($this->productCommandType);
+	        $commandReceipt->setDocumentNo($command->getCommandNo());
+            $commandReceipt->setSupplierCustomer($command->getSupplierCustomer());
+            $commandReceipt->setCurrency($command->getCurrency());
+	        $commandReceipt->setEditionDate(date('Y-m-d H:i:s'));
+            if (($dmodel = $commandReceipt->findDocumentModel())) {
+                $commandReceipt->setDocumentModel($dmodel);
+            }
+            $commandReceipt->save();
+            $uacCol = new Collection();
+            //on envoie l'alerte de reception de commande au commercial lié a la commande
+            $commercial = $command->getCommercial();
+            if ($commercial instanceof UserAccount && ($commercial->getEmail() != "")) {
+                $uacCol->setItem($commercial);
+            }
+            CommandManager::$alertsToSend[] = array(
+                'ALERT_PRODUCT_COMMAND_RECEIPT',
+                array(
+                    $commandReceipt, 
+                    $uacCol, 
+                    array(
+                        $command->getDestinatorSiteId(),
+                        $command->getExpeditorSiteId()
+                    )
+                )
+            );
         } else if ($this->commandType == 'ChainCommand') {
             $additionnalUsers = new Collection();
             $additionnalUsers->setItem($this->auth->getUser());

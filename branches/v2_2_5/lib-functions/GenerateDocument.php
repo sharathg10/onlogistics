@@ -85,6 +85,15 @@ function generateDocument($document, $reedit=0, $output='I') {
         } else {
             $generator_name = 'DeliveryOrderGenerator';
         }
+    } else if (get_class($document) == 'CommandReceipt') { 
+        $cmd = $document->getCommand();
+        if ($cmd instanceof ChainCommand) {
+            $generator_name = $cmd->getIsEstimate() ?
+                'ChainCommandEstimateReceiptGenerator' : 'ChainCommandReceiptGenerator';
+        } else {
+            $generator_name = $cmd->getIsEstimate() ? 
+                'CommandEstimateReceiptGenerator' : 'CommandReceiptGenerator';
+        }
     } else {
         $generator_name = get_class($document) . 'Generator';
     }

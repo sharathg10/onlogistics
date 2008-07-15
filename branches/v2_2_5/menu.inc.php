@@ -469,6 +469,18 @@ $menu_metadata = array(
         'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW),
         'children'    => array(
             array(
+                'title'       => _('Selling prices'),
+                'link'        => 'dispatcher.php?entity=PriceByCurrency&altname=SellingPrices',
+                'description' => _('Selling prices'),
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES)
+            ),
+            array(
+                'title'       => _('Supplier prices'),
+                'link'        => 'dispatcher.php?entity=PriceByCurrency&altname=SupplierPrices',
+                'description' => _('Supplier prices'),
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES)
+            ),
+            array(
                 'title'       => _('Seasonalities'),
                 'link'        => 'SaisonalityList.php',
                 'description' => _('List of seasonalities'),
@@ -806,6 +818,13 @@ $menu_metadata = array(
                 'title'       => _('Lookbook printing'),
                 'link'        => 'dispatcher.php?entity=RTWModel&altname=RTWModelForLookbook',
                 'description' => _('Lookbook printing'),
+                'restrict_to_context' => array('readytowear'),
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_TRANSPORTEUR,UserAccount::PROFILE_DIR_COMMERCIAL)
+            ),
+            array(
+                'title'       => _('Document appendices'),
+                'link'        => 'dispatcher.php?entity=DocumentAppendix',
+                'description' => _('Document appendices'),
                 'restrict_to_context' => array('readytowear'),
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_TRANSPORTEUR,UserAccount::PROFILE_DIR_COMMERCIAL)
             ),

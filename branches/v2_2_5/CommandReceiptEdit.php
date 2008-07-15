@@ -35,35 +35,12 @@
  */
 
 require_once('config.inc.php');
-require_once('DocumentGenerator.php');
+require_once('GenerateDocument.php');
 
-if(isset($_GET['cmdId'])) {
-    $command = Object::load('Command', $_GET['cmdId']);
-} elseif(isset($_GET['id'])) {
-    $abstractDoc = Object::load('AbstractDocument', $_GET['id']);
-    $command = $abstractDoc->getCommand();
-    if(!($command instanceof Command)) {
-        Template::errorDialog(
-            _('Please select a document related to an order in order to print the receipt.'), 
-            'javascript:window.close();', BASE_POPUP_TEMPLATE);
-        exit();
-    }
-} else {
-    Template::errorDialog(E_MSG_TRY_AGAIN, 'javascript:window.close();', BASE_POPUP_TEMPLATE);
-    exit();
+$id  = isset($_GET['id']) ? $_GET['id'] : 0;
+if ($id) {
+    $doc = Object::load('AbstractDocument', $id);
+    generateDocument($doc, true);
 }
 
-if($command instanceof ProductCommand) {
-    $doc = new CommandReceipt($command);
-} elseif($command instanceof ChainCommand) {
-    $doc = new ChainCommandReceipt($command);
-} else {
-    Template::errorDialog(
-        _('Receipt reprinting is impossible for this type of document.'), 
-        'javascript:window.close();', BASE_POPUP_TEMPLATE);
-    exit();
-}
-// document non sauve en base
-$pdf = $doc->render();
-$pdf->output('doc.pdf', 'I');
 ?>

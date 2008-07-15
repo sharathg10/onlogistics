@@ -3,13 +3,38 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * $Source: /home/cvs/codegen/codegentemplates.py,v $
+ * IMPORTANT: This is a generated file, please do not edit.
  *
- * Ceci est un fichier généré, NE PAS EDITER.
+ * This file is part of Onlogistics, a web based ERP and supply chain 
+ * management application. 
  *
- * @copyright 2002-2006 ATEOR - All rights reserved
+ * Copyright (C) 2003-2008 ATEOR
+ *
+ * This program is free software: you can redistribute it and/or modify it 
+ * under the terms of the GNU Affero General Public License as published by 
+ * the Free Software Foundation, either version 3 of the License, or (at your 
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Affero General Public 
+ * License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * PHP version 5.1.0+
+ *
+ * @package   Onlogistics
+ * @author    ATEOR dev team <dev@ateor.com>
+ * @copyright 2003-2008 ATEOR <contact@ateor.com> 
+ * @license   http://www.fsf.org/licensing/licenses/agpl-3.0.html GNU AGPL
+ * @version   SVN: $Id$
+ * @link      http://www.onlogistics.org
+ * @link      http://onlogistics.googlecode.com
+ * @since     File available since release 0.1.0
+ * @filesource
  */
-
 
 /**
  * _RTWMaterial class
@@ -24,6 +49,7 @@ class _RTWMaterial extends Product {
     const TYPE_THREAD = 3;
     const TYPE_HEEL = 4;
     const TYPE_BAMBOO = 5;
+    const TYPE_SOLE = 6;
 
     // }}}
     // Constructeur {{{
@@ -123,7 +149,8 @@ class _RTWMaterial extends Product {
             _RTWMaterial::TYPE_PACKAGING => _("Packaging"), 
             _RTWMaterial::TYPE_THREAD => _("Thread"), 
             _RTWMaterial::TYPE_HEEL => _("Heel"), 
-            _RTWMaterial::TYPE_BAMBOO => _("Bamboo")
+            _RTWMaterial::TYPE_BAMBOO => _("Bamboo"), 
+            _RTWMaterial::TYPE_SOLE => _("Sole")
         );
         asort($array);
         return $keys?array_keys($array):$array;
@@ -346,35 +373,41 @@ class _RTWMaterial extends Product {
             ),
             'RTWModel_11'=>array(
                 'linkClass'     => 'RTWModel',
-                'field'         => 'Lagrima',
+                'field'         => 'MediaPlanta',
                 'ondelete'      => 'nullify',
                 'multiplicity'  => 'onetomany'
             ),
             'RTWModel_12'=>array(
                 'linkClass'     => 'RTWModel',
-                'field'         => 'HeelCovering',
+                'field'         => 'Lagrima',
                 'ondelete'      => 'nullify',
                 'multiplicity'  => 'onetomany'
             ),
             'RTWModel_13'=>array(
                 'linkClass'     => 'RTWModel',
-                'field'         => 'Selvedge',
+                'field'         => 'HeelCovering',
                 'ondelete'      => 'nullify',
                 'multiplicity'  => 'onetomany'
             ),
             'RTWModel_14'=>array(
                 'linkClass'     => 'RTWModel',
-                'field'         => 'Thread1',
+                'field'         => 'Selvedge',
                 'ondelete'      => 'nullify',
                 'multiplicity'  => 'onetomany'
             ),
             'RTWModel_15'=>array(
                 'linkClass'     => 'RTWModel',
-                'field'         => 'Thread2',
+                'field'         => 'Thread1',
                 'ondelete'      => 'nullify',
                 'multiplicity'  => 'onetomany'
             ),
             'RTWModel_16'=>array(
+                'linkClass'     => 'RTWModel',
+                'field'         => 'Thread2',
+                'ondelete'      => 'nullify',
+                'multiplicity'  => 'onetomany'
+            ),
+            'RTWModel_17'=>array(
                 'linkClass'     => 'RTWModel',
                 'field'         => 'Bamboo',
                 'ondelete'      => 'nullify',

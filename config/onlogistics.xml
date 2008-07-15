@@ -2884,6 +2884,7 @@
             <const name="TYPE_THREAD" label="Thread" value="3"/>
             <const name="TYPE_HEEL" label="Heel" value="4"/>
             <const name="TYPE_BAMBOO" label="Bamboo" value="5"/>
+            <const name="TYPE_SOLE" label="Sole" value="6"/>
         </property>
         <property type="foreignkey" name="Color" class="RTWColor" label="Color"
             usedby="grid,addedit,searchform" />

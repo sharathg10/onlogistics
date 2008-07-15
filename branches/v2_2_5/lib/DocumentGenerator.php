@@ -3859,7 +3859,7 @@ class WorksheetGenerator extends DocumentGenerator {
             $qtyGetter = 'get' . $attrName . 'Quantity';
             $mat    = $this->model->$getter();
             $value  = ($mat instanceof RTWMaterial) ? $mat->toString() : _('N/A');
-            $qty    = ($mat instanceof RTWMaterial) ? $this->model->$qtyGetter() : '';
+            $qty    = ($mat instanceof RTWMaterial && method_exists($this->model, $qtyGetter)) ? $this->model->$qtyGetter() : '';
             $this->pdf->tableHeader(array($label => 35, $value => 135, (string)$qty => 20), 0);
         }
         $sizes = $this->model->getSizeCollection();

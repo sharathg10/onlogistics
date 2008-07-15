@@ -4766,6 +4766,34 @@ ALTER TABLE UserAccount ADD _CommissionPercent DECIMAL(10,2) NOT NULL DEFAULT 0;
 ALTER TABLE AbstractDocument ADD _CommercialCommissionPercent DECIMAL(10,2) NOT NULL DEFAULT 0 AFTER _TaxStamp;
 ALTER TABLE AbstractDocument ADD _CommercialCommissionAmount DECIMAL(10,2) NOT NULL DEFAULT 0 AFTER _CommercialCommissionPercent;
 
+# Table structure for DocumentAppendix
+DROP TABLE IF EXISTS DocumentAppendix;
+CREATE TABLE DocumentAppendix (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Code VARCHAR(255) DEFAULT NULL,
+  _Title VARCHAR(255) DEFAULT NULL,
+  _Body TEXT DEFAULT NULL,
+  _Image VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE UNIQUE INDEX _Code ON DocumentAppendix (_Code);
+
+# Table structure for actDocumentAppendix
+DROP TABLE IF EXISTS actDocumentAppendix;
+CREATE TABLE actDocumentAppendix (
+  _FromActor int(11) unsigned NOT NULL default '0',
+  _ToDocumentAppendix int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromActor, _ToDocumentAppendix)
+) TYPE=InnoDB CHARSET=latin1;
+
+
+set @id=(select IFNULL(max(_Id),0) from DocumentModel);
+INSERT INTO `DocumentModel` VALUES (@id+1,0,'RECEPISSE DE COMMANDE','',1,'CommandReceipt',1,0,1,1,1,0);
+
+
+
 ####################################
 # Ne pas enlever
 COMMIT;

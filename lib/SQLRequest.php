@@ -876,8 +876,8 @@ function getOrderedQtyPerWeekForSupplier($ActorId, $SupplierId, $TimeStampBegin,
         $sql .= 'AND CMD._IsEstimate=0 ';
     }
     $sql .= 'AND CMD._Expeditor=' . $ActorId . '
-         AND UNIX_TIMESTAMP(CMD._WishedStartDate)<' . $TimeStampEnd . '
-         AND UNIX_TIMESTAMP(CMD._WishedStartDate)>' . $TimeStampBegin . '
+         AND UNIX_TIMESTAMP(ACM._StartDate)<' . $TimeStampEnd . '
+         AND UNIX_TIMESTAMP(ACM._StartDate)>' . $TimeStampBegin . '
          AND PDT._Activated = 1 AND ACM._Type=' . SORTIE_NORMALE . '
          GROUP BY CMD._IsEstimate, PDT._Id;';
 	return executeSQL($sql);
@@ -1119,8 +1119,8 @@ function getDeliveredQtyPerWeekForSupplier($ActorId, $SupplierId, $TimeStampBegi
          WHERE ACM._ProductCommand=CMD._Id AND ACM._Product=PDT._Id
          AND AP._Product=PDT._Id AND AP._Actor=' . $SupplierId . '
          AND AP._Priority=1 AND CMD._IsEstimate=0 AND CMD._Expeditor=' . $ActorId . '
-         AND UNIX_TIMESTAMP(CMD._WishedStartDate)<' . $TimeStampEnd . '
-         AND UNIX_TIMESTAMP(CMD._WishedStartDate)>' . $TimeStampBegin . '
+         AND UNIX_TIMESTAMP(ACM._StartDate)<' . $TimeStampEnd . '
+         AND UNIX_TIMESTAMP(ACM._StartDate)>' . $TimeStampBegin . '
          AND PDT._Activated = 1 AND ACM._Type=' . SORTIE_NORMALE . '
          AND ACM._State NOT IN (' . ActivatedMovement::CREE . ', ' . ActivatedMovement::BLOQUE . ')
          GROUP BY PDT._Id;';
@@ -1150,9 +1150,9 @@ function getWaitedQtyPerWeek($ProductIdArray, $ActorId, $TimeStampEnd, $TimeStam
         $sql .= 'AND CMD._IsEstimate=0 ';
     }
     $sql .= 'AND CMD._Destinator=' . $ActorId . '
-         AND UNIX_TIMESTAMP(CMD._WishedStartDate)<' . $TimeStampEnd;
+         AND UNIX_TIMESTAMP(ACM._StartDate)<' . $TimeStampEnd;
     if ($TimeStampBegin != '') {
-        $sql .= ' AND UNIX_TIMESTAMP(CMD._WishedStartDate)>=' . $TimeStampBegin;
+        $sql .= ' AND UNIX_TIMESTAMP(ACM._StartDate)>=' . $TimeStampBegin;
     }
     $sql .= ' AND PDT._Id IN (' . implode(",", $ProductIdArray) . ')
          AND ACM._State <> ' . ActivatedMovement::ACM_EXECUTE_TOTALEMENT . '
@@ -1185,7 +1185,7 @@ function getLateOrderedQty($SupplierId, $ActorId, $TimeStampEnd)
         $sql .= 'AND CMD._IsEstimate=0 ';
     }
     $sql .= 'AND CMD._Expeditor=' . $ActorId . '
-         AND UNIX_TIMESTAMP(CMD._WishedStartDate)<' . $TimeStampEnd . '
+         AND UNIX_TIMESTAMP(ACM._StartDate)<' . $TimeStampEnd . '
          AND ACM._State <> ' . ActivatedMovement::ACM_EXECUTE_TOTALEMENT . '
          AND ACM._Type=' . SORTIE_NORMALE . '
          GROUP BY pdtId;';
@@ -1208,8 +1208,8 @@ function getOrderedQtyAtEndOfWeek($ProductIdArray, $ActorId, $TimeStampBegin, $T
         $sql .= 'AND CMD._IsEstimate=0 ';
     }
     $sql .= 'AND CMD._Expeditor= ' . $ActorId . '
-         AND UNIX_TIMESTAMP(CMD._WishedStartDate)<' . $TimeStampEnd . '
-         AND UNIX_TIMESTAMP(CMD._WishedStartDate)>=' . $TimeStampBegin . '
+         AND UNIX_TIMESTAMP(ACM._StartDate)<' . $TimeStampEnd . '
+         AND UNIX_TIMESTAMP(ACM._StartDate)>=' . $TimeStampBegin . '
          AND PDT._Id IN (' . implode(',', $ProductIdArray) . ')
          AND ACM._State <> ' . ActivatedMovement::ACM_EXECUTE_TOTALEMENT . '
          AND ACM._Type=' . SORTIE_NORMALE . '

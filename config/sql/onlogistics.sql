@@ -1436,6 +1436,22 @@ CREATE INDEX _State ON Department (_State);
 CREATE INDEX _Country ON Department (_Country);
 
 --
+-- Table structure for DocumentAppendix
+--
+DROP TABLE IF EXISTS DocumentAppendix;
+CREATE TABLE DocumentAppendix (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Code VARCHAR(255) DEFAULT NULL,
+  _Title VARCHAR(255) DEFAULT NULL,
+  _Body TEXT DEFAULT NULL,
+  _Image VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE UNIQUE INDEX _Code ON DocumentAppendix (_Code);
+
+--
 -- Table structure for DocumentModel
 --
 DROP TABLE IF EXISTS DocumentModel;
@@ -2278,7 +2294,7 @@ CREATE TABLE Product (
   _Id int(11) unsigned NOT NULL default '0',
   _DBId int(11) default 0,
   _ClassName VARCHAR(255) DEFAULT NULL,
-  _Name INT(11) NOT NULL DEFAULT NULL,
+  _Name VARCHAR(255) DEFAULT NULL,
   _BaseReference VARCHAR(255) DEFAULT NULL,
   _Volume FLOAT NOT NULL DEFAULT 0,
   _CustomsNaming VARCHAR(255) DEFAULT NULL,
@@ -3476,6 +3492,16 @@ CREATE TABLE ForecastFlowFlowTypeItem (
   _FromForecastFlow int(11) unsigned NOT NULL default '0',
   _ToFlowTypeItem int(11) unsigned NOT NULL default '0',
   PRIMARY KEY (_FromForecastFlow, _ToFlowTypeItem)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- Table structure for actDocumentAppendix
+--
+DROP TABLE IF EXISTS actDocumentAppendix;
+CREATE TABLE actDocumentAppendix (
+  _FromActor int(11) unsigned NOT NULL default '0',
+  _ToDocumentAppendix int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromActor, _ToDocumentAppendix)
 ) TYPE=InnoDB CHARSET=latin1;
 
 --

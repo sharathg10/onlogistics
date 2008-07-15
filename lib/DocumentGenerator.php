@@ -34,6 +34,7 @@
  * @filesource
  */
 
+// includes {{{
 require_once('Pdf/PDFDocumentRender.php');
 require_once('Numbers/Words.php');
 require_once('Objects/Operation.const.php');
@@ -42,7 +43,9 @@ require_once('Objects/Command.php');
 require_once('Objects/Command.const.php');
 require_once('Objects/AbstractDocument.php');
 require_once('LangTools.php');
+// }}}
 
+// Constants {{{
 // limite pour le changement de page sur les items
 define('PAGE_HEIGHT_LIMIT', 270);
 define('PAGE_HEIGHT_LIMIT_TO_TOTAL', 205);
@@ -50,13 +53,15 @@ define('PAGE_WIDTH', 190);
 define('NUMBER_OF_CELLS_PER_TABLE', 5);
 define('PAGE_HEIGHT_LIMIT_TO_CHANGE_LETTER', 90);
 define('PAGE_HEIGHT_LIMIT_TO_LOGCARD_BARCODES', 222);
+// }}}
 
+// DocumentGenerator {{{
 /**
  * DocumentGenerator.
  * Classe de base pour les autres documents pdf.
  *
  */
-class DocumentGenerator { // {{{
+class DocumentGenerator { 
     /**
      * Constructor
      * @param Object $document un AbstractDocument
@@ -384,13 +389,13 @@ class DocumentGenerator { // {{{
         return $return;
     }
 } // }}}
-
+// CommandDocumentGenerator {{{
 /**
  * CommandDocumentGenerator.
  * Classe de base pour les autres documents pdf.
  *
  */
-class CommandDocumentGenerator extends DocumentGenerator { // {{{
+class CommandDocumentGenerator extends DocumentGenerator {
     /**
      * Constructor
      * @param Object $document AbstractDocument
@@ -458,14 +463,63 @@ class CommandDocumentGenerator extends DocumentGenerator { // {{{
         $this->pdf->leftAdressCaption = _('Delivery address') . ': ';
         $this->pdf->leftAdress = $dAddressStr;
     }
-} // }}}
+    // CommandDocumentGenerator::renderAppendices() {{{
 
+    /**
+     * Ajoute les annexes au document.
+     *
+     * @param Object $pdfDoc PDFDocumentRender utilise lors d'edition de n factures
+     * @access protected
+     * @return void
+     */
+    protected function renderAppendices($pdfDoc = false) {
+        $pdfDoc = $pdfDoc == false ? $this->pdf : $pdfDoc;
+        $appendices = $this->destinator->getDocumentAppendixCollection();
+        $count = 0;
+        $inImage = false;
+        foreach ($appendices as $appendix) {
+            $img = $appendix->getImage();
+            if (!empty($img)) {
+                $infos = ImageManager::getFileInfo(md5($appendix->getImage()));
+                if (is_array($infos) && !empty($infos['data'])) {
+                    list(,$type) = explode('/', $infos['mimetype']);
+                    $pdfDoc->addPage();
+                    $pdfDoc->image('data://' . $infos['mimetype'] . ';base64,' 
+                        . base64_encode($infos['data']), 0, 0, 210, 297, $type);
+                }
+                $inImage = true;
+            } else {
+                if ($count == 0 || $inImage) {
+                    $pdfDoc->addPage();
+                    $pdfDoc->ln();
+                    $pdfDoc->ln();
+                    $pdfDoc->ln();
+                }
+                $title = $appendix->getTitle();
+                $body  = $appendix->getBody();
+                if (!empty($title)) {
+                    $pdfDoc->tableHeader(array($title => 190), 1);
+                }
+                if (!empty($body)) {
+                    $pdfDoc->tableBody(array(0 => array($body)));
+                }
+                $pdfDoc->ln();
+                $inImage = false;
+            }
+            $count++;
+            $this->pdf->footer = '';
+        }
+    }
+
+    // }}}
+} // }}}
+// DeliveryOrderGenerator {{{
 /**
  * DeliveryOrderGenerator
  * Classe utilisee pour les bordereaux de livraison.
  *
  */
-class DeliveryOrderGenerator extends CommandDocumentGenerator { // {{{
+class DeliveryOrderGenerator extends CommandDocumentGenerator {
 
     // DeliveryOrderGenerator::__construct {{{
     /**
@@ -499,7 +553,7 @@ class DeliveryOrderGenerator extends CommandDocumentGenerator { // {{{
         $this->renderCustomsBlocs();
         $this->_renderContent();
         $this->renderTotal1Bloc();
-        $this->_renderComment();
+        $this->renderComment();
         $this->renderFooter();
         $this->renderSNLotBloc();
         return $this->pdf;
@@ -581,14 +635,14 @@ class DeliveryOrderGenerator extends CommandDocumentGenerator { // {{{
     }
 
     // }}}
-    // DeliveryOrder::_renderComment() {{{
+    // DeliveryOrder::renderComment() {{{
 
     /**
      * Ajoute le commentaire de la commande
      * @access protected
      * @return void
      */
-    protected function _renderComment() {
+    protected function renderComment() {
         $comment = $this->command->getComment();
         if (!empty($comment)) {
             $this->pdf->tableHeader(
@@ -634,14 +688,14 @@ class DeliveryOrderGenerator extends CommandDocumentGenerator { // {{{
 
     // }}}
 } // }}}
-
+// RTWDeliveryOrderGenerator {{{
 /**
  * RTWDeliveryOrderGenerator
  * Classe utilisee pour les bordereaux de livraison de commandes produit client
  * en contexte pret a porter.
  *
  */
-class RTWDeliveryOrderGenerator extends DeliveryOrderGenerator { // {{{
+class RTWDeliveryOrderGenerator extends DeliveryOrderGenerator {
     // DeliveryOrderGenerator::__construct {{{
     /**
      * Constructor
@@ -674,7 +728,7 @@ class RTWDeliveryOrderGenerator extends DeliveryOrderGenerator { // {{{
         $this->renderCustomsBlocs();
         $this->_renderContent();
         $this->renderTotal1Bloc();
-        $this->_renderComment();
+        $this->renderComment();
         $this->renderFooter();
         return $this->pdf;
     }
@@ -714,13 +768,14 @@ class RTWDeliveryOrderGenerator extends DeliveryOrderGenerator { // {{{
 
     // }}}
 } // }}}
-
+// InvoiceGenerator {{{
 /**
  * InvoiceGenerator.
  * Classe utilisee pour les factures.
  *
  */
-class InvoiceGenerator extends CommandDocumentGenerator { // {{{
+class InvoiceGenerator extends CommandDocumentGenerator {
+    // InvoiceGenerator::__construct() {{{
     /**
      * Constructor
      *
@@ -733,6 +788,8 @@ class InvoiceGenerator extends CommandDocumentGenerator { // {{{
         parent::__construct($document, $isReedition, $autoPrint,
                             _('Invoice'));
     }
+    // }}}
+    // InvoiceGenerator::render() {{{
 
     /**
      * Construit la facture pdf
@@ -757,9 +814,12 @@ class InvoiceGenerator extends CommandDocumentGenerator { // {{{
         $this->renderTotal1Bloc($pdfDoc);
         $this->renderTotal2Bloc($pdfDoc);
         $this->renderSNLotBloc($pdfDoc);
-        $this->_renderComment($pdfDoc);
+        $this->renderComment($pdfDoc);
+        $this->renderAppendices($pdfDoc);
         return $pdfDoc;
     }
+    // }}}
+    // InvoiceGenerator::_renderContent() {{{
 
     /**
      * Construit le contenu du pdf
@@ -800,7 +860,7 @@ class InvoiceGenerator extends CommandDocumentGenerator { // {{{
             $pdfDoc->ln(8);
         }
     }
-
+    // }}}
     // InvoiceGenerator::renderTotal1Bloc() {{{
 
     /**
@@ -959,7 +1019,6 @@ class InvoiceGenerator extends CommandDocumentGenerator { // {{{
         $pdfDoc->tableHeader($data);
     }
     // }}}
-    
     // InvoiceGenerator::renderComment() {{{
 
     /**
@@ -968,7 +1027,7 @@ class InvoiceGenerator extends CommandDocumentGenerator { // {{{
      * @access protected
      * @return void
      */
-    protected function _renderComment($pdfDoc=false) {
+    protected function renderComment($pdfDoc=false) {
         $pdfDoc = (!$pdfDoc)?$this->pdf:$pdfDoc;
         $comment = $this->document->getComment();
         if (!empty($comment)) {
@@ -983,7 +1042,7 @@ class InvoiceGenerator extends CommandDocumentGenerator { // {{{
     }
 
     // }}}
-
+    // InvoiceGenerator::getExpeditorBankDetail() {{{
     /**
      * Récupère les detail de l'adresse de la banque
      * de l'expediteur
@@ -1013,6 +1072,8 @@ class InvoiceGenerator extends CommandDocumentGenerator { // {{{
         $abd->getBankAddressZipCode(), $abd->getBankAddressCountry());
         return $data;
     }
+    // }}}
+    // InvoiceGenerator::getBLFieldValue() {{{
 
     /**
      * Retourne la valeur à afficher dans l'en-tête des données de la facture
@@ -1032,15 +1093,16 @@ class InvoiceGenerator extends CommandDocumentGenerator { // {{{
         }
         return $value;
     }
+    // }}}
 } // }}}
-
+// RTWInvoiceGenerator {{{
 /**
  * RTWInvoiceGenerator.
  * Classe utilisee pour les factures de commandes produit client en contexte 
  * pret a porter.
  *
  */
-class RTWInvoiceGenerator extends InvoiceGenerator { // {{{
+class RTWInvoiceGenerator extends InvoiceGenerator {
     /**
      * Construit la facture pdf
      *
@@ -1063,7 +1125,8 @@ class RTWInvoiceGenerator extends InvoiceGenerator { // {{{
         $this->_renderContent($pdfDoc);
         $this->renderTotal1Bloc($pdfDoc);
         $this->renderTotal2Bloc($pdfDoc);
-        $this->_renderComment($pdfDoc);
+        $this->renderComment($pdfDoc);
+        $this->renderAppendices($pdfDoc);
         return $pdfDoc;
     }
 
@@ -1105,12 +1168,12 @@ class RTWInvoiceGenerator extends InvoiceGenerator { // {{{
         }
     }
 } // }}}
-
+// CourseCommandInvoiceGenerator {{{
 /**
  * Classe fille pour les commandes de cours avec quelques spécificités
  *
  **/
-class CourseCommandInvoiceGenerator extends InvoiceGenerator { // {{{
+class CourseCommandInvoiceGenerator extends InvoiceGenerator {
     /**
      * Constructor
      *
@@ -1236,13 +1299,13 @@ class CourseCommandInvoiceGenerator extends InvoiceGenerator { // {{{
         $this->pdf->ln(3);
     }
 } // }}}
-
+// ChainCommandInvoiceGenerator {{{
 /**
  * ChainCommandInvoiceGenerator.
  * classe utilisée pour des factures de commande de transport.
  *
  */
-class ChainCommandInvoiceGenerator extends InvoiceGenerator { // {{{
+class ChainCommandInvoiceGenerator extends InvoiceGenerator {
     // __construct() {{{
 
     /**
@@ -1282,7 +1345,7 @@ class ChainCommandInvoiceGenerator extends InvoiceGenerator { // {{{
         $this->renderTotal1Bloc($pdfDoc);
         $this->renderTotal2Bloc($pdfDoc);
         $this->renderSNLotBloc($pdfDoc);
-        $this->_renderComment($pdfDoc);
+        $this->renderComment($pdfDoc);
         return $pdfDoc;
     }
 
@@ -1536,13 +1599,13 @@ class ChainCommandInvoiceGenerator extends InvoiceGenerator { // {{{
 
     // }}}
 } // }}}
-
+// PrestationInvoiceGenerator {{{
 /**
  * PrestationInvoiceGenerator.
  * classe utilisée pour des factures de prestation.
  *
  */
-class PrestationInvoiceGenerator extends InvoiceGenerator { // {{{
+class PrestationInvoiceGenerator extends InvoiceGenerator {
     // PrestationInvoiceGenerator::__construct() {{{
 
     /**
@@ -1577,7 +1640,7 @@ class PrestationInvoiceGenerator extends InvoiceGenerator { // {{{
         $this->_renderTransportDetails();*/
         $this->renderTotal1Bloc();
         $this->renderTotal2Bloc();
-        $this->_renderComment();
+        $this->renderComment();
         //$this->_renderACOList();
         //$this->_renderStockageList();
         $this->renderFooter();
@@ -2075,13 +2138,13 @@ class PrestationInvoiceGenerator extends InvoiceGenerator { // {{{
 
     // }}} 
 } // }}}
-
+// ToHaveGenerator {{{
 /**
  * ToHaveGenerator
  * Classe utilisée pour les avoirs.
  *
  */
-class ToHaveGenerator extends DocumentGenerator { // {{{
+class ToHaveGenerator extends DocumentGenerator {
     /**
      * Constructor
      *
@@ -2177,13 +2240,13 @@ class ToHaveGenerator extends DocumentGenerator { // {{{
     }
 
 } // }}}
-
+// PackingListGenerator {{{
 /**
  * PackingListGenerator.
  * Classe utilisée pour les listes de colisage.
  *
  */
-class PackingListGenerator extends DocumentGenerator { // {{{
+class PackingListGenerator extends DocumentGenerator {
     /**
      * Constructor
      *
@@ -2422,13 +2485,13 @@ class PackingListGenerator extends DocumentGenerator { // {{{
     }
 
 } // }}}
-
+// InvoicesListGenerator {{{
 /**
  * InvoicesListGenerator.
  * Sert à générer les relevé de factures simples ou avec lettre de change.
  *
  */
-class InvoicesListGenerator extends DocumentGenerator { // {{{
+class InvoicesListGenerator extends DocumentGenerator {
 
     private $_withChangeLetter;
     public $supplierCustomer;
@@ -2728,7 +2791,7 @@ class InvoicesListGenerator extends DocumentGenerator { // {{{
         $this->pdf->Line($shapeX+40, $shapeY+4, $shapeX+38, $shapeY+2);
     }
 } // }}}
-
+// LogCardGenerator {{{
 /**
  * LogCardGenerator.
  * Classe utilisée pour les fiches suiveuses.
@@ -2736,7 +2799,7 @@ class InvoicesListGenerator extends DocumentGenerator { // {{{
  * http://www.dassault-aviation.com/outils/traducteur_resultat.cfm?op=fr&id=F
  *
  */
-class LogCardGenerator extends DocumentGenerator{ // {{{
+class LogCardGenerator extends DocumentGenerator {
     /**
      * Constructor
      *
@@ -2908,12 +2971,12 @@ class LogCardGenerator extends DocumentGenerator{ // {{{
         }
     }
 } // }}}
-
+// ForwardingFormGenerator {{{
 /**
  * class ForwardingFormGenerator
  * Génère les bordereaux d'expedition
  */
-class ForwardingFormGenerator extends DocumentGenerator { // {{{
+class ForwardingFormGenerator extends DocumentGenerator {
 
     // ForwardingFormGenerator::__construct() {{{
 
@@ -3178,14 +3241,14 @@ class ForwardingFormGenerator extends DocumentGenerator { // {{{
 
     // }}}
 } // }}}
-
+// CommandReceiptGenerator {{{
 /**
  * classe de génération des récépissés de commandes.
  *
  */
-class CommandReceipt extends DocumentGenerator { // {{{
+class CommandReceiptGenerator extends CommandDocumentGenerator { 
 
-    // CommandReceipt::__construct() {{{
+    // CommandReceiptGenerator::__construct() {{{
 
     /**
      * Constructeur.
@@ -3193,22 +3256,13 @@ class CommandReceipt extends DocumentGenerator { // {{{
      * @param object $command commande
      * @return void
      */
-    public function __construct($command) {
-        $document = new AbstractDocument();
-        $document->setDocumentNo($command->getCommandNo());
-        $this->expeditor = $command->getExpeditor();
-        $this->expeditorSite = $command->getExpeditorSite();
-        $this->destinator = $command->getDestinator();
-        $this->destinatorSite = $command->getDestinatorSite();
-
-        parent::__construct($document, false, false,
-            $command->getCurrency(), _('Order receipt'));
+    public function __construct($document, $reedit=false) {
+        parent::__construct($document, $reedit, false, _('Order receipt'));
         $this->pdf->showExpeditor = false;
-        $this->command = $command;
     }
 
     // }}}
-    // CommandReceipt::render() {{{
+    // CommandReceiptGenerator::render() {{{
 
     /**
      * construit le récépissé
@@ -3223,11 +3277,12 @@ class CommandReceipt extends DocumentGenerator { // {{{
         $this->pdf->addHeader();
         $this->renderContent();
         $this->renderTotalBlock();
+        $this->renderAppendices();
         return $this->pdf;
     }
 
     // }}}
-    // CommandReceipt::renderAddressesBloc() {{{
+    // CommandReceiptGenerator::renderAddressesBloc() {{{
 
     /**
      * Construit les blocs d'addresses du récépissé.
@@ -3248,7 +3303,7 @@ class CommandReceipt extends DocumentGenerator { // {{{
     }
 
     // }}}
-    // CommandReceipt::renderContent() {{{
+    // CommandReceiptGenerator::renderContent() {{{
 
     /**
      * Génére le contenu du doc :
@@ -3274,19 +3329,32 @@ class CommandReceipt extends DocumentGenerator { // {{{
         }
 
         $header = array(_('Reference') => 30,
-                        _('Name')       => 30,
-                        _('Quantity')  => 20,
-                        _('Basis excl. VAT') . ' ' . $this->currency    => 20,
-                        _('Discount')    => 30,
-                        _('Amount excl. VAT') . ' ' . $this->currency   => 30,
-                        _('Amount incl. VAT') . ' ' . $this->currency  => 30);
-        $data = array();
+                        _('Description of goods') => 65,
+                        _('Qty')  => 15,
+                        _('Unit Price net of tax') . ' ' . $this->currency=>15,
+                        _('Disc.')    => 13,
+                        _('Amount excl. VAT') . ' ' . $this->currency   => 20,
+                        _('Amount incl. VAT') . ' ' . $this->currency  => 20);
+        if (in_array('readytowear', Preferences::get('TradeContext', array()))) {
+            $data = $this->getDataForRTW();
+        } else {
+            $data = $this->getData();
+        }
+        $this->pdf->tableHeader($header, 1);
+        $this->pdf->tableBody($data, $header);
+        $this->pdf->Ln(8);
+    }
+
+    // }}}
+    // CommandReceiptGenerator::getData() {{{
+
+    protected function getData() {
         $commandType = $this->command->getType();
         $supplierCustomer = $this->command->getSupplierCustomer();
         $supplier = $supplierCustomer->getSupplier();
-
         $commandItemCol = $this->command->getCommandItemCollection();
         $count = $commandItemCol->getcount();
+        $data = array();
         for($i=0 ; $i<$count ; $i++) {
             $commandItem = $commandItemCol->getItem($i);
             $product = $commandItem->getProduct();
@@ -3296,22 +3364,8 @@ class CommandReceipt extends DocumentGenerator { // {{{
             $unitQty = $commandType==Command::TYPE_CUSTOMER?
                 $product->getSellUnitQuantity():
                 $product->getBuyUnitQuantity($supplier);
-            /* XXX Commenté par david cf bug 0002626
-            $promotion = $commandItem->getPromotion();
-            if($promotion instanceof Promotion) {
-                $promoRate = DocumentGenerator::formatNumber($promotion->getRate());
-            	if($promotion->getType()==Promotion::PROMO_TYPE_PERCENT) {
-            	     $symbol = '%';
-            	} elseif ($promotion->getType()==Promotion::PROMO_TYPE_MONTANT) {
-            	    $currency = $promotion->getCurrency();
-            	    $symbol = $currency instanceof Currency?$currency->getSymbol():'';
-            	}
-            } else {
-                $promoRate = $symbol = '';
-            }
-            */
             // Pas d'affichage des separateurs des milliers ici
-            $data [] = array(
+            $data[] = array(
                 $productRef,
                 $product->getName(),
                 $commandItem->getQuantity() . ' (' . _('by') . ' ' .
@@ -3321,15 +3375,75 @@ class CommandReceipt extends DocumentGenerator { // {{{
                 $promoRate . ' ' . $symbol,*/
                 $commandItem->getHanding(),
                 $commandItem->getTotalHT(true),
-                $commandItem->getTotalTTC(true));
+                $commandItem->getTotalTTC(true)
+            );
         }
-        $this->pdf->tableHeader($header, 1);
-        $this->pdf->tableBody($data, $header);
-        $this->pdf->Ln(8);
+        foreach ($data as &$array) {
+            $array[3] = I18N::formatNumber($array[3]);
+            $array[4] = I18N::formatNumber($array[4]);
+            $array[5] = I18N::formatNumber($array[5]);
+            $array[6] = I18N::formatNumber($array[6]);
+        }
+        return $data;
     }
-
+    
     // }}}
-    // CommandReceipt::renderTotalBlock() {{{
+    // CommandReceiptGenerator::getDataForRTW() {{{
+
+    protected function getDataForRTW() {
+        $commandType = $this->command->getType();
+        $supplierCustomer = $this->command->getSupplierCustomer();
+        $supplier = $supplierCustomer->getSupplier();
+        $commandItemCol = $this->command->getCommandItemCollection();
+        $count = $commandItemCol->getcount();
+        $registry = array();
+        for($i=0 ; $i<$count ; $i++) {
+            $commandItem = $commandItemCol->getItem($i);
+            $product = $commandItem->getProduct();
+            if ($product instanceof RTWMaterial) {
+                // commande matière: on appelle getData plutôt
+                return $this->getData();
+            }
+            $model   = $product->getModel();
+            $productRef = $model->getStyleNumber();
+            if (!(($size = $product->getSize()) instanceof RTWSize)) {
+                $size = false;
+            }
+            if (isset($registry[$model->getId()])) {
+                $registry[$model->getId()][1] .= ($size ? ", ".$size->getName().": " . $commandItem->getQuantity() : '');
+                $registry[$model->getId()][2] += $commandItem->getQuantity();
+                $registry[$model->getId()][3] += $commandItem->getPriceHT();
+                $registry[$model->getId()][4] += $commandItem->getHanding();
+                $registry[$model->getId()][5] += $commandItem->getTotalHT();
+                $registry[$model->getId()][6] += $commandItem->getTotalTTC();
+            } else {
+                $registry[$model->getId()] = array(
+                    $model->getStyleNumber(),
+                    $product->getName() . ($size ? "\n".$size->getName().": " . $commandItem->getQuantity(): ''),
+                    $commandItem->getQuantity(),
+                    $commandItem->getPriceHT(),
+                    $commandItem->getHanding(),
+                    $commandItem->getTotalHT(),
+                    $commandItem->getTotalTTC()
+                );
+            }
+        }
+        foreach ($registry as $i=>&$array) {
+            $model = Object::load('RTWModel', $i);
+            $legalMentions = $model->getLegalMentions();
+            if (!empty($legalMentions)) {
+                $array[1] .= "\n\n" . $legalMentions;
+            }
+            $array[3] = I18N::formatNumber($array[3]);
+            $array[4] = I18N::formatNumber($array[4]);
+            $array[5] = I18N::formatNumber($array[5]);
+            $array[6] = I18N::formatNumber($array[6]);
+        }
+        return array_values($registry);
+    }
+    
+    // }}}
+    // CommandReceiptGenerator::renderTotalBlock() {{{
 
     /**
      * génère le tableau avec le total, affiche l'accompte et
@@ -3372,27 +3486,27 @@ class CommandReceipt extends DocumentGenerator { // {{{
 
     // }}}
 } // }}}
-
+// ChainCommandReceiptGenerator {{{
 /**
  * classe de génération des récépissés de commandes de transport.
  *
  */
-class ChainCommandReceipt extends CommandReceipt { // {{{
+class ChainCommandReceiptGenerator extends CommandReceiptGenerator {
 
-    // ChainCommandReceipt::__construct() {{{
+    // ChainCommandReceiptGenerator::__construct() {{{
 
     /**
      * Constructeur.
      *
      * @param object $command ChainCommand
      */
-    public function __construct($command) {
-        parent::__construct($command);
+    public function __construct($document, $reedit=false) {
+        parent::__construct($document, $reedit);
         $this->commandNoLabel = _('Order number');
     }
 
     // }}}
-    // ChainCommandReceipt::renderAddressesBloc() {{{
+    // ChainCommandReceiptGenerator::renderAddressesBloc() {{{
 
     /**
      * Construit les blocs d'addresses du récépissé.
@@ -3407,7 +3521,7 @@ class ChainCommandReceipt extends CommandReceipt { // {{{
     }
 
     // }}}
-    // ChainCommandReceipt::renderContent() {{{
+    // ChainCommandReceiptGenerator::renderContent() {{{
 
     /**
      * Génére le contenu du doc :
@@ -3477,7 +3591,7 @@ class ChainCommandReceipt extends CommandReceipt { // {{{
     }
 
     // }}}
-    // ChainCommandReceipt::renderTotalBlock() {{{
+    // ChainCommandReceiptGenerator::renderTotalBlock() {{{
 
     /**
      * génère le tableau avec le total, affiche l'accompte et
@@ -3516,13 +3630,13 @@ class ChainCommandReceipt extends CommandReceipt { // {{{
 
     // }}}
 } // }}}
-
+// CommandEstimateReceiptGenerator {{{
 /**
  * classe de génération des devis pour les commandes produits
  *
  */
-class ProductCommandEstimateReceipt extends CommandReceipt { // {{{
-    // ProductCommandEstimateReceipt::__construct() {{{
+class CommandEstimateReceiptGenerator extends CommandReceiptGenerator {
+    // CommandEstimateReceiptGenerator::__construct() {{{
 
     /**
      * Constructeur.
@@ -3530,20 +3644,20 @@ class ProductCommandEstimateReceipt extends CommandReceipt { // {{{
      * @param object $command commande
      * @return void
      */
-    public function __construct($command) {
-        parent::__construct($command);
+    public function __construct($document, $reedit=false) {
+        parent::__construct($document, $reedit);
         $this->docName = _('Estimate receipt');
     }
 
     // }}}
 } // }}}
-
+// ChainCommandEstimateReceipt {{{
 /**
  * classe de génération des devis pour les commandes de transport
  *
  */
-class ChainCommandEstimateReceipt extends ChainCommandReceipt { // {{{
-    // ChainCommandEstimateReceipt::__construct() {{{
+class ChainCommandEstimateReceiptGenerator extends ChainCommandReceiptGenerator {
+    // ChainCommandEstimateReceiptGenerator::__construct() {{{
 
     /**
      * Constructeur.
@@ -3551,22 +3665,22 @@ class ChainCommandEstimateReceipt extends ChainCommandReceipt { // {{{
      * @param object $command commande
      * @return void
      */
-    public function __construct($command) {
-        parent::__construct($command);
+    public function __construct($document, $reedit=false) {
+        parent::__construct($document, $reedit);
         $this->docName = _('Estimate receipt');
         $this->commandNoLabel = _('Estimate number');
     }
 
     // }}}
 } // }}}
-
+// InvoiceCollectionGenerator {{{
 /**
  * InvoiceCollectionGenerator.
  * Classe utilisée pour imprimer une série de factures dans le meme pdf, avec
  * gestion correcte de la pagination par facture.
  *
  */
-class InvoiceCollectionGenerator extends CommandDocumentGenerator { // {{{
+class InvoiceCollectionGenerator extends CommandDocumentGenerator {
     /**
      * La collection de factures a imprimer dans le meme pdf
      * @var string
@@ -3622,27 +3736,28 @@ class InvoiceCollectionGenerator extends CommandDocumentGenerator { // {{{
     // }}}
 
 } // }}}
-
+// WorksheetGenerator {{{
 /**
  * WorksheetGenerator.
  * Classe utilisée pour les fiches techniques.
  *
  */
-class WorksheetGenerator extends DocumentGenerator{ // {{{
+class WorksheetGenerator extends DocumentGenerator {
     /**
      * Constructor
      *
      * @param  object $model l'objet RTWModel
      * @access protected
      */
-    public function __construct($model) {
+    public function __construct($modelCollection) {
         // doc fictif car on ne sauve pas ces fiches suiveuses
         $document = new AbstractDocument();
         $cur = false; // pas important ici...
         parent::__construct($document, false, false, $cur, '');
         $this->pdf->showExpeditor   = false;
         $this->pdf->showPageNumbers = false;
-        $this->model = $model;
+        $this->modelCollection = $modelCollection;
+        $this->model = false;
     }
 
     /**
@@ -3653,14 +3768,17 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
      */
     public function render() {
         $this->pdf->SetFillColor(220);
-        $this->renderHeader();
-        $this->pdf->addPage(); // apres le renderHeader()!
-        $infos = ImageManager::getFileInfo(md5($this->model->getImage()));
-        if (is_array($infos) && !empty($infos['data'])) {
-            list(,$type) = explode('/', $infos['mimetype']);
-		    $this->pdf->image($infos['data'], 90, 8, 110, 0, $type);
+        foreach ($this->modelCollection as $model) {
+            $this->model = $model;
+            $this->renderHeader();
+            $this->pdf->addPage(); // apres le renderHeader()!
+            $infos = ImageManager::getFileInfo(md5($this->model->getImage()));
+            if (is_array($infos) && !empty($infos['data'])) {
+                list(,$type) = explode('/', $infos['mimetype']);
+		        $this->pdf->image($infos['data'], 90, 8, 110, 0, $type);
+            }
+            $this->_renderContent();
         }
-        $this->_renderContent();
         return $this->pdf;
     }
 
@@ -3738,9 +3856,11 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
         $items = $this->model->getMaterialProperties();
         foreach ($items as $attrName => $label) {
             $getter = 'get' . $attrName;
+            $qtyGetter = 'get' . $attrName . 'Quantity';
             $mat    = $this->model->$getter();
-            $value  = ($mat instanceof RTWMaterial) ? $mat->toString() : 'N/A';
-            $this->pdf->tableHeader(array($label => 35, $value => 155), 0);
+            $value  = ($mat instanceof RTWMaterial) ? $mat->toString() : _('N/A');
+            $qty    = ($mat instanceof RTWMaterial) ? $this->model->$qtyGetter() : '';
+            $this->pdf->tableHeader(array($label => 35, $value => 135, (string)$qty => 20), 0);
         }
         $sizes = $this->model->getSizeCollection();
         if (count($sizes) > 0) {
@@ -3755,13 +3875,13 @@ class WorksheetGenerator extends DocumentGenerator{ // {{{
         0);
     }
 } // }}}
-
+// LookbookGenerator {{{
 /**
  * LookbookGenerator.
  * Classe utilisée pour les fiches techniques.
  *
  */
-class LookbookGenerator extends WorksheetGenerator { // {{{
+class LookbookGenerator extends WorksheetGenerator {
     /**
      * Constructor
      *
@@ -3899,13 +4019,13 @@ class LookbookGenerator extends WorksheetGenerator { // {{{
                 $padding = "\n";
             }
             $mat1 = ($m = $this->model->getMaterial1()) instanceof RTWMaterial ?
-                $m->getCommercialName() : '';
+                $m->getCommercialNameAndColor() : '';
             $mat2 = ($m = $this->model->getMaterial2()) instanceof RTWMaterial ?
-                $m->getCommercialName() : '';
+                $m->getCommercialNameAndColor() : '';
             $acc1 = ($m = $this->model->getAccessory1()) instanceof RTWMaterial ?
-                $m->getCommercialName() : '';
+                $m->getCommercialNameAndColor() : '';
             $acc2 = ($m = $this->model->getAccessory1()) instanceof RTWMaterial ?
-                $m->getCommercialName() : '';
+                $m->getCommercialNameAndColor() : '';
 
             $this->pdf->tableBody(array(0 => array(
                 $this->model->getStyleNumber(),
@@ -3919,6 +4039,5 @@ class LookbookGenerator extends WorksheetGenerator { // {{{
         }
     }
 } // }}}
-
 
 ?>

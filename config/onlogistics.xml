@@ -428,6 +428,9 @@
         <property type="foreignkey" name="CustomerProperties" class="CustomerProperties" />
         <property type="foreignkey" name="ActorDetail" class="ActorDetail"
             navigable="1" multiplicity="onetoone" ondelete="cascade" />
+        <property type="manytomany" name="DocumentAppendix"
+            class="DocumentAppendix" field="FromActor" 
+            linktable="actDocumentAppendix" linkfield="ToDocumentAppendix"/>
     </entity>
 
     <!-- entity ActorBankDetail -->
@@ -969,6 +972,10 @@
         <property type="datetime" name="WishedDate" />
     </entity>
 
+    <!-- entity CommandReceipt -->
+    <entity name="CommandReceipt" extends="AbstractDocument" 
+        tablename="AbstractDocument"/>
+
     <!-- entity CommunicationModality -->
     <entity name="CommunicationModality" tablename="CommunicationModality">
         <property type="string" name="Phone" />
@@ -1415,6 +1422,20 @@
         <property type="string" name="Number" />
         <property type="foreignkey" name="State" class="State" />
         <property type="foreignkey" name="Country" class="Country" />
+    </entity>
+
+    <!-- entity DocumentAppendix -->
+    <entity name="DocumentAppendix" tablename="DocumentAppendix" 
+        label="Document appendices" features="grid,add,edit,del"
+        tostring="Code">
+        <property type="string" name="Code" required="1" unique="1" 
+            label="Code" usedby="grid,addedit" section="Code"/>
+        <property type="string" name="Title" label="Title" usedby="addedit"
+            section="Content"/>
+        <property type="text" name="Body" label="Body" usedby="addedit" 
+            section="Content"/>
+        <property type="image" name="Image" label="Image" usedby="addedit"
+            section="Content"/>
     </entity>
 
     <!-- entity DocumentModel -->
@@ -2123,15 +2144,20 @@
     </entity>
 
     <!-- entity PriceByCurrency -->
-    <entity name="PriceByCurrency" tablename="PriceByCurrency">
-        <property type="decimal" name="RecommendedPrice" default="0" />
-        <property type="decimal" name="Price" default="0" />
-        <property type="foreignkey" name="Currency" class="Currency" />
+    <entity name="PriceByCurrency" tablename="PriceByCurrency" label="Price"
+        features="grid,searchform">
+        <property type="decimal" name="RecommendedPrice" default="0"
+            label="Recommended price" usedby="grid"/>
+        <property type="decimal" name="Price" default="0" label="Price"
+            usedby="grid"/>
+        <property type="foreignkey" name="Currency" class="Currency"
+            label="Currency" usedby="grid,searchform"/>
         <property type="foreignkey" name="Product" class="Product"
-            navigable="1" />
+            navigable="1" label="Product" usedby="grid,searchform"/>
         <property type="foreignkey" name="ActorProduct" class="ActorProduct"
-            navigable="1" />
-        <property type="foreignkey" name="PricingZone" class="PricingZone"/>
+            navigable="1" usedby="grid,searchform"/>
+        <property type="foreignkey" name="PricingZone" class="PricingZone"
+            label="Pricing zone" usedby="grid,searchform"/>
     </entity>
 
     <!-- Entity PricingZone -->

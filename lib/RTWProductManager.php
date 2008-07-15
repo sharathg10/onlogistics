@@ -77,11 +77,11 @@ class RTWProductManager extends RTWManager
                 $product = new RTWProduct();
                 $product->generateId();
                 self::setProductDefaults($product);
-                $product->setModel($model);
                 $product->setSize($sizeId);
                 // affecte le produit à la chaine
                 self::createAffectation($product, 'lc');
             }
+            $product->setModel($model);
             $product->setName($model->getDescription());
             // construit la ref produit
             $size = Object::load('RTWSize', $sizeId);

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Onlogistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-09 19:01+0200\n"
+"POT-Creation-Date: 2008-07-16 12:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Ateor dev team <dev@ateor.com>\n"
 "Language-Team: Ateor dev team <dev@ateor.com>\n"
@@ -195,12 +195,12 @@ msgstr ""
 #: ../lib/Objects/Alert.const.php:276 ../lib/DocumentGenerator.php:443
 #: ../lib/DocumentGenerator.php:2381 ../lib/DocumentGenerator.php:3110
 #: ../lib/DocumentGenerator.php:3128 ../lib/DocumentGenerator.php:3136
-#: ../lib/DocumentGenerator.php:3333 ../lib/DocumentGenerator.php:3493
-#: ../ProductCommandSupplier.php:216 ../ProductByLocationList.php:146
-#: ../ComponentAddEdit.php:209 ../LocationConcreteProductList.php:260
-#: ../ChainCommandList.php:190 ../SupplierCatalog.php:324
-#: ../StockProductRealandVirtualList.php:103 ../AssemblyDetail.php:115
-#: ../ProductCommand.php:231 ../BoardByProduct.php:125 ../CommandList.php:287
+#: ../lib/DocumentGenerator.php:3566 ../ProductCommandSupplier.php:216
+#: ../ProductByLocationList.php:146 ../ComponentAddEdit.php:209
+#: ../LocationConcreteProductList.php:260 ../ChainCommandList.php:190
+#: ../SupplierCatalog.php:324 ../StockProductRealandVirtualList.php:103
+#: ../AssemblyDetail.php:115 ../ProductCommand.php:231
+#: ../BoardByProduct.php:125 ../CommandList.php:287
 #: ../ComponentConcreteProduct.php:125 ../AssemblyDegradedModeDetail.php:98
 #: ../DetailedLocationByProductList.php:154
 #: ../ConcreteComponentAddEdit.php:160 ../AssemblyEdit.php:119
@@ -712,8 +712,8 @@ msgstr ""
 #: ../lib/Custom/AccountingTypeAddEdit.php:74
 #: ../lib/Custom/GenericActorAddEdit.php:141
 #: ../lib/Custom/FlowCategoryAddEdit.php:51 ../lib/Objects/Operation.php:666
-#: ../lib/Objects/Operation.php:667 ../lib/Objects/_FlowCategory.php:426
-#: ../lib/Objects/_FlowCategory.php:427 ../lib/Objects/ProductKind.php:311
+#: ../lib/Objects/Operation.php:667 ../lib/Objects/_FlowCategory.php:434
+#: ../lib/Objects/_FlowCategory.php:435 ../lib/Objects/ProductKind.php:311
 #: ../lib/Objects/ProductKind.php:312 ../lib/Objects/_LicenceType.php:216
 #: ../lib/Objects/_LicenceType.php:217 ../lib/Objects/_Prestation.php:1049
 #: ../lib/Objects/_Prestation.php:1050 ../lib/Objects/_FlowTypeItem.php:448
@@ -743,23 +743,22 @@ msgstr ""
 #: ../lib/Objects/UploadedDocumentType.php:355
 #: ../lib/Objects/UploadedDocumentType.php:356
 #: ../lib/Objects/_HelpPage.php:377 ../lib/Objects/_HelpPage.php:378
-#: ../lib/ApportionmentManager.php:305 ../lib/DocumentGenerator.php:3332
-#: ../LicenceList.php:96 ../LicenceList.php:125 ../JS_Messages.php:256
-#: ../BoardByCommercial.php:125 ../ProductTypeList.php:59
-#: ../StateAddEdit.php:103 ../WorkOrderOpeTaskList.php:233
-#: ../ProductCommandSupplier.php:209 ../BoardByCustomer.php:125
-#: ../CatalogList.php:65 ../DocumentModelAddEdit.php:141
-#: ../ZoneAddEdit.php:151 ../ZoneAddEdit.php:179 ../ZoneAddEdit.php:197
-#: ../PromotionAddEdit.php:116 ../BankList.php:47 ../FlowAddEdit.php:220
-#: ../ProductCommand.php:223 ../FlowList.php:53 ../FlowList.php:89
-#: ../BoardBySupplier.php:126 ../WorkOrderList.php:170
-#: ../BoardByCategory.php:119 ../FormModelList.php:45 ../PromotionList.php:51
-#: ../CustomerAttractivityList.php:66 ../DocumentModelList.php:51
-#: ../BoardByCoast.php:122 ../CustomerFrequencyList.php:67
-#: ../CustomerAttractivityAddEdit.php:135 ../CustomerFrequencyAddEdit.php:119
-#: ../FormModelAddEdit.php:97 ../ActorList.php:93 ../ActorList.php:271
-#: ../ActorList.php:275 ../CountryCityAddEdit.php:120
-#: ../DepartmentAddEdit.php:109 void:1
+#: ../lib/ApportionmentManager.php:305 ../LicenceList.php:96
+#: ../LicenceList.php:125 ../JS_Messages.php:256 ../BoardByCommercial.php:125
+#: ../ProductTypeList.php:59 ../StateAddEdit.php:103
+#: ../WorkOrderOpeTaskList.php:233 ../ProductCommandSupplier.php:209
+#: ../BoardByCustomer.php:125 ../CatalogList.php:65
+#: ../DocumentModelAddEdit.php:141 ../ZoneAddEdit.php:151
+#: ../ZoneAddEdit.php:179 ../ZoneAddEdit.php:197 ../PromotionAddEdit.php:116
+#: ../BankList.php:47 ../FlowAddEdit.php:220 ../ProductCommand.php:223
+#: ../FlowList.php:53 ../FlowList.php:89 ../BoardBySupplier.php:126
+#: ../WorkOrderList.php:170 ../BoardByCategory.php:119 ../FormModelList.php:45
+#: ../PromotionList.php:51 ../CustomerAttractivityList.php:66
+#: ../DocumentModelList.php:51 ../BoardByCoast.php:122
+#: ../CustomerFrequencyList.php:67 ../CustomerAttractivityAddEdit.php:135
+#: ../CustomerFrequencyAddEdit.php:119 ../FormModelAddEdit.php:97
+#: ../ActorList.php:93 ../ActorList.php:271 ../ActorList.php:275
+#: ../CountryCityAddEdit.php:120 ../DepartmentAddEdit.php:109 void:1
 msgid "Name"
 msgstr ""
 
@@ -954,7 +953,7 @@ msgstr ""
 #: ../lib/Objects/DocumentModelProperty.php:123
 #: ../lib/Objects/Alert.const.php:264 ../lib/DocumentGenerator.php:1702
 #: ../lib/DocumentGenerator.php:1778 ../lib/DocumentGenerator.php:1925
-#: ../lib/DocumentGenerator.php:2858 ../lib/DocumentGenerator.php:3432
+#: ../lib/DocumentGenerator.php:2858 ../lib/DocumentGenerator.php:3505
 #: ../ProductionTaskValidation.php:106 ../PrestationInvoiceAddEdit.php:131
 #: ../ProductCommandSupplier.php:142 ../ActivatedChainList.php:67
 #: ../ActivatedMovementList.php:86 ../ForwardingFormEdit.php:343
@@ -1301,7 +1300,7 @@ msgstr ""
 #: ../lib/Objects/_Prestation.php:1077 ../lib/Objects/_FlowTypeItem.php:457
 #: ../lib/Objects/_FlowTypeItem.php:458 ../lib/Objects/_Account.php:829
 #: ../lib/Objects/_Account.php:830 ../lib/Objects/Alert.const.php:289
-#: ../lib/Objects/_TVA.php:268 ../lib/DocumentGenerator.php:3533
+#: ../lib/Objects/_TVA.php:268 ../lib/DocumentGenerator.php:3606
 #: ../PaymentToHaveList.php:92 ../menu.inc.php:243 void:1
 msgid "VAT"
 msgstr ""
@@ -1674,22 +1673,22 @@ msgstr ""
 #: ../lib/Custom/RTWModelForLookbookGrid.php:64
 #: ../lib/Custom/RTWModelForLookbookGrid.php:65
 #: ../lib/Custom/SellingPricesGrid.php:147 ../lib/Objects/_RTWModel.php:2482
-#: ../lib/Objects/_RTWModel.php:2483 ../lib/DocumentGenerator.php:3749
-#: ../lib/DocumentGenerator.php:3893 ../SalesmenCommission.php:64
+#: ../lib/Objects/_RTWModel.php:2483 ../lib/DocumentGenerator.php:3822
+#: ../lib/DocumentGenerator.php:3966 ../SalesmenCommission.php:64
 msgid "Season"
 msgstr ""
 
 #: ../lib/Custom/RTWModelForLookbookGrid.php:73
 #: ../lib/Custom/RTWModelForLookbookGrid.php:74
 #: ../lib/Objects/_RTWModel.php:2509 ../lib/Objects/_RTWModel.php:2510
-#: ../lib/DocumentGenerator.php:3760 ../lib/DocumentGenerator.php:3923
+#: ../lib/DocumentGenerator.php:3833 ../lib/DocumentGenerator.php:3996
 msgid "Style number"
 msgstr ""
 
 #: ../lib/Custom/RTWModelForLookbookGrid.php:82
 #: ../lib/Custom/RTWModelForLookbookGrid.php:83
 #: ../lib/Custom/SellingPricesGrid.php:156 ../lib/Objects/_RTWModel.php:2500
-#: ../lib/Objects/_RTWModel.php:2501 ../lib/DocumentGenerator.php:3895
+#: ../lib/Objects/_RTWModel.php:2501 ../lib/DocumentGenerator.php:3968
 msgid "Press name"
 msgstr ""
 
@@ -1848,7 +1847,7 @@ msgstr ""
 #: ../lib/Objects/PriceByCurrency.php:367
 #: ../lib/Objects/PriceByCurrency.php:483
 #: ../lib/Objects/PriceByCurrency.php:484 ../lib/Objects/_CostRange.php:753
-#: ../lib/Objects/_CostRange.php:754 ../lib/DocumentGenerator.php:3928
+#: ../lib/Objects/_CostRange.php:754 ../lib/DocumentGenerator.php:4001
 #: ../JS_Messages.php:319
 msgid "Price"
 msgstr ""
@@ -1856,7 +1855,7 @@ msgstr ""
 #: ../lib/Custom/SellingPricesGrid.php:79
 #: ../lib/Custom/SellingPricesGrid.php:80
 #: ../lib/Objects/PriceByCurrency.php:473
-#: ../lib/Objects/PriceByCurrency.php:474 ../lib/DocumentGenerator.php:3929
+#: ../lib/Objects/PriceByCurrency.php:474 ../lib/DocumentGenerator.php:4002
 #: ../JS_Messages.php:318
 msgid "Recommended price"
 msgstr ""
@@ -1980,7 +1979,7 @@ msgstr ""
 #: ../lib/Objects/DangerousProductType.php:110
 #: ../lib/Objects/Container.php:231 ../lib/Objects/Container.php:286
 #: ../lib/Objects/Container.php:342 ../lib/AlertSender.php:410
-#: ../lib/AlertSender.php:474 ../lib/DocumentGenerator.php:3788
+#: ../lib/AlertSender.php:474 ../lib/DocumentGenerator.php:3861
 #: ../crons/AlertTenDaysSinceLastFly.php:75 ../JS_Messages.php:320
 #: ../InstallmentAddEdit.php:145 ../InstallmentAddEdit.php:146
 #: ../InvoiceAddEdit.php:392 ../WorkOrderList.php:183 ../WorkOrderList.php:186
@@ -2109,13 +2108,13 @@ msgid "m3"
 msgstr ""
 
 #: ../lib/CustomGrid/Columns/GridColumnProductCommandPriceWithDiscount.php:76
-#: ../ProductCommand.php:235 ../InvoiceDetail.php:89 void:1
+#: ../ProductCommand.php:235 ../InvoiceDetail.php:89
 msgid "Offer on sale"
 msgstr ""
 
 #: ../lib/CustomGrid/Columns/GridColumnProductCommandQuantity.php:78
 #: ../lib/CustomGrid/Columns/GridColumnProductCommandQuantity.php:115
-#: ../lib/DocumentGenerator.php:3358
+#: ../lib/DocumentGenerator.php:3371
 msgid "by"
 msgstr ""
 
@@ -2207,16 +2206,16 @@ msgstr ""
 msgid "Tasks"
 msgstr ""
 
-#: ../lib/Objects/_FlowCategory.php:311
+#: ../lib/Objects/_FlowCategory.php:319
 msgid "Categories of expenses or receipts"
 msgstr ""
 
-#: ../lib/Objects/_FlowCategory.php:435 ../lib/Objects/_FlowCategory.php:436
+#: ../lib/Objects/_FlowCategory.php:443 ../lib/Objects/_FlowCategory.php:444
 #: ../ComponentAddEdit.php:205 void:1
 msgid "Parent"
 msgstr ""
 
-#: ../lib/Objects/_FlowCategory.php:444 ../lib/Objects/_FlowCategory.php:445
+#: ../lib/Objects/_FlowCategory.php:452 ../lib/Objects/_FlowCategory.php:453
 #: void:1
 msgid "Display order"
 msgstr ""
@@ -2322,7 +2321,7 @@ msgstr ""
 msgid "helicopter rental"
 msgstr ""
 
-#: ../lib/Objects/_Chain.php:304 ../lib/Objects/_RTWMaterial.php:243
+#: ../lib/Objects/_Chain.php:304 ../lib/Objects/_RTWMaterial.php:270
 msgid "Materials"
 msgstr ""
 
@@ -2433,7 +2432,7 @@ msgstr ""
 #: ../lib/ApportionmentManager.php:302 ../lib/DocumentGenerator.php:999
 #: ../lib/DocumentGenerator.php:1528 ../lib/DocumentGenerator.php:1705
 #: ../lib/DocumentGenerator.php:1926 ../lib/DocumentGenerator.php:2083
-#: ../lib/DocumentGenerator.php:3744 ../lib/DocumentGenerator.php:3889
+#: ../lib/DocumentGenerator.php:3817 ../lib/DocumentGenerator.php:3962
 #: ../PaymentToHaveList.php:87 ../FlyBoardBook.php:125
 #: ../ActivatedFlightList.php:177 ../ActionList.php:111
 #: ../ChainCommandList.php:175 ../SalesmenCommission.php:97
@@ -2734,7 +2733,8 @@ msgid "Heel reference"
 msgstr ""
 
 #: ../lib/Objects/RTWModel.php:96 ../lib/Objects/RTWModel.php:175
-#: ../lib/Objects/_RTWModel.php:2591 ../lib/Objects/_RTWModel.php:2592
+#: ../lib/Objects/_RTWMaterial.php:153 ../lib/Objects/_RTWModel.php:2591
+#: ../lib/Objects/_RTWModel.php:2592
 msgid "Sole"
 msgstr ""
 
@@ -2749,25 +2749,25 @@ msgid "Hand bag"
 msgstr ""
 
 #: ../lib/Objects/RTWModel.php:99 ../lib/Objects/_RTWModel.php:2648
-#: ../lib/Objects/_RTWModel.php:2649 ../lib/DocumentGenerator.php:3924
+#: ../lib/Objects/_RTWModel.php:2649 ../lib/DocumentGenerator.php:3997
 #: ../RTWCatalog.php:118
 msgid "Material 1"
 msgstr ""
 
 #: ../lib/Objects/RTWModel.php:100 ../lib/Objects/_RTWModel.php:2667
-#: ../lib/Objects/_RTWModel.php:2668 ../lib/DocumentGenerator.php:3925
+#: ../lib/Objects/_RTWModel.php:2668 ../lib/DocumentGenerator.php:3998
 #: ../RTWCatalog.php:119
 msgid "Material 2"
 msgstr ""
 
 #: ../lib/Objects/RTWModel.php:101 ../lib/Objects/_RTWModel.php:2686
-#: ../lib/Objects/_RTWModel.php:2687 ../lib/DocumentGenerator.php:3926
+#: ../lib/Objects/_RTWModel.php:2687 ../lib/DocumentGenerator.php:3999
 #: ../RTWCatalog.php:120
 msgid "Accessory 1"
 msgstr ""
 
 #: ../lib/Objects/RTWModel.php:102 ../lib/Objects/_RTWModel.php:2705
-#: ../lib/Objects/_RTWModel.php:2706 ../lib/DocumentGenerator.php:3927
+#: ../lib/Objects/_RTWModel.php:2706 ../lib/DocumentGenerator.php:4000
 #: ../RTWCatalog.php:121
 msgid "Accessory 2"
 msgstr ""
@@ -2807,7 +2807,7 @@ msgstr ""
 msgid "Selvedge"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:110 ../lib/Objects/_RTWMaterial.php:126
+#: ../lib/Objects/RTWModel.php:110 ../lib/Objects/_RTWMaterial.php:152
 #: ../lib/Objects/_RTWModel.php:2875 ../lib/Objects/_RTWModel.php:2876
 msgid "Bamboo"
 msgstr ""
@@ -2835,11 +2835,12 @@ msgstr ""
 #: ../lib/DocumentGenerator.php:836 ../lib/DocumentGenerator.php:1145
 #: ../lib/DocumentGenerator.php:1205 ../lib/DocumentGenerator.php:1563
 #: ../lib/DocumentGenerator.php:1662 ../lib/DocumentGenerator.php:1930
-#: ../lib/DocumentGenerator.php:2205 ../PrestationInvoiceAddEdit.php:179
-#: ../ActivatedMovementList.php:192 ../InvoiceAddEdit.php:367
-#: ../InvoiceChainCommandList.php:225 ../ProductCommand.php:231
-#: ../LocationExecutedMovementList.php:316 ../InvoiceDetail.php:88
-#: ../InventoryDetailList.php:129 ../ChainCommandInvoiceDetail.php:80 void:1
+#: ../lib/DocumentGenerator.php:2205 ../lib/DocumentGenerator.php:3333
+#: ../PrestationInvoiceAddEdit.php:179 ../ActivatedMovementList.php:192
+#: ../InvoiceAddEdit.php:367 ../InvoiceChainCommandList.php:225
+#: ../ProductCommand.php:231 ../LocationExecutedMovementList.php:316
+#: ../InvoiceDetail.php:88 ../InventoryDetailList.php:129
+#: ../ChainCommandInvoiceDetail.php:80 void:1
 msgid "Qty"
 msgstr ""
 
@@ -2867,39 +2868,39 @@ msgstr ""
 msgid "Distant emergency"
 msgstr ""
 
-#: ../lib/Objects/_RTWMaterial.php:121
+#: ../lib/Objects/_RTWMaterial.php:147
 msgid "Raw material"
 msgstr ""
 
-#: ../lib/Objects/_RTWMaterial.php:122
+#: ../lib/Objects/_RTWMaterial.php:148
 msgid "Accessory"
 msgstr ""
 
-#: ../lib/Objects/_RTWMaterial.php:123 void:1
+#: ../lib/Objects/_RTWMaterial.php:149 void:1
 msgid "Packaging"
 msgstr ""
 
-#: ../lib/Objects/_RTWMaterial.php:124
+#: ../lib/Objects/_RTWMaterial.php:150
 msgid "Thread"
 msgstr ""
 
-#: ../lib/Objects/_RTWMaterial.php:125
+#: ../lib/Objects/_RTWMaterial.php:151
 msgid "Heel"
 msgstr ""
 
-#: ../lib/Objects/_RTWMaterial.php:449 ../lib/Objects/_RTWMaterial.php:450
+#: ../lib/Objects/_RTWMaterial.php:482 ../lib/Objects/_RTWMaterial.php:483
 msgid "Commercial designation"
 msgstr ""
 
-#: ../lib/Objects/_RTWMaterial.php:458 ../lib/Objects/_RTWMaterial.php:459
+#: ../lib/Objects/_RTWMaterial.php:491 ../lib/Objects/_RTWMaterial.php:492
 msgid "MaterialType"
 msgstr ""
 
-#: ../lib/Objects/_RTWMaterial.php:467 ../lib/Objects/_RTWMaterial.php:468
+#: ../lib/Objects/_RTWMaterial.php:500 ../lib/Objects/_RTWMaterial.php:501
 msgid "Color"
 msgstr ""
 
-#: ../lib/Objects/_RTWMaterial.php:476 ../lib/Objects/_RTWMaterial.php:477
+#: ../lib/Objects/_RTWMaterial.php:509 ../lib/Objects/_RTWMaterial.php:510
 msgid "origin"
 msgstr ""
 
@@ -2910,8 +2911,8 @@ msgstr ""
 #: ../lib/Objects/ForecastFlow.php:504 ../lib/Objects/ForecastFlow.php:505
 #: ../lib/Objects/_RTWModel.php:2518 ../lib/Objects/_RTWModel.php:2519
 #: ../lib/DocumentGenerator.php:748 ../lib/DocumentGenerator.php:1144
-#: ../lib/DocumentGenerator.php:2380 ../lib/DocumentGenerator.php:3764
-#: ../lib/DocumentGenerator.php:3896 ../ActivatedChainList.php:127
+#: ../lib/DocumentGenerator.php:2380 ../lib/DocumentGenerator.php:3837
+#: ../lib/DocumentGenerator.php:3969 ../ActivatedChainList.php:127
 #: ../TransportChainList.php:88 void:1
 msgid "Description"
 msgstr ""
@@ -2967,8 +2968,8 @@ msgstr ""
 
 #: ../lib/Objects/DocumentModelProperty.php:131
 #: ../lib/Objects/Alert.const.php:266 ../lib/DocumentGenerator.php:3327
-#: ../lib/DocumentGenerator.php:3482 ../ProductCommandSupplier.php:144
-#: ../ProductCommand.php:143 void:1
+#: ../lib/DocumentGenerator.php:3555 ../ProductCommandSupplier.php:144
+#: ../ProductCommand.php:143
 msgid "Incoterm"
 msgstr ""
 
@@ -3387,13 +3388,13 @@ msgstr ""
 msgid "Carriage order"
 msgstr ""
 
-#: ../lib/Objects/Alert.const.php:239 ../lib/DocumentGenerator.php:3446
+#: ../lib/Objects/Alert.const.php:239 ../lib/DocumentGenerator.php:3519
 msgid "Collection address"
 msgstr ""
 
 #: ../lib/Objects/Alert.const.php:248 ../lib/DocumentGenerator.php:463
 #: ../lib/DocumentGenerator.php:600 ../lib/DocumentGenerator.php:2324
-#: ../lib/DocumentGenerator.php:3447 void:1
+#: ../lib/DocumentGenerator.php:3520 void:1
 msgid "Delivery address"
 msgstr ""
 
@@ -3403,7 +3404,6 @@ msgid "Madam, Sir"
 msgstr ""
 
 #: ../lib/Objects/Alert.const.php:260 ../lib/Objects/Alert.const.php:418
-#: void:1
 msgid "On"
 msgstr ""
 
@@ -3417,11 +3417,11 @@ msgstr ""
 msgid "Wished date"
 msgstr ""
 
-#: ../lib/Objects/Alert.const.php:267 ../lib/DocumentGenerator.php:3484
+#: ../lib/Objects/Alert.const.php:267 ../lib/DocumentGenerator.php:3557
 msgid "Imputation number or account number"
 msgstr ""
 
-#: ../lib/Objects/Alert.const.php:268 ../lib/DocumentGenerator.php:3487
+#: ../lib/Objects/Alert.const.php:268 ../lib/DocumentGenerator.php:3560
 msgid "Amount to recover on delivery"
 msgstr ""
 
@@ -3430,7 +3430,7 @@ msgid "Details of parcels to deliver"
 msgstr ""
 
 #: ../lib/Objects/Alert.const.php:275 ../lib/DocumentGenerator.php:1381
-#: ../lib/DocumentGenerator.php:3127 ../lib/DocumentGenerator.php:3492
+#: ../lib/DocumentGenerator.php:3127 ../lib/DocumentGenerator.php:3565
 #: ../InvoiceChainCommandList.php:221 ../ChainCommandInvoiceDetail.php:76
 #: void:1
 msgid "Parcel type"
@@ -3441,47 +3441,47 @@ msgid "Unit weight (kg)"
 msgstr ""
 
 #: ../lib/Objects/Alert.const.php:278 ../lib/DocumentGenerator.php:1383
-#: ../lib/DocumentGenerator.php:2383 ../lib/DocumentGenerator.php:3495
+#: ../lib/DocumentGenerator.php:2383 ../lib/DocumentGenerator.php:3568
 #: ../InvoiceChainCommandList.php:224 ../ChainCommandInvoiceDetail.php:79
 #: void:1
 msgid "Dimensions"
 msgstr ""
 
-#: ../lib/Objects/Alert.const.php:279 ../lib/DocumentGenerator.php:3496 void:1
+#: ../lib/Objects/Alert.const.php:279 ../lib/DocumentGenerator.php:3569 void:1
 msgid "Stackable ratio"
 msgstr ""
 
-#: ../lib/Objects/Alert.const.php:280 ../lib/DocumentGenerator.php:3497 void:1
+#: ../lib/Objects/Alert.const.php:280 ../lib/DocumentGenerator.php:3570 void:1
 msgid "Priority dimension"
 msgstr ""
 
 #: ../lib/Objects/Alert.const.php:286 ../lib/DocumentGenerator.php:1241
-#: ../lib/DocumentGenerator.php:3385 ../PrestationInvoiceAddEdit.php:152
+#: ../lib/DocumentGenerator.php:3458 ../PrestationInvoiceAddEdit.php:152
 #: ../ProductCommandSupplier.php:179 ../FlowAddEdit.php:236
 #: ../ProductCommand.php:191 void:1
 msgid "Global discount"
 msgstr ""
 
 #: ../lib/Objects/Alert.const.php:287 ../lib/Objects/_TVA.php:199
-#: ../lib/DocumentGenerator.php:3383 ../lib/DocumentGenerator.php:3531 void:1
+#: ../lib/DocumentGenerator.php:3456 ../lib/DocumentGenerator.php:3604 void:1
 msgid "Packing"
 msgstr ""
 
 #: ../lib/Objects/Alert.const.php:288 ../lib/Objects/_TVA.php:200
-#: ../lib/DocumentGenerator.php:3384 ../lib/DocumentGenerator.php:3532 void:1
+#: ../lib/DocumentGenerator.php:3457 ../lib/DocumentGenerator.php:3605 void:1
 msgid "Insurance"
 msgstr ""
 
 #: ../lib/Objects/Alert.const.php:290 ../lib/DocumentGenerator.php:3336
-#: ../lib/DocumentGenerator.php:3386 ../PaymentToHaveList.php:91
+#: ../lib/DocumentGenerator.php:3459 ../PaymentToHaveList.php:91
 #: ../FlowAddEdit.php:228 ../EstimateList.php:124 ../InvoiceList.php:151
 #: void:1
 msgid "Amount excl. VAT"
 msgstr ""
 
 #: ../lib/Objects/Alert.const.php:291 ../lib/DocumentGenerator.php:1000
-#: ../lib/DocumentGenerator.php:3337 ../lib/DocumentGenerator.php:3387
-#: ../lib/DocumentGenerator.php:3534 ../PaymentToHaveList.php:93
+#: ../lib/DocumentGenerator.php:3337 ../lib/DocumentGenerator.php:3460
+#: ../lib/DocumentGenerator.php:3607 ../PaymentToHaveList.php:93
 #: ../ToHaveAdd.php:147 ../ChainCommandList.php:187 ../FlowAddEdit.php:232
 #: ../EstimateList.php:127 ../InvoiceList.php:154
 #: ../InvoiceCommandList.php:273 ../FlowList.php:96 ../CommandList.php:273
@@ -3493,15 +3493,15 @@ msgstr ""
 #: ../lib/Objects/Alert.const.php:292 ../lib/DocumentGenerator.php:951
 #: ../lib/DocumentGenerator.php:1009 ../lib/DocumentGenerator.php:1494
 #: ../lib/DocumentGenerator.php:1538 ../lib/DocumentGenerator.php:2040
-#: ../lib/DocumentGenerator.php:2093 ../lib/DocumentGenerator.php:3408
-#: ../lib/DocumentGenerator.php:3535 ../PrestationInvoiceAddEdit.php:153
+#: ../lib/DocumentGenerator.php:2093 ../lib/DocumentGenerator.php:3481
+#: ../lib/DocumentGenerator.php:3608 ../PrestationInvoiceAddEdit.php:153
 #: ../ProductCommandSupplier.php:181 ../ProductCommand.php:193
 #: ../CommandList.php:234 void:1
 msgid "Instalment"
 msgstr ""
 
 #: ../lib/Objects/Alert.const.php:293 ../lib/DocumentGenerator.php:2598
-#: ../lib/DocumentGenerator.php:3411 ../lib/DocumentGenerator.php:3536 void:1
+#: ../lib/DocumentGenerator.php:3484 ../lib/DocumentGenerator.php:3609 void:1
 msgid "To pay"
 msgstr ""
 
@@ -3512,7 +3512,7 @@ msgstr ""
 #: ../lib/Objects/_RTWModel.php:2922 ../lib/Objects/_RTWModel.php:2927
 #: ../lib/DocumentGenerator.php:649 ../lib/DocumentGenerator.php:858
 #: ../lib/DocumentGenerator.php:1040 ../lib/DocumentGenerator.php:1165
-#: ../lib/DocumentGenerator.php:3553 ../ProductionTaskValidation.php:129
+#: ../lib/DocumentGenerator.php:3626 ../ProductionTaskValidation.php:129
 #: ../PrestationInvoiceAddEdit.php:156 ../WorkOrderOpeTaskList.php:147
 #: ../ProductCommandSupplier.php:184 ../ActionAddEdit.php:168
 #: ../ActionAddEdit.php:241 ../ToHaveAdd.php:151 ../FlightEdit.php:306
@@ -3983,7 +3983,7 @@ msgid "multiple"
 msgstr ""
 
 #: ../lib/Objects/RTWProduct.php:76 ../lib/Objects/_RTWProduct.php:302
-#: ../lib/Objects/_RTWProduct.php:303 void:1
+#: ../lib/Objects/_RTWProduct.php:303
 msgid "Size"
 msgstr ""
 
@@ -4422,7 +4422,7 @@ msgstr ""
 msgid "Add/Update qualification"
 msgstr ""
 
-#: ../lib/Objects/_TVA.php:198 ../lib/DocumentGenerator.php:3382 void:1
+#: ../lib/Objects/_TVA.php:198 ../lib/DocumentGenerator.php:3455 void:1
 msgid "Delivery expenses"
 msgstr ""
 
@@ -4444,27 +4444,27 @@ msgid "Models"
 msgstr ""
 
 #: ../lib/Objects/_RTWModel.php:2491 ../lib/Objects/_RTWModel.php:2492
-#: ../lib/DocumentGenerator.php:3771 ../lib/DocumentGenerator.php:3894
+#: ../lib/DocumentGenerator.php:3844 ../lib/DocumentGenerator.php:3967
 msgid "Shape"
 msgstr ""
 
 #: ../lib/Objects/_RTWModel.php:2527 ../lib/Objects/_RTWModel.php:2528
-#: ../lib/DocumentGenerator.php:3755
+#: ../lib/DocumentGenerator.php:3828
 msgid "Manufacturer"
 msgstr ""
 
 #: ../lib/Objects/_RTWModel.php:2536 ../lib/Objects/_RTWModel.php:2537
-#: ../lib/DocumentGenerator.php:3769
+#: ../lib/DocumentGenerator.php:3842
 msgid "Construction type"
 msgstr ""
 
 #: ../lib/Objects/_RTWModel.php:2545 ../lib/Objects/_RTWModel.php:2546
-#: ../lib/DocumentGenerator.php:3770
+#: ../lib/DocumentGenerator.php:3843
 msgid "Construction code"
 msgstr ""
 
 #: ../lib/Objects/_RTWModel.php:2554 ../lib/Objects/_RTWModel.php:2555
-#: ../lib/DocumentGenerator.php:3772
+#: ../lib/DocumentGenerator.php:3845
 msgid "Label (griffe)"
 msgstr ""
 
@@ -4549,7 +4549,7 @@ msgid "Color image"
 msgstr ""
 
 #: ../lib/Objects/_RTWModel.php:2912 ../lib/Objects/_RTWModel.php:2913
-#: ../lib/DocumentGenerator.php:3795 ../lib/DocumentGenerator.php:3912
+#: ../lib/DocumentGenerator.php:3868 ../lib/DocumentGenerator.php:3985
 msgid "Available sizes"
 msgstr ""
 
@@ -4699,10 +4699,9 @@ msgstr ""
 msgid "Return of goods"
 msgstr ""
 
-#: ../lib/Objects/ToHave.php:107 ../lib/DocumentGenerator.php:3335
-#: ../PrestationInvoiceAddEdit.php:181 ../ProductCommandSupplier.php:218
-#: ../ProductCommand.php:236 ../InvoiceDetail.php:92
-#: ../ProductHandingByCategoryList.php:89 void:1
+#: ../lib/Objects/ToHave.php:107 ../PrestationInvoiceAddEdit.php:181
+#: ../ProductCommandSupplier.php:218 ../ProductCommand.php:236
+#: ../InvoiceDetail.php:92 ../ProductHandingByCategoryList.php:89
 msgid "Discount"
 msgstr ""
 
@@ -5560,7 +5559,7 @@ msgid "of collection"
 msgstr ""
 
 #: ../lib/AlertSender.php:469 ../lib/DocumentGenerator.php:3319
-#: ../lib/DocumentGenerator.php:3471
+#: ../lib/DocumentGenerator.php:3544
 #, php-format
 msgid "between %s and %s"
 msgstr ""
@@ -5818,6 +5817,7 @@ msgstr ""
 
 #: ../lib/DocumentGenerator.php:616 ../lib/DocumentGenerator.php:835
 #: ../lib/DocumentGenerator.php:2204 ../lib/DocumentGenerator.php:3109
+#: ../lib/DocumentGenerator.php:3332
 msgid "Description of goods"
 msgstr ""
 
@@ -5844,6 +5844,7 @@ msgstr ""
 #: ../lib/DocumentGenerator.php:837 ../lib/DocumentGenerator.php:1146
 #: ../lib/DocumentGenerator.php:1564 ../lib/DocumentGenerator.php:1663
 #: ../lib/DocumentGenerator.php:1931 ../lib/DocumentGenerator.php:2206
+#: ../lib/DocumentGenerator.php:3334
 msgid "Unit Price net of tax"
 msgstr ""
 
@@ -6122,7 +6123,7 @@ msgstr ""
 msgid "Date and operator"
 msgstr ""
 
-#: ../lib/DocumentGenerator.php:2924 ../lib/DocumentGenerator.php:3800
+#: ../lib/DocumentGenerator.php:2924 ../lib/DocumentGenerator.php:3873
 msgid "Observations"
 msgstr ""
 
@@ -6181,48 +6182,48 @@ msgstr ""
 msgid "Raw total weight (Kg)"
 msgstr ""
 
-#: ../lib/DocumentGenerator.php:3301 void:1
+#: ../lib/DocumentGenerator.php:3301
 msgid "From (address)"
 msgstr ""
 
-#: ../lib/DocumentGenerator.php:3302 void:1
+#: ../lib/DocumentGenerator.php:3302
 msgid "To"
 msgstr ""
 
-#: ../lib/DocumentGenerator.php:3334 ../InvoiceAddEdit.php:348 void:1
-msgid "Basis excl. VAT"
+#: ../lib/DocumentGenerator.php:3335 ../InvoiceAddEdit.php:380
+msgid "Disc."
 msgstr ""
 
-#: ../lib/DocumentGenerator.php:3474
+#: ../lib/DocumentGenerator.php:3547
 msgid "Wished collection date"
 msgstr ""
 
-#: ../lib/DocumentGenerator.php:3477
+#: ../lib/DocumentGenerator.php:3550
 msgid "Wished delivery date"
 msgstr ""
 
-#: ../lib/DocumentGenerator.php:3494
+#: ../lib/DocumentGenerator.php:3567
 msgid "Unit weight"
 msgstr ""
 
-#: ../lib/DocumentGenerator.php:3576 ../lib/DocumentGenerator.php:3597
+#: ../lib/DocumentGenerator.php:3649 ../lib/DocumentGenerator.php:3670
 msgid "Estimate receipt"
 msgstr ""
 
-#: ../lib/DocumentGenerator.php:3598 ../EstimateList.php:72
+#: ../lib/DocumentGenerator.php:3671 ../EstimateList.php:72
 #: ../EstimateList.php:120
 msgid "Estimate number"
 msgstr ""
 
-#: ../lib/DocumentGenerator.php:3734
+#: ../lib/DocumentGenerator.php:3807
 msgid "Worksheet"
 msgstr ""
 
-#: ../lib/DocumentGenerator.php:3874
+#: ../lib/DocumentGenerator.php:3947
 msgid "Lookbook"
 msgstr ""
 
-#: ../lib/DocumentGenerator.php:3897
+#: ../lib/DocumentGenerator.php:3970
 msgid "Heel Height"
 msgstr ""
 
@@ -8190,12 +8191,12 @@ msgstr ""
 msgid "This order is not billable."
 msgstr ""
 
-#: ../InvoiceAddEdit.php:375
-msgid "Offer on sale "
+#: ../InvoiceAddEdit.php:348
+msgid "Basis excl. VAT"
 msgstr ""
 
-#: ../InvoiceAddEdit.php:380
-msgid "Disc."
+#: ../InvoiceAddEdit.php:375
+msgid "Offer on sale "
 msgstr ""
 
 #: ../InvoiceAddEdit.php:386 ../InvoiceDetail.php:99
@@ -9379,7 +9380,7 @@ msgstr ""
 msgid "Basis excl. VAT "
 msgstr ""
 
-#: ../ProductCommand.php:231 ../CommandList.php:289 void:1
+#: ../ProductCommand.php:231 ../CommandList.php:289
 msgid "Qty pack."
 msgstr ""
 
@@ -12159,38 +12160,6 @@ msgstr ""
 
 #: void:1
 msgid "Continue"
-msgstr ""
-
-#: void:1
-msgid "ORDER"
-msgstr ""
-
-#: void:1
-msgid "Sir, Madam,"
-msgstr ""
-
-#: void:1
-msgid "we are pleased to place the following product order"
-msgstr ""
-
-#: void:1
-msgid "Total base unit"
-msgstr ""
-
-#: void:1
-msgid "Thank you for choosing our company."
-msgstr ""
-
-#: void:1
-msgid "The sales department"
-msgstr ""
-
-#: void:1
-msgid "Let us know if we can be of further assistance."
-msgstr ""
-
-#: void:1
-msgid "The supplying department"
 msgstr ""
 
 #: void:1

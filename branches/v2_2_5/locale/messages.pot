@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Onlogistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-15 14:52+0200\n"
+"POT-Creation-Date: 2008-07-16 18:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Ateor dev team <dev@ateor.com>\n"
 "Language-Team: Ateor dev team <dev@ateor.com>\n"
@@ -117,7 +117,7 @@ msgstr ""
 #: ../lib/Objects/CommandExpeditionDetail.php:560
 #: ../lib/Objects/InvoicePayment.php:273
 #: ../lib/Objects/AnnualTurnoverDiscount.php:196
-#: ../lib/Objects/I18nString.php:250
+#: ../lib/Objects/I18nString.php:307
 #: ../lib/Objects/_PrestationCommandItem.php:231
 #: ../lib/Objects/_Location.php:493 ../lib/Objects/InvoicesList.php:237
 #: ../lib/Objects/_ProductSubstitution.php:219
@@ -732,8 +732,8 @@ msgstr ""
 #: ../lib/Custom/AccountingTypeAddEdit.php:74
 #: ../lib/Custom/GenericActorAddEdit.php:141
 #: ../lib/Custom/FlowCategoryAddEdit.php:51 ../lib/Objects/Operation.php:666
-#: ../lib/Objects/Operation.php:667 ../lib/Objects/_FlowCategory.php:426
-#: ../lib/Objects/_FlowCategory.php:427 ../lib/Objects/ProductKind.php:311
+#: ../lib/Objects/Operation.php:667 ../lib/Objects/_FlowCategory.php:434
+#: ../lib/Objects/_FlowCategory.php:435 ../lib/Objects/ProductKind.php:311
 #: ../lib/Objects/ProductKind.php:312 ../lib/Objects/_LicenceType.php:216
 #: ../lib/Objects/_LicenceType.php:217 ../lib/Objects/_Prestation.php:1049
 #: ../lib/Objects/_Prestation.php:1050 ../lib/Objects/_FlowTypeItem.php:448
@@ -2206,16 +2206,16 @@ msgstr ""
 msgid "Tasks"
 msgstr ""
 
-#: ../lib/Objects/_FlowCategory.php:311
+#: ../lib/Objects/_FlowCategory.php:319
 msgid "Categories of expenses or receipts"
 msgstr ""
 
-#: ../lib/Objects/_FlowCategory.php:435 ../lib/Objects/_FlowCategory.php:436
+#: ../lib/Objects/_FlowCategory.php:443 ../lib/Objects/_FlowCategory.php:444
 #: ../ComponentAddEdit.php:205 void:1
 msgid "Parent"
 msgstr ""
 
-#: ../lib/Objects/_FlowCategory.php:444 ../lib/Objects/_FlowCategory.php:445
+#: ../lib/Objects/_FlowCategory.php:452 ../lib/Objects/_FlowCategory.php:453
 #: void:1
 msgid "Display order"
 msgstr ""
@@ -2321,7 +2321,7 @@ msgstr ""
 msgid "helicopter rental"
 msgstr ""
 
-#: ../lib/Objects/_Chain.php:304 ../lib/Objects/_RTWMaterial.php:243
+#: ../lib/Objects/_Chain.php:304 ../lib/Objects/_RTWMaterial.php:270
 msgid "Materials"
 msgstr ""
 
@@ -2733,7 +2733,8 @@ msgid "Heel reference"
 msgstr ""
 
 #: ../lib/Objects/RTWModel.php:96 ../lib/Objects/RTWModel.php:175
-#: ../lib/Objects/_RTWModel.php:2591 ../lib/Objects/_RTWModel.php:2592
+#: ../lib/Objects/_RTWMaterial.php:153 ../lib/Objects/_RTWModel.php:2591
+#: ../lib/Objects/_RTWModel.php:2592
 msgid "Sole"
 msgstr ""
 
@@ -2806,7 +2807,7 @@ msgstr ""
 msgid "Selvedge"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:110 ../lib/Objects/_RTWMaterial.php:126
+#: ../lib/Objects/RTWModel.php:110 ../lib/Objects/_RTWMaterial.php:152
 #: ../lib/Objects/_RTWModel.php:2875 ../lib/Objects/_RTWModel.php:2876
 msgid "Bamboo"
 msgstr ""
@@ -2867,39 +2868,39 @@ msgstr ""
 msgid "Distant emergency"
 msgstr ""
 
-#: ../lib/Objects/_RTWMaterial.php:121
+#: ../lib/Objects/_RTWMaterial.php:147
 msgid "Raw material"
 msgstr ""
 
-#: ../lib/Objects/_RTWMaterial.php:122
+#: ../lib/Objects/_RTWMaterial.php:148
 msgid "Accessory"
 msgstr ""
 
-#: ../lib/Objects/_RTWMaterial.php:123 void:1
+#: ../lib/Objects/_RTWMaterial.php:149 void:1
 msgid "Packaging"
 msgstr ""
 
-#: ../lib/Objects/_RTWMaterial.php:124
+#: ../lib/Objects/_RTWMaterial.php:150
 msgid "Thread"
 msgstr ""
 
-#: ../lib/Objects/_RTWMaterial.php:125
+#: ../lib/Objects/_RTWMaterial.php:151
 msgid "Heel"
 msgstr ""
 
-#: ../lib/Objects/_RTWMaterial.php:449 ../lib/Objects/_RTWMaterial.php:450
+#: ../lib/Objects/_RTWMaterial.php:482 ../lib/Objects/_RTWMaterial.php:483
 msgid "Commercial designation"
 msgstr ""
 
-#: ../lib/Objects/_RTWMaterial.php:458 ../lib/Objects/_RTWMaterial.php:459
+#: ../lib/Objects/_RTWMaterial.php:491 ../lib/Objects/_RTWMaterial.php:492
 msgid "MaterialType"
 msgstr ""
 
-#: ../lib/Objects/_RTWMaterial.php:467 ../lib/Objects/_RTWMaterial.php:468
+#: ../lib/Objects/_RTWMaterial.php:500 ../lib/Objects/_RTWMaterial.php:501
 msgid "Color"
 msgstr ""
 
-#: ../lib/Objects/_RTWMaterial.php:476 ../lib/Objects/_RTWMaterial.php:477
+#: ../lib/Objects/_RTWMaterial.php:509 ../lib/Objects/_RTWMaterial.php:510
 msgid "origin"
 msgstr ""
 

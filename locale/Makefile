@@ -10,7 +10,7 @@ MSGUNIQ=msguniq
 DOMAIN=messages
 GENSCRIPT=xgettext.sh
 FWDIR?=../../../pwak/trunk/
-LANGS=en_GB fr_FR nl_NL de_DE tr_TR pl_PL
+LANGS=en_GB fr_FR nl_NL de_DE tr_TR pl_PL es_ES
 POTFILES=messages.pot
 
 # force l'execution des cibles listées

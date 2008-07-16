@@ -3,6 +3,8 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
+ * IMPORTANT: This is a generated file, please do not edit.
+ *
  * This file is part of Onlogistics, a web based ERP and supply chain 
  * management application. 
  *
@@ -34,6 +36,10 @@
  * @filesource
  */
 
+/**
+ * _FlowCategory class
+ *
+ */
 class _FlowCategory extends Object {
     
     // Constructeur {{{
@@ -136,7 +142,7 @@ class _FlowCategory extends Object {
     }
 
     // }}}
-    // DisplayOrder int property + getter/setter {{{
+    // DisplayOrder string property + getter/setter {{{
 
     /**
      * DisplayOrder int property
@@ -144,7 +150,7 @@ class _FlowCategory extends Object {
      * @access private
      * @var integer
      */
-    private $_DisplayOrder = null;
+    private $_DisplayOrder = 0;
 
     /**
      * _FlowCategory::getDisplayOrder
@@ -164,7 +170,9 @@ class _FlowCategory extends Object {
      * @return void
      */
     public function setDisplayOrder($value) {
-        $this->_DisplayOrder = ($value===null || $value === '')?null:(int)$value;
+        if ($value !== null) {
+            $this->_DisplayOrder = (int)$value;
+        }
     }
 
     // }}}

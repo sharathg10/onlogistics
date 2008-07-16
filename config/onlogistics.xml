@@ -1532,7 +1532,7 @@
         <property type="foreignkey" class="FlowCategory" name="Parent"
             navigable="1" usedby="grid,addedit,searchform" label="Parent" />
         <property type="int" name="DisplayOrder" usedby="grid,addedit"
-            label="Display order"/>
+            label="Display order" default="0"/>
     </entity>
 
     <!-- entity FlowItem -->

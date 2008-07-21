@@ -35,8 +35,6 @@ BEGIN;
 TRUNCATE TABLE IdHashTable;
 ####################################
 
-ALTER TABLE I18nString ADD _StringValue_es_ES TEXT DEFAULT NULL;
-
 ####################################
 # Ne pas enlever
 COMMIT;

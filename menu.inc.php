@@ -245,6 +245,12 @@ $menu_metadata = array(
                 'description' => _('VAT management'),
                 'restrict_to' => array(UserAccount::PROFILE_ROOT)
             ),
+            array(
+                'title'       => _('Incoterms'),
+                'link'        => 'dispatcher.php?entity=Incoterm',
+                'description' => _('Incoterms'),
+                'restrict_to' => array(UserAccount::PROFILE_ROOT)
+            ),
         )
     ),
     // }}}

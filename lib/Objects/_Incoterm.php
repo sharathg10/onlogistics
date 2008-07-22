@@ -3,6 +3,8 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
+ * IMPORTANT: This is a generated file, please do not edit.
+ *
  * This file is part of Onlogistics, a web based ERP and supply chain 
  * management application. 
  *
@@ -34,6 +36,10 @@
  * @filesource
  */
 
+/**
+ * _Incoterm class
+ *
+ */
 class _Incoterm extends Object {
     // class constants {{{
 
@@ -275,7 +281,7 @@ class _Incoterm extends Object {
      * @return string
      */
     public static function getObjectLabel() {
-        return _('None');
+        return _('Incoterms');
     }
 
     // }}}
@@ -373,7 +379,7 @@ class _Incoterm extends Object {
      * @see Object.php
      */
     public static function getFeatures() {
-        return array();
+        return array('grid', 'add', 'edit', 'del');
     }
 
     // }}}
@@ -389,7 +395,43 @@ class _Incoterm extends Object {
      * @see Object.php
      */
     public static function getMapping() {
-        $return = array();
+        $return = array(
+            'Code'=>array(
+                'label'        => _('Code'),
+                'shortlabel'   => _('Code'),
+                'usedby'       => array('grid', 'addedit'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => ''
+            ),
+            'Label'=>array(
+                'label'        => _('Label'),
+                'shortlabel'   => _('Label'),
+                'usedby'       => array('grid', 'addedit'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => ''
+            ),
+            'Description'=>array(
+                'label'        => _('Description'),
+                'shortlabel'   => _('Description'),
+                'usedby'       => array('grid', 'addedit'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => ''
+            ),
+            'TransportType'=>array(
+                'label'        => _('Transport type'),
+                'shortlabel'   => _('Transport type'),
+                'usedby'       => array('addedit'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => ''
+            ));
         return $return;
     }
 

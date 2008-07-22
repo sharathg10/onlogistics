@@ -1714,11 +1714,16 @@
 	</entity>
 
     <!-- entity Incoterm -->
-    <entity name="Incoterm" tablename="Incoterm">
-        <property type="string" length="5" name="Code" />
-        <property type="string" name="Label" />
-        <property type="text" name="Description" i18n="1" />
-        <property type="const" name="TransportType" default="0">
+    <entity name="Incoterm" tablename="Incoterm" label="Incoterms"
+        features="grid,add,edit,del">
+        <property type="string" length="5" name="Code" label="Code" 
+            usedby="grid,addedit"/>
+        <property type="string" name="Label" label="Label" 
+            usedby="grid,addedit"/>
+        <property type="text" name="Description" label="Description" i18n="1" 
+            usedby="grid,addedit"/>
+        <property type="const" name="TransportType" label="Transport type" 
+            default="0" usedby="addedit">
             <const name="INCOTERM_ALL" label="All" value="0" />
             <const name="INCOTERM_MARITIME" label="SEA" value="1" />
         </property>

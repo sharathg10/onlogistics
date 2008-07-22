@@ -3,6 +3,8 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
+ * IMPORTANT: This is a generated file, please do not edit.
+ *
  * This file is part of Onlogistics, a web based ERP and supply chain 
  * management application. 
  *
@@ -34,6 +36,11 @@
  * @filesource
  */
 
+/**
+ * Incoterm class
+ *
+ * Class containing addon methods.
+ */
 class Incoterm extends _Incoterm {
     // Constructeur {{{
 

@@ -42,6 +42,12 @@ $menu_metadata = array(
         'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW),
         'children'    => array(
             array(
+                'title'       => _('Profiles table'),
+                'link'        => 'ProfileTable.php',
+                'description' => _('Profiles table'),
+                'restrict_to' => array(UserAccount::PROFILE_ROOT)
+            ),
+            array(
                 'title'       => _('Operations tolerances'),
                 'link'        => 'OperationTolerance.php',
                 'description' => _('Operation tolerances management'),

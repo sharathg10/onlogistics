@@ -233,7 +233,7 @@ class RTWModelAddEdit extends GenericAddEdit {
      * @return void
      */
     protected function getFilterForSole() {
-        return array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL);
+        return array('MaterialType' => RTWMaterial::TYPE_SOLE);
     }
 
     // }}}
@@ -377,7 +377,7 @@ class RTWModelAddEdit extends GenericAddEdit {
      * @return void
      */
     protected function getFilterForBamboo() {
-        return array('MaterialType' => RTWMaterial::TYPE_HEEL);
+        return array('MaterialType' => RTWMaterial::TYPE_BAMBOO);
     }
 
     // }}}

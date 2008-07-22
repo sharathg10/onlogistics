@@ -238,6 +238,9 @@ INSERT INTO `DocumentModel` VALUES (@id+1,0,'RECEPISSE DE COMMANDE','',1,'Comman
 
 ALTER TABLE I18nString ADD _StringValue_es_ES TEXT DEFAULT NULL;
 
+set @id=(select IFNULL(max(_Id),0) from Incoterm);
+insert into Incoterm values (@id+1, NULL, "FD", "Free Domicile", 0, 1);
+
 ####################################
 # Ne pas enlever
 COMMIT;

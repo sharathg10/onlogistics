@@ -64,10 +64,10 @@ if (isset($_POST['ok'])) {
             'NomenclatureDuplicate.php?nomID=' . $object->getId());
         exit();
     }
-
     // copie des Component
     $componentsCol = $object->getComponentCollection(array('Level'=>0));
     foreach($componentsCol as $component) {
+        $component->setProduct($_POST['Nomenclature_Product_ID']);
         $component->duplicate($newNom->getId(), $retURL);
     }
     

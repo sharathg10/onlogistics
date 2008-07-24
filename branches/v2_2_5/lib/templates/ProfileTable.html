@@ -1,0 +1,32 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="4" class="form">
+{foreach name=loop1 from=$menu item=item}
+  <thead>
+  <tr>
+      <td colspan ="2">{$item.title}</td>
+  </tr>
+  </thead>
+  <tbody>
+{foreach name=loop2 from=$item.children item=subitem}
+  <tr>
+      <td>{$subitem.title}</td>
+      <td>
+{foreach name=loop3 from=$subitem.restrict_to item=profile}
+{$profile|getprofile}{if not $smarty.foreach.loop3.last}, {/if}
+{/foreach}
+      </td>
+  </tr>
+{foreach name=loop4 from=$subitem.children item=subsubitem}
+  <tr>
+      <td>&nbsp;&nbsp;&nbsp;&nbsp;+ {$subsubitem.title}</td>
+      <td>
+{foreach name=loop5 from=$subsubitem.restrict_to item=subprofile}
+{$subprofile|getprofile}{if not $smarty.foreach.loop5.last}, {/if}
+{/foreach}
+      </td>
+  </tr>
+{/foreach}
+
+{/foreach}
+  </tbody>
+{/foreach}
+</table>

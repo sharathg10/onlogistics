@@ -3842,7 +3842,6 @@ class WorksheetGenerator extends DocumentGenerator {
             'ConstructionType' => _('Construction type'),
             'ConstructionCode' => _('Construction code'),
             'Shape'            => _('Shape'),
-            'Label'            => _('Label (griffe)')
         );
         foreach ($items as $k => $v) {
             $getter = 'get' . $k;
@@ -3861,6 +3860,12 @@ class WorksheetGenerator extends DocumentGenerator {
             $value  = ($mat instanceof RTWMaterial) ? $mat->toString() : _('N/A');
             $qty    = ($mat instanceof RTWMaterial && method_exists($this->model, $qtyGetter)) ? $this->model->$qtyGetter() : '';
             $this->pdf->tableHeader(array($label => 35, $value => 135, (string)$qty => 20), 0);
+        }
+        if ($this->model->getLabel() instanceof RTWLabel) {
+            $this->pdf->tableHeader(array(
+                _('Label (griffe)') => 35, 
+                $this->model->getLabel()->toString() => 155),
+            0);
         }
         $sizes = $this->model->getSizeCollection();
         if (count($sizes) > 0) {

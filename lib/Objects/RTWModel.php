@@ -89,30 +89,34 @@ class RTWModel extends _RTWModel {
      * @access public
      * @return boolean
      */
-    public function getMaterialProperties($onlyForNomenclature=false) {
+    public static function getMaterialProperties($onlyForNomenclature=false) {
 
         $return = array(
-            'HeelReference' => _('Heel reference'),
-            'Sole'          => _('Sole'),
-            'Box'           => _('Box'),
-            'HandBag'       => _('Hand bag'),
             'Material1'     => _('Material 1'),
             'Material2'     => _('Material 2'),
             'Accessory1'    => _('Accessory 1'),
             'Accessory2'    => _('Accessory 2'),
+        );
+        if (!$onlyForNomenclature) {
+            $return += array(
+                'Thread1' => _('Thread 1'),
+                'Thread2' => _('Thread 2')
+            );
+        }
+        $return += array(
+            'Selvedge'      => _('Selvedge'),
             'Lining'        => _('Lining'),
             'Insole'        => _('Insole'),
             'UnderSole'     => _('Under-sole'),
             'MediaPlanta'   => _('Media planta'),
             'Lagrima'       => _('Lagrima'),
+            'Sole'          => _('Sole'),
+            'HeelReference' => _('Heel reference'),
             'HeelCovering'  => _('Heel covering'),
-            'Selvedge'      => _('Selvedge'),
             'Bamboo'        => _('Bamboo'),
+            'Box'           => _('Box'),
+            'HandBag'       => _('Hand bag'),
         );
-        if (!$onlyForNomenclature) {
-            $return['Thread1'] = _('Thread 1');
-            $return['Thread2'] = _('Thread 2');
-        }
         return $return;
     }
     // }}}

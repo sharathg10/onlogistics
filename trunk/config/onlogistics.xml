@@ -2879,8 +2879,8 @@
     <!-- Entity RTWMaterial -->
     <entity name="RTWMaterial" extends="Product" tablename="Product"
         features="add,edit,del,grid,searchform" label="Materials">
-        <property type="string" name="CommercialName"
-            label="Commercial designation"
+        <property type="string" name="ScientificName"
+            label="Scientific terminology"
             usedby="addedit,grid,searchform" />
         <!-- nomme MaterialType car Product::Type existe deja -->
         <property type="const" name="MaterialType" default="0"

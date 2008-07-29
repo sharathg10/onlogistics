@@ -155,7 +155,7 @@ class SupplierPricesGrid extends GenericGrid
         );
         if (in_array('readytowear', Preferences::get('TradeContext', array()))) {
             $this->grid->newColumn('FieldMapper', _('Commercial designation'),
-                array('Macro' => '%ActorProduct.Product.CommercialName%'));
+                array('Macro' => '%ActorProduct.Product.CommercialNameAndColor%'));
         }
         $this->grid->newColumn('FieldMapper', _('Supplier'),
             array('Macro' => '%ActorProduct.Actor.Name%')

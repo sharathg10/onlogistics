@@ -142,14 +142,14 @@ class ProductPriceAddEdit extends GenericAddEdit {
      */
     public function additionalFormContent() {
         if (isset($_REQUEST['supplier'])) {
-            $title = _('Supplier prices for product "%s"');
+            $title = _('Supplier prices for product %s / %s');
             $header = _('Supplier prices');
         } else {
-            $title = _('Selling prices for product "%s"');
+            $title = _('Selling prices for product %s / %s');
             $this->formTitle = _('Selling prices');
             $header = '';
         }
-        $this->title = sprintf($title, $this->object->getName());
+        $this->title = sprintf($title, $this->object->getBaseReference(), $this->object->getName());
         return  "<tr><th colspan=\"4\">$header</th><tr>\n"
              . "<tr><td colspan=\"4\"><div align=\"right\">"
              . "<input type=\"button\" id=\"addPBC\" class=\"button\" "

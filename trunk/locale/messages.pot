@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Onlogistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-22 16:29+0200\n"
+"POT-Creation-Date: 2008-07-29 15:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Ateor dev team <dev@ateor.com>\n"
 "Language-Team: Ateor dev team <dev@ateor.com>\n"
@@ -1128,6 +1128,20 @@ msgstr ""
 msgid "Images must not exceed 1 megaoctet"
 msgstr ""
 
+#: ../lib/Custom/RTWModelAddEdit.php:392 ../lib/Objects/_RTWModel.php:2894
+#: ../lib/Objects/_RTWModel.php:2895
+msgid "Black and white image"
+msgstr ""
+
+#: ../lib/Custom/RTWModelAddEdit.php:397 ../lib/Custom/RTWModelAddEdit.php:417
+msgid "Show/hide current image"
+msgstr ""
+
+#: ../lib/Custom/RTWModelAddEdit.php:412 ../lib/Objects/_RTWModel.php:2903
+#: ../lib/Objects/_RTWModel.php:2904
+msgid "Color image"
+msgstr ""
+
 #: ../lib/Custom/FlowTypeGrid.php:50
 msgid "Copy model"
 msgstr ""
@@ -1168,6 +1182,7 @@ msgstr ""
 #: ../lib/Custom/ActorProductGrid.php:56 ../lib/Custom/ActorProductGrid.php:65
 #: ../lib/Custom/PrestationCostGrid.php:107
 #: ../lib/Custom/PrestationCostGrid.php:111
+#: ../lib/Custom/SellingPricesGrid.php:185
 #: ../lib/Custom/RTWMaterialGrid.php:49 ../lib/Custom/RTWMaterialGrid.php:50
 #: ../lib/Objects/_Chain.php:1108 ../lib/Objects/_Chain.php:1109
 #: ../lib/Objects/Alert.const.php:91 ../lib/Objects/Alert.const.php:101
@@ -1206,15 +1221,16 @@ msgid "Reference"
 msgstr ""
 
 #: ../lib/Custom/ActorProductGrid.php:59 ../lib/Custom/ActorProductGrid.php:66
-#: ../lib/Objects/_Chain.php:1126 ../lib/Objects/_Chain.php:1127
-#: ../lib/Objects/RTWElement.php:256 ../lib/Objects/RTWElement.php:257
-#: ../StockStorageSiteList.php:72 ../AffectationList.php:48
-#: ../AffectationList.php:72 ../SaisonalityPromotionProductList.php:68
-#: ../ActivatedMovementList.php:90 ../ActivatedMovementList.php:189
-#: ../DocumentModelPropertyAddEdit.php:273 ../ProductByLocationList.php:77
-#: ../InvoiceAddEdit.php:347 ../SaisonalityAdd.php:240
-#: ../TransportChainList.php:73 ../ProductHandingByCategoryAddEditE3.php:184
-#: ../NomenclatureAddEdit.php:80 ../StockProductRealandVirtualList.php:54
+#: ../lib/Custom/SellingPricesGrid.php:188 ../lib/Objects/_Chain.php:1126
+#: ../lib/Objects/_Chain.php:1127 ../lib/Objects/RTWElement.php:256
+#: ../lib/Objects/RTWElement.php:257 ../StockStorageSiteList.php:72
+#: ../AffectationList.php:48 ../AffectationList.php:72
+#: ../SaisonalityPromotionProductList.php:68 ../ActivatedMovementList.php:90
+#: ../ActivatedMovementList.php:189 ../DocumentModelPropertyAddEdit.php:273
+#: ../ProductByLocationList.php:77 ../InvoiceAddEdit.php:347
+#: ../SaisonalityAdd.php:240 ../TransportChainList.php:73
+#: ../ProductHandingByCategoryAddEditE3.php:184 ../NomenclatureAddEdit.php:80
+#: ../StockProductRealandVirtualList.php:54
 #: ../StockProductRealandVirtualList.php:102
 #: ../NomenclatureConcreteProductList.php:75 ../BoardByProduct.php:123
 #: ../LocationExecutedMovementList.php:87
@@ -1564,14 +1580,16 @@ msgid ""
 msgstr ""
 
 #: ../lib/Custom/RTWMaterialAddEdit.php:64
-msgid "Scientific terminology"
+#: ../lib/Custom/SupplierPricesGrid.php:157
+#: ../lib/Custom/RTWMaterialGrid.php:59 ../lib/Custom/RTWMaterialGrid.php:60
+msgid "Commercial designation"
 msgstr ""
 
-#: ../lib/Custom/RTWMaterialAddEdit.php:98
+#: ../lib/Custom/RTWMaterialAddEdit.php:99
 #: ../lib/Custom/ProductPriceAddEdit.php:74
 #: ../lib/Custom/ProductPriceAddEdit.php:98
 #: ../lib/Custom/SupplierPricesGrid.php:124
-#: ../lib/Custom/SupplierPricesGrid.php:156 ../lib/Objects/Alert.const.php:181
+#: ../lib/Custom/SupplierPricesGrid.php:160 ../lib/Objects/Alert.const.php:181
 #: ../lib/Objects/Alert.const.php:205 ../lib/Objects/Alert.const.php:207
 #: ../lib/Objects/_UserAccount.php:387 ../lib/Objects/Actor.inc.php:42
 #: ../ActivatedChainList.php:75 ../ActivatedMovementList.php:107
@@ -1584,11 +1602,19 @@ msgstr ""
 msgid "Supplier"
 msgstr ""
 
-#: ../lib/Custom/RTWMaterialAddEdit.php:107
+#: ../lib/Custom/RTWMaterialAddEdit.php:108
 #: ../lib/Custom/RTWMaterialGrid.php:54 ../lib/Custom/RTWMaterialGrid.php:55
-#: ../lib/Custom/RTWMaterialGrid.php:65 ../lib/Objects/_RTWColor.php:216
+#: ../lib/Custom/RTWMaterialGrid.php:70 ../lib/Objects/_RTWColor.php:216
 #: ../lib/Objects/_RTWColor.php:217
 msgid "Supplier reference"
+msgstr ""
+
+#: ../lib/Custom/RTWMaterialAddEdit.php:123 ../ActorProductAddEdit.php:171
+msgid "Purchase unit"
+msgstr ""
+
+#: ../lib/Custom/RTWMaterialAddEdit.php:130 ../ActorProductAddEdit.php:173
+msgid "Purchase unit quantity"
 msgstr ""
 
 #: ../lib/Custom/GenericActorGrid.php:47 ../menu.inc.php:199
@@ -1674,21 +1700,21 @@ msgstr ""
 #: ../lib/Custom/RTWModelForLookbookGrid.php:65
 #: ../lib/Custom/SellingPricesGrid.php:157 ../lib/Objects/_RTWModel.php:2482
 #: ../lib/Objects/_RTWModel.php:2483 ../lib/DocumentGenerator.php:3822
-#: ../lib/DocumentGenerator.php:3966 ../SalesmenCommission.php:64
+#: ../lib/DocumentGenerator.php:3971 ../SalesmenCommission.php:64
 msgid "Season"
 msgstr ""
 
 #: ../lib/Custom/RTWModelForLookbookGrid.php:73
 #: ../lib/Custom/RTWModelForLookbookGrid.php:74
 #: ../lib/Objects/_RTWModel.php:2509 ../lib/Objects/_RTWModel.php:2510
-#: ../lib/DocumentGenerator.php:3833 ../lib/DocumentGenerator.php:3996
+#: ../lib/DocumentGenerator.php:3833 ../lib/DocumentGenerator.php:4001
 msgid "Style number"
 msgstr ""
 
 #: ../lib/Custom/RTWModelForLookbookGrid.php:82
 #: ../lib/Custom/RTWModelForLookbookGrid.php:83
 #: ../lib/Custom/SellingPricesGrid.php:166 ../lib/Objects/_RTWModel.php:2500
-#: ../lib/Objects/_RTWModel.php:2501 ../lib/DocumentGenerator.php:3968
+#: ../lib/Objects/_RTWModel.php:2501 ../lib/DocumentGenerator.php:3973
 msgid "Press name"
 msgstr ""
 
@@ -1734,7 +1760,7 @@ msgstr ""
 
 #: ../lib/Custom/ProductPriceAddEdit.php:145
 #, php-format
-msgid "Supplier prices for product \"%s\""
+msgid "Supplier prices for product %s / %s"
 msgstr ""
 
 #: ../lib/Custom/ProductPriceAddEdit.php:146 ../ProductList.php:183
@@ -1744,7 +1770,7 @@ msgstr ""
 
 #: ../lib/Custom/ProductPriceAddEdit.php:148
 #, php-format
-msgid "Selling prices for product \"%s\""
+msgid "Selling prices for product %s / %s"
 msgstr ""
 
 #: ../lib/Custom/ProductPriceAddEdit.php:149
@@ -1847,7 +1873,7 @@ msgstr ""
 #: ../lib/Objects/PriceByCurrency.php:367
 #: ../lib/Objects/PriceByCurrency.php:483
 #: ../lib/Objects/PriceByCurrency.php:484 ../lib/Objects/_CostRange.php:753
-#: ../lib/Objects/_CostRange.php:754 ../lib/DocumentGenerator.php:4001
+#: ../lib/Objects/_CostRange.php:754 ../lib/DocumentGenerator.php:4006
 #: ../JS_Messages.php:319
 msgid "Price"
 msgstr ""
@@ -1855,7 +1881,7 @@ msgstr ""
 #: ../lib/Custom/SellingPricesGrid.php:79
 #: ../lib/Custom/SellingPricesGrid.php:80
 #: ../lib/Objects/PriceByCurrency.php:473
-#: ../lib/Objects/PriceByCurrency.php:474 ../lib/DocumentGenerator.php:4002
+#: ../lib/Objects/PriceByCurrency.php:474 ../lib/DocumentGenerator.php:4007
 #: ../JS_Messages.php:318
 msgid "Recommended price"
 msgstr ""
@@ -1979,7 +2005,7 @@ msgstr ""
 #: ../lib/Objects/DangerousProductType.php:110
 #: ../lib/Objects/Container.php:231 ../lib/Objects/Container.php:286
 #: ../lib/Objects/Container.php:342 ../lib/AlertSender.php:410
-#: ../lib/AlertSender.php:474 ../lib/DocumentGenerator.php:3861
+#: ../lib/AlertSender.php:474 ../lib/DocumentGenerator.php:3860
 #: ../crons/AlertTenDaysSinceLastFly.php:75 ../JS_Messages.php:320
 #: ../InstallmentAddEdit.php:145 ../InstallmentAddEdit.php:146
 #: ../InvoiceAddEdit.php:392 ../WorkOrderList.php:183 ../WorkOrderList.php:186
@@ -2432,7 +2458,7 @@ msgstr ""
 #: ../lib/ApportionmentManager.php:302 ../lib/DocumentGenerator.php:999
 #: ../lib/DocumentGenerator.php:1528 ../lib/DocumentGenerator.php:1705
 #: ../lib/DocumentGenerator.php:1926 ../lib/DocumentGenerator.php:2083
-#: ../lib/DocumentGenerator.php:3817 ../lib/DocumentGenerator.php:3962
+#: ../lib/DocumentGenerator.php:3817 ../lib/DocumentGenerator.php:3967
 #: ../PaymentToHaveList.php:87 ../FlyBoardBook.php:125
 #: ../ActivatedFlightList.php:177 ../ActionList.php:111
 #: ../ChainCommandList.php:175 ../SalesmenCommission.php:97
@@ -2727,102 +2753,102 @@ msgstr ""
 msgid "Price by products associated to the service"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:95 ../lib/Objects/_RTWModel.php:2572
-#: ../lib/Objects/_RTWModel.php:2573
-msgid "Heel reference"
+#: ../lib/Objects/RTWModel.php:95 ../lib/Objects/_RTWModel.php:2648
+#: ../lib/Objects/_RTWModel.php:2649 ../lib/DocumentGenerator.php:4002
+#: ../RTWCatalog.php:118
+msgid "Material 1"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:96 ../lib/Objects/RTWModel.php:175
+#: ../lib/Objects/RTWModel.php:96 ../lib/Objects/_RTWModel.php:2667
+#: ../lib/Objects/_RTWModel.php:2668 ../lib/DocumentGenerator.php:4003
+#: ../RTWCatalog.php:119
+msgid "Material 2"
+msgstr ""
+
+#: ../lib/Objects/RTWModel.php:97 ../lib/Objects/_RTWModel.php:2686
+#: ../lib/Objects/_RTWModel.php:2687 ../lib/DocumentGenerator.php:4004
+#: ../RTWCatalog.php:120
+msgid "Accessory 1"
+msgstr ""
+
+#: ../lib/Objects/RTWModel.php:98 ../lib/Objects/_RTWModel.php:2705
+#: ../lib/Objects/_RTWModel.php:2706 ../lib/DocumentGenerator.php:4005
+#: ../RTWCatalog.php:121
+msgid "Accessory 2"
+msgstr ""
+
+#: ../lib/Objects/RTWModel.php:102 ../lib/Objects/_RTWModel.php:2857
+#: ../lib/Objects/_RTWModel.php:2858
+msgid "Thread 1"
+msgstr ""
+
+#: ../lib/Objects/RTWModel.php:103 ../lib/Objects/_RTWModel.php:2866
+#: ../lib/Objects/_RTWModel.php:2867
+msgid "Thread 2"
+msgstr ""
+
+#: ../lib/Objects/RTWModel.php:107 ../lib/Objects/_RTWModel.php:2838
+#: ../lib/Objects/_RTWModel.php:2839
+msgid "Selvedge"
+msgstr ""
+
+#: ../lib/Objects/RTWModel.php:108 ../lib/Objects/RTWModel.php:177
+#: ../lib/Objects/_RTWModel.php:2724 ../lib/Objects/_RTWModel.php:2725
+msgid "Lining"
+msgstr ""
+
+#: ../lib/Objects/RTWModel.php:109 ../lib/Objects/_RTWModel.php:2743
+#: ../lib/Objects/_RTWModel.php:2744
+msgid "Insole"
+msgstr ""
+
+#: ../lib/Objects/RTWModel.php:110 ../lib/Objects/_RTWModel.php:2762
+#: ../lib/Objects/_RTWModel.php:2763
+msgid "Under-sole"
+msgstr ""
+
+#: ../lib/Objects/RTWModel.php:111 ../lib/Objects/_RTWModel.php:2781
+#: ../lib/Objects/_RTWModel.php:2782
+msgid "Media planta"
+msgstr ""
+
+#: ../lib/Objects/RTWModel.php:112 ../lib/Objects/_RTWModel.php:2800
+#: ../lib/Objects/_RTWModel.php:2801
+msgid "Lagrima"
+msgstr ""
+
+#: ../lib/Objects/RTWModel.php:113 ../lib/Objects/RTWModel.php:179
 #: ../lib/Objects/_RTWMaterial.php:153 ../lib/Objects/_RTWModel.php:2591
 #: ../lib/Objects/_RTWModel.php:2592
 msgid "Sole"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:97 ../lib/Objects/_RTWModel.php:2610
-#: ../lib/Objects/_RTWModel.php:2611
-msgid "Box"
+#: ../lib/Objects/RTWModel.php:114 ../lib/Objects/_RTWModel.php:2572
+#: ../lib/Objects/_RTWModel.php:2573
+msgid "Heel reference"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:98 ../lib/Objects/_RTWModel.php:2629
-#: ../lib/Objects/_RTWModel.php:2630
-msgid "Hand bag"
-msgstr ""
-
-#: ../lib/Objects/RTWModel.php:99 ../lib/Objects/_RTWModel.php:2648
-#: ../lib/Objects/_RTWModel.php:2649 ../lib/DocumentGenerator.php:3997
-#: ../RTWCatalog.php:118
-msgid "Material 1"
-msgstr ""
-
-#: ../lib/Objects/RTWModel.php:100 ../lib/Objects/_RTWModel.php:2667
-#: ../lib/Objects/_RTWModel.php:2668 ../lib/DocumentGenerator.php:3998
-#: ../RTWCatalog.php:119
-msgid "Material 2"
-msgstr ""
-
-#: ../lib/Objects/RTWModel.php:101 ../lib/Objects/_RTWModel.php:2686
-#: ../lib/Objects/_RTWModel.php:2687 ../lib/DocumentGenerator.php:3999
-#: ../RTWCatalog.php:120
-msgid "Accessory 1"
-msgstr ""
-
-#: ../lib/Objects/RTWModel.php:102 ../lib/Objects/_RTWModel.php:2705
-#: ../lib/Objects/_RTWModel.php:2706 ../lib/DocumentGenerator.php:4000
-#: ../RTWCatalog.php:121
-msgid "Accessory 2"
-msgstr ""
-
-#: ../lib/Objects/RTWModel.php:103 ../lib/Objects/RTWModel.php:173
-#: ../lib/Objects/_RTWModel.php:2724 ../lib/Objects/_RTWModel.php:2725
-msgid "Lining"
-msgstr ""
-
-#: ../lib/Objects/RTWModel.php:104 ../lib/Objects/_RTWModel.php:2743
-#: ../lib/Objects/_RTWModel.php:2744
-msgid "Insole"
-msgstr ""
-
-#: ../lib/Objects/RTWModel.php:105 ../lib/Objects/_RTWModel.php:2762
-#: ../lib/Objects/_RTWModel.php:2763
-msgid "Under-sole"
-msgstr ""
-
-#: ../lib/Objects/RTWModel.php:106 ../lib/Objects/_RTWModel.php:2781
-#: ../lib/Objects/_RTWModel.php:2782
-msgid "Media planta"
-msgstr ""
-
-#: ../lib/Objects/RTWModel.php:107 ../lib/Objects/_RTWModel.php:2800
-#: ../lib/Objects/_RTWModel.php:2801
-msgid "Lagrima"
-msgstr ""
-
-#: ../lib/Objects/RTWModel.php:108 ../lib/Objects/RTWModel.php:171
+#: ../lib/Objects/RTWModel.php:115 ../lib/Objects/RTWModel.php:175
 #: ../lib/Objects/_RTWModel.php:2819 ../lib/Objects/_RTWModel.php:2820
 msgid "Heel covering"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:109 ../lib/Objects/_RTWModel.php:2838
-#: ../lib/Objects/_RTWModel.php:2839
-msgid "Selvedge"
-msgstr ""
-
-#: ../lib/Objects/RTWModel.php:110 ../lib/Objects/_RTWMaterial.php:152
+#: ../lib/Objects/RTWModel.php:116 ../lib/Objects/_RTWMaterial.php:152
 #: ../lib/Objects/_RTWModel.php:2875 ../lib/Objects/_RTWModel.php:2876
 msgid "Bamboo"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:113 ../lib/Objects/_RTWModel.php:2857
-#: ../lib/Objects/_RTWModel.php:2858
-msgid "Thread 1"
+#: ../lib/Objects/RTWModel.php:117 ../lib/Objects/_RTWModel.php:2610
+#: ../lib/Objects/_RTWModel.php:2611
+msgid "Box"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:114 ../lib/Objects/_RTWModel.php:2866
-#: ../lib/Objects/_RTWModel.php:2867
-msgid "Thread 2"
+#: ../lib/Objects/RTWModel.php:118 ../lib/Objects/_RTWModel.php:2629
+#: ../lib/Objects/_RTWModel.php:2630
+msgid "Hand bag"
 msgstr ""
 
-#: ../lib/Objects/RTWModel.php:168
+#: ../lib/Objects/RTWModel.php:172
 msgid "Upper"
 msgstr ""
 
@@ -2889,7 +2915,7 @@ msgid "Heel"
 msgstr ""
 
 #: ../lib/Objects/_RTWMaterial.php:482 ../lib/Objects/_RTWMaterial.php:483
-msgid "Commercial designation"
+msgid "Scientific terminology"
 msgstr ""
 
 #: ../lib/Objects/_RTWMaterial.php:491 ../lib/Objects/_RTWMaterial.php:492
@@ -2913,7 +2939,7 @@ msgstr ""
 #: ../lib/Objects/_RTWModel.php:2518 ../lib/Objects/_RTWModel.php:2519
 #: ../lib/DocumentGenerator.php:748 ../lib/DocumentGenerator.php:1144
 #: ../lib/DocumentGenerator.php:2380 ../lib/DocumentGenerator.php:3837
-#: ../lib/DocumentGenerator.php:3969 ../ActivatedChainList.php:127
+#: ../lib/DocumentGenerator.php:3974 ../ActivatedChainList.php:127
 #: ../TransportChainList.php:88 void:1
 msgid "Description"
 msgstr ""
@@ -4464,7 +4490,7 @@ msgid "Models"
 msgstr ""
 
 #: ../lib/Objects/_RTWModel.php:2491 ../lib/Objects/_RTWModel.php:2492
-#: ../lib/DocumentGenerator.php:3844 ../lib/DocumentGenerator.php:3967
+#: ../lib/DocumentGenerator.php:3844 ../lib/DocumentGenerator.php:3972
 msgid "Shape"
 msgstr ""
 
@@ -4484,7 +4510,7 @@ msgid "Construction code"
 msgstr ""
 
 #: ../lib/Objects/_RTWModel.php:2554 ../lib/Objects/_RTWModel.php:2555
-#: ../lib/DocumentGenerator.php:3845
+#: ../lib/DocumentGenerator.php:3866
 msgid "Label (griffe)"
 msgstr ""
 
@@ -4556,20 +4582,12 @@ msgstr ""
 msgid "Bamboo quantity"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2894 ../lib/Objects/_RTWModel.php:2895
-msgid "Black and white image"
-msgstr ""
-
 #: ../lib/Objects/_RTWModel.php:2900 ../lib/Objects/_RTWModel.php:2909
 msgid "Images"
 msgstr ""
 
-#: ../lib/Objects/_RTWModel.php:2903 ../lib/Objects/_RTWModel.php:2904
-msgid "Color image"
-msgstr ""
-
 #: ../lib/Objects/_RTWModel.php:2912 ../lib/Objects/_RTWModel.php:2913
-#: ../lib/DocumentGenerator.php:3868 ../lib/DocumentGenerator.php:3985
+#: ../lib/DocumentGenerator.php:3873 ../lib/DocumentGenerator.php:3990
 msgid "Available sizes"
 msgstr ""
 
@@ -6137,7 +6155,7 @@ msgstr ""
 msgid "Date and operator"
 msgstr ""
 
-#: ../lib/DocumentGenerator.php:2924 ../lib/DocumentGenerator.php:3873
+#: ../lib/DocumentGenerator.php:2924 ../lib/DocumentGenerator.php:3878
 msgid "Observations"
 msgstr ""
 
@@ -6233,11 +6251,11 @@ msgstr ""
 msgid "Worksheet"
 msgstr ""
 
-#: ../lib/DocumentGenerator.php:3947
+#: ../lib/DocumentGenerator.php:3952
 msgid "Lookbook"
 msgstr ""
 
-#: ../lib/DocumentGenerator.php:3970
+#: ../lib/DocumentGenerator.php:3975
 msgid "Heel Height"
 msgstr ""
 
@@ -10585,14 +10603,6 @@ msgstr ""
 #: ../ActorProductAddEdit.php:125
 #, php-format
 msgid "Supplier \"%s\" is already taking precedence for ordering this product."
-msgstr ""
-
-#: ../ActorProductAddEdit.php:171
-msgid "Purchase unit"
-msgstr ""
-
-#: ../ActorProductAddEdit.php:173
-msgid "Purchase unit quantity"
 msgstr ""
 
 #: ../ActorProductAddEdit.php:175

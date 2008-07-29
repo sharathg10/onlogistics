@@ -61,7 +61,7 @@ class RTWMaterialAddEdit extends GenericAddEdit {
         $return = parent::getAddEditMapping();
         $first  = & $return['']; // oui...
         $name   = array('Name' => array(
-            'label'        => _('Scientific terminology'),
+            'label'        => _('Commercial designation'),
             'inplace_edit' => false,
             'required'     => true,
             'add_button'   => false
@@ -85,6 +85,7 @@ class RTWMaterialAddEdit extends GenericAddEdit {
     protected function onBeforeDisplay() {
         $supplier = $this->object->getMainSupplier();
         // fournisseur
+        $this->form->addElement('static');
         $arr = SearchTools::createArrayIDFromCollection(
             'Supplier',
             array('Active'=>1),
@@ -108,16 +109,6 @@ class RTWMaterialAddEdit extends GenericAddEdit {
             'class="textfield"');
         $this->form->addElement($elt);
         $this->formDefaults['Supplier_Reference'] = $this->object->getReferenceByActor($supplier);
-        // prix fournisseur
-        /*
-        $elt = HTML_QuickForm::createElement(
-            'text',
-            'Supplier_Price',
-            _('Supplier price'),
-            'class="textfield"');
-        $this->form->addElement($elt);
-        $this->formDefaults['Supplier_Price'] = $this->object->getUBPrice($supplier);
-        */
         $this->form->setDefaults($this->formDefaults);
     }
 

@@ -612,12 +612,12 @@ class DeliveryOrderGenerator extends CommandDocumentGenerator {
     function _renderContent() {
         //cellule désignation personnalisé dans Command.getDataForBL()
         $columns = array(
-            _('Ordered products') => 24,
-            _('Description of goods') => 103,
-            _('Ordered qty') => 16,
+            _('Ordered products') => 60,
+            _('Description of goods') => 70,
+            _('Ordered qty') => 15,
             _('Selling unit') => 15,
-            _('Delivered Qty') => 16,
-            _('To deliver') => 16);
+            _('Delivered Qty') => 15,
+            _('To deliver') => 15);
         $this->pdf->tableHeader($columns, 1);
         $this->pdf->tableBody($this->data[0], $columns);
         $this->pdf->ln(8);

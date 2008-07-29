@@ -38,6 +38,12 @@ TRUNCATE TABLE IdHashTable;
 set @id=(select IFNULL(max(_Id),0) from Incoterm);
 insert into Incoterm values (@id+1, NULL, "FD", "Free Domicile", 0, 1);
 
+# migration CommercialName / ScientificName
+ALTER TABLE Product ADD _ScientificName VARCHAR(255) DEFAULT NULL AFTER _CommercialName;
+UPDATE Product SET _ScientificName=(SELECT _StringValue_fr_FR FROM I18nString where _Id=_Name) WHERE _ClassName='RTWMaterial';
+UPDATE I18nString i, Product p SET i._StringValue_fr_FR=p._CommercialName WHERE i._Id=p._Name and p._ClassName="RTWMaterial";
+ALTER TABLE Product DROP _CommercialName;
+
 ####################################
 # Ne pas enlever
 COMMIT;

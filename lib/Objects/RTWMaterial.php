@@ -97,7 +97,7 @@ class RTWMaterial extends _RTWMaterial {
      * @return string
      */
     function toStringForCustoms() {
-        $ret = $this->getName();
+        $ret = $this->getScientificName();
         if (($origin = $this->getOrigin()) != '') {
             $ret .= " ($origin)";
         }
@@ -114,7 +114,7 @@ class RTWMaterial extends _RTWMaterial {
      * @return string
      */
     function getCommercialNameAndColor() {
-        $ref = $this->getCommercialName();
+        $ref = $this->getName();
         if ($this->getColor() instanceof RTWColor) {
             $ref .= ' (' . $this->getColor()->getName() . ')';
         }

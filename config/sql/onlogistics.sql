@@ -1559,7 +1559,7 @@ CREATE TABLE FlowCategory (
   _DBId int(11) default 0,
   _Name VARCHAR(255) DEFAULT NULL,
   _Parent INT(11) NOT NULL DEFAULT 0,
-  _DisplayOrder INT(11) DEFAULT NULL,
+  _DisplayOrder INT(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (_Id)
 ) TYPE=InnoDB CHARSET=latin1;
 
@@ -1732,6 +1732,7 @@ CREATE TABLE I18nString (
   _StringValue_nl_NL TEXT DEFAULT NULL,
   _StringValue_tr_TR TEXT DEFAULT NULL,
   _StringValue_pl_PL TEXT DEFAULT NULL,
+  _StringValue_es_ES TEXT DEFAULT NULL,
   PRIMARY KEY (_Id)
 ) TYPE=InnoDB CHARSET=latin1;
 
@@ -2341,7 +2342,7 @@ CREATE TABLE Product (
   _Owner INT(11) NOT NULL DEFAULT 0,
   _Model INT(11) NOT NULL DEFAULT 0,
   _Size INT(11) NOT NULL DEFAULT 0,
-  _CommercialName VARCHAR(255) DEFAULT NULL,
+  _ScientificName VARCHAR(255) DEFAULT NULL,
   _MaterialType INT(3) NOT NULL DEFAULT 0,
   _Color INT(11) NOT NULL DEFAULT 0,
   _Origin VARCHAR(255) DEFAULT NULL,

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Onlogistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-29 15:13+0200\n"
+"POT-Creation-Date: 2008-07-30 10:05+0200\n"
 "PO-Revision-Date: 2008-06-07 13:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: Ateor dev team <dev@ateor.com>\n"
@@ -1704,14 +1704,6 @@ msgstr "Dostawca"
 #: ../lib/Objects/_RTWColor.php:217
 msgid "Supplier reference"
 msgstr ""
-
-#: ../lib/Custom/RTWMaterialAddEdit.php:123 ../ActorProductAddEdit.php:171
-msgid "Purchase unit"
-msgstr "Jednostka zakupu"
-
-#: ../lib/Custom/RTWMaterialAddEdit.php:130 ../ActorProductAddEdit.php:173
-msgid "Purchase unit quantity"
-msgstr "Ilość zakupu"
 
 #: ../lib/Custom/GenericActorGrid.php:47 ../menu.inc.php:199
 msgid "Generic actors"
@@ -10918,6 +10910,14 @@ msgstr "Czy jesteś pewien,że chcesz  skasowac dostawcę \"%s\"?"
 #, php-format
 msgid "Supplier \"%s\" is already taking precedence for ordering this product."
 msgstr "Dostawca \"%s\"rozpoczął już realizację dostawy tego produktu."
+
+#: ../ActorProductAddEdit.php:171
+msgid "Purchase unit"
+msgstr "Jednostka zakupu"
+
+#: ../ActorProductAddEdit.php:173
+msgid "Purchase unit quantity"
+msgstr "Ilość zakupu"
 
 #: ../ActorProductAddEdit.php:175
 msgid "Takes precedence for order"

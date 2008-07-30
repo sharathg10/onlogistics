@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Onlogistics 2.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-29 15:13+0200\n"
+"POT-Creation-Date: 2008-07-30 10:05+0200\n"
 "PO-Revision-Date: 2007-05-02 14:56+0100\n"
 "Last-Translator: guillaume <guillaume@ateor.com>\n"
 "Language-Team: ATEOR dev team <dalhia@ateor.com>\n"
@@ -1606,14 +1606,6 @@ msgstr ""
 #: ../lib/Custom/RTWMaterialGrid.php:70 ../lib/Objects/_RTWColor.php:216
 #: ../lib/Objects/_RTWColor.php:217
 msgid "Supplier reference"
-msgstr ""
-
-#: ../lib/Custom/RTWMaterialAddEdit.php:123 ../ActorProductAddEdit.php:171
-msgid "Purchase unit"
-msgstr ""
-
-#: ../lib/Custom/RTWMaterialAddEdit.php:130 ../ActorProductAddEdit.php:173
-msgid "Purchase unit quantity"
 msgstr ""
 
 #: ../lib/Custom/GenericActorGrid.php:47 ../menu.inc.php:199
@@ -10602,6 +10594,14 @@ msgstr ""
 #: ../ActorProductAddEdit.php:125
 #, php-format
 msgid "Supplier \"%s\" is already taking precedence for ordering this product."
+msgstr ""
+
+#: ../ActorProductAddEdit.php:171
+msgid "Purchase unit"
+msgstr ""
+
+#: ../ActorProductAddEdit.php:173
+msgid "Purchase unit quantity"
 msgstr ""
 
 #: ../ActorProductAddEdit.php:175

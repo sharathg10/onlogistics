@@ -7,14 +7,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Onlogistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-29 15:13+0200\n"
-"PO-Revision-Date: 2008-03-09 00:27+0200\n"
-"Last-Translator: Celal Camci <ccamci@iccdanismanlik.com.tr>\n"
+"POT-Creation-Date: 2008-07-30 10:05+0200\n"
+"PO-Revision-Date: 2008-07-30 10:05+0100\n"
+"Last-Translator: David JL <david@ateor.com>\n"
 "Language-Team: Ateor dev team <dev@ateor.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Bookmarks: 878,2098,2272,2333,-1,-1,-1,-1,-1,-1\n"
+"X-Poedit-Bookmarks: 878,164,2272,2333,-1,-1,-1,-1,-1,-1\n"
 
 #: ../lib-functions/ChainActivationTaskDetailTools.php:141
 #: ../lib-functions/ChainActivationTaskDetailTools.php:179
@@ -120,7 +120,7 @@ msgstr "None"
 #: ../lib-functions/InvoiceItemTools.php:455
 #, php-format
 msgid "The following orders are not billable: <ul><li>%s</li></ul>"
-msgstr "Takip eden sipariş faturalanamaz: <ul><li>%s</li></ul>"
+msgstr "Bu sipariş faturalanamaz: <ul><li>%s</li></ul>"
 
 #: ../lib-functions/InvoiceItemTools.php:456
 #, php-format
@@ -128,8 +128,8 @@ msgid ""
 "The following orders are locked because outstanding debts amount exceeds "
 "their maximum values: <ul><li>%s</li></ul>"
 msgstr ""
-"Takip eden sipariş kilitlendi çünkü ödenmemiş borç miktarı maximum değerı "
-"aştı: <ul><li>%s</li></ul>"
+"Bu sipariş kilitlendi çünkü ödenmemiş borç miktarı maximum değeri aştı: "
+"<ul><li>%s</li></ul>"
 
 #: ../lib-functions/InvoiceItemTools.php:457
 #, php-format
@@ -137,8 +137,8 @@ msgid ""
 "For the following orders invoice could not be sent by email because no user "
 "is set to receive it: <ul><li>%s</li></ul>"
 msgstr ""
-"Takip eden siparişlerin faturaları email ile gönderilemez çünkü hiçbir user "
-"onu kabul etmek için ayarlanmadı: <ul><li>%s</li></ul>"
+"Bu siparişlerin faturaları email ile gönderilemez çünkü hiçbir user onu "
+"kabul etmek için ayarlanmadı: <ul><li>%s</li></ul>"
 
 #: ../lib-functions/InvoiceItemTools.php:472
 msgid "Click on the button below to print invoices."
@@ -146,7 +146,7 @@ msgstr "Faturaları yazdırmak için asağıdaki butona basınız."
 
 #: ../lib-functions/InvoiceItemTools.php:479 void:1
 msgid "Charge several orders"
-msgstr "Çeşitli siparişler faturala"
+msgstr "Birçok sipariş faturala"
 
 #: ../lib-functions/InvoiceItemTools.php:533
 #: ../lib-functions/InvoicePrestationTools.php:106
@@ -168,7 +168,7 @@ msgstr "kalkışın"
 #: ../LocationExecutedMovementList.php:326 ../InventoryDetailList.php:75
 #: ../InventoryDetailList.php:121 ../StorebyStorageSiteList.php:73 void:1
 msgid "Site"
-msgstr "Site"
+msgstr "Bölge"
 
 #: ../lib-functions/ActivatedMovementTools.php:75
 #: ../lib/Objects/_CostRange.php:810 ../lib/Objects/_CostRange.php:811
@@ -235,11 +235,11 @@ msgstr "Lütfen düzeltiniz."
 
 #: ../lib-functions/AssemblyTools.php:48
 msgid "provided SN state is "
-msgstr "girilen SN şehri"
+msgstr "girilen SN durumu:"
 
 #: ../lib-functions/AssemblyTools.php:56
 msgid "SN provided is already used in an assembly. "
-msgstr "Girilen SN zaten bir montaj için kullanıldı."
+msgstr "Girilen SN halen bir montaj için kullanılılıyor."
 
 #: ../lib-functions/ProductCommandTools.php:100 ../JS_Messages.php:177
 #: ../ActorDelete.php:54
@@ -262,12 +262,12 @@ msgid ""
 "For all selected products, if selling unit is base unit, number of base unit "
 "in packaging can't be zero."
 msgstr ""
-"Tüm seçilen ürünler için, satış birimi ana birim ise, paketlemede ana "
+"Eşer tüm seçilen ürünlerin satış birimi ana birim ise, paketlemede ana "
 "birimlerin sayısı sıfır olamaz."
 
 #: ../lib-functions/ProductCommandTools.php:179
 msgid "You must select at least one product to order."
-msgstr "Sipariş için en azından bir ürün seçmelisiniz."
+msgstr "Sipariş için en az bir ürün seçmelisiniz."
 
 #: ../lib-functions/ProductCommandTools.php:198
 #: ../lib-functions/InvoicePrestationTools.php:97 ../lib/CommandManager.php:63
@@ -277,11 +277,11 @@ msgstr "Verilen sipariş numarası önceden tahsis edilmiştir, lütfen düzelti
 #: ../lib-functions/ChainTaskAddEditTools.php:149
 #, php-format
 msgid "The %s at %s"
-msgstr "The %s at %s"
+msgstr ""
 
 #: ../lib-functions/ChainTaskAddEditTools.php:178 void:1
 msgid "Monday"
-msgstr "Pazartesı"
+msgstr "Pazartesi"
 
 #: ../lib-functions/ChainTaskAddEditTools.php:179 void:1
 msgid "Tuesday"
@@ -310,15 +310,15 @@ msgstr "Pazar"
 #: ../lib-functions/ChainAddEditTools.php:44
 #: ../lib-functions/CacheTools.php:118 ../ajax/AjaxServer.php:324
 msgid "Generic actor site"
-msgstr "Jenerik ortak sitesi"
+msgstr "Jenerik ortak bölgesi"
 
 #: ../lib-functions/ExecutionTools.php:84
 msgid ""
 "Movement could not be executed because the following locations were "
 "temporary deactivated for inventory"
 msgstr ""
-"Faaliyet gerçekleştirilemez çünkü takip eden lokasyon envanter içinde geçici "
-"olarak etkisizleştirildi"
+"Faaliyet gerçekleştirilemez çünkü bu lokasyon envanter için geçici olarak "
+"devre dışı bırakıldı."
 
 #: ../lib-functions/ExecutionTools.php:103
 msgid "You must add a location."
@@ -326,11 +326,11 @@ msgstr "Bir lokasyon eklemelisin."
 
 #: ../lib-functions/ExecutionTools.php:104
 msgid "You can't validate movement without using a location."
-msgstr "Bir lokasyon kullanmadan faaliyet onaylamazsın."
+msgstr "Bir lokasyon kullanmadan faaliyet onaylanamaz."
 
 #: ../lib-functions/ExecutionTools.php:121
 msgid "Movement could not be executed because you provided wrong quantities."
-msgstr "Faaliyet gerçekleştirilemez çünkü yanlış miktarlar girildi."
+msgstr "Faaliyet gerçekleştirilemez çünkü yanlış miktar girildi."
 
 #: ../lib-functions/ExecutionTools.php:133
 msgid "Movement could not be executed because quantity provided is null."
@@ -347,7 +347,7 @@ msgstr "SN number ürün lokasyonuna göre girilen miktarlarla eşleşmez."
 #: ../lib-functions/ExecutionTools.php:198
 msgid "Lots number does not match provided total lot number by location."
 msgstr ""
-"Lot numaraları lokasyonuna göre girilen toplam lot numaraları ile eşleşmez."
+"Lot numarası lokasyonuna göre girilen toplam lot numarası ile eşleşmez."
 
 #: ../lib-functions/ExecutionTools.php:214
 msgid "lots"
@@ -361,36 +361,38 @@ msgstr "SN"
 #: ../lib-functions/ExecutionTools.php:218
 #, php-format
 msgid "Provided %s do not match provided quantities for product by location."
-msgstr "Girilen %s lokasyonuna göre girilen miktarlarla eşleşmez."
+msgstr ""
+"Girilen miktar %s lokasyonuna göre girilen ürün miktarları ile eşleşmez."
 
 #: ../lib-functions/ExecutionTools.php:238
 msgid "You have to select one or more movements."
-msgstr ""
+msgstr "Bir veya daha çok faaliyet seçmelisiniz."
 
 #: ../lib-functions/ExecutionTools.php:239
 msgid "All selected movements have to be linked to the same command."
-msgstr ""
+msgstr "Tüm seçilen faaliyetler aynı komuta bağlı olmalıdır."
 
 #: ../lib-functions/ExecutionTools.php:240
 msgid ""
 "All selected movements have to be linked to a product whithout tracing mode."
 msgstr ""
+"Tüm seçilen faaliyetler izleme modu olmaksızın bir ürüne bağlı olmalıdır."
 
 #: ../lib-functions/ExecutionTools.php:241
 msgid "All selected movements have to be normal issue or entry."
-msgstr ""
+msgstr "Tüm seçilen faaliyetler normal giriş veya çıkış olmalıdır. "
 
 #: ../lib-functions/ExecutionTools.php:242
 msgid "All selected movement states have to be \"Created\"."
-msgstr ""
+msgstr "Tüm seçilen faaliyet durumları \"Created\" olmalıdır."
 
 #: ../lib-functions/ExecutionTools.php:243
 msgid "Each selected movement have to be execute on one and only one location."
-msgstr ""
+msgstr "Her seçilen faaliyet yalnız bir lokasyonda gerçekleşmelidir."
 
 #: ../lib-functions/ExecutionTools.php:244
 msgid "A selected movement can't be execute: insufficient stock"
-msgstr ""
+msgstr "Seçilen faaliyet gerçekleştirilemez: yetersiz stok"
 
 #: ../lib-functions/ExecutionTools.php:245
 #, php-format
@@ -398,36 +400,40 @@ msgid ""
 "Movement could not be executed because the following location is temporary "
 "deactivated for inventory: %s"
 msgstr ""
+"Faaliyet gerçekleştirilemez çünkü bu lokasyon envanter için geçici olarak "
+"devre dışı bırakıldı: %s"
 
 #: ../lib-functions/ExecutionTools.php:246
 msgid "All selected movements have to be executed in the same site."
-msgstr ""
+msgstr "Tüm seçilen faaliyetler aynı bölgede gerçekleştirilmelidir."
 
 #: ../lib-functions/ExecutionTools.php:365
 msgid ""
 "Movement could not be executed because some quantity is insufficient for a "
 "location."
-msgstr "Faaliyet gerçekleşemez çünkü bu miktar bir lokasyon için yetersizdir."
+msgstr ""
+"Faaliyet gerçekleşemez çünkü bazı ürün miktarları bir lokasyon için "
+"yetersizdir."
 
 #: ../lib-functions/CacheTools.php:78
 msgid "No actor"
-msgstr "No partner"
+msgstr "Ortak yok"
 
 #: ../lib-functions/CacheTools.php:106 ../JS_Messages.php:292 void:1
 msgid "No site"
-msgstr "Site yok"
+msgstr "Bölge yok"
 
 #: ../lib-functions/InvoicePrestationTools.php:83
 msgid "Please select at least one service to charge."
-msgstr "Lütfen faturalama için en azından bir hizmet seçiniz."
+msgstr "Lütfen fiyatlandırma için en az bir servis seçiniz."
 
 #: ../lib-functions/InvoicePrestationTools.php:116
 msgid "Please select a supplier billing site."
-msgstr "Lütfen bir tedarikçi faturalama yeri seçiniz."
+msgstr "Lütfen bir tedarikçi faturalama bölgesi seçiniz."
 
 #: ../lib-functions/InvoicePrestationTools.php:123
 msgid "Please select a customer billing site."
-msgstr "Lütfen bir müşteri faturalama yeri seçiniz."
+msgstr "Lütfen bir müşteri faturalama bölgesi seçiniz."
 
 #: ../lib-functions/PlanningTools.php:236
 msgid "Delivery impossible this day."
@@ -440,7 +446,7 @@ msgstr "ve"
 #: ../lib-functions/GetCommandFromActivatedChain.php:45
 #, php-format
 msgid "Order related to chain \"%s\" could not be found in the database."
-msgstr "Zincir \"%s\" ıle ilişkili sipariş veritabanı içinde bulunamadı."
+msgstr "Zincir \"%s\" ile ilişkili sipariş veritabanı içinde bulunamadı."
 
 #: ../lib-functions/ExecutedMovementTools.php:205
 msgid "Unknown error."
@@ -456,23 +462,24 @@ msgstr "Yanlış veri girildi: bazı SN veya Lot veritabanı içinde bulunamadı
 
 #: ../lib-functions/ExecutedMovementTools.php:208
 msgid "Wrong data provided: some SN or Lot does not match cancelled movement."
-msgstr "Yanlış veri girildi: bazı SN veya Lot iptal edilen eylemle eşleşmez."
+msgstr ""
+"Yanlış veri girildi: bazı SN veya Lot iptal edilen faaliyetle eşleşmez."
 
 #: ../lib-functions/ExecutedMovementTools.php:209
 msgid "Wrong data provided: some quantity is too great."
-msgstr "Yanlış veri girildi: bazı miktar çok büyüktür."
+msgstr "Yanlış veri girildi: bazı miktarlar çok büyüktür."
 
 #: ../lib-functions/ExecutedMovementTools.php:210
 msgid "Wrong data provided: some SN or Lot is deactivated."
-msgstr "Yanlış veri girildi: bazı SN veya Lot etkisizleştirildi."
+msgstr "Yanlış veri girildi: bazı SN veya Lot devre dışı bırakıldı."
 
 #: ../lib-functions/ExecutedMovementTools.php:211
 msgid "Error in data provided please correct."
-msgstr "Girilen veride hata lütfen düzeltiniz."
+msgstr "Girilen veri hatalı lütfen düzeltiniz."
 
 #: ../lib-functions/ExecutedMovementTools.php:212
 msgid "Some SN is already assigned to a product, it cannot be entered again."
-msgstr "Bazı SN zaten bir ürüne tahsis edilmiştir, tekrar girilemez."
+msgstr "Bu SN zaten bir ürüne tahsis edilmiştir, tekrar girilemez."
 
 #: ../lib-functions/ExecutedMovementTools.php:213
 msgid "No location matches for this product"
@@ -480,28 +487,28 @@ msgstr "Bu ürün için hiçbir lokasyon eşleşmesi yapılamadı."
 
 #: ../lib-functions/ActivateChain.php:42
 msgid "Parameter to pass to the function must be chain."
-msgstr "Fonksiyona geçirilen parametre zincir olmalıdır."
+msgstr "Fonksiyona gönderilen parametre zincir olmalıdır."
 
 #: ../lib-functions/ActivateChain.php:43
 #, php-format
 msgid "Chain \"%s\" does not have any operation, please contact your admin."
 msgstr ""
-"Zincir \"%s\" hicbir operasyona sahip degildir, lütfen yöneticinizle kontak "
+"Zincir \"%s\" hiçbir operasyona sahip değildir, lütfen yöneticinizle kontak "
 "kurunuz."
 
 #: ../lib-functions/ActivateChain.php:44
 #, php-format
 msgid "Operation \"%s\" does not have any task, please contact your admin."
 msgstr ""
-"Operasyon \"%s\" hicbir göreve sahip degildir, lütfen yöneticinizle kontak "
+"Operasyon \"%s\" hiçbir göreve sahip değildir, lütfen yöneticinizle kontak "
 "kurunuz."
 
 #: ../lib-functions/ActivateChain.php:45
 msgid ""
 "Wished product version is not available anymore, please contact your admin."
 msgstr ""
-"İstenen ürün versiyonu daha fazla geçerli değildir,  lütfen yöneticinizle "
-"kontak kurunuz."
+"İstenen ürün versiyonu artık geçerli değildir,  lütfen yöneticinizle kontak "
+"kurunuz."
 
 #: ../lib-functions/ActivateChain.php:47
 msgid "Task associated components could not be found."
@@ -515,13 +522,13 @@ msgstr "Zinciri \"%s\" onarmak için lütfen yöneticinizle kontak kurunuz."
 #: ../lib-functions/ActivateChain.php:188
 #, php-format
 msgid "%s (task no %s in operation %s)"
-msgstr "%s (görev no %s yürürlükte %s)"
+msgstr "%s (görev no %s faal %s)"
 
 #: ../lib-functions/ActivateChain.php:286
 #: ../lib-functions/ActivateChain.php:296 ../lib/Objects/Actor.php:182
 #, php-format
 msgid "No site assigned to actor %s"
-msgstr "Partnere hiçbir site tahsis edilmedi %s"
+msgstr "Ortağa %s hiçbir bölge tahsis edilmedi "
 
 #: ../lib-functions/ActivateChain.php:361
 #: ../lib-functions/ActivateChain.php:391
@@ -532,45 +539,39 @@ msgstr "Operasyona \"%s\" atanan partner bulunamadı"
 #: ../lib-functions/ActivateChain.php:378
 #, php-format
 msgid "No actor is assigned to operation \"%s\""
-msgstr "Operasyona \"%s\" atanan hiçbir partner yoktur."
+msgstr "Operasyona \"%s\" hiçbir partner tahsis edilmedi."
 
 #: ../lib-functions/IsCommandCompatibleWithWorkOrder.php:124
 msgid ""
 "Wrong parameter provided, parameter should be an order, an activated chain "
 "or a collection of operations."
 msgstr ""
-"Yanlış parametre girildi, parametre bir sipariş, bir etkin zincir, veya "
+"Yanlış parametre girildi, parametre bir sipariş, etkin bir zincir veya "
 "operasyonların bir toplamı olmalıdır."
 
 #: ../lib-functions/IsCommandCompatibleWithWorkOrder.php:136
 msgid "Wrong parameter provided, parameter should be a work order."
-msgstr "Yanlış parametre girildi, parametre bir sipariş emri olmalıdır."
+msgstr "Yanlış parametre girildi, parametre bir iş emri olmalıdır."
 
 #: ../lib-functions/IsCommandCompatibleWithWorkOrder.php:140
 msgid "Total order volume exceeds maximum value allowed in work order."
-msgstr ""
-"Toplam sipariş hacmi siparişi emri için izin verilen maximum değeri aştı."
+msgstr "Toplam sipariş hacmi izin verilen maximum değeri aştı."
 
 #: ../lib-functions/IsCommandCompatibleWithWorkOrder.php:143
 msgid "Total order linear meters exceeds maximum value allowed in work order."
-msgstr ""
-"Toplam sipariş lineer metre sipariş emri için izin verilen maximum değeri "
-"aştı."
+msgstr "Toplam lineer metre siparişi izin verilen maximum değeri aştı."
 
 #: ../lib-functions/IsCommandCompatibleWithWorkOrder.php:146
 msgid "Total order weight exceeds maximum value allowed in work order."
-msgstr ""
-"Toplam sipariş ağırlığı sipariş emri için izin verilen maximum değeri aştı."
+msgstr "Toplam sipariş ağırlığı izin verilen maximum değeri aştı."
 
 #: ../lib-functions/IsCommandCompatibleWithWorkOrder.php:150
 msgid "Total order distance exceeds maximum value allowed in work order."
-msgstr ""
-"Toplam sipariş uzaklığı sipariş emri için izin verilen maximum değeri aştı."
+msgstr "Toplam sipariş uzaklığı izin verilen maximum değeri aştı."
 
 #: ../lib-functions/IsCommandCompatibleWithWorkOrder.php:154
 msgid "Total order duration exceeds maximum value allowed in work order."
-msgstr ""
-"Toplam sipariş süresi sipariş emri için izin verilen maximum değeri aştı."
+msgstr "Toplam sipariş süreci izin verilen maximum değeri aştı."
 
 #: ../lib-functions/ProductionTaskValidationTools.php:48
 msgid "Wrong task type provided."
@@ -587,19 +588,20 @@ msgstr "Görev operatörü bulunamadı."
 
 #: ../lib-functions/ProductionTaskValidationTools.php:51
 msgid "Only tasks with state set to \"in progress\" can be started."
-msgstr "Yalnızca şehir ayarlı \"devam eden\" görevler başlatılabilir."
+msgstr "Yalnızca konumu \"in progress\" ayarlı olan görevler başlatılabilir."
 
 #: ../lib-functions/ProductionTaskValidationTools.php:52
 msgid "Only tasks with state set to \"supended\" can be restarted."
-msgstr "Yalnızca şehir ayarlı \"beklemede\" görevler yeniden başlatılabilir."
+msgstr ""
+"Yalnızca konumu \"supended\" ayarlı olan görevler yeniden başlatılabilir."
 
 #: ../lib-functions/ProductionTaskValidationTools.php:53
 msgid "Only tasks with state set to \"in progress\" can be suspended."
-msgstr "Yalnızca şehir ayarlı \"devam eden\" görevler bekletilebilir."
+msgstr "Yalnızca konumu \"in progress\" ayarlı olan görevler bekletilebilir."
 
 #: ../lib-functions/ProductionTaskValidationTools.php:54
 msgid "Only tasks with state set to \"in progress\" can be finished."
-msgstr "Yalnızca şehir ayarlı \"devam eden\" görevler bitirilebilir."
+msgstr "Yalnızca konumu \"in progress\" ayarlı olan görevler bitirilebilir."
 
 #: ../lib-functions/ProductionTaskValidationTools.php:55
 msgid "Unknown action."
@@ -612,29 +614,29 @@ msgstr "Spreadsheet model veritabanı içinde bulunamadı."
 #: ../lib-functions/RPCTools.php:670
 #, php-format
 msgid "Line: %s, column: %s, %s with ID %s not found in the database."
-msgstr "Satır: %s, kolon: %s, %s ID ile %s veritabanı içinde bulunamadı."
+msgstr "Sıra: %s, kolon: %s, %s ID %s veritabanı içinde bulunamadı."
 
 #: ../lib-functions/RPCTools.php:681
 #, php-format
 msgid "Line: %s, column: %s, address \"%s\" was not found in the database."
-msgstr "Satır: %s, kolon: %s, adres \"%s\" veritabanı içinde bulunamadı."
+msgstr "Sıra: %s, kolon: %s, adres \"%s\" veritabanı içinde bulunamadı."
 
 #: ../lib-functions/GetTotalCaByActorAndDates.php:68
 msgid "Total turnover excl. VAT"
-msgstr "KDV hariç toplam iş hacmi"
+msgstr "KDV hariç toplam ciro"
 
 #: ../lib-functions/GetTotalCaByActorAndDates.php:68
 #: ../lib-functions/GetTotalCaByActorAndDates.php:235
 #: ../InvoicePrestationList.php:72
 #: ../../../pwak/trunk/lib/Search/SearchForm.php:553 void:1
 msgid "From"
-msgstr "From"
+msgstr ""
 
 #: ../lib-functions/GetTotalCaByActorAndDates.php:69
 #: ../lib-functions/GetTotalCaByActorAndDates.php:236 ../LicenceList.php:134
 #: ../LicenceAddEdit.php:142
 msgid "at"
-msgstr "at"
+msgstr ""
 
 #: ../lib-functions/GetTotalCaByActorAndDates.php:234
 msgid "Total expenses"
@@ -652,7 +654,7 @@ msgstr "Euros"
 #: ../lib/DocumentGenerator.php:618 ../lib/DocumentGenerator.php:750
 #: ../AffectationList.php:74 ../LocationExecutedMovementList.php:270 void:1
 msgid "Selling unit"
-msgstr "Satılan unit"
+msgstr "Satış birimi"
 
 #: ../lib-functions/StockAccountingExportTools.php:60 void:1
 msgid "Kilogramme"
@@ -660,7 +662,7 @@ msgstr "Kilogram"
 
 #: ../lib-functions/StockAccountingExportTools.php:61
 msgid "Cube meter"
-msgstr "metre küp"
+msgstr "Metre küp"
 
 #: ../lib-functions/StockAccountingExportTools.php:62 void:1
 msgid "Liter"
@@ -688,7 +690,7 @@ msgstr "L"
 
 #: ../ajax/AjaxServer.php:435 void:1
 msgid "Select"
-msgstr "Seçiniz"
+msgstr "Seç"
 
 #: ../lib/CommandParser/CommandParser.php:37
 msgid "Order addressee was not found in the database."
@@ -696,11 +698,11 @@ msgstr "Sipariş alıcı adresi veritabanı içinde bulunamadı. "
 
 #: ../lib/CommandParser/CommandParser.php:38
 msgid "Order addressee site was not found in the database."
-msgstr "Sipariş alıcı adres yeri veritabanı içinde bulunamadı. "
+msgstr "Sipariş adres bölgesi veritabanı içinde bulunamadı. "
 
 #: ../lib/CommandParser/CommandParser.php:39
 msgid "Shipper site was not found in the database."
-msgstr "Gönderen site veritabanı içinde bulunamadı. "
+msgstr "Gönderen yeri veritabanı içinde bulunamadı. "
 
 #: ../lib/CommandParser/CommandParser.php:40
 #: ../lib/CommandParser/CommandParser.php:255 ../rpc/api_site.php:581
@@ -720,8 +722,8 @@ msgid ""
 "The following category could not be deleted because it is associated either "
 "to an offer on sale, a discount or a customer: %s"
 msgstr ""
-"Takip eden kategori silinemez çünkü o bir promosyonlu satış, indirim veya "
-"müşteri ile ilgilidir."
+"Bu kategori silinemez çünkü o bir promosyonlu satış, indirim veya müşteri "
+"ile ilgilidir: %s"
 
 #: ../lib/Custom/CategoryAddEdit.php:38
 #, php-format
@@ -729,12 +731,12 @@ msgid ""
 "The following categories could not be deleted because they are associated "
 "either to an offer on sale, a discount or a customer: %s"
 msgstr ""
-"Takip eden kategoriler silinemez çünkü onlar bir promosyonlu satış, bir "
-"indirim veya bir müşteri ile ilgilidir: %s"
+"Bu kategoriler silinemez çünkü onlar bir promosyonlu satış, bir indirim veya "
+"bir müşteri ile ilgilidir: %s"
 
 #: ../lib/Custom/CategoryAddEdit.php:78
 msgid "Annual turnover discount percent"
-msgstr "Yıllık ciro iskonto yüzdesi"
+msgstr "Yıllık ciro indirim yüzdesi"
 
 #: ../lib/Custom/CategoryAddEdit.php:104 ../lib/Custom/FlowTypeAddEdit.php:114
 #: ../lib/Custom/GenericActorGrid.php:64 ../lib/Custom/GenericActorGrid.php:65
@@ -793,7 +795,7 @@ msgstr "İsim"
 
 #: ../lib/Custom/CategoryAddEdit.php:110
 msgid "List of actors associated to category"
-msgstr "Kategori ile ilgili partnerlerin listesi"
+msgstr "Kategori ile ilgili ortakların listesi"
 
 #: ../lib/Custom/CategoryAddEdit.php:131 ../lib/Custom/CategoryAddEdit.php:204
 #: ../lib/Custom/SupplierPricesGrid.php:88
@@ -822,7 +824,7 @@ msgstr "Miktar"
 
 #: ../lib/Custom/CategoryAddEdit.php:160
 msgid "List of minimum amounts to order associated to category"
-msgstr "Kategori ile ilgili sipariş için minimum miktarların listesi"
+msgstr "Kategori ile ilişkili sipariş için minimum miktarların listesi"
 
 #: ../lib/Custom/CategoryAddEdit.php:171
 msgid "Percent"
@@ -830,11 +832,11 @@ msgstr "Yüzde"
 
 #: ../lib/Custom/CategoryAddEdit.php:182
 msgid "Order minimum amount"
-msgstr "Minimum sipariş miktarı "
+msgstr "Minimum miktar sipariş et "
 
 #: ../lib/Custom/CategoryAddEdit.php:193
 msgid "Order maximum amount"
-msgstr "Maximum sipariş miktarı "
+msgstr "Maximum miktar sipariş et "
 
 #: ../lib/Custom/CategoryAddEdit.php:222
 msgid "List of handings by range"
@@ -842,7 +844,7 @@ msgstr "Uzaklığa göre teslimatların listesi "
 
 #: ../lib/Custom/RessourceGroupGrid.php:69
 msgid "Task associated to the model"
-msgstr "Modelle ilgili olan görev"
+msgstr "Modelle ilişkili olan görev"
 
 #: ../lib/Custom/RessourceGroupGrid.php:73 ../lib/Objects/Ressource.php:549
 #: ../lib/Objects/Ressource.php:550
@@ -853,7 +855,7 @@ msgstr "Kaynak tipi"
 #: ../lib/Custom/FlowTypeGrid.php:49 ../lib/Custom/ChainGrid.php:94
 #: ../NomenclatureList.php:88
 msgid "Copy"
-msgstr "Kopya"
+msgstr "Kopyala"
 
 #: ../lib/Custom/RessourceGroupGrid.php:97
 msgid "Copy resource model"
@@ -896,18 +898,20 @@ msgstr "Ekle"
 #: ../lib/Custom/PrestationCostAddEdit.php:226
 #, php-format
 msgid "You did not defined prices for selected %s."
-msgstr "Seçilen için fiyat belirlemedin %s."
+msgstr "Seçilen %s için fiyat belirlemedin."
 
 #: ../lib/Custom/PrestationCostAddEdit.php:233
 #: ../../../pwak/trunk/lib/GenericMessages.php:41
 #, php-format
 msgid "Please select a(n) %s."
-msgstr "Lütfen seç bir %s."
+msgstr "Lütfen bir %s seç."
 
 #: ../lib/Custom/PrestationCostAddEdit.php:278
 #, php-format
 msgid "A conflict exists with prices by %s defined for the following services:"
-msgstr "Fiyat ile bir uyuşmazlık var %s tarafindan belirlenen serviseler için:"
+msgstr ""
+"Aşağıdaki servisler için %s tarafından belirlenen fiyat ile bir uyuşmazlık "
+"var:"
 
 #: ../lib/Custom/PrestationCostAddEdit.php:308 ../lib/Objects/_Chain.php:303
 #: ../lib/Objects/_RTWProduct.php:191 ../menu.inc.php:276 void:1
@@ -997,7 +1001,7 @@ msgstr "Sipariş numarası"
 
 #: ../lib/Custom/UploadedDocumentGrid.php:120 void:1
 msgid "Download"
-msgstr "Indirme"
+msgstr ""
 
 #: ../lib/Custom/UploadedDocumentGrid.php:123 ../lib/Custom/AlertGrid.php:64
 #: ../lib/Custom/ChainGrid.php:77 ../ProductList.php:195
@@ -1016,6 +1020,8 @@ msgid ""
 "This model can not be modified because it is already used in one or more "
 "orders"
 msgstr ""
+"Bu model değiştirilemez çünkü halen bir veya birçok sipariş için "
+"kullanılıyor."
 
 #: ../lib/Custom/RTWModelGrid.php:301 ../lib/Custom/ChainGrid.php:95
 msgid "Copy chain"
@@ -1023,7 +1029,7 @@ msgstr "Zincir kopyala"
 
 #: ../lib/Custom/RTWModelGrid.php:305
 msgid "Print worksheet"
-msgstr ""
+msgstr "Çalışma taslağı yazdır"
 
 #: ../lib/Custom/ProductKindAddEdit.php:37
 #, php-format
@@ -1031,8 +1037,8 @@ msgid ""
 "The following product caracteristic could not be deleted because it is "
 "associated to a product or a seasonality: %s"
 msgstr ""
-"Takip eden ürün özelliği silinemeyebilir çünkü o bir ürün veya mevsimlik ile "
-"ilişkilidir: %s"
+"Bu ürün özelliği silinemeyebilir çünkü bir ürün veya mevsim ile ilişkilidir: "
+"%s"
 
 #: ../lib/Custom/ProductKindAddEdit.php:38
 #, php-format
@@ -1040,14 +1046,14 @@ msgid ""
 "The following product caracteristics could not be deleted because they are "
 "associated to a product or a seasonality: %s"
 msgstr ""
-"Takip eden ürün özellikleri silinemeyebilir çünkü onlar bir ürün veya "
-"mevsimlik ile ilişkilidir: %s"
+"Bu ürün özellikleri silinemeyebilir çünkü onlar bir ürün veya mevsim ile "
+"ilişkilidir: %s"
 
 #: ../lib/Custom/ProductKindAddEdit.php:39
 msgid ""
 "A product caracteristic with this name and this type already exists, please "
 "correct."
-msgstr "Bu isimle bir ürün özelligi ve bu tip halen var, lütfen düzeltiniz."
+msgstr "Bu isim ve türde bir ürün özelliği halen var, lütfen düzeltiniz."
 
 #: ../lib/Custom/RessourceGroupAddEdit.php:86
 #, php-format
@@ -1055,7 +1061,7 @@ msgid ""
 "Resource \"%s\" could not be deleted because it is associated to one or more "
 "tasks"
 msgstr ""
-"Kaynak \"%s\" silinemeyebilir çünkü o bir veya daha fazla görevle ilişkilidir"
+"Kaynak \"%s\" silinemeyebilir çünkü bir veya birden çok görevle bağlantılıdır"
 
 #: ../lib/Custom/RessourceGroupAddEdit.php:91
 #, php-format
@@ -1063,7 +1069,7 @@ msgid ""
 "Resources \"%s\" could not be deleted because they are associated to one or "
 "more tasks"
 msgstr ""
-"Kaynaklar \"%s\" silinemeyebilir çünkü onlar bir veya daha fazla görevlerle "
+"Kaynaklar \"%s\" silinemeyebilir çünkü bir veya daha fazla görevlerle "
 "ilişkilidir"
 
 #: ../lib/Custom/RessourceGroupAddEdit.php:133
@@ -1074,7 +1080,7 @@ msgstr "Kaynaklar"
 
 #: ../lib/Custom/InactiveRTWProductGrid.php:135
 msgid "Validate selected items"
-msgstr ""
+msgstr "Seçilen öğeleri geçerli kıl"
 
 #: ../lib/Custom/PrestationAddEdit.php:40
 #, php-format
@@ -1082,8 +1088,7 @@ msgid ""
 "The following service could not be deleted because it is linked to an "
 "invoice or to an order: %s"
 msgstr ""
-"Takip eden service silinemeyebilir çünkü o bir faturaya veya bir şiparişe "
-"bağlıdır: %s"
+"Bu service silinemeyebilir çünkü  bir faturaya veya bir şiparişe bağlıdır: %s"
 
 #: ../lib/Custom/PrestationAddEdit.php:41
 #, php-format
@@ -1091,8 +1096,8 @@ msgid ""
 "The following services could not be deleted because they are linked to an "
 "invoice or to an order: %s"
 msgstr ""
-"Takip eden serviceler silinemeyebilir çünkü onlar bir faturaya veya bir "
-"şiparişe bağlıdır: %s"
+"Bu serviseler silinemeyebilir çünkü  bir faturaya veya bir şiparişe "
+"bağlıdır: %s"
 
 #: ../lib/Custom/PrestationAddEdit.php:63 ../lib/Objects/_Prestation.php:892
 msgid "Add/Update service"
@@ -1155,26 +1160,26 @@ msgstr "Partner"
 
 #: ../lib/Custom/UserAccountAddEdit.php:161
 msgid "Available sites"
-msgstr "Mevcut siteler"
+msgstr "Mevcut bölgeler"
 
 #: ../lib/Custom/UserAccountAddEdit.php:161
 msgid "Allowed sites"
-msgstr "İzin verilen siteler"
+msgstr "İzin verilen bölgeler"
 
 #: ../lib/Custom/RTWModelAddEdit.php:138
 #: ../lib/Custom/DocumentAppendixAddEdit.php:77
 msgid "Images must be in \"png\" format"
-msgstr ""
+msgstr "Resimler \"png\" formatında olmalıdır."
 
 #: ../lib/Custom/RTWModelAddEdit.php:142
 #: ../lib/Custom/DocumentAppendixAddEdit.php:81
 msgid "Images must not exceed 1 megaoctet"
-msgstr ""
+msgstr "Resimler 1megaoctet'i geçmemelidir "
 
 #: ../lib/Custom/RTWModelAddEdit.php:392 ../lib/Objects/_RTWModel.php:2894
 #: ../lib/Objects/_RTWModel.php:2895
 msgid "Black and white image"
-msgstr ""
+msgstr "Siyah ve beyaz resim"
 
 #: ../lib/Custom/RTWModelAddEdit.php:397 ../lib/Custom/RTWModelAddEdit.php:417
 msgid "Show/hide current image"
@@ -1183,7 +1188,7 @@ msgstr ""
 #: ../lib/Custom/RTWModelAddEdit.php:412 ../lib/Objects/_RTWModel.php:2903
 #: ../lib/Objects/_RTWModel.php:2904
 msgid "Color image"
-msgstr ""
+msgstr "Renkli resim"
 
 #: ../lib/Custom/FlowTypeGrid.php:50
 msgid "Copy model"
@@ -1284,7 +1289,7 @@ msgstr "Referans"
 #: ../PromotionProductAdd.php:55 ../PromotionProductAdd.php:88
 #: ../LocationByProductList.php:77 ../Delivery.php:62 void:1
 msgid "Designation"
-msgstr "Etiket ismi"
+msgstr "Ürün etiket ismi"
 
 #: ../lib/Custom/ProductRessourceGrid.php:57 ../menu.inc.php:374
 msgid "Product resources"
@@ -1328,12 +1333,12 @@ msgstr "Genel yap"
 
 #: ../lib/Custom/EntityGrid.php:50
 msgid "Make private"
-msgstr "Özel yap"
+msgstr "Özelleştir"
 
 #: ../lib/Custom/LicenceTypeAddEdit.php:47
 #, php-format
 msgid "A license type already exists with the name \"%s\", please correct."
-msgstr "Bu isimle bir lisans tipi halen var \"%s\",  lütfen düzeltiniz."
+msgstr "Bu isimle \"%s\" bir lisans tipi var, lütfen düzeltiniz."
 
 #: ../lib/Custom/LicenceTypeAddEdit.php:74
 msgid ""
@@ -1341,7 +1346,7 @@ msgid ""
 "license defined for an actor."
 msgstr ""
 "Bazı lisans tipleri silinemeyebilir çünkü onlar bir ortak için belirnenen "
-"lisans ile alakalıdır."
+"lisans ile ilişkilidir."
 
 #: ../lib/Custom/FlowTypeAddEdit.php:37
 #, php-format
@@ -1349,8 +1354,7 @@ msgid ""
 "The following element could not be deleted because it is linked to accounts "
 "or to expanses or receipts: %s"
 msgstr ""
-"Takip eden element silinemez çünkü o hesaplara veya harcamalara veya "
-"makbuzlara bağlıdır: %s"
+"Bu element silinemez çünkü hesap veya harcama veya makbuzlara bağlıdır: %s"
 
 #: ../lib/Custom/FlowTypeAddEdit.php:38
 #, php-format
@@ -1358,8 +1362,8 @@ msgid ""
 "The following elements could not be deleted because they are linked to "
 "accounts or to expanses or receipts: %s"
 msgstr ""
-"Takip eden elementler silinemez çünkü onlar hesaplara veya harcamalara veya "
-"makbuzlara bağlıdır: %s"
+"Bu elementler silinemez çünkü onlar hesap veya harcama veya makbuzlara "
+"bağlıdır: %s"
 
 #: ../lib/Custom/FlowTypeAddEdit.php:115 ../lib/Objects/_Prestation.php:1076
 #: ../lib/Objects/_Prestation.php:1077 ../lib/Objects/_FlowTypeItem.php:457
@@ -1372,7 +1376,7 @@ msgstr "KDV"
 
 #: ../lib/Custom/FlowTypeAddEdit.php:149
 msgid "You must provide the expenses and receipts lines name"
-msgstr "Harcamalar ve makbuz satır isimlerini sağlamak zorundasınız"
+msgstr "Harcamalar ve gelirler için satır isimleri gir"
 
 #: ../lib/Custom/ActorProductAddEdit.php:107
 msgid ""
@@ -1388,7 +1392,7 @@ msgid ""
 "Resource \"%s\" could not be deleted because it is associated to one or more "
 "resource models"
 msgstr ""
-"Kaynak \"%s\" silinemez çünkü o bir veya daha çok kaynak modelleri ile "
+"Kaynak \"%s\" silinemez çünkü  bir veya daha çok kaynak modelleri ile "
 "ilgilidir"
 
 #: ../lib/Custom/ProductRessourceAddEdit.php:54
@@ -1412,7 +1416,7 @@ msgstr "Ürüne göre fiyat "
 
 #: ../lib/Custom/PrestationGrid.php:103
 msgid "Price by SN/Lot"
-msgstr "SN/Lot ile fiyat"
+msgstr "SN/Lot için fiyat"
 
 #: ../lib/Custom/PrestationGrid.php:107
 msgid "Price by airplane"
@@ -1420,11 +1424,11 @@ msgstr "Uçağa göre fiyat"
 
 #: ../lib/Custom/PrestationGrid.php:161
 msgid "Customer associated to the service"
-msgstr "Müşteri bu servisle ilişkilidir"
+msgstr "Müşteri servisle ilişkilidir"
 
 #: ../lib/Custom/PrestationGrid.php:169
 msgid "Product reference associated to the service"
-msgstr "Ürün referansı bu servisle ilişkilidir"
+msgstr "Ürün referansı servisle ilişkilidir"
 
 #: ../lib/Custom/PrestationGrid.php:171 ../lib/Objects/_Prestation.php:1094
 #: ../lib/Objects/_Prestation.php:1095 ../lib/Objects/ForecastFlow.php:541
@@ -1459,15 +1463,14 @@ msgstr "hayır"
 msgid ""
 "The following answer could not be deleted because it is associated to a "
 "question model: %s"
-msgstr "Takip eden cevap silinemez çünkü o bir soru modeli ile iligilidir: %s"
+msgstr "Bu cevap silinemez çünkü  bir soru modeli ile iligilidir: %s"
 
 #: ../lib/Custom/AnswerModelAddEdit.php:38
 #, php-format
 msgid ""
 "The following answers could not be deleted because they are associated to a "
 "question model: %s"
-msgstr ""
-"Takip eden cevaplar silinemez çünkü onlar bir soru modeli ile ilgilidir: %s"
+msgstr "Bu cevaplar silinemez çünkü onlar bir soru modeli ile ilgilidir: %s"
 
 #: ../lib/Custom/ActivatedChainTaskGrid.php:90
 #: ../lib/Custom/ActivatedChainTaskGrid.php:143
@@ -1529,7 +1532,7 @@ msgstr "Sipariş"
 
 #: ../lib/Custom/ActivatedChainTaskGrid.php:163
 msgid "Assign document to selected task"
-msgstr ""
+msgstr "Belgeleri seçilen görevlere tahsis et."
 
 #: ../lib/Custom/CustomerPotentialAddEdit.php:66
 msgid "Minimum value must be an integer."
@@ -1546,16 +1549,14 @@ msgstr "Minimum potansiyel değer maximun potensiyel değerden küçük olmalıd
 #: ../lib/Custom/CustomerPotentialAddEdit.php:103
 msgid ""
 "A potential with this name and measure unit already exists, please correct."
-msgstr ""
-"Bu isim ile bir potensiyel ve ölçüm birimi halen mevcuttur, lütfen "
-"düzeltiniz."
+msgstr "Bu isim ve ölçüm birimi ile bir değer mevcuttur, lütfen düzeltiniz."
 
 #: ../lib/Custom/CustomerPotentialAddEdit.php:124
 msgid ""
 "A potential already exists with this measure unit and common values. Please "
 "correct minimum/maximum value."
 msgstr ""
-"Bu ölçüm birimi ve genel değerler ile bir potensiyel halen mevcuttur. Lütfen "
+"Bu ölçüm birimi ve genel değerler ile bir potensiyel mevcuttur. Lütfen "
 "minimum/maximum değeri düzeltiniz."
 
 #: ../lib/Custom/CustomerPotentialAddEdit.php:177
@@ -1563,8 +1564,8 @@ msgid ""
 "The following potentials could not be deleted because they are associated to "
 "one or more frequencies and/or customers"
 msgstr ""
-"Takip eden potensiyeller silinemez çünkü onlar bir vaya daha fazla "
-"frekanslara ve/veya müşterilere ilişkilidir."
+"Bu değerler silinemez çünkü onlar bir veya daha fazla frekanslara ve/veya "
+"müşterilere ilişkilidir."
 
 #: ../lib/Custom/ChainAddEdit.php:71
 msgid "Chain departure and arrival actor cannot be the same, please correct."
@@ -1588,7 +1589,7 @@ msgstr "Varış yeri"
 
 #: ../lib/Custom/CurrencyConverterAddEdit.php:103
 msgid "A exchange rate already exists for selected currencies and period."
-msgstr ""
+msgstr "Seçilen para birimi ve periyot için halen bir kambiyo oranı var."
 
 #: ../lib/Custom/CronTaskAddEdit.php:71 ../lib/Objects/CronTask.php:392
 #: ../lib/Objects/CronTask.php:393
@@ -1619,8 +1620,8 @@ msgid ""
 "The following paragraph model could not be deleted because it is linked to a "
 "form model or to a question model: %s"
 msgstr ""
-"Takip eden paragraf modeli silinemeyebilir çünkü o bir model formuna veya "
-"bir soru modeline bağlıdır: %s"
+"Bu paragraf modeli silinemeyebilir çünkü  bir form modeli  veya bir soru "
+"modeline bağlıdır: %s"
 
 #: ../lib/Custom/ParagraphModelAddEdit.php:38
 #, php-format
@@ -1628,29 +1629,28 @@ msgid ""
 "The following paragraph models could not be deleted because they are linked "
 "to a form model or to a question model: %s"
 msgstr ""
-"Takip eden paragraf modelleri silinemeyebilir çünkü onlar bir model formuna "
-"veya bir soru modeline bağlıdır: %s"
+"Bu paragraf modelleri silinemeyebilir çünkü onlar bir form modeli veya bir "
+"soru modeline bağlıdır: %s"
 
 #: ../lib/Custom/RatingTypeAddEdit.php:47
 #, php-format
 msgid ""
 "A qualification type already exists with the name \"%s\", please correct."
-msgstr ""
-"Bu isimle \"%s\" bir yeterlilik tipi halen vardır \"%s\", lütfen düzeltiniz."
+msgstr "Bu isimle bir yeterlilik tipi halen vardır \"%s\", lütfen düzeltiniz."
 
 #: ../lib/Custom/RatingTypeAddEdit.php:74
 msgid ""
 "Some qualification types could not be deleted because they are associated to "
 "a qualification defined for an actor."
 msgstr ""
-"Bazı yeterlilik tipleri silinemez çünkü onlar bir partner için tanimlanan "
+"Bazı yeterlilik tipleri silinemez çünkü onlar bir partner için tanımlanan "
 "yeterlilik ile ilgilidir."
 
 #: ../lib/Custom/RTWMaterialAddEdit.php:64
 #: ../lib/Custom/SupplierPricesGrid.php:157
 #: ../lib/Custom/RTWMaterialGrid.php:59 ../lib/Custom/RTWMaterialGrid.php:60
 msgid "Commercial designation"
-msgstr ""
+msgstr "Ticari gösterim"
 
 #: ../lib/Custom/RTWMaterialAddEdit.php:99
 #: ../lib/Custom/ProductPriceAddEdit.php:74
@@ -1674,15 +1674,7 @@ msgstr "Tedarikçi"
 #: ../lib/Custom/RTWMaterialGrid.php:70 ../lib/Objects/_RTWColor.php:216
 #: ../lib/Objects/_RTWColor.php:217
 msgid "Supplier reference"
-msgstr ""
-
-#: ../lib/Custom/RTWMaterialAddEdit.php:123 ../ActorProductAddEdit.php:171
-msgid "Purchase unit"
-msgstr "Satın alma birimi"
-
-#: ../lib/Custom/RTWMaterialAddEdit.php:130 ../ActorProductAddEdit.php:173
-msgid "Purchase unit quantity"
-msgstr "Satın alma birim miktarı"
+msgstr "Tedarikçi referansı"
 
 #: ../lib/Custom/GenericActorGrid.php:47 ../menu.inc.php:199
 msgid "Generic actors"
@@ -1694,8 +1686,8 @@ msgid ""
 "The following airplane type could not be deleted because it is associated to "
 "a service or an existing airplane: %s"
 msgstr ""
-"Takip eden uçak tipi silinemeyebilir çünkü o bir service veya var olan bir "
-"uçak ile ilgilidir: %s "
+"Bu uçak tipi silinemeyebilir çünkü bir service veya var olan bir uçak ile "
+"ilgilidir: %s "
 
 #: ../lib/Custom/FlyTypeAddEdit.php:38
 #, php-format
@@ -1703,8 +1695,8 @@ msgid ""
 "The following airplane types could not be deleted because they are "
 "associated to a service or an existing airplane: %s"
 msgstr ""
-"Takip eden uçak tipleri silinemeyebilir çünkü onlar bir service veya var "
-"olan bir uçak ile ilgilidir: %s "
+"Bu uçak tipleri silinemeyebilir çünkü onlar bir service veya var olan bir "
+"uçak ile ilgilidir: %s "
 
 #: ../lib/Custom/FlyTypeAddEdit.php:39
 msgid "Selected items were successfully deleted. "
@@ -1716,8 +1708,8 @@ msgid ""
 "The following account could not be deleted because it is associated either "
 "to a VAT or an accounting type or an event type: %s"
 msgstr ""
-"Takip eden hesap silinemyebilir çünkü o ya bir KDV veya hesap tipi veya bir "
-"olay tipi ile ilişkilidir: %s"
+"Bu hesap silinemyebilir çünkü  bir KDV veya hesap tipi veya bir olay tipi "
+"ile ilişkilidir: %s"
 
 #: ../lib/Custom/AccountAddEdit.php:44
 #, php-format
@@ -1725,8 +1717,8 @@ msgid ""
 "The following accounts could not be deleted because they are associated "
 "either to a VAT or an accounting type or an event type: %s"
 msgstr ""
-"Takip eden hesaplar silinemyebilir çünkü onlar ya bir KDV veya hesap tipi "
-"veya bir olay tipi ile ilişkilidir: %s"
+"Bu hesaplar silinemyebilir çünkü onlar bir KDV veya hesap tipi veya bir olay "
+"tipi ile ilişkilidir: %s"
 
 #: ../lib/Custom/AccountAddEdit.php:84
 msgid "Expense types"
@@ -1755,8 +1747,8 @@ msgid ""
 "The following accounting type could not be deleted because it is associated "
 "either to a customer or to an account: %s"
 msgstr ""
-"Takip eden muhasebe tipi silinemeyebilir çünkü o ya bir müşteri ile veya bir "
-"hesap ile ilişkilidir: %s"
+"Bu muhasebe tipi silinemeyebilir çünkü  bir müşteri ile veya bir hesap ile "
+"ilişkilidir: %s"
 
 #: ../lib/Custom/AccountingTypeAddEdit.php:38
 #, php-format
@@ -1764,8 +1756,8 @@ msgid ""
 "The following accounting types could not be deleted because they are "
 "associated either to a customer or to an account: %s"
 msgstr ""
-"Takip eden muhasebe tipleri silinemeyebilir çünkü onlar ya bir müşteri ile "
-"veya bir hesap ile ilişkilidir: %s"
+"Bu muhasebe tipleri silinemeyebilir çünkü  bir müşteri ile veya bir hesap "
+"ile ilişkilidir: %s"
 
 #: ../lib/Custom/AccountingTypeAddEdit.php:76
 msgid "List of actors associated to the accounting model"
@@ -1781,21 +1773,21 @@ msgstr "Kullanıcı için alarm ayarlarını güncelle"
 #: ../lib/Objects/_RTWModel.php:2483 ../lib/DocumentGenerator.php:3822
 #: ../lib/DocumentGenerator.php:3971 ../SalesmenCommission.php:64
 msgid "Season"
-msgstr ""
+msgstr "Sezon"
 
 #: ../lib/Custom/RTWModelForLookbookGrid.php:73
 #: ../lib/Custom/RTWModelForLookbookGrid.php:74
 #: ../lib/Objects/_RTWModel.php:2509 ../lib/Objects/_RTWModel.php:2510
 #: ../lib/DocumentGenerator.php:3833 ../lib/DocumentGenerator.php:4001
 msgid "Style number"
-msgstr ""
+msgstr "Stil numarası"
 
 #: ../lib/Custom/RTWModelForLookbookGrid.php:82
 #: ../lib/Custom/RTWModelForLookbookGrid.php:83
 #: ../lib/Custom/SellingPricesGrid.php:166 ../lib/Objects/_RTWModel.php:2500
 #: ../lib/Objects/_RTWModel.php:2501 ../lib/DocumentGenerator.php:3973
 msgid "Press name"
-msgstr ""
+msgstr "Baskı ismi"
 
 #: ../lib/Custom/RTWModelForLookbookGrid.php:118
 #: ../lib/Custom/SellingPricesGrid.php:106
@@ -1803,41 +1795,40 @@ msgstr ""
 #: ../lib/Objects/PriceByCurrency.php:520
 #: ../lib/Objects/PriceByCurrency.php:521 ../JS_Messages.php:316 void:1
 msgid "Pricing zone"
-msgstr ""
+msgstr "Fiyat bölgesi"
 
 #: ../lib/Custom/RTWModelForLookbookGrid.php:134
 msgid "Print lookbook"
-msgstr ""
+msgstr "Log defteri yazdır"
 
 #: ../lib/Custom/UploadedDocumentAddEdit.php:66
 msgid "File to upload"
-msgstr ""
+msgstr "Veri yükleme dosyası"
 
 #: ../lib/Custom/CustomerSituationAddEdit.php:100
 msgid ""
 "The following situations cannot be deleted because they are link to one or "
 "more customers"
 msgstr ""
-"Takip eden durumlar silinemez çünkü onlar bir veya daha çok müşterilere "
-"bağlıdır"
+"Bu durumlar silinemez çünkü onlar bir veya daha çok müşterilere bağlıdır"
 
 #: ../lib/Custom/ThemeAddEdit.php:37
 #, php-format
 msgid ""
 "The following theme could not be deleted because it is associated to a "
 "question model: %s"
-msgstr "Takipeden tema silinemez çünkü o soru modeliyle iligilidir: %s"
+msgstr "Bu tema silinemez çünkü o soru modeliyle iligilidir: %s"
 
 #: ../lib/Custom/ThemeAddEdit.php:38
 #, php-format
 msgid ""
 "The following themes could not be deleted because they are associated to a "
 "question model: %s"
-msgstr "Takipeden temalar silinemez çünkü onlar soru modeliyle iligilidir: %s"
+msgstr "Bu temalar silinemez çünkü onlar soru modeliyle iligilidir: %s"
 
 #: ../lib/Custom/ProductPriceAddEdit.php:72
 msgid "You can select another supplier to edit his prices"
-msgstr ""
+msgstr "Diğer bir tedarikçi seçip fiyatları düzenleyebilirsin"
 
 #: ../lib/Custom/ProductPriceAddEdit.php:145
 #, php-format
@@ -1847,7 +1838,7 @@ msgstr ""
 #: ../lib/Custom/ProductPriceAddEdit.php:146 ../ProductList.php:183
 #: ../menu.inc.php:490 ../menu.inc.php:492
 msgid "Supplier prices"
-msgstr ""
+msgstr "Tedarikçi fiyatları"
 
 #: ../lib/Custom/ProductPriceAddEdit.php:148
 #, php-format
@@ -1859,7 +1850,7 @@ msgstr ""
 #: ../lib/Custom/SellingPricesGrid.php:54 ../ProductList.php:177
 #: ../menu.inc.php:484 ../menu.inc.php:486
 msgid "Selling prices"
-msgstr ""
+msgstr "Satış fiyatları"
 
 #: ../lib/Custom/GenericActorAddEdit.php:47
 msgid "Add or update generic actor"
@@ -1884,8 +1875,8 @@ msgid ""
 "The following category could not be deleted because it is linked to expenses "
 "or receipts or to others categories: %s"
 msgstr ""
-"Takip eden kategori silinemeyebilir çünkü o giderlere veya makbuzlara veya "
-"diğer kategorilere bağlıdır: %s "
+"Bu kategori silinemeyebilir çünkü  giderlere veya makbuzlara veya diğer "
+"kategorilere bağlıdır: %s "
 
 #: ../lib/Custom/FlowCategoryAddEdit.php:38
 #, php-format
@@ -1893,8 +1884,8 @@ msgid ""
 "The following categories could not be deleted because they are linked to "
 "expenses or receipts or to others categories: %s"
 msgstr ""
-"Takip eden kategoriler silinemeyebilir çünkü onlar giderlere veya makbuzlara "
-"veya diğer kategorilere bağlıdır: %s "
+"Bu kategoriler silinemeyebilir çünkü onlar giderlere veya makbuzlara veya "
+"diğer kategorilere bağlıdır: %s "
 
 #: ../lib/Custom/FlowCategoryAddEdit.php:52
 msgid "Expenses or receipts linked to the category."
@@ -1909,8 +1900,7 @@ msgstr "Kullanıcılar bu alarmı kabul etmek için set etti"
 msgid ""
 "The following question could not be deleted because it is associated to a "
 "paragraph model: %s"
-msgstr ""
-"Takip eden soru silinemeyebilir çünkü o bir pargraf modelle ilgilidir: %s"
+msgstr "Bu soru silinemeyebilir çünkü o bir pargraf modelle ilgilidir: %s"
 
 #: ../lib/Custom/QuestionAddEdit.php:38
 #, php-format
@@ -1918,8 +1908,7 @@ msgid ""
 "The following questions could not be deleted because they are associated to "
 "a paragraph model: %s"
 msgstr ""
-"Takip eden sorular silinemeyebilir çünkü onlar bir paragraf modelle "
-"ilgilidir: %s"
+"Bu sorular silinemeyebilir çünkü onlar bir paragraf modelle ilgilidir: %s"
 
 #: ../lib/Custom/PrestationCostGrid.php:53 ../lib/Objects/_Chain.php:245
 msgid "products"
@@ -1932,12 +1921,12 @@ msgstr "Uçak tipleri"
 #: ../lib/Custom/PrestationCostGrid.php:65
 #, php-format
 msgid "Some prices by %s are already defined for this service."
-msgstr "Bazı fiyatlar %s tarafından bu hizmet için zaten belirlendi."
+msgstr "%s tarafından bazı fiyatlar bu hizmet için zaten belirlendi."
 
 #: ../lib/Custom/PrestationCostGrid.php:77
 #, php-format
 msgid "List of prices by %s of service"
-msgstr "%s servisi tarafından fiyatların listesi "
+msgstr "%s servisi tarafından belirlenen fiyatların listesi "
 
 #: ../lib/Custom/ChainGrid.php:78 ../ProductList.php:196
 msgid "Assign to chain"
@@ -1954,6 +1943,8 @@ msgstr "Zincir operasyonları and görevler"
 #: ../lib/Custom/DocumentAppendixAddEdit.php:72
 msgid "You must provide either a title and body or an image, but not both."
 msgstr ""
+"Bir başlık ve açıklama veya bir resim sağlamalısınız, fakat ikisini birarada "
+"değil."
 
 #: ../lib/Custom/SupplierPricesGrid.php:79
 #: ../lib/Custom/SupplierPricesGrid.php:80
@@ -1973,7 +1964,7 @@ msgstr "Fiyat"
 #: ../lib/Objects/PriceByCurrency.php:474 ../lib/DocumentGenerator.php:4007
 #: ../JS_Messages.php:318
 msgid "Recommended price"
-msgstr ""
+msgstr "Önerilen fiyat"
 
 #: ../lib/Scheduler/Scheduler.php:125
 msgid "Chain is not activated."
@@ -1986,7 +1977,7 @@ msgstr "Zincir bitiş talimatına sahip değildir"
 #: ../lib/Scheduler/Scheduler.php:140
 msgid "A class chain must have as deadline task the flight task."
 msgstr ""
-"Bir grup zincir bitiş tarihi talimatı gibi uçuş talimatınada sahip olmak "
+"Bir grup zinciri bitiş tarihi talimatı gibi uçuş talimatınada sahip olmak "
 "zorundadır."
 
 #: ../lib/Scheduler/Scheduler.php:185
@@ -2012,15 +2003,15 @@ msgstr "Operasyonla ilgili partner için program bulunamadı "
 #: ../lib/Scheduler/Scheduler.php:524 ../lib/Scheduler/Scheduler.php:598
 #, php-format
 msgid "Task %s cannot be scheduled because its duration is undefined."
-msgstr "Görev %s programlanamaz çünkü onun süreçi tanımlanmadı."
+msgstr "Görev %s planlanamaz çünkü süreci tanımlanmadı."
 
 #: ../lib/Scheduler/Scheduler.php:634
 msgid "Wrong type of anchor for deadline task \""
-msgstr "Bitiş tarihi için yanlış anchor tipi   \""
+msgstr "Bitiş tarihi için yanlış ankor tipi   \""
 
 #: ../lib/Scheduler/Scheduler.php:680 ../lib/Scheduler/Scheduler.php:703
 msgid "Could not schedule interruptible task of "
-msgstr "Ara verilen görev programlanamayabilir"
+msgstr "Ara verilen görev planlanamaz"
 
 #: ../lib/Scheduler/Scheduler.php:681 ../lib/Scheduler/Scheduler.php:704
 #: ../UnavailabilityPlanning.php:463
@@ -2033,16 +2024,16 @@ msgid ""
 "Actor does not have a time slot long enough to execute non interruptible "
 "task. (taskDuration = %s, date = %s)"
 msgstr ""
-"Ara verilmeyen-sureli görevleri gerçekleştirmek için ortak yeterli uzunlukta "
-"bir tarih dilimine sahip değildir. (görevSüresi = %s, tarih = %s)"
+"Süreli görevleri gerçekleştirmek için ortak yeterli uzunlukta bir tarih "
+"dilimine sahip değildir. (görevSüresi = %s, tarih = %s)"
 
 #: ../lib/Scheduler/Scheduler.php:829 ../lib/Scheduler/Scheduler.php:841
 msgid ""
 "Actor does not have a time slot long enough to execute non interruptible "
 "task "
 msgstr ""
-"Ara verilmeyen-sureli görevleri gerçekleştirmek için ortak yeterli uzunlukta "
-"bir tarih dilimine sahip değildir."
+"Süreli görevleri gerçekleştirmek için ortak yeterli uzunlukta bir tarih "
+"dilimine sahip değildir."
 
 #: ../lib/Scheduler/Scheduler.php:842
 msgid "from "
@@ -2051,7 +2042,7 @@ msgstr "from "
 #: ../lib/Scheduler/Scheduler.php:865
 msgid "Actor does not have a time slot long enough to execute deadline task "
 msgstr ""
-"Bitiş tarihi görevini gerçekleştirmek için ortak yeterli uzunlukta bir tarih "
+"Son gün talimatlarını gerçekleştirmek için ortak yeterli uzunlukta bir tarih "
 "dilimine sahip değildi"
 
 #: ../lib/CustomGrid/Actions/GridActionRTWModelValidateSelected.php:76
@@ -2060,6 +2051,8 @@ msgid ""
 "All products combinations were successfully created. Here is the list of "
 "created products: %s"
 msgstr ""
+"Tüm ürün kombinasyonları başarılı bir şekilde oluşturuldu. Oluşturulan "
+"ürünlerin listesi: %s"
 
 #: ../lib/CustomGrid/Columns/GridColumnACOProductTypeName.php:54
 #: ../lib/CustomGrid/Columns/GridColumnPackingWeightWOOpeTaskList.php:54
@@ -2137,7 +2130,7 @@ msgstr "Link tipi"
 
 #: ../lib/CustomGrid/Columns/GridColumnProductSubstitutionLink.php:62
 msgid "Replaceable"
-msgstr "Yeri değiştirilebilir"
+msgstr "Değiştirilebilir"
 
 #: ../lib/CustomGrid/Columns/GridColumnProductSubstitutionLink.php:63
 msgid "Interchangeable"
@@ -2145,15 +2138,15 @@ msgstr "Değiştokuş edilebilir"
 
 #: ../lib/CustomGrid/Columns/GridColumnDeliveredQuantityRemaining.php:60
 msgid "Movement entirely executed"
-msgstr "Faaliyet tamamen başarılmıştır"
+msgstr "Faaliyet tamamen gerçekleştirilmiştir"
 
 #: ../lib/CustomGrid/Columns/GridColumnActivatedChainTaskEdit.php:95
 msgid "Afficher les instructions de travail"
-msgstr ""
+msgstr "Çalışma talimatlarını yayınla"
 
 #: ../lib/CustomGrid/Columns/GridColumnActivatedChainTaskEdit.php:98
 msgid "instructions"
-msgstr ""
+msgstr "talimatlar"
 
 #: ../lib/CustomGrid/Columns/GridColumnACHProductRefAndQty.php:49
 #: ../lib/CustomGrid/Columns/GridColumnACHProductRefAndQty.php:50
@@ -2169,17 +2162,17 @@ msgstr "Müşteri siparişi bulunamadı"
 #: ../lib/CustomGrid/Columns/GridColumnCronTaskSchedule.php:55
 #, php-format
 msgid "Every %02d of the month at %02dH00"
-msgstr "Her %02d ayin %02dH00 de"
+msgstr "Her %02d ayın %02dH00  'de"
 
 #: ../lib/CustomGrid/Columns/GridColumnCronTaskSchedule.php:61
 #, php-format
 msgid "every  %s at %02dH00"
-msgstr "every %s at %02dH00"
+msgstr "her %s  %02dH00 'de"
 
 #: ../lib/CustomGrid/Columns/GridColumnCronTaskSchedule.php:64
 #, php-format
 msgid "Everyday at %02dH00"
-msgstr "Hergün %02dH00 de"
+msgstr "Hergün t %02dH00  'de"
 
 #: ../lib/CustomGrid/Columns/GridColumnActivatedChainTaskHistory.php:95
 #, php-format
@@ -2193,11 +2186,11 @@ msgstr "detaylar"
 
 #: ../lib/CustomGrid/Columns/GridColumnCommandProduct.php:50
 msgid "Display deliveries state"
-msgstr "Teslimat şehrini görüntüle"
+msgstr "Teslimat durumlarını görüntüle"
 
 #: ../lib/CustomGrid/Columns/GridColumnCommandProduct.php:58
 msgid "This command was closed."
-msgstr "Bu komut kapanmiştir."
+msgstr "Bu komut kapanmıştır."
 
 #: ../lib/CustomGrid/Columns/GridColumnProductHandingByCategoryAddEdit.php:65
 #: ../../../pwak/trunk/lib/GenericMessages.php:30
@@ -2239,7 +2232,7 @@ msgstr "Satış teklifi"
 #: ../lib/CustomGrid/Columns/GridColumnProductCommandQuantity.php:115
 #: ../lib/DocumentGenerator.php:3371
 msgid "by"
-msgstr "ile"
+msgstr "by"
 
 #: ../lib/CustomGrid/Columns/GridColumnInvoiceAddEditBaseReference.php:83
 msgid "This reference was subject to a reinstatement, "
@@ -2303,15 +2296,15 @@ msgstr "Deniz"
 
 #: ../lib/Objects/Operation.php:357
 msgid "Various"
-msgstr ""
+msgstr "Çeşitli"
 
 #: ../lib/Objects/Operation.php:358
 msgid "Production"
-msgstr ""
+msgstr "Üretim"
 
 #: ../lib/Objects/Operation.php:359
 msgid "Consulting"
-msgstr ""
+msgstr "Danışmanlık"
 
 #: ../lib/Objects/Operation.php:532 ../ActivatedChainList.php:105
 #: ../WorkOrderList.php:160 ../ActivatedChainOperationList.php:99 void:1
@@ -2321,7 +2314,7 @@ msgstr "Operasyonlar"
 #: ../lib/Objects/Operation.php:675 ../lib/Objects/Operation.php:676
 #: ../lib/Objects/Task.php:614 ../lib/Objects/Task.php:615
 msgid "Symbol"
-msgstr ""
+msgstr "Sembol"
 
 #: ../lib/Objects/Operation.php:693 ../lib/Objects/Operation.php:694
 #: ../lib/Objects/_ActivatedChainTask.php:2582 ../lib/Objects/Task.php:477
@@ -2358,7 +2351,7 @@ msgstr "Herhangibir"
 #: ../CustomerCatalog.php:280 ../CustomerCatalog.php:297
 #: ../../../pwak/trunk/lib/GenericMessages.php:76
 msgid "Select one or more items"
-msgstr "Bir veya daha fazla öge seç"
+msgstr "Bir veya daha fazla öğe seçiniz"
 
 #: ../lib/Objects/ProductKind.php:209
 msgid "Product caracteristics"
@@ -2417,7 +2410,7 @@ msgstr "Lisans tipi Ekle/Güncelle"
 
 #: ../lib/Objects/Alert.php:146
 msgid "You must use the method Alert::prepare() before sending."
-msgstr "Alarm metodu kullanmak zorundasınız::hazırla() göndermeden önce."
+msgstr "Alarm metodu kullanmasınız::hazırla() göndermeden önce."
 
 #: ../lib/Objects/_ActorProduct.php:396
 msgid "Add/Update product references by customer"
@@ -2446,7 +2439,7 @@ msgstr "helikopter kiralama"
 
 #: ../lib/Objects/_Chain.php:304 ../lib/Objects/_RTWMaterial.php:270
 msgid "Materials"
-msgstr ""
+msgstr "Malzemeler"
 
 #: ../lib/Objects/_Chain.php:624 ../lib/Objects/_ActivatedMovement.php:182
 msgid "Created"
@@ -2474,7 +2467,7 @@ msgstr "Katalog tanımı"
 
 #: ../lib/Objects/_Chain.php:1153 ../lib/Objects/_Chain.php:1154
 msgid "Auto assign to"
-msgstr ""
+msgstr "Otomobil tayin et"
 
 #: ../lib/Objects/_Chain.php:1162 ../lib/Objects/_Chain.php:1163
 msgid "Barcode type"
@@ -2500,22 +2493,22 @@ msgstr "Oluşum tarihi"
 #: ../PrestationCommandList.php:123 ../CourseCommandList.php:74
 #: ../CourseCommandList.php:166 ../ConcreteProductList.php:55
 msgid "State"
-msgstr "Şehir"
+msgstr "Pozisyon"
 
 #: ../lib/Objects/CurrencyConverter.php:291 ../menu.inc.php:706
 #: ../menu.inc.php:708
 msgid "Currency converter"
-msgstr ""
+msgstr "Para birimi dönüştürücü"
 
 #: ../lib/Objects/CurrencyConverter.php:396
 #: ../lib/Objects/CurrencyConverter.php:397
 msgid "From currency"
-msgstr ""
+msgstr "Para biriminden"
 
 #: ../lib/Objects/CurrencyConverter.php:405
 #: ../lib/Objects/CurrencyConverter.php:406
 msgid "To currency"
-msgstr ""
+msgstr "para birimi"
 
 #: ../lib/Objects/CurrencyConverter.php:414
 #: ../lib/Objects/CurrencyConverter.php:415 ../WorkOrderList.php:181
@@ -2631,7 +2624,7 @@ msgstr "sigorta masrafları"
 
 #: ../lib/Objects/_FlowTypeItem.php:247
 msgid "packing charges"
-msgstr "amlajlama ücretleri"
+msgstr "ambalajlama ücretleri"
 
 #: ../lib/Objects/_FlowTypeItem.php:248
 msgid "forwarding charges"
@@ -2713,12 +2706,12 @@ msgstr "metre kareye göre "
 
 #: ../lib/Objects/_ActivatedChainTask.php:509 ../lib/Objects/ChainTask.php:362
 msgid "by kilowatt"
-msgstr "kilowatta göre"
+msgstr "kilowata göre"
 
 #: ../lib/Objects/_ActivatedChainTask.php:1532 ../lib/Objects/Action.php:374
 #: ../ActivatedMovementList.php:213
 msgid "To do"
-msgstr "Yapmak"
+msgstr "Gerçekleştir"
 
 #: ../lib/Objects/_ActivatedChainTask.php:1533 ../lib/Objects/Action.php:375
 #: ../lib/Objects/_ActivatedMovement.php:183
@@ -2765,7 +2758,7 @@ msgstr "normal"
 
 #: ../lib/Objects/_LEMConcreteProduct.php:248
 msgid "That caused cancellation"
-msgstr "İptale sebep oldu"
+msgstr "İptaline neden oldu"
 
 #: ../lib/Objects/_LEMConcreteProduct.php:249
 #: ../LocationExecutedMovementList.php:119
@@ -2775,7 +2768,7 @@ msgstr "İptal edildi"
 #: ../lib/Objects/AbstractDocument.php:163
 #: ../lib/Objects/DocumentModel.inc.php:50
 msgid "Command receipt"
-msgstr ""
+msgstr "Alındı komutu"
 
 #: ../lib/Objects/AbstractDocument.php:164 ../lib/Objects/Alert.const.php:171
 #: ../lib/Objects/Alert.const.php:182 ../lib/Objects/Alert.const.php:206
@@ -2826,15 +2819,15 @@ msgstr "Bu müşteri için hizmet numarası"
 
 #: ../lib/Objects/_ContactRole.php:115 ../menu.inc.php:326
 msgid "Contact roles"
-msgstr ""
+msgstr "Kontakt personel rolleri"
 
 #: ../lib/Objects/_RTWShape.php:77 ../menu.inc.php:431
 msgid "Shapes"
-msgstr ""
+msgstr "Şekiller"
 
 #: ../lib/Objects/RTWSize.php:165 ../menu.inc.php:403
 msgid "Sizes"
-msgstr ""
+msgstr "Boyutlar"
 
 #: ../lib/Objects/_AeroConcreteProduct.php:413 void:1
 msgid "Gallon"
@@ -2848,106 +2841,106 @@ msgstr "%"
 
 #: ../lib/Objects/ProductPrestationCost.php:165
 msgid "Price by products associated to the service"
-msgstr "Hizmete iliskin urunlere göre fiyat"
+msgstr "Hizmete ilişkin ürünlere göre fiyat"
 
 #: ../lib/Objects/RTWModel.php:95 ../lib/Objects/_RTWModel.php:2648
 #: ../lib/Objects/_RTWModel.php:2649 ../lib/DocumentGenerator.php:4002
 #: ../RTWCatalog.php:118
 msgid "Material 1"
-msgstr ""
+msgstr "Malzeme 1"
 
 #: ../lib/Objects/RTWModel.php:96 ../lib/Objects/_RTWModel.php:2667
 #: ../lib/Objects/_RTWModel.php:2668 ../lib/DocumentGenerator.php:4003
 #: ../RTWCatalog.php:119
 msgid "Material 2"
-msgstr ""
+msgstr "Malzeme 2"
 
 #: ../lib/Objects/RTWModel.php:97 ../lib/Objects/_RTWModel.php:2686
 #: ../lib/Objects/_RTWModel.php:2687 ../lib/DocumentGenerator.php:4004
 #: ../RTWCatalog.php:120
 msgid "Accessory 1"
-msgstr ""
+msgstr "Aksesuar 1"
 
 #: ../lib/Objects/RTWModel.php:98 ../lib/Objects/_RTWModel.php:2705
 #: ../lib/Objects/_RTWModel.php:2706 ../lib/DocumentGenerator.php:4005
 #: ../RTWCatalog.php:121
 msgid "Accessory 2"
-msgstr ""
+msgstr "Aksesuar 2"
 
 #: ../lib/Objects/RTWModel.php:102 ../lib/Objects/_RTWModel.php:2857
 #: ../lib/Objects/_RTWModel.php:2858
 msgid "Thread 1"
-msgstr ""
+msgstr "İplik 1"
 
 #: ../lib/Objects/RTWModel.php:103 ../lib/Objects/_RTWModel.php:2866
 #: ../lib/Objects/_RTWModel.php:2867
 msgid "Thread 2"
-msgstr ""
+msgstr "İplik 2"
 
 #: ../lib/Objects/RTWModel.php:107 ../lib/Objects/_RTWModel.php:2838
 #: ../lib/Objects/_RTWModel.php:2839
 msgid "Selvedge"
-msgstr ""
+msgstr "Kumaş kenarı"
 
 #: ../lib/Objects/RTWModel.php:108 ../lib/Objects/RTWModel.php:177
 #: ../lib/Objects/_RTWModel.php:2724 ../lib/Objects/_RTWModel.php:2725
 msgid "Lining"
-msgstr ""
+msgstr "Astar"
 
 #: ../lib/Objects/RTWModel.php:109 ../lib/Objects/_RTWModel.php:2743
 #: ../lib/Objects/_RTWModel.php:2744
 msgid "Insole"
-msgstr ""
+msgstr "Ayakkabı astarı"
 
 #: ../lib/Objects/RTWModel.php:110 ../lib/Objects/_RTWModel.php:2762
 #: ../lib/Objects/_RTWModel.php:2763
 msgid "Under-sole"
-msgstr ""
+msgstr "Taban altı"
 
 #: ../lib/Objects/RTWModel.php:111 ../lib/Objects/_RTWModel.php:2781
 #: ../lib/Objects/_RTWModel.php:2782
 msgid "Media planta"
-msgstr ""
+msgstr "Media planta"
 
 #: ../lib/Objects/RTWModel.php:112 ../lib/Objects/_RTWModel.php:2800
 #: ../lib/Objects/_RTWModel.php:2801
 msgid "Lagrima"
-msgstr ""
+msgstr "Lagrima"
 
 #: ../lib/Objects/RTWModel.php:113 ../lib/Objects/RTWModel.php:179
 #: ../lib/Objects/_RTWMaterial.php:153 ../lib/Objects/_RTWModel.php:2591
 #: ../lib/Objects/_RTWModel.php:2592
 msgid "Sole"
-msgstr ""
+msgstr "Taban"
 
 #: ../lib/Objects/RTWModel.php:114 ../lib/Objects/_RTWModel.php:2572
 #: ../lib/Objects/_RTWModel.php:2573
 msgid "Heel reference"
-msgstr ""
+msgstr "Topuk referansı"
 
 #: ../lib/Objects/RTWModel.php:115 ../lib/Objects/RTWModel.php:175
 #: ../lib/Objects/_RTWModel.php:2819 ../lib/Objects/_RTWModel.php:2820
 msgid "Heel covering"
-msgstr ""
+msgstr "Topuk kaplama"
 
 #: ../lib/Objects/RTWModel.php:116 ../lib/Objects/_RTWMaterial.php:152
 #: ../lib/Objects/_RTWModel.php:2875 ../lib/Objects/_RTWModel.php:2876
 msgid "Bamboo"
-msgstr ""
+msgstr "Bambu"
 
 #: ../lib/Objects/RTWModel.php:117 ../lib/Objects/_RTWModel.php:2610
 #: ../lib/Objects/_RTWModel.php:2611
 msgid "Box"
-msgstr ""
+msgstr "Box"
 
 #: ../lib/Objects/RTWModel.php:118 ../lib/Objects/_RTWModel.php:2629
 #: ../lib/Objects/_RTWModel.php:2630
 msgid "Hand bag"
-msgstr ""
+msgstr "El çantası"
 
 #: ../lib/Objects/RTWModel.php:172
 msgid "Upper"
-msgstr ""
+msgstr "Üst"
 
 #: ../lib/Objects/Component.php:213 ../lib/Objects/Component.php:254
 #: ../NomenclatureDuplicate.php:105 ../NomenclatureAddEdit.php:208
@@ -2969,7 +2962,7 @@ msgstr "Miktar"
 
 #: ../lib/Objects/_RTWLabel.php:77 ../menu.inc.php:445
 msgid "Labels (griffes)"
-msgstr ""
+msgstr "Etiketler (bilgiler)"
 
 #: ../lib/Objects/CustomerProperties.php:139
 msgid "Major emergency"
@@ -2993,11 +2986,11 @@ msgstr "Hafif aciliyet"
 
 #: ../lib/Objects/_RTWMaterial.php:147
 msgid "Raw material"
-msgstr ""
+msgstr "Ham malzeme"
 
 #: ../lib/Objects/_RTWMaterial.php:148
 msgid "Accessory"
-msgstr ""
+msgstr "Aksesuar"
 
 #: ../lib/Objects/_RTWMaterial.php:149 void:1
 msgid "Packaging"
@@ -3005,27 +2998,27 @@ msgstr "Paketleme"
 
 #: ../lib/Objects/_RTWMaterial.php:150
 msgid "Thread"
-msgstr ""
+msgstr "İplik"
 
 #: ../lib/Objects/_RTWMaterial.php:151
 msgid "Heel"
-msgstr ""
+msgstr "opuk"
 
 #: ../lib/Objects/_RTWMaterial.php:482 ../lib/Objects/_RTWMaterial.php:483
 msgid "Scientific terminology"
-msgstr ""
+msgstr "Bilimsel terminoloji"
 
 #: ../lib/Objects/_RTWMaterial.php:491 ../lib/Objects/_RTWMaterial.php:492
 msgid "MaterialType"
-msgstr ""
+msgstr "Malzeme Tipi"
 
 #: ../lib/Objects/_RTWMaterial.php:500 ../lib/Objects/_RTWMaterial.php:501
 msgid "Color"
-msgstr ""
+msgstr "Renk"
 
 #: ../lib/Objects/_RTWMaterial.php:509 ../lib/Objects/_RTWMaterial.php:510
 msgid "origin"
-msgstr ""
+msgstr "orijin"
 
 #: ../lib/Objects/ForecastFlow.php:390
 msgid "Forecast flow"
@@ -3144,11 +3137,11 @@ msgstr "Parçaların toplam sayısı"
 #: ../lib/Objects/Actor.php:188
 #, php-format
 msgid "No planning assigned to site %s"
-msgstr "Bölgeye hiçbir planlama tahsis edilmedi %s"
+msgstr "%s bölgesine hiçbir planlama tahsis edilmedi "
 
 #: ../lib/Objects/_RTWColor.php:109 ../menu.inc.php:396
 msgid "Colors"
-msgstr ""
+msgstr "Renkler"
 
 #: ../lib/Objects/PrestationCustomer.php:72
 msgid "An actor can only be associated to the same service once"
@@ -3212,7 +3205,7 @@ msgstr "Basit alarm gönder"
 
 #: ../lib/Objects/_SupplierCustomer.php:365 ../DocumentList.php:126 void:1
 msgid "Send an invoice by email"
-msgstr "Email ile bir fatura gönder"
+msgstr "E-mail ile bir fatura gönder"
 
 #: ../lib/Objects/_SupplierCustomer.php:418 void:1
 msgid "Billable"
@@ -3241,7 +3234,7 @@ msgstr "Aktif"
 #: ../lib/Objects/_ActivatedChainOperation.php:817
 #: ../lib/Objects/_Command.php:849
 msgid "Partially charged"
-msgstr "Kısmi faturalandı"
+msgstr "Kısmen faturalanan"
 
 #: ../lib/Objects/PrestationCommand.php:109
 #: ../lib/Objects/Command.const.php:45 ../lib/Objects/Command.const.php:56
@@ -3251,13 +3244,13 @@ msgstr "Kısmi faturalandı"
 #: ../lib/Objects/_ActivatedChainOperation.php:816
 #: ../lib/Objects/_Command.php:850
 msgid "Completely charged"
-msgstr "Tamamen faturalandı"
+msgstr "Tamamen faturalanan"
 
 #: ../lib/Objects/PrestationCommand.php:110
 #: ../lib/Objects/Command.const.php:57 ../lib/Objects/Command.const.php:76
 #: ../lib/Objects/_Command.php:851
 msgid "Partially paid"
-msgstr "Kısmi ödenen"
+msgstr "Kısmen ödenen"
 
 #: ../lib/Objects/PrestationCommand.php:111
 #: ../lib/Objects/Command.const.php:58 ../lib/Objects/Command.const.php:77
@@ -3309,7 +3302,7 @@ msgstr "Muhasebe modeli"
 
 #: ../lib/Objects/_Account.php:847 ../lib/Objects/_Account.php:848
 msgid "FlowType"
-msgstr "AkışTürü"
+msgstr ""
 
 #: ../lib/Objects/_Account.php:856 ../lib/Objects/_Account.php:857
 #: ../lib/Objects/_Account.php:862
@@ -3342,7 +3335,7 @@ msgstr "Dağıtım anahtarı"
 
 #: ../lib/Objects/Alert.const.php:92
 msgid "Virtual stock reached"
-msgstr "Sanal stok aştı"
+msgstr "Erişilen sanal stok"
 
 #: ../lib/Objects/Alert.const.php:93 ../lib/Objects/Alert.const.php:113
 msgid "Virtual stock for product"
@@ -3381,19 +3374,19 @@ msgstr "Ürün referansının stok miktarı"
 
 #: ../lib/Objects/Alert.const.php:112
 msgid "Virtual stock reaches zero."
-msgstr "Sanal stok sıfıra ulaşdı."
+msgstr "Sanal stok sıfıra ulaştı."
 
 #: ../lib/Objects/Alert.const.php:114
 msgid "reached zero."
-msgstr "sıfıra ulaşıldı."
+msgstr "sıfıra ulaştı."
 
 #: ../lib/Objects/Alert.const.php:121
 msgid "Stock reaches zero."
-msgstr "Stok sıfıra ulaşdı."
+msgstr "Stok sıfıra ulaşır."
 
 #: ../lib/Objects/Alert.const.php:123
 msgid "reached its minimum level, which is zero."
-msgstr "minimum seviyeye erişildi, oda sıfırdır."
+msgstr "Sıfır olan minimum seviyeye erişildi."
 
 #: ../lib/Objects/Alert.const.php:130
 msgid "Partial import. Order"
@@ -3401,16 +3394,16 @@ msgstr "Kısmi ithalat. Sipariş"
 
 #: ../lib/Objects/Alert.const.php:133 ../lib/Objects/Alert.const.php:142
 msgid "Partial movement, for reference"
-msgstr "Kısmi taşıma, referans için"
+msgstr "Kısmi faaliyet, referans için"
 
 #: ../lib/Objects/Alert.const.php:134
 msgid "There was"
-msgstr "Var olan"
+msgstr "There was"
 
 #: ../lib/Objects/Alert.const.php:135 ../lib/Objects/Alert.const.php:144
 #: ../lib/Objects/Alert.const.php:226 ../lib/Objects/Alert.const.php:368
 msgid "moved units for"
-msgstr "Taşınan birimler için"
+msgstr "taşınan birimler "
 
 #: ../lib/Objects/Alert.const.php:135 ../lib/Objects/Alert.const.php:144
 #: ../lib/Objects/Alert.const.php:227
@@ -3660,7 +3653,7 @@ msgstr "Sipariş silme"
 
 #: ../lib/Objects/Alert.const.php:315
 msgid "have just been deleted by the user"
-msgstr "User tarafından az once silindi"
+msgstr "user tarafından az önce silindi"
 
 #: ../lib/Objects/Alert.const.php:327
 msgid "Confirmation of your booking of the"
@@ -3668,7 +3661,7 @@ msgstr "Rezervasyon onayı"
 
 #: ../lib/Objects/Alert.const.php:328
 msgid "ref."
-msgstr "referans"
+msgstr "ref."
 
 #: ../lib/Objects/Alert.const.php:330
 msgid "Your booking of the"
@@ -3793,7 +3786,7 @@ msgstr "Lütfen müşteri kredi notunun yayınlanabilirliğini teyit et."
 
 #: ../lib/Objects/Alert.const.php:397 void:1
 msgid "Reference substitution"
-msgstr "Yerine konan referans"
+msgstr "Referans yer değiştirme "
 
 #: ../lib/Objects/Alert.const.php:398
 msgid "Expected reference"
@@ -3871,7 +3864,7 @@ msgstr "Servisimizi kullanığınız için teşekkür ederiz."
 
 #: ../lib/Objects/Alert.const.php:447
 msgid "Please find enclosed the invoice number "
-msgstr "Makbuz numarası ilişiktedir"
+msgstr "Fatura numarası ilişiktedir"
 
 #: ../lib/Objects/Alert.const.php:454
 msgid "Customers without order since 30 days"
@@ -3880,7 +3873,7 @@ msgstr "30 günden beri sipariş vermeyen müşteriler"
 #: ../lib/Objects/Alert.const.php:455
 msgid ""
 "The following customers did not place an order since 30 days: {$customerList}"
-msgstr "Takip eden müşteriler 30 günden beri sipariş vermedi: {$customerList}"
+msgstr "Bu müşteriler 30 günden beri sipariş vermedi: {$customerList}"
 
 #: ../lib/Objects/Alert.const.php:459
 msgid "Forecast of expenses"
@@ -3924,55 +3917,63 @@ msgstr "Aşağıdaki gelirlerin toplamı tahmin edilenden daha küçüktür:"
 
 #: ../lib/Objects/Alert.const.php:481
 msgid "Document upload confirmation"
-msgstr ""
+msgstr "Belge yükleme onayı"
 
 #: ../lib/Objects/Alert.const.php:482
 msgid "Document \"{$name}\" was uploaded by user \"{$user}\" on {$date}"
 msgstr ""
+"Belge \"{$name}\" kullanıcı \"{$user}\" tarafından {$date} tarihinde yüklendi"
 
 #: ../lib/Objects/Alert.const.php:486
 msgid "Document update confirmation"
-msgstr ""
+msgstr "Belge yükleme onayı"
 
 #: ../lib/Objects/Alert.const.php:487
 msgid "Document \"{$name}\" was updated by user \"{$user}\" on {$date}"
 msgstr ""
+"Belge \"{$name}\" kullanıcı \"{$user}\" tarafından {$date} tarihinde yüklendi"
 
 #: ../lib/Objects/Alert.const.php:491
 msgid "Document delete confirmation"
-msgstr ""
+msgstr "Belge silme onayı"
 
 #: ../lib/Objects/Alert.const.php:492
 msgid "Document \"{$name}\" was deleted by user \"{$user}\" on {$date}"
 msgstr ""
+"Belge \"{$name}\" kullanıcı \"{$user}\" tarafından {$date} tarihinde silindi"
 
 #: ../lib/Objects/Alert.const.php:496
 msgid "Document assignment confirmation"
-msgstr ""
+msgstr "Belge tahsis onayı"
 
 #: ../lib/Objects/Alert.const.php:497
 msgid ""
 "Document \"{$name}\" was assigned to task \"{$task}\" of order \"{$order}\" "
 "by user \"{$user}\" on {$date}"
 msgstr ""
+"Belge \"{$name}\" kullanıcı \"{$user}\" tarafından {$date} tarihinde "
+"\"{$order}\" sipariş \"{$görev}\" görevine tayin edildi"
 
 #: ../lib/Objects/Alert.const.php:501
 msgid "Document unassignment confirmation"
-msgstr ""
+msgstr "Belge atamama onayı"
 
 #: ../lib/Objects/Alert.const.php:502
 msgid ""
 "Document \"{$name}\" was unassigned from its task by user \"{$user}\" on "
 "{$date}"
 msgstr ""
+"Belge \"{$name}\" kullanıcı \"{$user}\" tarafından {$date} tarihinde "
+"görevine tayin edilmedi"
 
 #: ../lib/Objects/Alert.const.php:506
 msgid "Overdue tasks for customer {$customerName}, order {$commandNo}"
 msgstr ""
+"Müşteri {$customerName}, sipariş {$commandNo} için vadesi geçmiş görevler"
 
 #: ../lib/Objects/Alert.const.php:512
 msgid "Scheduled end"
-msgstr ""
+msgstr "Planlama sonu"
 
 #: ../lib/Objects/Alert.const.php:507
 msgid ""
@@ -3981,6 +3982,10 @@ msgid ""
 "            \t<tr>\n"
 "            \t\t<th>"
 msgstr ""
+"Bu müşteri için tarihi geçmiş görevler:</p> \n"
+"              <table border=\"1\" width=\"100%\">\n"
+"            \t<tr>\n"
+"            \t\t<th>"
 
 #: ../lib/Objects/Command.const.php:40 ../lib/Objects/Command.const.php:52
 #: ../lib/Objects/Command.const.php:63 ../lib/Objects/Command.const.php:97
@@ -4024,7 +4029,7 @@ msgstr "Kilitlenen sipariş"
 #: ../ActivatedChainTaskList.php:156 ../CommandList.php:143
 #: ../PrestationCommandList.php:71
 msgid "Select one or more states"
-msgstr "Bir veya daha fazla şehir seçiniz "
+msgstr "Bir veya daha fazla durum seçiniz "
 
 #: ../lib/Objects/Command.const.php:54 ../menu.inc.php:974
 msgid "Completed flights"
@@ -4043,7 +4048,7 @@ msgstr "Tamamlanan uçuş"
 #: ../lib/Objects/Command.const.php:83
 #, php-format
 msgid "Your %s was successfully saved with reference: \"%s\""
-msgstr ""
+msgstr "%s bu referans ile \"%s\" başarı ile kaydedildi"
 
 #: ../lib/Objects/Command.const.php:84
 #, php-format
@@ -4100,7 +4105,7 @@ msgstr "Hedeflenen müşteri kategorisi"
 
 #: ../lib/Objects/RTWHeelHeight.php:77 ../menu.inc.php:452
 msgid "Heel heights"
-msgstr ""
+msgstr "Topuk yüksekliği"
 
 #: ../lib/Objects/_ProductQuantityByCategory.php:137
 msgid "any"
@@ -4113,7 +4118,7 @@ msgstr "çok"
 #: ../lib/Objects/RTWProduct.php:76 ../lib/Objects/_RTWProduct.php:302
 #: ../lib/Objects/_RTWProduct.php:303
 msgid "Size"
-msgstr ""
+msgstr "Boyuk"
 
 #: ../lib/Objects/Action.php:377
 msgid "In alert"
@@ -4146,9 +4151,7 @@ msgstr "günler"
 msgid ""
 "You must provide a quantity in \"Upper bound\" field to a price by unit for "
 "a quantity."
-msgstr ""
-"\" Üst limit\" alanı içine birime göre bir miktar icin bir fiyat girmek "
-"zorundasınız. "
+msgstr "\" Üst limit\" alanına bir miktar için birim fiyat girmelisiniz. "
 
 #: ../lib/Objects/CostRange.php:142
 msgid "You cannot define a fixed price for a store."
@@ -4172,7 +4175,7 @@ msgstr "Bulvar"
 
 #: ../lib/Objects/_ActorBankDetail.php:239 ../lib/Objects/_Site.php:339
 msgid "Lane"
-msgstr "Şerit"
+msgstr "Dar sokak"
 
 #: ../lib/Objects/_ActorBankDetail.php:240 ../lib/Objects/_Site.php:340
 msgid "Blind alley"
@@ -4208,17 +4211,17 @@ msgstr "Belge tipi"
 #: ../lib/Objects/_UploadedDocument.php:619
 #: ../lib/Objects/_UploadedDocument.php:620
 msgid "File type"
-msgstr ""
+msgstr "Dosya tipi"
 
 #: ../lib/Objects/_UploadedDocument.php:646
 #: ../lib/Objects/_UploadedDocument.php:647
 msgid "Upload date"
-msgstr ""
+msgstr "Yükleme tarihi"
 
 #: ../lib/Objects/_UploadedDocument.php:655
 #: ../lib/Objects/_UploadedDocument.php:656
 msgid "Last modification date"
-msgstr ""
+msgstr "Son değişim tarihi"
 
 #: ../lib/Objects/Catalog.const.php:49 ../menu.inc.php:278 ../menu.inc.php:282
 #: ../menu.inc.php:284
@@ -4263,15 +4266,15 @@ msgstr "Vaziyet"
 
 #: ../lib/Objects/CustomerSituation.php:389
 msgid "Time (in month) when ..."
-msgstr "Zaman (ay içinde) ne zaman ..."
+msgstr "Zaman (ay) ne zaman ..."
 
 #: ../lib/Objects/CustomerSituation.php:390
 msgid "Time (in month)"
-msgstr "Zaman (ay içinde)"
+msgstr "Zaman (ay)"
 
 #: ../lib/Objects/_ConcreteProduct.php:541
 msgid "up"
-msgstr "yukarı"
+msgstr "up"
 
 #: ../lib/Objects/_ConcreteProduct.php:542
 msgid "in fixing"
@@ -4291,7 +4294,7 @@ msgstr "kiralık "
 
 #: ../lib/Objects/Task.php:623 ../lib/Objects/Task.php:624
 msgid "To be validated"
-msgstr ""
+msgstr "Onaylanmış olan"
 
 #: ../lib/Objects/PriceByCurrency.php:511
 #: ../lib/Objects/PriceByCurrency.php:512
@@ -4349,7 +4352,7 @@ msgstr "Kategoriler"
 
 #: ../lib/Objects/Command.php:492
 msgid "replaced by"
-msgstr "ile değiştirildi"
+msgstr "tarafından değiştirildi"
 
 #: ../lib/Objects/Product.php:207 ../lib/Objects/Product.php:241
 #: ../lib/Objects/Product.php:282
@@ -4411,15 +4414,15 @@ msgstr "müşteriyi alarm durumuna ayarla"
 
 #: ../lib/Objects/_RTWSeason.php:77 ../menu.inc.php:410
 msgid "Seasons"
-msgstr ""
+msgstr "Sezon"
 
 #: ../lib/Objects/RTWElement.php:155
 msgid "Element"
-msgstr ""
+msgstr "Element"
 
 #: ../lib/Objects/_RTWConstructionType.php:77 ../menu.inc.php:417
 msgid "Construction types"
-msgstr ""
+msgstr "Yapım tipleri"
 
 #: ../lib/Objects/_CommandItem.php:417 void:1
 msgid "Length"
@@ -4436,7 +4439,7 @@ msgstr "Yükseklik"
 #: ../lib/Objects/UploadedDocument.php:65
 #, php-format
 msgid "assigned to activated chain task \"%s\"."
-msgstr ""
+msgstr "etkin zincir görevine \"%s\" atandı."
 
 #: ../lib/Objects/_Site.php:795
 msgid "Billing."
@@ -4581,15 +4584,15 @@ msgstr "Nakliye giderleri"
 
 #: ../lib/Objects/_TVA.php:201
 msgid "Other"
-msgstr ""
+msgstr "Diğer"
 
 #: ../lib/Objects/_TVA.php:203
 msgid "Reduced"
-msgstr ""
+msgstr "Azaltılmış"
 
 #: ../lib/Objects/RTWPressName.php:77 ../menu.inc.php:438
 msgid "Press names"
-msgstr ""
+msgstr "Baskı isimleri"
 
 #: ../lib/Objects/_RTWModel.php:2321 ../menu.inc.php:523 ../menu.inc.php:645
 #: ../menu.inc.php:817
@@ -4599,104 +4602,104 @@ msgstr "Modeller"
 #: ../lib/Objects/_RTWModel.php:2491 ../lib/Objects/_RTWModel.php:2492
 #: ../lib/DocumentGenerator.php:3844 ../lib/DocumentGenerator.php:3972
 msgid "Shape"
-msgstr ""
+msgstr "Şekil"
 
 #: ../lib/Objects/_RTWModel.php:2527 ../lib/Objects/_RTWModel.php:2528
 #: ../lib/DocumentGenerator.php:3828
 msgid "Manufacturer"
-msgstr ""
+msgstr "İmalatçı"
 
 #: ../lib/Objects/_RTWModel.php:2536 ../lib/Objects/_RTWModel.php:2537
 #: ../lib/DocumentGenerator.php:3842
 msgid "Construction type"
-msgstr ""
+msgstr "Yapım tipi"
 
 #: ../lib/Objects/_RTWModel.php:2545 ../lib/Objects/_RTWModel.php:2546
 #: ../lib/DocumentGenerator.php:3843
 msgid "Construction code"
-msgstr ""
+msgstr "Yapım kodu"
 
 #: ../lib/Objects/_RTWModel.php:2554 ../lib/Objects/_RTWModel.php:2555
 #: ../lib/DocumentGenerator.php:3866
 msgid "Label (griffe)"
-msgstr ""
+msgstr "Etiket (bilgi)"
 
 #: ../lib/Objects/_RTWModel.php:2563 ../lib/Objects/_RTWModel.php:2564
 msgid "Heel height"
-msgstr ""
+msgstr "Topuk yüksekliği"
 
 #: ../lib/Objects/_RTWModel.php:2581 ../lib/Objects/_RTWModel.php:2582
 msgid "Heel reference quantity"
-msgstr ""
+msgstr "Topuk referans miktarı"
 
 #: ../lib/Objects/_RTWModel.php:2600 ../lib/Objects/_RTWModel.php:2601
 msgid "Sole quantity"
-msgstr ""
+msgstr "Taban miktarı"
 
 #: ../lib/Objects/_RTWModel.php:2619 ../lib/Objects/_RTWModel.php:2620
 msgid "Box quantity"
-msgstr ""
+msgstr "Box miktarı"
 
 #: ../lib/Objects/_RTWModel.php:2638 ../lib/Objects/_RTWModel.php:2639
 msgid "Hand bag quantity"
-msgstr ""
+msgstr "El çantası miktarı"
 
 #: ../lib/Objects/_RTWModel.php:2657 ../lib/Objects/_RTWModel.php:2658
 msgid "Material 1 quantity"
-msgstr ""
+msgstr "Malzeme 1 miktarı"
 
 #: ../lib/Objects/_RTWModel.php:2676 ../lib/Objects/_RTWModel.php:2677
 msgid "Material 2 quantity"
-msgstr ""
+msgstr "Malzeme 2 miktarı"
 
 #: ../lib/Objects/_RTWModel.php:2695 ../lib/Objects/_RTWModel.php:2696
 msgid "Accessory 1 quantity"
-msgstr ""
+msgstr "Aksesuar 1 miktarı"
 
 #: ../lib/Objects/_RTWModel.php:2714 ../lib/Objects/_RTWModel.php:2715
 msgid "Accessory 2 quantity"
-msgstr ""
+msgstr "Aksesuar 2 miktarı"
 
 #: ../lib/Objects/_RTWModel.php:2733 ../lib/Objects/_RTWModel.php:2734
 msgid "Lining quantity"
-msgstr ""
+msgstr "Astar miktarı"
 
 #: ../lib/Objects/_RTWModel.php:2752 ../lib/Objects/_RTWModel.php:2753
 msgid "Insole quantity"
-msgstr ""
+msgstr "Ayakkabı astarı miktarı"
 
 #: ../lib/Objects/_RTWModel.php:2771 ../lib/Objects/_RTWModel.php:2772
 msgid "Under-sole quantity"
-msgstr ""
+msgstr "Ayakkabı taban altı miktarı"
 
 #: ../lib/Objects/_RTWModel.php:2790 ../lib/Objects/_RTWModel.php:2791
 msgid "Media planta quantity"
-msgstr ""
+msgstr "Medya planta miktarı"
 
 #: ../lib/Objects/_RTWModel.php:2809 ../lib/Objects/_RTWModel.php:2810
 msgid "Lagrima quantity"
-msgstr ""
+msgstr "Lagrima miktarı"
 
 #: ../lib/Objects/_RTWModel.php:2828 ../lib/Objects/_RTWModel.php:2829
 msgid "Heel covering quantity"
-msgstr ""
+msgstr "Topuk kaplama miktarı"
 
 #: ../lib/Objects/_RTWModel.php:2847 ../lib/Objects/_RTWModel.php:2848
 msgid "Selvedge quantity"
-msgstr ""
+msgstr "Kumaş kenarı miktarı"
 
 #: ../lib/Objects/_RTWModel.php:2884 ../lib/Objects/_RTWModel.php:2885
 msgid "Bamboo quantity"
-msgstr ""
+msgstr "Bambu miktarı"
 
 #: ../lib/Objects/_RTWModel.php:2900 ../lib/Objects/_RTWModel.php:2909
 msgid "Images"
-msgstr ""
+msgstr "Resimler"
 
 #: ../lib/Objects/_RTWModel.php:2912 ../lib/Objects/_RTWModel.php:2913
 #: ../lib/DocumentGenerator.php:3873 ../lib/DocumentGenerator.php:3990
 msgid "Available sizes"
-msgstr ""
+msgstr "Mevcut boyutlar"
 
 #: ../lib/Objects/ProductHandingByCategory.php:229
 #: ../lib/Objects/_Promotion.php:242 ../lib/CashBalanceManager.php:270
@@ -4763,7 +4766,7 @@ msgstr "Simülasyon"
 
 #: ../lib/Objects/_RTWProduct.php:293 ../lib/Objects/_RTWProduct.php:294
 msgid "model"
-msgstr ""
+msgstr "model"
 
 #: ../lib/Objects/AnswerModel.php:277 ../lib/Objects/AnswerModel.php:278
 msgid "Answer text"
@@ -4840,7 +4843,7 @@ msgstr "Dahili çıkış"
 
 #: ../lib/Objects/RTWConstructionCode.php:77 ../menu.inc.php:424
 msgid "Construction codes"
-msgstr ""
+msgstr "Yapım kodları"
 
 #: ../lib/Objects/ToHave.php:106
 msgid "Return of goods"
@@ -4875,7 +4878,7 @@ msgstr "Son"
 
 #: ../lib/Objects/_CostRange.php:151
 msgid "Forfeiture by calendar month"
-msgstr ""
+msgstr "Aylık takvime göre hakkını kaybetme"
 
 #: ../lib/Objects/_CostRange.php:152
 msgid "Amount by hour"
@@ -4971,7 +4974,7 @@ msgstr "Depolama yeri  \"%s\" silinemez"
 #: ../lib/Objects/Site.php:242
 #, php-format
 msgid "Site \"%s\" could not be deleted because it is in use in a order."
-msgstr "Site \"%s\" silinemedi çünkü bir sipariş için kullanım durumunda "
+msgstr "Bölge \"%s\" silinemedi çünkü bir sipariş için kullanım durumunda "
 
 #: ../lib/Objects/ConcreteProductPrestationCost.php:165
 msgid "Price by SN/Lot associated to the service"
@@ -5163,7 +5166,7 @@ msgstr "Harici müşteri"
 
 #: ../lib/Objects/_UserAccount.php:402
 msgid "Owner customer"
-msgstr "Mal sahibi müşteri"
+msgstr "Ürün sahibi müşteri"
 
 #: ../lib/Objects/_UserAccount.php:403
 msgid "Subsidiary accountant"
@@ -5174,11 +5177,11 @@ msgstr "Yardımcı muhasebeci"
 #: ../CommandList.php:130 ../UnavailabilityPlanning.php:129
 #: ../ActorAddEdit.php:536
 msgid "Project manager"
-msgstr ""
+msgstr "Proje müdürü"
 
 #: ../lib/Objects/_UserAccount.php:405
 msgid "Product manager"
-msgstr ""
+msgstr "Ürün müdürü"
 
 #: ../lib/Objects/_UserAccount.php:1104
 msgid "Add/Update user account"
@@ -5224,7 +5227,7 @@ msgstr "Tedarikçi kataloğu"
 #: ../lib/Objects/_UserAccount.php:1373 ../lib/Objects/_UserAccount.php:1374
 #: void:1
 msgid "Sites"
-msgstr "Mevki"
+msgstr "Bölgeler"
 
 #: ../lib/Objects/Invoice.php:213 ../lib/Objects/Actor.inc.php:43
 #: ../ActivatedFlightList.php:102 ../ActivatedFlightList.php:189
@@ -5534,7 +5537,7 @@ msgstr "Programlanan gorevleri Ekle/Güncelle"
 
 #: ../lib/Objects/CronTask.php:383 ../lib/Objects/CronTask.php:384 void:1
 msgid "Task name"
-msgstr "Görev name"
+msgstr "Görev ismi"
 
 #: ../lib/Objects/CronTask.php:389 ../lib/Objects/CronTask.php:398
 #: ../lib/Objects/CronTask.php:434
@@ -5570,12 +5573,12 @@ msgstr "İlgili sayfa"
 #: ../lib/Objects/DocumentAppendix.php:333
 #: ../lib/Objects/DocumentAppendix.php:334
 msgid "Body"
-msgstr ""
+msgstr "Gövde"
 
 #: ../lib/Objects/DocumentAppendix.php:211 ../menu.inc.php:837
 #: ../menu.inc.php:839 void:1
 msgid "Document appendices"
-msgstr ""
+msgstr "Belge ekleri"
 
 #: ../lib/Objects/DocumentAppendix.php:330
 #: ../lib/Objects/DocumentAppendix.php:339
@@ -5648,46 +5651,46 @@ msgstr "Seçilen uçak için maximum ağırlık koltuğa göre aşıldı "
 #: ../lib/SQLRequest.php:2233
 #, php-format
 msgid "an item of invoice \"%s\""
-msgstr ""
+msgstr "Bir fatura \"%s\" çeşiti"
 
 #: ../lib/SQLRequest.php:2234
 #, php-format
 msgid "the account \"%s\""
-msgstr ""
+msgstr "hesap \"%s\""
 
 #: ../lib/SQLRequest.php:2235
 #, php-format
 msgid "an item of command \"%s\""
-msgstr ""
+msgstr "bir komut \"%s\" çeşidi"
 
 #: ../lib/SQLRequest.php:2236
 #, php-format
 msgid "an expenses and receipts item (FlowItem id: %s)"
-msgstr ""
+msgstr "bir gelir ve gider çeşidi (FlowItem id: %s)"
 
 #: ../lib/SQLRequest.php:2237
 #, php-format
 msgid "an item of a model of expenses and receipts (FlowTypeItem id: %s)"
-msgstr ""
+msgstr "gelir ve gider modelinin bir çeşidi (FlowTypeItem id: %s)"
 
 #: ../lib/SQLRequest.php:2238
 #, php-format
 msgid "the service \"%s\""
-msgstr ""
+msgstr "servis \"%s\""
 
 #: ../lib/SQLRequest.php:2239
 #, php-format
 msgid "the product \"%s\""
-msgstr ""
+msgstr "ürün \"%s\""
 
 #: ../lib/SQLRequest.php:2240
 #, php-format
 msgid "the document \"%s\""
-msgstr ""
+msgstr "belge \"%s\""
 
 #: ../lib/SQLRequest.php:2255
 msgid "Selected VAT cannot be deleted because it is used by "
-msgstr ""
+msgstr "Seçilen KDV silinemez çünkü kullanılıyor"
 
 #: ../lib/AlertSender.php:306
 #, php-format
@@ -5696,6 +5699,9 @@ msgid ""
 "\n"
 "The department of sales."
 msgstr ""
+"Lütfen eklenen sipariş faturasını kabul et \"%s\".\n"
+"\n"
+"Satış departmanı"
 
 #: ../lib/AlertSender.php:423 ../lib/AlertSender.php:436
 msgid "Tel."
@@ -5713,7 +5719,7 @@ msgstr "toplama"
 #: ../lib/DocumentGenerator.php:3544
 #, php-format
 msgid "between %s and %s"
-msgstr "arasında %s ve %s"
+msgstr "%s ve %s arasında"
 
 #: ../lib/AlertSender.php:565 void:1
 msgid "Solo flight"
@@ -5729,7 +5735,7 @@ msgstr "Potansiyel"
 #: ../lib/AlertSender.php:952 ../lib/AlertSender.php:981
 #: ../lib/AlertSender.php:1015
 msgid "unknown"
-msgstr ""
+msgstr "bilinmeyen"
 
 #: ../lib/AlertSender.php:1083
 #, php-format
@@ -5766,15 +5772,17 @@ msgid ""
 "No exchange rate exists for selected currencies and period. Please define "
 "this exchange rate, or change currency."
 msgstr ""
+"Seçilen para birimi ve dönem için döviz oranı yoktur. Lütfen kambiyo oranını "
+"belirle veya para birimini değiştir."
 
 #: ../lib/CashBalanceManager.php:526
 msgid "More than one exchange rate exist for selected currencies and period."
-msgstr ""
+msgstr "Seçilen para birimi ve dönem için birden çok döviz oranı vardır."
 
 #: ../lib/CashBalanceManager.php:540
 #, php-format
 msgid "The results will be calculated for the period from %s to %s."
-msgstr ""
+msgstr "Dönem için %s  %s sonuçlar hesaplanacaktır."
 
 #: ../lib/ApportionmentManager.php:303
 msgid "Invoice number or expense/receipt"
@@ -5802,12 +5810,12 @@ msgstr "borç"
 
 #: ../lib/RTWProductManager.php:61
 msgid "No products were created because you did not select any available size."
-msgstr ""
+msgstr "Hiçbir ürün oluşturulmadı çünkü geçerli bir boyut seçilmedi"
 
 #: ../lib/RTWProductManager.php:170
 #, php-format
 msgid "You must create a chain with reference \"%s\""
-msgstr ""
+msgstr "\"%s\" referansı ile bir zincir oluşturmalısınız."
 
 #: ../lib/CommandManager.php:61
 msgid "You must create an order first."
@@ -6064,12 +6072,12 @@ msgstr "Personal indirimi"
 #: ../lib/DocumentGenerator.php:928 ../lib/DocumentGenerator.php:1268
 #: ../lib/DocumentGenerator.php:1471 ../lib/DocumentGenerator.php:2017 void:1
 msgid "FODEC tax"
-msgstr ""
+msgstr "FODEC vergi"
 
 #: ../lib/DocumentGenerator.php:939 ../lib/DocumentGenerator.php:1279
 #: ../lib/DocumentGenerator.php:1482 ../lib/DocumentGenerator.php:2028 void:1
 msgid "Tax stamp"
-msgstr ""
+msgstr "Vergi kaşesi"
 
 #: ../lib/DocumentGenerator.php:960 ../lib/DocumentGenerator.php:1287
 #: ../lib/DocumentGenerator.php:1502 ../lib/DocumentGenerator.php:2049
@@ -6165,7 +6173,7 @@ msgstr ""
 
 #: ../lib/DocumentGenerator.php:2384
 msgid "Volume (l)"
-msgstr ""
+msgstr "Hacim (I)"
 
 #: ../lib/DocumentGenerator.php:2420
 msgid "Total weight (kg)"
@@ -6177,7 +6185,7 @@ msgstr "Toplam hacim (m3)"
 
 #: ../lib/DocumentGenerator.php:2520
 msgid "Statement of invoices"
-msgstr "Faturaların durumu"
+msgstr "Faturaların beyanı"
 
 #: ../lib/DocumentGenerator.php:2581
 msgid ""
@@ -6187,7 +6195,7 @@ msgstr "Sayın müşteri, kalan ödeme için fatura ayrıtıları ektedir"
 #: ../lib/DocumentGenerator.php:2582
 #, php-format
 msgid "for period from %s to %s."
-msgstr "dönem için from %s to %s."
+msgstr " %s arası %s dönem için"
 
 #: ../lib/DocumentGenerator.php:2593
 msgid "Edition Date"
@@ -6198,8 +6206,8 @@ msgid ""
 "Please pay amount stated below for this bill of exchange (that excludes "
 "charges) to the account of"
 msgstr ""
-"Lütfen aşağıda belirlenen miktarı ödeyiniz bu faturanın (ücretler hariç) "
-"belirlenen hesaba transferi için "
+"Faturanın (ücretler hariç) belirlenen hesaba transferi için lütfen aşağıda "
+"belirtilen miktarı ödeyiniz "
 
 #: ../lib/DocumentGenerator.php:2700
 msgid "Amount for control"
@@ -6373,24 +6381,24 @@ msgstr "Birim ağırlık"
 
 #: ../lib/DocumentGenerator.php:3649 ../lib/DocumentGenerator.php:3670
 msgid "Estimate receipt"
-msgstr ""
+msgstr "Tahmini gelir"
 
 #: ../lib/DocumentGenerator.php:3671 ../EstimateList.php:72
 #: ../EstimateList.php:120
 msgid "Estimate number"
-msgstr ""
+msgstr "Tahmini numara"
 
 #: ../lib/DocumentGenerator.php:3807
 msgid "Worksheet"
-msgstr ""
+msgstr "Çalışma tablosu"
 
 #: ../lib/DocumentGenerator.php:3952
 msgid "Lookbook"
-msgstr ""
+msgstr "Log defteri"
 
 #: ../lib/DocumentGenerator.php:3975
 msgid "Heel Height"
-msgstr ""
+msgstr "Topuk Yüksekliği"
 
 #: ../rpc/XmlRpcServer.php:1488
 msgid "Cannot find task number "
@@ -6625,7 +6633,7 @@ msgstr "Lütfen öncelikle bir tedarikçi seçiniz."
 
 #: ../JS_Messages.php:61
 msgid "must be \"HH:MM\""
-msgstr "\"HH:MM\" olmalı"
+msgstr "\"HH:MM\" formatında olmalı"
 
 #: ../JS_Messages.php:63
 msgid "No operation available"
@@ -6698,51 +6706,51 @@ msgstr "KDV hariç alış fiyatı"
 
 #: ../JS_Messages.php:88
 msgid "hours real potential since new (hours)"
-msgstr "Revisyondan itibaren sanal potensiyel "
+msgstr "Yeni halinden itibaren gerçek potensiyel saatleri (saatler) "
 
 #: ../JS_Messages.php:89
 msgid "hours real potential since new (minutes)"
-msgstr "İlk halinden bu yana saatler gerçek potensiyel (dakikalar) "
+msgstr "Yeni halinden itibaren gerçek potensiyel dakikaları (dakikalar) "
 
 #: ../JS_Messages.php:90
 msgid "cycle real potential since new"
-msgstr "İlk halinden bu yana periyot gerçek potensiyel "
+msgstr "İlk halinden itibaren gerçek potensiyel periyodu "
 
 #: ../JS_Messages.php:91
 msgid "landing real potential since new"
-msgstr "İlk halinden bu yana iniş gerçek potensiyel "
+msgstr "İlk halinden bu yana gerçek iniş potensiyeli"
 
 #: ../JS_Messages.php:92
 msgid "hours real potential since full overhaul (hours)"
-msgstr "Ful revisyondan itibaren saatler gerçek potensiyel (saatler) "
+msgstr "Ful revisyondan itibaren gerçek potensiyel saatleri (saatler) "
 
 #: ../JS_Messages.php:93
 msgid "hours real potential since full overhaul (minutes)"
-msgstr "Ful revisyondan itibaren saatler gerçek potensiyel (dakikalar) "
+msgstr "Ful revisyondan itibaren gerçek potensiyel saatleri (dakikalar) "
 
 #: ../JS_Messages.php:94
 msgid "cycle real potential since full overhaul"
-msgstr "Ful revisyondan itibaren periyot gerçek potensiyel "
+msgstr "Ful revisyondan itibaren gerçek potensiyel periyodu "
 
 #: ../JS_Messages.php:95
 msgid "landing real potential since full overhaul"
-msgstr "Ful revisyondan itibaren iniş gerçek potensiyel "
+msgstr "Ful revisyondan itibaren gerçek iniş potensiyel "
 
 #: ../JS_Messages.php:96
 msgid "hours real potential since reparation (hours)"
-msgstr "Tamirattan itibaren saatler gerçek potensiyel (saatler)"
+msgstr "Tamirattan itibaren gerçek potensiyel saatleri (saatler)"
 
 #: ../JS_Messages.php:97
 msgid "hours real potential since reparation (minutes)"
-msgstr "Tamirattan itibaren saatler gerçek potensiyel (dakikalar)"
+msgstr "Tamirattan itibaren gerçek potensiyel saatleri  (dakikalar)"
 
 #: ../JS_Messages.php:98
 msgid "cycle real potential since reparation"
-msgstr "Tamirattan itibaren potensiyel (saatler)"
+msgstr "Tamirattan itibaren gerçek potensiyel periyodu (saatler)"
 
 #: ../JS_Messages.php:99
 msgid "Landing real potential since reparation"
-msgstr "Tamirattan itibaren iniş gerçek potensiyel "
+msgstr "Tamirattan itibaren gerçek iniş potensiyel "
 
 #: ../JS_Messages.php:102 void:1
 msgid "Number of days"
@@ -6786,11 +6794,11 @@ msgstr "VLAE saatleri"
 
 #: ../JS_Messages.php:112
 msgid "Hours on single-engined"
-msgstr "Tek motorla saatlar"
+msgstr "Tek motorlu saatlar"
 
 #: ../JS_Messages.php:113
 msgid "Hours on twin-engined"
-msgstr "Çift motorla saatlar"
+msgstr "Çift motorlu saatlar"
 
 #: ../JS_Messages.php:114
 msgid "commercial hours"
@@ -6814,7 +6822,7 @@ msgstr "IBAN numarası (Uluslararası banka hesap numarası)"
 
 #: ../JS_Messages.php:122
 msgid "You have to select two different currencies."
-msgstr ""
+msgstr "İki farklı para birimi seçmelisiniz."
 
 #: ../JS_Messages.php:124
 msgid "You must select a flight purpose."
@@ -6971,7 +6979,7 @@ msgstr "Tüm öğeleri silemezsiniz."
 msgid ""
 "Dates for scheduled order items should match the format: \"dd/mm/yy hh:mm\""
 msgstr ""
-"Planlanmış sipariş ögeleri için tarihler formatla eşleşmelidir: \"dd/mm/yy "
+"Planlanmış sipariş öğeleri için tarihler formatla eşleşmelidir: \"dd/mm/yy "
 "hh:mm\""
 
 #: ../JS_Messages.php:180
@@ -7005,7 +7013,7 @@ msgstr "Ambalaj miktarı tam sayı olmalı. Lütfen düzeltiniz."
 
 #: ../JS_Messages.php:188
 msgid "Please provide a work order name."
-msgstr "Lütfen bir sipariş emri ismi giriniz."
+msgstr "Lütfen bir iş emri ismi giriniz."
 
 #: ../JS_Messages.php:189
 msgid "Please provide non negatives values"
@@ -7029,7 +7037,7 @@ msgstr "ülke"
 
 #: ../JS_Messages.php:196
 msgid "Site type could not be modified because it has stores in it."
-msgstr "Site tipi düzeltilemez çünkü o içinde bir depoya sahiptir."
+msgstr "Bölge tipi düzeltilemez çünkü içinde bir depoya sahiptir."
 
 #: ../JS_Messages.php:198
 msgid "A site already exists with this name, please correct."
@@ -7051,7 +7059,7 @@ msgstr "gelecek haftaların sayısı"
 
 #: ../JS_Messages.php:203
 msgid "default delivery within"
-msgstr "varsayılan siparişle birlikte"
+msgstr "varsayılan sipariş"
 
 #: ../JS_Messages.php:204
 msgid "Please select a valid date."
@@ -7312,7 +7320,7 @@ msgstr "[Görev bulunamadı]"
 
 #: ../JS_Messages.php:289
 msgid "A task with a fixed date can not be defined as deadline task."
-msgstr "Kesin tarihli bir görev son görev olarak tanımlanamaz."
+msgstr "Kesin tarihli bir görev son görev gibi tanımlanamaz."
 
 #: ../JS_Messages.php:290
 msgid "A deadline task is already defined, modify it ?"
@@ -7320,7 +7328,7 @@ msgstr "Son görev zaten tanımlanmış, değiştiriniz ?"
 
 #: ../JS_Messages.php:291
 msgid "All sites"
-msgstr "Bütün siteler"
+msgstr "Tüm bölgeler"
 
 #: ../JS_Messages.php:294
 msgid "Please select the addressee site"
@@ -7394,6 +7402,8 @@ msgstr "Gelir ve gider çizgilerini eklemelisiniz."
 #: ../JS_Messages.php:321
 msgid "This will discard the changes you made for this supplier, continue ?"
 msgstr ""
+"Bu tedarikçi için yapılan değişimler iptal edilecektir, devam etmek "
+"istiyormusun?"
 
 #: ../ChainCommandDetail.php:42 ../ChainTextDetail.php:41
 #: ../ActivatedChainTaskInstructions.php:56 void:1
@@ -7411,7 +7421,7 @@ msgstr "bileşenler"
 #: ../ComponentsTree.php:52 ../ConcreteComponentsTree.php:67
 #, php-format
 msgid "Nomenclature \"%s\" version \"%s\": view by %s"
-msgstr "Terminoloji \"%s\" versiyon \"%s\": %s göre görünüm"
+msgstr "\"%s\" ürün modeli  \"%s\": versiyonuna  %s göre görünüm"
 
 #: ../BoardByCommercial.php:52
 msgid "Select one or more salesmen"
@@ -7444,13 +7454,13 @@ msgstr "KDV hariç ciro"
 #: ../BoardByProduct.php:135 ../BoardByCategory.php:131
 #, php-format
 msgid "% of total turnover"
-msgstr "toplam ciro yüzdesi"
+msgstr ""
 
 #: ../StoreDelete.php:99
 #, php-format
 msgid ""
 "The following stores could not be deleted, they were only deactivated: %s"
-msgstr "Takip eden dükkanlar silinemez, onlar yalnizca etkisizlştirildi: %s"
+msgstr "Bu depolar silinemez, onlar yalnızca etkisizlştirildi: %s"
 
 #: ../StoreDelete.php:106
 #, php-format
@@ -7458,8 +7468,8 @@ msgid ""
 "The following stores could not be deleted nor deactivated, because one of "
 "theirs locations is not empty: %s"
 msgstr ""
-"Asağıdaki depolar silinemez veya etkisizleştirilemez, çünkü onlardan birinin "
-"lokasyonu boştur: %s"
+"Bu depolar silinemez veya etkisizleştirilemez, çünkü onlardan birinin "
+"lokasyonu boş değildir: %s"
 
 #: ../AffectationList.php:50 ../ActivatedChainList.php:125 void:1
 msgid "Chain reference"
@@ -7472,7 +7482,7 @@ msgstr "Ürünü zincirden çıkartınız"
 #: ../PaymentToHaveList.php:59
 #, php-format
 msgid "List of available credit notes for customer %s for payment of %s"
-msgstr "Mevcut kredi notlarının listesi müşteri %s ödemesinin %s için"
+msgstr "Müşteri %s ödemesi  için %s mevcut kredi notlarının listesi "
 
 #: ../PaymentToHaveList.php:63
 #, php-format
@@ -7495,7 +7505,7 @@ msgstr "Kredi notları listesi"
 #: ../RessourceGroupDuplicate.php:94
 #, php-format
 msgid "Resource model \"%s\" copy"
-msgstr "Finansal kaynak modeli \"%s\" kopyalama"
+msgstr "Kaynak modeli \"%s\" kopyala"
 
 #: ../ProductionTaskValidation.php:108
 msgid "Task name and number"
@@ -7566,11 +7576,11 @@ msgstr "Fatura numarası"
 
 #: ../PrestationInvoiceAddEdit.php:141
 msgid "Supplier billing site"
-msgstr "Tedarikçi fatura sitesi"
+msgstr "Tedarikçi fatura yeri"
 
 #: ../PrestationInvoiceAddEdit.php:146
 msgid "Customer billing site"
-msgstr "Müşteri fatura sitesi"
+msgstr "Müşteri fatura yeri"
 
 #: ../PrestationInvoiceAddEdit.php:149 ../ProductCommandSupplier.php:176
 #: ../ProductCommand.php:188
@@ -7646,7 +7656,7 @@ msgstr " bir bölge"
 #: ../AffectAlertToUserAccount.php:45
 #, php-format
 msgid "Alerts were successfully modified for user \"%s\"."
-msgstr "Kulanıcı için alarm başarıyla değiştirildi \"%s\"."
+msgstr "Kulanıcı \"%s\" için alarm başarıyla değiştirildi."
 
 #: ../AffectAlertToUserAccount.php:89
 #, php-format
@@ -7656,13 +7666,12 @@ msgstr "Kullanıcı \"%s\" hiçbir alarm kabul etmemek için yapılandırıldı.
 #: ../AffectAlertToUserAccount.php:93
 #, php-format
 msgid "User \"%s\" was configured to receive alert \"%s\""
-msgstr "Kullanıcı \"%s\" alarm kabul etmek icin yapılandırıldı \"%s\""
+msgstr "Kullanıcı \"%s\" \"%s\" alarmı kabul etmek icin yapılandırıldı"
 
 #: ../AffectAlertToUserAccount.php:96
 #, php-format
 msgid "User \"%s\" was configured to receive the following alerts: %s"
-msgstr ""
-"Kullanıcı \"%s\" takip eden alarmı kabul etmek için yapılandırıldı \"%s\""
+msgstr "Kullanıcı \"%s\" bu alarmı: \"%s\" kabul etmek için yapılandırıldı "
 
 #: ../PaymentDelete.php:52
 msgid "payment"
@@ -7670,19 +7679,19 @@ msgstr "ödeme"
 
 #: ../PaymentDelete.php:60
 msgid "order_command"
-msgstr "sipariş_emir"
+msgstr ""
 
 #: ../PaymentDelete.php:149
 msgid "The following payments could not be deleted"
-msgstr "Takip eden ödemeler silinemez"
+msgstr "Bu ödemeler silinemez"
 
 #: ../WorkOrderOpeTaskList.php:44
 msgid "You are not allowed to edit this work order."
-msgstr "Bu sipariş emrini düzenlemenize izniniz yok."
+msgstr "Bu iş emrini düzenleme izniniz yoktur."
 
 #: ../WorkOrderOpeTaskList.php:74
 msgid "An error occurred: work order details cannot be displayed."
-msgstr "Bir hata oluştu: sipariş emri detayları gösterilemedi."
+msgstr "Bir hata oluştu: iş emri detayları gösterilemedi."
 
 #: ../WorkOrderOpeTaskList.php:87
 #: ../../../pwak/trunk/lib/GenericMessages.php:66
@@ -7719,7 +7728,7 @@ msgstr "Sipariş emri içeriği"
 
 #: ../SaisonalityPromotionProductList.php:45
 msgid "An error occurred, please close this popup window."
-msgstr "Bir hata oluştu, lütfen bu popup windowu kapat"
+msgstr "Bir hata oluştu, lütfen bu popup penceresini kapatınız."
 
 #: ../SaisonalityPromotionProductList.php:52
 msgid "seasonality"
@@ -7732,17 +7741,17 @@ msgstr "satış promosyonu"
 #: ../SaisonalityPromotionProductList.php:73
 #, php-format
 msgid "List of products assigned to %s"
-msgstr "%s atanan ürünlerin listesi"
+msgstr "Ürün listesi %s tahsis edildi"
 
 #: ../ProductCommandSupplier.php:118 ../ChainCommand.php:109
 #: ../ProductCommand.php:118
 msgid "estimate"
-msgstr ""
+msgstr "tahmin"
 
 #: ../ProductCommandSupplier.php:118 ../ChainCommand.php:109
 #: ../ProductCommand.php:118 ../EstimateToOrder.php:144
 msgid "order"
-msgstr ""
+msgstr "sipariş"
 
 #: ../ProductCommandSupplier.php:168 ../ProductCommand.php:163
 msgid "Shipper site"
@@ -7752,7 +7761,7 @@ msgstr "Gönderici yeri"
 #: ../ChainCommandList.php:181 ../ProductCommand.php:167
 #: ../CommandList.php:280
 msgid "Addressee site"
-msgstr "Alıcı site"
+msgstr "Alıcı yeri"
 
 #: ../ProductCommandSupplier.php:212 ../ProductCommand.php:241
 #, php-format
@@ -7770,7 +7779,7 @@ msgstr "Sipariş Alan"
 
 #: ../ActivatedChainList.php:85 ../ActivatedChainOperationList.php:107 void:1
 msgid "Filter by beginning date"
-msgstr "Başlama tarihine göre filtreleme"
+msgstr "Başlama tarihine göre filtrele"
 
 #: ../ActivatedChainList.php:106 ../WorkOrderList.php:161
 msgid "Display operations"
@@ -7802,12 +7811,13 @@ msgid ""
 "The following properties could not be deleted because they are in use in one "
 "or more catalogues"
 msgstr ""
-"Takip eden özellikler silinemeyebilir çünkü onlar bir veya daha fazla "
-"kataloğun kullanımındadır."
+"Bu özellikler silinemeyebilir çünkü onlar bir veya daha fazla kataloğun "
+"kullanımındadır."
 
 #: ../ProductList.php:51
 msgid "You must configure a catalogue and assign it to this screen."
-msgstr "Bir katalog yapılandırmalısınız ve bu ekrana atamalısinız."
+msgstr ""
+"Bir katalog knfigürasyonu yapmalısınız ve bu ekrana tahsis etmelisiniz."
 
 #: ../ProductList.php:108
 msgid "A catalogue must contain at least a criterion."
@@ -7819,11 +7829,11 @@ msgstr "Birim fiyat"
 
 #: ../ProductList.php:178
 msgid "Selling prices management"
-msgstr ""
+msgstr "Satiş fiyatı yönetimi"
 
 #: ../ProductList.php:184
 msgid "Supplier prices management"
-msgstr ""
+msgstr "Tedarikçi fiyatı yönetimi"
 
 #: ../ProductList.php:190
 msgid "Add SN/Lot"
@@ -7848,12 +7858,12 @@ msgstr "Uçak kaydı"
 
 #: ../FlyBoardBook.php:78
 msgid "Display airplane hours of flight"
-msgstr "Uçak uçuş saatlerini göster"
+msgstr "Uçak için uçuş saatlerini göster"
 
 #: ../FlyBoardBook.php:127 ../FlightNotebook.php:165
 #: ../CourseCommandList.php:158
 msgid "Matr."
-msgstr "Kayıt"
+msgstr ""
 
 #: ../FlyBoardBook.php:129 ../FlightEdit.php:241 void:1
 msgid "Pilot"
@@ -7890,11 +7900,11 @@ msgstr "Gece"
 
 #: ../FlyBoardBook.php:154
 msgid "VLAE"
-msgstr "VLAE"
+msgstr ""
 
 #: ../ChainTaskAddEdit.php:127
 msgid "Update fixed date task or weekly task"
-msgstr "Kesin tarihli görevler veya haftalık görev guncelle"
+msgstr "Kesin tarihli görev veya haftalık görev güncelle"
 
 #: ../InvoicePaymentList.php:64 ../InvoiceList.php:143
 #: ../InvoiceCommandList.php:268 ../PaymentCommandList.php:75
@@ -7926,15 +7936,15 @@ msgstr "Yeni terimleme için yeni versiyon ve tarih girmelisiniz"
 
 #: ../NomenclatureDuplicate.php:112 ../NomenclatureAddEdit.php:215
 msgid "Validity begin date"
-msgstr "Geçerlilik başlangıç tarihi"
+msgstr "Yürürlük başlangıç tarihi"
 
 #: ../NomenclatureDuplicate.php:113 ../NomenclatureAddEdit.php:216
 msgid "Validity end date"
-msgstr "Geçerlilik son tarihi"
+msgstr "Yürürlük bitiş tarihi"
 
 #: ../NomenclatureDuplicate.php:128
 msgid "Nomenclature copy"
-msgstr "Terminoloji kopyala"
+msgstr "Ürün modeli kopyala"
 
 #: ../home.php:52 ../index.php:6
 msgid "Onlogistics"
@@ -7952,11 +7962,11 @@ msgstr "İşlem tipi seçiniz"
 #: ../LocationExecutedMovementDelete.php:282
 #: ../LocationExecutedMovementDelete.php:317
 msgid "Execute a stock reinstatement"
-msgstr "Bir depo yenileyiniz"
+msgstr "Bir stok yenilemesi gerçekleştir"
 
 #: ../LocationExecutedMovementDelete.php:324 void:1
 msgid "Stock reinstatement"
-msgstr "Depo yenileme"
+msgstr "Stok yenileme"
 
 #: ../ActivatedFlightList.php:93 ../ToHaveAdd.php:138
 #: ../ActivatedChainTaskList.php:109 ../UnavailabilityPlanning.php:134
@@ -7993,19 +8003,19 @@ msgstr "bir veya daha fazla müşteri seçiniz"
 
 #: ../BoardByCustomer.php:76
 msgid "Only customers who placed<br/>at least an order"
-msgstr "Yalnızca en az bir sipariş veren<br/> müşteriler"
+msgstr "En az bir sipariş veren<br/> müşteriler"
 
 #: ../NomenclatureAffect.php:52
 msgid "This part is already linked to a nomenclature."
-msgstr "Bu bölüm zaten bir terminolojiye bağlıdır."
+msgstr "Bu bölüm zaten bir ürün modeline bağlıdır."
 
 #: ../NomenclatureAffect.php:61
 msgid "Associated nomenclature model could not be found."
-msgstr "Ilgili terminoloji örneği bulunamadı."
+msgstr "İlgili ürün modeli örneği bulunamadı."
 
 #: ../NomenclatureAffect.php:67
 msgid "Associated nomenclature is not \"buildable\"."
-msgstr "İlgili terminoloji \"yapılandırılabilir\" değil."
+msgstr "İlgili ürün modeli \"elverişli\" değildir."
 
 #: ../NomenclatureAffect.php:89
 msgid "Part has been successfully assigned."
@@ -8037,7 +8047,7 @@ msgstr "Ürün değişim yönetimi:"
 
 #: ../ProductSubstitutionList.php:197
 msgid "[Products being created]"
-msgstr "[Oluşturulan ürünler]"
+msgstr "[Oluşturulacak ürünler]"
 
 #: ../ProductSubstitutionList.php:220
 msgid "Link"
@@ -8053,11 +8063,11 @@ msgstr "Bir veya daha fazla faaliyet tipi seçiniz"
 
 #: ../ActivatedMovementList.php:105 ../ActivatedMovementList.php:186
 msgid "Destinator"
-msgstr ""
+msgstr "Tasarımcı"
 
 #: ../ActivatedMovementList.php:169
 msgid "Execute several movements"
-msgstr ""
+msgstr "Birçok faaliyeti gerçekleştir"
 
 #: ../ActivatedMovementList.php:190 ../CommandList.php:117
 #: ../ActorProductAddEdit.php:167
@@ -8074,7 +8084,7 @@ msgstr "Başlangıç tarihi"
 
 #: ../ActivatedMovementList.php:209
 msgid "Execute this movement"
-msgstr "Bu faaliyeti çalıştır"
+msgstr "Bu faaliyeti gerçekleştir"
 
 #: ../DocumentModelAddEdit.php:152
 msgid "Select a fixed actor"
@@ -8195,7 +8205,7 @@ msgstr ""
 #: ../ActivatedMovementAddWithPrevisionToBeExecuted.php:513
 #, php-format
 msgid "Expected reference (%s) has been replaced by %s."
-msgstr "Beklenen referans (%s) yer degistirildi tarafindan %s."
+msgstr "Beklenen referans (%s) %s tarafından yer degistirildi."
 
 #: ../ActivatedMovementAddWithPrevisionToBeExecuted.php:519
 msgid "Comment: "
@@ -8249,7 +8259,7 @@ msgstr "Lütfen bir durum giriniz."
 #: ../ActionAddEdit.php:220
 #, php-format
 msgid "Add/Update action for actor \"%s\""
-msgstr "Ortak \"%s\" için hareket ekle/güncelle"
+msgstr "Ortak \"%s\" için eylem ekle/güncelle"
 
 #: ../ActionAddEdit.php:250
 msgid "Please provide a comment."
@@ -8258,11 +8268,11 @@ msgstr "Lütfen bir yorum giriniz."
 #: ../ActionAddEdit.php:259
 #, php-format
 msgid "Client %s has been put in alert state."
-msgstr "Müşteri %s alarm durumuna konuldu."
+msgstr "Müşteri %s alarm durumuna ayarlandı."
 
 #: ../ActionAddEdit.php:282
 msgid "Add an action for actor: "
-msgstr "Partner için bir hareket ekleyiniz:"
+msgstr "Partner için bir eylem ekleyiniz:"
 
 #: ../ActionAddEdit.php:286
 msgid "Select an action type"
@@ -8296,7 +8306,7 @@ msgstr "Seçilen eylemler silindi."
 #: ../ProductByLocationList.php:58
 #, php-format
 msgid "Stock state: location > reference, store (%s)"
-msgstr "Stok şehri: lokasyon > referans, depo (%s)"
+msgstr "Stok durumu: lokasyon > referans, depo (%s)"
 
 #: ../ProductByLocationList.php:66 ../DetailedLocationByProductList.php:78
 #: ../LocationByProductList.php:65
@@ -8345,7 +8355,7 @@ msgstr "Lütfen bir zincir seçiniz"
 #: ../GanttDiagram.php:62
 #, php-format
 msgid "Schedule for chain \"%s\" of order \"%s\", customer \"%s\"."
-msgstr ""
+msgstr "Sipariş \"%s\" zinciri \"%s\"  ve müşteri \"%s\" için planlama yap."
 
 #: ../GanttDiagram.php:65
 #, php-format
@@ -8422,15 +8432,15 @@ msgstr "Evet (Kısmi)"
 
 #: ../WorkOrderCloture.php:56
 msgid "You are not allowed to close this work order."
-msgstr "Bu sipariş emrini kapatamassınız."
+msgstr "Bu iş emrini kapatamassınız."
 
 #: ../WorkOrderCloture.php:70
 msgid "Are you sure you want to close selected work order ?"
-msgstr "Seçilen sipariş emrini kapatmak istediginizden eminmisiniz ?"
+msgstr "Seçilen iş emrini kapatmak istediginizden eminmisiniz ?"
 
 #: ../WorkOrderCloture.php:143
 msgid "An error occurred: work order state could not be updated."
-msgstr "Bir hata oluştu: sipariş emri konumu güncellenemedi."
+msgstr "Bir hata oluştu: iş emri durumu güncellenemedi."
 
 #: ../WorkOrderCloture.php:149
 msgid "Work order has been terminated."
@@ -8463,7 +8473,7 @@ msgstr "Seviye"
 
 #: ../ComponentAddEdit.php:210
 msgid "Percent wasted"
-msgstr ""
+msgstr "Fire yüzdesi"
 
 #: ../ComponentAddEdit.php:227
 msgid "Please provide a level."
@@ -8475,7 +8485,7 @@ msgstr "Lütfen bir miktar giriniz."
 
 #: ../ComponentAddEdit.php:231
 msgid "Precent wasted must be a decimal percent"
-msgstr ""
+msgstr "Fire yüzdesi desimal bir yüzde olmak zorundadır"
 
 #: ../FlightEdit.php:51
 msgid "Flight data recording"
@@ -8764,7 +8774,7 @@ msgstr "Eylem tipine göre istatistik"
 #: ../ChainCommandList.php:141 ../CommandList.php:220
 #: ../CourseCommandList.php:129
 msgid "Charge"
-msgstr "Faturalamak"
+msgstr "Faturala"
 
 #: ../ChainCommandList.php:148 ../CommandList.php:227
 #: ../PrestationCommandList.php:108 ../CourseCommandList.php:139
@@ -8849,12 +8859,12 @@ msgstr "Hepsini sıfırla"
 
 #: ../SupplierCatalog.php:322
 msgid "Sold by"
-msgstr "Tarihinde satıldı"
+msgstr "Satış şekli"
 
 #: ../SupplierCatalog.php:329 ../TransportChainList.php:92
 #: ../CustomerCatalog.php:461 void:1
 msgid "Ask for estimate"
-msgstr ""
+msgstr "Estimate için ara"
 
 #: ../SupplierCatalog.php:337 ../CustomerCatalog.php:469
 msgid "Order selected items"
@@ -8890,7 +8900,7 @@ msgstr "Kısıtlamalı ürünler"
 
 #: ../PromotionAddEdit.php:174
 msgid "Please provide a rate/amount."
-msgstr "Lütfen oran/miktar giriniz."
+msgstr "Lütfen bir oran/miktar giriniz."
 
 #: ../PromotionAddEdit.php:175
 msgid "Please provide the offer on sale type."
@@ -8928,7 +8938,7 @@ msgstr "Makbuzu yazdırmak için lütfen siparişle ilgili bir belge seçiniz."
 
 #: ../EstimateEdit.php:64 ../EstimateToOrder.php:67
 msgid "Selected item is not an estimate."
-msgstr ""
+msgstr "Seçilen öğe bir estimate değildir."
 
 #: ../EstimateEdit.php:88
 msgid "Receipt reprinting is impossible for this type of document."
@@ -9184,11 +9194,11 @@ msgstr "Bir operasyon seçiniz"
 #: ../ActivatedChainTaskList.php:119 ../CommandList.php:126
 #: ../UnavailabilityPlanning.php:125
 msgid "Select a project manager"
-msgstr ""
+msgstr "Bir proje müdürü seçiniz"
 
 #: ../ActivatedChainTaskList.php:127 ../UnavailabilityPlanning.php:139 void:1
 msgid "Signatory"
-msgstr ""
+msgstr "İmza sahibi"
 
 #: ../ActivatedChainTaskList.php:140 ../WorkOrderList.php:77
 #: ../ActivatedChainOperationList.php:219
@@ -9221,7 +9231,7 @@ msgstr "Log kart yazdır"
 
 #: ../ActivatedChainTaskList.php:247
 msgid "Limit date"
-msgstr ""
+msgstr "Tarih limiti"
 
 #: ../ComponentGroupAddEdit.php:50
 msgid "Add or update set"
@@ -9273,7 +9283,7 @@ msgstr "Uçak çizelgesi"
 
 #: ../StockAccountingExport.php:75 ../StockAccountingExport.php:149
 msgid "site"
-msgstr "site"
+msgstr "bölge"
 
 #: ../StockAccountingExport.php:76 void:1
 msgid "Property"
@@ -9297,19 +9307,19 @@ msgstr "Birim istatistikleri"
 
 #: ../EstimateList.php:73
 msgid "Command number"
-msgstr ""
+msgstr "Komut numarası"
 
 #: ../EstimateList.php:79
 msgid "Filter by estimate date"
-msgstr ""
+msgstr "Tahmini tarihe göre filtrele"
 
 #: ../EstimateList.php:113
 msgid "Print estimate"
-msgstr ""
+msgstr "Tahmin yazdır"
 
 #: ../EstimateList.php:114
 msgid "Print estimate document"
-msgstr ""
+msgstr "Tahmin belgesi yazdır"
 
 #: ../ProductHandingByCategoryAddEditE3.php:48
 #, php-format
@@ -9370,7 +9380,7 @@ msgstr "Lütfen bir sürüm giriniz."
 
 #: ../ChainTaskDetails.php:64 void:1
 msgid "Nomenclature"
-msgstr "Terminoloji"
+msgstr "Ürün modeli"
 
 #: ../ChainTaskDetails.php:67
 msgid "Linked component"
@@ -9558,19 +9568,19 @@ msgstr ""
 
 #: ../SalesmenCommission.php:102
 msgid "Invoice total ht"
-msgstr ""
+msgstr "Fatura toplamı"
 
 #: ../SalesmenCommission.php:103
 msgid "Commission percent"
-msgstr ""
+msgstr "Komisyon yüzdesi"
 
 #: ../SalesmenCommission.php:104
 msgid "Commission amount"
-msgstr ""
+msgstr "Komisyon miktarı"
 
 #: ../ContactAddEdit.php:59
 msgid "Contact cannot be saved"
-msgstr "Kontak kaydedilemez"
+msgstr "Kontakt personel kaydedilemez"
 
 #: ../ContactAddEdit.php:60
 msgid "Create/update contact"
@@ -9591,7 +9601,7 @@ msgstr "Setlere göre göster"
 #: ../NomenclatureConcreteProductList.php:76 ../NomenclatureList.php:48
 #: ../NomenclatureList.php:97
 msgid "Nomenclature version"
-msgstr "Terminoloji versiyon"
+msgstr "Ürün modeli versiyonu"
 
 #: ../ProductQuantityByCategoryEdit.php:44
 #: ../ProductQuantityByCategoryList.php:44
@@ -9745,28 +9755,30 @@ msgstr "Gerçekleşen kısmi hareketlerin listesi"
 #: ../UploadedDocumentActivatedChainTask.php:62
 #, php-format
 msgid "Document \"%s\" has been assigned to task \"%s\""
-msgstr ""
+msgstr "Belge \"%s\" görev \"%s\" için atanmıştır"
 
 #: ../UploadedDocumentActivatedChainTask.php:73
 #, php-format
 msgid "Document \"%s\" has been unassigned from its task."
-msgstr ""
+msgstr "Belge \"%s\" görev tayini durdurulmuştur."
 
 #: ../EstimateToOrder.php:74
 #, php-format
 msgid "Selected estimate has already given rise to order \"%s\"."
-msgstr ""
+msgstr "Seçilen tahmin siparişe \"%s\" bir artış vermiştir."
 
 #: ../EstimateToOrder.php:87
 #, php-format
 msgid ""
 "Estimate \"%s\" is not valid anymore (%d days passed since it was issued)."
 msgstr ""
+"Tahmin \"%s\" bundan sonra geçerli değildir (yayınlandığından beri %d gün "
+"geçmiştir)"
 
 #: ../EstimateToOrder.php:179
 #, php-format
 msgid "Order for estimate number \"%s\""
-msgstr ""
+msgstr "Tahmini number \"%s\" için sipariş"
 
 #: ../CommandList.php:136
 msgid "Document number (invoice, delivery order, etc...)"
@@ -9778,11 +9790,11 @@ msgstr "Kapalı"
 
 #: ../CommandList.php:162
 msgid "Filter by creation date"
-msgstr ""
+msgstr "Oluşturma tarihine göre filtrele"
 
 #: ../CommandList.php:214 ../CourseCommandList.php:115
 msgid "Unlock"
-msgstr "Kilitli olmayan"
+msgstr "Serbest bırak"
 
 #: ../CommandList.php:235
 msgid "Add or update instalment"
@@ -9798,7 +9810,7 @@ msgstr "kaydedildi"
 
 #: ../WorkOrder.php:80
 msgid "Modified data is no more compatible with work order items.\n"
-msgstr "Değiştirilen veri artık sipariş emri elemanları ile uyumlu değildir.\n"
+msgstr "Değiştirilen veri iş emri öğeleri ile uyumlu değildir.\n"
 
 #: ../WorkOrder.php:81
 msgid "modified"
@@ -9810,7 +9822,7 @@ msgstr "Sipariş emri verisi başarılıydı"
 
 #: ../WorkOrder.php:185
 msgid "Add a work order"
-msgstr "Sipariş emri ekle"
+msgstr "Bir iş emri ekle"
 
 #: ../WorkOrder.php:193 ../WorkOrder.php:247 void:1
 msgid "h."
@@ -9822,7 +9834,7 @@ msgstr "m."
 
 #: ../WorkOrder.php:204
 msgid "Update work order"
-msgstr "Sipariş emri güncelle"
+msgstr "İş emri güncelle"
 
 #: ../InvoiceDetail.php:54
 msgid "Invoice was not found in the database."
@@ -9871,11 +9883,11 @@ msgstr "Sipariş bu veritabanı içinde bulunamadı."
 
 #: ../CommandDelete.php:62
 msgid "You cannot delete an estimate that is linked to an order"
-msgstr ""
+msgstr "Bir siparişe bağlı tahmini silemezsin"
 
 #: ../CommandDelete.php:67
 msgid "You cannot delete an order which state is different from \"Activated\""
-msgstr "\"Aktiv edilmiş\" olandan farklı bir sipariş şehri silemezsin."
+msgstr "\"Aktiv edilen\" pozisyonunundan farklı bir sipariş silemezsiniz."
 
 #: ../CommandDelete.php:73
 msgid "You cannot delete a closed order."
@@ -9884,20 +9896,21 @@ msgstr "Kapalı siparişi silemezsiniz."
 #: ../CommandDelete.php:80
 #, php-format
 msgid "Are you sure you want to delete %s ?"
-msgstr ""
+msgstr "Silmek istediğinden eminmisin %s ?"
 
 #: ../CommandDelete.php:81
 msgid "this estimate"
-msgstr ""
+msgstr "bu tahmin"
 
 #: ../CommandDelete.php:81
 msgid "this order"
-msgstr ""
+msgstr "bu sipariş"
 
 #: ../CommandDelete.php:97
 msgid ""
 "This order cannot be deleted because one of its task is linked to a document."
 msgstr ""
+"Bu sipariş silinemez çünkü görevlerinden biri bir belgeye bağlanmiştır."
 
 #: ../ProductQuantityByCategoryList.php:145 ../BoardByCategory.php:51
 #: ../ProductHandingByCategoryList.php:52
@@ -9927,7 +9940,7 @@ msgstr "Yalnızca ürünleri<br> sipariş edilen tedarikçiler"
 
 #: ../PaymentCommandList.php:72 ../menu.inc.php:589 ../menu.inc.php:595
 msgid "State of orders"
-msgstr "Sipariş şehri"
+msgstr "Siparişlerin durumu"
 
 #: ../PaymentCommandList.php:74 ../ToHavePaymentList.php:61
 msgid "Payment number"
@@ -9959,11 +9972,11 @@ msgstr "KDV hariç satınalma birim fiyatı"
 #: ../ContactDelete.php:59
 #, php-format
 msgid "Contact %s cannot be deleted"
-msgstr "Kontak %s silinemez."
+msgstr "%s kontakt personel silinemez."
 
 #: ../ActivatedMovementWithPrevisionExecuteSeveral.php:81
 msgid "Execute several movement"
-msgstr ""
+msgstr "Birçok faaliyet gerçekleştir"
 
 #: ../SiteAddEdit.php:62
 msgid "Site cannot be saved"
@@ -9972,11 +9985,11 @@ msgstr "Site kaydedilemiyebilir"
 #: ../SiteAddEdit.php:64
 #, php-format
 msgid "Site \"%s\" was successfully saved."
-msgstr "Site \"%s\" başarılı bir şekilde kaydedildi."
+msgstr "Bölge \"%s\" başarılı bir şekilde kaydedildi."
 
 #: ../SiteAddEdit.php:65
 msgid "Add or update site"
-msgstr "Site ekle veya güncelle"
+msgstr "Bölge ekle veya güncelle"
 
 #: ../SiteAddEdit.php:66
 msgid "More than one result match."
@@ -9989,15 +10002,15 @@ msgstr "Birden daha  fazla sonuç çıktı, lütfen birini seçiniz."
 #: ../SiteAddEdit.php:68
 #, php-format
 msgid "A site already exists with the name \"%s\", please correct."
-msgstr "Bu isimle \"%s\" bir site zaten var, lütfen düzeltiniz."
+msgstr "Bu isimle \"%s\" bir yer zaten var, lütfen düzeltiniz."
 
 #: ../SiteAddEdit.php:128
 msgid "Site was not found in the database"
-msgstr "Site veritabanı içinde bulunamadı"
+msgstr "Bölge veritabanı içinde bulunamadı"
 
 #: ../ComponentConcreteProduct.php:113
 msgid "Parts nomenclature reference "
-msgstr "Terminoloji referans parçaları"
+msgstr "Ürün modeli referans parçaları"
 
 #: ../ComponentConcreteProduct.php:124
 msgid "SN or Lot"
@@ -10021,7 +10034,7 @@ msgstr "Bu siparişi serbest bırakmak istediğinizden eminmisiniz?"
 
 #: ../Download.php:82 void:1
 msgid "Onlogistics download zone"
-msgstr "Onlogistics download zone"
+msgstr "Onlogistics yükleme yeri"
 
 #: ../SupplyingOptimization.php:68
 msgid "No order found for last weeks."
@@ -10033,7 +10046,7 @@ msgstr "Seçilen tarihde önerilen miktarda sipariş yok. "
 
 #: ../SupplyingOptimization.php:169
 msgid "Number of weeks in history"
-msgstr "Geçmişteki haftaların sayısı"
+msgstr "Geçmiş haftaların sayısı"
 
 #: ../SupplyingOptimization.php:171
 msgid "Number of weeks of forecast"
@@ -10057,7 +10070,7 @@ msgstr "Varış tarihi"
 
 #: ../ChainTaskList.php:99
 msgid "List of fixed date task or weekly task"
-msgstr "Kesin tarihli görev veya haftalık görevin listesi"
+msgstr "Kesin tarihli görev veya haftalık görev listesi"
 
 #: ../FlowTypeDuplicate.php:82
 msgid "Expenses and receipts model copy"
@@ -10158,7 +10171,7 @@ msgstr "Sürenin bitiş tarihi"
 
 #: ../ChainActivationTaskDetail.php:98 ../menu.inc.php:518 void:1
 msgid "Nomenclatures"
-msgstr "Terminolojiler"
+msgstr "Ürün modelleri"
 
 #: ../ChainActivationTaskDetail.php:101
 msgid "Components"
@@ -10266,7 +10279,7 @@ msgstr "Zincir oluştur"
 
 #: ../NomenclatureList.php:89
 msgid "Copy nomenclature"
-msgstr "Terminaloji kopyala"
+msgstr "Ürün modeli kopyala"
 
 #: ../PotentialsEdit.php:162
 msgid "Update potentials"
@@ -10349,7 +10362,7 @@ msgstr "Bu sipariş için hiçbir fatura çıkarılmadı."
 
 #: ../CashBalance.php:57
 msgid "Convert to currency"
-msgstr ""
+msgstr "Para birimine çevir"
 
 #: ../CashBalance.php:71 ../menu.inc.php:628 ../menu.inc.php:694
 #: ../menu.inc.php:696 void:1
@@ -10400,19 +10413,19 @@ msgstr "Bu müşteri ve seçilen tarih aralığı için hiçbir ödeme yoktur."
 
 #: ../PreferencesUpload.php:73
 msgid "Select file types you want to allow for upload"
-msgstr ""
+msgstr "Yükleme için izin vermek istediğin bir dosya tipi seçiniz"
 
 #: ../PreferencesUpload.php:74
 msgid "Available file types"
-msgstr ""
+msgstr "Mevcut dosya tipleri"
 
 #: ../PreferencesUpload.php:75
 msgid "Allowed file types"
-msgstr ""
+msgstr "İzin verilen dosya tipleri"
 
 #: ../PreferencesUpload.php:88
 msgid "Upload preferences"
-msgstr ""
+msgstr "Yükleme tercihleri"
 
 #: ../ChainDuplicate.php:78
 #, php-format
@@ -10446,29 +10459,29 @@ msgstr ""
 #: ../ConcreteProductAddEdit.php:64
 #, php-format
 msgid "Item with ID \"%s\" was not found in the database."
-msgstr "ID \"%s\" ile öge veritabanı içinde bulunamadı."
+msgstr "\"%s\" ID ile bir öğe veritabanı içinde bulunamadı."
 
 #: ../ConcreteProductAddEdit.php:65
 msgid "Product related to the selected item was not found in the database."
-msgstr "Seçilen öge ile alakalı ürün veritabanı içinde bulunamadı."
+msgstr "Seçilen öğe ile alakalı ürün veritabanı içinde bulunamadı."
 
 #: ../ConcreteProductAddEdit.php:66
 #, php-format
 msgid "An item with the SN/Lot \"%s\" already exists."
-msgstr "SN/Lot \"%s\" ile bir öge zaten var."
+msgstr "\"%s\" SN/Lot ile bir öğe zaten var."
 
 #: ../ConcreteProductAddEdit.php:67
 msgid "You don't have enough permissions for this item."
-msgstr "Bu öge için yeterli izine sahip değilsiniz."
+msgstr "Bu madde için yeterli izine sahip değilsiniz."
 
 #: ../ConcreteProductAddEdit.php:68
 msgid "Item cannot be saved."
-msgstr "Öge kaydedilemez."
+msgstr "Öğe kaydedilemez."
 
 #: ../ConcreteProductAddEdit.php:70
 msgid "Product related to selected item must have a tracking mode (SN or Lot)."
 msgstr ""
-"Seçilen ögeyle ilişkili ürün bir izleme moduna (SN or Lot) sahip olmalıdır."
+"Seçilen öğeyle ilişkili ürün bir izleme moduna (SN or Lot) sahip olmalıdır."
 
 #: ../ConcreteProductAddEdit.php:71
 #, php-format
@@ -10532,7 +10545,7 @@ msgstr "SN/Lot sahibi"
 
 #: ../DetailedLocationByProductList.php:104
 msgid "Filter by end of life date"
-msgstr "Dayanma ömrü tarihine göre filtreleyiniz"
+msgstr "Son kullanma tarihine göre filtrele"
 
 #: ../DetailedLocationByProductList.php:121
 msgid "Product Owner"
@@ -10552,11 +10565,11 @@ msgstr "Toleranslar başarıyla güncellendi."
 
 #: ../StorebyStorageSiteList.php:58
 msgid "Please select a site."
-msgstr "Lütfen bir site seçiniz"
+msgstr "Lütfen bir bölge seçiniz"
 
 #: ../StorebyStorageSiteList.php:68
 msgid "You are not allowed to view the stores of this site."
-msgstr "Bu yerin depolarını görüntüleme izniniz yok."
+msgstr "Bu bölgenin depolarını görüntüleme izniniz yok."
 
 #: ../StorebyStorageSiteList.php:177
 msgid "Activate store"
@@ -10596,7 +10609,7 @@ msgstr "Lokasyona göre stok içi SN/Lot"
 
 #: ../StorebyStorageSiteList.php:232
 msgid "Back to list of sites"
-msgstr "Sitelerin listesine geri dön"
+msgstr "Bölgelerin listesine geri dön"
 
 #: ../ProductTypeAddEdit.php:49
 msgid "Product type cannot be saved."
@@ -10655,7 +10668,7 @@ msgstr ""
 #: ../ActivatedMovementAddWithoutPrevision.php:59
 #, php-format
 msgid "Unknown reference \"%s\", please try again."
-msgstr "Bilinmeyen kaynak \"%s\", lütfen yeniden deneyin."
+msgstr "\"%s\" bilinmeyen referans, lütfen yeniden deneyin."
 
 #: ../ActivatedMovementAddWithoutPrevision.php:175
 msgid "Position change"
@@ -10685,7 +10698,7 @@ msgstr "KDV hariç harcamalar"
 #: ../BoardByCoast.php:134
 #, php-format
 msgid "% of total expenses"
-msgstr "toplam giderlerin %"
+msgstr ""
 
 #: ../CustomerFrequencyList.php:75 void:1
 msgid "Min."
@@ -10782,7 +10795,7 @@ msgstr "Partner ekle yada güncelle"
 
 #: ../ActorAddEdit.php:77
 msgid "Actor must have at least one site with an address, please correct."
-msgstr "Partnerin en az bir adres yeri olmalı, lütfen düzeltiniz."
+msgstr "Ortağın en az bir adres yeri olmalı, lütfen düzeltiniz."
 
 #: ../ActorAddEdit.php:78
 msgid ""
@@ -10794,7 +10807,7 @@ msgid ""
 "Actor cannot be deactivated because he is the owner of a stock in a storage "
 "site."
 msgstr ""
-"Partner etkisizleştirilemez çünkü depolama yerinde bir stokun sahibidir."
+"Ortak etkisiz hale getirilemez çünkü depolama yerinde bir stok sahibidir."
 
 #: ../ActorAddEdit.php:714
 msgid ": appointment arranged on "
@@ -10817,6 +10830,14 @@ msgstr "Tedarikçiyi \"%s\" iptal etmek istediğinize eminmisiniz?"
 #, php-format
 msgid "Supplier \"%s\" is already taking precedence for ordering this product."
 msgstr "Bu ürün sipariçi için tedarikçi \"%s\" zaten önceliğe sahiptir."
+
+#: ../ActorProductAddEdit.php:171
+msgid "Purchase unit"
+msgstr "Satın alma birimi"
+
+#: ../ActorProductAddEdit.php:173
+msgid "Purchase unit quantity"
+msgstr "Satın alma birim miktarı"
 
 #: ../ActorProductAddEdit.php:175
 msgid "Takes precedence for order"
@@ -10913,7 +10934,7 @@ msgstr "Form model ekle veya güncelle."
 
 #: ../ActorList.php:94
 msgid "Main site city"
-msgstr "Ana mevki şehri"
+msgstr "Ana bölgei şehri"
 
 #: ../ActorList.php:96 void:1
 msgid "Delivery zone"
@@ -10921,7 +10942,7 @@ msgstr "Teslimat zonu"
 
 #: ../ActorList.php:98
 msgid "Main site zip code"
-msgstr "Ana mevki posta kodu"
+msgstr "Ana bölge posta kodu"
 
 #: ../ActorList.php:118
 msgid "Siret"
@@ -11025,11 +11046,11 @@ msgstr "of"
 
 #: ../StoreAddEdit.php:89
 msgid "Please select an owner and provide a store name."
-msgstr "Lütfen bir kullanıcı seçiniz ve depolama alanı ismi giriniz."
+msgstr "Lütfen bir ürün sahibi seçiniz ve depo ismi giriniz."
 
 #: ../StoreAddEdit.php:97
 msgid "A store with the name provided already exists in this site."
-msgstr "Bu sitede bu isimle bir depo halen mevcuttur."
+msgstr "Bu bölgede bu isimle bir depo halen mevcuttur."
 
 #: ../StoreAddEdit.php:130
 msgid "A location with the name provided already exists in this store."
@@ -11107,7 +11128,7 @@ msgstr "Geri dönem miktar"
 
 #: ../Delivery.php:78
 msgid "State of deliveries for order "
-msgstr "Sipariş dağıtım şehirleri"
+msgstr "Sipariş dağıtım durumları"
 
 #: ../ActivatedChainOperationList.php:81
 msgid "You are not allowed to execute this action."
@@ -11135,11 +11156,11 @@ msgstr "Bitiş tarihine göre filtrele"
 
 #: ../ActivatedChainOperationList.php:195
 msgid "Assign to a new work order"
-msgstr "Yeni bir sipariş emrine atama"
+msgstr "Yeni bir iş emrine tahsis et"
 
 #: ../ActivatedChainOperationList.php:205
 msgid "Assign to an existing work order"
-msgstr "Varolan bir sipariş emrine atama"
+msgstr "Varolan bir iş emrine atama"
 
 #: ../ActivatedChainOperationList.php:230
 #: ../ActivatedChainOperationList.php:239
@@ -11173,11 +11194,11 @@ msgstr "Ödenmemis borçlar and ödeme yönetimi"
 
 #: ../WorkOrderOpeTaskDelete.php:54
 msgid "You are not allowed to modify this work order."
-msgstr "Bu sipariş emrini değiştirmeye izniniz yok."
+msgstr "Bu iş emrini değiştirmeye izniniz yok."
 
 #: ../SalesmenCommissionSettings.php:70
 msgid "Commission percent by invoice"
-msgstr ""
+msgstr "Faturaya göre komisyon oranı"
 
 #: ../menu.inc.php:45 ../menu.inc.php:47
 msgid "Profiles table"
@@ -11329,7 +11350,7 @@ msgstr "Tedarik optimizasyonu"
 
 #: ../menu.inc.php:218
 msgid "Supplying optimization preferences"
-msgstr ""
+msgstr "Tearik optimizasyon tercihleri"
 
 #: ../menu.inc.php:222
 msgid "Website"
@@ -11353,15 +11374,15 @@ msgstr "Ticari içerik tercihleri"
 
 #: ../menu.inc.php:240
 msgid "Upload"
-msgstr ""
+msgstr "Yükleme"
 
 #: ../menu.inc.php:242
 msgid "Preferences for file uploads"
-msgstr ""
+msgstr "Dosya yükleme tercihleri"
 
 #: ../menu.inc.php:251
 msgid "VAT management"
-msgstr ""
+msgstr "KDV yönetimi"
 
 #: ../menu.inc.php:265 void:1
 msgid "Back office"
@@ -11373,11 +11394,11 @@ msgstr "Zincir listesi"
 
 #: ../menu.inc.php:288
 msgid "Pricing zones"
-msgstr ""
+msgstr "Fiyat bölgesi"
 
 #: ../menu.inc.php:290
 msgid "Pricing zones management"
-msgstr ""
+msgstr "Fiyat bölgeleri yönetimi"
 
 #: ../menu.inc.php:294
 msgid "Caracteristics"
@@ -11417,11 +11438,11 @@ msgstr "Ortakların listesi"
 
 #: ../menu.inc.php:328
 msgid "Contact roles management"
-msgstr ""
+msgstr "Kontack personel rolleri yönetimi"
 
 #: ../menu.inc.php:332 ../menu.inc.php:334
 msgid "Salesmen commission settings"
-msgstr ""
+msgstr "Satiş elemanı komisyon ayarları"
 
 #: ../menu.inc.php:338 ../menu.inc.php:340
 msgid "Supplying settings"
@@ -11465,55 +11486,55 @@ msgstr "Maliyet örnekleri listesi"
 
 #: ../menu.inc.php:389 ../menu.inc.php:391
 msgid "Data management"
-msgstr ""
+msgstr "Veri yönetimi"
 
 #: ../menu.inc.php:398
 msgid "Colors management"
-msgstr ""
+msgstr "Renk yönetimi"
 
 #: ../menu.inc.php:405
 msgid "Sizes management"
-msgstr ""
+msgstr "Boyutların yönetimi"
 
 #: ../menu.inc.php:412
 msgid "Seasons management"
-msgstr ""
+msgstr "Sezon yönetimi"
 
 #: ../menu.inc.php:419
 msgid "Construction types management"
-msgstr ""
+msgstr "Yapım tipi yönetimi"
 
 #: ../menu.inc.php:426
 msgid "Construction codes management"
-msgstr ""
+msgstr "Yapım kodu yönetimi"
 
 #: ../menu.inc.php:433
 msgid "Shapes management"
-msgstr ""
+msgstr "Şekil yönetimi"
 
 #: ../menu.inc.php:440
 msgid "Press names management"
-msgstr ""
+msgstr "Baskı isimleri yönetimi"
 
 #: ../menu.inc.php:447
 msgid "Labels (griffes) management"
-msgstr ""
+msgstr "Etiket (bilgi) yönetimi"
 
 #: ../menu.inc.php:454
 msgid "Heel heights management"
-msgstr ""
+msgstr "Topuk yüksekliği yönetimi"
 
 #: ../menu.inc.php:461 ../menu.inc.php:463
 msgid "Materials management"
-msgstr ""
+msgstr "Malzeme yönetimi"
 
 #: ../menu.inc.php:468
 msgid "Worksheets"
-msgstr ""
+msgstr "Çalışma tabloları"
 
 #: ../menu.inc.php:470
 msgid "Worksheets management"
-msgstr ""
+msgstr "Çalışma tabloları yönetimi"
 
 #: ../menu.inc.php:479 void:1
 msgid "Pricing"
@@ -11577,11 +11598,11 @@ msgstr "Ders rezervasyonları takibi"
 
 #: ../menu.inc.php:612
 msgid "Estimates"
-msgstr ""
+msgstr "Tahminler"
 
 #: ../menu.inc.php:614
 msgid "List of estimates"
-msgstr ""
+msgstr "Tahminlerim listesi"
 
 #: ../menu.inc.php:618
 msgid "Credit notes"
@@ -11662,7 +11683,7 @@ msgstr "Sipariş emirleri yönetimi"
 
 #: ../menu.inc.php:733 ../menu.inc.php:735
 msgid "Regrouping in work order"
-msgstr "Sipriş emrine göre yeniden gruplama"
+msgstr "İş emrine göre yeniden gruplama"
 
 #: ../menu.inc.php:748 ../menu.inc.php:750 void:1
 msgid "Amount of stock"
@@ -11678,11 +11699,11 @@ msgstr "Depolama yerleri listesi"
 
 #: ../menu.inc.php:760 ../menu.inc.php:762
 msgid "Expected movements"
-msgstr "Beklenen hareketler"
+msgstr "Stok hareketleri"
 
 #: ../menu.inc.php:766
 msgid "Unexpected movements"
-msgstr "Beklenmeyen faaliyetler"
+msgstr "Beklenmeyen stok hareketleri"
 
 #: ../menu.inc.php:768
 msgid "Unexpected movement execution"
@@ -11726,7 +11747,7 @@ msgstr "Belgelerin yeniden yazdırılması"
 
 #: ../menu.inc.php:830 ../menu.inc.php:832
 msgid "Lookbook printing"
-msgstr ""
+msgstr "Log defteri yazdırma"
 
 #: ../menu.inc.php:848 void:1
 msgid "Scoreboard"
@@ -11734,7 +11755,7 @@ msgstr "Skorbord"
 
 #: ../menu.inc.php:855
 msgid "salesman"
-msgstr ""
+msgstr "satış elemanı"
 
 #: ../menu.inc.php:859 ../menu.inc.php:861
 msgid "Turnover by salesman"
@@ -11742,7 +11763,7 @@ msgstr "Pazarlamacı cirosu"
 
 #: ../menu.inc.php:865 ../menu.inc.php:867
 msgid "Salesmen commissions"
-msgstr ""
+msgstr "Satış elemanı komisyonları"
 
 #: ../menu.inc.php:875
 msgid "Turnover by customer"
@@ -11818,19 +11839,19 @@ msgstr ""
 
 #: ../menu.inc.php:993
 msgid "Electronic document management"
-msgstr ""
+msgstr "Elektronik belge yönetimi"
 
 #: ../menu.inc.php:1001
 msgid "List of uploaded documents"
-msgstr ""
+msgstr "Yüklenen belgelerin yönetimi"
 
 #: ../menu.inc.php:1006
 msgid "Document Types"
-msgstr ""
+msgstr "Belge tipleri"
 
 #: ../menu.inc.php:1008
 msgid "List of document types"
-msgstr ""
+msgstr "Belge tipleri listesi"
 
 #: ../DocumentList.php:110
 msgid "Reprinting"
@@ -11842,11 +11863,11 @@ msgstr "Fatura gönder"
 
 #: ../../../pwak/trunk/lib/Grid/Actions/Renderers/GridActionRendererSelectForSingleSelection.php:43
 msgid "For selected item: "
-msgstr "Seçilen öge için:"
+msgstr "Seçilen öğe için:"
 
 #: ../../../pwak/trunk/lib/Grid/Actions/Renderers/GridActionRendererSelect.php:86
 msgid "For selected items: "
-msgstr "Seçilen ögeler için:"
+msgstr "Seçilen öğeler için:"
 
 #: ../../../pwak/trunk/lib/Grid/Actions/GridActionPrint.php:42
 msgid "Print list"
@@ -11854,7 +11875,7 @@ msgstr "Yazma listesi"
 
 #: ../../../pwak/trunk/lib/Grid/Actions/GridActionExport.php:48
 msgid "Export list in csv format (Excel)"
-msgstr "Export listesi cvs formatı (Excel) içindedir"
+msgstr "Export listesi ı (Excel) cvs formatındadır"
 
 #: ../../../pwak/trunk/lib/Grid/Grid.php:831 void:1
 msgid "First page"
@@ -11910,24 +11931,24 @@ msgstr "Göre filtrele"
 
 #: ../../../pwak/trunk/lib/Search/SearchForm.php:993
 msgid "criteria"
-msgstr ""
+msgstr "kriter"
 
 #: ../../../pwak/trunk/lib/Search/SearchForm.php:993
 msgid "Available criteria"
-msgstr ""
+msgstr "Mevcut kriter"
 
 #: ../../../pwak/trunk/lib/Search/SearchForm.php:994
 msgid "Criteria to hide"
-msgstr ""
+msgstr "Saklamak için kriter"
 
 #: ../../../pwak/trunk/lib/Search/SearchForm.php:1004
 msgid "You can't hide all criteria."
-msgstr ""
+msgstr "Tüm kriterleri saklayamazsın"
 
 #: ../../../pwak/trunk/lib/Timetable/Formats/TimetableFormatWeekly.php:211
 #, php-format
 msgid "Week %s of %s"
-msgstr "Hafta %s in %s"
+msgstr "Week %s of %s"
 
 #: ../../../pwak/trunk/lib/GenericMessages.php:31
 msgid "Error when executing action"
@@ -11951,7 +11972,7 @@ msgstr "SQL hatası."
 
 #: ../../../pwak/trunk/lib/GenericMessages.php:38
 msgid "Session expired, please try again."
-msgstr "Dönem süresi doldu, lütfen yeniden deneyiniz."
+msgstr "Sezon süresi doldu, lütfen yeniden deneyiniz."
 
 #: ../../../pwak/trunk/lib/GenericMessages.php:39
 msgid "This action cannot be completed"
@@ -11959,7 +11980,7 @@ msgstr "Bu eylem tamamlanamaz"
 
 #: ../../../pwak/trunk/lib/GenericMessages.php:40
 msgid "You must select a wished date"
-msgstr "Bir istenen tarih secmelisiniz"
+msgstr "İstenen bir tarih secmelisiniz"
 
 #: ../../../pwak/trunk/lib/GenericMessages.php:42
 msgid "Begin date must be lower than end date."
@@ -11967,7 +11988,7 @@ msgstr "Başlama tarihi bitiş tarihinden küçük olmalıdır."
 
 #: ../../../pwak/trunk/lib/GenericMessages.php:44
 msgid "Selected items were not found in the database."
-msgstr "Seçilen ögeler veritabanı içinde bulunamadı."
+msgstr "Seçilen öğeler veritabanı içinde bulunamadı."
 
 #: ../../../pwak/trunk/lib/GenericMessages.php:45
 msgid "Maximum allowed weight exceeded for selected airplane"
@@ -12042,11 +12063,11 @@ msgstr "Seçilen öğeleri silmek istediğinizden eminmisin?"
 
 #: ../../../pwak/trunk/lib/GenericMessages.php:63
 msgid "Please select one or more items."
-msgstr "Lütfen bir veya daha fazla öge seçiniz."
+msgstr "Lütfen bir veya daha fazla öğe seçiniz."
 
 #: ../../../pwak/trunk/lib/GenericMessages.php:64
 msgid "Please select one (and only one) item."
-msgstr "Lütfen bir (ve yalnız bir) öge seçiniz."
+msgstr "Lütfen bir (yalnızca bir) öğe seçiniz."
 
 #: ../../../pwak/trunk/lib/GenericMessages.php:65
 msgid "Are you sure you want to do this ?"
@@ -12054,20 +12075,20 @@ msgstr "Bunu yapmak istediğinizden eminmisin?"
 
 #: ../../../pwak/trunk/lib/GenericMessages.php:67
 msgid "Some items could not be deleted"
-msgstr "Bazı ögeler silinemez"
+msgstr "Bazı öğeler silinemez"
 
 #: ../../../pwak/trunk/lib/GenericMessages.php:68
 #, php-format
 msgid "The following items could not be deleted: <ul><li>%s</li></ul>"
-msgstr "Takip eden ögeler silinemez: <ul><li>%s</li></ul>"
+msgstr "Bu öğeler silinemez: <ul><li>%s</li></ul>"
 
 #: ../../../pwak/trunk/lib/GenericMessages.php:69
 msgid "Selected items were successfully deleted."
-msgstr "Seçilen ögeler başarıyla silindi."
+msgstr "Seçilen öğeler başarıyla silindi."
 
 #: ../../../pwak/trunk/lib/GenericMessages.php:70
 msgid "None of the selected items could be deleted."
-msgstr "Seçilen ögelerin hiçbiri silinemedi."
+msgstr "Seçilen öğelerin hiçbiri silinemedi."
 
 #: ../../../pwak/trunk/lib/GenericMessages.php:72
 #, php-format
@@ -12075,14 +12096,16 @@ msgid ""
 "Item could not be saved because some property values must be unique for %s "
 "entity."
 msgstr ""
-"Öge silinemez çünkü bazı nitelik değerleri %s eleman için tek olmalıdır. "
+"Bu item kaydedilemez çünkü %s elemanı için bazı nitelik değerleri tek "
+"olmalıdır. "
 
 #: ../../../pwak/trunk/lib/GenericMessages.php:73
 msgid ""
 "Item could not be deleted because some properties must be empty in order to "
 "delete the item."
 msgstr ""
-"Öge silinemez çünkü bazı nitelik değerleri ögeyi silmek için boş olmalıdır."
+"Bu öğe silinemez çünkü bazı nitelik değerleri öğeyi silmek için boş "
+"olmalıdır."
 
 #: ../../../pwak/trunk/lib/GenericMessages.php:79
 #: ../../../pwak/trunk/lib/GenericMessages.php:81 void:1
@@ -12403,7 +12426,7 @@ msgstr "Sipariş emri özeti"
 
 #: void:1
 msgid "Add a site"
-msgstr "Bir site ekle"
+msgstr "Bir bölge ekle"
 
 #: void:1
 msgid "Discount over annual turnover"
@@ -12431,7 +12454,7 @@ msgstr "Hiçbir kayıt bulunamadı"
 
 #: void:1
 msgid "Delete selected items"
-msgstr "Seçilen ögeleri sil"
+msgstr "Seçilen öğeleri sil"
 
 #: void:1
 msgid "Define substitutions for reference"
@@ -12567,7 +12590,7 @@ msgstr "Zincir etkinleştirme/Komut tipi"
 
 #: void:1
 msgid "Departure actor/site."
-msgstr "Kalkış partner/site."
+msgstr "Kalkış ortak/bölge."
 
 #: void:1
 msgid "Departure actor of initial order"
@@ -12575,15 +12598,15 @@ msgstr "Başlangıç siparişinin kalkış partneri"
 
 #: void:1
 msgid "Departure site of initial order"
-msgstr "Başlangıç siparişinin kalkış yeri"
+msgstr "Başlangıç siparişi kalkış yeri"
 
 #: void:1
 msgid "Fixed site"
-msgstr "Sabit site "
+msgstr "Sabit bölge"
 
 #: void:1
 msgid "Arrival actor/site."
-msgstr "Varış partner/site."
+msgstr "Varış ortak/bölge."
 
 #: void:1
 msgid "Arrival actor of initial order"
@@ -12591,7 +12614,7 @@ msgstr "Başlangıç siparişinin varış partneri"
 
 #: void:1
 msgid "Arrival site of initial order"
-msgstr "Başlangıç siparişinin varış yeri"
+msgstr "Başlangıç siparişi varış yeri"
 
 #: void:1
 msgid "Task duration/calculation mode"
@@ -12607,7 +12630,7 @@ msgstr "Sevkedilmiş paketler"
 
 #: void:1
 msgid "Shipped deposited packings : provide departure locations"
-msgstr "Sevkedilmiş depolanan paketlemeler : varis lokasyonu gir"
+msgstr "Sevkedilmiş depolanan paketlemeler : kalkış lokasyonu gir"
 
 #: void:1
 msgid "Update cache"
@@ -12615,11 +12638,11 @@ msgstr "Önbelleği güncelleme"
 
 #: void:1
 msgid "Actors/sites javascript cache"
-msgstr "Partner/siteler javascript önbellek"
+msgstr "Ortakalar/bölgeler javascript önbellek"
 
 #: void:1
 msgid "Actors/sites/jobs javascript cache"
-msgstr "Partner/siteler/işler javascript önbellek"
+msgstr "Ortaklar/bölgeler/işler javascript önbellek"
 
 #: void:1
 msgid "Details for credit note number "
@@ -12675,7 +12698,7 @@ msgstr "Sıralamayı sıfırla"
 
 #: void:1
 msgid "Contact name"
-msgstr "Kontak ismi"
+msgstr "Kontakt personel ismi"
 
 #: void:1
 msgid "Function"
@@ -12707,11 +12730,11 @@ msgstr "Kommand listesine geri dön"
 
 #: void:1
 msgid "VAT surtax"
-msgstr ""
+msgstr "KDV ilave vergi"
 
 #: void:1
 msgid "Tax Stamp"
-msgstr ""
+msgstr "Vergi Kaşesi"
 
 #: void:1
 msgid "of global discount"
@@ -12815,7 +12838,7 @@ msgstr "Tanımlanan ayarların listesi"
 
 #: void:1
 msgid "store for site"
-msgstr "site için depo"
+msgstr "bölge için depo"
 
 #: void:1
 msgid "Store name"
@@ -12891,23 +12914,23 @@ msgstr "Kataloglar üzerinde parlaklığa izin ver"
 
 #: void:1
 msgid "Take into account customer planning in command date calendar"
-msgstr ""
+msgstr "Komut takvimindeki müşteri planlamasını göz önüne al"
 
 #: void:1
 msgid "Estimates behaviour"
-msgstr ""
+msgstr "Tahmin davranışları"
 
 #: void:1
 msgid "Estimate"
-msgstr ""
+msgstr "Tahmin"
 
 #: void:1
 msgid "Previsional order"
-msgstr ""
+msgstr "Öngörülen sipariş"
 
 #: void:1
 msgid "Number of days of validity of estimates"
-msgstr ""
+msgstr "Tahminlerin geçerlilik günlerinin sayısı"
 
 #: void:1
 msgid "Customer product orders behaviour"
@@ -12931,15 +12954,15 @@ msgstr "Gerçeğe dayalı"
 
 #: void:1
 msgid "VAT overtaxed (%)"
-msgstr ""
+msgstr "KDV fazla vergi (%)"
 
 #: void:1
 msgid "FODEC tax (%)"
-msgstr ""
+msgstr "FODEC vergi (%)"
 
 #: void:1
 msgid "Pre-calculate possible suppliers in supplying optimization"
-msgstr ""
+msgstr "Tedarik optimizasyonundaki mümkün tedarikçilerin ön hesabı"
 
 #: void:1
 msgid "Actor preferences"
@@ -12955,11 +12978,11 @@ msgstr "Havacılık içeriği"
 
 #: void:1
 msgid "Consulting context"
-msgstr ""
+msgstr "Danışmanlık içeriği"
 
 #: void:1
 msgid "Ready-to-wear context"
-msgstr ""
+msgstr "Hazır giyim içeriği"
 
 #: void:1
 msgid "License name"
@@ -13047,7 +13070,7 @@ msgstr "Genel bilgi"
 
 #: void:1
 msgid "Number of items per page"
-msgstr "Her sayfadaki ögelerin sayısı"
+msgstr "Her sayfadaki öğelerin sayısı"
 
 #: void:1
 msgid "Catalog content"
@@ -13083,7 +13106,7 @@ msgstr "Seçilen şehirlere atama"
 
 #: void:1
 msgid "Assign selected sites"
-msgstr "Seçilen sitelere atama"
+msgstr "Seçilen bölgelere tayin et"
 
 #: void:1
 msgid "Save zone name"
@@ -13099,7 +13122,7 @@ msgstr "Dahil olan şehirler"
 
 #: void:1
 msgid "Included sites"
-msgstr "Dahil olan siteler"
+msgstr "Dahil edilen bölgeler"
 
 #: void:1
 msgid "Reason for unavailability"
@@ -13208,7 +13231,7 @@ msgstr "Görünümü özelleştir"
 
 #: void:1
 msgid "Customize search criteria"
-msgstr ""
+msgstr "Arama kriterlerini özelleştir"
 
 #: void:1
 msgid "Customize"
@@ -13313,17 +13336,16 @@ msgstr "lokasyonlara göre stok miktarlarını görüntüle"
 
 #: void:1
 msgid "manage storage sites, stores and locations"
-msgstr "depo yerlerini, dükkânlari ve lokasyonlari düzenle"
+msgstr "depo yerlerini, dükkanları ve lokasyonları düzenle"
 
 #: void:1
 msgid "view list of expected movements and execute it"
-msgstr "beklenen hareketlerin listesini görüntüle ve onu çalıştır"
+msgstr "stok hareketleri listesini görüntüle ve çalıştır"
 
 #: void:1
 msgid "execute unexpected movements (client refusal, damage, etc...)"
 msgstr ""
-"beklenmeyen hareketlerin işlemlerini uygula (müşteri kabul etmeme, hasar, "
-"vb...)"
+"beklenmeyen stok hareketlerini çalıştır (müşteri kabul etmeme, hasar, vb...)"
 
 #: void:1
 msgid "View stock movements history"
@@ -13550,23 +13572,23 @@ msgid ""
 "field, or to find products which name ends with \"foo\", just type \"*foo\" "
 "in the name criteria text field."
 msgstr ""
-"Wild card karakterleri \"*\"  kullanmak yapmak için yalnızca bir kelimenin "
-"bir parçasini arama motoruna yazabilirsin. Örneğin referansları \"000\" ile "
+"Wild card karakterleri \"*\"  kullanmak  için yalnızca bir kelimenin bir "
+"parçasini arama motoruna yazabilirsiniz. Örneğin referansları \"000\" ile "
 "başlayan tüm ürünleri bulmak için referans kriteri metin alanına yalnızca "
-"\"000*\" yaz, veya isim sonlari \"foo\"  ile olan ürünleri bulmak için isim "
-"kriteri metin alanına yalnızca \"*foo\" yaz."
+"\"000*\" yazınız veya isim sonları \"foo\"  ile biten ürünleri bulmak için "
+"isim kriteri metin alanına yalnızca \"*foo\" yazınız."
 
 #: void:1
 msgid "Documents tab allows you to do the following operations"
-msgstr "Belgeler sekmesi takip eden operasyonlari yapmaniza izin verir."
+msgstr "Belgeler sekmesi aşağıdaki operasyonları yapmanıza izin verir."
 
 #: void:1
 msgid "manage document models"
-msgstr "belge örnekleri düzenle"
+msgstr "belge modelleri düzenle"
 
 #: void:1
 msgid "Document layout and contents customisation "
-msgstr "Belge düzeni ve uyarlama içeriği"
+msgstr "Belge tasarım ve içerik uyarlama"
 
 #: void:1
 msgid "reprint documents"
@@ -13576,8 +13598,8 @@ msgstr "belegeleri yeniden yazdır"
 msgid ""
 "access to document list (invoices, credit notes, etc...) to reprint them"
 msgstr ""
-"Yeniden yazdırmak için belge listesine erişim (faturalar, kredi notlari, "
-"vb...) "
+"belge listesine (faturalar, kredi notlari, vb...) onları yeniden yazdırmak "
+"için erişim"
 
 #: void:1
 msgid ""
@@ -13589,28 +13611,28 @@ msgstr ""
 
 #: void:1
 msgid "the list of alerts"
-msgstr "alarmların listesi"
+msgstr "uyarıların listesi"
 
 #: void:1
 msgid "add, update or view actors"
-msgstr "partnerleri ekle, güncelle veya görüntüle"
+msgstr "ortaklar ekle, güncelle veya görüntüle"
 
 #: void:1
 msgid "Configure actors (customers, suppliers, service providers...)"
 msgstr ""
-"Partnerleri yapılandır (müşteriler, tedarikçiler, hizmet sağlayıcılar...)"
+"Ortakları (müşteriler, tedarikçiler, hizmet sağlayıcılar...vb.) yapılandır"
 
 #: void:1
 msgid ""
 "use the search engine to find desired actors and click on \"New search\" to "
 "reset your search criteria"
 msgstr ""
-"istenen partnerleri bulmak için arama motoru kullan, arama kriterlerini "
+"istenen ortakları bulmak için arama motoru kullanınız, arama kriterlerini "
 "sıfırlamak için \"Yeni arama\" tuşuna basınız"
 
 #: void:1
 msgid "The list of actors"
-msgstr "Partnerlerin listesi"
+msgstr "Ortakların listesi"
 
 #: void:1
 msgid ""
@@ -13618,9 +13640,9 @@ msgid ""
 "salesman, maximum outstanding debts allowed, current outstanding debts, main "
 "site address etc..."
 msgstr ""
-"eşlenen arama kriteri gösteriliyor, satış elemanı ile ilişkili ismi, izin "
-"verilen maximum odenmemiş borcu, mevcut odenmemiş borç, ana yerin adresini "
-"vb...görebilirsin."
+"eşlenen arama kriteri gösterildi, ilgili satış elemanı ismini, izin verilen "
+"maximum ödenmemiş borcu, mevcut ödenmemiş borcu, ana bölge adresini vb... "
+"görebilirsin."
 
 #: void:1
 msgid "Available features"
@@ -13628,23 +13650,23 @@ msgstr "Mevcut özellikler"
 
 #: void:1
 msgid "according to your permissions, click on corresponding tab"
-msgstr "yetki izinlerine göre, ilgili sekmeye basınız"
+msgstr "yetki izninize göre, ilgili sekmeye basınız"
 
 #: void:1
 msgid "configure Onlogistics (users, catalogues, alerts, etc...)"
-msgstr "Onlogistics yapılandır (kullanıcılar, kataloglar, alarmlar, vb...)"
+msgstr "Onlogistics 'i (kullanıcılar, kataloglar, alarmlar, vb...) yapılandır"
 
 #: void:1
 msgid ""
 "define your logistics environment: chains, products purchased or sold, "
 "actors (customers, suppliers, service providers...) etc..."
 msgstr ""
-"logistik ortamını tanımla: zincirler, alınan ve satılan ürünler, partners "
-"(müşteriler, tedarikçiler, hizmet verenler...) etc..."
+"logistik ortamını tanımla: zincirler, alınan ve satılan ürünler, ortaklar "
+"(müşteriler, tedarikçiler, servis sağlayıcılar, etc...)"
 
 #: void:1
 msgid "define and store product nomenclatures,"
-msgstr "ürün terminololerini tanımla ve kaydet"
+msgstr "ürün modellerini tanımla ve kaydet"
 
 #: void:1
 msgid ""
@@ -13655,7 +13677,7 @@ msgstr ""
 
 #: void:1
 msgid "place customer or supplier orders,"
-msgstr "müşteri veya tedarikci siparişlerini işleme koy,"
+msgstr "müşteri veya tedarikci siparişleri ver,"
 
 #: void:1
 msgid "view orders state, billings and payments"
@@ -13668,24 +13690,24 @@ msgstr "muhasebe verilerini yapılandır"
 #: void:1
 msgid "execute operations regroupings, build and print carriage orders"
 msgstr ""
-"yeniden gruplama operasyonlarını, taşıyıcı siparişlerini oluşturma ve "
-"yazdırma işlemlerini gerçekleştir"
+"yeniden gruplama operasyonları gerçekleştir, nakliye siparişleri oluştur ve "
+"yazdır"
 
 #: void:1
 msgid ""
 "view stock quantities, stock state by location, movements and inventory "
 "history and expected movements"
 msgstr ""
-"stok miktarlarını, lokasyona göre stok şehirlerini, hareket ve envanter "
-"geçmişini ve beklenen hareketleri görüntüle"
+"stok miktarlarını, lokasyona göre stok durumlarını, hareket ve envanter "
+"geçmişini ve stok hareketlerini görüntüle"
 
 #: void:1
 msgid "reprint existing documents"
-msgstr "varolan belgeleri yeniden yazdır"
+msgstr "mevcut belgeleri yeniden yazdır"
 
 #: void:1
 msgid "turnover statistics and performance indicators"
-msgstr "ciro istatistikleri ve performans göstergeleri"
+msgstr "iş hacmi istatistikleri ve performans göstergeleri"
 
 #: void:1
 msgid "validate tasks, view history and plannings"
@@ -13698,8 +13720,7 @@ msgstr "Uçuş"
 #: void:1
 msgid "execute operations related to flights (only in aeronautical context)."
 msgstr ""
-"uçuşlarla ilgili operasyon işlemlerini gerçekleştir (yalniz havacılık "
-"içerigi ile ilgili) "
+"uçuşlarla ilgili operasyonları gerçekleştir (yalnız havacılık ile ilgili) "
 
 #: void:1
 msgid "Some useful tips for increasing your productivity"
@@ -13721,16 +13742,15 @@ msgstr "Yardımı göster"
 msgid ""
 "where available, use \"Contextual help\" button (on the screen up right "
 "corner)"
-msgstr ""
-"mevcut \"içeriksel yardım\" butonunu kullan (ekranın sağ üst köşesinde)"
+msgstr "\"İçeriksel yardım\" butonunu kullanınız (ekranın sağ üst köşesinde)"
 
 #: void:1
 msgid "Send a mail to technical support"
-msgstr "Teknik destege bir mail gonder"
+msgstr "Teknik destek için bir e-mail gönder"
 
 #: void:1
 msgid "click on \"Technical support\" link (at the top of every screen)"
-msgstr " \"Teknik destek\" linkine basınız (her ekranın üzerinde)"
+msgstr " \"Teknik destek\" linkine basınız (ekranın üst tarafında)"
 
 #: void:1
 msgid "Sign out"
@@ -13750,19 +13770,19 @@ msgstr ""
 
 #: void:1
 msgid "Orders tab allows you to do the following operations"
-msgstr "Sipariş sekmesi takip eden operasyonları yapmanıza izin verir."
+msgstr "Sipariş sekmesi aşağıdaki operasyonları yapmanıza izin verir."
 
 #: void:1
 msgid "place a customer product order"
-msgstr "Bir müşteri ürün siparişi yerine getir"
+msgstr "Bir müşteri ürün siparişi gir"
 
 #: void:1
 msgid "place a supplier product order"
-msgstr "Bir tedarikçi ürün siparişi yerine getir"
+msgstr "Bir tedarikçi ürün siparişi gir"
 
 #: void:1
 msgid "book a carriage service"
-msgstr "bir taşıma servisi rezerve et"
+msgstr "bir taşıma servisi rezervasyonu yap"
 
 #: void:1
 msgid "book a class"
@@ -13773,8 +13793,8 @@ msgid ""
 "View completed stock movements, in relation to an order (normal entries and "
 "issues) or not (dislocation, client refusal, damage etc...)"
 msgstr ""
-"Bir siparişle (normal girişler ve çıkışlar) ilgili  stok hareketlerini "
-"görüntüle veya görüntülememe (yer değiştirme, musteri reddetme, hasar vb...)"
+"Bir siparişle ilgili (normal girişler ve çıkışlar) veya ilgili olmayan (yer "
+"değiştirme, müşteri reddetme, hasar vb...) stok hareketlerini görüntüle "
 
 #: void:1
 msgid ""
@@ -13921,7 +13941,7 @@ msgstr "Bahşişler"
 
 #: void:1
 msgid "select one or more states in the states select list:"
-msgstr "seçilen şehir listesi içinde bir veya daha fazla şehir seç:"
+msgstr "seçilen pozisyon listesi içinde bir veya daha fazla pozisyon seç:"
 
 #: void:1
 msgid "keep the \"ctrl\" key pressed while selecting"
@@ -13949,7 +13969,7 @@ msgstr "Uygulamanın potensiyel limiti (saatler içinde)"
 
 #: void:1
 msgid "Fixed date of execution"
-msgstr "Kesin yürütme tarihi"
+msgstr "Kesin uygulama tarihi"
 
 #: void:1
 msgid "select a date"
@@ -14105,7 +14125,7 @@ msgstr "Bağlı olan muhasebe tipi"
 
 #: void:1
 msgid "select an item"
-msgstr "bir öge seç"
+msgstr "bir öğe seç"
 
 #: void:1
 msgid "Detailed file"
@@ -14189,19 +14209,19 @@ msgstr "Sanal potensiyel"
 
 #: void:1
 msgid "mandatory fields if airplane"
-msgstr "Uçak ise mecburi alanlar "
+msgstr "Uçak için mecburi alanlar "
 
 #: void:1
 msgid "Fuel additions"
-msgstr "İlave fuel"
+msgstr "Yakıt katkıları"
 
 #: void:1
 msgid "No flight preparation was found for this period"
-msgstr "Bu dönem için hiçbir uçus hazırlığı yapılmadı"
+msgstr "Bu dönem için hiçbir uçuş hazırlığı yapılmadı"
 
 #: void:1
 msgid "Fuel consumption"
-msgstr "Fuel tüketimi"
+msgstr "Yakıt tüketimi"
 
 #: void:1
 msgid "No flight was found for this period"
@@ -14233,7 +14253,7 @@ msgstr "Revisyondan itibaren sanal potensiyel "
 
 #: void:1
 msgid "Next scheduled maintenances"
-msgstr "Planlanan gelecek bakım-onarim"
+msgstr "Planlanan gelecek bakım-onarım"
 
 #: void:1
 msgid "No maintenance service scheduled"
@@ -14273,15 +14293,15 @@ msgstr "Onarımdan itibaren devirlerin sayısı"
 
 #: void:1
 msgid "Site properties"
-msgstr "Site özellikleri"
+msgstr "Bölge özellikleri"
 
 #: void:1
 msgid "Site name"
-msgstr "Site ismi"
+msgstr "Bölge ismi"
 
 #: void:1
 msgid "Site address"
-msgstr "Site adresi"
+msgstr "Bölge adresi"
 
 #: void:1
 msgid "Address complement"
@@ -14293,19 +14313,19 @@ msgstr "Posta Kodu (Fransa)"
 
 #: void:1
 msgid "Contacts"
-msgstr "Kontaklar"
+msgstr "Kontaks personeller"
 
 #: void:1
 msgid "Role"
-msgstr ""
+msgstr "Role"
 
 #: void:1
 msgid "No contact."
-msgstr "Kontak yok."
+msgstr "Kontakt kişi yok."
 
 #: void:1
 msgid "Add a contact"
-msgstr "Kontak ekle"
+msgstr "Kontakt kişi ekle"
 
 #: void:1
 msgid "Edit task dates"
@@ -14317,7 +14337,7 @@ msgstr "zincir"
 
 #: void:1
 msgid "Current schedule"
-msgstr "Geçerli olan zaman çizelgesi"
+msgstr "Mevcut zaman çizelgesi"
 
 #: void:1
 msgid "Fixed date"
@@ -14353,7 +14373,7 @@ msgstr "Yeni haftalık kalkış tarihi"
 
 #: void:1
 msgid "every"
-msgstr "her bir"
+msgstr "herbir"
 
 #: void:1
 msgid "Current weekly arrival date"
@@ -14441,7 +14461,7 @@ msgstr "Kalite"
 
 #: void:1
 msgid "Slogan"
-msgstr ""
+msgstr "Slogan"
 
 #: void:1
 msgid "Logo"
@@ -14477,19 +14497,19 @@ msgstr "İş"
 
 #: void:1
 msgid "Operative"
-msgstr ""
+msgstr "Faal (çalışır durumda)"
 
 #: void:1
 msgid "Can be internal affectation"
-msgstr ""
+msgstr "İçsel tavır olabilir"
 
 #: void:1
 msgid "Internal affectation"
-msgstr ""
+msgstr "İçsel tavır"
 
 #: void:1
 msgid "Business provider"
-msgstr ""
+msgstr "İş sağlayıcı"
 
 #: void:1
 msgid "Aeronautical data"
@@ -14537,7 +14557,7 @@ msgstr "Çift motorlu gece uçuşları"
 
 #: void:1
 msgid "IFR"
-msgstr "IFR"
+msgstr ""
 
 #: void:1
 msgid "Commercial data and billing data"
@@ -14581,23 +14601,23 @@ msgstr "Seçenek"
 
 #: void:1
 msgid "Subject to VAT"
-msgstr "KDV ye bağımlı"
+msgstr "KDV 'ye tabidir"
 
 #: void:1
 msgid "Subject to VAT overtaxed"
-msgstr ""
+msgstr "Fazla KDV oranına tabidir"
 
 #: void:1
 msgid "Subject to FODEC tax"
-msgstr ""
+msgstr "Fodex vergisine tabidir"
 
 #: void:1
 msgid "Subject to tax stamp"
-msgstr ""
+msgstr "Vergi kaşesine tabidir"
 
 #: void:1
 msgid "Select one or more document appendices"
-msgstr ""
+msgstr "Bir veya dahaçokbelge ekleri seçiniz"
 
 #: void:1
 msgid "Bank contact"
@@ -14629,7 +14649,7 @@ msgstr "Adresler ve zaman çizelgesi"
 
 #: void:1
 msgid "Main Site"
-msgstr "Ana Site"
+msgstr "Ana Bölge"
 
 #: void:1
 msgid "NAF code"
@@ -14661,11 +14681,11 @@ msgstr "Kreasyon modu"
 
 #: void:1
 msgid "Edition mode"
-msgstr "Basım modu"
+msgstr "Baskı modu"
 
 #: void:1
 msgid "Connected actor"
-msgstr "Bağlanan partner"
+msgstr "Bağlı olan ortak"
 
 #: void:1
 msgid "Selected actor."
@@ -14673,7 +14693,7 @@ msgstr "Seçilen partner."
 
 #: void:1
 msgid "Selected actor is your"
-msgstr "Seçilen partnerin"
+msgstr "Seçilen partner:"
 
 #: void:1
 msgid "Outstanding debts"
@@ -14685,7 +14705,7 @@ msgstr "Ödeme modu"
 
 #: void:1
 msgid "Validate outstanding debts"
-msgstr "Ödenmemiş borçları doğrulamak"
+msgstr "Ödenmemiş borçları doğrula"
 
 #: void:1
 msgid "Statistics for period and"
@@ -14821,7 +14841,7 @@ msgstr "İşler"
 
 #: void:1
 msgid "Please select an item"
-msgstr "Lütfen bir öge seçiniz"
+msgstr "Lütfen bir öğe seçiniz"
 
 #: void:1
 msgid "Quantitative limits"
@@ -14837,7 +14857,7 @@ msgstr "m2"
 
 #: void:1
 msgid "update beginning and end time for selected operation"
-msgstr "Seçilen operasyonlar için başlangıç ve bitiş tarihini güncelle"
+msgstr "Seçilen operasyon için başlangıç ve bitiş tarihini güncelle"
 
 #: void:1
 msgid "Total parcel number"
@@ -14853,7 +14873,7 @@ msgstr "tahmin edilen veri"
 
 #: void:1
 msgid "Informations to provide after completion of work order"
-msgstr "Sipariş emri tamamlanmasından sonra girilen bilgiler"
+msgstr "Sipariş talimatı bitişinden sonra girilen bilgiler"
 
 #: void:1
 msgid "Departure Km"
@@ -14889,7 +14909,7 @@ msgstr "Kişilik kazandırma"
 
 #: void:1
 msgid "Designation field"
-msgstr "Etiket ismi alanı"
+msgstr "Ürün etiket alanı"
 
 #: void:1
 msgid "property_list"
@@ -14906,9 +14926,9 @@ msgid ""
 "onlogistics with your browser, <br/>but please be aware that some features "
 "could not work properly."
 msgstr ""
-"Eğer, bazı nedenden dolayı, firefoxu yükleyemezsen, mevcut tarayıcın ile  "
-"onlagistics'i kullanmaya devam edebilirsin, <br/>fakat lütfen farkında ol ki "
-"bazı özellikler tam anlamıyla kullanılmayabilir."
+"Eğer bazı nedenden ötürü Firefoxu yükleyemezsen, mevcut tarayıcın ile  "
+"onlagistics'i kullanmaya devam edebilirsin, <br/>fakat bazı özelliklerin tam "
+"anlamıyla kullanılamaycağının farkında olmalısın."
 
 #: void:1
 msgid "Continue with an unsupported browser"
@@ -14916,7 +14936,7 @@ msgstr "Desteklenmeyen bir tarayıcı ile devam et"
 
 #: void:1
 msgid "Virtual quantity reached min. stock"
-msgstr "Sanal miktar minimum stok değerine ulaştı"
+msgstr "Sanal miktar minimum stok değerine erişti"
 
 #: void:1
 msgid "Actual quantity reached min. stock"
@@ -14980,11 +15000,11 @@ msgstr "Kismi faaliyet"
 
 #: void:1
 msgid "Carriage order receipt"
-msgstr "Nakliye emri makbuzu"
+msgstr "Nakliye talimat makbuzu"
 
 #: void:1
 msgid "Schedule error"
-msgstr "Çizelge hatası"
+msgstr "Planlama hatası"
 
 #: void:1
 msgid "Delete order"
@@ -15028,7 +15048,7 @@ msgstr "Beklenen ziyaret tarihleri aşıldı."
 
 #: void:1
 msgid "Alert for production tasks validation"
-msgstr "Üretim görevleri onayı için uyarı"
+msgstr "Üretim görev onayı için uyarı"
 
 #: void:1
 msgid "Invoice available for printing"
@@ -15056,7 +15076,7 @@ msgstr "PALLET"
 
 #: void:1
 msgid "LETTER"
-msgstr "EVRAK"
+msgstr "MEKTUP"
 
 #: void:1
 msgid "BOX"
@@ -15064,7 +15084,7 @@ msgstr "BOX"
 
 #: void:1
 msgid "CONTAINER"
-msgstr "KONTAINER"
+msgstr "KONTEYNER"
 
 #: void:1
 msgid "ROLL"
@@ -15132,15 +15152,15 @@ msgstr "Faaliyetlerin geçmişi"
 
 #: void:1
 msgid "How to place a customer order ?"
-msgstr "Bir müşteri siparişi nasıl yerine getirilir?"
+msgstr "Bir müşteri siparişi nasıl verilir?"
 
 #: void:1
 msgid "Actors management"
-msgstr "Partner yönetimi"
+msgstr "Ortakların yönetimi"
 
 #: void:1
 msgid "Welcome to onlogistics.com"
-msgstr "Onlogistics.com a hoşgeldiniz"
+msgstr "Onlogistics.com ' a hoşgeldiniz"
 
 #: void:1
 msgid "Onlogistics admin"
@@ -15148,11 +15168,11 @@ msgstr "Onlogistics admin"
 
 #: void:1
 msgid "Settings for your activity"
-msgstr "Aktivitelerin ayarları"
+msgstr "Aktiviteler için ayarlar"
 
 #: void:1
 msgid "Orders management"
-msgstr "Sipariş yönetimi"
+msgstr "Siparişlerin yönetimi"
 
 #: void:1
 msgid "Carriage orders follow-up"
@@ -15220,7 +15240,7 @@ msgstr "AMBALAJ AÇMA"
 
 #: void:1
 msgid "UNGROUPING"
-msgstr "GROUPTAN ÇIKARTMA"
+msgstr "GRUPLAMA"
 
 #: void:1
 msgid "CUSTOMS"
@@ -15580,7 +15600,7 @@ msgstr "Uygulama tarihleri"
 
 #: void:1
 msgid "Download Firefox"
-msgstr "Firefoxu yükle"
+msgstr "Firefox yükle"
 
 #: void:1
 msgid "Download Adobe Reader"
@@ -15599,8 +15619,7 @@ msgid ""
 "If you want to check application integrity you can also download the "
 "corresponding md5 sum."
 msgstr ""
-"Program uygunluğunu kontrol etmek istiyorsan ilgili md5 sum ' ı ayrıca "
-"yükleyebilirsin."
+"Program uygunluğunu kontrol etmek istersen ilgili md5 sum yükleyebilirsin."
 
 #: void:1
 msgid "md5 sum"
@@ -15617,6 +15636,12 @@ msgstr "fransızca"
 #: void:1
 msgid "english"
 msgstr "ingilizce"
+
+#~ msgid "Supplier prices for product \"%s\""
+#~ msgstr "Ürün \"%s\" için tedarikçi fiyatları"
+
+#~ msgid "Selling prices for product \"%s\""
+#~ msgstr "Ürün \"%s\" için satış fiyatları"
 
 #~ msgid "ORDER"
 #~ msgstr "SİPARİŞ"

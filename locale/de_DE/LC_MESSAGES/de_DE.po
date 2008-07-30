@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Onlogistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-29 15:13+0200\n"
+"POT-Creation-Date: 2008-07-30 10:05+0200\n"
 "PO-Revision-Date: 2007-07-04 16:42+0100\n"
 "Last-Translator: David JL <david@ateor.com>\n"
 "Language-Team: \n"
@@ -1707,14 +1707,6 @@ msgstr "Zulieferer"
 #: ../lib/Objects/_RTWColor.php:217
 msgid "Supplier reference"
 msgstr ""
-
-#: ../lib/Custom/RTWMaterialAddEdit.php:123 ../ActorProductAddEdit.php:171
-msgid "Purchase unit"
-msgstr "Einheit für den Einkauf "
-
-#: ../lib/Custom/RTWMaterialAddEdit.php:130 ../ActorProductAddEdit.php:173
-msgid "Purchase unit quantity"
-msgstr "Menge für den Einkauf"
 
 #: ../lib/Custom/GenericActorGrid.php:47 ../menu.inc.php:199
 msgid "Generic actors"
@@ -11002,6 +10994,14 @@ msgstr "Sind Sie sicher, dass Sie den Zulieferer \"%s\" löschen möchten?"
 msgid "Supplier \"%s\" is already taking precedence for ordering this product."
 msgstr ""
 "Zulieferer \"%s\" ist bereits bevorzugter Zulieferer für diese Produkt."
+
+#: ../ActorProductAddEdit.php:171
+msgid "Purchase unit"
+msgstr "Einheit für den Einkauf "
+
+#: ../ActorProductAddEdit.php:173
+msgid "Purchase unit quantity"
+msgstr "Menge für den Einkauf"
 
 #: ../ActorProductAddEdit.php:175
 msgid "Takes precedence for order"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Onlogistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-29 15:13+0200\n"
+"POT-Creation-Date: 2008-07-30 10:17+0200\n"
 "PO-Revision-Date: 2007-07-12 08:51+0100\n"
 "Last-Translator: Bram De Saedeleer <bramdesaedeleer@gmail.com>\n"
 "Language-Team: Ateor dev team <dev@ateor.com>\n"
@@ -1680,14 +1680,6 @@ msgstr "Leverancier"
 #: ../lib/Objects/_RTWColor.php:217
 msgid "Supplier reference"
 msgstr ""
-
-#: ../lib/Custom/RTWMaterialAddEdit.php:123 ../ActorProductAddEdit.php:171
-msgid "Purchase unit"
-msgstr "Aankoopeenheid"
-
-#: ../lib/Custom/RTWMaterialAddEdit.php:130 ../ActorProductAddEdit.php:173
-msgid "Purchase unit quantity"
-msgstr "Hoeveelheid aankoopeenheden"
 
 #: ../lib/Custom/GenericActorGrid.php:47 ../menu.inc.php:199
 msgid "Generic actors"
@@ -10886,6 +10878,14 @@ msgstr "Wil u echt leverancier \"%s\" verwijderen?"
 #, php-format
 msgid "Supplier \"%s\" is already taking precedence for ordering this product."
 msgstr "Leverancier \"%s\" heeft al voorrang op de bestelling van dit product."
+
+#: ../ActorProductAddEdit.php:171
+msgid "Purchase unit"
+msgstr "Aankoopeenheid"
+
+#: ../ActorProductAddEdit.php:173
+msgid "Purchase unit quantity"
+msgstr "Hoeveelheid aankoopeenheden"
 
 #: ../ActorProductAddEdit.php:175
 msgid "Takes precedence for order"

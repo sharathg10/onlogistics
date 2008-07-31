@@ -121,31 +121,33 @@ if ($MvtTypeEntrieExit == SORTIE) {
 } elseif ($MvtTypeEntrieExit == ENTREE) {
     $supplierId = Tools::getValueFromMacro($ActivatedMovement, '%ProductCommand.Expeditor.Id%');
     $filters = array(
-        SearchTools::NewFilterComponent('Supplier', 'ActorProduct().Actor.Id',
-            'Equals', $supplierId, 1, 'Product'),
+        SearchTools::NewFilterComponent('Supplier', 'ActorProduct().Actor.Id', 'Equals', $supplierId, 1, 'Product'),
         SearchTools::NewFilterComponent('Activated', '', 'Equals', 1, 1)
     );
-    $filter = SearchTools::filterAssembler($filters);
+    $filter = new FilterComponent(
+        SearchTools::filterAssembler($filters),
+        new FilterRule('Id', FilterRule::OPERATOR_EQUALS, $orderedProduct->getId())
+    );
+    $filter->operator = FilterComponent::OPERATOR_OR;
     $order  = array('BaseReference' => SORT_ASC);
-    $ProductCollection = $ProductMapper->loadCollection($filter, $order);
+    $ProductCollection = $ProductMapper->loadCollection($filter, $order, array('BaseReference'));
 }
 
-$ProductCollection->acceptDuplicate = false;
-$ProductCollection->setItem($orderedProduct);
-$ProductCollection->sort('BaseReference', SORT_ASC);
+//$ProductCollection->acceptDuplicate = false;
+//$ProductCollection->setItem($orderedProduct);
+//$ProductCollection->sort('BaseReference', SORT_ASC);
+//die();
 
-if (!Tools::isEmptyObject($ProductCollection)){
-    for($i = 0; $i < $ProductCollection->getCount(); $i++) {
-        $item = $ProductCollection->getItem($i);
-        if ($MvtTypeId == ENTREE_NORMALE) {
-            $ref = $item->getReferenceByActor();
-            $ref = empty($ref)?$item->getBaseReference($supplier):$ref;
-        } else {
-            $ref = $item->getBaseReference();
-        }
-        $ProductIdBaseRefArray[$item->getId()] = $ref;
-        unset($item);
+for($i = 0; $i < $ProductCollection->getCount(); $i++) {
+    $item = $ProductCollection->getItem($i);
+    if ($MvtTypeId == ENTREE_NORMALE) {
+        $ref = $item->getReferenceByActor($supplier);
+        $ref = empty($ref)? $item->getBaseReference() : $ref;
+    } else {
+        $ref = $item->getBaseReference();
     }
+    $ProductIdBaseRefArray[$item->getId()] = $ref;
+    unset($item);
 }
 
 // Permet de construire un select, avec les refs substituables en couleur!

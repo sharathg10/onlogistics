@@ -138,6 +138,7 @@ if ($MvtTypeEntrieExit == SORTIE) {
 //$ProductCollection->sort('BaseReference', SORT_ASC);
 //die();
 
+$ProductIdBaseRefArray = array();
 for($i = 0; $i < $ProductCollection->getCount(); $i++) {
     $item = $ProductCollection->getItem($i);
     if ($MvtTypeId == ENTREE_NORMALE) {

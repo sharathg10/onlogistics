@@ -85,14 +85,12 @@ class RTWMaterialManager extends RTWManager
         // XXX je suis vraiment pas sur de tout ca...
         $defaults = array(
             'SellUnitType'     => SELLUNITTYPE_UB,
-            'BuyUnitType'      => SELLUNITTYPE_UB,
             'SellUnitQuantity' => 1,
             'ProductType'      => PRODUCT_TYPE_RTWMATERIAL,
             'Affected'         => 1
         );
         if ($product->getMaterialType() == RTWMaterial::TYPE_RAW_MATERIAL) {
             $defaults['SellUnitType'] = SELLUNITTYPE_MT;
-            $defaults['BuyUnitType']  = SELLUNITTYPE_MT;
         }
         foreach ($defaults as $k=>$v) {
             $setter = 'set' . $k;

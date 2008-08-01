@@ -389,7 +389,7 @@ class RTWModelAddEdit extends GenericAddEdit {
      * @return void
      */
     protected function renderImage() {
-        $this->form->addElement('file', 'Image', _('Black and white image'), array('class' => 'textfield'));
+        $this->form->addElement('file', 'RTWModel_Image', _('Black and white image'), array('class' => 'textfield'));
         if ($this->object->getImage() != '') {
             $this->form->addElement('static', 'ImageLink', '', 
                   '<a href="javascript:void(0);" '
@@ -409,7 +409,7 @@ class RTWModelAddEdit extends GenericAddEdit {
      * @return void
      */
     protected function renderColorImage() {
-        $this->form->addElement('file', 'ColorImage', _('Color image'), array('class' => 'textfield'));
+        $this->form->addElement('file', 'RTWModel_ColorImage', _('Color image'), array('class' => 'textfield'));
         if ($this->object->getColorImage() != '') {
             $this->form->addElement('static', 'ColorImageLink', '', 
                 '<a href="javascript:void(0);" '

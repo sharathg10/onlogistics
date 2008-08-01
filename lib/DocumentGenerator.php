@@ -3802,12 +3802,10 @@ class WorksheetGenerator extends DocumentGenerator {
      */
     protected function _renderContent() {
         $this->pdf->Ln();
-        $this->pdf->Ln();
         $this->pdf->addText(
             _('Worksheet') . ' ' . $this->model->toString(),
             array('fontSize'=>14, 'lineHeight'=>8)
         );
-        $this->pdf->Ln();
         $this->pdf->Ln();
         $this->pdf->Ln();
         $this->pdf->Ln();

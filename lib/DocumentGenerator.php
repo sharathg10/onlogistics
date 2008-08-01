@@ -3851,13 +3851,23 @@ class WorksheetGenerator extends DocumentGenerator {
             }
         }
         $items = $this->model->getMaterialProperties();
+        $products = $this->model->getRTWProductCollection();
         foreach ($items as $attrName => $label) {
             $getter = 'get' . $attrName;
-            $qtyGetter = 'get' . $attrName . 'Quantity';
             $mat    = $this->model->$getter();
-            $value  = ($mat instanceof RTWMaterial) ? $mat->toString() : _('N/A');
-            $qty    = ($mat instanceof RTWMaterial && method_exists($this->model, $qtyGetter)) ? $this->model->$qtyGetter() : '';
-            $this->pdf->tableHeader(array($label => 35, $value => 135, (string)$qty => 20), 0);
+            if ($mat instanceof RTWMaterial) {
+                $value = $mat->toString();
+                $qtyGetter = 'get' . $attrName . 'Quantity';
+                $qty = method_exists($this->model, $qtyGetter) ? $this->model->$qtyGetter() : '';
+                $unitType = $mat->getBuyUnitType();
+                if ($unitType instanceof SellUnitType) {
+                    $qty .= ' (' . $mat->getBuyUnitQuantity() . ' ' . $unitType->getShortName() . ')';
+                }
+            } else {
+                $value = _('N/A');
+                $qty   =  '';
+            }
+            $this->pdf->tableHeader(array($label => 35, $value => 130, (string)$qty => 25), 0);
         }
         if ($this->model->getLabel() instanceof RTWLabel) {
             $this->pdf->tableHeader(array(

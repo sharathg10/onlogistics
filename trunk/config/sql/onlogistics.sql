@@ -2669,11 +2669,13 @@ DROP TABLE IF EXISTS SellUnitType;
 CREATE TABLE SellUnitType (
   _Id int(11) unsigned NOT NULL default 0,
   _DBId int(11) default 0,
-  _ShortName VARCHAR(255) DEFAULT NULL,
-  _LongName VARCHAR(255) DEFAULT NULL,
+  _ShortName INT(11) NOT NULL DEFAULT NULL,
+  _LongName INT(11) NOT NULL DEFAULT NULL,
+  _ConstName VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (_Id)
 ) TYPE=InnoDB CHARSET=latin1;
 
+CREATE UNIQUE INDEX _ConstName ON SellUnitType (_ConstName);
 
 --
 -- Table structure for Site

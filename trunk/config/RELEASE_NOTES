@@ -44,6 +44,20 @@ UPDATE Product SET _ScientificName=(SELECT _StringValue_fr_FR FROM I18nString wh
 UPDATE I18nString i, Product p SET i._StringValue_fr_FR=p._CommercialName WHERE i._Id=p._Name and p._ClassName="RTWMaterial";
 ALTER TABLE Product DROP _CommercialName;
 
+# sell unit types
+ALTER TABLE SellUnitType ADD _ConstName VARCHAR(255) DEFAULT NULL;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_UB" WHERE _Id=1;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_UC" WHERE _Id=2;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_UE" WHERE _Id=3;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_UR" WHERE _Id=4;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_KG" WHERE _Id=5;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_LI" WHERE _Id=6;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_GA" WHERE _Id=7;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_OZ" WHERE _Id=8;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_MM" WHERE _Id=9;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_CM" WHERE _Id=10;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_MT" WHERE _Id=11;
+
 ####################################
 # Ne pas enlever
 COMMIT;

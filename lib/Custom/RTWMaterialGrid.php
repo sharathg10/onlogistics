@@ -50,12 +50,17 @@ class RTWMaterialGrid extends GenericGrid {
             'shortlabel'   => _('Reference'),
             'usedby'       => array('grid')
         ));
-        $name  = array('ReferenceByActor' => array(
+        $supplierRef  = array('ReferenceByActor' => array(
             'label'        => _('Supplier reference'),
             'shortlabel'   => _('Supplier reference'),
             'usedby'       => array('grid', 'searchform')
+        ));
+        $name  = array('Name' => array(
+            'label'        => _('Commercial designation'),
+            'shortlabel'   => _('Commercial designation'),
+            'usedby'       => array('grid', 'searchform')
         )); 
-        return $ref + $name + $mapping;
+        return $ref + $supplierRef + $name + $mapping;
     }
 
     // }}}

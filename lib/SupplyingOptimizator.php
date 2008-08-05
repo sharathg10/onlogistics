@@ -216,7 +216,7 @@ class SupplyingOptimizator {
             if ($j >= 1) {
                 $rs2 = getDeliveredQtyPerWeekForSupplier($this->_customerId,
                         $this->_supplierId, $this->_tsArray[$j], $TimeStampEnd);
-                while (!$rs2->EOF){
+                while ($rs2 && !$rs2->EOF){
                     $orderedQtyArray[$rs2->fields['pdtId']][strval($j)] -=
                             floatval($rs2->fields['realQty']);
                     $rs2->moveNext();

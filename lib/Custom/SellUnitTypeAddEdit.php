@@ -27,18 +27,41 @@
  * @author    ATEOR dev team <dev@ateor.com>
  * @copyright 2003-2008 ATEOR <contact@ateor.com> 
  * @license   http://www.fsf.org/licensing/licenses/agpl-3.0.html GNU AGPL
- * @version   SVN: $Id$
+ * @version   SVN: $Id: AccountAddEdit.php 9 2008-06-06 09:12:09Z izimobil $
  * @link      http://www.onlogistics.org
  * @link      http://onlogistics.googlecode.com
  * @since     File available since release 0.1.0
  * @filesource
  */
 
-define('SELLUNITTYPE_NONE', 0); // aucun
+/**
+ * SellUnitTypeAddEdit
+ *
+ */
+class SellUnitTypeAddEdit extends GenericAddEdit {
+    // SellUnitTypeAddEdit::onBeforeDisplay() {{{
+    
+    public function onBeforeDisplay() {
+        if ($this->action == GenericController::FEATURE_EDIT) {
+            $this->form->freeze('SellUnitType_ConstName');
+        }
 
-$col = Object::loadCollection('SellUnitType');
-foreach ($col as $sut) {
-    define($sut->getConstName(), $sut->getId());
+    }
+    
+    // }}}
+    // SellUnitTypeAddEdit::onBeforeHandlePostData() {{{
+    
+    public function onBeforeHandlePostData(&$values) {
+        if ($this->action == GenericController::FEATURE_ADD) {
+            if (!preg_match('/^[a-zA-Z_]+$/', $values['SellUnitType_ConstName'])) {
+                Template::errorDialog(_('You must provide a valid constant name'), $this->guessReturnURL());
+                exit(1);
+            }
+            $values['SellUnitType_ConstName'] = strtoupper($values['SellUnitType_ConstName']);
+        }
+    }
+    
+    // }}}
 }
 
 ?>

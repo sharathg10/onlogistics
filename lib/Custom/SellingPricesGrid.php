@@ -174,6 +174,23 @@ class SellingPricesGrid extends GenericGrid
     }
 
     // }}}
+    // SellingPricesGrid::renderColumnProduct() {{{
+
+    /**
+     *
+     * @access protected
+     * @return array
+     */
+    protected function renderColumnProduct() {
+        $this->grid->newColumn('FieldMapper', _('Reference'), 
+            array('Macro' => '%Product.BaseReference%')
+        );
+        $this->grid->newColumn('FieldMapper', _('Designation'), 
+            array('Macro' => '%Product%')
+        );
+    }
+
+    // }}}
 }
 
 ?>

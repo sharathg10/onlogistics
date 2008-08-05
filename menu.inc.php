@@ -257,6 +257,12 @@ $menu_metadata = array(
                 'description' => _('Incoterms'),
                 'restrict_to' => array(UserAccount::PROFILE_ROOT)
             ),
+            array(
+                'title'       => _('Selling or purchase unit types'),
+                'link'        => 'dispatcher.php?entity=SellUnitType',
+                'description' => _('Selling or purchase unit types'),
+                'restrict_to' => array(UserAccount::PROFILE_ROOT)
+            ),
         )
     ),
     // }}}

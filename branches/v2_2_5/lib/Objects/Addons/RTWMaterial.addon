@@ -39,7 +39,7 @@
      * @return string
      */
     function toStringForCustoms() {
-        $ret = $this->getName();
+        $ret = $this->getScientificName();
         if (($origin = $this->getOrigin()) != '') {
             $ret .= " ($origin)";
         }
@@ -56,7 +56,7 @@
      * @return string
      */
     function getCommercialNameAndColor() {
-        $ref = $this->getCommercialName();
+        $ref = $this->getName();
         if ($this->getColor() instanceof RTWColor) {
             $ref .= ' (' . $this->getColor()->getName() . ')';
         }

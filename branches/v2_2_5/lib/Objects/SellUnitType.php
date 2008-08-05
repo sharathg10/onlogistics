@@ -3,6 +3,8 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
+ * IMPORTANT: This is a generated file, please do not edit.
+ *
  * This file is part of Onlogistics, a web based ERP and supply chain 
  * management application. 
  *
@@ -34,6 +36,10 @@
  * @filesource
  */
 
+/**
+ * SellUnitType class
+ *
+ */
 class SellUnitType extends Object {
     
     // Constructeur {{{
@@ -206,6 +212,38 @@ class SellUnitType extends Object {
     }
 
     // }}}
+    // ConstName string property + getter/setter {{{
+
+    /**
+     * ConstName string property
+     *
+     * @access private
+     * @var string
+     */
+    private $_ConstName = '';
+
+    /**
+     * SellUnitType::getConstName
+     *
+     * @access public
+     * @return string
+     */
+    public function getConstName() {
+        return $this->_ConstName;
+    }
+
+    /**
+     * SellUnitType::setConstName
+     *
+     * @access public
+     * @param string $value
+     * @return void
+     */
+    public function setConstName($value) {
+        $this->_ConstName = $value;
+    }
+
+    // }}}
     // getTableName() {{{
 
     /**
@@ -230,7 +268,7 @@ class SellUnitType extends Object {
      * @return string
      */
     public static function getObjectLabel() {
-        return _('None');
+        return _('Selling or buying unit types');
     }
 
     // }}}
@@ -248,7 +286,8 @@ class SellUnitType extends Object {
     public static function getProperties() {
         $return = array(
             'ShortName' => Object::TYPE_I18N_STRING,
-            'LongName' => Object::TYPE_I18N_STRING);
+            'LongName' => Object::TYPE_I18N_STRING,
+            'ConstName' => Object::TYPE_STRING);
         return $return;
     }
 
@@ -311,7 +350,7 @@ class SellUnitType extends Object {
      * @return array
      */
     public static function getUniqueProperties() {
-        $return = array();
+        $return = array('ConstName');
         return $return;
     }
 
@@ -344,7 +383,7 @@ class SellUnitType extends Object {
      * @see Object.php
      */
     public static function getFeatures() {
-        return array();
+        return array('grid', 'add', 'edit');
     }
 
     // }}}
@@ -360,7 +399,34 @@ class SellUnitType extends Object {
      * @see Object.php
      */
     public static function getMapping() {
-        $return = array();
+        $return = array(
+            'ShortName'=>array(
+                'label'        => _('Short name'),
+                'shortlabel'   => _('Short name'),
+                'usedby'       => array('grid', 'addedit'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => ''
+            ),
+            'LongName'=>array(
+                'label'        => _('Long name'),
+                'shortlabel'   => _('Long name'),
+                'usedby'       => array('grid', 'addedit'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => ''
+            ),
+            'ConstName'=>array(
+                'label'        => _('Constant name (for exemple: SELLUNITTYPE_UB)'),
+                'shortlabel'   => _('Constant name (for exemple: SELLUNITTYPE_UB)'),
+                'usedby'       => array('grid', 'addedit'),
+                'required'     => true,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => ''
+            ));
         return $return;
     }
 

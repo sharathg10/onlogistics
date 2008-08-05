@@ -61,7 +61,7 @@ class RTWMaterialAddEdit extends GenericAddEdit {
         $return = parent::getAddEditMapping();
         $first  = & $return['']; // oui...
         $name   = array('Name' => array(
-            'label'        => _('Scientific terminology'),
+            'label'        => _('Commercial designation'),
             'inplace_edit' => false,
             'required'     => true,
             'add_button'   => false
@@ -85,6 +85,7 @@ class RTWMaterialAddEdit extends GenericAddEdit {
     protected function onBeforeDisplay() {
         $supplier = $this->object->getMainSupplier();
         // fournisseur
+        $this->form->addElement('static');
         $arr = SearchTools::createArrayIDFromCollection(
             'Supplier',
             array('Active'=>1),
@@ -108,16 +109,30 @@ class RTWMaterialAddEdit extends GenericAddEdit {
             'class="textfield"');
         $this->form->addElement($elt);
         $this->formDefaults['Supplier_Reference'] = $this->object->getReferenceByActor($supplier);
-        // prix fournisseur
-        /*
+        // unit type et quantity
+        $arr = SearchTools::createArrayIDFromCollection(
+            'SellUnitType',
+            array(),
+            MSG_SELECT_AN_ELEMENT,
+            'ShortName',
+            array('ShortName'=>SORT_ASC)
+        );
+        $elt = HTML_QuickForm::createElement(
+            'select',
+            'Supplier_BuyUnitType',
+            _('Purchase unit'),
+            $arr,
+            array('style'=>'width:100%;'));
+        $this->form->addElement($elt);
         $elt = HTML_QuickForm::createElement(
             'text',
-            'Supplier_Price',
-            _('Supplier price'),
+            'Supplier_BuyUnitQuantity',
+            _('Purchase unit quantity'),
             'class="textfield"');
         $this->form->addElement($elt);
-        $this->formDefaults['Supplier_Price'] = $this->object->getUBPrice($supplier);
-        */
+        $unitType = $this->object->getBuyUnitType($supplier);
+        $this->formDefaults['Supplier_BuyUnitType'] = $unitType instanceof SellUnitType ? $unitType->getId() : 0;
+        $this->formDefaults['Supplier_BuyUnitQuantity'] = $this->object->getBuyUnitQuantity($supplier);
         $this->form->setDefaults($this->formDefaults);
     }
 

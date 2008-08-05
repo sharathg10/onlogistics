@@ -112,7 +112,7 @@ class SupplierPricesGrid extends GenericGrid
     }
 
     // }}}
-    // SellingPricesGrid::renderSearchFormActorProduct() {{{
+    // SupplierPricesGrid::renderSearchFormActorProduct() {{{
 
     /**
      *
@@ -142,7 +142,7 @@ class SupplierPricesGrid extends GenericGrid
     }
 
     // }}}
-    // SellingPricesGrid::renderColumnActorProduct() {{{
+    // SupplierPricesGrid::renderColumnActorProduct() {{{
 
     /**
      *
@@ -153,6 +153,10 @@ class SupplierPricesGrid extends GenericGrid
         $this->grid->newColumn('FieldMapper', _('Product'),
             array('Macro' => '%ActorProduct.Product.BaseReference%')
         );
+        if (in_array('readytowear', Preferences::get('TradeContext', array()))) {
+            $this->grid->newColumn('FieldMapper', _('Commercial designation'),
+                array('Macro' => '%ActorProduct.Product.CommercialNameAndColor%'));
+        }
         $this->grid->newColumn('FieldMapper', _('Supplier'),
             array('Macro' => '%ActorProduct.Actor.Name%')
         );

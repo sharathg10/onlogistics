@@ -2499,9 +2499,13 @@
     </entity>
 
     <!-- entity SellUnitType -->
-    <entity name="SellUnitType" tablename="SellUnitType" tostring="LongName">
-        <property type="string" name="ShortName" i18n="1" />
-        <property type="string" name="LongName" i18n="1" />
+    <entity name="SellUnitType" tablename="SellUnitType" tostring="LongName"
+        features="grid,add,edit" label="Selling or buying unit types">
+        <property type="string" name="ShortName" label="Short name" i18n="1" usedby="grid,addedit"/>
+        <property type="string" name="LongName" label="Long name" i18n="1" usedby="grid,addedit"/>
+        <property type="string" name="ConstName" 
+            label="Constant name (for exemple: SELLUNITTYPE_UB)" 
+            usedby="grid,addedit" required="1" unique="1"/>
     </entity>
 
     <!-- entity Site -->
@@ -2879,8 +2883,8 @@
     <!-- Entity RTWMaterial -->
     <entity name="RTWMaterial" extends="Product" tablename="Product"
         features="add,edit,del,grid,searchform" label="Materials">
-        <property type="string" name="CommercialName"
-            label="Commercial designation"
+        <property type="string" name="ScientificName"
+            label="Scientific terminology"
             usedby="addedit,grid,searchform" />
         <!-- nomme MaterialType car Product::Type existe deja -->
         <property type="const" name="MaterialType" default="0"

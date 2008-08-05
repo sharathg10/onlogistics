@@ -3802,12 +3802,10 @@ class WorksheetGenerator extends DocumentGenerator {
      */
     protected function _renderContent() {
         $this->pdf->Ln();
-        $this->pdf->Ln();
         $this->pdf->addText(
             _('Worksheet') . ' ' . $this->model->toString(),
             array('fontSize'=>14, 'lineHeight'=>8)
         );
-        $this->pdf->Ln();
         $this->pdf->Ln();
         $this->pdf->Ln();
         $this->pdf->Ln();
@@ -3842,7 +3840,6 @@ class WorksheetGenerator extends DocumentGenerator {
             'ConstructionType' => _('Construction type'),
             'ConstructionCode' => _('Construction code'),
             'Shape'            => _('Shape'),
-            'Label'            => _('Label (griffe)')
         );
         foreach ($items as $k => $v) {
             $getter = 'get' . $k;
@@ -3854,13 +3851,29 @@ class WorksheetGenerator extends DocumentGenerator {
             }
         }
         $items = $this->model->getMaterialProperties();
+        $products = $this->model->getRTWProductCollection();
         foreach ($items as $attrName => $label) {
             $getter = 'get' . $attrName;
-            $qtyGetter = 'get' . $attrName . 'Quantity';
             $mat    = $this->model->$getter();
-            $value  = ($mat instanceof RTWMaterial) ? $mat->toString() : _('N/A');
-            $qty    = ($mat instanceof RTWMaterial && method_exists($this->model, $qtyGetter)) ? $this->model->$qtyGetter() : '';
-            $this->pdf->tableHeader(array($label => 35, $value => 135, (string)$qty => 20), 0);
+            if ($mat instanceof RTWMaterial) {
+                $value = $mat->toString();
+                $qtyGetter = 'get' . $attrName . 'Quantity';
+                $qty = method_exists($this->model, $qtyGetter) ? $this->model->$qtyGetter() : '';
+                $unitType = $mat->getBuyUnitType();
+                if ($unitType instanceof SellUnitType) {
+                    $qty .= ' (' . $mat->getBuyUnitQuantity() . ' ' . $unitType->getShortName() . ')';
+                }
+            } else {
+                $value = _('N/A');
+                $qty   =  '';
+            }
+            $this->pdf->tableHeader(array($label => 35, $value => 130, (string)$qty => 25), 0);
+        }
+        if ($this->model->getLabel() instanceof RTWLabel) {
+            $this->pdf->tableHeader(array(
+                _('Label (griffe)') => 35, 
+                $this->model->getLabel()->toString() => 155),
+            0);
         }
         $sizes = $this->model->getSizeCollection();
         if (count($sizes) > 0) {

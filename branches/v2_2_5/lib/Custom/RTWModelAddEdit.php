@@ -381,6 +381,67 @@ class RTWModelAddEdit extends GenericAddEdit {
     }
 
     // }}}
+    // RTWModelAddEdit::renderImage() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function renderImage() {
+        $this->form->addElement('file', 'RTWModel_Image', _('Black and white image'), array('class' => 'textfield'));
+        if ($this->object->getImage() != '') {
+            $this->form->addElement('static', 'ImageLink', '', 
+                  '<a href="javascript:void(0);" '
+                  . 'onclick="setElementPosition(\'ImagePreview\', {\'x\':15, \'y\': elementPosition(this).y + 15});'
+                  . 'fw.dom.toggleElement(\'ImagePreview\')">' . _('Show/hide current image') . '</a>');
+        } else {
+            $this->form->addElement('static');
+        }
+    }
+
+    // }}}
+    // RTWModelAddEdit::renderColorImage() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function renderColorImage() {
+        $this->form->addElement('file', 'RTWModel_ColorImage', _('Color image'), array('class' => 'textfield'));
+        if ($this->object->getColorImage() != '') {
+            $this->form->addElement('static', 'ColorImageLink', '', 
+                '<a href="javascript:void(0);" '
+                . 'onclick="setElementPosition(\'ColorImagePreview\', {\'x\':15, \'y\': elementPosition(this).y + 15});'
+                . 'fw.dom.toggleElement(\'ColorImagePreview\')">' . _('Show/hide current image') . '</a>');
+        } else {
+            $this->form->addElement('static');
+        }
+    }
+
+    // }}}
+    // RTWModelAddEdit::postContent() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function postContent() {
+        $html = '';
+        $img  = urlencode($this->object->getImage());
+        if ($img != '') {
+            $html .= '<div id="ImagePreview" style="border: 1px black solid;position:absolute;z-index:10;display:none;"><img src="image.php?uuid='.$img.'&md5=1"/></div>';
+        }
+        $img  = urlencode($this->object->getColorImage());
+        if ($img != '') {
+            $html .= '<div id="ColorImagePreview" style="border: 1px black solid;position:absolute;z-index:10;display:none;"><img src="image.php?uuid='.$img.'&md5=1"/></div>';
+        }
+        return $html;
+    }
+
+    // }}}
 }
 
 ?>

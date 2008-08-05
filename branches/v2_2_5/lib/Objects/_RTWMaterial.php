@@ -66,35 +66,35 @@ class _RTWMaterial extends Product {
     }
 
     // }}}
-    // CommercialName string property + getter/setter {{{
+    // ScientificName string property + getter/setter {{{
 
     /**
-     * CommercialName string property
+     * ScientificName string property
      *
      * @access private
      * @var string
      */
-    private $_CommercialName = '';
+    private $_ScientificName = '';
 
     /**
-     * _RTWMaterial::getCommercialName
+     * _RTWMaterial::getScientificName
      *
      * @access public
      * @return string
      */
-    public function getCommercialName() {
-        return $this->_CommercialName;
+    public function getScientificName() {
+        return $this->_ScientificName;
     }
 
     /**
-     * _RTWMaterial::setCommercialName
+     * _RTWMaterial::setScientificName
      *
      * @access public
      * @param string $value
      * @return void
      */
-    public function setCommercialName($value) {
-        $this->_CommercialName = $value;
+    public function setScientificName($value) {
+        $this->_ScientificName = $value;
     }
 
     // }}}
@@ -284,7 +284,7 @@ class _RTWMaterial extends Product {
      */
     public static function getProperties($ownOnly = false) {
         $return = array(
-            'CommercialName' => Object::TYPE_STRING,
+            'ScientificName' => Object::TYPE_STRING,
             'MaterialType' => Object::TYPE_CONST,
             'Color' => 'RTWColor',
             'Origin' => Object::TYPE_STRING);
@@ -478,9 +478,9 @@ class _RTWMaterial extends Product {
      */
     public static function getMapping($ownOnly = false) {
         $return = array(
-            'CommercialName'=>array(
-                'label'        => _('Commercial designation'),
-                'shortlabel'   => _('Commercial designation'),
+            'ScientificName'=>array(
+                'label'        => _('Scientific terminology'),
+                'shortlabel'   => _('Scientific terminology'),
                 'usedby'       => array('addedit', 'grid', 'searchform'),
                 'required'     => false,
                 'inplace_edit' => false,

@@ -111,8 +111,12 @@ class RTWManager
         $ap->setActor($supplierId);
         $ap->setProduct($product);
         $ap->setAssociatedProductReference($ref);
-        $ap->setBuyUnitType(1);
-        $ap->setBuyUnitQuantity(1);
+        $unitType = isset($values['Supplier_BuyUnitType']) ?
+            $values['Supplier_BuyUnitType'] : 1;
+        $unitQty = isset($values['Supplier_BuyUnitQuantity']) ?
+            $values['Supplier_BuyUnitQuantity'] : 1;
+        $ap->setBuyUnitType($unitType);
+        $ap->setBuyUnitQuantity($unitQty);
         $ap->setPriority(1);
         $ap->save();
         $product->setActorProduct($ap);

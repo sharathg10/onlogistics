@@ -3861,7 +3861,13 @@ class WorksheetGenerator extends DocumentGenerator {
                 $qty = method_exists($this->model, $qtyGetter) ? $this->model->$qtyGetter() : '';
                 $unitType = $mat->getBuyUnitType();
                 if ($unitType instanceof SellUnitType) {
-                    $qty .= ' (' . $mat->getBuyUnitQuantity() . ' ' . $unitType->getShortName() . ')';
+                    /*
+                    $unitQty = $mat->getBuyUnitQuantity();
+                    if (is_numeric($qty) && $unitQty > 0) {
+                        $qty *= $unitQty;
+                    }
+                    */
+                    $qty .= ' ' . $unitType->getShortName();
                 }
             } else {
                 $value = _('N/A');

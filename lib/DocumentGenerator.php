@@ -81,7 +81,7 @@ class DocumentGenerator {
         $this->document = $document;
         $this->docName  = $docName;
         // un document doit être réimprimé dans sa langue originelle
-        if ($this->document instanceof AbstractDocument) {
+        if ($this->document instanceof AbstractDocument && $this->document->getId() > 0) {
             $locale = $this->document->getLocale();
             if (empty($locale)) {
                 $locale = I18N::getLocaleCode();

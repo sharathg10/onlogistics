@@ -46,6 +46,7 @@ $ProfileId = $auth->getProfile();
 $auth->checkProfiles(
     array(UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW, UserAccount::PROFILE_ADMIN_VENTES,
           UserAccount::PROFILE_AERO_ADMIN_VENTES, UserAccount::PROFILE_COMMERCIAL, UserAccount::PROFILE_AERO_CUSTOMER,
+          UserAccount::PROFILE_CUSTOMER, UserAccount::PROFILE_OWNER_CUSTOMER,
           UserAccount::PROFILE_AERO_INSTRUCTOR, UserAccount::PROFILE_DIR_COMMERCIAL, UserAccount::PROFILE_GED_PROJECT_MANAGER));
 
 $retURL = isset($_REQUEST['retURL'])&&!empty($_REQUEST['retURL'])?

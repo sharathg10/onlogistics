@@ -1,4 +1,5 @@
-    
+    // DailyPlanning::getGraph() {{{
+
     /**
      *
      * @access public
@@ -77,3 +78,5 @@
         }
         return $graph;
     }
+
+    // }}}    

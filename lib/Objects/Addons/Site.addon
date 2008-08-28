@@ -217,12 +217,33 @@
     function onAfterImport($params = array()) {
         // si le site n'a pas de planning on en crée un vide
         if ($this->getPlanningId() == 0) {
-            require_once('Objects/WeeklyPlanning.php');
-            $planning = WeeklyPlanning::createEmptyPlanning();
+            $planning = WeeklyPlanning::createDefaultPlanning();
             $this->setPlanning($planning);
             $this->save();
         }
         return true;
+    }
+
+    // }}}
+    // Site::getPlanning() {{{
+
+    /**
+     * Methode surchargee pour pouvoir creer un planning s'il n'existe pas ou 
+     * s'il est vide.
+     *
+     * @access public
+     * @return object WeeklyPlanning
+     */
+    function getPlanning($save = true) {
+        $planning = parent::getPlanning();
+        if (!($planning instanceof WeeklyPlanning) || $planning->isEmpty()) {
+            $planning = WeeklyPlanning::createDefaultPlanning($planning, $save);
+            $this->setPlanning($planning);
+            if ($save) {
+                $this->save();
+            }
+        }
+        return $planning;
     }
 
     // }}}

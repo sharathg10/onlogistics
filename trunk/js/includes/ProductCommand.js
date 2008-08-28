@@ -177,7 +177,7 @@ function RecalculateItemTotal(index, globalHandingFloat) {
 		// qu'une ligne de comde, donc le bloc suivant n'est pas execute en boucle
 		if(!globalHandingFloat) {
             var globalHandingFloat = 0
-    		if (elements["GlobalHanding"].value != '') {
+    		if (elements['GlobalHanding'] && elements["GlobalHanding"].value != '') {
                 globalHandingFloat = fw.i18n.extractNumber(elements["GlobalHanding"]);
     		}
 		}
@@ -187,7 +187,7 @@ function RecalculateItemTotal(index, globalHandingFloat) {
 			var PUHT = parseFloat(elements["HiddenPrice[]"][index].value);
 			var TVA = parseFloat(elements["HiddenTVA[]"][index].value);
 			var handingWidget = elements["hdg[]"][index];
-			var handing = elements["hdg[]"][index].value;
+			var handing = handingWidget ? handingWidget.value : '';
 			var PTHTWidget = elements["PTHT[]"][index];
 			var PriceHTWidget = elements["PriceHT[]"][index];
 		} else {
@@ -196,7 +196,7 @@ function RecalculateItemTotal(index, globalHandingFloat) {
 			var PUHT = parseFloat(elements["HiddenPrice[]"].value);  // deja tronque a 2 decimales cote serveur
 			var TVA = parseFloat(elements["HiddenTVA[]"].value);
 			var handingWidget = elements["hdg[]"];
-			var handing = elements["hdg[]"].value;
+			var handing = handingWidget ? handingWidget.value : '';
 			var PTHTWidget = elements["PTHT[]"];
 			var PriceHTWidget = elements["PriceHT[]"];
 		}
@@ -274,7 +274,7 @@ function RecalculateTotal(updateAll) {
 
 		// Remise globale
 		var globalHandingFloat = 0;  // initialisation
-		if(elements["GlobalHanding"].value != '' ) {
+		if (elements["GlobalHanding"] && elements["GlobalHanding"].value != '' ) {
 			globalHandingFloat = fw.i18n.extractNumber(elements["GlobalHanding"]);
 			if ((globalHandingFloat < 0) || (globalHandingFloat > 100)) {
 				alert(ProductCommand_4);
@@ -321,17 +321,17 @@ function RecalculateTotal(updateAll) {
         }
 
 		/*  Les differents frais  */
-		if(elements["Port"].value != ''){
+		if (elements["Port"] && elements["Port"].value != ''){
 			fPort = fw.i18n.extractNumber(elements["Port"]);
 			totalHT  = add(totalHT, fPort);
 			totalTTC = add(totalTTC, troncature(mul(fPort, (add(1, div(elements["port_tva_rate"].value, 100))))));
 		}
-		if(elements["Emballage"].value != ''){
+		if (elements["Emballage"] && elements["Emballage"].value != ''){
 			fEmballage = fw.i18n.extractNumber(elements["Emballage"]);
 			totalHT  = add(totalHT, fEmballage);
 			totalTTC = add(totalTTC, troncature(mul(fEmballage, (add(1, div(elements["packing_tva_rate"].value, 100))))));
 		}
-		if(elements["Assurance"].value != '' ){
+		if (elements["Assurance"] && elements["Assurance"].value != '' ){
 			fAssurance = fw.i18n.extractNumber(elements["Assurance"]);
 			totalHT  = add(totalHT, fAssurance);
 			totalTTC = add(totalTTC, troncature(mul(fAssurance, (add(1, div(elements["insurance_tva_rate"].value, 100))))));

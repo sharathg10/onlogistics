@@ -199,7 +199,7 @@
   <p>{$cmdProductGrid}
   <table class="form" width="100%" cellspacing="0" cellpadding="3" border="0">
 	<tr>
-		<td nowrap="nowrap" width="15%"><strong>{$form.Port.label} {$Currency}: </strong></td>
+		<td nowrap="nowrap" width="15%"><strong>{if $form.Port}{$form.Port.label} {$Currency}: {/if}</strong></td>
 		<td nowrap="nowrap" width="20%">{$form.Port.html}</td>
 		<td nowrap="nowrap" width="15%"><div id="DisplayRemExcepLabel" style="display:block;"><strong>{t}Customer discount{/t} %:</strong></div></td>
 		<td nowrap="nowrap" width="20%"><div id="DisplayRemExcep" style="display:block;"><b>
@@ -209,21 +209,21 @@
           id="TotalHT" class="ReadOnlyField FieldBold" readonly="readonly" /></td>
 	</tr>
 	<tr>
-		<td  nowrap="nowrap"><strong>{$form.Emballage.label} {$Currency}: </strong></td>
+        <td  nowrap="nowrap"><strong>{if $form.Emballage}{$form.Emballage.label} {$Currency}: {/if}</strong></td>
 		<td colspan="3">{$form.Emballage.html}</td>
 		<td nowrap="nowrap"><strong>{t}Amount incl. VAT{/t} {$Currency}: </strong></td>
 		<td nowrap="nowrap"><input type="text" style="width:80%" name="TotalTTC" class="ReadOnlyField" readonly="readonly" /></td>
 	</tr>
 	<tr>
-		<td  nowrap="nowrap"><strong>{$form.Assurance.label} {$Currency}: </strong></td>
+        <td  nowrap="nowrap"><strong>{if $form.Assurance}{$form.Assurance.label} {$Currency}: {/if}</strong></td>
 		<td colspan="3">{$form.Assurance.html}</td>
 		<td nowrap="nowrap"><strong>{$form.Installment.label} {$Currency}: </strong></td>
 		<td nowrap="nowrap">{$form.Installment.html}</td>
 	</tr>
 	<tr>
-		<td  nowrap="nowrap"><strong>{$form.GlobalHanding.label} %: </strong></td>
+		<td  nowrap="nowrap"><strong>{if $form.GlobalHanding}{$form.GlobalHanding.label} %: {/if}</strong></td>
 		<td colspan="3">{$form.GlobalHanding.html}</td>
-		<td nowrap="nowrap"><strong>{t}To pay{/t} {$Currency}:   </strong></td>
+		<td nowrap="nowrap"><strong>{t}To pay{/t} {$Currency}: </strong></td>
 		<td nowrap="nowrap"><input type="text" style="width:80%" name="ToPay" class="ReadOnlyField" readonly="readonly" /></td>
 	</tr>
   </table>

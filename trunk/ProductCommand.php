@@ -46,6 +46,7 @@ $auth->checkProfiles(array(UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMI
     UserAccount::PROFILE_OWNER_CUSTOMER, UserAccount::PROFILE_PRODUCT_MANAGER));
 
 $consultingContext = in_array('consulting', Preferences::get('TradeContext', array()));
+$customerProfiles  = array(UserAccount::PROFILE_CUSTOMER,UserAccount::PROFILE_OWNER_CUSTOMER);
 
 /**
  * Prolonge les datas de recherche en session: param 1 pour conserver les cases
@@ -185,11 +186,13 @@ if ($consultingContext) {
 }
 
 $onKeyUp = 'onKeyUp="RecalculateTotal();"';
-$form->addElement('text', 'Port', _('Forwarding charges'), $onKeyUp);
-$form->addElement('text', 'Emballage', _('Handling charges'), $onKeyUp);
-$form->addElement('text', 'Assurance', _('Insurances charges'), $onKeyUp);
-$form->addElement('text', 'GlobalHanding', _('Global discount'),
+if (!in_array($auth->getProfile(), $customerProfiles)) {
+    $form->addElement('text', 'Port', _('Forwarding charges'), $onKeyUp);
+    $form->addElement('text', 'Emballage', _('Handling charges'), $onKeyUp);
+    $form->addElement('text', 'Assurance', _('Insurances charges'), $onKeyUp);
+    $form->addElement('text', 'GlobalHanding', _('Global discount'),
         'onKeyUp="RecalculateTotal(true);"'); // true pour recalculer les lignes
+}
 $form->addElement('text', 'Installment', _('Instalment'),
         'onKeyUp="RecalculateToPay();RecalculateUpdateIncur();" '
         . 'style="width:80%" class="FieldWhite" value="0"');
@@ -233,10 +236,12 @@ $grid->NewColumn('ProductCommandQuantity', $qtyCaption);
 $grid->NewColumn('ProductCommandMinimumQuantity', _('Minimum qty'),
         array('customer' => $customer));
 $grid->NewColumn('ProductCommandPromotion', _('Offer on sale'), array('customer' => $customer));
-$grid->NewColumn('FieldMapper', _('Discount'),
+if (!in_array($auth->getProfile(), $customerProfiles)) {
+    $grid->NewColumn('FieldMapper', _('Discount'),
         array('Macro' => '<input type="text" name="hdg[]" value="" size="5" '
                        . 'onKeyUp="RecalculateItemTotal(getItemIndex(this));'
                        . 'RecalculateTotal();" />'));
+}
 $grid->NewColumn('ProductCommandPriceWithHanding',
         sprintf(_('%s price excl. VAT'), $curStr), array('actor' => $customer));
 $grid->NewColumn('FieldMapper', sprintf(_('Total price excl. VAT %s'), $curStr),
@@ -281,7 +286,6 @@ if (isset($_REQUEST['isEstimate'])) {
 }
 
 // Affichage du seuil mini HT de commande autorise, si profile 'client'
-$customerProfiles = array(UserAccount::PROFILE_CUSTOMER,UserAccount::PROFILE_OWNER_CUSTOMER);
 if (in_array($auth->getProfile(), $customerProfiles)) {
     // Pour mettre dans un hidden, pour le controle js
     $smarty->assign('MiniAmountToOrder', $customer->getMiniAmountToOrder($currency));

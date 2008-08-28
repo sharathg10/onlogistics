@@ -201,7 +201,7 @@ echo $_SESSION['site']->getCountryCity();*/
     /**
      * On remplit l'objet Planning
      */
-	$planning = $_SESSION['site']->getPlanning();
+	$planning = $_SESSION['site']->getPlanning(false);
     if (!($planning instanceof WeeklyPlanning)) {
         $planning = new WeeklyPlanning();
     }
@@ -382,7 +382,7 @@ for($i = 0; $i < $contactCollection->getCount(); $i++) {
 } // for
 $smarty->assign('ContactList', $contactList);
 
-$weeklyPlanning = $_SESSION['site']->getPlanning();
+$weeklyPlanning = $_SESSION['site']->getPlanning(false);
 
 if (!($weeklyPlanning instanceof WeeklyPlanning)) {
     $weeklyPlanning = Object::load('WeeklyPlanning');

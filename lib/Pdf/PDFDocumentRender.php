@@ -406,14 +406,14 @@ class PDFDocumentRender extends FpdfJS {
         $this->Cell(45, 3, $this->leftAdressCaption, 0, 0, 'L');
         $this->SetXY(10, 58);
         $this->RestoreFont();
-        $this->MultiCell(57, 4, trim(str_replace("\n\n", "\n", $this->leftAdress)));
+        $this->MultiCell(57, 3.5, trim(str_replace("\n\n", "\n", $this->leftAdress)));
         $this->SetXY(130, 52);
         $this->SetFont($this->defaultFamilyFont, 'bU', $this->defaultFontSize['TITLE']);
         $this->Cell(45, 3, $this->rightAdressCaption, 0, 0, 'L');
         $this->SetXY(130, 58);
         $this->RestoreFont();
-        $this->MultiCell(57, 4, trim(str_replace("\n\n" , "\n" , $this->rightAdress)));
-        $this->Ln(5);
+        $this->MultiCell(57, 3.5, trim(str_replace("\n\n" , "\n" , $this->rightAdress)));
+        $this->Ln(10);
     } // }}}
 
     /**

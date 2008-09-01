@@ -3276,6 +3276,7 @@ class CommandReceiptGenerator extends CommandDocumentGenerator {
         $this->renderAddressesBloc();
         $this->pdf->addHeader();
         $this->renderContent();
+        $this->renderComment();
         $this->renderTotalBlock();
         $this->renderAppendices();
         return $this->pdf;
@@ -3329,10 +3330,10 @@ class CommandReceiptGenerator extends CommandDocumentGenerator {
         }
 
         $header = array(_('Reference') => 30,
-                        _('Description of goods') => 65,
+                        _('Description of goods') => 75,
                         _('Qty')  => 15,
                         _('Unit Price net of tax') . ' ' . $this->currency=>15,
-                        _('Disc.')    => 13,
+                        _('Disc.')    => 15,
                         _('Amount excl. VAT') . ' ' . $this->currency   => 20,
                         _('Amount incl. VAT') . ' ' . $this->currency  => 20);
         if (in_array('readytowear', Preferences::get('TradeContext', array()))) {
@@ -3343,6 +3344,23 @@ class CommandReceiptGenerator extends CommandDocumentGenerator {
         $this->pdf->tableHeader($header, 1);
         $this->pdf->tableBody($data, $header);
         $this->pdf->Ln(8);
+    }
+
+    // }}}
+    // CommandReceiptGenerator::renderComment() {{{
+
+    /**
+     * Ajoute le commentaire de la commande
+     * @param Object $pdfDoc PDFDocumentRender utilise lors d'edition de n factures
+     * @access protected
+     * @return void
+     */
+    protected function renderComment($pdfDoc=false) {
+        $comment = $this->command->getComment();
+        if (!empty($comment)) {
+            $this->pdf->tableHeader(
+                array(_('Comment') . ': ' . $comment => 190));
+        }
     }
 
     // }}}

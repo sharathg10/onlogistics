@@ -445,6 +445,7 @@ class CommandDocumentGenerator extends DocumentGenerator {
                     1
                 );
             $pdfDoc->tableBody($data);
+            $this->pdf->ln(5);
         }
     }
 
@@ -463,6 +464,34 @@ class CommandDocumentGenerator extends DocumentGenerator {
         $this->pdf->leftAdressCaption = _('Delivery address') . ': ';
         $this->pdf->leftAdress = $dAddressStr;
     }
+    // CommandDocumentGenerator::renderComment() {{{
+
+    /**
+     * Ajoute le commentaire de la commande
+     * @param Object $pdfDoc PDFDocumentRender utilise lors d'edition de n factures
+     * @access protected
+     * @return void
+     */
+    protected function renderComment($pdfDoc=false) {
+        $pdfDoc = (!$pdfDoc)?$this->pdf:$pdfDoc;
+        if (method_exists($this->document, 'getComment')) {
+            $comment = $this->document->getComment();
+        } else {
+            $comment = $this->command->getComment();
+        }
+        if (!empty($comment)) {
+            if ($pdfDoc->getY() >= PAGE_HEIGHT_LIMIT) {
+                $pdfDoc->addPage();
+                $pdfDoc->addHeader();
+            }
+            $this->pdf->ln(3);
+            $this->pdf->tableHeader(array(_('Comment') => 190), 1);
+            $this->pdf->tableBody(array(0 => array($comment)));
+            $this->pdf->ln(3);
+        }
+    }
+
+    // }}}
     // CommandDocumentGenerator::renderAppendices() {{{
 
     /**
@@ -620,7 +649,7 @@ class DeliveryOrderGenerator extends CommandDocumentGenerator {
             _('To deliver') => 15);
         $this->pdf->tableHeader($columns, 1);
         $this->pdf->tableBody($this->data[0], $columns);
-        $this->pdf->ln(8);
+        $this->pdf->ln(3);
         if ($this->pdf->getY() >= PAGE_HEIGHT_LIMIT) {
             $this->pdf->addPage();
             $this->pdf->addHeader();
@@ -630,23 +659,7 @@ class DeliveryOrderGenerator extends CommandDocumentGenerator {
             $count = sizeof($this->data[0]);
             $this->pdf->tableHeader($columns, 1);
             $this->pdf->tableBody(array($this->data[0][$count-1]), $columns);
-            $this->pdf->ln(8);
-        }
-    }
-
-    // }}}
-    // DeliveryOrder::renderComment() {{{
-
-    /**
-     * Ajoute le commentaire de la commande
-     * @access protected
-     * @return void
-     */
-    protected function renderComment() {
-        $comment = $this->command->getComment();
-        if (!empty($comment)) {
-            $this->pdf->tableHeader(
-                array(_('Comment') . ': ' . $comment => 190));
+            $this->pdf->ln(3);
         }
     }
 
@@ -669,7 +682,6 @@ class DeliveryOrderGenerator extends CommandDocumentGenerator {
                 array(_('Parcels total weight (Kg)') . ': ' .
                 $this->data[1][1] => 190));
         }
-        $this->pdf->ln(3);
     }
 
     // }}}
@@ -853,12 +865,6 @@ class InvoiceGenerator extends CommandDocumentGenerator {
             $pdfDoc->tableBody(array($columnsData[$count-1]), $columns);
             $pdfDoc->ln(8);
         }
-        $comment = $this->document->getComment();
-        if(!empty($comment)) {
-            $pdfDoc->tableHeader(array(_('Comment') . ' : ' .
-                $comment => 190 ), 1);
-            $pdfDoc->ln(8);
-        }
     }
     // }}}
     // InvoiceGenerator::renderTotal1Bloc() {{{
@@ -1019,29 +1025,6 @@ class InvoiceGenerator extends CommandDocumentGenerator {
         $pdfDoc->tableHeader($data);
     }
     // }}}
-    // InvoiceGenerator::renderComment() {{{
-
-    /**
-     * Ajoute le commentaire de la commande
-     * @param Object $pdfDoc PDFDocumentRender utilise lors d'edition de n factures
-     * @access protected
-     * @return void
-     */
-    protected function renderComment($pdfDoc=false) {
-        $pdfDoc = (!$pdfDoc)?$this->pdf:$pdfDoc;
-        $comment = $this->document->getComment();
-        if (!empty($comment)) {
-            $pdfDoc->ln(8);
-            if ($pdfDoc->getY() >= PAGE_HEIGHT_LIMIT) {
-                $pdfDoc->addPage();
-                $pdfDoc->addHeader();
-            }
-            $this->pdf->tableHeader(
-                array(_('Comment') . ': ' . $comment => 190));
-        }
-    }
-
-    // }}}
     // InvoiceGenerator::getExpeditorBankDetail() {{{
     /**
      * Récupère les detail de l'adresse de la banque
@@ -1158,12 +1141,6 @@ class RTWInvoiceGenerator extends InvoiceGenerator {
             $count = sizeof($columnsData);
             $pdfDoc->tableHeader($columns, 1);
             $pdfDoc->tableBody(array($columnsData[$count-1]), $columns);
-            $pdfDoc->ln(8);
-        }
-        $comment = $this->document->getComment();
-        if(!empty($comment)) {
-            $pdfDoc->tableHeader(array(_('Comment') . ' : ' .
-                $comment => 190 ), 1);
             $pdfDoc->ln(8);
         }
     }
@@ -3276,8 +3253,8 @@ class CommandReceiptGenerator extends CommandDocumentGenerator {
         $this->renderAddressesBloc();
         $this->pdf->addHeader();
         $this->renderContent();
-        $this->renderComment();
         $this->renderTotalBlock();
+        $this->renderComment();
         $this->renderAppendices();
         return $this->pdf;
     }
@@ -3317,9 +3294,11 @@ class CommandReceiptGenerator extends CommandDocumentGenerator {
 
         if ($this->command->getWishedEndDate() != 0 &&
             $this->command->getWishedEndDate() != 'NULL') {
-            $date_souhaitee = sprintf(_('between %s and %s'),
-                $date_souhaitee,
-                I18N::formatDate($this->command->getWishedEndDate()));
+            $wishedDate = sprintf(
+                _('between %s and %s'),
+                $wishedDate,
+                I18N::formatDate($this->command->getWishedEndDate()
+            ));
         }
         $this->pdf->addText(_('Wished date') . ' : ' .
             $wishedDate);
@@ -3344,23 +3323,6 @@ class CommandReceiptGenerator extends CommandDocumentGenerator {
         $this->pdf->tableHeader($header, 1);
         $this->pdf->tableBody($data, $header);
         $this->pdf->Ln(8);
-    }
-
-    // }}}
-    // CommandReceiptGenerator::renderComment() {{{
-
-    /**
-     * Ajoute le commentaire de la commande
-     * @param Object $pdfDoc PDFDocumentRender utilise lors d'edition de n factures
-     * @access protected
-     * @return void
-     */
-    protected function renderComment($pdfDoc=false) {
-        $comment = $this->command->getComment();
-        if (!empty($comment)) {
-            $this->pdf->tableHeader(
-                array(_('Comment') . ': ' . $comment => 190));
-        }
     }
 
     // }}}
@@ -3430,7 +3392,7 @@ class CommandReceiptGenerator extends CommandDocumentGenerator {
             if (isset($registry[$model->getId()])) {
                 $registry[$model->getId()][1] .= ($size ? ", ".$size->getName().": " . $commandItem->getQuantity() : '');
                 $registry[$model->getId()][2] += $commandItem->getQuantity();
-                $registry[$model->getId()][3] += $commandItem->getPriceHT();
+                //$registry[$model->getId()][3] += $commandItem->getPriceHT();
                 $registry[$model->getId()][4] += $commandItem->getHanding();
                 $registry[$model->getId()][5] += $commandItem->getTotalHT();
                 $registry[$model->getId()][6] += $commandItem->getTotalTTC();
@@ -3638,12 +3600,6 @@ class ChainCommandReceiptGenerator extends CommandReceiptGenerator {
 
         $this->pdf->tableHeader($header, 1);
         $this->pdf->tableBody($data, $header);
-
-        $comment = $this->command->getComment();
-        if(!empty($comment)) {
-            $this->pdf->tableHeader(array(_('Comment') . ' : ' .
-                $comment => 190 ), 1);
-        }
     }
 
     // }}}

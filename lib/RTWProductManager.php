@@ -223,6 +223,11 @@ class RTWProductManager extends RTWManager
             $setter = 'set' . $k;
             $product->$setter($v);
         }
+        // TVA 19.6 by default
+        $tva = Object::load('TVA', array('Rate' => 19.6));
+        if ($tva instanceof TVA) {
+            $product->setTVA($tva);
+        }
     }
 
     // }}}

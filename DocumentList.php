@@ -103,6 +103,12 @@ if (true == $form->displayGrid()){// || $form->isFirstArrival()) {
 	if (isset($_REQUEST['formSubmitted']) && !isset($_REQUEST['DateOrder1'])) {
 	    unset($_SESSION['DateOrder1']);
 	}
+    if (isset($_REQUEST['ClassName']) && in_array($_REQUEST['ClassName'], 
+        array('DeliveryOrder', 'CommandReceipt', 'Invoice'))) {
+        $FilterComponentArray[] = new FilterComponent(
+            new FilterRule('Command', FilterRule::OPERATOR_GREATER_THAN, 0)
+        );
+    }
 
 	$grid = new Grid();
 	$grid->itemPerPage = 50;

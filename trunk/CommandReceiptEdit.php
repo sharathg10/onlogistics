@@ -37,10 +37,18 @@
 require_once('config.inc.php');
 require_once('GenerateDocument.php');
 
-$id  = isset($_GET['id']) ? $_GET['id'] : 0;
-if ($id) {
-    $doc = Object::load('AbstractDocument', $id);
+$doc = false;
+if (isset($_GET['id'])) {
+    $doc = Object::load('CommandReceipt', $_GET['id']);
+} else if (isset($_GET['cmdId'])) {
+    $doc = Object::load('CommandReceipt', array('Command' => $_GET['cmdId']));
+}
+if ($doc instanceof CommandReceipt) {
     generateDocument($doc, true);
+} else {
+    $errorBody = _('Error: order receipt could not be printed.');
+    Template::errorDialog($errorBody, 'javascript:window.close();', BASE_POPUP_TEMPLATE);
+    exit(1);
 }
 
 ?>

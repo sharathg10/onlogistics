@@ -42,8 +42,8 @@ define('PDF_FONTSIZE_SUBTITLE', 9);
 define('PDF_FONTSIZE_FOOTER', 8);
 define('PDF_FONTSIZE_DEFAULT', 8);
 define('PDF_FONTSIZE_FILIGREE', 90);
-define('PDF_FONTSIZE_HEADER', 10);
-define('PDF_FONTSIZE_ADDRESS', 11);
+define('PDF_FONTSIZE_HEADER', 9);
+define('PDF_FONTSIZE_ADDRESS', 10);
 define('PDF_FAMILYFONT', 'Arial');
 
 class PDFDocumentRender extends FpdfJS {
@@ -107,6 +107,13 @@ class PDFDocumentRender extends FpdfJS {
      * @var string
 	 */
     public $docTitle;
+
+	/**
+	 * Date d'edition du document formatee
+     * @access public
+     * @var string
+	 */
+    public $docDate;
 
 	/**
 	 * Contient un logo en base64 ou string vide
@@ -364,10 +371,12 @@ class PDFDocumentRender extends FpdfJS {
 	        $this->MultiCell(57, 4, trim(str_replace("\n\n", "\n", $ExpeditorSiteAdress)));
         }
         $this->setFont($this->defaultFamilyFont,'B', $this->defaultFontSize['HEADER']);//PDF_FONTSIZE_HEADER);
-		$this->setXY(120, 15);
+		$this->setXY(100, 15);
 		$this->Cell(90, 3,  $this->docTitle);
+		$this->setXY(100, 19);
+		$this->Cell(90, 3,  _('Edition date') . ': ' . $this->docDate);
 
-		$this->setXY(120,20);
+		$this->setXY(100,23);
 		$this->setFont($this->defaultFamilyFont,'B', $this->defaultFontSize['HEADER']);//PDF_FONTSIZE_HEADER);
 
 		// Selon si plusieurs factures dans le même pdf ou non

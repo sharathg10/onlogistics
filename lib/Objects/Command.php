@@ -1114,6 +1114,24 @@ class Command extends _Command {
     }
 
     // }}}
+    // Command::getNumberOfOrderedProducts() {{{
+
+    /**
+     * Retourne le nombre total de produits commandes.
+     *
+     * @access public
+     * @return int
+     */
+    public function getNumberOfOrderedProducts() {
+        $cmiCol = $this->getCommandItemCollection();
+        $num = 0;
+        foreach ($cmiCol as $cmi) {
+            $num += $cmi->getQuantity();
+        }
+        return $num;
+    }
+
+    // }}}
 
 }
 

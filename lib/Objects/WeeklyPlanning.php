@@ -49,7 +49,8 @@ class WeeklyPlanning extends _WeeklyPlanning {
     }
 
     // }}}
-    
+    // WeeklyPlanning::getDailyPlanningForDate() {{{
+
     /**
      *
      * @access public
@@ -67,6 +68,9 @@ class WeeklyPlanning extends _WeeklyPlanning {
         }
         return false;
     }  
+
+    // }}} 
+    // WeeklyPlanning::renderTemplate() {{{
     
     /**
      * Assigne les variables aux template planning
@@ -157,29 +161,76 @@ class WeeklyPlanning extends _WeeklyPlanning {
         $smarty->assign("PHP_SELF", $_SERVER['PHP_SELF']);
     }
 
+    // }}} 
+    // WeeklyPlanning::createDefaultPlanning() {{{
+
     /**
-     * Crée un planning vide, le sauve et le retourne.
+     * Crée un planning par defaut, le sauve et le retourne.
      *
      * @access public
      * @return object WeeklyPlanning
      */
-    function createEmptyPlanning() {
-        require_once('Objects/DailyPlanning.php');
-        $planning = new WeeklyPlanning();
+    public function isEmpty() {
+        $getters  = array(
+            'getMonday', 'getTuesday', 'getWednesday', 'getThursday', 
+            'getFriday', 'getSaturday', 'getSunday'
+        );
+        foreach($getters as $getter) {
+            $day = $this->$getter();
+            if (!($day instanceof DailyPlanning)) {
+                continue;
+            }
+            if ($day->getStart()   != 0 || $day->getPause() != 0 || 
+                $day->getRestart() != 0 || $day->getEnd()   != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // }}} 
+    // WeeklyPlanning::createDefaultPlanning() {{{
+
+    /**
+     * Crée un planning par defaut, le sauve et le retourne.
+     *
+     * @access public
+     * @return object WeeklyPlanning
+     */
+    public static function createDefaultPlanning($planning = false, $save = true) {
+        if (!($planning instanceof WeeklyPlanning)) {
+            $planning = new WeeklyPlanning();
+        }
         $setters  = array(
             'setMonday', 'setTuesday', 'setWednesday', 'setThursday', 
             'setFriday', 'setSaturday', 'setSunday'
         );
         foreach($setters as $setter) {
             $day = new DailyPlanning();
-            $day->save();
+            if ($setter != 'setSaturday' && $setter != 'setSunday') {
+                $day->setStart('08:00');
+                $day->setPause('00:00');
+                $day->setRestart('00:00');
+                $day->setEnd('18:00');
+            } else {
+                $day->setStart('00:00');
+                $day->setPause('00:00');
+                $day->setRestart('00:00');
+                $day->setEnd('00:00');
+            }
+            if ($save) {
+                $day->save();
+            }
             $planning->$setter($day);
             unset($day);
         }
-        $planning->save();
+        if ($save) {
+            $planning->save();
+        }
         return $planning;
     }
 
+    // }}} 
 }
 
 ?>

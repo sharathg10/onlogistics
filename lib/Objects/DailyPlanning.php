@@ -49,7 +49,8 @@ class DailyPlanning extends _DailyPlanning {
     }
 
     // }}}
-    
+    // DailyPlanning::getGraph() {{{
+
     /**
      *
      * @access public
@@ -129,6 +130,7 @@ class DailyPlanning extends _DailyPlanning {
         return $graph;
     }
 
+    // }}}    
 }
 
 ?>

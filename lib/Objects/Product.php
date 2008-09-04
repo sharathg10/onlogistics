@@ -84,6 +84,7 @@ class Product extends _Product {
             if ($pbc instanceof PriceByCurrency) {
                 return $pbc->getPrice();
             }
+            return 0;
         }
         // sinon, on essaie de récupérer le prix associé à la devise
         if ($currencyID > 0) {

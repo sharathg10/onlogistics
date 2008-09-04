@@ -327,8 +327,8 @@ class Invoice extends _Invoice {
             if (!(($size = $rtwProduct->getSize()) instanceof RTWSize)) {
                 $size = false;
             }
-            $ref = $rtwProduct->getBaseReference();
             $model = $rtwProduct->getModel();
+            $ref = $rtwProduct->getBaseReference() . "\n" . $model->getPressName()->toString();
             if (!isset($ret[$model->getId()])) {
                 $ret[$model->getId()] = array(
                     $ref,

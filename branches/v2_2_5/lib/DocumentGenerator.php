@@ -445,7 +445,7 @@ class CommandDocumentGenerator extends DocumentGenerator {
                     1
                 );
             $pdfDoc->tableBody($data);
-            $this->pdf->ln(5);
+            $this->pdf->ln(3);
         }
     }
 
@@ -458,8 +458,7 @@ class CommandDocumentGenerator extends DocumentGenerator {
     public function buildLeftAddress() {
         // adresse de livraison
         $dSite = $this->command->getDestinatorSite();
-        $dAddressStr = $this->destinator->getQualityForAddress()
-            . $this->destinator->getName() . "\n"
+        $dAddressStr = $dSite->getName() . "\n"
             . $dSite->getFormatAddressInfos("\n");
         $this->pdf->leftAdressCaption = _('Delivery address') . ': ';
         $this->pdf->leftAdress = $dAddressStr;
@@ -484,7 +483,6 @@ class CommandDocumentGenerator extends DocumentGenerator {
                 $pdfDoc->addPage();
                 $pdfDoc->addHeader();
             }
-            $this->pdf->ln(3);
             $this->pdf->tableHeader(array(_('Comment') => 190), 1);
             $this->pdf->tableBody(array(0 => array($comment)));
             $this->pdf->ln(3);
@@ -504,7 +502,6 @@ class CommandDocumentGenerator extends DocumentGenerator {
         $pdfDoc = (!$pdfDoc)?$this->pdf:$pdfDoc;
         $incoterm = $this->command->getIncoterm();
         if ($incoterm instanceof Incoterm) {
-            $this->pdf->ln(3);
             $this->pdf->tableHeader(array(_('Incoterm') => 190), 1);
             $this->pdf->tableBody(array(0 => array($incoterm->getLabel())));
             $this->pdf->ln(3);
@@ -734,6 +731,7 @@ class DeliveryOrderGenerator extends CommandDocumentGenerator {
                 array(_('Parcels total weight (Kg)') . ': ' .
                 $this->data[1][1] => 190));
         }
+        $this->pdf->ln(3);
     }
 
     // }}}

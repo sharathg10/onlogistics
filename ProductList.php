@@ -39,6 +39,7 @@ require_once('Objects/Product.inc.php');
 //Database::connection()->debug = true;
 $auth = Auth::Singleton();
 $auth->checkProfiles();
+$tradeContext = Preferences::get('TradeContext', array());
 /* Cleanage des variables produit en session */
 SearchTools::cleanDataSession('pdt');
 unset($_SESSION['ccp']);
@@ -102,6 +103,89 @@ $customArray = array(
         )
     )
 );
+
+if (in_array('readytowear', $tradeContext)) {
+    $customArray['PressName'] = array(
+        'Name'=>'PressName',
+        'Type'=>'select',
+        'Params'=> array(
+            SearchTools::createArrayIDFromCollection(
+                'RTWPressName',
+                array(),
+                _('Select one or more items')
+            ),
+            'multiple, size="6"'
+        ),
+        'SearchOptions'=>array(
+            'Path'=>'Model.PressName.Id',
+            'Operator'=>'In'
+        )
+    );
+    $customArray['Material1'] = array(
+        'Name'=>'Material1',
+        'Type'=>'select',
+        'Params'=> array(
+            SearchTools::createArrayIDFromCollection(
+                'RTWMaterial',
+                array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL),
+                _('Select one or more items')
+            ),
+            'multiple, size="6"'
+        ),
+        'SearchOptions'=>array(
+            'Path'=>'Model.Material1.Id',
+            'Operator'=>'In'
+        )
+    );
+    $customArray['Material2'] = array(
+        'Name'=>'Material2',
+        'Type'=>'select',
+        'Params'=> array(
+            SearchTools::createArrayIDFromCollection(
+                'RTWMaterial',
+                array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL),
+                _('Select one or more items')
+            ),
+            'multiple, size="6"'
+        ),
+        'SearchOptions'=>array(
+            'Path'=>'Model.Material2.Id',
+            'Operator'=>'In'
+        )
+    );
+    $customArray['Accessory1'] = array(
+        'Name'=>'Accessory1',
+        'Type'=>'select',
+        'Params'=> array(
+            SearchTools::createArrayIDFromCollection(
+                'RTWMaterial',
+                array('MaterialType' => RTWMaterial::TYPE_ACCESSORY),
+                _('Select one or more items')
+            ),
+            'multiple, size="6"'
+        ),
+        'SearchOptions'=>array(
+            'Path'=>'Model.Accessory1.Id',
+            'Operator'=>'In'
+        )
+    );
+    $customArray['Accessory2'] = array(
+        'Name'=>'Accessory2',
+        'Type'=>'select',
+        'Params'=> array(
+            SearchTools::createArrayIDFromCollection(
+                'RTWMaterial',
+                array('MaterialType' => RTWMaterial::TYPE_ACCESSORY),
+                _('Select one or more items')
+            ),
+            'multiple, size="6"'
+        ),
+        'SearchOptions'=>array(
+            'Path'=>'Model.Accessory2.Id',
+            'Operator'=>'In'
+        )
+    );
+}
 $res = $catalog->buildSearchForm($form, array(), $customArray);
 if (false == $res) {
     Template::errorDialog(
@@ -115,6 +199,15 @@ $form->addAction(array('URL'=>'ProductAddEdit.php?returnURL=ProductList.php'));
 
 /*  Affichage du Grid  */
 if (true === $form->displayGrid()) {
+    if (in_array('readytowear', $tradeContext)) {
+        $rtwProductProperties = array('PressName', 'Material1', 'Material2',
+            'Accessory1', 'Accessory2');
+        foreach ($rtwProductProperties as $prop) {
+            if (SearchTools::requestOrSessionExist($prop, array(0=>'##'), 'NotEquals')) {
+                $form->entity = 'RTWProduct';
+            }
+        }
+    }
     //  Création du filtre complet
     $Filter = SearchTools::filterAssembler($form->buildFilterComponentArray());
     define('PRODUCTLIST_ITEMPERPAGE', $catalog->getItemPerPage());

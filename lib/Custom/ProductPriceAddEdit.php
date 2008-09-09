@@ -118,11 +118,15 @@ class ProductPriceAddEdit extends GenericAddEdit {
         $mapper = Mapper::singleton('PriceByCurrency');
         $mapper->delete($obj->getPriceByCurrencyCollectionIds());
         if (isset($_POST['PBC_Price']) && is_array($_POST['PBC_Price'])) {
-            for ($i=0; $i<count($_POST['PBC_Price']); $i++) {
+            for ($i=0; $i<count($_POST['PBC_Currency_ID']); $i++) {
                 // construit le PriceByCurrency
                 $pbc = new PriceByCurrency();
-                $pbc->setRecommendedPrice($_POST['PBC_RecommendedPrice'][$i]);
-                $pbc->setPrice($_POST['PBC_Price'][$i]);
+                $p = isset($_POST['PBC_RecommendedPrice'][$i]) ? 
+                    $_POST['PBC_RecommendedPrice'][$i]: 0;
+                $pbc->setRecommendedPrice($p);
+                $p = isset($_POST['PBC_Price'][$i]) ?
+                    $_POST['PBC_Price'][$i]: 0;
+                $pbc->setPrice($p);
                 $pbc->setCurrency($_POST['PBC_Currency_ID'][$i]);
                 $pbc->setPricingZone($_POST['PBC_PricingZone_ID'][$i]);
                 $pbc->$setter($obj->getId());

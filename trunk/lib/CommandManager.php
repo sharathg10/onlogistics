@@ -782,7 +782,7 @@ class CommandManager{
             return true;
         }
         // envoi du mail de récépissé, envoye en fait apres la transaction
-        if ($this->commandType == 'ProductCommand') {
+        if ($this->commandType == 'ProductCommand' && !$this->isEstimate) {
             $customer = $this->auth->getActor();
             $this->_debug('* Envoi du récépissé de la commande de produit ' .
                 $command->getCommandNo());
@@ -797,23 +797,25 @@ class CommandManager{
                 $commandReceipt->setDocumentModel($dmodel);
             }
             $commandReceipt->save();
-            $uacCol = new Collection();
-            //on envoie l'alerte de reception de commande au commercial lié a la commande
-            $commercial = $command->getCommercial();
-            if ($commercial instanceof UserAccount && ($commercial->getEmail() != "")) {
-                $uacCol->setItem($commercial);
-            }
-            CommandManager::$alertsToSend[] = array(
-                'ALERT_PRODUCT_COMMAND_RECEIPT',
-                array(
-                    $commandReceipt, 
-                    $uacCol, 
+            if (!$this->isEstimate) {
+                $uacCol = new Collection();
+                //on envoie l'alerte de reception de commande au commercial lié a la commande
+                $commercial = $command->getCommercial();
+                if ($commercial instanceof UserAccount && ($commercial->getEmail() != "")) {
+                    $uacCol->setItem($commercial);
+                }
+                CommandManager::$alertsToSend[] = array(
+                    'ALERT_PRODUCT_COMMAND_RECEIPT',
                     array(
-                        $command->getDestinatorSiteId(),
-                        $command->getExpeditorSiteId()
+                        $commandReceipt, 
+                        $uacCol, 
+                        array(
+                            $command->getDestinatorSiteId(),
+                            $command->getExpeditorSiteId()
+                        )
                     )
-                )
-            );
+                );
+            }
         } else if ($this->commandType == 'ChainCommand') {
             $additionnalUsers = new Collection();
             $additionnalUsers->setItem($this->auth->getUser());

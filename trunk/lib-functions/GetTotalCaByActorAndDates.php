@@ -46,7 +46,7 @@ function GetTotalCaByActorAndDates($actorId, $dateStart, $dateEnd, $commandType,
 	} else {
 	    $FilterComponentArray[] = SearchTools::NewFilterComponent('Expeditor', '', 'Equals', $actorId, 1);
 	}
-    
+	$FilterComponentArray[] = SearchTools::NewFilterComponent('IsEstimate', '', 'Equals', 0, 1);
     $FilterComponentArray[] = SearchTools::NewFilterComponent('CommandDate', '', 'LowerThanOrEquals', $dateEnd, 1);
 	$FilterComponentArray[] = SearchTools::NewFilterComponent('CommandDate', '', 'GreaterThanOrEquals', $dateStart, 1);
 	$FilterComponentArray[] = SearchTools::NewFilterComponent('Type', '', 'Equals', $commandType, 1);

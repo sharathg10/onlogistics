@@ -324,10 +324,11 @@ $msgs['TermsOfPaymentAddEdit_1'] = _('Percent of total amount incl. taxes');
 $msgs['TermsOfPaymentAddEdit_2'] = _('Delay in days');
 $msgs['TermsOfPaymentAddEdit_3'] = _('Option');
 $msgs['TermsOfPaymentAddEdit_4'] = _('Event');
-$msgs['TermsOfPaymentAddEdit_5'] = _('Percent of amount must be a float');
-$msgs['TermsOfPaymentAddEdit_6'] = _('Payment delay must be an integer');
-$msgs['TermsOfPaymentAddEdit_7'] = _('Percent of amount can not exceed 100%');
-$msgs['TermsOfPaymentAddEdit_8'] = _('Percent of amount sum must be equals to 100%');
+$msgs['TermsOfPaymentAddEdit_5'] = _('Modality');
+$msgs['TermsOfPaymentAddEdit_6'] = _('Percent of amount must be a float');
+$msgs['TermsOfPaymentAddEdit_7'] = _('Payment delay must be an integer');
+$msgs['TermsOfPaymentAddEdit_8'] = _('Percent of amount can not exceed 100%');
+$msgs['TermsOfPaymentAddEdit_9'] = _('Percent of amount sum must be equals to 100%');
 
 
 header('Content-Type: text/javascript');

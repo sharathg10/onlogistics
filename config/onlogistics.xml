@@ -2679,6 +2679,16 @@
             <const name="ORDER" label="Order" value="5" />
             <const name="DELIVERY" label="Delivery" value="6" />
         </property>
+        <property type="const" name="PaymentModality" default="0" required="1"
+            usedby="grid,searchform,addedit" label="Modality">
+            <const name="CHECK" label="Check" value="0"/>
+            <const name="CASH" label="Cash" value="1"/>
+            <const name="CREDIT_CARD" label="Credit card" value="2"/>
+            <const name="DRAFT" label="Draft" value="3"/>
+            <const name="TRANSFER" label="Transfer" value="4"/>
+            <const name="ASSETS" label="Assets" value="5"/>
+            <const name="PROMISSORY_NOTE" label="Promissory note" value="6"/>
+        </property>
         <property type="foreignkey" name="TermsOfPayment"
             class="TermsOfPayment" ondelete="cascade" navigable="1"/>
     </entity>

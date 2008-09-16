@@ -1053,8 +1053,23 @@ class InvoiceGenerator extends CommandDocumentGenerator {
         if (!($abd instanceof ActorBankDetail)) {
             return '';
         }
-        if (!in_array($this->supplierCustomer->getModality(),
-        array(SupplierCustomer::VIREMENT, SupplierCustomer::TRAITE, SupplierCustomer::BILLET_ORDRE))) {
+        $continue = false;
+        $top = $this->supplierCustomer->getTermsOfPayment();
+        if (!$top instanceof TermsOfPayment) {
+            return '';
+        }
+        $modalities = array(
+            TermsOfPaymentItem::TRANSFER,
+            TermsOfPaymentItem::DRAFT,
+            TermsOfPaymentItem::PROMISSORY_NOTE
+        );
+        foreach ($top->getTermsOfPaymentItemCollection() as $item) {
+            if (in_array($item->getPaymentModality(), $modalities)) {
+                $continue = true;
+                break;
+            }
+        }
+        if (!$continue) {
             return '';
         }
         // streettype
@@ -1067,8 +1082,12 @@ class InvoiceGenerator extends CommandDocumentGenerator {
         if ($abd->getBankAddressAdd() != '') {
             $data .= sprintf("%s\n", $abd->getBankAddressAdd());
         }
-        $data .= sprintf("%s %s %s\n", $abd->getBankAddressCity(),
-        $abd->getBankAddressZipCode(), $abd->getBankAddressCountry());
+        $data .= sprintf(
+            "%s %s %s\n",
+            $abd->getBankAddressCity(),
+            $abd->getBankAddressZipCode(),
+            $abd->getBankAddressCountry()
+        );
         return $data;
     }
     // }}}

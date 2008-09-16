@@ -48,6 +48,13 @@ class _TermsOfPaymentItem extends Object {
     const END_OF_NEXT_MONTH = 3;
     const ORDER = 5;
     const DELIVERY = 6;
+    const CHECK = 0;
+    const CASH = 1;
+    const CREDIT_CARD = 2;
+    const DRAFT = 3;
+    const TRANSFER = 4;
+    const ASSETS = 5;
+    const PROMISSORY_NOTE = 6;
 
     // }}}
     // Constructeur {{{
@@ -240,6 +247,65 @@ class _TermsOfPaymentItem extends Object {
     }
 
     // }}}
+    // PaymentModality const property + getter/setter/getPaymentModalityConstArray {{{
+
+    /**
+     * PaymentModality int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_PaymentModality = 0;
+
+    /**
+     * _TermsOfPaymentItem::getPaymentModality
+     *
+     * @access public
+     * @return integer
+     */
+    public function getPaymentModality() {
+        return $this->_PaymentModality;
+    }
+
+    /**
+     * _TermsOfPaymentItem::setPaymentModality
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setPaymentModality($value) {
+        if ($value !== null) {
+            $this->_PaymentModality = (int)$value;
+        }
+    }
+
+    /**
+     * _TermsOfPaymentItem::getPaymentModalityConstArray
+     * Retourne un tableau associatif avec la valeur de la constante en
+     * clef et sa représentation textuelle en valeur.
+     * Si $keys vaut true, seules les clefs sont retournées
+     *
+     * @access public
+     * @static
+     * @param boolean $keys
+     * @return array
+     */
+    public static function getPaymentModalityConstArray($keys = false) {
+        $array = array(
+            _TermsOfPaymentItem::CHECK => _("Check"), 
+            _TermsOfPaymentItem::CASH => _("Cash"), 
+            _TermsOfPaymentItem::CREDIT_CARD => _("Credit card"), 
+            _TermsOfPaymentItem::DRAFT => _("Draft"), 
+            _TermsOfPaymentItem::TRANSFER => _("Transfer"), 
+            _TermsOfPaymentItem::ASSETS => _("Assets"), 
+            _TermsOfPaymentItem::PROMISSORY_NOTE => _("Promissory note")
+        );
+        asort($array);
+        return $keys?array_keys($array):$array;
+    }
+
+    // }}}
     // TermsOfPayment foreignkey property + getter/setter {{{
 
     /**
@@ -339,6 +405,7 @@ class _TermsOfPaymentItem extends Object {
             'PaymentDelay' => Object::TYPE_INT,
             'PaymentOption' => Object::TYPE_CONST,
             'PaymentEvent' => Object::TYPE_CONST,
+            'PaymentModality' => Object::TYPE_CONST,
             'TermsOfPayment' => 'TermsOfPayment');
         return $return;
     }
@@ -453,6 +520,15 @@ class _TermsOfPaymentItem extends Object {
             'PaymentEvent'=>array(
                 'label'        => _('Event'),
                 'shortlabel'   => _('Event'),
+                'usedby'       => array('grid', 'searchform', 'addedit'),
+                'required'     => true,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => ''
+            ),
+            'PaymentModality'=>array(
+                'label'        => _('Modality'),
+                'shortlabel'   => _('Modality'),
                 'usedby'       => array('grid', 'searchform', 'addedit'),
                 'required'     => true,
                 'inplace_edit' => false,

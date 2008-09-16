@@ -2858,6 +2858,7 @@ CREATE TABLE TermsOfPaymentItem (
   _PaymentDelay INT(11) NOT NULL DEFAULT 0,
   _PaymentOption INT(3) NOT NULL DEFAULT 0,
   _PaymentEvent INT(3) NOT NULL DEFAULT 0,
+  _PaymentModality INT(3) NOT NULL DEFAULT 0,
   _TermsOfPayment INT(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (_Id)
 ) TYPE=InnoDB CHARSET=latin1;

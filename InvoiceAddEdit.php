@@ -472,6 +472,9 @@ if ($sp instanceof SupplierCustomer) {
     $Smarty->assign('MaxIncur', $MaxIncur);
     $Smarty->assign('UpdateIncur', I18N::formatNumber($sp->getUpdateIncur()));
 	$Smarty->assign('ToHaveTTC', I18N::formatNumber($sp->getToHaveTTC()));
+    if (($top = $sp->getTermsOfPayment()) instanceof TermsOfPayment) {
+        $Smarty->assign('TermsOfPayment', $top->getName());
+    }
 } else {
     $Smarty->assign('UpdateIncur', '0,00');
 	$Smarty->assign('ToHaveTTC', '0,00');

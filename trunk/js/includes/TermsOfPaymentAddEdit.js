@@ -19,7 +19,7 @@ initialize = function() {
         'TermsOfPaymentItem',
         filter,
         {},
-        ['PercentOfTotal', 'PaymentDelay', 'PaymentOption', 'PaymentEvent']
+        ['PercentOfTotal', 'PaymentDelay', 'PaymentOption', 'PaymentEvent', 'PaymentModality']
     );
     var onSuccess = function (data) {
         // contruire les options
@@ -72,15 +72,17 @@ onDelTOPI = function(nodeID) {
 newTOPIItem = function(itemData) {
     var index = $('TOPIUL').childNodes.length;
     if (typeof(itemData) != 'undefined') {
-        var percentOfTotal = itemData.percentOfTotal;
-        var paymentDelay   = itemData.paymentDelay;
-        var paymentOption  = itemData.paymentOption.value;
-        var paymentEvent   = itemData.paymentEvent.value;
+        var percentOfTotal  = itemData.percentOfTotal;
+        var paymentDelay    = itemData.paymentDelay;
+        var paymentOption   = itemData.paymentOption.value;
+        var paymentEvent    = itemData.paymentEvent.value;
+        var paymentModality = itemData.paymentModality.value;
     } else {
-        var percentOfTotal = '0';
-        var paymentDelay   = '0';
-        var paymentOption  = 0;
-        var paymentEvent   = 0;
+        var percentOfTotal  = '0';
+        var paymentDelay    = '0';
+        var paymentOption   = 0;
+        var paymentEvent    = 0;
+        var paymentModality = 0;
     }
     return LI(
         {id: 'TOPILI'+index, style: 'padding: 3px; border: 1px #fff outset;'},
@@ -103,6 +105,18 @@ newTOPIItem = function(itemData) {
                 name : 'TOPI_PaymentDelay[]',
                 id   : 'TOPI_PaymentDelay' + index
             })
+        ),
+        SPAN(
+            {style:'padding: 5px;'},
+            LABEL({'for': 'TOPI_PaymentModality' + index}, TermsOfPaymentAddEdit_5 + ': '),
+            newSelect(
+                'TOPI_PaymentModality[]',
+                'callStaticMethod',
+                'TermsOfPaymentItem',
+                'getPaymentModalityConstArray',
+                paymentModality,
+                false
+            )
         ),
         SPAN(
             {style:'padding: 5px;'},
@@ -195,23 +209,23 @@ function checkAndFormat(evt) {
         var percentOfTotal = elts["TOPI_PercentOfTotal[]"][i].value.replace(' ', '');
         var paymentDelay   = elts["TOPI_PaymentDelay[]"][i].value.replace(' ', '');
         if (!/^\d+[\.,]?\d*$/.test(percentOfTotal)) {
-            alert(TermsOfPaymentAddEdit_5);
+            alert(TermsOfPaymentAddEdit_6);
             return evt.stop();
         }
         if (!/^\d+$/.test(paymentDelay)) {
-            alert(TermsOfPaymentAddEdit_6);
+            alert(TermsOfPaymentAddEdit_7);
             return evt.stop();
         }
         percentOfTotal = fw.i18n.extractNumber(percentOfTotal);
         elts["TOPI_PercentOfTotal[]"][i].value = percentOfTotal;
         subtotal += percentOfTotal;
         if (subtotal > 100) {
-            alert(TermsOfPaymentAddEdit_7);
+            alert(TermsOfPaymentAddEdit_8);
             return evt.stop();
         }
     }
     if (subtotal != 100) {
-        alert(TermsOfPaymentAddEdit_8);
+        alert(TermsOfPaymentAddEdit_9);
         return evt.stop();
     }
     return true;

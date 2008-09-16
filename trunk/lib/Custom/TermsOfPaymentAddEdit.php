@@ -82,6 +82,7 @@ class TermsOfPaymentAddEdit extends GenericAddEdit {
                 $topi->setPaymentDelay($val);
                 $topi->setPaymentOption($_POST['TOPI_PaymentOption'][$i]);
                 $topi->setPaymentEvent($_POST['TOPI_PaymentEvent'][$i]);
+                $topi->setPaymentModality($_POST['TOPI_PaymentModality'][$i]);
                 $topi->setTermsOfPayment($this->objID);
                 $topi->save();
             }

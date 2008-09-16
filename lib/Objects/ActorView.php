@@ -262,17 +262,6 @@ class ActorView extends View {
     } 
 
     /**
-     * ActorView::getPaymentCondition()
-     * 
-     * @access public
-     * @return string
-     */
-    function getPaymentCondition()
-    {
-        return $this->_entity->getPaymentCondition();
-    } 	
-
-    /**
      * ActorView::_getSite()
      * 
      * @param string $sitetype (soit 'delivery' soit 'invoice')

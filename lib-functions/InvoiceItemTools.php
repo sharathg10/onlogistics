@@ -163,24 +163,8 @@ function savePaymentDate($Invoice, $Command) {
             array('Supplier' => $Expeditor, 'Customer' => $Destinator));
 
     if (!Tools::isEmptyObject($SupplierCustomer)) {
-		if ($SupplierCustomer->getOption() == SupplierCustomer::NET) {
-		    $date = explode(" ", $Invoice->getEditionDate());
-		}
-		elseif ($SupplierCustomer->getOption() == SupplierCustomer::FIN_DE_MOIS) {
-			$date = explode(" ", DateTimeTools::lastDayInMonth($Invoice->getEditionDate()));
-		}
-		else {  // Fin de mois suivant
-			$date = explode(" ", DateTimeTools::lastDayInMonth(
-                    DateTimeTools::getNextMonthDate($Invoice->getEditionDate())));
-		}
-		$time = $date[1];
-		$time = str_replace("-", ":", $time);
-		$date = $date[0]." ".$time;
-		$date = DateTimeTools::DateModeler($date, $SupplierCustomer->getTotalDays() * 86400);
-		$Invoice->setPaymentDate( str_replace(":", "-", $date) );
-		if ($Command instanceof CourseCommand) {
-		    $Invoice->setPaymentCondition($SupplierCustomer->getPaymentCondition());
-		}
+       // XXX TODO TERMS_OF_PAYMENT implement PaymentDate calculation
+	   $Invoice->setPaymentDate($Invoice->getEditionDate());
 	}
 	else {  // Pas de SupplierCustomer defini
 	   $Invoice->setPaymentDate($Invoice->getEditionDate());
@@ -400,9 +384,6 @@ function chargeSeveralCommands($cmdIds) {
         } else {
             $invoice->setToPay($invoice->getTotalPriceTTC() - $installment);
         }
-
-    	//les conditions de paiement
-        $invoice->setPaymentCondition($sp->getPaymentCondition());
 
         // calcule la commission du commercial
         $invoice->updateCommercialCommission();

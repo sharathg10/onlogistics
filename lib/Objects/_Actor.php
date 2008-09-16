@@ -521,40 +521,6 @@ class _Actor extends Object {
     }
 
     // }}}
-    // PaymentCondition string property + getter/setter {{{
-
-    /**
-     * PaymentCondition int property
-     *
-     * @access private
-     * @var integer
-     */
-    private $_PaymentCondition = 0;
-
-    /**
-     * _Actor::getPaymentCondition
-     *
-     * @access public
-     * @return integer
-     */
-    public function getPaymentCondition() {
-        return $this->_PaymentCondition;
-    }
-
-    /**
-     * _Actor::setPaymentCondition
-     *
-     * @access public
-     * @param integer $value
-     * @return void
-     */
-    public function setPaymentCondition($value) {
-        if ($value !== null) {
-            $this->_PaymentCondition = (int)$value;
-        }
-    }
-
-    // }}}
     // Incoterm foreignkey property + getter/setter {{{
 
     /**
@@ -2108,7 +2074,6 @@ class _Actor extends Object {
             'RCS' => Object::TYPE_STRING,
             'Role' => Object::TYPE_STRING,
             'Active' => Object::TYPE_INT,
-            'PaymentCondition' => Object::TYPE_INT,
             'Incoterm' => 'Incoterm',
             'PackageCondition' => Object::TYPE_INT,
             'Commercial' => 'UserAccount',

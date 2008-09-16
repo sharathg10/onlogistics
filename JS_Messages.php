@@ -320,6 +320,16 @@ $msgs['ProductPriceAddEdit_3'] = _('Price');
 $msgs['ProductPriceAddEdit_4'] = _('N/A');
 $msgs['ProductPriceAddEdit_5'] = _('This will discard the changes you made for this supplier, continue ?');
 
+$msgs['TermsOfPaymentAddEdit_1'] = _('Percent of total amount incl. taxes');
+$msgs['TermsOfPaymentAddEdit_2'] = _('Delay in days');
+$msgs['TermsOfPaymentAddEdit_3'] = _('Option');
+$msgs['TermsOfPaymentAddEdit_4'] = _('Event');
+$msgs['TermsOfPaymentAddEdit_5'] = _('Percent of amount must be a float');
+$msgs['TermsOfPaymentAddEdit_6'] = _('Payment delay must be an integer');
+$msgs['TermsOfPaymentAddEdit_7'] = _('Percent of amount can not exceed 100%');
+$msgs['TermsOfPaymentAddEdit_8'] = _('Percent of amount sum must be equals to 100%');
+
+
 header('Content-Type: text/javascript');
 // Pas d'utilisation de JsTools::JSQuoteString() ici, car inutilisable dans
 // Login.php (le config.inc.php redirige JS_Messages.php vers Login.php)

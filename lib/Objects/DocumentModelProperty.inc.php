@@ -204,30 +204,21 @@ function getDocumentModelPropertyCellValue($cell, $documentGenerator, $cmd=false
     	    }
         	break;
     	case DocumentModelProperty::CELL_REGLEMENT:
-            if (method_exists($document, 'getPaymentDate') && method_exists($document, 'getPaymentcondition')) {
+            if (method_exists($document, 'getPaymentDate')) {
                 $paymentDate = $document->getPaymentDate('localedate_short');
-                $paymentCondition = $document->getPaymentCondition();
                 if($paymentDate) {
-                    $value .= _('Date') . ' : ' . $paymentDate;
-                }
-                if($paymentCondition) {
-                    $value .= "(" . $paymentCondition . ")\n";
+                    $value .= _('Date') . ' : ' . $paymentDate . "\n";
                 }
             }
             if($cmd instanceof Command) {
                 $sp = $cmd->getSupplierCustomer();
-                if ($document instanceof DeliveryOrder) {
-                    if ($sp instanceof SupplierCustomer) {
-                        $value .= $sp->getPaymentCondition() . "\n";
+                if ($document instanceof Invoice || $document instanceof DeliveryOrder) {
+                    if (($top = $sp->getTermsOfPayment()) instanceof TermsOfPayment) {
+                        $value .= $top->getName() . "\n";
                     }
                 }
                 $abd = $cmd->getActorBankDetail();
                 if (!($abd instanceof ActorBankDetail)) {
-                    break;
-                }
-                if ($sp instanceof SupplierCustomer &&
-                    !in_array($sp->getModality(),
-                              array(SupplierCustomer::VIREMENT, SupplierCustomer::TRAITE, SupplierCustomer::BILLET_ORDRE))) {
                     break;
                 }
                 $streetConstArray = $abd->getBankAddressStreetTypeConstArray();

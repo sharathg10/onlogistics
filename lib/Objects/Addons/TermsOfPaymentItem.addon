@@ -1,0 +1,44 @@
+    // getDateAndAmountForOrder() {{{
+
+    /**
+     * Return the date and amount of the payment for the given order as a tuple 
+     * array of two elements.
+     *
+     * @param Command The order
+     *
+     * @access public
+     * @return array
+     */
+    public function getDateAndAmountForOrder($order)
+    {
+        // calculate date
+        $event = $this->getPaymentEvent();
+        if ($event == TermsOfPaymentItem::ORDER) {
+            $date = $order->getCommandDate();
+        } else {
+            $date = $order->getWishedDate();
+        }
+        $option = $this->getPaymentOption();
+        if ($option == self::END_OF_MONTH) {
+            $date = DateTimeTools::lastDayInMonth($date);
+        } else if ($option == self::END_OF_NEXT_MONTH) {
+            $date = DateTimeTools::lastDayInMonth($date, 1);
+        }
+        $delay = $this->getPaymentDelay();
+        if ($delay > 0) {
+            $ts   = DateTimeTools::MysqlDateToTimeStamp($date);
+            $date = DateTimeTools::timeStampToMySQLDate(
+                $ts + ($delay * DateTimeTools::ONE_DAY)
+            ); 
+        }
+        // calculate amount
+        $amount  = $order->getTotalPriceTTC();
+        $percent = $this->getPercentOfTotal();
+        if ($amount > 0 && $percent > 0 && $percent != 100) {
+            $amount = $amount * ($percent / 100);
+        }
+        // return date and amount in an array
+        return array($date, $amount);
+    }
+
+    // }}}

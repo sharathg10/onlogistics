@@ -261,9 +261,6 @@ if (true === $form->displayGrid()
 				  'Profiles' => array(UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW),
 		          'URL' => 'SupplierDelayStock.php?actId=%d'));
 
- /* $grid->NewAction('Redirect', array('Caption' => 'Gestion des encours',
-            'URL' => 'ActorIncurAddEdit.php?actId=%d'));
-	*/
 	$grid->NewAction('Print');
 	$grid->NewAction('Export', array('FileName' => 'Acteurs'));
 

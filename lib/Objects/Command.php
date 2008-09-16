@@ -175,6 +175,30 @@ class Command extends _Command {
     }
 
     // }}}
+    // Command::getWishedDate() {{{
+
+    /**
+     * Return the wished date, either the WishedStartDate or the middle of the 
+     * WishedStartDate and WishedEndDate.
+     *
+     * @access public
+     * @return string
+     */
+    function getWishedDate()
+    {
+        $startDate = $this->getWishedStartDate();
+        $endDate   = $this->getWishedEndDate();
+        if ($this->getWishedEndDate() > 0) {
+		    $startTS = DateTimeTools::MysqlDateToTimeStamp($startDate);
+		    $endTS   = DateTimeTools::MysqlDateToTimeStamp($endDate);
+            return DateTimeTools::timeStampToMySQLDate(
+                $startTS + (($endTS - $startTS) / 2)
+            );
+        }
+        return $startDate;
+    }
+
+    // }}}
     // Command::generateCommandNo() {{{
 
     /**
@@ -805,9 +829,11 @@ class Command extends _Command {
             // le couple n'a pas été trouvé on en crée un par défaut
             require_once('Objects/SupplierCustomer.php');
             $spc = new SupplierCustomer();
-            $spc->setModality(SupplierCustomer::CHEQUE);
-            $spc->setTotalDays(30);
-            $spc->setOption(SupplierCustomer::NET);
+            // conditions de paiement par defaut
+            $top = Object::load('TermsOfPayment', 1);
+            if ($top instanceof TermsOfPayment) {
+                $spc->setTermsOfPayment($top);
+            }
             $exp = $this->getExpeditor();
             $spc->setSupplier($exp);
             $dest = $this->getDestinator();

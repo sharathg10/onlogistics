@@ -1,21 +1,3 @@
-    // SupplierCustomer::getPaymentCondition() {{{
-
-    /**
-     * methode addon qui retourne les conditions de paiement
-     * concatenation de Option, TotalDays, Modality
-     *
-     * @access public
-     * @return string
-     */
-    function getPaymentCondition(){
-        $modalityArray = $this->getModalityConstArray();
-        $optionArray = $this->getOptionConstArray();
-        return $modalityArray[$this->getModality()] . ' '
-             . $this->getTotalDays().' ' . _('days')  . ' '
-             . $optionArray[$this->GetOption()];
-    }
-
-    // }}}
     // SupplierCustomer::save() {{{
 
     /**

@@ -3,6 +3,8 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
+ * IMPORTANT: This is a generated file, please do not edit.
+ *
  * This file is part of Onlogistics, a web based ERP and supply chain 
  * management application. 
  *
@@ -34,6 +36,11 @@
  * @filesource
  */
 
+/**
+ * SupplierCustomer class
+ *
+ * Class containing addon methods.
+ */
 class SupplierCustomer extends _SupplierCustomer {
     // Constructeur {{{
 
@@ -46,24 +53,6 @@ class SupplierCustomer extends _SupplierCustomer {
      */
     public function __construct() {
         parent::__construct();
-    }
-
-    // }}}
-    // SupplierCustomer::getPaymentCondition() {{{
-
-    /**
-     * methode addon qui retourne les conditions de paiement
-     * concatenation de Option, TotalDays, Modality
-     *
-     * @access public
-     * @return string
-     */
-    function getPaymentCondition(){
-        $modalityArray = $this->getModalityConstArray();
-        $optionArray = $this->getOptionConstArray();
-        return $modalityArray[$this->getModality()] . ' '
-             . $this->getTotalDays().' ' . _('days')  . ' '
-             . $optionArray[$this->GetOption()];
     }
 
     // }}}

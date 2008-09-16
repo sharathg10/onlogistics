@@ -263,6 +263,12 @@ $menu_metadata = array(
                 'description' => _('Selling or purchase unit types'),
                 'restrict_to' => array(UserAccount::PROFILE_ROOT)
             ),
+            array(
+                'title'       => _('Terms of payment'),
+                'link'        => 'dispatcher.php?entity=TermsOfPayment',
+                'description' => _('Terms of payment'),
+                'restrict_to' => array(UserAccount::PROFILE_ROOT)
+            ),
         )
     ),
     // }}}

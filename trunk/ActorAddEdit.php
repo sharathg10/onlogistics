@@ -418,15 +418,15 @@ $smarty->assign('withTaxStamp', ((float)$taxStamp > 0)?1:0);
 $siteCountry = 0;
 $smarty->assign('Actor', $_SESSION['actor']);
 
-$options = SupplierCustomer::getOptionConstArray();
-$modalities = SupplierCustomer::getModalityConstArray();
-$option = $_SESSION['supplierCustomer']->getOption();
-$smarty->assign('OptionList',
-    join("\n\t\t", FormTools::writeOptionsFromArray($options, $option)));
-$modality = $_SESSION['supplierCustomer']->getModality();
-$smarty->assign('ModalityList',
-    join("\n\t\t", FormTools::writeOptionsFromArray($modalities, $modality)));
 $smarty->assign('SupplierCustomer', $_SESSION['supplierCustomer']);
+
+$topList = FormTools::writeOptionsFromObject(
+    'TermsOfPayment',
+    $_SESSION['supplierCustomer']->getTermsOfPaymentId(),
+    array(),
+    array('Name' => SORT_ASC)
+);
+$smarty->assign('TermsOfPaymentList', join("\n\t\t", $topList));
 $supplier = $_SESSION['supplierCustomer']->getSupplier();
 // soumis à la TVA ?
 $hasTVA = $_SESSION['supplierCustomer']->getHasTVA();

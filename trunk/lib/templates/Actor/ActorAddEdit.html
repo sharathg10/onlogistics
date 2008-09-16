@@ -436,26 +436,12 @@
       </td>
     </tr>
     <tr>
-      <td>{t}Payment modalities{/t} :</td>
-      <td>
-	  	<select name="SupplierCustomer_Modality" style="width:100%">
-			{$ModalityList}
+      <td>{t}Terms of payment{/t} :</td>
+      <td colspan="3">
+	    <select name="SupplierCustomer_TermsOfPayment_ID">
+			{$TermsOfPaymentList}
 		</select>
 	  </td>
-      <td>{t}Number of days{/t} :</td>
-      <td>
-	  	<input name="SupplierCustomer_TotalDays" type="text" id="SupplierCustomer_TotalDays"
-          style="width:100%" value="{if $SupplierCustomer != 0}{$SupplierCustomer->getTotalDays()}{/if}" />
-	  </td>
-    </tr>
-    <tr>
-      <td>{t}Option{/t} :</td>
-      <td>
-	    <select name="SupplierCustomer_Option" style="width:100%">
-			{$OptionList}
-		</select>
-	  </td>
-	  <td colspan="2">&nbsp;</td>
     </tr>
     <tr>
       <td>{t}Subject to VAT{/t} : </td>

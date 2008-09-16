@@ -41,7 +41,6 @@ CREATE TABLE AbstractDocument (
   _Packing DECIMAL(10,2) NOT NULL DEFAULT 0,
   _Insurance DECIMAL(10,2) NOT NULL DEFAULT 0,
   _GlobalHanding DECIMAL(10,2) NOT NULL DEFAULT 0,
-  _PaymentCondition VARCHAR(255) DEFAULT '0',
   _ToPay DECIMAL(10,2) NOT NULL DEFAULT 0,
   _PaymentDate DATETIME DEFAULT NULL,
   _TvaSurtaxRate DECIMAL(10,2) NOT NULL DEFAULT 0,
@@ -389,7 +388,6 @@ CREATE TABLE Actor (
   _RCS VARCHAR(255) DEFAULT NULL,
   _Role VARCHAR(255) DEFAULT NULL,
   _Active INT(11) NOT NULL DEFAULT 1,
-  _PaymentCondition INT(11) NOT NULL DEFAULT 0,
   _Incoterm INT(11) NOT NULL DEFAULT 0,
   _PackageCondition INT(11) DEFAULT NULL,
   _Commercial INT(11) NOT NULL DEFAULT 0,
@@ -2669,8 +2667,8 @@ DROP TABLE IF EXISTS SellUnitType;
 CREATE TABLE SellUnitType (
   _Id int(11) unsigned NOT NULL default 0,
   _DBId int(11) default 0,
-  _ShortName INT(11) NOT NULL DEFAULT NULL,
-  _LongName INT(11) NOT NULL DEFAULT NULL,
+  _ShortName VARCHAR(255) DEFAULT NULL,
+  _LongName VARCHAR(255) DEFAULT NULL,
   _ConstName VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (_Id)
 ) TYPE=InnoDB CHARSET=latin1;
@@ -2798,13 +2796,11 @@ CREATE TABLE SupplierCustomer (
   _MaxIncur DECIMAL(10,2) DEFAULT NULL,
   _UpdateIncur DECIMAL(10,2) DEFAULT NULL,
   _ToHaveTTC DECIMAL(10,2) DEFAULT NULL,
-  _Option INT(3) NOT NULL DEFAULT 0,
-  _TotalDays INT(11) DEFAULT NULL,
-  _Modality INT(3) DEFAULT NULL,
   _InvoiceByMail INT(3) NOT NULL DEFAULT 0,
   _CustomerProductCommandBehaviour INT(3) NOT NULL DEFAULT 0,
   _Supplier INT(11) NOT NULL DEFAULT 0,
   _Customer INT(11) NOT NULL DEFAULT 0,
+  _TermsOfPayment INT(11) NOT NULL DEFAULT 0,
   _MaxDeliveryDay INT(11) DEFAULT NULL,
   _TotalDeliveryDay INT(11) DEFAULT NULL,
   _DeliveryType INT(11) DEFAULT NULL,
@@ -2817,6 +2813,7 @@ CREATE TABLE SupplierCustomer (
 
 CREATE INDEX _Supplier ON SupplierCustomer (_Supplier);
 CREATE INDEX _Customer ON SupplierCustomer (_Customer);
+CREATE INDEX _TermsOfPayment ON SupplierCustomer (_TermsOfPayment);
 
 --
 -- Table structure for Task
@@ -2837,6 +2834,35 @@ CREATE TABLE Task (
 ) TYPE=InnoDB CHARSET=latin1;
 
 CREATE UNIQUE INDEX _Symbol ON Task (_Symbol);
+
+--
+-- Table structure for TermsOfPayment
+--
+DROP TABLE IF EXISTS TermsOfPayment;
+CREATE TABLE TermsOfPayment (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+
+--
+-- Table structure for TermsOfPaymentItem
+--
+DROP TABLE IF EXISTS TermsOfPaymentItem;
+CREATE TABLE TermsOfPaymentItem (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _PercentOfTotal DECIMAL(10,2) DEFAULT NULL,
+  _PaymentDelay INT(11) NOT NULL DEFAULT 0,
+  _PaymentOption INT(3) NOT NULL DEFAULT 0,
+  _PaymentEvent INT(3) NOT NULL DEFAULT 0,
+  _TermsOfPayment INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _TermsOfPayment ON TermsOfPaymentItem (_TermsOfPayment);
 
 --
 -- Table structure for Theme

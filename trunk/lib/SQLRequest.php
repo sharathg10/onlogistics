@@ -1879,16 +1879,10 @@ function request_groupableBoxCount($achID, $ackID, $currentBoxLevel) {
  *
  * @return Object
  */
-function request_commandForCashBalance($cmdType, $currency, $startDate, $endDate) {
-    $request = 'SELECT DISTINCT(CMD._Id) as cmdId, CMD._Type as cmdType,
-        IF(CMD._SupplierCustomer=0, CMD._WishedStartDate,
-            (CASE WHEN SC._Option=0 THEN ADDDATE(CMD._WishedStartDate, SC._TotalDays)
-                  WHEN SC._Option=1 THEN ADDDATE(LAST_DAY(CMD._WishedStartDate), SC._TotalDays)
-                  WHEN SC._Option=2 THEN
-                      ADDDATE(
-                          ADDDATE(LAST_DAY(CMD._WishedStartDate), INTERVAL 1 MONTH), SC._TotalDays)
-            END)) as estimatedPaymentDate,
-        CMD._TotalPriceTTC as CmdTotalTTC,
+function request_commandForCashBalance($cmdType, $currency) {
+    $request = 'SELECT DISTINCT(CMD._Id) as cmdId, CMD._Type as cmdType, 
+        CMD._WishedStartDate as cmdWishedStartDate, CMD._TotalPriceTTC as CmdTotalTTC,
+        SC._TermsOfPayment as scTermsOfPayment,
         IF((select count(_Id) from AbstractDocument where _ClassName="Invoice" and _Command=CMD._Id),
             (select sum(_ToPay) from AbstractDocument where _ClassName="Invoice" and _Command=CMD._Id),
             0) as CmdPayed';
@@ -1905,10 +1899,7 @@ function request_commandForCashBalance($cmdType, $currency, $startDate, $endDate
         $request .= ' AND CMD._DBId=' . DATABASE_ID;
     }
     $request .= ' GROUP BY CMD._ID
-        HAVING CmdTotalTTC - CmdPayed > 0 ' .
-        //AND estimatedPaymentDate > NOW()
-        'AND estimatedPaymentDate < "'.$endDate.'" 
-        AND estimatedPaymentDate > "'.$startDate.'"';
+        HAVING CmdTotalTTC - CmdPayed > 0 ';
     if($cmdType==Command::TYPE_TRANSPORT) {
         $request .= ' AND prsFactured=0';
     }

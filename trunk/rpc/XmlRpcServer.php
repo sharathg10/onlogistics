@@ -1126,7 +1126,6 @@ class OnlogisticsXmlRpcServer extends XmlRpcServer{
      *  )
      *  [UpdateIncur] => 0
      *  [MaxIncur] => 0
-     *  [PaymentCondition] =>
      *  [PortTVA] => 0
      *  [InsuranceTVA] => 0
      *  [PackingTVA] => 10.3
@@ -1225,11 +1224,13 @@ class OnlogisticsXmlRpcServer extends XmlRpcServer{
         $result['DestinatorList'] = array();
         $result['DestinatorList'][0] = array($cust->getId(), $cust->getName(),
             $siteArray);
-        // récupération de l'encours courant, maximum et du paymentcondition
+        // récupération de l'encours courant, maximum et des terms of payment
         $spc = findSupplierCustomer($this->auth->getActor(), $cust);
         $result['CurrentIncur'] = $spc->getUpdateIncur();
         $result['MaxIncur'] = $spc->getMaxIncur();
-        $result['PaymentCondition'] = $spc->getPaymentCondition();
+        $top = $spc->getTermsOfPayment();
+        $result['PaymentCondition'] = $top instanceof TermsOfPayment ? 
+            $top->getName() : '';
         // devise
         $cur = $cust->getCurrency();
         $result['Currency'] = $cur instanceof Currency?$cur->getShortName():'EUR';

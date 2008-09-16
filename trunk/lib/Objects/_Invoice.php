@@ -260,38 +260,6 @@ class _Invoice extends AbstractDocument {
     }
 
     // }}}
-    // PaymentCondition string property + getter/setter {{{
-
-    /**
-     * PaymentCondition string property
-     *
-     * @access private
-     * @var string
-     */
-    private $_PaymentCondition = '0';
-
-    /**
-     * _Invoice::getPaymentCondition
-     *
-     * @access public
-     * @return string
-     */
-    public function getPaymentCondition() {
-        return $this->_PaymentCondition;
-    }
-
-    /**
-     * _Invoice::setPaymentCondition
-     *
-     * @access public
-     * @param string $value
-     * @return void
-     */
-    public function setPaymentCondition($value) {
-        $this->_PaymentCondition = $value;
-    }
-
-    // }}}
     // ToPay float property + getter/setter {{{
 
     /**
@@ -901,7 +869,6 @@ class _Invoice extends AbstractDocument {
             'GlobalHanding' => Object::TYPE_DECIMAL,
             'TotalPriceHT' => Object::TYPE_DECIMAL,
             'TotalPriceTTC' => Object::TYPE_DECIMAL,
-            'PaymentCondition' => Object::TYPE_STRING,
             'ToPay' => Object::TYPE_DECIMAL,
             'PaymentDate' => Object::TYPE_DATETIME,
             'Comment' => Object::TYPE_TEXT,

@@ -403,7 +403,6 @@
         <property type="string" name="RCS" />
         <property type="string" name="Role" />
         <property type="int" name="Active" default="1" />
-        <property type="int" name="PaymentCondition" default="0" />
         <property type="foreignkey" name="Incoterm" class="Incoterm" />
         <property type="int" name="PackageCondition" />
         <property type="foreignkey" name="Commercial" class="UserAccount" />
@@ -1768,7 +1767,6 @@
         <property type="decimal" name="GlobalHanding" default="0" />
         <property type="decimal" name="TotalPriceHT" default="0" />
         <property type="decimal" name="TotalPriceTTC" default="0" />
-        <property type="string" name="PaymentCondition" default="0" />
         <property type="decimal" name="ToPay" default="0" />
         <property type="datetime" name="PaymentDate" />
         <property type="text" name="Comment" />
@@ -2609,21 +2607,6 @@
         <property type="decimal" name="MaxIncur" />
         <property type="decimal" name="UpdateIncur" />
         <property type="decimal" name="ToHaveTTC" />
-        <property type="const" name="Option" default="0">
-            <const name="NET" label="Net" value="0"/>
-            <const name="FIN_DE_MOIS" label="End of month" value="1"/>
-            <const name="FIN_DE_MOIS_SUIVANT" label="End of next month" value="2"/>
-        </property>
-        <property type="int" name="TotalDays" />
-        <property type="const" name="Modality">
-            <const name="CHEQUE" label="Check" value="0"/>
-            <const name="ESPECE" label="Cash" value="1"/>
-            <const name="CB" label="Credit card" value="2"/>
-            <const name="TRAITE" label="Draft" value="3"/>
-            <const name="VIREMENT" label="Transfer" value="4"/>
-            <const name="AVOIR" label="Assets" value="5"/>
-            <const name="BILLET_ORDRE" label="Promissory note" value="6"/>
-        </property>
         <property type="const" name="InvoiceByMail" default="0">
             <const name="INVOICE_BY_MAIL_NONE" label="No mail sending" value="0" />
             <const name="INVOICE_BY_MAIL_ALERT" label="Send simple alert" value="1" />
@@ -2640,6 +2623,7 @@
             ondelete="cascade" />
         <property type="foreignkey" name="Customer" class="Actor"
             ondelete="cascade" />
+        <property type="foreignkey" name="TermsOfPayment" class="TermsOfPayment"/>
         <property type="int" name="MaxDeliveryDay" />
         <property type="int" name="TotalDeliveryDay" />
         <property type="int" name="DeliveryType" />
@@ -2668,6 +2652,35 @@
         <property type="bool" name="IsBoxCreator" default="0"/>
         <property type="manytomany" name="Operation" class="Operation"
             field="ToTask" linktable="oprTask" linkfield="FromOperation" usedby="addedit"/>
+    </entity>
+
+    <!-- entity TermsOfPayment -->
+    <entity name="TermsOfPayment" tablename="TermsOfPayment"
+        label="Terms of payment" features="add,edit,del,grid,searchform">
+        <property type="string" name="Name" label="Designation" 
+            usedby="grid,searchform,addedit"/>
+    </entity>
+
+    <!-- entity TermsOfPaymentItem -->
+    <entity name="TermsOfPaymentItem" tablename="TermsOfPaymentItem"
+        label="Terms of payment item" features="add,edit,del,grid,searchform">
+        <property type="decimal" name="PercentOfTotal" 
+            label="Percent of total amount incl. taxes" usedby="grid,searchform,addedit"/>
+        <property type="int" name="PaymentDelay" default="0" 
+            label="Delay in days" usedby="grid,searchform,addedit"/>
+        <property type="const" name="PaymentOption" default="0" required="1"
+            usedby="grid,searchform,addedit" label="Option">
+            <const name="NET" label="Net" value="1" />
+            <const name="END_OF_MONTH" label="End of month" value="2" />
+            <const name="END_OF_NEXT_MONTH" label="End of next month" value="3" />
+        </property>
+        <property type="const" name="PaymentEvent" default="0" required="1"
+            usedby="grid,searchform,addedit" label="Event">
+            <const name="ORDER" label="Order" value="5" />
+            <const name="DELIVERY" label="Delivery" value="6" />
+        </property>
+        <property type="foreignkey" name="TermsOfPayment"
+            class="TermsOfPayment" ondelete="cascade" navigable="1"/>
     </entity>
 
     <!-- entity Theme -->

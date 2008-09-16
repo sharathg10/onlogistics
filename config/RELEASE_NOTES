@@ -35,12 +35,12 @@ BEGIN;
 TRUNCATE TABLE IdHashTable;
 ####################################
 
-#ALTER TABLE Actor DROP _PaymentCondition;
-#ALTER TABLE AbstractDocument DROP _PaymentCondition;
-#ALTER TABLE SupplierCustomer DROP _Option;
-#ALTER TABLE SupplierCustomer DROP _TotalDays;
-#ALTER TABLE SupplierCustomer DROP _Modality;
-#ALTER TABLE SupplierCustomer ADD _TermsOfPayment INT(11) NOT NULL DEFAULT 0 AFTER _Customer;
+ALTER TABLE Actor DROP _PaymentCondition;
+ALTER TABLE AbstractDocument DROP _PaymentCondition;
+ALTER TABLE SupplierCustomer DROP _Option;
+ALTER TABLE SupplierCustomer DROP _TotalDays;
+ALTER TABLE SupplierCustomer DROP _Modality;
+ALTER TABLE SupplierCustomer ADD _TermsOfPayment INT(11) NOT NULL DEFAULT 0 AFTER _Customer;
 
 DROP TABLE IF EXISTS TermsOfPayment;
 CREATE TABLE TermsOfPayment (

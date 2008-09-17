@@ -76,12 +76,6 @@ class TermsOfPaymentItem extends _TermsOfPaymentItem {
         } else {
             $date = $order->getWishedDate();
         }
-        $option = $this->getPaymentOption();
-        if ($option == self::END_OF_MONTH) {
-            $date = DateTimeTools::lastDayInMonth($date);
-        } else if ($option == self::END_OF_NEXT_MONTH) {
-            $date = DateTimeTools::lastDayInMonth($date, 1);
-        }
         $delay = $this->getPaymentDelay();
         if ($delay > 0) {
             $ts   = DateTimeTools::MysqlDateToTimeStamp($date);
@@ -89,11 +83,33 @@ class TermsOfPaymentItem extends _TermsOfPaymentItem {
                 $ts + ($delay * DateTimeTools::ONE_DAY)
             ); 
         }
+        $option = $this->getPaymentOption();
+        if ($option == self::END_OF_MONTH) {
+            $date = DateTimeTools::lastDayInMonth($date);
+        } else if ($option == self::END_OF_NEXT_MONTH) {
+            $date = DateTimeTools::lastDayInMonth($date, 1);
+        }
         // calculate amount
         $amount  = $order->getTotalPriceTTC();
         $percent = $this->getPercentOfTotal();
         if ($amount > 0 && $percent > 0 && $percent != 100) {
-            $amount = $amount * ($percent / 100);
+            $amount = round($amount * ($percent / 100), 2);
+        }
+        // if it's the last we need to adjust the amount
+        $parent  = $this->getTermsOfPayment();
+        $itemIds = $parent->getTermsOfPaymentItemCollectionIds();
+        if ($this->getId() == array_pop($itemIds)) {
+            $tmpAmount = 0;
+            foreach ($itemIds as $id) {
+                $item = Object::load('TermsOfPaymentItem', $id);
+                list($d, $t) = $item->getDateAndAmountForOrder($order);
+                $tmpAmount += $t;
+            }
+            $tmpAmount += $amount;
+            if ($tmpAmount != $order->getTotalPriceTTC()) {
+                $toAdd = $order->getTotalPriceTTC() - $tmpAmount;
+                $amount = $amount + $toAdd;
+            }
         }
         // return date and amount in an array
         return array($date, $amount);

@@ -102,7 +102,7 @@ $form->addElement('text', 'Commercial', _('Salesman'), array(),
         array('Path' => 'Commercial.Identity'));
 $form->addBlankElement();
 $form->addElement('select', 'ClassName', _('Type'),
-        array($classNameDict, 'multiple size="3"'),
+        array(getClassNameList(), 'multiple size="3"'),
         array('Operator' => 'Like'));
 $catArray = Object::loadCollection('Category', array(), array('Name'=>SORT_ASC))->toArray();
 $catArray = array('##' => _('All')) + $catArray;
@@ -199,6 +199,7 @@ if (true === $form->displayGrid()
     $Filter->tables = $tables;
 
     $grid = new Grid();
+    $grid->customizationEnabled = true;
     // Pour ne pas avoir d'erreur js liee a customisation searchForms
     $grid->javascriptFormOwnerName = 'ActorList';
     define('ACTORLIST_ITEMPERPAGE', 150);
@@ -281,6 +282,21 @@ if (true === $form->displayGrid()
             array('Method'=>'getUpdateIncur', 'Sortable'=>false));
     $grid->NewColumn('FieldMapper', _('Address'),
             array('Macro' => '%MainSite.FormatAddressInfos|default%', 'Sortable' => false));
+    $grid->NewColumn('FieldMapper', _('Currency'),
+            array('Macro' => '%Currency.Name%', 'Sortable' => true));
+    $grid->NewColumn('FieldMapper', _('Pricing zone'),
+            array('Macro' => '%PricingZone.Name|default%', 'Sortable' => true));
+    $grid->NewColumn('FieldMapperWithTranslation', _('This actor is your'),
+        array('Macro' => '%ClassName%',
+			  'TranslationMap' => getClassNameList(),
+              'Sortable' => true));
+    $grid->NewColumn('FieldMapper', _('TermsOfPayment'),
+        array('Macro' => '%SupplierCustomer.TermsOfPayment.Name%',
+              'Sortable' => true));
+    $grid->NewColumn('FieldMapperWithTranslation', _('Subject to VAT'),
+        array('Macro' => '%SupplierCustomer.HasTVA%',
+			  'TranslationMap' => array(0 => A_YES, 1 => A_NO),
+              'Sortable' => true));
     // Colonnes pour les commerciaux
     $grid->NewColumn('FieldMapper', _('Situation'),
             array('Macro' => '%CustomerProperties.Situation.Name|default%',

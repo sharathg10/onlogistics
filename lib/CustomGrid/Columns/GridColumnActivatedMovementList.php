@@ -72,11 +72,14 @@ class GridColumnActivatedMovementList extends AbstractGridColumn {
             $count = $LPQCollection->getCount();
             for($j = 0; $j < $count; $j++) {
                 $item = $LPQCollection->getItem($j);
-/*                if (0 == $item->getRealQuantity()) {
-                    unset($item);
-                    continue; // si qte nulle, on n'affiche pas la location
-                } */
-                $storeNameArray[] = Tools::getValueFromMacro($item, $macro);
+                if ($this->_level == 'Location') {
+                    $loc = $item->getLocation();
+                    if ($loc instanceof Location) { 
+                        $storeNameArray[] = sprintf('%s (%s)', $loc->getName(), $item->getRealQuantity());
+                    }
+                } else {
+                    $storeNameArray[] = Tools::getValueFromMacro($item, $macro);
+                }
                 unset($item);
             }
         }

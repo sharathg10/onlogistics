@@ -290,7 +290,7 @@ if (true === $form->displayGrid()
         array('Macro' => '%ClassName%',
 			  'TranslationMap' => getClassNameList(),
               'Sortable' => true));
-    $grid->NewColumn('FieldMapper', _('TermsOfPayment'),
+    $grid->NewColumn('FieldMapper', _('Terms of payment'),
         array('Macro' => '%SupplierCustomer.TermsOfPayment.Name%',
               'Sortable' => true));
     $grid->NewColumn('FieldMapperWithTranslation', _('Subject to VAT'),

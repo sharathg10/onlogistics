@@ -526,13 +526,18 @@ class CommandDocumentGenerator extends DocumentGenerator {
         }
         $title = _('Terms of payment') . ': ' . $top->getName();
         $pdfDoc->tableHeader(array($title => 190), 1);
-        $pdfDoc->tableHeader(array(_('Date') => 120, _('Amount') => 70), 1);
+        $pdfDoc->tableHeader(array(
+            _('Date')      => 70,
+            _('Amount')    => 50, 
+            _('To pay to') => 70
+        ), 1);
         $items = $top->getTermsOfPaymentItemCollection();
         foreach ($items as $item) {
-            list($date, $amount) = $item->getDateAndAmountForOrder($this->command);
+            list($date, $amount, $to) = $item->getDateAndAmountForOrder($this->command);
+            $toName = ($to instanceof Actor) ? $to->getName() : '';
             $date   = I18N::formatDate($date, I18N::DATE_LONG);
             $amount = $this->formatCurrency($this->currency, $amount);
-            $pdfDoc->tableBody(array(0 => array($date, $amount)));
+            $pdfDoc->tableBody(array(0 => array($date, $amount, $toName)));
         }
         $pdfDoc->ln(3);
     }
@@ -1157,16 +1162,6 @@ class RTWInvoiceGenerator extends InvoiceGenerator {
      */
     protected function _renderContent($pdfDoc=false) {
         $pdfDoc = (!$pdfDoc)?$this->pdf:$pdfDoc;
-        if ($this->command->getIsEstimate()) {
-            $this->pdf->addText(_('Season') . ' : ' . 
-                Tools::getValueFromMacro(
-                    $this->command,
-                    '%CommandItem()[0].Product.Model.Season.Name%'
-                )
-            );
-            $this->pdf->addText(_('Number of ordered products') . ': ' 
-                . $this->command->getNumberOfOrderedProducts());
-        }
         //cellule désignation personnalisé dans Invoice.DataForInvoice()
         $columns = array(
             _('Reference')=>34,
@@ -3588,13 +3583,13 @@ class ChainCommandReceiptGenerator extends CommandReceiptGenerator {
 
     // }}}
 } // }}}
-// CommandEstimateReceiptGenerator {{{
+// EstimateGenerator {{{
 /**
  * classe de génération des devis pour les commandes produits
  *
  */
-class CommandEstimateReceiptGenerator extends CommandReceiptGenerator {
-    // CommandEstimateReceiptGenerator::__construct() {{{
+class EstimateGenerator extends CommandReceiptGenerator {
+    // EstimateGenerator::__construct() {{{
 
     /**
      * Constructeur.
@@ -3609,13 +3604,13 @@ class CommandEstimateReceiptGenerator extends CommandReceiptGenerator {
 
     // }}}
 } // }}}
-// ChainCommandEstimateReceipt {{{
+// ChainCommandEstimateGenerator {{{
 /**
  * classe de génération des devis pour les commandes de transport
  *
  */
-class ChainCommandEstimateReceiptGenerator extends ChainCommandReceiptGenerator {
-    // ChainCommandEstimateReceiptGenerator::__construct() {{{
+class ChainCommandEstimateGenerator extends ChainCommandReceiptGenerator {
+    // ChainCommandEstimateGenerator::__construct() {{{
 
     /**
      * Constructeur.

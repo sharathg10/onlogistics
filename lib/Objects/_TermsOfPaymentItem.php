@@ -306,6 +306,60 @@ class _TermsOfPaymentItem extends Object {
     }
 
     // }}}
+    // Supplier foreignkey property + getter/setter {{{
+
+    /**
+     * Supplier foreignkey
+     *
+     * @access private
+     * @var mixed object Supplier or integer
+     */
+    private $_Supplier = false;
+
+    /**
+     * _TermsOfPaymentItem::getSupplier
+     *
+     * @access public
+     * @return object Supplier
+     */
+    public function getSupplier() {
+        if (is_int($this->_Supplier) && $this->_Supplier > 0) {
+            $mapper = Mapper::singleton('Supplier');
+            $this->_Supplier = $mapper->load(
+                array('Id'=>$this->_Supplier));
+        }
+        return $this->_Supplier;
+    }
+
+    /**
+     * _TermsOfPaymentItem::getSupplierId
+     *
+     * @access public
+     * @return integer
+     */
+    public function getSupplierId() {
+        if ($this->_Supplier instanceof Supplier) {
+            return $this->_Supplier->getId();
+        }
+        return (int)$this->_Supplier;
+    }
+
+    /**
+     * _TermsOfPaymentItem::setSupplier
+     *
+     * @access public
+     * @param object Supplier $value
+     * @return void
+     */
+    public function setSupplier($value) {
+        if (is_numeric($value)) {
+            $this->_Supplier = (int)$value;
+        } else {
+            $this->_Supplier = $value;
+        }
+    }
+
+    // }}}
     // TermsOfPayment foreignkey property + getter/setter {{{
 
     /**
@@ -406,6 +460,7 @@ class _TermsOfPaymentItem extends Object {
             'PaymentOption' => Object::TYPE_CONST,
             'PaymentEvent' => Object::TYPE_CONST,
             'PaymentModality' => Object::TYPE_CONST,
+            'Supplier' => 'Supplier',
             'TermsOfPayment' => 'TermsOfPayment');
         return $return;
     }

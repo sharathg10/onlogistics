@@ -2859,10 +2859,12 @@ CREATE TABLE TermsOfPaymentItem (
   _PaymentOption INT(3) NOT NULL DEFAULT 0,
   _PaymentEvent INT(3) NOT NULL DEFAULT 0,
   _PaymentModality INT(3) NOT NULL DEFAULT 0,
+  _Supplier INT(11) NOT NULL DEFAULT 0,
   _TermsOfPayment INT(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (_Id)
 ) TYPE=InnoDB CHARSET=latin1;
 
+CREATE INDEX _Supplier ON TermsOfPaymentItem (_Supplier);
 CREATE INDEX _TermsOfPayment ON TermsOfPaymentItem (_TermsOfPayment);
 
 --

@@ -56,24 +56,54 @@ class TermsOfPayment extends Object {
     }
 
     // }}}
-    // Name string property + getter/setter {{{
+    // Name i18n_string property + getter/setter {{{
 
     /**
-     * Name string property
+     * Name foreignkey
      *
      * @access private
-     * @var string
+     * @var mixed object I18nString or integer
      */
-    private $_Name = '';
+    private $_Name = 0;
 
     /**
      * TermsOfPayment::getName
      *
      * @access public
+     * @param string $locale optional, default is the current locale code
+     * @param boolean $useDefaultLocaleIfEmpty determine if the getter must
+     * return the translation in the DEFAULT_LOCALE if no translation is found
+     * in the current locale.
      * @return string
      */
-    public function getName() {
-        return $this->_Name;
+    public function getName($locale=false, $defaultLocaleIfEmpty=true) {
+        $locale = $locale !== false ? $locale : I18N::getLocaleCode();
+        if (is_int($this->_Name) && $this->_Name > 0) {
+            $this->_Name = Object::load('I18nString', $this->_Name);
+        }
+        $ret = null;
+        if ($this->_Name instanceof I18nString) {
+            $getter = 'getStringValue_' . $locale;
+            $ret = $this->_Name->$getter();
+            if ($ret == null && $defaultLocaleIfEmpty) {
+                $getter = 'getStringValue_' . LOCALE_DEFAULT;
+                $ret = $this->_Name->$getter();
+            }
+        }
+        return $ret;
+    }
+
+    /**
+     * TermsOfPayment::getNameId
+     *
+     * @access public
+     * @return integer
+     */
+    public function getNameId() {
+        if ($this->_Name instanceof I18nString) {
+            return $this->_Name->getId();
+        }
+        return (int)$this->_Name;
     }
 
     /**
@@ -81,10 +111,26 @@ class TermsOfPayment extends Object {
      *
      * @access public
      * @param string $value
+     * @param string $locale optional, default is the current locale code
      * @return void
      */
-    public function setName($value) {
-        $this->_Name = $value;
+    public function setName($value, $locale=false) {
+        if (is_numeric($value)) {
+            $this->_Name = (int)$value;
+        } else if ($value instanceof I18nString) {
+            $this->_Name = $value;
+        } else {
+            $locale = $locale !== false ? $locale : I18N::getLocaleCode();
+            if (!($this->_Name instanceof I18nString)) {
+                $this->_Name = Object::load('I18nString', $this->_Name);
+                if (!($this->_Name instanceof I18nString)) {
+                    $this->_Name = new I18nString();
+                }
+            }
+            $setter = 'setStringValue_'.$locale;
+            $this->_Name->$setter($value);
+            $this->_Name->save();
+        }
     }
 
     // }}}
@@ -187,7 +233,7 @@ class TermsOfPayment extends Object {
      */
     public static function getProperties() {
         $return = array(
-            'Name' => Object::TYPE_STRING);
+            'Name' => Object::TYPE_I18N_STRING);
         return $return;
     }
 

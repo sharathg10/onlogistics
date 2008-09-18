@@ -11,7 +11,8 @@
         parent="1" tostring="DocumentNo">
         <property type="string" name="DocumentNo" />
         <property type="datetime" name="EditionDate" />
-        <property type="foreignkey" name="Command" class="Command" navigable="1" />
+        <property type="foreignkey" name="Command" class="Command" 
+            navigable="1" ondelete="cascade"/>
         <property type="const" name="CommandType" default="0">
             <const name="TYPE_SUPPLIER_PRODUCT" label="Supplier order"
                 value="1"/>
@@ -1491,6 +1492,10 @@
         <property type="bool" name="Public" label="Public" usedby="searchform,grid"/>
     </entity>
 
+    <!-- entity Estimate -->
+    <entity name="Estimate" tablename="AbstractDocument" extends="AbstractDocument">
+    </entity>
+
     <!-- entity ExecutedMovement -->
     <entity name="ExecutedMovement" tablename="ExecutedMovement">
         <property type="datetime" name="StartDate" />
@@ -2658,7 +2663,7 @@
     <entity name="TermsOfPayment" tablename="TermsOfPayment"
         label="Terms of payment" features="add,edit,del,grid,searchform">
         <property type="string" name="Name" label="Designation" 
-            usedby="grid,searchform,addedit"/>
+            usedby="grid,searchform,addedit" i18n="1"/>
     </entity>
 
     <!-- entity TermsOfPaymentItem -->
@@ -2689,6 +2694,7 @@
             <const name="ASSETS" label="Assets" value="5"/>
             <const name="PROMISSORY_NOTE" label="Promissory note" value="6"/>
         </property>
+        <property type="foreignkey" name="Supplier" class="Supplier" />
         <property type="foreignkey" name="TermsOfPayment"
             class="TermsOfPayment" ondelete="cascade" navigable="1"/>
     </entity>

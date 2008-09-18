@@ -88,11 +88,16 @@ function generateDocument($document, $reedit=0, $output='I') {
     } else if (get_class($document) == 'CommandReceipt') { 
         $cmd = $document->getCommand();
         if ($cmd instanceof ChainCommand) {
-            $generator_name = $cmd->getIsEstimate() ?
-                'ChainCommandEstimateReceiptGenerator' : 'ChainCommandReceiptGenerator';
+            $generator_name = 'ChainCommandReceiptGenerator';
         } else {
-            $generator_name = $cmd->getIsEstimate() ? 
-                'CommandEstimateReceiptGenerator' : 'CommandReceiptGenerator';
+            $generator_name = 'CommandReceiptGenerator';
+        }
+    } else if (get_class($document) == 'Estimate') { 
+        $cmd = $document->getCommand();
+        if ($cmd instanceof ChainCommand) {
+            $generator_name = 'ChainCommandEstimateGenerator';
+        } else {
+            $generator_name = 'EstimateGenerator';
         }
     } else {
         $generator_name = get_class($document) . 'Generator';
@@ -102,6 +107,7 @@ function generateDocument($document, $reedit=0, $output='I') {
         // Si le pdf existe deja en base
         if (!Tools::isEmptyObject($pdfDoc)) {
             Tools::redirectTo('DocumentReedit.php?id=' . $document->getId());
+            exit();
         }
         Database::connection()->startTrans();
         // pour sauvegarde du doc en base

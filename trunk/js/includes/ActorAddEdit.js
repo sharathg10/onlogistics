@@ -13,7 +13,6 @@ connect(window, 'onload', function() {
 
 requiredFields = new Array(
 	new Array('Actor_Name', REQUIRED, NONE, ActorAddEdit_0),
-	new Array('SupplierCustomer_TotalDays', NONE, 'int', ActorAddEdit_1),
 	new Array('SupplierCustomer_MaxIncur', NONE, 'int', ActorAddEdit_2)
 );
 

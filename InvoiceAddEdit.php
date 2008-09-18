@@ -358,6 +358,7 @@ if ($hasTVA) {
             . '<input type="hidden" name="TTVA[]" value="0">';
 } else {
     $listHiddenFields .= '<input type="hidden" name="HiddenTVA[]" value="0">'
+            . '<input type="hidden" name="HiddenTvaId[]" value="0">'
             . '<input type="hidden" name="TTVA[]" value="0">';
 }
 

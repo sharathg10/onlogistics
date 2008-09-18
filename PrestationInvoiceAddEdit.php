@@ -225,7 +225,7 @@ if ($supplierCustomer instanceof SupplierCustomer) {
     $smarty->assign('MaxIncur', $MaxIncur);
     $smarty->assign('UpdateIncur',
         I18N::formatNumber($supplierCustomer->getUpdateIncur()));
-    $smarty->assign('PaymentCondition', $supplierCustomer->getPaymentCondition());
+
     if ($supplierCustomer->getHasTVA()) {
         $smarty->assign('port_tva_rate', getTVARateByCategory(TVA::TYPE_DELIVERY_EXPENSES, $tvaSurtaxRate));
         $smarty->assign('packing_tva_rate', getTVARateByCategory(TVA::TYPE_PACKING, $tvaSurtaxRate));

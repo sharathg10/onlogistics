@@ -509,32 +509,30 @@ class CommandDocumentGenerator extends DocumentGenerator {
     }
 
     // }}}
-    // CommandDocumentGenerator::renderPaymentCondition() {{{
+    // CommandDocumentGenerator::renderTermsOfPayment() {{{
 
     /**
-     * Ajoute le commentaire de la commande
+     * Conditions de paiement.
+     *
      * @param Object $pdfDoc PDFDocumentRender utilise lors d'edition de n factures
      * @access protected
      * @return void
      */
-    protected function renderPaymentCondition($pdfDoc=false) {
+    protected function renderTermsOfPayment($pdfDoc=false) {
         $pdfDoc = (!$pdfDoc)?$this->pdf:$pdfDoc;
-        if (method_exists($this->document, 'getPaymentCondition')) {
-            $cond = $this->document->getPaymentCondition();
-            $date = $this->document->getPaymentDate('localedate_short');
-        } else {
-            $cond = $this->supplierCustomer->getPaymentCondition();
-            $date = false;
+        $top = $this->supplierCustomer->getTermsOfPayment();
+        if (!($top instanceof TermsOfPayment)) {
+            continue;
         }
-        if ($date !== false) {
-            $pdfDoc->tableHeader(array(
-                _('Payment conditions') => 130,
-                _('Payment date') => 60,
-            ), 1);
-            $pdfDoc->tableBody(array(0 => array($cond, $date)));
-        } else {
-            $pdfDoc->tableHeader(array(_('Payment conditions') => 190), 1);
-            $pdfDoc->tableBody(array(0 => array($cond)));
+        $title = _('Terms of payment') . ': ' . $top->getName();
+        $pdfDoc->tableHeader(array($title => 190), 1);
+        $pdfDoc->tableHeader(array(_('Date') => 120, _('Amount') => 70), 1);
+        $items = $top->getTermsOfPaymentItemCollection();
+        foreach ($items as $item) {
+            list($date, $amount) = $item->getDateAndAmountForOrder($this->command);
+            $date   = I18N::formatDate($date, I18N::DATE_LONG);
+            $amount = $this->formatCurrency($this->currency, $amount);
+            $pdfDoc->tableBody(array(0 => array($date, $amount)));
         }
         $pdfDoc->ln(3);
     }
@@ -834,6 +832,7 @@ class RTWDeliveryOrderGenerator extends DeliveryOrderGenerator {
 /**
  * InvoiceGenerator.
  * Classe utilisee pour les factures.
+ * XXX TODO TERMS_OF_PAYMENT implement InvoiceGenerator::renderTermsOfPayment
  *
  */
 class InvoiceGenerator extends CommandDocumentGenerator {
@@ -874,10 +873,9 @@ class InvoiceGenerator extends CommandDocumentGenerator {
         $this->renderCustomsBlocs($pdfDoc);
         $this->_renderContent($pdfDoc);
         $this->renderTotal1Bloc($pdfDoc);
-        $this->renderTotal2Bloc($pdfDoc);
         $this->renderSNLotBloc($pdfDoc);
         $this->renderIncoterm($pdfDoc);
-        $this->renderPaymentCondition($pdfDoc);
+        $this->renderTermsOfPayment($pdfDoc);
         $this->renderComment($pdfDoc);
         $this->renderAppendices($pdfDoc);
         return $pdfDoc;
@@ -1043,36 +1041,6 @@ class InvoiceGenerator extends CommandDocumentGenerator {
     }
 
     // }}}
-    // InvoiceGenerator::renderTotal2Bloc() {{{
-    /**
-     * Affiche le second tableau total de la facture
-     * @access protected
-     * @param Object $pdfDoc PDFDocumentRender utilise lors d'edition de n factures
-     * @return void
-     */
-    protected function renderTotal2Bloc($pdfDoc=false) {
-        /*
-        $pdfDoc = (!$pdfDoc)?$this->pdf:$pdfDoc;
-        $columns = array(
-            _('Means of payment') => 110,
-            _('Date') => 40,
-            _('Amount incl. VAT') . ' ' . $this->currency => 40
-            );
-        $pdfDoc->tableHeader($columns, 1);
-        $toPay = $this->document->getToPayForDocument();
-
-        $data = array();
-        // si accompte
-        if ($this->command->getInstallment() > 0) {
-            $data[] = array(
-                _('Instalment'),
-                $this->command->getCommandDate('localedate_short'),
-                DocumentGenerator::formatNumber($this->command->getInstallment())
-                );
-        }
-        */
-    }
-    // }}}
     // InvoiceGenerator::getExpeditorBankDetail() {{{
     /**
      * Récupère les detail de l'adresse de la banque
@@ -1085,8 +1053,23 @@ class InvoiceGenerator extends CommandDocumentGenerator {
         if (!($abd instanceof ActorBankDetail)) {
             return '';
         }
-        if (!in_array($this->supplierCustomer->getModality(),
-        array(SupplierCustomer::VIREMENT, SupplierCustomer::TRAITE, SupplierCustomer::BILLET_ORDRE))) {
+        $continue = false;
+        $top = $this->supplierCustomer->getTermsOfPayment();
+        if (!$top instanceof TermsOfPayment) {
+            return '';
+        }
+        $modalities = array(
+            TermsOfPaymentItem::TRANSFER,
+            TermsOfPaymentItem::DRAFT,
+            TermsOfPaymentItem::PROMISSORY_NOTE
+        );
+        foreach ($top->getTermsOfPaymentItemCollection() as $item) {
+            if (in_array($item->getPaymentModality(), $modalities)) {
+                $continue = true;
+                break;
+            }
+        }
+        if (!$continue) {
             return '';
         }
         // streettype
@@ -1099,8 +1082,12 @@ class InvoiceGenerator extends CommandDocumentGenerator {
         if ($abd->getBankAddressAdd() != '') {
             $data .= sprintf("%s\n", $abd->getBankAddressAdd());
         }
-        $data .= sprintf("%s %s %s\n", $abd->getBankAddressCity(),
-        $abd->getBankAddressZipCode(), $abd->getBankAddressCountry());
+        $data .= sprintf(
+            "%s %s %s\n",
+            $abd->getBankAddressCity(),
+            $abd->getBankAddressZipCode(),
+            $abd->getBankAddressCountry()
+        );
         return $data;
     }
     // }}}
@@ -1155,9 +1142,8 @@ class RTWInvoiceGenerator extends InvoiceGenerator {
         $this->renderCustomsBlocs($pdfDoc);
         $this->_renderContent($pdfDoc);
         $this->renderTotal1Bloc($pdfDoc);
-        $this->renderTotal2Bloc($pdfDoc);
         $this->renderIncoterm($pdfDoc);
-        $this->renderPaymentCondition($pdfDoc);
+        $this->renderTermsOfPayment($pdfDoc);
         $this->renderComment($pdfDoc);
         $this->renderAppendices($pdfDoc);
         return $pdfDoc;
@@ -1380,10 +1366,9 @@ class ChainCommandInvoiceGenerator extends InvoiceGenerator {
         $this->_renderContent($pdfDoc);
         $this->renderPrestationDetail();
         $this->renderTotal1Bloc($pdfDoc);
-        $this->renderTotal2Bloc($pdfDoc);
         $this->renderSNLotBloc($pdfDoc);
         $this->renderIncoterm($pdfDoc);
-        $this->renderPaymentCondition($pdfDoc);
+        $this->renderTermsOfPayment($pdfDoc);
         $this->renderComment($pdfDoc);
         return $pdfDoc;
     }
@@ -1554,40 +1539,6 @@ class ChainCommandInvoiceGenerator extends InvoiceGenerator {
     }
 
     // }}}
-    // renderTotal2Bloc() {{{
-
-    /**
-     *
-     * @access protected
-     * @return void
-     */
-    protected function renderTotal2Bloc() {
-        $columns = array(
-            _('Means of payment') => 110,
-            _('Date') => 40,
-            _('Total') . ' ' . $this->currency => 40
-            );
-        $this->pdf->tableHeader($columns, 1);
-        $toPay = $this->document->getToPayForDocument();
-
-        $data = array();
-        // si accompte
-        if ($this->command->getInstallment() > 0) {
-            $data[] = array(
-                _('Instalment'),
-                $this->command->getCommandDate('localedate_short'),
-                DocumentGenerator::formatNumber($this->command->getInstallment())
-                );
-        }
-        $data[] = array(
-            $this->document->getPaymentCondition(),
-            strcmp($this->document->getPaymentDate('localedate_short'), '00/00/0000')?$this->document->getPaymentDate('localedate_short'):'',
-            DocumentGenerator::formatNumber($toPay)
-            );
-        $this->pdf->tableBody($data);
-    }
-
-    // }}}
     // renderPrestationDetail() {{{
 
     /**
@@ -1678,7 +1629,6 @@ class PrestationInvoiceGenerator extends InvoiceGenerator {
         }
         $this->_renderTransportDetails();*/
         $this->renderTotal1Bloc();
-        $this->renderTotal2Bloc();
         $this->renderComment();
         //$this->_renderACOList();
         //$this->_renderStockageList();
@@ -2109,38 +2059,6 @@ class PrestationInvoiceGenerator extends InvoiceGenerator {
         $this->pdf->ln(3);
     }
 
-    // }}}
-    // InvoiceGenerator::renderTotal2Bloc() {{{
-    /**
-     * Affiche le second tableau total de la facture
-     * @access protected
-     * @return void
-     */
-    protected function renderTotal2Bloc() {
-        $columns = array(
-            _('Means of payment') => 110,
-            _('Date') => 40,
-            _('Total to pay') . ' ' . $this->currency => 40
-            );
-        $this->pdf->tableHeader($columns, 1);
-        $toPay = $this->document->getToPayForDocument();
-
-        $data = array();
-        // si accompte
-        if ($this->command->getInstallment() > 0) {
-            $data[] = array(
-                _('Instalment'),
-                $this->command->getCommandDate('localedate_short'),
-                DocumentGenerator::formatNumber($this->command->getInstallment())
-                );
-        }
-        $data = array(
-            $this->document->getPaymentCondition() => 110,
-            $this->document->getPaymentDate('localedate_short') => 40,
-            DocumentGenerator::formatNumber($toPay) => 40
-        );
-        $this->pdf->tableHeader($data);
-    }
     // }}}
     // renderDetails() {{{
 
@@ -3317,7 +3235,7 @@ class CommandReceiptGenerator extends CommandDocumentGenerator {
         $this->renderContent();
         $this->renderTotalBlock();
         $this->renderIncoterm();
-        $this->renderPaymentCondition();
+        $this->renderTermsOfPayment();
         $this->renderComment();
         $this->renderAppendices();
         return $this->pdf;

@@ -49,6 +49,7 @@ class ChainCommand extends _ChainCommand {
     }
 
     // }}}
+    // ChainCommand::getSupplierCustomer() {{{
 
     /**
      * Retourne le couple SupplierCustomer de la commande telle que:
@@ -66,10 +67,12 @@ class ChainCommand extends _ChainCommand {
             // le couple n'a pas été trouvé on en crée un par défaut
             require_once('Objects/SupplierCustomer.php');
             $spc = new SupplierCustomer();
-            $spc->setModality(SupplierCustomer::CHEQUE);
-            $spc->setTotalDays(30);
-            $spc->setOption(SupplierCustomer::NET);
             $sup = Auth::getDatabaseOwner();
+            // conditions de paiement par defaut
+            $top = Object::load('TermsOfPayment', 1);
+            if ($top instanceof TermsOfPayment) {
+                $spc->setTermsOfPayment($top);
+            }
             $spc->setSupplier($sup);
             $cus = $this->getCustomer();
             $spc->setCustomer($cus);
@@ -85,7 +88,7 @@ class ChainCommand extends _ChainCommand {
         }
         return $spc;
     }
-
+    // }}}
     // ChainCommand::hasAllGoupingTaskToDo() {{{
 
     /**

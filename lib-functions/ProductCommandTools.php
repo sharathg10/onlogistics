@@ -452,9 +452,11 @@ function findSupplierCustomer($expeditor, $destinator, $hasTVA=false) {
         // le couple n'a pas été trouvé on en crée un par défaut
         require_once('Objects/SupplierCustomer.php');
         $spc = new SupplierCustomer();
-        $spc->setModality(SupplierCustomer::CHEQUE);
-        $spc->setTotalDays(30);
-        $spc->setOption(SupplierCustomer::NET);
+        // conditions de paiement par defaut
+        $top = Object::load('TermsOfPayment', 1);
+        if ($top instanceof TermsOfPayment) {
+            $spc->setTermsOfPayment($top);
+        }
         $spc->setHasTVA($hasTVA);
         $spc->setSupplier($expeditor);
         $spc->setCustomer($destinator);

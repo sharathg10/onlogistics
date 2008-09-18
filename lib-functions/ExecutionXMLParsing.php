@@ -123,10 +123,6 @@ function parseCommand($file, $rang)
         $invoice->setGlobalHanding((float)$xmlCmd->handing);
 
         $xmlSpc = $xmlCmd->suppliercustomer;
-        $paymentCond = clean((string)$xmlSpc->modality) . ' '
-                . clean((string)$xmlSpc->totaldays)
-                . ' ' . clean((string)$xmlSpc->hastva);
-        $invoice->setPaymentCondition($paymentCond);
 
         $invoice->save();
         $Command->save();

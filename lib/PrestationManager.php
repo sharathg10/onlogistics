@@ -1125,7 +1125,6 @@ class PrestationManager {
 	    $invoice->setTvaSurtaxRate($_REQUEST['tvaSurtaxRate']);  // deja formate
 	    $invoice->setFodecTaxRate($_REQUEST['fodecTaxRate']);    // deja formate
 	    $invoice->setTaxStamp($_REQUEST['taxStamp']);            // deja formate
-        $invoice->setPaymentCondition($this->supplierCustomer->getPaymentCondition());
         $invoice->setToPay($ToPay);
         $invoice->setAccountingTypeActor($command->getDestinatorId());
         $invoice->setComment(stripslashes($_REQUEST['cmdComment']));

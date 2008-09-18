@@ -38,10 +38,11 @@ require_once('config.inc.php');
 require_once('DocumentGenerator.php');
 
 if (isset($_GET['estId'])) {
+    $commandReceipt = false;
     $command = Object::load('Command', $_GET['estId']);
 } else if (isset($_GET['id'])) {
-    $abstractDoc = Object::load('AbstractDocument', $_GET['id']);
-    $command = $abstractDoc->getCommand();
+    $commandReceipt = Object::load('CommandReceipt', $_GET['id']);
+    $command = $commandReceipt->getCommand();
     if(!($command instanceof Command)) {
         Template::errorDialog(
             _('Please select a document related to an order in order to print the receipt.'), 
@@ -68,17 +69,25 @@ if (!$command->getIsEstimate()) {
     exit(1);
 }
 
-$commandReceipt = new CommandReceipt();
-$commandReceipt->setCommand($command);
-$commandReceipt->setCommandType($command->getType());
-$commandReceipt->setDocumentNo($command->getCommandNo());
-$commandReceipt->setSupplierCustomer($command->getSupplierCustomer());
-$commandReceipt->setCurrency($command->getCurrency());
-$commandReceipt->setEditionDate(date('Y-m-d H:i:s'));
-if (($dmodel = $commandReceipt->findDocumentModel())) {
-    $commandReceipt->setDocumentModel($dmodel);
+if (!$commandReceipt) {
+    $commandReceipt = Object::load('CommandReceipt', array(
+        'Command'    => $command->getId(),
+        'DocumentNo' => $command->getCommandNo()
+    ));
 }
-$commandReceipt->save();
+if (!($commandReceipt instanceof CommandReceipt)) {
+    $commandReceipt = new CommandReceipt();
+    $commandReceipt->setCommand($command);
+    $commandReceipt->setCommandType($command->getType());
+    $commandReceipt->setDocumentNo($command->getCommandNo());
+    $commandReceipt->setSupplierCustomer($command->getSupplierCustomer());
+    $commandReceipt->setCurrency($command->getCurrency());
+    $commandReceipt->setEditionDate(date('Y-m-d H:i:s'));
+    if (($dmodel = $commandReceipt->findDocumentModel())) {
+        $commandReceipt->setDocumentModel($dmodel);
+    }
+    $commandReceipt->save();
+}
 if ($command instanceof ProductCommand) {
     $doc = new CommandEstimateReceiptGenerator($commandReceipt);
 } else if ($command instanceof ChainCommand) {

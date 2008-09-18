@@ -36,7 +36,6 @@
 
 require_once('config.inc.php');
 require_once('Objects/Command.const.php');
-require_once('Objects/SupplierCustomer.const.php');
 require_once('AccountTools.php');
 
 $auth = Auth::Singleton();
@@ -130,7 +129,7 @@ else if (isset($_REQUEST['FormSubmitted']) && $_REQUEST['FormSubmitted'] == 'tru
     }
 
     // Gestion du ActorBankDetail
-    if ($_POST['Modality'] != SupplierCustomer::AVOIR && $_POST['ActorBankDetail'] != 0) {
+    if ($_POST['Modality'] != TermsOfPaymentItem::ASSETS && $_POST['ActorBankDetail'] != 0) {
         // On incremente ou decremente en banque, selon que cmde Supplier ou Customer
         $coef = ($Command->getType() == Command::TYPE_SUPPLIER)?-1:1;
         $abd = Object::load('ActorBankDetail', $_POST['ActorBankDetail']);
@@ -335,7 +334,7 @@ else {
     $smarty->assign('InvoiceCommandListGrid', $InvoiceCommandListGrid);
     $CommandState = $Command->getState();
     $smarty->assign('HiddenCommandState', $CommandState);
-    $modalities = SupplierCustomer::getModalityConstArray();
+    $modalities = TermsOfPaymentItem::getPaymentModalityConstArray();
     $smarty->assign('ModalityList',
             join("\n\t\t", FormTools::writeOptionsFromArray($modalities)));
     $smarty->assign('CmdType', $Command->getType());  // Le type de la commande

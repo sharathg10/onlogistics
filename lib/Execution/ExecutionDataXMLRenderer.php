@@ -224,7 +224,6 @@ class MovementExecutionDataXMLRenderer {
             $xmldoc .= XML_Util::createTag('name', array(), $destinator->getName());
             $xmldoc .= XML_Util::createTag('quality', array(),
                 $destinator->getQualityForAddress());
-            $xmldoc .= XML_Util::createTag('paymentcondition', array(), $destinator->getPaymentCondition());
 
             $xmldoc .= XML_Util::createStartElement('deliveryaddress');
             $xmldoc .= XML_Util::createTag('streettype', array(), $destinator->getStreetType('delivery'));
@@ -287,8 +286,6 @@ class MovementExecutionDataXMLRenderer {
             $xmldoc .= XML_Util::createTag('name', array(), $expeditor->getName());
             $xmldoc .= XML_Util::createTag('quality', array(),
                 $expeditor->getQualityForAddress());
-
-            $xmldoc .= XML_Util::createTag('paymentcondition', array(), $expeditor->getPaymentCondition());
 
             $xmldoc .= XML_Util::createStartElement('deliveryaddress');
             $xmldoc .= XML_Util::createTag('streettype', array(), $expeditor->getStreetType('delivery'));
@@ -374,11 +371,6 @@ class MovementExecutionDataXMLRenderer {
                 $xmldoc .= XML_Util::createEndElement('actorbankdetail');
             }*/
 
-            $xmldoc .= XML_Util::createTag('modality', array(),
-                                           $supCust->getModality());
-            $xmldoc .= XML_Util::createtag('totaldays', array(),
-                                           $supCust->getTotalDays());
-            $xmldoc .= XML_Util::createTag('option', array(), $supCust->getOption());
             $xmldoc .= XML_Util::createTag('hastva', array(), $supCust->getHasTVA());
 
             $customer = $supCust->getCustomer();

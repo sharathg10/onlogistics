@@ -1,31 +1,31 @@
 # $Id$
 #
-# Ce fichier sert à faciliter et automatiser la mise en prod de la prochaine
-# release. On y indique les requètes à appliquer à la base de donée (pour la
-# mettre à jour), et éventuellement d'autres informations utiles.
-# Il faut donc veiller à le tenir à jour à chaque modification de la base de
-# données.
+# Ce fichier sert Ã  faciliter et automatiser la mise en prod de la prochaine
+# release. On y indique les requÃ¨tes Ã  appliquer Ã  la base de donÃ©e (pour la
+# mettre Ã  jour), et Ã©ventuellement d'autres informations utiles.
+# Il faut donc veiller Ã  le tenir Ã  jour Ã  chaque modification de la base de
+# donnÃ©es.
 #
 # ATTENTION A L'ORDRE DES REQUETES:
 # ---------------------------------
-# Elles doivent être de la plus ancienne à la plus récente dans le bloc de la
+# Elles doivent Ãªtre de la plus ancienne Ã  la plus rÃ©cente dans le bloc de la
 # release en cours.
 #
 # FONCTIONNEMENT
 # --------------
-# Pendant la phase de développement suivant une release, on écrit les requètes
-# nécessaires à la mise à jour des bases de données (depuis la release jusqu'à
+# Pendant la phase de dÃ©veloppement suivant une release, on Ã©crit les requÃ¨tes
+# nÃ©cessaires Ã  la mise Ã  jour des bases de donnÃ©es (depuis la release jusqu'Ã 
 # la release suivante).
 #
 # Lors de la mise en production de la release suivante (release + 1), on
-# applique ce fichier aux bases de données pour les mettre à jour, puis on
+# applique ce fichier aux bases de donnÃ©es pour les mettre Ã  jour, puis on
 # renomme le fichier en RELEASE_NOTES.OLD, et on entame un nouveau
-# RELEASE_NOTES (en prévision de release + 2).
+# RELEASE_NOTES (en prÃ©vision de release + 2).
 #
 # TODO IMPORTANT !!
 # -----------------
-# à chaque RELEASE, ne pas oublier de:
-#    * Mettre à jour les feeds ipkg du zaurus,
+# Ã  chaque RELEASE, ne pas oublier de:
+#    * Mettre Ã  jour les feeds ipkg du zaurus,
 #    * Updater les applications desktop
 
 ####################################
@@ -260,6 +260,41 @@ UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_OZ" WHERE _Id=8;
 UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_MM" WHERE _Id=9;
 UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_CM" WHERE _Id=10;
 UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_MT" WHERE _Id=11;
+
+# conditions paiement
+ALTER TABLE Actor DROP _PaymentCondition;
+ALTER TABLE AbstractDocument DROP _PaymentCondition;
+ALTER TABLE SupplierCustomer DROP _Option;
+ALTER TABLE SupplierCustomer DROP _TotalDays;
+ALTER TABLE SupplierCustomer DROP _Modality;
+ALTER TABLE SupplierCustomer ADD _TermsOfPayment INT(11) NOT NULL DEFAULT 0 AFTER _Customer;
+
+DROP TABLE IF EXISTS TermsOfPayment;
+CREATE TABLE TermsOfPayment (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+DROP TABLE IF EXISTS TermsOfPaymentItem;
+CREATE TABLE TermsOfPaymentItem (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _PercentOfTotal DECIMAL(10,2) DEFAULT NULL,
+  _PaymentDelay INT(11) NOT NULL DEFAULT 0,
+  _PaymentOption INT(3) NOT NULL DEFAULT 0,
+  _PaymentEvent INT(3) NOT NULL DEFAULT 0,
+  _PaymentModality INT(3) NOT NULL DEFAULT 0,
+  _TermsOfPayment INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _TermsOfPayment ON TermsOfPaymentItem (_TermsOfPayment);
+
+insert into TermsOfPayment values (1, NULL, 'Chèque 30 jours net');
+insert into TermsOfPaymentItem values (1, NULL, 100, 30, 1, 6, 0, 1);
+update SupplierCustomer set _TermsOfPayment=1 where 1;
 
 ####################################
 # Ne pas enlever

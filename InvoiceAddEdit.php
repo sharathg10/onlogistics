@@ -96,9 +96,6 @@ if (isset($_REQUEST['FormSubmitted']) && $_REQUEST['FormSubmitted'] == 'true') {
     } else {
         $Invoice->setToPay($Invoice->getTotalPriceTTC());
     }
-    //les conditions de paiement
-    $Invoice->setPaymentCondition($_POST['HiddenPaymentCondition']);
-
     // calcule la commission du commercial
     $Invoice->updateCommercialCommission();
 
@@ -472,12 +469,12 @@ $Smarty->assign('InvoiceItemGrid', $InvoiceItemGrid);
 if ($sp instanceof SupplierCustomer) {
     $MaxIncur = (is_null($sp->getMaxIncur()))?
             _('Undefined'):I18N::formatNumber($sp->getMaxIncur());
-    $PaymentCondition = $sp->getPaymentCondition();
-    $Smarty->assign('PaymentCondition', $PaymentCondition);
-    $Smarty->assign('HiddenPaymentCondition', $PaymentCondition);
     $Smarty->assign('MaxIncur', $MaxIncur);
     $Smarty->assign('UpdateIncur', I18N::formatNumber($sp->getUpdateIncur()));
 	$Smarty->assign('ToHaveTTC', I18N::formatNumber($sp->getToHaveTTC()));
+    if (($top = $sp->getTermsOfPayment()) instanceof TermsOfPayment) {
+        $Smarty->assign('TermsOfPayment', $top->getName());
+    }
 } else {
     $Smarty->assign('UpdateIncur', '0,00');
 	$Smarty->assign('ToHaveTTC', '0,00');

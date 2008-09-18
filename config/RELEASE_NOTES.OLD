@@ -4818,6 +4818,42 @@ UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_MM" WHERE _Id=9;
 UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_CM" WHERE _Id=10;
 UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_MT" WHERE _Id=11;
 
+# terms of payment
+ALTER TABLE Actor DROP _PaymentCondition;
+ALTER TABLE AbstractDocument DROP _PaymentCondition;
+ALTER TABLE SupplierCustomer DROP _Option;
+ALTER TABLE SupplierCustomer DROP _TotalDays;
+ALTER TABLE SupplierCustomer DROP _Modality;
+ALTER TABLE SupplierCustomer ADD _TermsOfPayment INT(11) NOT NULL DEFAULT 0 AFTER _Customer;
+
+DROP TABLE IF EXISTS TermsOfPayment;
+CREATE TABLE TermsOfPayment (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+DROP TABLE IF EXISTS TermsOfPaymentItem;
+CREATE TABLE TermsOfPaymentItem (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _PercentOfTotal DECIMAL(10,2) DEFAULT NULL,
+  _PaymentDelay INT(11) NOT NULL DEFAULT 0,
+  _PaymentOption INT(3) NOT NULL DEFAULT 0,
+  _PaymentEvent INT(3) NOT NULL DEFAULT 0,
+  _PaymentModality INT(3) NOT NULL DEFAULT 0,
+  _TermsOfPayment INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _TermsOfPayment ON TermsOfPaymentItem (_TermsOfPayment);
+
+insert into TermsOfPayment values (1, NULL, 'Chèque 30 jours net');
+insert into TermsOfPaymentItem values (1, NULL, 100, 30, 1, 6, 0, 1);
+update SupplierCustomer set _TermsOfPayment=1 where 1;
+
+
 ####################################
 # Ne pas enlever
 COMMIT;

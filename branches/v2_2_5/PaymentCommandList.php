@@ -77,7 +77,7 @@ $grid->NewColumn('FieldMapper', _('Edition date'),
 $grid->NewColumn('FieldMapper', _('Reference'), array('Macro' => '%Reference%'));
 $grid->NewColumn('FieldMapperWithTranslation', _('Means of payment'),
     	array('Macro' => '%Modality%',
-              'TranslationMap' => SupplierCustomer::getModalityConstArray()));
+              'TranslationMap' => TermsOfPaymentItem::getPaymentModalityConstArray()));
 $grid->NewColumn('FieldMapper', _('Bank'),
     	array('Macro' => '%ActorBankDetail.BankName|default%'));
 $grid->NewColumn('MultiPrice', _('Total amount incl. VAT'),

@@ -104,7 +104,6 @@ if (isset($_REQUEST['FormSubmitted']) && $_REQUEST['FormSubmitted'] == 'true') {
     $Invoice->setGlobalHanding($_POST['GlobalHanding']);
     $Invoice->setTotalPriceHT($_POST['totalpriceHT']);
     $Invoice->setTotalPriceTTC($_POST['totalpriceTTC']);
-    $Invoice->setPaymentCondition($_POST['HiddenPaymentCondition']);
     $Invoice->setToPay($_POST['ToPay']);
 
     $Invoice->setEditionDate(date('Y-m-d H:i:s'));
@@ -241,9 +240,10 @@ $smarty->assign('Currency', $cur instanceof Currency?$cur->getSymbol():'&euro;')
 
 //Information liées au supplierCustomer
 $MaxIncur = (is_null($sp->getMaxIncur()))?_('Undefined'):I18N::formatNumber($sp->getMaxIncur());
-$PaymentCondition = $sp->getPaymentCondition();
-$smarty->assign('PaymentCondition', $PaymentCondition);
-$smarty->assign('HiddenPaymentCondition', $PaymentCondition);
+$top = $sp->getTermsOfPayment();
+if ($top instanceof TermsOfPayment) {
+    $smarty->assign('TermsOfPayment', $top->getName());
+}
 $smarty->assign('Customer', Tools::getValueFromMacro($Command, '%Customer.Name%'));
 $smarty->assign('MaxIncur', $MaxIncur);
 $smarty->assign('UpdateIncur', I18N::formatNumber($sp->getUpdateIncur()));

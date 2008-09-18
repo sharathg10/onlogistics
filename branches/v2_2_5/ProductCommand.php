@@ -310,7 +310,10 @@ $smarty->assign('MaxIncur', $MaxIncur);
 $smarty->assign('CalendarAwareOfPlanning', Preferences::get('CalendarAwareOfPlanning', 0));
 $smarty->assign('UpdateIncur',
     I18N::formatNumber($SupplierCustomer->getUpdateIncur()));
-$smarty->assign('PaymentCondition', $SupplierCustomer->getPaymentCondition());
+$top = $SupplierCustomer->getTermsOfPayment();
+if ($top instanceof TermsOfPayment) {
+    $smarty->assign('TermsOfPayment', $top->getName());
+}
 if ($SupplierCustomer->getHasTVA()) {
     $smarty->assign('port_tva_rate', getTVARateByCategory(TVA::TYPE_DELIVERY_EXPENSES));
     $smarty->assign('packing_tva_rate', getTVARateByCategory(TVA::TYPE_PACKING));

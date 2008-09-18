@@ -34,47 +34,40 @@
  * @filesource
  */
 
-$classNameDict = array(
-    '##'             => _('All'),
-    '*Actor'         => _('Actor'),
-    '*Customer'      => _('Customer'),
-    'ProjectManager' => _('Project manager'),
-    '*Supplier'      => _('Supplier'),
-    'AeroInstructor' => _('Instructor'), 
-    'AeroOperator'   => _('Operator')
-);
-
 /**
+ * Return the list of available actor classes.
  *
- * @access public
- * @return void 
- **/
-function getPaymentConditions(){
-	return array(
-		0 => _('Undefined'),
-		1 => _('Check'),
-		2 => _('Check with 30 days delay'),
-		3 => _('Cash'),
-		4 => _('30 days draft'),
-		5 => _('45 days draft')
-	);
+ * @return array
+ */ 
+function getClassNameList()
+{
+    return array(
+        'Actor'          => _('Actor'),
+        'Customer'       => _('Customer'),
+        'Supplier'       => _('Supplier'),
+        'ProjectManager' => _('Project manager'),
+        'AeroCustomer'   => _('Customer'),
+        'AeroSupplier'   => _('Supplier'),
+        'AeroInstructor' => _('Instructor'),
+        'AeroOperator'   => _('Operator'),
+    );
 }
-		
+
 /**
  * retourne un tableau avec les types de société possibles.
  * 
- * @access public
  * @return array 
- **/
+ */
 function getCompanyTypes(){
 	return array(_('SA'), _('SARL'), _('SNC'), _('SAS'), _('EURL'));
 }
+
 /**
  * retourne un tableau d'options avec les types de société possibles.
  * 
  * @access public
  * @return array 
- **/
+ */
 function getCompanyTypesAsOptions($sel=0){
 	$ret = array("\n<option value=\"\">" . _('None') . "</option>");
 	foreach(getCompanyTypes() as $type){
@@ -100,4 +93,5 @@ function getCarrierActorCollection() {
     }
     return $returnCol;
 }
+
 ?>

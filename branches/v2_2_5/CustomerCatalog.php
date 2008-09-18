@@ -382,7 +382,6 @@ if (true === $form->displayGrid($displayGrid)) {
                 SearchTools::NewFilterComponent('Id', '', 'Equals', -1, 1);
     }
     $filter = SearchTools::filterAssembler($filterArray);
-    $order = array('BaseReference' => SORT_ASC);
 
     $grid = $catalog->buildGrid(
         array(
@@ -439,6 +438,12 @@ if (true === $form->displayGrid($displayGrid)) {
         /*
         $grid->newColumn('FieldMapper', _('Specific options'), array('Macro'=>'%Model.Option().Name%'));
          */
+        $order = array(
+            'Model.StyleNumber' => SORT_ASC,
+            'Size.Name'         => SORT_ASC
+        );
+    } else {
+        $order = array('BaseReference' => SORT_ASC);
     }
     // Si la preference est activee, on permet de saisir des qtes ds le catalog
     // Si ce sont des qtes d'UE (autre pref activee), on n'affiche pas la qte mini, 

@@ -15,7 +15,6 @@ action="InvoiceChainCommandList.php" onsubmit="return validation();" class="form
             <input type="hidden" name="returnURL" value="{$returnURL}" />
             <input type="hidden"name="UpdateIncur" value="{$UpdateIncur}" />
          	<input type="hidden" name="HiddenCmdType" value="{$CmdType}" />
-         	<input type="hidden" name="HiddenPaymentCondition" value="{$HiddenPaymentCondition}" />
          	<input type="hidden" name="MaxIncur" value="{$MaxIncur}" />
          	<input type="hidden" name="hiddenHasInvoice" value={$HasInvoice} />
          	<input type="hidden" name="FormSubmitted" value="" />
@@ -31,7 +30,7 @@ action="InvoiceChainCommandList.php" onsubmit="return validation();" class="form
                 <td>{t}Customer{/t}: {$Customer}</td>
  	        </tr>
  	        <tr>
- 		        <td>&nbsp;{t}Payment conditions{/t} : {$PaymentCondition}</td>
+ 		        <td>&nbsp;{t}Terms of payment{/t} : {$TermsOfPayment}</td>
  		        <td>{t}Current outstanding debts{/t} {$Currency}: {$UpdateIncur}</td>
  	        </tr>
  	        <tr>

@@ -3,6 +3,8 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
+ * IMPORTANT: This is a generated file, please do not edit.
+ *
  * This file is part of Onlogistics, a web based ERP and supply chain 
  * management application. 
  *
@@ -34,19 +36,13 @@
  * @filesource
  */
 
+/**
+ * _SupplierCustomer class
+ *
+ */
 class _SupplierCustomer extends Object {
     // class constants {{{
 
-    const NET = 0;
-    const FIN_DE_MOIS = 1;
-    const FIN_DE_MOIS_SUIVANT = 2;
-    const CHEQUE = 0;
-    const ESPECE = 1;
-    const CB = 2;
-    const TRAITE = 3;
-    const VIREMENT = 4;
-    const AVOIR = 5;
-    const BILLET_ORDRE = 6;
     const INVOICE_BY_MAIL_NONE = 0;
     const INVOICE_BY_MAIL_ALERT = 1;
     const INVOICE_BY_MAIL_YES = 2;
@@ -165,152 +161,6 @@ class _SupplierCustomer extends Object {
     public function setToHaveTTC($value) {
         $this->_ToHaveTTC = ($value===null || $value === '')?
             null:round(I18N::extractNumber($value), 2);
-    }
-
-    // }}}
-    // Option const property + getter/setter/getOptionConstArray {{{
-
-    /**
-     * Option int property
-     *
-     * @access private
-     * @var integer
-     */
-    private $_Option = 0;
-
-    /**
-     * _SupplierCustomer::getOption
-     *
-     * @access public
-     * @return integer
-     */
-    public function getOption() {
-        return $this->_Option;
-    }
-
-    /**
-     * _SupplierCustomer::setOption
-     *
-     * @access public
-     * @param integer $value
-     * @return void
-     */
-    public function setOption($value) {
-        if ($value !== null) {
-            $this->_Option = (int)$value;
-        }
-    }
-
-    /**
-     * _SupplierCustomer::getOptionConstArray
-     * Retourne un tableau associatif avec la valeur de la constante en
-     * clef et sa représentation textuelle en valeur.
-     * Si $keys vaut true, seules les clefs sont retournées
-     *
-     * @access public
-     * @static
-     * @param boolean $keys
-     * @return array
-     */
-    public static function getOptionConstArray($keys = false) {
-        $array = array(
-            _SupplierCustomer::NET => _("Net"), 
-            _SupplierCustomer::FIN_DE_MOIS => _("End of month"), 
-            _SupplierCustomer::FIN_DE_MOIS_SUIVANT => _("End of next month")
-        );
-        asort($array);
-        return $keys?array_keys($array):$array;
-    }
-
-    // }}}
-    // TotalDays int property + getter/setter {{{
-
-    /**
-     * TotalDays int property
-     *
-     * @access private
-     * @var integer
-     */
-    private $_TotalDays = null;
-
-    /**
-     * _SupplierCustomer::getTotalDays
-     *
-     * @access public
-     * @return integer
-     */
-    public function getTotalDays() {
-        return $this->_TotalDays;
-    }
-
-    /**
-     * _SupplierCustomer::setTotalDays
-     *
-     * @access public
-     * @param integer $value
-     * @return void
-     */
-    public function setTotalDays($value) {
-        $this->_TotalDays = ($value===null || $value === '')?null:(int)$value;
-    }
-
-    // }}}
-    // Modality const property + getter/setter/getModalityConstArray {{{
-
-    /**
-     * Modality int property
-     *
-     * @access private
-     * @var integer
-     */
-    private $_Modality = 0;
-
-    /**
-     * _SupplierCustomer::getModality
-     *
-     * @access public
-     * @return integer
-     */
-    public function getModality() {
-        return $this->_Modality;
-    }
-
-    /**
-     * _SupplierCustomer::setModality
-     *
-     * @access public
-     * @param integer $value
-     * @return void
-     */
-    public function setModality($value) {
-        if ($value !== null) {
-            $this->_Modality = (int)$value;
-        }
-    }
-
-    /**
-     * _SupplierCustomer::getModalityConstArray
-     * Retourne un tableau associatif avec la valeur de la constante en
-     * clef et sa représentation textuelle en valeur.
-     * Si $keys vaut true, seules les clefs sont retournées
-     *
-     * @access public
-     * @static
-     * @param boolean $keys
-     * @return array
-     */
-    public static function getModalityConstArray($keys = false) {
-        $array = array(
-            _SupplierCustomer::CHEQUE => _("Check"), 
-            _SupplierCustomer::ESPECE => _("Cash"), 
-            _SupplierCustomer::CB => _("Credit card"), 
-            _SupplierCustomer::TRAITE => _("Draft"), 
-            _SupplierCustomer::VIREMENT => _("Transfer"), 
-            _SupplierCustomer::AVOIR => _("Assets"), 
-            _SupplierCustomer::BILLET_ORDRE => _("Promissory note")
-        );
-        asort($array);
-        return $keys?array_keys($array):$array;
     }
 
     // }}}
@@ -528,6 +378,60 @@ class _SupplierCustomer extends Object {
             $this->_Customer = (int)$value;
         } else {
             $this->_Customer = $value;
+        }
+    }
+
+    // }}}
+    // TermsOfPayment foreignkey property + getter/setter {{{
+
+    /**
+     * TermsOfPayment foreignkey
+     *
+     * @access private
+     * @var mixed object TermsOfPayment or integer
+     */
+    private $_TermsOfPayment = false;
+
+    /**
+     * _SupplierCustomer::getTermsOfPayment
+     *
+     * @access public
+     * @return object TermsOfPayment
+     */
+    public function getTermsOfPayment() {
+        if (is_int($this->_TermsOfPayment) && $this->_TermsOfPayment > 0) {
+            $mapper = Mapper::singleton('TermsOfPayment');
+            $this->_TermsOfPayment = $mapper->load(
+                array('Id'=>$this->_TermsOfPayment));
+        }
+        return $this->_TermsOfPayment;
+    }
+
+    /**
+     * _SupplierCustomer::getTermsOfPaymentId
+     *
+     * @access public
+     * @return integer
+     */
+    public function getTermsOfPaymentId() {
+        if ($this->_TermsOfPayment instanceof TermsOfPayment) {
+            return $this->_TermsOfPayment->getId();
+        }
+        return (int)$this->_TermsOfPayment;
+    }
+
+    /**
+     * _SupplierCustomer::setTermsOfPayment
+     *
+     * @access public
+     * @param object TermsOfPayment $value
+     * @return void
+     */
+    public function setTermsOfPayment($value) {
+        if (is_numeric($value)) {
+            $this->_TermsOfPayment = (int)$value;
+        } else {
+            $this->_TermsOfPayment = $value;
         }
     }
 
@@ -1012,13 +916,11 @@ class _SupplierCustomer extends Object {
             'MaxIncur' => Object::TYPE_DECIMAL,
             'UpdateIncur' => Object::TYPE_DECIMAL,
             'ToHaveTTC' => Object::TYPE_DECIMAL,
-            'Option' => Object::TYPE_CONST,
-            'TotalDays' => Object::TYPE_INT,
-            'Modality' => Object::TYPE_CONST,
             'InvoiceByMail' => Object::TYPE_CONST,
             'CustomerProductCommandBehaviour' => Object::TYPE_CONST,
             'Supplier' => 'Actor',
             'Customer' => 'Actor',
+            'TermsOfPayment' => 'TermsOfPayment',
             'MaxDeliveryDay' => Object::TYPE_INT,
             'TotalDeliveryDay' => Object::TYPE_INT,
             'DeliveryType' => Object::TYPE_INT,

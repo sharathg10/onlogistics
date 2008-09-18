@@ -194,11 +194,28 @@ class FlowTypeItem extends _FlowTypeItem {
                 require_once('SQLRequest.php');
                 $result = request_commandForCashBalance(
                     $flowType->getCommandType(),
-                    $currency,
-                    $beginDate,
-                    $endDate); 
+                    $currency);
+                //$beginDate;
+                //$endDate; 
                 while(!$result->EOF) {
-                    $topay = troncature($result->fields['CmdTotalTTC'] - $result->fields['CmdPayed']);
+                    $cmdTTC = $result->fields['CmdTotalTTC'];
+                    $wishedDate = $result->fields['cmdWishedStartDate'];
+                    $isValid = $wishedDate >= $beginDate && $wishedDate <= $endDate;
+                    /**
+                    $topId = $result->fields['scTermsOfPayment'];
+                    if ($topId > 0 && ($top = Object::load('TermsOfPayment', $topId)) instanceof TermsOfPayment) {
+                        foreach($topItems as $topItem) {
+                            if ($topItem->getPaymentEvent() != TermsOfPaymentItem::ORDER) {
+                                continue;
+                            }
+                            
+                        }
+                    }
+                    */
+                    if (!$isValid) {
+                        continue;
+                    }
+                    $topay = troncature($cmdTTC - $result->fields['CmdPayed']);
                     $total += $topay;
                     $totals['total'] += $coeff * $topay;
                     $result->moveNext();

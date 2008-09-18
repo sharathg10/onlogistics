@@ -137,7 +137,7 @@ class SupplierPricesGrid extends GenericGrid
                 MSG_SELECT_AN_ELEMENT,
                 'BaseReference'
             )),
-            array('Path' => 'ActorProduct().Product.Id')
+            array('Path' => 'ActorProduct.Product.Id')
         );
     }
 

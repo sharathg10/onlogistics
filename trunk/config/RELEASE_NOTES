@@ -35,39 +35,13 @@ BEGIN;
 TRUNCATE TABLE IdHashTable;
 ####################################
 
-ALTER TABLE Actor DROP _PaymentCondition;
-ALTER TABLE AbstractDocument DROP _PaymentCondition;
-ALTER TABLE SupplierCustomer DROP _Option;
-ALTER TABLE SupplierCustomer DROP _TotalDays;
-ALTER TABLE SupplierCustomer DROP _Modality;
-ALTER TABLE SupplierCustomer ADD _TermsOfPayment INT(11) NOT NULL DEFAULT 0 AFTER _Customer;
+# ajout TermsOfPaymentItem supplier
+ALTER TABLE TermsOfPaymentItem ADD _Supplier INT(11) NOT NULL DEFAULT 0;
 
-DROP TABLE IF EXISTS TermsOfPayment;
-CREATE TABLE TermsOfPayment (
-  _Id int(11) unsigned NOT NULL default 0,
-  _DBId int(11) default 0,
-  _Name VARCHAR(255) DEFAULT NULL,
-  PRIMARY KEY (_Id)
-) TYPE=InnoDB CHARSET=latin1;
-
-DROP TABLE IF EXISTS TermsOfPaymentItem;
-CREATE TABLE TermsOfPaymentItem (
-  _Id int(11) unsigned NOT NULL default 0,
-  _DBId int(11) default 0,
-  _PercentOfTotal DECIMAL(10,2) DEFAULT NULL,
-  _PaymentDelay INT(11) NOT NULL DEFAULT 0,
-  _PaymentOption INT(3) NOT NULL DEFAULT 0,
-  _PaymentEvent INT(3) NOT NULL DEFAULT 0,
-  _PaymentModality INT(3) NOT NULL DEFAULT 0,
-  _TermsOfPayment INT(11) NOT NULL DEFAULT 0,
-  PRIMARY KEY (_Id)
-) TYPE=InnoDB CHARSET=latin1;
-
-CREATE INDEX _TermsOfPayment ON TermsOfPaymentItem (_TermsOfPayment);
-
-insert into TermsOfPayment values (1, NULL, 'Chèque 30 jours net');
-insert into TermsOfPaymentItem values (1, NULL, 100, 30, 1, 6, 0, 1);
-update SupplierCustomer set _TermsOfPayment=1 where 1;
+# nettoyage documents
+DELETE FROM AbstractDocument WHERE _Command=0 AND _ClassName IN ('Invoice','DeliveryOrder','CommandReceipt', 'Estimate');
+UPDATE AbstractDocument abd, Command cmd SET abd._ClassName='Estimate' WHERE cmd._Id = abd._Command and cmd._IsEstimate=1;
+DELETE FROM PDFDocument WHERE _Id NOT IN (select _PDFDocument from AbstractDocument);
 
 ####################################
 # Ne pas enlever

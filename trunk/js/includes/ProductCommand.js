@@ -138,6 +138,17 @@ function validation(evt) {
                 }
             }
         }
+        // controle site expediteur
+        if (!elements['cmdExpeditorSite'] || !elements['cmdExpeditorSite'].value) {
+            alert(ProductCommand_17);
+            return evt.stop();
+        }
+        // controle site destinataire
+        if (!elements['cmdDestinatorSite'] || !elements['cmdDestinatorSite'].value) {
+            alert(ProductCommand_18);
+            return evt.stop();
+        }
+
 	}
 	return true;
 }

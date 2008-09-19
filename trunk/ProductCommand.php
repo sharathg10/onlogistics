@@ -164,7 +164,14 @@ $form->addElement('select', 'cmdDestinator', _('Addressee'),
 $form->addElement('select', 'cmdExpeditorSite', _('Shipper site'),
         array(), 'id="cmdExpeditorSite" style="width:80%"');
 $custSiteArray = SearchTools::createArrayIDFromCollection(
-        'Site', array('Owner' => $customer->getId()), '', 'Name');
+    'Site',
+    array(
+        'Owner' => $customer->getId(),
+        'Type'  => array(Site::SITE_TYPE_LIVRAISON, Site::SITE_TYPE_FACTURATION_LIVRAISON)
+    ),
+    '',
+    'Name'
+);
 $form->addElement('select', 'cmdDestinatorSite', _('Addressee site'),
         $custSiteArray, 'id="cmdDestinatorSite" style="width:80%"');
 $commercialArray = SearchTools::createArrayIDFromCollection(

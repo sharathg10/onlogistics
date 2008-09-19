@@ -184,6 +184,8 @@ $msgs['ProductCommand_13'] = _('You provide a wrong quantity for a product selle
 $msgs['ProductCommand_14'] = _('Amount excl. VAT is lower than minimum amount to order');
 $msgs['ProductCommand_15'] = _('Please correct or contact customer department.');
 $msgs['ProductCommand_16'] = _('Packaging quantity have to be an integer. Please correct.');
+$msgs['ProductCommand_17'] = _('No expeditor site defined, please add one.');
+$msgs['ProductCommand_18'] = _('Destinator does not have a delivery site, please add one.');
 
 $msgs['WorkOrder_0'] = _('Please provide a work order name.');
 $msgs['WorkOrder_1'] = _('Please provide non negatives values');

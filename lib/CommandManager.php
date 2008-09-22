@@ -777,26 +777,24 @@ class CommandManager{
             Database::connection()->completeTrans();
 
         }
-        // si c'est un devis, on a plus rien à faire ici
-        if ($this->isEstimate) {
-            return true;
-        }
+        
         // envoi du mail de récépissé, envoye en fait apres la transaction
-        if ($this->commandType == 'ProductCommand' && !$this->isEstimate) {
+        if ($this->commandType == 'ProductCommand') {
             $customer = $this->auth->getActor();
             $this->_debug('* Envoi du récépissé de la commande de produit ' .
                 $command->getCommandNo());
-            $commandReceipt = new CommandReceipt();
-            $commandReceipt->setCommand($command);
-            $commandReceipt->setCommandType($this->productCommandType);
-	        $commandReceipt->setDocumentNo($command->getCommandNo());
-            $commandReceipt->setSupplierCustomer($command->getSupplierCustomer());
-            $commandReceipt->setCurrency($command->getCurrency());
-	        $commandReceipt->setEditionDate(date('Y-m-d H:i:s'));
-            if (($dmodel = $commandReceipt->findDocumentModel())) {
-                $commandReceipt->setDocumentModel($dmodel);
+            $docCls = $this->isEstimate ? 'Estimate' : 'CommandReceipt';
+            $doc = new $docCls();
+            $doc->setCommand($command);
+            $doc->setCommandType($this->productCommandType);
+	        $doc->setDocumentNo($command->getCommandNo());
+            $doc->setSupplierCustomer($command->getSupplierCustomer());
+            $doc->setCurrency($command->getCurrency());
+	        $doc->setEditionDate(date('Y-m-d H:i:s'));
+            if (($dmodel = $doc->findDocumentModel())) {
+                $doc->setDocumentModel($dmodel);
             }
-            $commandReceipt->save();
+            $doc->save();
             if (!$this->isEstimate) {
                 $uacCol = new Collection();
                 //on envoie l'alerte de reception de commande au commercial lié a la commande
@@ -807,7 +805,7 @@ class CommandManager{
                 CommandManager::$alertsToSend[] = array(
                     'ALERT_PRODUCT_COMMAND_RECEIPT',
                     array(
-                        $commandReceipt, 
+                        $doc, 
                         $uacCol, 
                         array(
                             $command->getDestinatorSiteId(),
@@ -828,6 +826,10 @@ class CommandManager{
                     $command, $command->getTotalPriceTTC(), $additionnalUsers
                 )
             );
+        }
+        // si c'est un devis, on a plus rien à faire ici
+        if ($this->isEstimate) {
+            return true;
         }
         // envoi des mails d'alerte de stock
         for ($i=0; $i < count($alerts); $i++) {

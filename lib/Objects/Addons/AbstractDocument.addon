@@ -1,17 +1,3 @@
-    // Constructeur {{{
-
-    /**
-     * AbstractDocument::__construct()
-     * Constructeur
-     *
-     * @access public
-     * @return void
-     */
-    public function __construct() {
-        parent::__construct();
-    }
-
-    // }}}
     // getLogo() {{{
 
     /**
@@ -125,6 +111,7 @@
         return array(
             'CommandReceipt' => _('Command receipt'),
             'Invoice'        => _('Invoice'),
+            'Estimate'       => _('Estimate'),
             'PackingList'    => _('Packing list'),
             'ToHave'         => _('Credit note'),
             'DeliveryOrder'  => _('Delivery order'),
@@ -149,6 +136,7 @@
         $urls = array(
             'CommandReceipt' => 'CommandReceiptEdit.php?print=1&id=%d',
             'Invoice'        => 'EditInvoice.php?print=1&InvoiceId=%d',
+            'Estimate'       => 'EstimateEdit.php?print=1&id=%d',
             'PackingList'    => 'PackingListEdit.php?reedit=1&pId=%d',
             'ToHave'         => 'ToHaveEdit.php?reedit=1&thId=%d',
             'DeliveryOrder'  => 'DeliveryOrderEdit.php?reedit=1&idBL=%d',

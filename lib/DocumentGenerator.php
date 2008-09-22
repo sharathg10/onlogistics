@@ -35,6 +35,7 @@
  */
 
 // includes {{{
+
 require_once('Pdf/PDFDocumentRender.php');
 require_once('Numbers/Words.php');
 require_once('Objects/Operation.const.php');
@@ -43,9 +44,10 @@ require_once('Objects/Command.php');
 require_once('Objects/Command.const.php');
 require_once('Objects/AbstractDocument.php');
 require_once('LangTools.php');
-// }}}
 
+// }}}
 // Constants {{{
+
 // limite pour le changement de page sur les items
 define('PAGE_HEIGHT_LIMIT', 270);
 define('PAGE_HEIGHT_LIMIT_TO_TOTAL', 205);
@@ -53,17 +55,54 @@ define('PAGE_WIDTH', 190);
 define('NUMBER_OF_CELLS_PER_TABLE', 5);
 define('PAGE_HEIGHT_LIMIT_TO_CHANGE_LETTER', 90);
 define('PAGE_HEIGHT_LIMIT_TO_LOGCARD_BARCODES', 222);
+
 // }}}
 
 // DocumentGenerator {{{
+
 /**
  * DocumentGenerator.
  * Classe de base pour les autres documents pdf.
  *
  */
-class DocumentGenerator { 
+class DocumentGenerator
+{ 
+    // properties {{{
+
+    /**
+     * Le document PDF
+     * @var Object PDFDocumentRender
+     */
+    public $pdf = false;
+
+    /**
+     * Le nom du document
+     * @var string
+     */
+    public $docName = false;
+
+    /**
+     * Objet documentModel
+     */
+    public $documentModel = false;
+    /**
+     * propriétés de classe servant de raccourcis pour les diverses méthodes
+     */
+    public $document = false;
+    public $command = false;
+    public $expeditor = false;
+    public $destinator = false;
+    public $expeditorSite = false;
+    public $destinatorSite = false;
+    public $currency = false;
+    public $editor = false;   // Acteur editeur du document
+
+    // }}}
+    // __construct() {{{
+
     /**
      * Constructor
+     *
      * @param Object $document un AbstractDocument
      * @param boolean $isReedition true si reedition
      * @param boolean $autoPrint true pour impression automatique
@@ -115,33 +154,8 @@ class DocumentGenerator {
         $this->pdf->footer = $this->document->getFooter();
     }
 
-    /**
-     * Le document PDF
-     * @var Object PDFDocumentRender
-     */
-    public $pdf = false;
-
-    /**
-     * Le nom du document
-     * @var string
-     */
-    public $docName = false;
-
-    /**
-     * Objet documentModel
-     */
-    public $documentModel = false;
-    /**
-     * propriétés de classe servant de raccourcis pour les diverses méthodes
-     */
-    public $document = false;
-    public $command = false;
-    public $expeditor = false;
-    public $destinator = false;
-    public $expeditorSite = false;
-    public $destinatorSite = false;
-    public $currency = false;
-    public $editor = false;   // Acteur editeur du document
+    // }}}
+    // DocumentGenerator::formatNumber() {{{
 
     /**
      * Formatte un nombre conformement aux usages dans la langue courante.
@@ -159,6 +173,9 @@ class DocumentGenerator {
        return I18N::formatNumber($number, $dec_num, $skip_zeros, true);
     }
 
+    // }}}
+    // DocumentGenerator::formatCurrency() {{{
+
     /**
      * Formatte un montant en devise conformement aux usages dans la langue courante.
      * Fait un appel à I18N::formatCurrency(), avec le param $strict à true, pour 
@@ -175,6 +192,9 @@ class DocumentGenerator {
     public static function formatCurrency($currency, $number, $dec_num=2, $skip_zeros=false) {
        return I18N::formatCurrency($currency, $number, $dec_num, $skip_zeros, true);
     }
+
+    // }}}
+    // DocumentGenerator::formatPercent() {{{
     
     /**
      * Formatte un pourcentage conformement aux usages dans la langue courante.
@@ -191,6 +211,9 @@ class DocumentGenerator {
     public static function formatPercent($number, $dec_num=2, $skip_zeros=false) {
        return I18N::formatPercent($number, $dec_num, $skip_zeros, true);
     }
+
+    // }}}
+    // DocumentGenerator::render() {{{
         
     /**
      * Construit le document pdf
@@ -201,6 +224,9 @@ class DocumentGenerator {
     public function render() {
         trigger_error('Abstract method...', E_USER_WARNING);
     }
+
+    // }}}
+    // DocumentGenerator::renderHeader() {{{
 
     /**
      *
@@ -215,8 +241,10 @@ class DocumentGenerator {
             $this->document->getDocumentNo();
         $pdfDoc->docDate =  I18n::formatDate($this->document->getEditionDate(), I18N::DATE_SHORT);
         $pdfDoc->logo = base64_decode($this->document->getLogo());
-///        $pdfDoc->header();
     }
+
+    // }}}
+    // DocumentGenerator::renderFooter() {{{
 
     /**
      *
@@ -226,25 +254,68 @@ class DocumentGenerator {
     public function renderFooter() {
     }
 
+    // }}}
+    // DocumentGenerator::renderAddressesBloc() {{{
+
     /**
      * Render des blocs d'adresses
      * @access public
      * @return void
      */
     public function renderAddressesBloc() {
-        // Donnees a afficher dans toutes les pages, juste en dessous du header
-        // adresse de facturation
-        $iSite = $this->destinator->getInvoicingSite();
-        $iAddressStr = $this->destinator->getQualityForAddress()
-        . $this->destinator->getName() . "\n"
-        . $iSite->getFormatAddressInfos("\n");
-        // on appelle cette méthode pour gérer les differences entre les
-        // types de commandes
-        $this->buildLeftAddress();  ///#
-        $this->pdf->rightAdressCaption = _('Billing address') . ': ';
-        $this->pdf->rightAdress = $iAddressStr;
+        $this->buildLeftAddress();
+        $this->buildRightAddress();
         $this->pdf->addHeader();
     }
+
+    // }}}
+    // DocumentGenerator::buildLeftAddress() {{{
+
+    /**
+     * Affiche l'adresse de gauche (par defaut: adresse de livraison).
+     *
+     * @access protected
+     * @return void
+     */
+    protected function buildLeftAddress() {
+        $str = '';
+        if ($this->expeditor instanceof Actor) {
+            $str = $this->expeditor->getQualityForAddress() 
+                 . $this->expeditor->getName() . "\n";
+        }
+        if ($this->expeditorSite instanceof Site) {
+            $str = $this->expeditorSite->getName() . "\n" 
+                 . $this->expeditorSite->getFormatAddressInfos("\n");
+        }
+        $this->pdf->leftAdressCaption = _('Shipper') . ': ';
+        $this->pdf->leftAdress = $str;
+    }
+
+    // }}}
+    // DocumentGenerator::buildRightAddress() {{{
+
+    /**
+     * Affiche l'adresse de droite (par defaut: adresse de facturation).
+     *
+     * @access public
+     * @return void
+     */
+    protected function buildRightAddress() {
+        $str = '';
+        if ($this->destinator instanceof Actor) {
+            $str = $this->destinator->getQualityForAddress() 
+                 . $this->destinator->getName() . "\n";
+        }
+        if ($this->destinatorSite instanceof Site) {
+            $str = $this->destinatorSite->getName() . "\n" 
+                 . $this->destinatorSite->getFormatAddressInfos("\n");
+        }
+        $this->pdf->rightAdressCaption = _('Addressee') . ': ';
+        $this->pdf->rightAdress = $str;
+    }
+
+    // }}}
+    // DocumentGenerator::renderSNLotBloc() {{{
 
     /**
      *
@@ -255,17 +326,8 @@ class DocumentGenerator {
         trigger_error('Abstract method...', E_USER_WARNING);
     }
 
-    /**
-     * Cette méthode est définie pour pouvoir être surchargée dans les classes
-     * qui n'ont pas besoin d'afficher l'addresse de livraison, typiquement les
-     * commandes de cours
-     *
-     * @access public
-     * @return void
-     **/
-    public function buildLeftAddress() {
-        trigger_error('Abstract method...', E_USER_WARNING);
-    }
+    // }}}
+    // DocumentGenerator::numberWords() {{{
 
     /**
      *
@@ -305,6 +367,9 @@ class DocumentGenerator {
         return sprintf('%s %s %s', $int, $currency, $dec);
     }
 
+    // }}}
+    // DocumentGenerator::renderCustomsBlocs() {{{
+
     /**
      * Méthode qui crée les tableaux du haut en fonction des
      * DocumentModelProperty associés au DocumentModel utilisé.
@@ -331,6 +396,7 @@ class DocumentGenerator {
             $domMapper = Mapper::singleton('DocumentModelProperty');
             // pour chaque tableau :
             for ($i=1 ; $i<=$numberOfTable ; $i++) {
+                $pdfDoc->ln(3);
                 // récupérer les 5 documentModelProperty de la table dans l'ordre
                 $domPropCol = $domMapper->loadCollection(
                     array('Property' => 0,
@@ -363,6 +429,9 @@ class DocumentGenerator {
         }
     }
 
+    // }}}
+    // DocumentGenerator::renderDescriptionOfGoodsField() {{{
+
     /**
      * Recupere le contenu du champ désignation personalise
      * dans le model de document
@@ -389,16 +458,25 @@ class DocumentGenerator {
         }
         return $return;
     }
-} // }}}
+    
+    // }}}
+}
+
+// }}}
 // CommandDocumentGenerator {{{
+
 /**
  * CommandDocumentGenerator.
  * Classe de base pour les autres documents pdf.
  *
  */
-class CommandDocumentGenerator extends DocumentGenerator {
+class CommandDocumentGenerator extends DocumentGenerator
+{
+    // __construct() {{{
+
     /**
-     * Constructor
+     * Constructor.
+     *
      * @param Object $document AbstractDocument
      * @param boolean $isReedition true si reedition
      * @param boolean $autoPrint true si impression auto
@@ -416,6 +494,45 @@ class CommandDocumentGenerator extends DocumentGenerator {
         parent::__construct($document, $isReedition, $autoPrint,
                             $cur, $docName);
     }
+
+    // }}}
+    // CommandDocumentGenerator::buildLeftAddress() {{{
+
+    /**
+     * Affiche l'adresse de gauche (par defaut: adresse de livraison).
+     *
+     * @access protected
+     * @return void
+     */
+    protected function buildLeftAddress() {
+        $site = $this->command->getDestinatorSite();
+        if ($site instanceof Site) {
+            $str = $site->getName() . "\n" . $site->getFormatAddressInfos("\n");
+            $this->pdf->leftAdressCaption = _('Delivery address') . ': ';
+            $this->pdf->leftAdress = $str;
+        }
+    }
+
+    // }}}
+    // CommandDocumentGenerator::buildRightAddress() {{{
+
+    /**
+     * Affiche l'adresse de droite (par defaut: adresse de facturation).
+     *
+     * @access public
+     * @return void
+     */
+    protected function buildRightAddress() {
+        $site = $this->destinator->getInvoicingSite();
+        if ($site instanceof Site) {
+            $str = $site->getName() . "\n" . $site->getFormatAddressInfos("\n");
+            $this->pdf->rightAdressCaption = _('Billing address') . ': ';
+            $this->pdf->rightAdress = $str;
+        }
+    }
+
+    // }}}
+    // CommandDocumentGenerator::renderSNLotBloc() {{{
 
     /**
      * Affiche untableau avec les details des infos des SN/Lot
@@ -449,20 +566,7 @@ class CommandDocumentGenerator extends DocumentGenerator {
         }
     }
 
-    /**
-     * Affiche l'adresse de livraison
-     *
-     * @access public
-     * @return void
-     **/
-    public function buildLeftAddress() {
-        // adresse de livraison
-        $dSite = $this->command->getDestinatorSite();
-        $dAddressStr = $dSite->getName() . "\n"
-            . $dSite->getFormatAddressInfos("\n");
-        $this->pdf->leftAdressCaption = _('Delivery address') . ': ';
-        $this->pdf->leftAdress = $dAddressStr;
-    }
+    // }}}
     // CommandDocumentGenerator::renderComment() {{{
 
     /**
@@ -526,13 +630,18 @@ class CommandDocumentGenerator extends DocumentGenerator {
         }
         $title = _('Terms of payment') . ': ' . $top->getName();
         $pdfDoc->tableHeader(array($title => 190), 1);
-        $pdfDoc->tableHeader(array(_('Date') => 120, _('Amount') => 70), 1);
+        $pdfDoc->tableHeader(array(
+            _('Date')      => 70,
+            _('Amount')    => 50, 
+            _('To pay to') => 70
+        ), 1);
         $items = $top->getTermsOfPaymentItemCollection();
         foreach ($items as $item) {
-            list($date, $amount) = $item->getDateAndAmountForOrder($this->command);
+            list($date, $amount, $to) = $item->getDateAndAmountForOrder($this->command);
+            $toName = ($to instanceof Actor) ? $to->getName() : '';
             $date   = I18N::formatDate($date, I18N::DATE_LONG);
             $amount = $this->formatCurrency($this->currency, $amount);
-            $pdfDoc->tableBody(array(0 => array($date, $amount)));
+            $pdfDoc->tableBody(array(0 => array($date, $amount, $toName)));
         }
         $pdfDoc->ln(3);
     }
@@ -590,14 +699,16 @@ class CommandDocumentGenerator extends DocumentGenerator {
     // }}}
 } // }}}
 // DeliveryOrderGenerator {{{
+
 /**
  * DeliveryOrderGenerator
  * Classe utilisee pour les bordereaux de livraison.
  *
  */
-class DeliveryOrderGenerator extends CommandDocumentGenerator {
+class DeliveryOrderGenerator extends CommandDocumentGenerator
+{
+    // __construct {{{
 
-    // DeliveryOrderGenerator::__construct {{{
     /**
      * Constructor
      * @param Object $document DeliveryOrder
@@ -636,45 +747,34 @@ class DeliveryOrderGenerator extends CommandDocumentGenerator {
     }
 
     // }}}
-    // DeliveryOrder::renderAddressesBloc() {{{
+    // DeliveryOrder::buildLeftAddress() {{{
 
     /**
-     * Construction des blocs d'adresses du header
-     * @access public
-     * @return void
-     */
-    public function renderAddressesBloc() {
-        // Donnees a afficher dans toutes les pages, juste en dessous du header
-        // adresse de facturation
-        $iSite = $this->destinator->getInvoicingSite();
-        $iAddressStr = $this->destinator->getQualityForAddress()
-                       . $this->destinator->getName() . "\n"
-                       . $iSite->getFormatAddressInfos("\n");
-        // on appelle cette méthode pour gérer les differences entre les
-        // types de commandes
-        //$this->pdf->leftAdressCaption = _('Billing address') . ': ';
-        //$this->pdf->leftAdress = $iAddressStr;
-        $this->_buildRightAddress();
-        $this->pdf->addHeader();
-    }
-
-    // }}}
-    // DeliveryOrder::_buildRightAddress() {{{
-
-    /**
-     * Construction de l'adresse de droite (livraison)
-     * affichée dans le header
+     * On n'affiche pas l'adresse de facturation
      *
      * @access protected
      * @return void
      **/
-    protected function _buildRightAddress(){
-        // adresse de livraison
-        $dSite = $this->command->getDestinatorSite();
-        $dAddressStr = $dSite->getName() . "\n"
-            . $dSite->getFormatAddressInfos("\n");
-        $this->pdf->rightAdressCaption = _('Delivery address') . ': ';
-        $this->pdf->rightAdress = $dAddressStr;
+    protected function buildLeftAddress()
+    {
+    }
+
+    // }}}
+    // DeliveryOrderGenerator::buildRightAddress() {{{
+
+    /**
+     * Affiche l'adresse de droite (ici adresse de livraison).
+     *
+     * @access protected
+     * @return void
+     */
+    protected function buildRightAddress() {
+        $site = $this->command->getDestinatorSite();
+        if ($site instanceof Site) {
+            $str = $site->getName() . "\n" . $site->getFormatAddressInfos("\n");
+            $this->pdf->rightAdressCaption = _('Delivery address') . ': ';
+            $this->pdf->rightAdress = $str;
+        }
     }
 
     // }}}
@@ -747,16 +847,21 @@ class DeliveryOrderGenerator extends CommandDocumentGenerator {
     }
 
     // }}}
-} // }}}
+}
+
+// }}}
 // RTWDeliveryOrderGenerator {{{
+
 /**
  * RTWDeliveryOrderGenerator
  * Classe utilisee pour les bordereaux de livraison de commandes produit client
  * en contexte pret a porter.
  *
  */
-class RTWDeliveryOrderGenerator extends DeliveryOrderGenerator {
-    // DeliveryOrderGenerator::__construct {{{
+class RTWDeliveryOrderGenerator extends DeliveryOrderGenerator 
+{
+    // RTWDeliveryOrderGenerator::__construct {{{
+
     /**
      * Constructor
      * @param Object $document DeliveryOrder
@@ -772,7 +877,7 @@ class RTWDeliveryOrderGenerator extends DeliveryOrderGenerator {
     }
 
     // }}}
-    // DeliveryOrder::render() {{{
+    // RTWDeliveryOrderGenerator::render() {{{
 
     /**
      * Construit le document pdf
@@ -794,7 +899,7 @@ class RTWDeliveryOrderGenerator extends DeliveryOrderGenerator {
     }
 
     // }}}
-    // DeliveryOrder::_renderContent() {{{
+    // RTWDeliveryOrderGenerator::_renderContent() {{{
 
     /**
      * Render du contenu du doc
@@ -827,16 +932,20 @@ class RTWDeliveryOrderGenerator extends DeliveryOrderGenerator {
     }
 
     // }}}
-} // }}}
+}
+
+// }}}
 // InvoiceGenerator {{{
+
 /**
  * InvoiceGenerator.
  * Classe utilisee pour les factures.
- * XXX TODO TERMS_OF_PAYMENT implement InvoiceGenerator::renderTermsOfPayment
  *
  */
-class InvoiceGenerator extends CommandDocumentGenerator {
+class InvoiceGenerator extends CommandDocumentGenerator
+{
     // InvoiceGenerator::__construct() {{{
+
     /**
      * Constructor
      *
@@ -849,6 +958,7 @@ class InvoiceGenerator extends CommandDocumentGenerator {
         parent::__construct($document, $isReedition, $autoPrint,
                             _('Invoice'));
     }
+
     // }}}
     // InvoiceGenerator::render() {{{
 
@@ -916,6 +1026,7 @@ class InvoiceGenerator extends CommandDocumentGenerator {
             $pdfDoc->ln(8);
         }
     }
+
     // }}}
     // InvoiceGenerator::renderTotal1Bloc() {{{
 
@@ -1112,15 +1223,21 @@ class InvoiceGenerator extends CommandDocumentGenerator {
         return $value;
     }
     // }}}
-} // }}}
+}
+
+// }}}
 // RTWInvoiceGenerator {{{
+
 /**
  * RTWInvoiceGenerator.
  * Classe utilisee pour les factures de commandes produit client en contexte 
  * pret a porter.
  *
  */
-class RTWInvoiceGenerator extends InvoiceGenerator {
+class RTWInvoiceGenerator extends InvoiceGenerator
+{
+    // __construct() {{{
+
     /**
      * Construit la facture pdf
      *
@@ -1149,6 +1266,9 @@ class RTWInvoiceGenerator extends InvoiceGenerator {
         return $pdfDoc;
     }
 
+    // }}}
+    // RTWInvoiceGenerator::_renderContent() {{{
+
     /**
      * Construit le contenu du pdf
      * @access protected
@@ -1157,16 +1277,6 @@ class RTWInvoiceGenerator extends InvoiceGenerator {
      */
     protected function _renderContent($pdfDoc=false) {
         $pdfDoc = (!$pdfDoc)?$this->pdf:$pdfDoc;
-        if ($this->command->getIsEstimate()) {
-            $this->pdf->addText(_('Season') . ' : ' . 
-                Tools::getValueFromMacro(
-                    $this->command,
-                    '%CommandItem()[0].Product.Model.Season.Name%'
-                )
-            );
-            $this->pdf->addText(_('Number of ordered products') . ': ' 
-                . $this->command->getNumberOfOrderedProducts());
-        }
         //cellule désignation personnalisé dans Invoice.DataForInvoice()
         $columns = array(
             _('Reference')=>34,
@@ -1190,22 +1300,32 @@ class RTWInvoiceGenerator extends InvoiceGenerator {
             $pdfDoc->ln(8);
         }
     }
-} // }}}
+
+    // }}}
+}
+
+// }}}
 // CourseCommandInvoiceGenerator {{{
+
 /**
  * Classe fille pour les commandes de cours avec quelques spécificités
  *
- **/
-class CourseCommandInvoiceGenerator extends InvoiceGenerator {
+ */
+class CourseCommandInvoiceGenerator extends InvoiceGenerator
+{
+    // __construct() {{{
+
     /**
      * Constructor
      *
      * @access protected
      */
     public function __construct($invoice) {
-        //$this->documentGenerator($invoice);
         parent::__construct($invoice);
     }
+
+    // }}}
+    // CourseCommandInvoiceGenerator::buildLeftAddress() {{{
 
     /**
      * Pas de d'addresse destinataire pour une commande de cours
@@ -1215,6 +1335,9 @@ class CourseCommandInvoiceGenerator extends InvoiceGenerator {
      */
     public function buildLeftAddress() {
     }
+
+    // }}}
+    // CourseCommandInvoiceGenerator::_renderContent() {{{
 
     /**
      * Le bloc contenant les items de la facture est légèrement différent.
@@ -1245,6 +1368,9 @@ class CourseCommandInvoiceGenerator extends InvoiceGenerator {
             $this->pdf->ln(8);
         }
     }
+
+    // }}}
+    // CourseCommandInvoiceGenerator::renderTotal1Bloc() {{{
 
     /**
      * Le bloc recapitulant le total est un peu different pour la commande de
@@ -1321,14 +1447,20 @@ class CourseCommandInvoiceGenerator extends InvoiceGenerator {
         }
         $this->pdf->ln(3);
     }
-} // }}}
+
+    // }}}
+} 
+
+// }}}
 // ChainCommandInvoiceGenerator {{{
+
 /**
  * ChainCommandInvoiceGenerator.
  * classe utilisée pour des factures de commande de transport.
  *
  */
-class ChainCommandInvoiceGenerator extends InvoiceGenerator {
+class ChainCommandInvoiceGenerator extends InvoiceGenerator
+{
     // __construct() {{{
 
     /**
@@ -1371,24 +1503,6 @@ class ChainCommandInvoiceGenerator extends InvoiceGenerator {
         $this->renderTermsOfPayment($pdfDoc);
         $this->renderComment($pdfDoc);
         return $pdfDoc;
-    }
-
-    // }}}
-    // renderAddressesBloc() {{{
-
-    /**
-     * Render des blocs d'adresses
-     * @access public
-     * @return void
-     */
-    public function renderAddressesBloc() {
-        $cus = $this->command->getCustomer();
-        $site = $cus->getInvoicingSite();
-        $this->pdf->rightAdressCaption = _('Address') . ': ';
-        $this->pdf->rightAdress = $cus->getQualityForAddress()
-            . $cus->getName() . "\n"
-            . $site->getFormatAddressInfos("\n");
-        $this->pdf->addHeader();
     }
 
     // }}}
@@ -1588,14 +1702,18 @@ class ChainCommandInvoiceGenerator extends InvoiceGenerator {
     }
 
     // }}}
-} // }}}
+}
+
+// }}}
 // PrestationInvoiceGenerator {{{
+
 /**
  * PrestationInvoiceGenerator.
  * classe utilisée pour des factures de prestation.
  *
  */
-class PrestationInvoiceGenerator extends InvoiceGenerator {
+class PrestationInvoiceGenerator extends InvoiceGenerator
+{
     // PrestationInvoiceGenerator::__construct() {{{
 
     /**
@@ -1806,7 +1924,7 @@ class PrestationInvoiceGenerator extends InvoiceGenerator {
     }
 
     // }}}
-    // _renderTransportDetails() {{{
+    // PrestationInvoiceGenerator::_renderTransportDetails() {{{
 
     /**
      * _renderTransportDetails 
@@ -1936,12 +2054,10 @@ class PrestationInvoiceGenerator extends InvoiceGenerator {
      * @return void
      */
     public function buildLeftAddress() {
-        $this->pdf->leftAdressCaption = '';
-        $this->pdf->leftAdress = '';
     }
 
     // }}}
-    // InvoiceGenerator::renderTotal1Bloc() {{{
+    // PrestationInvoiceGenerator::renderTotal1Bloc() {{{
 
     /**
      * Affiche le premier tableau total de la facture
@@ -2060,7 +2176,7 @@ class PrestationInvoiceGenerator extends InvoiceGenerator {
     }
 
     // }}}
-    // renderDetails() {{{
+    // PrestationInvoiceGenerator::renderDetails() {{{
 
     public function renderDetails() {
         $details = array();
@@ -2094,14 +2210,28 @@ class PrestationInvoiceGenerator extends InvoiceGenerator {
     }
 
     // }}} 
-} // }}}
+}
+
+// }}}
 // ToHaveGenerator {{{
+
 /**
  * ToHaveGenerator
  * Classe utilisée pour les avoirs.
  *
  */
-class ToHaveGenerator extends DocumentGenerator {
+class ToHaveGenerator extends DocumentGenerator
+{
+    // properties {{{
+
+    /**
+     * proprietes de classe servant de raccourcis pour les diverses methodes
+     */
+    public $Customer = false;
+
+    // }}}
+    // __construct() {{{
+
     /**
      * Constructor
      *
@@ -2119,10 +2249,8 @@ class ToHaveGenerator extends DocumentGenerator {
         parent::__construct($document, $isReedition, true, $cur, _('Credit note'));
     }
 
-    /**
-     * proprietes de classe servant de raccourcis pour les diverses methodes
-     */
-    public $Customer = false;
+    // }}}
+    // ToHaveGenerator::render() {{{
 
     /**
      * Construit la facture pdf
@@ -2141,6 +2269,9 @@ class ToHaveGenerator extends DocumentGenerator {
         return $this->pdf;
     }
 
+    // }}}
+    // ToHaveGenerator::buildLeftAddress() {{{
+
     /**
      * Pas de d'addresse destinataire pour un avoir
      *
@@ -2149,6 +2280,27 @@ class ToHaveGenerator extends DocumentGenerator {
      */
     public function buildLeftAddress() {
     }
+
+    // }}}
+    // ToHaveGenerator::buildRightAddress() {{{
+
+    /**
+     * Affiche l'adresse de droite (par defaut: adresse de facturation).
+     *
+     * @access public
+     * @return void
+     */
+    protected function buildRightAddress() {
+        $site = $this->destinator->getInvoicingSite();
+        if ($site instanceof Site) {
+            $str = $site->getName() . "\n" . $site->getFormatAddressInfos("\n");
+            $this->pdf->rightAdressCaption = _('Billing address') . ': ';
+            $this->pdf->rightAdress = $str;
+        }
+    }
+
+    // }}}
+    // ToHaveGenerator::_renderContent() {{{
 
     /**
      * Tableau 'principal'
@@ -2196,14 +2348,29 @@ class ToHaveGenerator extends DocumentGenerator {
         $this->pdf->tableBody(array(array($this->document->getComment())));
     }
 
-} // }}}
+    // }}}
+}
+
+// }}}
 // PackingListGenerator {{{
+
 /**
  * PackingListGenerator.
  * Classe utilisée pour les listes de colisage.
  *
  */
-class PackingListGenerator extends DocumentGenerator {
+class PackingListGenerator extends DocumentGenerator
+{
+    // properties {{{
+
+    /**
+     * proprietes de classe servant de raccourcis pour les diverses methodes
+     */
+    public $Box = false;
+
+    // }}}
+    // __construct() {{{
+
     /**
      * Constructor
      *
@@ -2223,10 +2390,8 @@ class PackingListGenerator extends DocumentGenerator {
                             _('Packing list'));
     }
 
-    /**
-     * proprietes de classe servant de raccourcis pour les diverses methodes
-     */
-    public $Box = false;
+    // }}}
+    // PackingListGenerator::render() {{{
 
     /**
      * Construit la facture pdf
@@ -2246,6 +2411,9 @@ class PackingListGenerator extends DocumentGenerator {
         return $this->pdf;
     }
 
+    // }}}
+    // PackingListGenerator::render() {{{
+
     /**
      * Donnees a afficher dans toutes les pages, juste en dessous du header
      * @access public
@@ -2255,32 +2423,12 @@ class PackingListGenerator extends DocumentGenerator {
         // adresse de facturation: seulement si une seule Command liee a la Box!
         $Command = $this->Box->getCommand();
         if (!Tools::isEmptyObject($Command)) {
-            $iSite = $this->destinator->getInvoicingSite();
-            $iAddressStr = $this->destinator->getQualityForAddress()
-                . $this->destinator->getName() . "\n"
-                . $iSite->getFormatAddressInfos("\n");
-            $this->pdf->leftAdressCaption = _('Billing address') . ': ';
-            $this->pdf->leftAdress = $iAddressStr;
+            parent::renderAddressesBloc();
         }
-
-        $this->_buildRightAddress();
-        $this->pdf->addHeader();
     }
 
-    /**
-     * Affiche l'Adresse de livraison
-     *
-     * @access public
-     * @return void
-     **/
-    public function _buildRightAddress() {
-        $destinatorSite = $this->Box->getDestinatorSite();
-        $destinatorAddressStr = $this->destinator->getQualityForAddress()
-            . $this->destinator->getName() . "\n"
-            . $destinatorSite->getFormatAddressInfos("\n");
-        $this->pdf->rightAdressCaption = _('Delivery address') . ': ';
-        $this->pdf->rightAdress = $destinatorAddressStr;
-    }
+    // }}}
+    // PackingListGenerator::_renderPackingListBloc() {{{
 
     /**
      * affiche les infos sur la facture et le client et le commercial
@@ -2325,6 +2473,9 @@ class PackingListGenerator extends DocumentGenerator {
         $this->pdf->ln(5);
     }
 
+    // }}}
+    // PackingListGenerator::_renderContent() {{{
+
     /**
      * Tableau 'principal'
      * @access protected
@@ -2367,6 +2518,9 @@ class PackingListGenerator extends DocumentGenerator {
         }
     }
 
+    // }}}
+    // PackingListGenerator::_renderTotalBloc() {{{
+
     /**
      * Affiche le total du poids et du volume
      * @access private
@@ -2381,6 +2535,9 @@ class PackingListGenerator extends DocumentGenerator {
             );
         $this->pdf->ln(3);
     }
+
+    // }}}
+    // PackingListGenerator::renderCustomsBlocs() {{{
 
     /**
      * On surcharge la méthode DocumentGenerator::renderCustomsBlocs
@@ -2441,17 +2598,26 @@ class PackingListGenerator extends DocumentGenerator {
         }
     }
 
-} // }}}
+    // }}}
+}
+
+// }}}
 // InvoicesListGenerator {{{
+
 /**
  * InvoicesListGenerator.
  * Sert à générer les relevé de factures simples ou avec lettre de change.
  *
  */
-class InvoicesListGenerator extends DocumentGenerator {
+class InvoicesListGenerator extends DocumentGenerator
+{
+    // properties {{{
 
     private $_withChangeLetter;
     public $supplierCustomer;
+
+    // }}}
+    // __construct() {{{
 
     /**
       * Constructeur
@@ -2477,6 +2643,9 @@ class InvoicesListGenerator extends DocumentGenerator {
                             _('Statement of invoices'));
     }
 
+    // }}}
+    // InvoicesListGenerator::render() {{{
+
     /**
       * Effectue le render du doc.
       *
@@ -2497,6 +2666,9 @@ class InvoicesListGenerator extends DocumentGenerator {
         return $this->pdf;
     }
 
+    // }}}
+    // InvoicesListGenerator::renderHeader() {{{
+
     /**
       * Le header contient le logo du supplier (acteur connecté)
       * et le nom du document.
@@ -2510,23 +2682,38 @@ class InvoicesListGenerator extends DocumentGenerator {
         //$this->pdf->header(); // inutile: appele par addPage
     }
 
+    // }}}
+    // InvoicesListGenerator::buildLeftAddress() {{{
+
     /**
-      * récupère l'addresse de facturation du customer
-      * et l'ajoute au header.
-      *
-      * @access public
-      * @return void
-      */
-    public function renderAddressesBloc() {
-        // addresse de facturation
-        $invoicingSite = $this->destinator->getInvoicingSite();
-        $invoicingAddressStr = $this->destinator->getQualityForAddress() .
-            $this->destinator->getName() . "\n" .
-            $invoicingSite->getFormatAddressInfos("\n");
-        $this->pdf->rightAdressCaption = _('Billing address') . ': ';
-        $this->pdf->rightAdress = $invoicingAddressStr;
-        $this->pdf->addHeader();
+     * On affiche pas l'adresse de livraison
+     *
+     * @access public
+     * @return void
+     */
+    public function buildLeftAddress() {
     }
+
+    // }}}
+    // InvoicesListGenerator::buildRightAddress() {{{
+
+    /**
+     * Affiche l'adresse de droite (par defaut: adresse de facturation).
+     *
+     * @access public
+     * @return void
+     */
+    protected function buildRightAddress() {
+        $site = $this->destinator->getInvoicingSite();
+        if ($site instanceof Site) {
+            $str = $site->getName() . "\n" . $site->getFormatAddressInfos("\n");
+            $this->pdf->rightAdressCaption = _('Billing address') . ': ';
+            $this->pdf->rightAdress = $str;
+        }
+    }
+
+    // }}}
+    // InvoicesListGenerator::_renderContent() {{{
 
     /**
      * Effectue le render du tableau des factures
@@ -2591,6 +2778,9 @@ class InvoicesListGenerator extends DocumentGenerator {
             $this->bigTotals['ttc'] . ' ' => 32,
             $this->bigTotals['toPay'] . '  ' => 32));
     }
+
+    // }}}
+    // InvoicesListGenerator::_renderChangeLetter() {{{
 
     /**
      * Effectue le render de la lettre de change
@@ -2747,8 +2937,13 @@ class InvoicesListGenerator extends DocumentGenerator {
         $this->pdf->Line($shapeX+40, $shapeY+4, $shapeX+42, $shapeY+2);
         $this->pdf->Line($shapeX+40, $shapeY+4, $shapeX+38, $shapeY+2);
     }
-} // }}}
+
+    // }}}
+}
+
+// }}}
 // LogCardGenerator {{{
+
 /**
  * LogCardGenerator.
  * Classe utilisée pour les fiches suiveuses.
@@ -2756,7 +2951,10 @@ class InvoicesListGenerator extends DocumentGenerator {
  * http://www.dassault-aviation.com/outils/traducteur_resultat.cfm?op=fr&id=F
  *
  */
-class LogCardGenerator extends DocumentGenerator {
+class LogCardGenerator extends DocumentGenerator
+{
+    // __construct() {{{
+
     /**
      * Constructor
      *
@@ -2776,6 +2974,9 @@ class LogCardGenerator extends DocumentGenerator {
         $this->activatedChain = Object::load('ActivatedChain', $achId);
     }
 
+    // }}}
+    // LogCardGenerator::render() {{{
+
     /**
      * Construit le doc pdf
      *
@@ -2792,6 +2993,9 @@ class LogCardGenerator extends DocumentGenerator {
         return $this->pdf;
     }
 
+    // }}}
+    // LogCardGenerator::renderHeader() {{{
+
     /**
      *
      * @access public
@@ -2802,6 +3006,9 @@ class LogCardGenerator extends DocumentGenerator {
         $this->pdf->fontSize['HEADER'] = 30;
         //$this->pdf->header();  // inutile: appele par addPage()
     }
+
+    // }}}
+    // LogCardGenerator::_renderCommandBloc() {{{
 
     /**
      * affiche les infos sur la facture et le client et le commercial
@@ -2840,6 +3047,9 @@ class LogCardGenerator extends DocumentGenerator {
         $this->pdf->ln(5);
         $this->pdf->defaultFontSize['DEFAULT'] = 10;
     }
+
+    // }}}
+    // LogCardGenerator::_renderContent() {{{
 
     /**
      * Tableau 'principal'
@@ -2927,14 +3137,19 @@ class LogCardGenerator extends DocumentGenerator {
             $this->pdf->ln(4);
         }
     }
-} // }}}
+
+    // }}}
+}
+
+// }}}
 // ForwardingFormGenerator {{{
+
 /**
  * class ForwardingFormGenerator
  * Génère les bordereaux d'expedition
  */
-class ForwardingFormGenerator extends DocumentGenerator {
-
+class ForwardingFormGenerator extends DocumentGenerator
+{
     // ForwardingFormGenerator::__construct() {{{
 
     /**
@@ -2975,28 +3190,6 @@ class ForwardingFormGenerator extends DocumentGenerator {
         $this->renderCustomsBlocs();
         $this->_renderContent();
         return $this->pdf;
-    }
-
-    // }}}
-    // ForwardingFormGenerator::renderAddressesBloc() {{{
-
-    public function renderAddressesBloc() {
-        // expediteur
-        $eSite = $this->expeditorSite;
-        $eAddressStr = $eSite->getName() . "\n"
-        . $eSite->getFormatAddressInfos("\n");
-
-        // destinataire
-        $dSite = $this->destinatorSite;
-        $dAddressStr = $dSite->getName() . "\n"
-        . $dSite->getFormatAddressInfos("\n");
-
-        $this->pdf->leftAdressCaption = _('Shipper') . ': ';
-        $this->pdf->leftAdress = $eAddressStr;
-        $this->pdf->rightAdressCaption = _('Addressee') . ': ';
-        $this->pdf->rightAdress = $dAddressStr;
-
-        $this->pdf->addHeader();
     }
 
     // }}}
@@ -3197,14 +3390,17 @@ class ForwardingFormGenerator extends DocumentGenerator {
     }
 
     // }}}
-} // }}}
+}
+
+// }}}
 // CommandReceiptGenerator {{{
+
 /**
  * classe de génération des récépissés de commandes.
  *
  */
-class CommandReceiptGenerator extends CommandDocumentGenerator { 
-
+class CommandReceiptGenerator extends CommandDocumentGenerator
+{ 
     // CommandReceiptGenerator::__construct() {{{
 
     /**
@@ -3231,7 +3427,6 @@ class CommandReceiptGenerator extends CommandDocumentGenerator {
         $this->renderHeader();
         $this->pdf->addPage(); // apres le renderHeader()!
         $this->renderAddressesBloc();
-        $this->pdf->addHeader();
         $this->renderContent();
         $this->renderTotalBlock();
         $this->renderIncoterm();
@@ -3239,27 +3434,6 @@ class CommandReceiptGenerator extends CommandDocumentGenerator {
         $this->renderComment();
         $this->renderAppendices();
         return $this->pdf;
-    }
-
-    // }}}
-    // CommandReceiptGenerator::renderAddressesBloc() {{{
-
-    /**
-     * Construit les blocs d'addresses du récépissé.
-     * A gauche l'expediteur de la commande, à droite le destinataire.
-     *
-     * @return void
-     */
-    public function renderAddressesBloc() {
-        $this->pdf->leftAdress = $this->destinator->getQualityForAddress()
-        . $this->destinator->getName() . "\n"
-        . $this->destinatorSite->getFormatAddressInfos("\n");
-        $this->pdf->rightAdress = $this->expeditor->getQualityForAddress()
-        . $this->expeditor->getName() . "\n"
-        . $this->expeditorSite->getFormatAddressInfos("\n");
-
-        $this->pdf->leftAdressCaption = _('From (address)') . ': ';
-        $this->pdf->rightAdressCaption = _('To') . ': ';
     }
 
     // }}}
@@ -3452,14 +3626,17 @@ class CommandReceiptGenerator extends CommandDocumentGenerator {
     }
 
     // }}}
-} // }}}
+}
+
+// }}}
 // ChainCommandReceiptGenerator {{{
+
 /**
  * classe de génération des récépissés de commandes de transport.
  *
  */
-class ChainCommandReceiptGenerator extends CommandReceiptGenerator {
-
+class ChainCommandReceiptGenerator extends CommandReceiptGenerator
+{
     // ChainCommandReceiptGenerator::__construct() {{{
 
     /**
@@ -3470,21 +3647,6 @@ class ChainCommandReceiptGenerator extends CommandReceiptGenerator {
     public function __construct($document, $reedit=false) {
         parent::__construct($document, $reedit);
         $this->commandNoLabel = _('Order number');
-    }
-
-    // }}}
-    // ChainCommandReceiptGenerator::renderAddressesBloc() {{{
-
-    /**
-     * Construit les blocs d'addresses du récépissé.
-     * A gauche l'expediteur de la commande, à droite le destinataire.
-     *
-     * @return void
-     */
-    public function renderAddressesBloc() {
-        parent::renderAddressesBloc();
-        $this->pdf->leftAdressCaption = _('Collection address') . ': ';
-        $this->pdf->rightAdressCaption = _('Delivery address') . ': ';
     }
 
     // }}}
@@ -3587,14 +3749,18 @@ class ChainCommandReceiptGenerator extends CommandReceiptGenerator {
     }
 
     // }}}
-} // }}}
-// CommandEstimateReceiptGenerator {{{
+}
+
+// }}}
+// EstimateGenerator {{{
+
 /**
  * classe de génération des devis pour les commandes produits
  *
  */
-class CommandEstimateReceiptGenerator extends CommandReceiptGenerator {
-    // CommandEstimateReceiptGenerator::__construct() {{{
+class EstimateGenerator extends CommandReceiptGenerator
+{
+    // EstimateGenerator::__construct() {{{
 
     /**
      * Constructeur.
@@ -3608,14 +3774,18 @@ class CommandEstimateReceiptGenerator extends CommandReceiptGenerator {
     }
 
     // }}}
-} // }}}
-// ChainCommandEstimateReceipt {{{
+}
+
+// }}}
+// ChainCommandEstimateGenerator {{{
+
 /**
  * classe de génération des devis pour les commandes de transport
  *
  */
-class ChainCommandEstimateReceiptGenerator extends ChainCommandReceiptGenerator {
-    // ChainCommandEstimateReceiptGenerator::__construct() {{{
+class ChainCommandEstimateGenerator extends ChainCommandReceiptGenerator
+{
+    // ChainCommandEstimateGenerator::__construct() {{{
 
     /**
      * Constructeur.
@@ -3630,20 +3800,29 @@ class ChainCommandEstimateReceiptGenerator extends ChainCommandReceiptGenerator 
     }
 
     // }}}
-} // }}}
+}
+
+// }}}
 // InvoiceCollectionGenerator {{{
+
 /**
  * InvoiceCollectionGenerator.
  * Classe utilisée pour imprimer une série de factures dans le meme pdf, avec
  * gestion correcte de la pagination par facture.
  *
  */
-class InvoiceCollectionGenerator extends CommandDocumentGenerator {
+class InvoiceCollectionGenerator extends CommandDocumentGenerator
+{
+    // properties {{{
+
     /**
      * La collection de factures a imprimer dans le meme pdf
      * @var string
      */
     public $invoiceColl = false;
+
+    // }}}
+    // __construct() {{{
 
     /**
      * Constructor
@@ -3653,11 +3832,13 @@ class InvoiceCollectionGenerator extends CommandDocumentGenerator {
      * @param boolean $autoPrint true pour impression auto
      * @access protected
      */
-    public function __construct($invoiceColl) { // {{{
+    public function __construct($invoiceColl) {
         $this->invoiceColl = $invoiceColl;
         $this->pdf = new PDFDocumentRender(false, false);
     }
+
     // }}}
+    // InvoiceCollectionGenerator::render() {{{
 
     /**
      * Construit la facture pdf
@@ -3665,7 +3846,7 @@ class InvoiceCollectionGenerator extends CommandDocumentGenerator {
      * @access public
      * @return PDFDocumentRender Object
      */
-    public function render() { // {{{
+    public function render() {
         $documentColl = $this->invoiceColl;
         $count = $documentColl->getCount();
         for($i = 0; $i < $count; $i++) {
@@ -3690,16 +3871,22 @@ class InvoiceCollectionGenerator extends CommandDocumentGenerator {
         }
         return $this->pdf;
     }
-    // }}}
 
-} // }}}
+    // }}}
+}
+
+// }}}
 // WorksheetGenerator {{{
+
 /**
  * WorksheetGenerator.
  * Classe utilisée pour les fiches techniques.
  *
  */
-class WorksheetGenerator extends DocumentGenerator {
+class WorksheetGenerator extends DocumentGenerator
+{
+    // __construct() {{{
+
     /**
      * Constructor
      *
@@ -3716,6 +3903,9 @@ class WorksheetGenerator extends DocumentGenerator {
         $this->modelCollection = $modelCollection;
         $this->model = false;
     }
+
+    // }}}
+    // WorksheetGenerator::render() {{{
 
     /**
      * Construit le doc pdf
@@ -3739,6 +3929,9 @@ class WorksheetGenerator extends DocumentGenerator {
         return $this->pdf;
     }
 
+    // }}}
+    // WorksheetGenerator::renderHeader() {{{
+
     /**
      *
      * @access public
@@ -3751,6 +3944,9 @@ class WorksheetGenerator extends DocumentGenerator {
         $this->pdf->logo = base64_decode($dbOwner->getLogo());
         //$this->pdf->header();  // inutile: appele par addPage()
     }
+
+    // }}}
+    // WorksheetGenerator::_renderContent() {{{
 
     /**
      * Tableau 'principal'
@@ -3850,14 +4046,22 @@ class WorksheetGenerator extends DocumentGenerator {
             $this->model->getComment() => 155), 
         0);
     }
-} // }}}
+
+    // }}}
+}
+
+// }}}
 // LookbookGenerator {{{
+
 /**
  * LookbookGenerator.
  * Classe utilisée pour les fiches techniques.
  *
  */
-class LookbookGenerator extends WorksheetGenerator {
+class LookbookGenerator extends WorksheetGenerator
+{
+    // __construct() {{{
+
     /**
      * Constructor
      *
@@ -3875,6 +4079,9 @@ class LookbookGenerator extends WorksheetGenerator {
         $this->zoneId = $zoneId;
         $this->model = false;
     }
+
+    // }}}
+    // LookbookGenerator::render() {{{
 
     /**
      * Construit le doc pdf
@@ -3898,6 +4105,9 @@ class LookbookGenerator extends WorksheetGenerator {
         return $this->pdf;
     }
 
+    // }}}
+    // LookbookGenerator::renderHeader() {{{
+
     /**
      *
      * @access public
@@ -3910,6 +4120,9 @@ class LookbookGenerator extends WorksheetGenerator {
         $this->pdf->logo = base64_decode($dbOwner->getLogo());
         //$this->pdf->header();  // inutile: appele par addPage()
     }
+
+    // }}}
+    // LookbookGenerator::_renderContent() {{{
 
     /**
      * Tableau 'principal'
@@ -4014,6 +4227,10 @@ class LookbookGenerator extends WorksheetGenerator {
             )));
         }
     }
-} // }}}
+
+    // }}}
+}
+
+// }}}
 
 ?>

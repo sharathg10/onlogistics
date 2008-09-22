@@ -37,8 +37,14 @@
 define('SKIP_CONNECTION', true);
 define('MAPPER_CACHE_DISABLED', true);
 
+$only_class = isset($_SERVER['argv'][1]) ? $_SERVER['argv'][1] : false;
+$only_dsn   = isset($_SERVER['argv'][2]) ? $_SERVER['argv'][2] : false;
+
 require_once 'config.inc.php';
 foreach($GLOBALS['DSNS'] as $dsn_name) {
+    if ($only_dsn && $dsn_name != $only_dsn) {
+        continue;
+    }
     $dsn = constant($dsn_name);
     if (substr_count($dsn, '/') == 4) {
         // XXX compte qui n'a pas de base propre: les crons ne sont pas
@@ -52,6 +58,9 @@ foreach($GLOBALS['DSNS'] as $dsn_name) {
     foreach ($xml->entity as $entity) {
         $eAttrs = $entity->attributes();
         $eName  = (String)$eAttrs['name'];
+        if ($only_class && $only_class != $eName) {
+            continue;
+        }
         $eTable = (String)$eAttrs['tablename'];
         $props  = array();
         foreach ($entity->property as $property) {

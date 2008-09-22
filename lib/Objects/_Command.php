@@ -3,6 +3,8 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
+ * IMPORTANT: This is a generated file, please do not edit.
+ *
  * This file is part of Onlogistics, a web based ERP and supply chain 
  * management application. 
  *
@@ -34,6 +36,10 @@
  * @filesource
  */
 
+/**
+ * _Command class
+ *
+ */
 class _Command extends Object {
     // class constants {{{
 
@@ -1992,7 +1998,7 @@ class _Command extends Object {
             'AbstractDocument'=>array(
                 'linkClass'     => 'AbstractDocument',
                 'field'         => 'Command',
-                'ondelete'      => 'nullify',
+                'ondelete'      => 'cascade',
                 'multiplicity'  => 'onetomany'
             ),
             'Command_1'=>array(

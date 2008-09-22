@@ -47,6 +47,7 @@ function getDocumentTypeArray() {
         'DeliveryOrder' => _('Delivery order'),
         'ForwardingForm' => _('Forwarding form'),
         'Invoice' => _('Invoice'), 
+        'Estimate' => _('Estimate'),
         'CommandReceipt' => _('Command receipt'), 
         'PackingList' => _('Packing list'),
         'InvoicesList' => _('Invoices statement')

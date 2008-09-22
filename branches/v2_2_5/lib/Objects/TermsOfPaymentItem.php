@@ -59,8 +59,8 @@ class TermsOfPaymentItem extends _TermsOfPaymentItem {
     // getDateAndAmountForOrder() {{{
 
     /**
-     * Return the date and amount of the payment for the given order as a tuple 
-     * array of two elements.
+     * Return the date, amount and actor of the payment for the given order as
+     * a tuple array of three elements.
      *
      * @param Command The order
      *
@@ -111,8 +111,12 @@ class TermsOfPaymentItem extends _TermsOfPaymentItem {
                 $amount = $amount + $toAdd;
             }
         }
+        // find actor
+        if (!(($supplier = $this->getSupplier()) instanceof Supplier)) {
+            $supplier = $order->getSupplierCustomer()->getSupplier();
+        }
         // return date and amount in an array
-        return array($date, $amount);
+        return array($date, $amount, $supplier);
     }
 
     // }}}

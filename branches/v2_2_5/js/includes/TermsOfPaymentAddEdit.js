@@ -19,7 +19,7 @@ initialize = function() {
         'TermsOfPaymentItem',
         filter,
         {},
-        ['PercentOfTotal', 'PaymentDelay', 'PaymentOption', 'PaymentEvent', 'PaymentModality']
+        ['PercentOfTotal', 'PaymentDelay', 'PaymentOption', 'PaymentEvent', 'PaymentModality', 'Supplier']
     );
     var onSuccess = function (data) {
         // contruire les options
@@ -77,12 +77,14 @@ newTOPIItem = function(itemData) {
         var paymentOption   = itemData.paymentOption.value;
         var paymentEvent    = itemData.paymentEvent.value;
         var paymentModality = itemData.paymentModality.value;
+        var supplier        = itemData.supplier.id;
     } else {
         var percentOfTotal  = '0';
         var paymentDelay    = '0';
         var paymentOption   = 0;
         var paymentEvent    = 0;
         var paymentModality = 0;
+        var supplier        = 0;
     }
     return LI(
         {id: 'TOPILI'+index, style: 'padding: 3px; border: 1px #fff outset;'},
@@ -108,7 +110,7 @@ newTOPIItem = function(itemData) {
         ),
         SPAN(
             {style:'padding: 5px;'},
-            LABEL({'for': 'TOPI_PaymentModality' + index}, TermsOfPaymentAddEdit_5 + ': '),
+            LABEL({'for': 'TOPI_PaymentModality' + index}, TermsOfPaymentAddEdit_3 + ': '),
             newSelect(
                 'TOPI_PaymentModality[]',
                 'callStaticMethod',
@@ -120,7 +122,7 @@ newTOPIItem = function(itemData) {
         ),
         SPAN(
             {style:'padding: 5px;'},
-            LABEL({'for': 'TOPI_PaymentOption' + index}, TermsOfPaymentAddEdit_3 + ': '),
+            LABEL({'for': 'TOPI_PaymentOption' + index}, TermsOfPaymentAddEdit_4 + ': '),
             newSelect(
                 'TOPI_PaymentOption[]',
                 'callStaticMethod',
@@ -132,7 +134,7 @@ newTOPIItem = function(itemData) {
         ),
         SPAN(
             {style:'padding: 5px;'},
-            LABEL({'for': 'TOPI_PaymentEvent' + index}, TermsOfPaymentAddEdit_4 + ': '),
+            LABEL({'for': 'TOPI_PaymentEvent' + index}, TermsOfPaymentAddEdit_5 + ': '),
             newSelect(
                 'TOPI_PaymentEvent[]',
                 'callStaticMethod',
@@ -140,6 +142,18 @@ newTOPIItem = function(itemData) {
                 'getPaymentEventConstArray',
                 paymentEvent,
                 false
+            )
+        ),
+        SPAN(
+            {style:'padding: 5px;'},
+            LABEL({'for': 'TOPI_Supplier' + index}, TermsOfPaymentAddEdit_6 + ': '),
+            newSelect(
+                'TOPI_Supplier_ID[]',
+                'loadCollection',
+                'Supplier',
+                false,
+                supplier,
+                true
             )
         ),
         SPAN(
@@ -186,7 +200,7 @@ newSelect = function(name, method, arg1, arg2, selected, addBlankItem) {
             nodes[i] = createDOM('option', attrs, data[i].toString);
         }
         if (addBlankItem) {
-            item = createDOM('option', {'value': 0}, ProductPriceAddEdit_4);
+            item = createDOM('option', {'value': 0}, TermsOfPaymentAddEdit_7);
             appendChildNodes($(name+index), new Array(item));
         }
         appendChildNodes($(name+index), nodes);
@@ -209,23 +223,23 @@ function checkAndFormat(evt) {
         var percentOfTotal = elts["TOPI_PercentOfTotal[]"][i].value.replace(' ', '');
         var paymentDelay   = elts["TOPI_PaymentDelay[]"][i].value.replace(' ', '');
         if (!/^\d+[\.,]?\d*$/.test(percentOfTotal)) {
-            alert(TermsOfPaymentAddEdit_6);
+            alert(TermsOfPaymentAddEdit_8);
             return evt.stop();
         }
         if (!/^\d+$/.test(paymentDelay)) {
-            alert(TermsOfPaymentAddEdit_7);
+            alert(TermsOfPaymentAddEdit_9);
             return evt.stop();
         }
         percentOfTotal = fw.i18n.extractNumber(percentOfTotal);
         elts["TOPI_PercentOfTotal[]"][i].value = percentOfTotal;
         subtotal += percentOfTotal;
         if (subtotal > 100) {
-            alert(TermsOfPaymentAddEdit_8);
+            alert(TermsOfPaymentAddEdit_10);
             return evt.stop();
         }
     }
     if (subtotal != 100) {
-        alert(TermsOfPaymentAddEdit_9);
+        alert(TermsOfPaymentAddEdit_11);
         return evt.stop();
     }
     return true;

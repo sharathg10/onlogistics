@@ -56,16 +56,20 @@ class Actor extends _Actor {
     }
 
     // }}}
+    // Actor::isGeneric() {{{
 
     /**
-     * this is an alias
+     * this is an alias of Site::getGeneric()
      *
      * @return boolean
      */
     public function isGeneric()
     {
-        return $this->GetGeneric();
+        return $this->getGeneric();
     }
+
+    // }}}
+    // Actor::getChildren() {{{
 
     /**
      * this is an alias
@@ -77,6 +81,9 @@ class Actor extends _Actor {
         return $this->getActorCollection();
     }
 
+    // }}}
+    // Actor::hasChildren() {{{
+
     /**
      * this is an alias
      *
@@ -84,9 +91,11 @@ class Actor extends _Actor {
      */
     public function hasChildren()
     {
-        $col = $this->getActorCollection();
-        return ($col > 0);
+        return count($this->getActorCollection()) > 0;
     }
+
+    // }}}
+    // Actor::getWorkOrderCollection() {{{
 
     /**
      * Methode addon qui recupere les OT qui ont 1 operation liee a une commande
@@ -95,7 +104,7 @@ class Actor extends _Actor {
      * @access public
      * @return Array
      */
-    public function GetWorkOrderCollection()
+    public function getWorkOrderCollection()
     {
         require_once('SQLRequest.php');
         $SQLRequest = Request_WorkOrderList($this->GetId());
@@ -107,6 +116,9 @@ class Actor extends _Actor {
         }
         return $WorkOrderArrayId;
     }
+
+    // }}}
+    // Actor::getSupplierCustomer() {{{
 
     /**
      * retourne le SupplierCustomer associé à l'acteur et à l'acteur de
@@ -137,13 +149,17 @@ class Actor extends _Actor {
         return $spc;
     }
 
+    // }}}
+    // Actor::getCustomerCollection() {{{
+
     /**
      * Retourne La collection des Clients
      * Utilise une requete sql pour les perfs
+     *
      * @return ActorCollection Content of value
      * @access public
      */
-    public function GetCustomerCollection() {
+    public function getCustomerCollection() {
         require_once('SQLRequest.php');
         $ActorMapper = Mapper::singleton('Actor');
         $CustomerCollectionIds = GetCustomerCollectionIds($this->GetId());
@@ -153,13 +169,17 @@ class Actor extends _Actor {
         return $CustomerCollection;
     }
 
+    // }}}
+    // Actor::getSupplierCollection() {{{
+
     /**
      * Retourne La collection des Clients
      * Utilise une requete sql pour les perfs
+     *
      * @return ActorCollection Content of value
      * @access public
      */
-    public function GetSupplierCollection() {
+    public function getSupplierCollection() {
         require_once('SQLRequest.php');
         $ActorMapper = Mapper::singleton('Actor');
         $SupplierCollectionIds = GetSupplierCollectionIds($this->GetId());
@@ -167,6 +187,9 @@ class Actor extends _Actor {
             array('Id'=>$SupplierCollectionIds));
         return $SupplierCollection;
     }
+
+    // }}}
+    // Actor::getWeeklyPlanning() {{{
 
     /**
      * AeroActor::getWeeklyPlanning()
@@ -191,6 +214,9 @@ class Actor extends _Actor {
         return $wplanning;
     }
 
+    // }}}
+    // Actor::isDeletable() {{{
+
     /**
      * Retourne true si l'acteur peut être supprimé et false sinon.
      *
@@ -201,6 +227,9 @@ class Actor extends _Actor {
         require_once('SQLRequest.php');
         return request_actorIsDeletable($this->getId());
     }
+
+    // }}}
+    // Actor::isMainSupplier() {{{
 
     /**
      * Retourne true si l'acteur est fournisseur principal d'au moins un Product
@@ -231,6 +260,9 @@ class Actor extends _Actor {
         return $pdtcoll;
     }
 
+    // }}}
+    // Actor::removeMainSupplierLinks() {{{
+
     /**
      * Supprime les liens Product-MainSupplier, c'est a dire met a jour
      * les ActorProduct.Priority a 0
@@ -251,30 +283,34 @@ class Actor extends _Actor {
         return $coll;
     }
 
+    // }}}
+    // Actor::getInvoicingSite() {{{
+
     /**
-     * Retourne le 1er site de facturation trouve, oubien
-     * le 1er site de facturation-livraison trouve, oubien le MainSite
+     * Return the first invoicing site found or false.
+     *
      * @access public
      * @return Site
      */
-    public function getInvoicingSite(){
-        $InvoicingSite = false;
-        $SiteCollection = $this->getSiteCollection(array('Type' => Site::SITE_TYPE_FACTURATION));
-        if (!Tools::isEmptyObject($SiteCollection)) {
-            $InvoicingSite = $SiteCollection->getItem(0);  // on prend le 1er trouve
+    public function getInvoicingSite()
+    {
+        $siteCollection = $this->getSiteCollection(array(
+            'Type' => Site::SITE_TYPE_FACTURATION
+        ));
+        if (count($siteCollection)) {
+            return $siteCollection->getItem(0); 
         }
-        else {
-            unset($SiteCollection);
-            $SiteCollection = $this->getSiteCollection(array('Type' => Site::SITE_TYPE_FACTURATION_LIVRAISON));
-            if (!Tools::isEmptyObject($SiteCollection)) {
-                $InvoicingSite = $SiteCollection->getItem(0);  // on prend le 1er trouve
-            }
-            else {
-                $InvoicingSite = $this->getMainSite();
-            }
+        $siteCollection = $this->getSiteCollection(array(
+            'Type' => Site::SITE_TYPE_FACTURATION_LIVRAISON
+        ));
+        if (count($siteCollection)) {
+            return $siteCollection->getItem(0);
         }
-        return $InvoicingSite;
+        return false;
     }
+
+    // }}}
+    // Actor::getQualityForAddress() {{{
 
     /**
      * Retourne une string a inserer en debut d'adresse
@@ -288,6 +324,9 @@ class Actor extends _Actor {
                 '':$qualityArray[$this->getQuality()] . ' ';
         return $return;
     }
+
+    // }}}
+    // Actor::onAfterImport() {{{
 
     /**
      * Fonction appelée après import de données via glao-import.
@@ -309,6 +348,9 @@ class Actor extends _Actor {
         $mainsite->save();
         return true;
     }
+
+    // }}}
+    // Actor::setLogoFromFileInput() {{{
 
     /**
      * Gère le logo de l'acteur:
@@ -361,6 +403,9 @@ class Actor extends _Actor {
         return true;
     }
 
+    // }}}
+    // Actor::isAvailableFor() {{{
+
     /**
      * Actor::isAvailableFor()
      * Retourne true si l'acteur est disponible pour le créneau $start-$end
@@ -395,6 +440,9 @@ class Actor extends _Actor {
         return false;
     }
 
+    // }}}
+    // Actor::getNextMeetingAction() {{{
+
     /**
      * Actor::getNextMeetingAction()
      * Retourne la 1ere Action de type MEETING a l'etat A FAIRE, trouvee
@@ -425,6 +473,9 @@ class Actor extends _Actor {
         }
         return $action;
     }
+
+    // }}}
+    // Actor::getLastProductIdsOrdered() {{{
 
     /**
      * Actor::getLastProductIdsOrdered()
@@ -458,6 +509,9 @@ class Actor extends _Actor {
         return $pdtIds;
     }
 
+    // }}}
+    // Actor::getMiniAmountToOrder() {{{
+
     /**
      * Actor::getMiniAmountToOrder($currency)
      * Retourne le minimum HT qu'il est possible de commander
@@ -487,6 +541,8 @@ class Actor extends _Actor {
         
         return $mato->getAmount();
     }
+
+    // }}}
 }
 
 ?>

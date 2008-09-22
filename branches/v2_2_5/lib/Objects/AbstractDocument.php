@@ -3,6 +3,8 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
+ * IMPORTANT: This is a generated file, please do not edit.
+ *
  * This file is part of Onlogistics, a web based ERP and supply chain 
  * management application. 
  *
@@ -34,6 +36,11 @@
  * @filesource
  */
 
+/**
+ * AbstractDocument class
+ *
+ * Class containing addon methods.
+ */
 class AbstractDocument extends _AbstractDocument {
     // Constructeur {{{
 
@@ -162,6 +169,7 @@ class AbstractDocument extends _AbstractDocument {
         return array(
             'CommandReceipt' => _('Command receipt'),
             'Invoice'        => _('Invoice'),
+            'Estimate'       => _('Estimate'),
             'PackingList'    => _('Packing list'),
             'ToHave'         => _('Credit note'),
             'DeliveryOrder'  => _('Delivery order'),
@@ -186,6 +194,7 @@ class AbstractDocument extends _AbstractDocument {
         $urls = array(
             'CommandReceipt' => 'CommandReceiptEdit.php?print=1&id=%d',
             'Invoice'        => 'EditInvoice.php?print=1&InvoiceId=%d',
+            'Estimate'       => 'EstimateEdit.php?print=1&id=%d',
             'PackingList'    => 'PackingListEdit.php?reedit=1&pId=%d',
             'ToHave'         => 'ToHaveEdit.php?reedit=1&thId=%d',
             'DeliveryOrder'  => 'DeliveryOrderEdit.php?reedit=1&idBL=%d',
@@ -195,6 +204,7 @@ class AbstractDocument extends _AbstractDocument {
     }
     
     // }}}
+
 }
 
 ?>

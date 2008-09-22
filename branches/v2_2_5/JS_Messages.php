@@ -184,6 +184,8 @@ $msgs['ProductCommand_13'] = _('You provide a wrong quantity for a product selle
 $msgs['ProductCommand_14'] = _('Amount excl. VAT is lower than minimum amount to order');
 $msgs['ProductCommand_15'] = _('Please correct or contact customer department.');
 $msgs['ProductCommand_16'] = _('Packaging quantity have to be an integer. Please correct.');
+$msgs['ProductCommand_17'] = _('No expeditor site defined, please add one.');
+$msgs['ProductCommand_18'] = _('Destinator does not have a delivery site, please add one.');
 
 $msgs['WorkOrder_0'] = _('Please provide a work order name.');
 $msgs['WorkOrder_1'] = _('Please provide non negatives values');
@@ -320,15 +322,17 @@ $msgs['ProductPriceAddEdit_3'] = _('Price');
 $msgs['ProductPriceAddEdit_4'] = _('N/A');
 $msgs['ProductPriceAddEdit_5'] = _('This will discard the changes you made for this supplier, continue ?');
 
-$msgs['TermsOfPaymentAddEdit_1'] = _('Percent of total amount incl. taxes');
-$msgs['TermsOfPaymentAddEdit_2'] = _('Delay in days');
-$msgs['TermsOfPaymentAddEdit_3'] = _('Option');
-$msgs['TermsOfPaymentAddEdit_4'] = _('Event');
-$msgs['TermsOfPaymentAddEdit_5'] = _('Modality');
-$msgs['TermsOfPaymentAddEdit_6'] = _('Percent of amount must be a float');
-$msgs['TermsOfPaymentAddEdit_7'] = _('Payment delay must be an integer');
-$msgs['TermsOfPaymentAddEdit_8'] = _('Percent of amount can not exceed 100%');
-$msgs['TermsOfPaymentAddEdit_9'] = _('Percent of amount sum must be equals to 100%');
+$msgs['TermsOfPaymentAddEdit_1']  = _('Percent of total amount incl. taxes');
+$msgs['TermsOfPaymentAddEdit_2']  = _('Delay in days');
+$msgs['TermsOfPaymentAddEdit_3']  = _('Modality');
+$msgs['TermsOfPaymentAddEdit_4']  = _('Option');
+$msgs['TermsOfPaymentAddEdit_5']  = _('Event');
+$msgs['TermsOfPaymentAddEdit_6']  = _('To pay to');
+$msgs['TermsOfPaymentAddEdit_7']  = _('Order supplier');
+$msgs['TermsOfPaymentAddEdit_8']  = _('Percent of amount must be a float');
+$msgs['TermsOfPaymentAddEdit_9']  = _('Payment delay must be an integer');
+$msgs['TermsOfPaymentAddEdit_10'] = _('Percent of amount can not exceed 100%');
+$msgs['TermsOfPaymentAddEdit_11'] = _('Percent of amount sum must be equals to 100%');
 
 
 header('Content-Type: text/javascript');

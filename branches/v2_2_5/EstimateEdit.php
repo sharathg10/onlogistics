@@ -38,11 +38,11 @@ require_once('config.inc.php');
 require_once('DocumentGenerator.php');
 
 if (isset($_GET['estId'])) {
-    $commandReceipt = false;
-    $command = Object::load('Command', $_GET['estId']);
+    $estimate = false;
+    $command  = Object::load('Command', $_GET['estId']);
 } else if (isset($_GET['id'])) {
-    $commandReceipt = Object::load('CommandReceipt', $_GET['id']);
-    $command = $commandReceipt->getCommand();
+    $estimate = Object::load('Estimate', $_GET['id']);
+    $command  = $estimate->getCommand();
     if(!($command instanceof Command)) {
         Template::errorDialog(
             _('Please select a document related to an order in order to print the receipt.'), 
@@ -69,39 +69,27 @@ if (!$command->getIsEstimate()) {
     exit(1);
 }
 
-if (!$commandReceipt) {
-    $commandReceipt = Object::load('CommandReceipt', array(
-        'Command'    => $command->getId(),
-        'DocumentNo' => $command->getCommandNo()
+if (!$estimate) {
+    $estimate = Object::load('Estimate', array(
+        'Command'  => $command->getId()
     ));
 }
-if (!($commandReceipt instanceof CommandReceipt)) {
-    $commandReceipt = new CommandReceipt();
-    $commandReceipt->setCommand($command);
-    $commandReceipt->setCommandType($command->getType());
-    $commandReceipt->setDocumentNo($command->getCommandNo());
-    $commandReceipt->setSupplierCustomer($command->getSupplierCustomer());
-    $commandReceipt->setCurrency($command->getCurrency());
-    $commandReceipt->setEditionDate(date('Y-m-d H:i:s'));
-    if (($dmodel = $commandReceipt->findDocumentModel())) {
-        $commandReceipt->setDocumentModel($dmodel);
+if (!($estimate instanceof Estimate)) {
+    $estimate = new Estimate();
+    $estimate->setCommand($command);
+    $estimate->setCommandType($command->getType());
+    $estimate->setDocumentNo($command->getCommandNo());
+    $estimate->setSupplierCustomer($command->getSupplierCustomer());
+    $estimate->setCurrency($command->getCurrency());
+    $estimate->setEditionDate(date('Y-m-d H:i:s'));
+    if (($dmodel = $estimate->findDocumentModel())) {
+        $estimate->setDocumentModel($dmodel);
     }
-    $commandReceipt->save();
+    $estimate->save();
 }
-if ($command instanceof ProductCommand) {
-    $doc = new CommandEstimateReceiptGenerator($commandReceipt);
-} else if ($command instanceof ChainCommand) {
-    $doc = new ChainCommandEstimateReceiptGenerator($commandReceipt);
-} else {
-    Template::errorDialog(
-        _('Receipt reprinting is impossible for this type of document.'), 
-        'javascript:window.close();',
-        BASE_POPUP_TEMPLATE
-    );
-    exit(1);
-}
-// document non sauve en base
-$pdf = $doc->render();
-$pdf->output('doc.pdf', 'I');
+require_once 'GenerateDocument.php';
+
+$reedit = isset($_REQUEST['print']) && $_REQUEST['print'] > 0;
+generateDocument($estimate, $reedit);
 
 ?>

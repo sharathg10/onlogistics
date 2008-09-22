@@ -295,7 +295,7 @@ if (true === $form->displayGrid()
               'Sortable' => true));
     $grid->NewColumn('FieldMapperWithTranslation', _('Subject to VAT'),
         array('Macro' => '%SupplierCustomer.HasTVA%',
-			  'TranslationMap' => array(0 => A_YES, 1 => A_NO),
+			  'TranslationMap' => array(0 => A_NO, 1 => A_YES),
               'Sortable' => true));
     // Colonnes pour les commerciaux
     $grid->NewColumn('FieldMapper', _('Situation'),

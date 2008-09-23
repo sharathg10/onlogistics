@@ -626,7 +626,7 @@ class CommandDocumentGenerator extends DocumentGenerator
         $pdfDoc = (!$pdfDoc)?$this->pdf:$pdfDoc;
         $top = $this->supplierCustomer->getTermsOfPayment();
         if (!($top instanceof TermsOfPayment)) {
-            continue;
+            return;
         }
         $title = _('Terms of payment') . ': ' . $top->getName();
         $pdfDoc->tableHeader(array($title => 190), 1);

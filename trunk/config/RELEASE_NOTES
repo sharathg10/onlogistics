@@ -35,17 +35,9 @@ BEGIN;
 TRUNCATE TABLE IdHashTable;
 ####################################
 
-# ajout TermsOfPaymentItem supplier
-ALTER TABLE TermsOfPaymentItem ADD _Supplier INT(11) NOT NULL DEFAULT 0;
-
-# nettoyage documents
-DELETE FROM AbstractDocument WHERE _Command=0 AND _ClassName IN ('Invoice','DeliveryOrder','CommandReceipt', 'Estimate');
-UPDATE AbstractDocument abd, Command cmd SET abd._ClassName='Estimate' WHERE cmd._Id = abd._Command and cmd._IsEstimate=1;
-DELETE FROM PDFDocument WHERE _Id NOT IN (select _PDFDocument from AbstractDocument);
-
-# ajout document model devis
-set @id=(select IFNULL(max(_Id),0) from DocumentModel);
-INSERT INTO `DocumentModel` VALUES (@id+1, 0, 'DEVIS', '', 1, 'Estimate', 1, 0, 1, 1, 1, 0);
+set @id=(SELECT IFNULL(MAX(_Id), 0)+1 FROM I18nString);
+INSERT INTO I18nString VALUES (@id, NULL, 'Estimate', 'Devis', '', '', '', '', '');
+INSERT INTO Alert VALUES (55001, NULL, @id, NULL, NULL);
 
 ####################################
 # Ne pas enlever

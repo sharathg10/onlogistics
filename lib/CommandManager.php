@@ -795,25 +795,23 @@ class CommandManager{
                 $doc->setDocumentModel($dmodel);
             }
             $doc->save();
-            if (!$this->isEstimate) {
-                $uacCol = new Collection();
-                //on envoie l'alerte de reception de commande au commercial lié a la commande
-                $commercial = $command->getCommercial();
-                if ($commercial instanceof UserAccount && ($commercial->getEmail() != "")) {
-                    $uacCol->setItem($commercial);
-                }
-                CommandManager::$alertsToSend[] = array(
-                    'ALERT_PRODUCT_COMMAND_RECEIPT',
-                    array(
-                        $doc, 
-                        $uacCol, 
-                        array(
-                            $command->getDestinatorSiteId(),
-                            $command->getExpeditorSiteId()
-                        )
-                    )
-                );
+            $uacCol = new Collection();
+            //on envoie l'alerte de reception de commande au commercial lié a la commande
+            $commercial = $command->getCommercial();
+            if ($commercial instanceof UserAccount && ($commercial->getEmail() != "")) {
+                $uacCol->setItem($commercial);
             }
+            CommandManager::$alertsToSend[] = array(
+                'ALERT_PRODUCT_COMMAND_RECEIPT',
+                array(
+                    $doc, 
+                    $uacCol, 
+                    array(
+                        $command->getDestinatorSiteId(),
+                        $command->getExpeditorSiteId()
+                    )
+                )
+            );
         } else if ($this->commandType == 'ChainCommand') {
             $additionnalUsers = new Collection();
             $additionnalUsers->setItem($this->auth->getUser());
@@ -827,29 +825,27 @@ class CommandManager{
                 )
             );
         }
-        // si c'est un devis, on a plus rien à faire ici
-        if ($this->isEstimate) {
-            return true;
-        }
-        // envoi des mails d'alerte de stock
-        for ($i=0; $i < count($alerts); $i++) {
-            $alertId = $alerts[$i][0];
-            $pdt = $alerts[$i][1];
-            $this->_debug('* Envoi alerte stock de la commande '.$command->getCommandNo());
-            if (AlertSender::isStockAlert($alertId)) {
+        if (!$this->isEstimate) {
+            // envoi des mails d'alerte de stock
+            for ($i=0; $i < count($alerts); $i++) {
+                $alertId = $alerts[$i][0];
+                $pdt = $alerts[$i][1];
+                $this->_debug('* Envoi alerte stock de la commande '.$command->getCommandNo());
+                if (AlertSender::isStockAlert($alertId)) {
                     CommandManager::$alertsToSend[] = array(
-                    'sendStockAlert',
-                    array(
-                        $alertId, $pdt, array(), $command
-                    )
-                );
+                        'sendStockAlert',
+                        array(
+                            $alertId, $pdt, array(), $command
+                        )
+                    );
+                }
             }
-        }
-        // envoi des mails d'alerte encours
-        if ($this->commandType == 'ProductCommand') {
-            $this->_debug('* Gestion de l\'encours de la commande ' .
-                $command->getCommandNo());
-            handleIncurUpdate($command, '€'); // XXX FIXME devise
+            // envoi des mails d'alerte encours
+            if ($this->commandType == 'ProductCommand') {
+                $this->_debug('* Gestion de l\'encours de la commande ' .
+                    $command->getCommandNo());
+                handleIncurUpdate($command, '€'); // XXX FIXME devise
+            }
         }
         // Si la commande 'initiatrice de tout', on est hors transaction, on
         // envoit les mails

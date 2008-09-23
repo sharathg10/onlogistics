@@ -4853,6 +4853,19 @@ insert into TermsOfPayment values (1, NULL, 'Chèque 30 jours net');
 insert into TermsOfPaymentItem values (1, NULL, 100, 30, 1, 6, 0, 1);
 update SupplierCustomer set _TermsOfPayment=1 where 1;
 
+# ajout TermsOfPaymentItem supplier
+ALTER TABLE TermsOfPaymentItem ADD _Supplier INT(11) NOT NULL DEFAULT 0;
+
+# nettoyage documents
+DELETE FROM AbstractDocument WHERE _Command=0 AND _ClassName IN ('Invoice','DeliveryOrder','CommandReceipt', 'Estimate');
+UPDATE AbstractDocument abd, Command cmd SET abd._ClassName='Estimate' WHERE cmd._Id = abd._Command and cmd._IsEstimate=1;
+DELETE FROM PDFDocument WHERE _Id NOT IN (select _PDFDocument from AbstractDocument);
+
+# ajout document model devis
+set @id=(select IFNULL(max(_Id),0) from DocumentModel);
+INSERT INTO `DocumentModel` VALUES (@id+1, 0, 'DEVIS', '', 1, 'Estimate', 1, 0, 1, 1, 1, 0);
+
+
 
 ####################################
 # Ne pas enlever

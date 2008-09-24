@@ -66,6 +66,7 @@ class SupplyingOptimizator {
      * @access private
      */
     private $_supplierId = 0;
+    private $_modelIds = 0;
     /**
      *
      * @var    integer $_customerId l'actor connecte, par defaut
@@ -124,6 +125,7 @@ class SupplyingOptimizator {
         }else {  // l'actor connecte par defaut
             $this->_customerId = $auth->getActorId();
         }
+        $this->_modelIds = isset($params['modelIds']) ? $params['modelIds'] : array();
         $supplierCustomer = Object::load(
                 'SupplierCustomer',
                 array('Customer' => $this->_customerId,
@@ -184,7 +186,7 @@ class SupplyingOptimizator {
             $TimeStampEnd = $this->_tsArray[$j] + 604800;
             //  resultset suite a req SQL
             $rs = getOrderedQtyPerWeekForSupplier($this->_customerId,
-                    $this->_supplierId, $this->_tsArray[$j], $TimeStampEnd);
+                    $this->_supplierId, $this->_tsArray[$j], $TimeStampEnd, $this->_modelIds);
 
             while ($rs && !$rs->EOF){
                 if ($j == 0) { // patch moche pour forcer l'obtention d'un dico, pas une liste!!
@@ -372,6 +374,7 @@ class SupplyingOptimizator {
         // Pour trier par BaseReference, vu que cote python, on manipule des
         // dictionnaires (non ordonnes)
         $productIdSorted = array();
+        $models = array();
         // Stock a l'instant now
         $rs = getProductInfoList($allProductIdArray, $this->_supplierId);
         while ($rs && !$rs->EOF){
@@ -391,11 +394,13 @@ class SupplyingOptimizator {
                           'exitQtyBeforeEndOfWeek' => $orderedQty,
                           'supplierRef' => strval($rs->fields['supplierRef']));
             $productIdSorted[] = intval($rs->fields['pdtId']);
+            $models[] = $rs->fields['pdtModel'];
             $rs->moveNext();
         }
         $return['productInfoList'] = $productInfoList;
         // Pas utile pour la version web
         $return['productIdSorted'] = $productIdSorted;
+        $return['models'] = $models;
 
         foreach($allProductIdArray as $pdtId) {
             /*  Recuperation de la Qte en stock en fin de semaine 0  */

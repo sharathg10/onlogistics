@@ -44,6 +44,8 @@ $auth->checkProfiles();
 $userId = $auth->getUserId();
 $smarty = new Template();
 
+$rtwContext = (in_array('readytowear', Preferences::get('TradeContext', array())));
+
 //SearchTools::prolongDataInSession();
 
 //$action = basename($_SERVER['PHP_SELF']);
@@ -62,6 +64,10 @@ if (isset($_REQUEST['formSubmitted']) && $_REQUEST['formSubmitted'] == 1) {
     }
     $supplierId = isset($_POST['Supplier'])?$_POST['Supplier']:$_SESSION['supplier'];
     $params = array('supplierId' => $supplierId);
+    $modelIds = isset($_POST['Model']) ? $_POST['Model'] : (isset($_SESSION['Model']) ? $_SESSION['Model'] : array());
+    if ($rtwContext) {
+        $params['modelIds'] = $modelIds;
+    }
     $optimizator = new SupplyingOptimizator($params);
     $data = $optimizator->getData();
     if ($data === false) {
@@ -101,6 +107,7 @@ if (isset($_REQUEST['formSubmitted']) && $_REQUEST['formSubmitted'] == 1) {
     $session = Session::singleton();
     // mise en session en vue de ProductCommandSupplier
     $session->register('supplier', $supplierId, 3);
+    $session->register('Model', $modelIds, 3);
     // mise en session pour ne pas refaire les calculs
     $session->register('qtyToOrder', $data['QtyToOrder'], 3);
     $session->register('wishedStartDates', $optimizator->wishedStartDates, 3);
@@ -154,15 +161,48 @@ $form = new HTML_QuickForm('SupplyingOptimization', 'post', $_SERVER['PHP_SELF']
 unset($form->_attributes['name']);  // xhtml compliant
 
 $supplierSelect = $form->addElement('select', 'Supplier', _('Supplier'), array(),
-        'style="width:100%" id="Supplier"');
+    'id="supplierSelect" style="width:100%"');
+if ($rtwContext) {
+    $modelSelect = $form->addElement('select', 'Model', _('Model'), array(), 
+        'id="modelSelect" multiple size="6" class="select"');
+}
 $supplierArray = SearchTools::createArrayIDFromCollection(
         array('Supplier', 'AeroSupplier'), array('Active'=>1));
+$precalculate = (Preferences::get('PreCalculateOptimApproSuppliers', false));
+$supplierMap  = array();
 foreach($supplierArray as $supplierId => $supplierName) {
-    if (Preferences::get('PreCalculateOptimApproSuppliers', false)) {
+    if ($precalculate) {
         $optimizator = new SupplyingOptimizator(array('supplierId' => $supplierId));
-        $style = $optimizator->getData() ? '' : 'disabled="disabled"';
+        $data = $optimizator->getData();
+        $style = $data ? '' : 'disabled="disabled"';
+        if ($data && $rtwContext) {
+            $modelArray  = Object::loadCollection('RTWModel',
+                array('Manufacturer' => $supplierId),
+                array('StyleNumber'=>SORT_ASC)
+            )->toArray('getStyleNumber');
+            foreach($modelArray as $modelId=>$modelName) {
+                if (in_array($modelId, $data['models'])) {
+                    $supplierMap[$supplierId][] = array(
+                        'id'   => $modelId,
+                        'name' => $modelName
+                    );
+                }
+            }
+        }
     } else {
         $style = '';
+        if ($rtwContext) {
+            $modelArray  = Object::loadCollection('RTWModel',
+                array('Manufacturer' => $supplierId),
+                array('StyleNumber'=>SORT_ASC)
+            )->toArray('getStyleNumber');
+            foreach ($modelArray as $modelId => $modelName) {
+                $supplierMap[$supplierId][] = array(
+                    'id'   => $modelId,
+                    'name' => $modelName
+                );
+            }
+        }
     }
     $supplierSelect->addOption($supplierName, $supplierId, $style);
 }
@@ -188,6 +228,7 @@ if (isset($_SESSION['Supplier'])) {
 $form->setDefaults($defaultValues);
 $form->accept($renderer);  // affecte au form le renderer personnalise
 $smarty->assign('form', $renderer->toArray());
+$smarty->assign('supplierMap', $supplierMap);
 
 //$smarty->assign('dateFormat', I18N::getHTMLSelectDateFormat());
 $pageContent = $smarty->fetch('Stock/SupplyingOptimization.html');

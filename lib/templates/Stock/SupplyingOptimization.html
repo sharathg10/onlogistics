@@ -1,3 +1,13 @@
+<script type="text/javascript">
+var supplierMap = [];
+{foreach from=$supplierMap key=supplierId item=modelData}
+supplierMap[{$supplierId}] = [];
+{foreach from=$modelData item=model}
+supplierMap[{$supplierId}].push(OPTION({literal}{{/literal}'value': {$model.id}{literal}}{/literal}, "{$model.name}"));
+{/foreach}
+{/foreach}
+</script>
+
 {$form.javascript}
 <form {$form.attributes}>
 <table width="100%" border="0" cellspacing="0" cellpadding="4" class="form" id="searchFormHeader">
@@ -28,9 +38,14 @@
   <tbody>
     <tr class="search">
 	  <td class="element_label">{$form.Supplier.label}:</td>
-      <td class="element_html">{$form.Supplier.html}</td>
+      <td class="element_html">{$form.Supplier.html}{$form.hidden}</td>
+      {if $form.Model} 
+      <td class="element_label">{$form.Model.label}</td>
+      <td class="element_html">{$form.Model.html}</td>
+      {else}
       <td class="element_label">&nbsp;</td>
-      <td class="element_html">{$form.hidden}&nbsp;</td>
+      <td class="element_html">&nbsp;</td>
+      {/if}
     </tr>
     <tr class="search">
 	  <td nowrap="nowrap">{$form.PassedWeekNumber.label}:</td>

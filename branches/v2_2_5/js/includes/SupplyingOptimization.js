@@ -13,7 +13,7 @@ requiredFields = new Array(
 /**
  * Verifie qu'une date a ete selectionnee
  * @return boolean
- **/
+ */
 function checkDate() {
     var d=new Date();
     var month = ((d.getMonth()+1)<10)?'0' + (d.getMonth()+1):(d.getMonth()+1);
@@ -25,3 +25,12 @@ function checkDate() {
     }
     return true;
 }
+
+connect(window, 'onload', function() {
+    if ($('modelSelect')) {
+        connect('supplierSelect', 'onchange', function() {
+            replaceChildNodes($('modelSelect'), supplierMap[$('supplierSelect').value]);
+        });
+        replaceChildNodes($('modelSelect'), supplierMap[$('supplierSelect').value]);
+    }
+});

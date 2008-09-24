@@ -45,6 +45,7 @@ define('ALERT_SUPPLIER_COMMAND_INCUR_OVER', 40000);
 define('ALERT_CLIENT_INVOICE_INCUR_OVER', 45000);
 define('ALERT_SUPPLIER_INVOICE_INCUR_OVER', 50000);
 define('ALERT_CLIENT_COMMAND_RECEIPT', 55000);
+define('ALERT_ESTIMATE_RECEIPT', 55001);
 define('ALERT_SUPPLIER_COMMAND_RECEIPT', 60000);
 define('ALERT_CLIENT_LATE_PAYMENT', 65000);
 define('ALERT_SUPPLIER_LATE_PAYMENT', 70000);
@@ -187,6 +188,11 @@ function getAlertContent($alertId=0) {
 
     $alertContent[ALERT_CLIENT_COMMAND_RECEIPT] = array(
         'subject' => _('Order receipt') . ' {$NumCde}',
+        'body' => '{$body}'
+    );
+
+    $alertContent[ALERT_ESTIMATE_RECEIPT] = array(
+        'subject' => _('Estimate') . ' {$NumCde}',
         'body' => '{$body}'
     );
 

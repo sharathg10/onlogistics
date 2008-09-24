@@ -864,7 +864,7 @@ function getCustomerCollectionIds($ActorId)
  * @return Object resultset
  */
 function getOrderedQtyPerWeekForSupplier($ActorId, $SupplierId, $TimeStampBegin,
-        $TimeStampEnd)
+        $TimeStampEnd, $modelIds)
 {
     require_once('Objects/MovementType.const.php');
 	$sql = 'SELECT CMD._IsEstimate as isEstimate, PDT._Id as pdtId, SUM(ACM._Quantity) AS Qty
@@ -878,8 +878,11 @@ function getOrderedQtyPerWeekForSupplier($ActorId, $SupplierId, $TimeStampBegin,
     $sql .= 'AND CMD._Expeditor=' . $ActorId . '
          AND UNIX_TIMESTAMP(ACM._StartDate)<' . $TimeStampEnd . '
          AND UNIX_TIMESTAMP(ACM._StartDate)>' . $TimeStampBegin . '
-         AND PDT._Activated = 1 AND ACM._Type=' . SORTIE_NORMALE . '
-         GROUP BY CMD._IsEstimate, PDT._Id;';
+         AND PDT._Activated = 1 AND ACM._Type=' . SORTIE_NORMALE;
+    if (!empty($modelIds)) {
+        $sql .= ' AND PDT._Model in (' . implode(',', $modelIds) . ')';
+    }
+    $sql .= ' GROUP BY CMD._IsEstimate, PDT._Id;';
 	return executeSQL($sql);
 }
 
@@ -1224,7 +1227,7 @@ function getOrderedQtyAtEndOfWeek($ProductIdArray, $ActorId, $TimeStampBegin, $T
 function getProductInfoList($ProductIdArray, $SupplierId)
 {
     $locale = I18N::getLocaleCode();
-	$sql = 'SELECT DISTINCT P._Id AS pdtId, P._BaseReference AS pdtBaseReference,
+	$sql = 'SELECT DISTINCT P._Id AS pdtId, P._BaseReference AS pdtBaseReference, P._Model as pdtModel,
          I._StringValue_'.$locale.' AS pdtName, AP._AssociatedProductReference AS supplierRef,
          AP._BuyUnitQuantity AS BuyUnitQty,
          P._SellUnitMinimumStoredQuantity AS MiniStoredQty, P._SellUnitVirtualQuantity as QV,

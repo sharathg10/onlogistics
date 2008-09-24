@@ -219,7 +219,7 @@ class SupplyingOptimizator {
                 $rs2 = getDeliveredQtyPerWeekForSupplier($this->_customerId,
                         $this->_supplierId, $this->_tsArray[$j], $TimeStampEnd);
                 while ($rs2 && !$rs2->EOF){
-                    if (isset([$rs2->fields['pdtId']][strval($j)])) {
+                    if (isset($orderedQtyArray[$rs2->fields['pdtId']][strval($j)])) {
                         $orderedQtyArray[$rs2->fields['pdtId']][strval($j)] -=
                             floatval($rs2->fields['realQty']);
                     }

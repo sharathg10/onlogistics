@@ -297,15 +297,25 @@ class AlertSender{
      **/
     public static function send_ALERT_PRODUCT_COMMAND_RECEIPT($commandReceipt, $uacCol, $siteIds=array()) 
     {
-        if ($commandReceipt->getCommandType() == Command::TYPE_SUPPLIER) {
-            $alert = self::_loadAlert(ALERT_SUPPLIER_COMMAND_RECEIPT);
+        if ($commandReceipt instanceof Estimate) {
+            $alert = self::_loadAlert(ALERT_ESTIMATE_RECEIPT);
+            $body  = sprintf(
+                _("Please find enclosed the estimate \"%s\".\n\nThe department of sales."),
+                $commandReceipt->getDocumentNo()
+            );
+            $filename = 'estimate.pdf';
         } else {
-            $alert = self::_loadAlert(ALERT_CLIENT_COMMAND_RECEIPT);
+            if ($commandReceipt->getCommandType() == Command::TYPE_SUPPLIER) {
+                $alert = self::_loadAlert(ALERT_SUPPLIER_COMMAND_RECEIPT);
+            } else {
+                $alert = self::_loadAlert(ALERT_CLIENT_COMMAND_RECEIPT);
+            }
+            $body  = sprintf(
+                _("Please find enclosed the receipt for order \"%s\".\n\nThe department of sales."),
+                $commandReceipt->getDocumentNo()
+            );
+            $filename = 'command_receipt.pdf';
         }
-        $body  = sprintf(
-            _("Please find enclosed the receipt for order \"%s\".\n\nThe department of sales."),
-            $commandReceipt->getDocumentNo()
-        );
         $alert->prepare(array(
             'NumCde' => $commandReceipt->getDocumentNo(),
             'body'   => $body
@@ -316,7 +326,7 @@ class AlertSender{
         $attachment = array(
             'content' => $pdfContent,
             'contentType' => 'application/pdf',
-            'fileName' => 'command_receipt.pdf',
+            'fileName' => $filename,
             'isFile' => false
         );
         self::_send($alert, $uacCol, false, $filter, $attachment);

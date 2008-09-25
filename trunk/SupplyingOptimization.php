@@ -41,6 +41,7 @@ require_once('LangTools.php');
 
 $auth = Auth::Singleton();
 $auth->checkProfiles();
+$session = Session::singleton();
 $userId = $auth->getUserId();
 $smarty = new Template();
 
@@ -104,7 +105,6 @@ if (isset($_REQUEST['formSubmitted']) && $_REQUEST['formSubmitted'] == 1) {
     $smarty->assign(
         'wishedStartDateArray', $wishedStartDateArray);
     $smarty->assign('futureWeekNumber', $futureWeekNumber);
-    $session = Session::singleton();
     // mise en session en vue de ProductCommandSupplier
     $session->register('supplier', $supplierId, 3);
     $session->register('Model', $modelIds, 3);
@@ -170,48 +170,61 @@ $supplierArray = SearchTools::createArrayIDFromCollection(
         array('Supplier', 'AeroSupplier'), array('Active'=>1));
 $precalculate = (Preferences::get('PreCalculateOptimApproSuppliers', false));
 $supplierMap  = array();
-foreach($supplierArray as $supplierId => $supplierName) {
-    $style = '';
-    $models = false;
-    if ($precalculate) {
-        $optimizator = new SupplyingOptimizator(array('supplierId' => $supplierId));
-        $data = $optimizator->getData();
-        if (is_array($data)) {
-            $data = $optimizator->renderData();
+$supplierOptions = array();
+if (!isset($_SESSION['supplierOptions']) || !isset($_SESSION['supplierMap'])) {
+    foreach($supplierArray as $supplierId => $supplierName) {
+        $style = '';
+        $models = false;
+        if ($precalculate) {
+            $optimizator = new SupplyingOptimizator(array('supplierId' => $supplierId));
+            $data = $optimizator->getData();
             if (is_array($data)) {
-                $style = '';
-                if ($rtwContext) {
-                    $modelArray  = Object::loadCollection('RTWModel',
-                        array('Manufacturer' => $supplierId),
-                        array('StyleNumber'=>SORT_ASC)
-                    )->toArray('getStyleNumber');
-                    $models = $data['Models'];
+                $data = $optimizator->renderData();
+                if (is_array($data) && !empty($data['QtyToOrder'])) {
+                    $style = '';
+                    if ($rtwContext) {
+                        $modelArray  = Object::loadCollection('RTWModel',
+                            array('Manufacturer' => $supplierId),
+                            array('StyleNumber'=>SORT_ASC)
+                        )->toArray('getStyleNumber');
+                        $models = $data['Models'];
+                    }
+                } else {
+                    $style = 'disabled="disabled"';
+                    $models = array();
                 }
             } else {
                 $style = 'disabled="disabled"';
                 $models = array();
             }
-        } else {
-            $style = 'disabled="disabled"';
-            $models = array();
         }
-    }
-    if ($rtwContext) {
-        $modelArray  = Object::loadCollection('RTWModel',
-            array('Manufacturer' => $supplierId),
-            array('StyleNumber'=>SORT_ASC)
-        )->toArray('getStyleNumber');
-        foreach ($modelArray as $modelId => $modelName) {
-            if (false === $models || in_array($modelId, $models)) {
-                $supplierMap[$supplierId][] = array(
-                    'id'   => $modelId,
-                    'name' => $modelName
-                );
+        if ($rtwContext) {
+            $modelArray  = Object::loadCollection('RTWModel',
+                array('Manufacturer' => $supplierId),
+                array('StyleNumber'=>SORT_ASC)
+            )->toArray('getStyleNumber');
+            foreach ($modelArray as $modelId => $modelName) {
+                if (false === $models || in_array($modelId, $models)) {
+                    $supplierMap[$supplierId][] = array(
+                        'id'   => $modelId,
+                        'name' => $modelName
+                    );
+                }
             }
         }
+        $supplierOptions[] = array($supplierName, $supplierId, $style);
     }
-    $supplierSelect->addOption($supplierName, $supplierId, $style);
+    $session->register('supplierMap', $supplierMap, 1);
+    $session->register('supplierOptions', $supplierOptions, 1);
+} else {
+    $session->prolong('supplierMap', 1);
+    $session->prolong('supplierOptions', 1);
 }
+
+foreach($_SESSION['supplierOptions'] as $opt) {
+    $supplierSelect->addOption($opt[0], $opt[1], $opt[2]);
+}
+
 $form->addElement('text', 'PassedWeekNumber', _('Number of weeks in history'),
         'style="width:100%" id="PassedWeekNumber"');
 $form->addElement('text', 'FutureWeekNumber', _('Number of weeks of forecast'),
@@ -234,7 +247,7 @@ if (isset($_SESSION['Supplier'])) {
 $form->setDefaults($defaultValues);
 $form->accept($renderer);  // affecte au form le renderer personnalise
 $smarty->assign('form', $renderer->toArray());
-$smarty->assign('supplierMap', $supplierMap);
+$smarty->assign('supplierMap', $_SESSION['supplierMap']);
 
 //$smarty->assign('dateFormat', I18N::getHTMLSelectDateFormat());
 $pageContent = $smarty->fetch('Stock/SupplyingOptimization.html');

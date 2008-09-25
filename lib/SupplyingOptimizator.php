@@ -396,7 +396,7 @@ class SupplyingOptimizator {
                           'exitQtyBeforeEndOfWeek' => $orderedQty,
                           'supplierRef' => strval($rs->fields['supplierRef']));
             $productIdSorted[] = intval($rs->fields['pdtId']);
-            $models[] = $rs->fields['pdtModel'];
+            $models[$rs->fields['pdtId']] = $rs->fields['pdtModel'];
             $rs->moveNext();
         }
         $return['productInfoList'] = $productInfoList;
@@ -434,6 +434,7 @@ class SupplyingOptimizator {
         $OrderedQtyPerWeekInEstimate = $data['orderedQtyArrayInEstimate'];
         // Qtes commandees pour reappro (entrees) par semaine
         $WaitedQtyPerWeek = $data['waitedQtyArray'];
+        $Models = $data['models'];
 
         $ProductIdArray = array();
         $AllProductIdArray = array();
@@ -530,6 +531,7 @@ class SupplyingOptimizator {
             for($i = 1; $i <=$this->_futureWeekNumber ; $i++) {
                 // Si on tient compte de l'historique, des saisonalites, et promos
                 if ($this->_withExtrapolation && isset($ProductIdArray[$pdtId])) {
+                    
                     # Calcul des previsions de Qtes brutes pour les semaines
                     # a venir a partir du calcul des moyennes des quantites
                     # 'brutes' commandees les X dernieres semaines, pour chaque semaine a venir
@@ -578,11 +580,11 @@ class SupplyingOptimizator {
                 $totalOrderedQty += $OrderedQtyPerWeek[$pdtId][$i];
                 $totalQtyToOrder += $QtyToOrder[$pdtId][$i] ;
             }
-            if ($totalQtyToOrder == 0 && $totalOrderedQty == 0) {
+            if ($totalQtyToOrder == 0) { // && $totalOrderedQty == 0) {
                 //echo "\n On supprime l'entrée %s car Qte commandee=Qte pour reappro=0, et pas de sortie interne" % (str(x))
                 unset($OrderedQtyPerWeek[$pdtId], $WaitedQtyPerWeek[$pdtId],
-                    $QtyToOrder[$pdtId], $ProductInfoList[$pdtId]);
-                array_diff($AllProductIdArray, array($pdtId));
+                    $QtyToOrder[$pdtId], $ProductInfoList[$pdtId], $Models[$pdtId]);
+                $AllProductIdArray = array_diff($AllProductIdArray, array($pdtId));
             }
         }
         // Si pas de qtes commandees
@@ -605,7 +607,8 @@ class SupplyingOptimizator {
                 'WaitedQtyPerWeek' =>$WaitedQtyPerWeek,
                 'QtyToOrder' => $QtyToOrder,
                 'ProductInfoList' => $ProductInfoList,
-                'SubstitutionInfoList' => $substitutionInfoList
+                'SubstitutionInfoList' => $substitutionInfoList,
+                'Models' => $Models
         );
     }
 

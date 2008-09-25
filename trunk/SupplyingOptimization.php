@@ -171,32 +171,38 @@ $supplierArray = SearchTools::createArrayIDFromCollection(
 $precalculate = (Preferences::get('PreCalculateOptimApproSuppliers', false));
 $supplierMap  = array();
 foreach($supplierArray as $supplierId => $supplierName) {
+    $style = '';
+    $models = false;
     if ($precalculate) {
         $optimizator = new SupplyingOptimizator(array('supplierId' => $supplierId));
         $data = $optimizator->getData();
-        $style = $data ? '' : 'disabled="disabled"';
-        if ($data && $rtwContext) {
-            $modelArray  = Object::loadCollection('RTWModel',
-                array('Manufacturer' => $supplierId),
-                array('StyleNumber'=>SORT_ASC)
-            )->toArray('getStyleNumber');
-            foreach($modelArray as $modelId=>$modelName) {
-                if (in_array($modelId, $data['models'])) {
-                    $supplierMap[$supplierId][] = array(
-                        'id'   => $modelId,
-                        'name' => $modelName
-                    );
+        if (is_array($data)) {
+            $data = $optimizator->renderData();
+            if (is_array($data)) {
+                $style = '';
+                if ($rtwContext) {
+                    $modelArray  = Object::loadCollection('RTWModel',
+                        array('Manufacturer' => $supplierId),
+                        array('StyleNumber'=>SORT_ASC)
+                    )->toArray('getStyleNumber');
+                    $models = $data['Models'];
                 }
+            } else {
+                $style = 'disabled="disabled"';
+                $models = array();
             }
+        } else {
+            $style = 'disabled="disabled"';
+            $models = array();
         }
-    } else {
-        $style = '';
-        if ($rtwContext) {
-            $modelArray  = Object::loadCollection('RTWModel',
-                array('Manufacturer' => $supplierId),
-                array('StyleNumber'=>SORT_ASC)
-            )->toArray('getStyleNumber');
-            foreach ($modelArray as $modelId => $modelName) {
+    }
+    if ($rtwContext) {
+        $modelArray  = Object::loadCollection('RTWModel',
+            array('Manufacturer' => $supplierId),
+            array('StyleNumber'=>SORT_ASC)
+        )->toArray('getStyleNumber');
+        foreach ($modelArray as $modelId => $modelName) {
+            if (false === $models || in_array($modelId, $models)) {
                 $supplierMap[$supplierId][] = array(
                     'id'   => $modelId,
                     'name' => $modelName

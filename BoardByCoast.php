@@ -50,8 +50,9 @@ $form = new SearchForm('Actor');
 $SupplierArray = SearchTools::createArrayIDFromCollection(array('Supplier', 'AeroSupplier'),
     array('Generic'=>0), _('Select one or more suppliers'));
 $form->addElement('select', 'Id', _('Supplier'), array($SupplierArray, 'multiple size="5"'), array());
+$types = Command::getTypeConstArray() + array(0 => _('Estimate'));
 $form->addElement('select', 'CommandType', _('Type of order'),
-        array(Command::getTypeConstArray()), array('Disable'=>true));
+        array($types), array('Disable'=>true));
 $currencyArray = SearchTools::createArrayIDFromCollection(
     'Currency');
 $form->addElement('select', 'Currency', _('Currency'), array($currencyArray), array('Disable'=>true));

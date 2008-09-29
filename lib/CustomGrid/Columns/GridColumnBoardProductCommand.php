@@ -63,11 +63,16 @@ class GridColumnBoardProductCommand extends AbstractGridColumn {
         } else {
             $FilterComponentArray[] = SearchTools::NewFilterComponent('Expeditor', 'Command.Expeditor', 'Equals', $Auth->getActorId(), 1);
         }
-		$FilterComponentArray[] = SearchTools::NewFilterComponent('IsEstimate', 'Command.IsEstimate', 'Equals', 0, 1);
+        if (!$this->commandType) {
+            // devis
+		    $FilterComponentArray[] = SearchTools::NewFilterComponent('IsEstimate', 'Command.IsEstimate', 'Equals', 1, 1);
+        } else {
+		    $FilterComponentArray[] = SearchTools::NewFilterComponent('IsEstimate', 'Command.IsEstimate', 'Equals', 0, 1);
+		    $FilterComponentArray[] = SearchTools::NewFilterComponent('Type', 'Command.Type', 'Equals', $this->commandType, 1);
+        }
 		$FilterComponentArray[] = SearchTools::NewFilterComponent('Product', '', 'Equals', $object->getId(), 1);
 		$FilterComponentArray[] = SearchTools::NewFilterComponent('start', 'Command.CommandDate', 'GreaterThanOrEquals', $this->date_start, 1);
 		$FilterComponentArray[] = SearchTools::NewFilterComponent('end', 'Command.CommandDate', 'LowerThanOrEquals', $this->date_end, 1);
-		$FilterComponentArray[] = SearchTools::NewFilterComponent('Type', 'Command.Type', 'Equals', $this->commandType, 1);
 		$FilterComponentArray[] = SearchTools::NewFilterComponent('Currency', 'Command.Currency', 'Equals', $this->currency, 1);
         $filter = SearchTools::FilterAssembler($FilterComponentArray);
         $CommandItemCollection = $cmdItemMapper->loadCollection($filter, array(), 

@@ -176,6 +176,9 @@ if (isset($_REQUEST['FormSubmitted']) && $_REQUEST['FormSubmitted'] == 'true') {
             saveInstance($EXM_In, 'javascript:window.close()');
             // }}}
             // création des lem de sortie et d'entrée, maj des lpq {{{
+            if (!isset($_POST['ProductLocation']) || !is_array($_POST['ProductLocation'])) {
+                continue;
+            }
             foreach($_POST['ProductLocation'][$key] as $index=>$locationExit) {
                 $qty = $_POST['ProductQty'][$key][$index];
                 if($qty==0) {

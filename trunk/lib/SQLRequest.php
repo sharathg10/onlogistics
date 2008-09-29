@@ -1382,8 +1382,7 @@ function Request_ActorCommandsBySupplier($expeditorId, $supplierId, $dateStart, 
 	    "AND C._ClassName='ProductCommand' " .
 	    "AND SC._Id=C._SupplierCustomer " .
 	    "AND SC._Supplier=$expeditorId AND P._Supplier=$supplierId " .
-	    "AND C._CommandDate<='$dateEnd' AND C._CommandDate>='$dateStart' " .
-	    "AND C._IsEstimate=0 AND C._Type=$commandType";
+	    "AND C._CommandDate<='$dateEnd' AND C._CommandDate>='$dateStart'";
     } else {
 	    $sql = "SELECT ACI._PriceHT, ACI._Promotion, " .
 	    "ACI._Handing as _aciHanding, C._Handing as _cHanding, " .
@@ -1392,8 +1391,13 @@ function Request_ActorCommandsBySupplier($expeditorId, $supplierId, $dateStart, 
 	    "WHERE P._Id=ACI._Product AND ACI._Command=C._Id  " .
 	    "AND C._ClassName='ProductCommand' " .
 	    "AND C._Expeditor=$expeditorId AND P._Supplier=$supplierId " .
-	    "AND C._CommandDate<='$dateEnd' AND C._CommandDate>='$dateStart' " .
-	    "AND C._IsEstimate=0 AND C._Type=$commandType";
+	    "AND C._CommandDate<='$dateEnd' AND C._CommandDate>='$dateStart'";
+    }
+    if (!$commandType) {
+        // devis
+	    $sql .= " AND C._IsEstimate=1";
+    } else {
+	    $sql .= " AND C._IsEstimate=0 AND C._Type=" . $commandType;
     }
     if($currency) {
         $sql .= " AND C._Currency=$currency";
@@ -1415,12 +1419,16 @@ function Request_CustomersWithCommand($actorId, $start_date, $end_date, $command
         $sql = "SELECT DISTINCT CMD._Destinator FROM Command CMD, SupplierCustomer SC ";
         $sql .= "WHERE CMD._SupplierCustomer=SC._Id ";
         $sql .= "AND SC._Supplier='$actorId' ";
-	    $sql .= "AND CMD._CommandDate<='$end_date' AND CMD._CommandDate>='$start_date' ";
-	    $sql .= "AND CMD._IsEstimate=0 AND CMD._Type=" . $commandType;
+	    $sql .= "AND CMD._CommandDate<='$end_date' AND CMD._CommandDate>='$start_date'";
     } else {
         $sql = "SELECT DISTINCT CMD._Destinator FROM Command CMD WHERE CMD._Expeditor='$actorId' ";
-	    $sql .= "AND CMD._CommandDate<='$end_date' AND CMD._CommandDate>='$start_date' ";
-	    $sql .= "AND CMD._IsEstimate=0 AND CMD._Type=" . $commandType;
+	    $sql .= "AND CMD._CommandDate<='$end_date' AND CMD._CommandDate>='$start_date'";
+    }
+    if (!$commandType) {
+        // devis
+	    $sql .= " AND CMD._IsEstimate=1";
+    } else {
+	    $sql .= " AND CMD._IsEstimate=0 AND CMD._Type=" . $commandType;
     }
     $sql .= " AND CMD._Currency=$currency";
 	$rs = ExecuteSQL($sql);
@@ -1447,12 +1455,16 @@ function Request_CommercialsWithCommand($actorId, $start_date, $end_date, $comma
 		$sql = "SELECT DISTINCT CMD._Commercial FROM Command CMD, SupplierCustomer SC ";
 		$sql .= "WHERE CMD._SupplierCustomer=SC._Id ";
 		$sql .= "AND SC._Supplier='$actorId' ";
-    	$sql .= "AND CMD._CommandDate<='$end_date' AND CMD._CommandDate>='$start_date' ";
-    	$sql .= "AND CMD._IsEstimate=0 AND CMD._Type='$commandType'";
+    	$sql .= "AND CMD._CommandDate<='$end_date' AND CMD._CommandDate>='$start_date'";
 	} else {
     	$sql = "SELECT DISTINCT CMD._Commercial FROM Command CMD WHERE CMD._Expeditor='$actorId' ";
-    	$sql .= "AND CMD._CommandDate<='$end_date' AND CMD._CommandDate>='$start_date' ";
-    	$sql .= "AND CMD._IsEstimate=0 AND CMD._Type='$commandType'";
+    	$sql .= "AND CMD._CommandDate<='$end_date' AND CMD._CommandDate>='$start_date'";
+    }
+    if (!$commandType) {
+        // devis
+	    $sql .= " AND CMD._IsEstimate=1";
+    } else {
+	    $sql .= " AND CMD._IsEstimate=0 AND CMD._Type=" . $commandType;
     }
     $sql .= " AND CMD._Currency=$currencyId";
 	$rs = ExecuteSQL($sql);
@@ -1482,14 +1494,18 @@ function Request_SuppliersWithCommand ($actorId, $start_date, $end_date, $comman
 	    "WHERE P._Id=ACI._Product AND ACI._Command=C._Id  " .
 	    "AND C._ClassName='ProductCommand' AND SC._Supplier=$actorId " .
 	    "AND SC._Id=C._SupplierCustomer " .
-	    "AND C._CommandDate<='$end_date' AND C._CommandDate>='$start_date' ".
-	    "AND C._IsEstimate=0 AND C._Type=$commandType";
+	    "AND C._CommandDate<='$end_date' AND C._CommandDate>='$start_date'";
 	} else {
 	    $sql = "SELECT DISTINCT P._Supplier FROM Product P, CommandItem ACI, Command C " .
 	    "WHERE P._Id=ACI._Product AND ACI._Command=C._Id  " .
 	    "AND C._ClassName='ProductCommand' AND C._Expeditor=$actorId " .
-	    "AND C._CommandDate<='$end_date' AND C._CommandDate>='$start_date' ".
-	    "AND C._IsEstimate=0 AND C._Type=$commandType";
+	    "AND C._CommandDate<='$end_date' AND C._CommandDate>='$start_date'";
+    }
+    if (!$commandType) {
+        // devis
+	    $sql .= " AND C._IsEstimate=1";
+    } else {
+	    $sql .= " AND C._IsEstimate=0 AND C._Type=" . $commandType;
     }
     $sql .= " AND C._Currency=$currency";
 
@@ -1517,16 +1533,20 @@ function Request_GetSuppliersWithOrders($actorId, $dateStart, $DateEnd, $command
 	    "WHERE C._SupplierCustomer=SC._Id AND SC._Supplier=$actorId " .
 	    "AND A._Id=C._Expeditor " .
 	    "AND A._ClassName IN ('Supplier', 'AeroSupplier')" .
-	    "AND C._CommandDate<='$DateEnd' AND C._CommandDate>='$dateStart' " .
-	    "AND C._IsEstimate=0 AND C._Type=$commandType";
+	    "AND C._CommandDate<='$DateEnd' AND C._CommandDate>='$dateStart'";
 	} else {
 	    $sql = "SELECT DISTINCT C._Expeditor FROM Command C, Actor A " .
 	    "WHERE C._Destinator=$actorId AND A._Id=C._Expeditor " .
 	    "AND A._ClassName IN ('Supplier', 'AeroSupplier')" .
-	    "AND C._CommandDate<='$DateEnd' AND C._CommandDate>='$dateStart' " .
-	    "AND C._IsEstimate=0 AND C._Type=$commandType";
+	    "AND C._CommandDate<='$DateEnd' AND C._CommandDate>='$dateStart'";
     }
-    $sql .= " AND _Currency=$currency";
+    if (!$commandType) {
+        // devis
+	    $sql .= " AND C._IsEstimate=1";
+    } else {
+	    $sql .= " AND C._IsEstimate=0 AND C._Type=" . $commandType;
+    }
+    $sql .= " AND C._Currency=$currency";
 
 	$rs = ExecuteSQL($sql);
 	if (false != $rs) {
@@ -1551,13 +1571,19 @@ function Request_CategoryWithCommands($actorId, $dateStart, $DateEnd, $commandTy
         "WHERE C._SupplierCustomer=SC._Id AND SC._Supplier=$actorId ".
         "AND C._Destinator=A._Id " .
         "AND C._CommandDate<='$DateEnd' AND C._CommandDate>='$dateStart' " .
-        "AND C._IsEstimate=0 AND A._Category > 0 AND C._Type=$commandType";
+        "AND A._Category > 0";
 	} else {
 	    $sql = "SELECT DISTINCT A._Category FROM Command C, Actor A " .
 	    "WHERE C._Expeditor=$actorId AND C._Destinator=A._Id " .
 	    "AND C._CommandDate<='$DateEnd' AND C._CommandDate>='$dateStart' " .
-	    "AND C._IsEstimate=0 AND A._Category > 0 AND C._Type=$commandType";
+	    "AND A._Category > 0";
 	}
+    if (!$commandType) {
+        // devis
+	    $sql .= " AND C._IsEstimate=1";
+    } else {
+	    $sql .= " AND C._IsEstimate=0 AND C._Type=" . $commandType;
+    }
     $sql .= " AND CMD._Currency=$currency";
 
 	$rs = ExecuteSQL($sql);
@@ -1583,13 +1609,17 @@ function Request_ProductWithCommand ($actorId, $dateStart, $DateEnd, $commandTyp
 		"SupplierCustomer SC " .
 	    "WHERE C._SupplierCustomer=SC._Id AND SC._Supplier=$actorId " .
 	    "AND ACI._Command=C._Id " .
-	    "AND C._CommandDate<='$DateEnd' AND C._CommandDate>='$dateStart' ".
-	    "AND C._IsEstimate=0 AND C._Type='$commandType'";
+	    "AND C._CommandDate<='$DateEnd' AND C._CommandDate>='$dateStart'";
 	} else {
 	    $sql = "SELECT DISTINCT ACI._Product FROM Command C, CommandItem ACI " .
 	    "WHERE C._Expeditor=$actorId AND ACI._Command=C._Id " .
-	    "AND C._CommandDate<='$DateEnd' AND C._CommandDate>='$dateStart' ".
-	    "AND C._IsEstimate=0 AND C._Type='$commandType'";
+	    "AND C._CommandDate<='$DateEnd' AND C._CommandDate>='$dateStart'";
+    }
+    if (!$commandType) {
+        // devis
+	    $sql .= " AND C._IsEstimate=1";
+    } else {
+	    $sql .= " AND C._IsEstimate=0 AND C._Type=" . $commandType;
     }
     $sql .= " AND C._Currency=$currency";
 
@@ -1884,11 +1914,11 @@ function request_groupableBoxCount($achID, $ackID, $currentBoxLevel) {
  */
 function request_commandForCashBalance($cmdType, $currency) {
     $request = 'SELECT DISTINCT(CMD._Id) as cmdId, CMD._Type as cmdType, 
-        CMD._WishedStartDate as cmdWishedStartDate, CMD._TotalPriceTTC as CmdTotalTTC,
+        CMD._TotalPriceTTC as cmdTotalTTC,
         SC._TermsOfPayment as scTermsOfPayment,
         IF((select count(_Id) from AbstractDocument where _ClassName="Invoice" and _Command=CMD._Id),
             (select sum(_ToPay) from AbstractDocument where _ClassName="Invoice" and _Command=CMD._Id),
-            0) as CmdPayed';
+            0) as cmdPayed';
     if($cmdType==Command::TYPE_TRANSPORT) {
         $request .= ', IF((select count(aco._Id) from ActivatedChainOperation aco, CommandItem cmi where cmi._Command=CMD._Id and cmi._ActivatedChain=aco._ActivatedChain and aco._PrestationFactured=0), 0, 1) as prsFactured';
     }
@@ -1902,7 +1932,7 @@ function request_commandForCashBalance($cmdType, $currency) {
         $request .= ' AND CMD._DBId=' . DATABASE_ID;
     }
     $request .= ' GROUP BY CMD._ID
-        HAVING CmdTotalTTC - CmdPayed > 0 ';
+        HAVING cmdTotalTTC - cmdPayed > 0 ';
     if($cmdType==Command::TYPE_TRANSPORT) {
         $request .= ' AND prsFactured=0';
     }

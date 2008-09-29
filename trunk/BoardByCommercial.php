@@ -52,8 +52,9 @@ $CommercialArray = SearchTools::createArrayIDFromCollection(
         'UserAccount', $commercialFilter, _('Select one or more salesmen'));
 $form->addElement('select', 'Id', _('Salesman'),
         array($CommercialArray, 'multiple size="5"'), array());
+$types = Command::getTypeConstArray() + array(0 => _('Estimate'));
 $form->addElement('select', 'CommandType', _('Type of order'),
-        array(Command::getTypeConstArray()), array('Disable'=>true));
+        array($types), array('Disable'=>true));
 $currencyArray = SearchTools::createArrayIDFromCollection(
     'Currency');
 $form->addElement('select', 'Currency', _('Currency'), array($currencyArray), array('Disable'=>true));

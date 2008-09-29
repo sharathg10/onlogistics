@@ -68,7 +68,7 @@ if ($pfID == UserAccount::PROFILE_ADMIN_VENTES ||
 $smarty = new Template();
 
 // Contruction du formulaire de recherche
-$form = new SearchForm('Command');
+$form = new SearchForm('ProductCommand');
 $form->addElement('text', 'CommandNo', _('Estimate number'));
 $form->addElement('text', 'CommandCommandNo', _('Command number'),
     array('Path' => 'Command.CommandNo'));

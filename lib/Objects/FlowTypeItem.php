@@ -192,32 +192,27 @@ class FlowTypeItem extends _FlowTypeItem {
             // ligne des lignes de facture
             if($breakdownPart == self::BREAKDOWN_INVOICE_ITEM) {
                 require_once('SQLRequest.php');
+                
                 $result = request_commandForCashBalance(
                     $flowType->getCommandType(),
                     $currency);
                 //$beginDate;
                 //$endDate; 
-                while(!$result->EOF) {
-                    $cmdTTC = $result->fields['CmdTotalTTC'];
-                    $wishedDate = $result->fields['cmdWishedStartDate'];
-                    $isValid = $wishedDate >= $beginDate && $wishedDate <= $endDate;
-                    /**
-                    $topId = $result->fields['scTermsOfPayment'];
+                while($result && !$result->EOF) {
+                    $cmdTTC = $result->fields['cmdTotalTTC'];
+                    $topay  = troncature($cmdTTC - $result->fields['cmdPayed']);
+                    $topId  = $result->fields['scTermsOfPayment'];
                     if ($topId > 0 && ($top = Object::load('TermsOfPayment', $topId)) instanceof TermsOfPayment) {
+                        $order = Object::load('Command', $result->fields['cmdId']);
+                        $topItems = $top->getTermsOfPaymentItemCollection();
                         foreach($topItems as $topItem) {
-                            if ($topItem->getPaymentEvent() != TermsOfPaymentItem::ORDER) {
-                                continue;
+                            list($date, $amount, $supplier) = $topItem->getDateAndAmountForOrder($order, $topay);
+                            if ($date >= $beginDate && $date <= $endDate) {
+                                $total += $amount;
+                                $totals['total'] += $coeff * $amount;
                             }
-                            
                         }
                     }
-                    */
-                    if (!$isValid) {
-                        continue;
-                    }
-                    $topay = troncature($cmdTTC - $result->fields['CmdPayed']);
-                    $total += $topay;
-                    $totals['total'] += $coeff * $topay;
                     $result->moveNext();
                 }
             }

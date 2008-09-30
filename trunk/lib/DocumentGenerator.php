@@ -3900,6 +3900,8 @@ class WorksheetGenerator extends DocumentGenerator
         parent::__construct($document, false, false, $cur, '');
         $this->pdf->showExpeditor   = false;
         $this->pdf->showPageNumbers = false;
+        $this->pdf->showEditionDate = false;
+        $this->pdf->setAutoPageBreak(true, 10);
         $this->modelCollection = $modelCollection;
         $this->model = false;
     }
@@ -3922,7 +3924,7 @@ class WorksheetGenerator extends DocumentGenerator
             $infos = ImageManager::getFileInfo(md5($this->model->getImage()));
             if (is_array($infos) && !empty($infos['data'])) {
                 list(,$type) = explode('/', $infos['mimetype']);
-		        $this->pdf->image($infos['data'], 90, 8, 110, 0, $type);
+		        $this->pdf->image($infos['data'], 90, 10, 110, 0, $type);
             }
             $this->_renderContent();
         }
@@ -3959,11 +3961,7 @@ class WorksheetGenerator extends DocumentGenerator
             _('Worksheet') . ' ' . $this->model->toString(),
             array('fontSize'=>14, 'lineHeight'=>8)
         );
-        $this->pdf->Ln();
-        $this->pdf->Ln();
-        $this->pdf->Ln();
-        $this->pdf->Ln();
-        $this->pdf->Ln();
+        $this->pdf->Ln(50);
         $this->pdf->addText(
             _('Date') . ': ' . I18N::formatDate(time(), I18N::DATE_LONG),
             array('fontSize'=>12, 'lineHeight'=>5)
@@ -4075,6 +4073,8 @@ class LookbookGenerator extends WorksheetGenerator
         parent::__construct($document, false, false, $cur, '');
         $this->pdf->showExpeditor   = false;
         $this->pdf->showPageNumbers = false;
+        $this->pdf->showEditionDate = false;
+        $this->pdf->setAutoPageBreak(true, 10);
         $this->modelCollection = $modelCollection;
         $this->zoneId = $zoneId;
         $this->model = false;
@@ -4213,7 +4213,7 @@ class LookbookGenerator extends WorksheetGenerator
                 $m->getCommercialNameAndColor() : '';
             $acc1 = ($m = $this->model->getAccessory1()) instanceof RTWMaterial ?
                 $m->getCommercialNameAndColor() : '';
-            $acc2 = ($m = $this->model->getAccessory1()) instanceof RTWMaterial ?
+            $acc2 = ($m = $this->model->getAccessory2()) instanceof RTWMaterial ?
                 $m->getCommercialNameAndColor() : '';
 
             $this->pdf->tableBody(array(0 => array(

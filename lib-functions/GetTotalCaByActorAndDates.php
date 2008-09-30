@@ -46,10 +46,14 @@ function GetTotalCaByActorAndDates($actorId, $dateStart, $dateEnd, $commandType,
 	} else {
 	    $FilterComponentArray[] = SearchTools::NewFilterComponent('Expeditor', '', 'Equals', $actorId, 1);
 	}
-	$FilterComponentArray[] = SearchTools::NewFilterComponent('IsEstimate', '', 'Equals', 0, 1);
+    if (!$commandType) {
+	    $FilterComponentArray[] = SearchTools::NewFilterComponent('IsEstimate', '', 'Equals', 1, 1);
+    } else {
+	    $FilterComponentArray[] = SearchTools::NewFilterComponent('IsEstimate', '', 'Equals', 0, 1);
+	    $FilterComponentArray[] = SearchTools::NewFilterComponent('Type', '', 'Equals', $commandType, 1);
+    }
     $FilterComponentArray[] = SearchTools::NewFilterComponent('CommandDate', '', 'LowerThanOrEquals', $dateEnd, 1);
 	$FilterComponentArray[] = SearchTools::NewFilterComponent('CommandDate', '', 'GreaterThanOrEquals', $dateStart, 1);
-	$FilterComponentArray[] = SearchTools::NewFilterComponent('Type', '', 'Equals', $commandType, 1);
     $FilterComponentArray[] = SearchTools::NewFilterComponent('Currency', '', 'Equals', $currencyId, 1);
     
     if ($WithRealCategory) {
@@ -215,11 +219,17 @@ function GetCoast($actorId, $dateStart, $dateEnd, $commandType, $currency) {
 	} else {
 	    $FilterComponentArray[] = SearchTools::NewFilterComponent('Destinator', '', 'Equals', $actorId, 1);
 	}
+     if (!$commandType) {
+        // devis
+        $FilterComponentArray[] = SearchTools::NewFilterComponent('IsEstimate', "", 'Equals', 1, 1);
+    } else {
+        $FilterComponentArray[] = SearchTools::NewFilterComponent('IsEstimate', "", 'Equals', 0, 1);
+        $FilterComponentArray[] = SearchTools::NewFilterComponent('Type', '', 'Equals', $commandType, 1);
+    }
 	$FilterComponentArray[] = SearchTools::NewFilterComponent('ExpeditorClassName', 'Expeditor.ClassName', 
 												 'In', array('Supplier', 'AeroSupplier'), 1);
 	$FilterComponentArray[] = SearchTools::NewFilterComponent('CommandDate', '', 'LowerThanOrEquals', $dateEnd, 1);
 	$FilterComponentArray[] = SearchTools::NewFilterComponent('CommandDate', '', 'GreaterThanOrEquals', $dateStart, 1);
-	$FilterComponentArray[] = SearchTools::NewFilterComponent('Type', '', 'Equals', $commandType, 1);
 	$FilterComponentArray[] = SearchTools::NewFilterComponent('Currency', '', 'Equals', $currency, 1);
 	$Filter = SearchTools::FilterAssembler($FilterComponentArray);
 	

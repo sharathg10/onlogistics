@@ -70,7 +70,7 @@ $smarty = new Template();
 // Contruction du formulaire de recherche
 $form = new SearchForm('ProductCommand');
 $form->addElement('text', 'CommandNo', _('Estimate number'));
-$form->addElement('text', 'CommandCommandNo', _('Command number'),
+$form->addElement('text', 'CommandCommandNo', _('Command number'), array(),
     array('Path' => 'Command.CommandNo'));
 $form->addElement('text', 'BaseReference', _('Product reference'), array(),
     array('Path' => 'CommandItem().Product.BaseReference'));

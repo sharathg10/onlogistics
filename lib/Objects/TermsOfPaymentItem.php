@@ -67,7 +67,7 @@ class TermsOfPaymentItem extends _TermsOfPaymentItem {
      * @access public
      * @return array
      */
-    public function getDateAndAmountForOrder($order)
+    public function getDateAndAmountForOrder($order, $amount = null)
     {
         // calculate date
         $event = $this->getPaymentEvent();
@@ -90,7 +90,9 @@ class TermsOfPaymentItem extends _TermsOfPaymentItem {
             $date = DateTimeTools::lastDayInMonth($date, 1);
         }
         // calculate amount
-        $amount  = $order->getTotalPriceTTC();
+        if ($amount === null) {
+            $amount = $order->getTotalPriceTTC();
+        }
         $percent = $this->getPercentOfTotal();
         if ($amount > 0 && $percent > 0 && $percent != 100) {
             $amount = round($amount * ($percent / 100), 2);
@@ -102,12 +104,12 @@ class TermsOfPaymentItem extends _TermsOfPaymentItem {
             $tmpAmount = 0;
             foreach ($itemIds as $id) {
                 $item = Object::load('TermsOfPaymentItem', $id);
-                list($d, $t) = $item->getDateAndAmountForOrder($order);
+                list($d, $t, $s) = $item->getDateAndAmountForOrder($order);
                 $tmpAmount += $t;
             }
             $tmpAmount += $amount;
-            if ($tmpAmount != $order->getTotalPriceTTC()) {
-                $toAdd = $order->getTotalPriceTTC() - $tmpAmount;
+            if ($tmpAmount != $amount) {
+                $toAdd  = $amount - $tmpAmount;
                 $amount = $amount + $toAdd;
             }
         }

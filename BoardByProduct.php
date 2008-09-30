@@ -52,8 +52,9 @@ $ProductArray = array('## '=> _('select one or more products'))
         + ProductArrayForSelect();
 $form->addElement('select', 'Id', _('Product'),
         array($ProductArray, 'multiple size="5"'), array());
+$types = Command::getTypeConstArray() + array(0 => _('Estimate'));
 $form->addElement('select', 'CommandType', _('Type of order'),
-        array(Command::getTypeConstArray()), array('Disable'=>true));
+        array($types), array('Disable'=>true));
 
 $currencyArray = SearchTools::createArrayIDFromCollection(
     'Currency');

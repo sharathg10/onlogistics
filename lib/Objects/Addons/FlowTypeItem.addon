@@ -1,4 +1,3 @@
-
     // toString() {{{
 
     /**
@@ -141,15 +140,27 @@
             // ligne des lignes de facture
             if($breakdownPart == self::BREAKDOWN_INVOICE_ITEM) {
                 require_once('SQLRequest.php');
+                
                 $result = request_commandForCashBalance(
                     $flowType->getCommandType(),
-                    $currency,
-                    $beginDate,
-                    $endDate); 
-                while(!$result->EOF) {
-                    $topay = troncature($result->fields['CmdTotalTTC'] - $result->fields['CmdPayed']);
-                    $total += $topay;
-                    $totals['total'] += $coeff * $topay;
+                    $currency);
+                //$beginDate;
+                //$endDate; 
+                while($result && !$result->EOF) {
+                    $cmdTTC = $result->fields['cmdTotalTTC'];
+                    $topay  = troncature($cmdTTC - $result->fields['cmdPayed']);
+                    $topId  = $result->fields['scTermsOfPayment'];
+                    if ($topId > 0 && ($top = Object::load('TermsOfPayment', $topId)) instanceof TermsOfPayment) {
+                        $order = Object::load('Command', $result->fields['cmdId']);
+                        $topItems = $top->getTermsOfPaymentItemCollection();
+                        foreach($topItems as $topItem) {
+                            list($date, $amount, $supplier) = $topItem->getDateAndAmountForOrder($order, $topay);
+                            if ($date >= $beginDate && $date <= $endDate) {
+                                $total += $amount;
+                                $totals['total'] += $coeff * $amount;
+                            }
+                        }
+                    }
                     $result->moveNext();
                 }
             }

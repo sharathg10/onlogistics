@@ -66,6 +66,10 @@ class RTWProductManager extends RTWManager
             new FilterRule('Size', FilterRule::OPERATOR_NOT_IN, $sizeIds)
         ));
         foreach ($productCol as $p) {
+            $c = Object::load('Chain', array('Reference' => $p->getBaseReference()));
+            if ($c instanceof Chain) {
+                $c->delete();
+            }
             $p->delete();
         }
         foreach ($sizeIds as $sizeId) {
@@ -131,11 +135,6 @@ class RTWProductManager extends RTWManager
             // supprime tous les composants de la nomenclature
             $cpnMapper = Mapper::singleton('Component');
             $cpnMapper->delete($nomenclature->getComponentCollectionIds());
-            // supprime la chaine précédemment créée
-            $oldchain = Object::load('Chain', array('Reference' => $product->getBaseReference()));
-            if ($oldchain instanceof Chain) {
-                $oldchain->delete();
-            }
         }
         $model = $product->getModel();
         $nomenclature->save();
@@ -171,11 +170,16 @@ class RTWProductManager extends RTWManager
                 $ref
             ));
         }
-        include_once 'DuplicateChain.php';
         include_once 'Objects/Task.const.php';
         $newRef   = $product->getBaseReference();
-        $newDesc  = $chain->getDescription() . ' ' . $newRef;
-        $newChain = duplicateChain($chain, $newRef, $newDesc);
+        $newChain = Object::load('Chain', array('Reference'=>$newRef));
+        if (!($newChain instanceof Chain)) {
+            include_once 'DuplicateChain.php';
+            $newDesc  = $chain->getDescription() . ' ' . $newRef;
+            $newChain = duplicateChain($chain, $newRef, $newDesc);
+        }
+        // au cas ou...
+        $newChain->setAutoAssignTo(Chain::AUTOASSIGN_NONE);
         $opeCol = $newChain->getChainOperationCollection();
         foreach ($opeCol as $ope) {
             $taskCol = $ope->getChainTaskCollection();

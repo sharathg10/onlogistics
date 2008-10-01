@@ -1924,7 +1924,7 @@ function request_commandForCashBalance($cmdType, $currency) {
     }
     $request .= ' FROM Command CMD, SupplierCustomer SC
         WHERE (CMD._SupplierCustomer = SC._Id OR CMD._SupplierCustomer=0)
-            AND CMD._Type = ' . $cmdType;
+            AND CMD._Type = ' . $cmdType . ' AND CMD._IsEstimate=0';
     if($currency) {
         $request .= ' AND CMD._Currency = ' . $currency;
     }

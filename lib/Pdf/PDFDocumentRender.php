@@ -191,6 +191,12 @@ class PDFDocumentRender extends FpdfJS {
     public $showPageNumbers = true;
 
     /**
+     * Mettre a false pour masquer la date d'edition en haut
+     * @var boolean
+     */
+    public $showEditionDate = true;
+
+    /**
      * Indicating whether a new group was requested
      * @var boolean
      */
@@ -373,8 +379,10 @@ class PDFDocumentRender extends FpdfJS {
         $this->setFont($this->defaultFamilyFont,'B', $this->defaultFontSize['HEADER']);//PDF_FONTSIZE_HEADER);
 		$this->setXY(100, 15);
 		$this->Cell(90, 3,  $this->docTitle);
-		$this->setXY(100, 19);
-		$this->Cell(90, 3,  _('Edition date') . ': ' . $this->docDate);
+        if ($this->showEditionDate) {
+		    $this->setXY(100, 19);
+		    $this->Cell(90, 3,  _('Edition date') . ': ' . $this->docDate);
+        }
 
 		$this->setXY(100,23);
 		$this->setFont($this->defaultFamilyFont,'B', $this->defaultFontSize['HEADER']);//PDF_FONTSIZE_HEADER);

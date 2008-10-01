@@ -864,7 +864,7 @@ function getCustomerCollectionIds($ActorId)
  * @return Object resultset
  */
 function getOrderedQtyPerWeekForSupplier($ActorId, $SupplierId, $TimeStampBegin,
-        $TimeStampEnd, $modelIds)
+        $TimeStampEnd, $modelIds=array())
 {
     require_once('Objects/MovementType.const.php');
 	$sql = 'SELECT CMD._IsEstimate as isEstimate, PDT._Id as pdtId, SUM(ACM._Quantity) AS Qty
@@ -901,7 +901,7 @@ function getOrderedQtyPerWeekForSupplier($ActorId, $SupplierId, $TimeStampBegin,
  * @param week: indice de la semaine:
  * @return Object resultset
  */
-function getInternalActivatedMovementPerWeek($SupplierId, $TimeStampBegin, $TimeStampEnd, $week)
+function getInternalActivatedMovementPerWeek($SupplierId, $TimeStampBegin, $TimeStampEnd, $week, $modelIds=array())
 {
     require_once('Objects/MovementType.const.php');
     require_once('Objects/ActivatedMovement.php');
@@ -915,8 +915,11 @@ function getInternalActivatedMovementPerWeek($SupplierId, $TimeStampBegin, $Time
             AND ACM._Type= ' . SORTIE_INTERNE . '
             AND UNIX_TIMESTAMP(ACM._StartDate)<' . $TimeStampEnd . '
             AND UNIX_TIMESTAMP(ACM._StartDate)>' . $TimeStampBegin . '
-            AND PDT._Activated = 1
-            GROUP BY PDT._Id;';
+            AND PDT._Activated = 1';
+        if (!empty($modelIds)) {
+            $sql .= ' AND PDT._Model in (' . implode(',', $modelIds) . ')';
+        }
+        $sql .= ' GROUP BY PDT._Id;';
     }
     else {
         $sql = '
@@ -932,8 +935,11 @@ function getInternalActivatedMovementPerWeek($SupplierId, $TimeStampBegin, $Time
             AND ACM._State!=' . ActivatedMovement::ACM_EXECUTE_TOTALEMENT . '
             AND UNIX_TIMESTAMP(ACM._StartDate)<' . $TimeStampEnd . '
             AND UNIX_TIMESTAMP(ACM._StartDate)>' . $TimeStampBegin . '
-            AND PDT._Activated = 1
-            GROUP BY PDT._Id)
+            AND PDT._Activated = 1';
+            if (!empty($modelIds)) {
+                $sql .= ' AND PDT._Model in (' . implode(',', $modelIds) . ')';
+            }
+            $sql .= ' GROUP BY PDT._Id)
             UNION
             (SELECT PDT._Id as pdtId,
             SUM(IFNULL(EXM._RealQuantity, 0) - ACM._Quantity) AS qty
@@ -947,9 +953,11 @@ function getInternalActivatedMovementPerWeek($SupplierId, $TimeStampBegin, $Time
             AND ACM._State!=' . ActivatedMovement::ACM_EXECUTE_TOTALEMENT . '
             AND UNIX_TIMESTAMP(ACM._StartDate)<' . $TimeStampEnd . '
             AND UNIX_TIMESTAMP(ACM._StartDate)>' . $TimeStampBegin . '
-            AND PDT._Activated = 1
-            GROUP BY PDT._Id)
-            ;';
+            AND PDT._Activated = 1';
+            if (!empty($modelIds)) {
+                $sql .= ' AND PDT._Model in (' . implode(',', $modelIds) . ')';
+            }
+        $sql .= ' GROUP BY PDT._Id);';
     }
 	return executeSQL($sql);
 }
@@ -1112,7 +1120,7 @@ function getProductPromoImpactPerWeek($ProductIdArray)
 // getDeliveredQtyPerWeekForSupplier() {{{
 
 // Qtes commandees (cmdes client) et deja en partie ou totalemt sorties de stock
-function getDeliveredQtyPerWeekForSupplier($ActorId, $SupplierId, $TimeStampBegin, $TimeStampEnd)
+function getDeliveredQtyPerWeekForSupplier($ActorId, $SupplierId, $TimeStampBegin, $TimeStampEnd, $modelIds=array())
 {
 	require_once('Objects/ActivatedMovement.php');
     require_once('Objects/MovementType.const.php');
@@ -1124,8 +1132,12 @@ function getDeliveredQtyPerWeekForSupplier($ActorId, $SupplierId, $TimeStampBegi
          AND AP._Priority=1 AND CMD._IsEstimate=0 AND CMD._Expeditor=' . $ActorId . '
          AND UNIX_TIMESTAMP(ACM._StartDate)<' . $TimeStampEnd . '
          AND UNIX_TIMESTAMP(ACM._StartDate)>' . $TimeStampBegin . '
-         AND PDT._Activated = 1 AND ACM._Type=' . SORTIE_NORMALE . '
-         AND ACM._State NOT IN (' . ActivatedMovement::CREE . ', ' . ActivatedMovement::BLOQUE . ')
+         AND PDT._Activated = 1 AND ACM._Type=' . SORTIE_NORMALE;
+
+    if (!empty($modelIds)) {
+        $sql .= ' AND PDT._Model in (' . implode(',', $modelIds) . ')';
+    }
+    $sql .= ' AND ACM._State NOT IN (' . ActivatedMovement::CREE . ', ' . ActivatedMovement::BLOQUE . ')
          GROUP BY PDT._Id;';
 	return executeSQL($sql);
 }
@@ -1174,7 +1186,7 @@ function getWaitedQtyPerWeek($ProductIdArray, $ActorId, $TimeStampEnd, $TimeStam
  *
  * @return object
  */
-function getLateOrderedQty($SupplierId, $ActorId, $TimeStampEnd)
+function getLateOrderedQty($SupplierId, $ActorId, $TimeStampEnd, $modelIds=array())
 {
 	require_once('Objects/ActivatedMovement.php');
     require_once('Objects/MovementType.const.php');
@@ -1187,6 +1199,9 @@ function getLateOrderedQty($SupplierId, $ActorId, $TimeStampEnd)
     if (Preferences::get('EstimateBehaviour', 0) != 1) {
         $sql .= 'AND CMD._IsEstimate=0 ';
     }
+    if (!empty($modelIds)) {
+        $sql .= 'AND PDT._Model in (' . implode(',', $modelIds) . ') ';
+    }
     $sql .= 'AND CMD._Expeditor=' . $ActorId . '
          AND UNIX_TIMESTAMP(ACM._StartDate)<' . $TimeStampEnd . '
          AND ACM._State <> ' . ActivatedMovement::ACM_EXECUTE_TOTALEMENT . '
@@ -1196,7 +1211,7 @@ function getLateOrderedQty($SupplierId, $ActorId, $TimeStampEnd)
 }
 
 // }}}
-// getOrderedQtyPerWeekForSupplier() {{{
+// getOrderedQtyAtEndOfWeek() {{{
 
 function getOrderedQtyAtEndOfWeek($ProductIdArray, $ActorId, $TimeStampBegin, $TimeStampEnd)
 {

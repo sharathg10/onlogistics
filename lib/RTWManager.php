@@ -74,6 +74,13 @@ class RTWManager
             );
         }
         foreach ($chainCol as $chain) {
+            $pcl = Object::load('ProductChainLink', array(
+                'Chain'   => $chain->getId(),
+                'Product' => $product->getId()
+            ));
+            if ($pcl instanceof ProductChainLink) {
+                continue;
+            }
             $pcl = new ProductChainLink();
             $pcl->setChain($chain);
             $pcl->setProduct($product);

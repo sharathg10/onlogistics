@@ -56,7 +56,7 @@ class GridColumnActivatedMovementReference extends AbstractGridColumn {
             $Product->getName() . '">';
         $return .= $Product->getBaseReference()
          . '</a><input type="hidden" name="Product_Id[]" value="' . $ProductId . '">';
-        if ($EntrieExit == ENTREE) {
+        if ($EntrieExit == MovementType::TYPE_ENTRY) {
             return $return;
         } else { 
             // si sortie, gestion des produits de substitution actives, et 

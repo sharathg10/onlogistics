@@ -34,24 +34,10 @@
  * @filesource
  */
 
-define('SORTIE_NORMALE', 1);//--------------->SORTIE_NORMALE
-define('ENTREE_NORMALE', 2);//--------------->ENTREE_NORMALE
-define('SORTIE_CASSE', 3);  //--------------->SORTIE_CASSE
-define('ENTREE_SURPLUS', 4);//--------------->ENTREE_SURPLUS
-define('SORTIE_INVENT', 5);  //--------------->SORTIE_INVENTAIRE
-define('ENTREE_INVENT', 6);  //--------------->ENTREE_INVENTAIRE
-////define('ENTREE_REFUS_CLIENT', 7);  //--------------->ENTREE_REFUS_CLIENT  // DEPRECATED!!!!!!!
-define('SORTIE_DEPLACEMT', 8);  //--------------->SORTIE_DEPLACEMT
-define('ENTREE_DEPLACEMT', 9);  //--------------->ENTREE_DEPLACEMT
-define('SORTIE_ECHANTILLON', 10);  //--------------->SORTIE_ECHANTILLON
-define('ENTREE_ECHANTILLON', 11);  //--------------->ENTREE_ECHANTILLON
-define('SORTIE_MODIF_COND', 12);  //--------------->SORTIE_MODIF_CONDITIONNEMENT
-define('ENTREE_MODIF_COND', 13);  //--------------->ENTREE_MODIF_CONDITIONNEMENT
-define('ENTREE_INTERNE', 14);     //--------------->ENTREE_INTERNE
-define('SORTIE_INTERNE', 15);     //--------------->SORTIE_INTERNE
-
-define('SORTIE', 1);  //--------------->SORTIE QUELCONQUE
-define('ENTREE', 0);  //--------------->ENTREE QUELCONQUE
+$__col = Object::loadCollection('MovementType');
+foreach ($__col as $__mvt) {
+    define($__mvt->getConstName(), $__mvt->getId());
+}
 
 $MovementTypeArray = array(
     SORTIE_NORMALE => _('Normal issue'), 

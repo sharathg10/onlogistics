@@ -114,11 +114,11 @@ if ($command instanceof Command) {
     $supplierID = $command->getExpeditorId();
 }
 
-// Si SORTIE, on n'affiche ds le select que les Product substituts qui sont en stock et actives!
-if ($MvtTypeEntrieExit == SORTIE) {
+// Si MovementType::TYPE_EXIT, on n'affiche ds le select que les Product substituts qui sont en stock et actives!
+if ($MvtTypeEntrieExit == MovementType::TYPE_EXIT) {
     // Collection des Product en stock et actives, et substituts
     $ProductCollection = $SubstitutCollection;
-} elseif ($MvtTypeEntrieExit == ENTREE) {
+} elseif ($MvtTypeEntrieExit == MovementType::TYPE_ENTRY) {
     $supplierId = Tools::getValueFromMacro($ActivatedMovement, '%ProductCommand.Expeditor.Id%');
     $filters = array(
         SearchTools::NewFilterComponent('Supplier', 'ActorProduct().Actor.Id', 'Equals', $supplierId, 1, 'Product'),
@@ -153,7 +153,7 @@ for($i = 0; $i < $ProductCollection->getCount(); $i++) {
 
 // Permet de construire un select, avec les refs substituables en couleur!
 require_once('ListItems.php');
-if ($MvtTypeEntrieExit == SORTIE) { // affichage seulement des substituts
+if ($MvtTypeEntrieExit == MovementType::TYPE_EXIT) { // affichage seulement des substituts
     $monSelectProductHTML = itemsArrayToHtml($ProductIdBaseRefArray, $ProductId);
 }
 else {  // Affichage des Product, dont ceux substituts affiches en rouge
@@ -196,7 +196,7 @@ $LPQCollection = $LPQMapper->loadCollection(
 
 /* En cas d'entree, on construit le SELECT qu'il faut afficher.
    Et il est possible que des LPQ aient ete crees en session.  */
-if ($MvtTypeEntrieExit == ENTREE) {
+if ($MvtTypeEntrieExit == MovementType::TYPE_ENTRY) {
     if (isset($_SESSION['LPQCollection'])) {
         $LPQCollectionForSession = unserialize($_SESSION['LPQCollection']);
         for ($i=0;$i<$LPQCollectionForSession->getCount();$i++) {
@@ -266,11 +266,11 @@ else  {
 }
 $Smarty->assign('Comment', $exmComment);
 
-if ($MvtTypeEntrieExit == ENTREE){
+if ($MvtTypeEntrieExit == MovementType::TYPE_ENTRY){
     $Smarty->assign('HTMLLocationSelect', $HTMLLocationSelect);
-    //$Smarty->assign('EditBL', ""); // on ne propose pas l'edition de BL si ENTREE
+    //$Smarty->assign('EditBL', ""); // on ne propose pas l'edition de BL si MovementType::TYPE_ENTRY
 }
-/*if (($MvtTypeEntrieExit == SORTIE) &&
+/*if (($MvtTypeEntrieExit == MovementType::TYPE_EXIT) &&
     ($MvtTypeId != SORTIE_INTERNE)) {
     $Smarty->assign('EditBL', '<tr class="gris4"><td>
                     <b> ' . _('Print delivery order') . '&nbsp;</b>

@@ -201,9 +201,9 @@ if (true === $form->displayGrid()) {
                 $rs2->moveNext();
 				continue;
 			}
-			// Si entree et non annulateur ou EXM associe est une SORTIE et lem annulateur
-			$coef = (($rs2->fields['entryExit'] == ENTREE && $rs2->fields['cancelledMvt'] == 0)
-					|| ($rs2->fields['entryExit'] == SORTIE && $rs2->fields['cancelledMvt'] > 0))?-1:1;
+			// Si entree et non annulateur ou EXM associe est une MovementType::TYPE_EXIT et lem annulateur
+			$coef = (($rs2->fields['entryExit'] == MovementType::TYPE_ENTRY && $rs2->fields['cancelledMvt'] == 0)
+					|| ($rs2->fields['entryExit'] == MovementType::TYPE_EXIT && $rs2->fields['cancelledMvt'] > 0))?-1:1;
 			$item->setQuantity($item->getQuantity() + ($coef * $rs2->fields['qty']));
 			$rs2->moveNext();
 		}

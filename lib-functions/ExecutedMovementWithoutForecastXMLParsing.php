@@ -122,7 +122,7 @@ function process($auth, $xmldata)
 
         // si le mouvement est une sortie, le couple Location/Product doit exister
         // en bdd dans un site appartenant à l’acteur de l’utilisateur connecté.
-        if ($movementType->getEntrieExit() == SORTIE) {
+        if ($movementType->getEntrieExit() == MovementType::TYPE_EXIT) {
             if (Tools::isEmptyObject($lpq)) {
                 return $errMsge . sprintf(
 					"le couple emplacement/produit n'existe pas pour " .

@@ -508,8 +508,8 @@ class PriceByCurrency extends Object {
                 'section'      => ''
             ),
             'ActorProduct'=>array(
-                'label'        => _('ActorProduct'),
-                'shortlabel'   => _('ActorProduct'),
+                'label'        => _('Actor / Product'),
+                'shortlabel'   => _('Actor / Product'),
                 'usedby'       => array('grid', 'searchform'),
                 'required'     => false,
                 'inplace_edit' => false,

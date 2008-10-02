@@ -2087,12 +2087,14 @@ DROP TABLE IF EXISTS MovementType;
 CREATE TABLE MovementType (
   _Id int(11) unsigned NOT NULL default 0,
   _DBId int(11) default 0,
-  _Name VARCHAR(255) DEFAULT NULL,
+  _Name INT(11) NOT NULL DEFAULT NULL,
   _Foreseeable INT(1) NOT NULL DEFAULT 0,
-  _EntrieExit INT(1) NOT NULL DEFAULT 0,
+  _EntrieExit INT(3) NOT NULL DEFAULT 0,
+  _ConstName VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (_Id)
 ) TYPE=InnoDB CHARSET=latin1;
 
+CREATE UNIQUE INDEX _ConstName ON MovementType (_ConstName);
 
 --
 -- Table structure for Nomenclature

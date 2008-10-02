@@ -99,7 +99,7 @@ function checkBeforeMovement($cancelLink, $foreseeable=true){
     //on verifie qu'il y a des emplacements
     // Si pas d'emplacement utilise, message different selon si entree ou sortie
     if (!isset($_POST['lpqId'])) {
-        $errorMsge = ($_POST['MvtTypeEntrieExit'] == ENTREE)?
+        $errorMsge = ($_POST['MvtTypeEntrieExit'] == MovementType::TYPE_ENTRY)?
             _('You must add a location.'):
             _('You can\'t validate movement without using a location.');
        Template::errorDialog($errorMsge, $cancelLink);
@@ -279,7 +279,7 @@ function checkBeforeSeveralMovements() {
         // Si sortie, verif que 1 seul LPQ contient le Product, et en qte suffisante
         // Et tout doit se passer dans le MEME site
         $entrieExit = Tools::getValueFromMacro($acm, '%Type.EntrieExit%');
-        if ($entrieExit == SORTIE) {
+        if ($entrieExit == MovementType::TYPE_EXIT) {
             $pdtId = $acm->getProductId();
             $Filter = getLpqFilter($pdtId);
             $LPQMapper = Mapper::singleton('LocationProductQuantities');
@@ -466,7 +466,7 @@ function updateLocationConcreteProduct($lpq, $LEMCPCollection) {
         return true;
     }
     $url = 'ActivatedMovementList.php';
-    $coef = (($_POST['MvtTypeEntrieExit'] == ENTREE && !isChangeOfPosition())
+    $coef = (($_POST['MvtTypeEntrieExit'] == MovementType::TYPE_ENTRY && !isChangeOfPosition())
                 || (isset($_REQUEST['CancellationType']) && $_REQUEST['CancellationType'] != ""))?1:-1;
 
     $LocationId = $lpq->getLocationId();
@@ -493,8 +493,8 @@ function updateLocationConcreteProduct($lpq, $LEMCPCollection) {
                                 array('ConcreteProduct' => $LCP->getConcreteProductId(),
                                       'Location' => $LCP->getLocationId()));
 
-            // Si SORTIE ou chgt de position, le LCP doit exister, sinon, erreur
-            if (Tools::isEmptyObject($testLCP) && ($_REQUEST['MvtTypeEntrieExit'] == SORTIE
+            // Si MovementType::TYPE_EXIT ou chgt de position, le LCP doit exister, sinon, erreur
+            if (Tools::isEmptyObject($testLCP) && ($_REQUEST['MvtTypeEntrieExit'] == MovementType::TYPE_EXIT
                                         || isChangeOfPosition())) {
                 return false;
             }
@@ -505,7 +505,7 @@ function updateLocationConcreteProduct($lpq, $LEMCPCollection) {
                 } else {  // Entree ou Sortie sur LCP existant
                     saveInstance($testLCP, $url);
                 }
-            } else {  // ENTREE sur nouvel emplacement: creation de LCP
+            } else {  // MovementType::TYPE_ENTRY sur nouvel emplacement: creation de LCP
                 saveInstance($LCP, $url);
             }
             unset($testLCP, $LCP);

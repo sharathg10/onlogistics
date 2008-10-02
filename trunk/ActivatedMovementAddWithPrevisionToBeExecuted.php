@@ -179,7 +179,7 @@ elseif (isset($_POST['FormSubmitted'])) { // on valide le formulaire (clic sur '
         // Message d'erreur si une qte >0 a ete saisie pour un LPQ finalement desactive
         ActivatedLPQControl();
 
-        if ($_POST['MvtTypeEntrieExit'] == ENTREE
+        if ($_POST['MvtTypeEntrieExit'] == MovementType::TYPE_ENTRY
                     && $TotalRealQuantity > $_POST['EnvisagedQuantity']) {
             // Si pas une reintegration en stock
             if (!isCancellation()) {
@@ -194,7 +194,7 @@ elseif (isset($_POST['FormSubmitted'])) { // on valide le formulaire (clic sur '
             }
             exit;
         }
-        if ($_POST['MvtTypeEntrieExit'] == SORTIE) {
+        if ($_POST['MvtTypeEntrieExit'] == MovementType::TYPE_EXIT) {
             // Produit commande
             $InitialProduct = $ActivatedMovement->getProduct();
             $InitialProductId = $InitialProduct->getId();
@@ -242,7 +242,7 @@ elseif (isset($_POST['FormSubmitted'])) { // on valide le formulaire (clic sur '
     $State = ((isset($_GET['partial'])) && ($_GET['partial'] == 1))?
             ExecutedMovement::EXECUTE_PARTIELLEMENT:ExecutedMovement::EXECUTE_TOTALEMENT;
     //  sert a incrementer ou decrementer les qtes en stock
-    $coef = ($_POST['MvtTypeEntrieExit'] == ENTREE || isCancellation())?1:-1;
+    $coef = ($_POST['MvtTypeEntrieExit'] == MovementType::TYPE_ENTRY || isCancellation())?1:-1;
 
     // Si deja partielmt execute ou si reintegr. en stock, on recupere l'EXM correspdt
     $EXMMapper = Mapper::singleton('ExecutedMovement');
@@ -356,7 +356,7 @@ elseif (isset($_POST['FormSubmitted'])) { // on valide le formulaire (clic sur '
 
 
             // Creation des box si sortie de stock
-            if ($_POST['MvtTypeEntrieExit'] == SORTIE
+            if ($_POST['MvtTypeEntrieExit'] == MovementType::TYPE_EXIT
                     && $ActivatedMovement->getTypeId() != SORTIE_INTERNE) {
                 $LEM->createBoxes();
             }
@@ -377,7 +377,7 @@ elseif (isset($_POST['FormSubmitted'])) { // on valide le formulaire (clic sur '
                 exit;
             }
             // Pour edition eventuelle d'un BL, determination du site
-            if ($_SESSION['MvtTypeEntrieExit'] == SORTIE && !$Site) {
+            if ($_SESSION['MvtTypeEntrieExit'] == MovementType::TYPE_EXIT && !$Site) {
                 $Site = Object::load(
                         'Site',
                         Tools::getValueFromMacro(
@@ -437,7 +437,7 @@ elseif (isset($_POST['FormSubmitted'])) { // on valide le formulaire (clic sur '
         require_once('Objects/Command.const.php');
         // dans ce cas, pas besoin d'aller voir
         // l'etat des autres mvts lies a la commande
-        if ($State != ExecutedMovement::EXECUTE_TOTALEMENT && $_POST['MvtTypeEntrieExit'] == ENTREE) {
+        if ($State != ExecutedMovement::EXECUTE_TOTALEMENT && $_POST['MvtTypeEntrieExit'] == MovementType::TYPE_ENTRY) {
             $Command->setState(Command::LIV_PARTIELLE);
         }
         // MAJ l'etat de la Command en fonction aussi des autres mvts lies a elle
@@ -473,7 +473,7 @@ elseif (isset($_POST['FormSubmitted'])) { // on valide le formulaire (clic sur '
      * dans le meme StorageSite) > 0, pour savoir si on force l'edition d'un BL */
     $activatedMovement = Object::load(
             'ActivatedMovement', $_SESSION['ActivatedMvtId']);
-    if (($_SESSION['MvtTypeEntrieExit'] == SORTIE)
+    if (($_SESSION['MvtTypeEntrieExit'] == MovementType::TYPE_EXIT)
         && ($activatedMovement->getTypeId() != SORTIE_INTERNE)) {
         $OtherMovementBeforBL = $Command->getOtherPossibleMovement(
                 $ActivatedMovement, $Site);

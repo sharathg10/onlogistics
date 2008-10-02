@@ -35,9 +35,23 @@ BEGIN;
 TRUNCATE TABLE IdHashTable;
 ####################################
 
-set @id=(SELECT IFNULL(MAX(_Id), 0)+1 FROM I18nString);
-INSERT INTO I18nString VALUES (@id, NULL, 'Estimate', 'Devis', '', '', '', '', '');
-INSERT INTO Alert VALUES (55001, NULL, @id, NULL, NULL);
+ALTER TABLE MovementType ADD _ConstName VARCHAR(255) DEFAULT NULL;
+ALTER TABLE MovementType CHANGE COLUMN _EntrieExit _EntrieExit INT(3) NOT NULL DEFAULT 0;
+
+UPDATE MovementType SET _ConstName="SORTIE_NORMALE" where _Id=1;
+UPDATE MovementType SET _ConstName="ENTREE_NORMALE" where _Id=2;
+UPDATE MovementType SET _ConstName="SORTIE_CASSE" where _Id=3;
+UPDATE MovementType SET _ConstName="ENTREE_SURPLUS" where _Id=4;
+UPDATE MovementType SET _ConstName="SORTIE_INVENT" where _Id=5;
+UPDATE MovementType SET _ConstName="ENTREE_INVENT" where _Id=6;
+UPDATE MovementType SET _ConstName="SORTIE_DEPLACEMT" where _Id=8;
+UPDATE MovementType SET _ConstName="ENTREE_DEPLACEMT" where _Id=9;
+UPDATE MovementType SET _ConstName="SORTIE_ECHANTILLON" where _Id=10;
+UPDATE MovementType SET _ConstName="ENTREE_ECHANTILLON" where _Id=11;
+UPDATE MovementType SET _ConstName="SORTIE_MODIF_COND" where _Id=12;
+UPDATE MovementType SET _ConstName="ENTREE_MODIF_COND" where _Id=13;
+UPDATE MovementType SET _ConstName="ENTREE_INTERNE" where _Id=14;
+UPDATE MovementType SET _ConstName="SORTIE_INTERNE" where _Id=15;
 
 ####################################
 # Ne pas enlever

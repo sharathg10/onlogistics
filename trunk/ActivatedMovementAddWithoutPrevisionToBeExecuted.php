@@ -105,7 +105,7 @@ elseif (isset($_POST['FormSubmitted'])) {
 
 	// Controle des quantites saisies par emplacemt lorsque on est en sortie
     // ou si deplacement
-	if ($_POST['MvtTypeEntrieExit'] == SORTIE || isChangeOfPosition()) {
+	if ($_POST['MvtTypeEntrieExit'] == MovementType::TYPE_EXIT || isChangeOfPosition()) {
 		checkStockQty($cancelLink);
 	}
 
@@ -214,10 +214,10 @@ elseif (isset($_POST['FormSubmitted'])) {
 			    $LEM->createInventoryDetail($Inventory);
 			}
 			//le mouvement est de type sortie ou deplacement
-			if ($_POST['MvtTypeEntrieExit'] == SORTIE || isChangeOfPosition()) {
-			    $mvtTypeForUpLPQ = SORTIE;
-			} elseif ($_POST['MvtTypeEntrieExit'] == ENTREE && !isChangeOfPosition()){
-			    $mvtTypeForUpLPQ = ENTREE;
+			if ($_POST['MvtTypeEntrieExit'] == MovementType::TYPE_EXIT || isChangeOfPosition()) {
+			    $mvtTypeForUpLPQ = MovementType::TYPE_EXIT;
+			} elseif ($_POST['MvtTypeEntrieExit'] == MovementType::TYPE_ENTRY && !isChangeOfPosition()){
+			    $mvtTypeForUpLPQ = MovementType::TYPE_ENTRY;
 			}
 			$lpq = updateLPQQuantity($lpq, $_POST['QuantityArray'][$i],
 			    $mvtTypeForUpLPQ, $cancelLink);
@@ -267,7 +267,7 @@ elseif (isset($_POST['FormSubmitted'])) {
 				$testLCP->setQuantity($testLCP->getQuantity() + $LEMCP->getQuantity());
                 saveInstance($testLCP, $cancelLink);
 			}
-			else {  // ENTREE sur nouvel emplacement: creation de LCP
+			else {  // MovementType::TYPE_ENTRY sur nouvel emplacement: creation de LCP
 				$LCP = Object::load('LocationConcreteProduct');
 				$LCP->setConcreteProduct($LEMCP->getConcreteProduct());
 				$LCP->setLocation($LEM->getLocation());

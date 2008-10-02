@@ -63,7 +63,7 @@ $cmd = $acm->getProductCommand();
 $returnURL = 'ActivatedMovementList.php';
 
 // Si ce sont des entrees normales, on affiche un select pour choisir un Location
-if (!isset($_REQUEST['check']) && $entrieExit == ENTREE) {
+if (!isset($_REQUEST['check']) && $entrieExit == MovementType::TYPE_ENTRY) {
     $uac = $auth->getUser();
     $ProfileId = $auth->getProfile();
     $UserConnectedActorId = $auth->getActorId();
@@ -107,7 +107,7 @@ foreach ($_REQUEST['acmId'] as $acmId) {
     $pdtId = $acm->getProductId();
     $Product = $acm->getProduct();
     
-    if ($entrieExit == SORTIE) {
+    if ($entrieExit == MovementType::TYPE_EXIT) {
         $Filter = getLpqFilter($pdtId);
         $LPQCollection = $LPQMapper->loadCollection($Filter);
         // Cette coll ne contient qu'un et un seul element (controle en amont)
@@ -156,7 +156,7 @@ foreach ($_REQUEST['acmId'] as $acmId) {
     $LEM = createLocationExecutedMovement($LEMParams, $returnURL);
     
     // Creation des box si sortie de stock
-    if ($entrieExit == SORTIE) {
+    if ($entrieExit == MovementType::TYPE_EXIT) {
         $LEM->createBoxes();
     }
     
@@ -192,7 +192,7 @@ if (Database::connection()->hasFailedTrans()) {
 Database::connection()->completeTrans();
 
 // Pour edition eventuelle d'un BL, determination du site
-if ($entrieExit == SORTIE) {
+if ($entrieExit == MovementType::TYPE_EXIT) {
     $Site = Object::load('StorageSite', $siteId);
     $OtherMovementBeforBL = $cmd->getOtherPossibleMovement(0, $Site);
         if(false === $OtherMovementBeforBL) {

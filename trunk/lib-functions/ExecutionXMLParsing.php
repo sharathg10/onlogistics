@@ -391,7 +391,7 @@ function parseCommand($file, $rang)
                 }
 
                 // fx de checking du lpq
-                if ($MvtTypeEntrieExit == SORTIE) {
+                if ($MvtTypeEntrieExit == MovementType::TYPE_EXIT) {
                     if (Tools::isEmptyObject($LocationProductQuantities)) {
                         $errors[] = $ErrorMsge . "Il n'a pas été trouvé en base de donnée de référence "
                             . $RealProduct->getBaseReference() . " à l'emplacement "

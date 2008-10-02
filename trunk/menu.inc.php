@@ -264,6 +264,12 @@ $menu_metadata = array(
                 'restrict_to' => array(UserAccount::PROFILE_ROOT)
             ),
             array(
+                'title'       => _('Movement types'),
+                'link'        => 'dispatcher.php?entity=MovementType',
+                'description' => _('Movement types'),
+                'restrict_to' => array(UserAccount::PROFILE_ROOT)
+            ),
+            array(
                 'title'       => _('Terms of payment'),
                 'link'        => 'dispatcher.php?entity=TermsOfPayment',
                 'description' => _('Terms of payment'),

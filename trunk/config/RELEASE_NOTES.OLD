@@ -4866,6 +4866,9 @@ set @id=(select IFNULL(max(_Id),0) from DocumentModel);
 INSERT INTO `DocumentModel` VALUES (@id+1, 0, 'DEVIS', '', 1, 'Estimate', 1, 0, 1, 1, 1, 0);
 
 
+set @id=(SELECT IFNULL(MAX(_Id), 0)+1 FROM I18nString);
+INSERT INTO I18nString VALUES (@id, NULL, 'Estimate', 'Devis', '', '', '', '', '');
+INSERT INTO Alert VALUES (55001, NULL, @id, NULL, NULL);
 
 ####################################
 # Ne pas enlever

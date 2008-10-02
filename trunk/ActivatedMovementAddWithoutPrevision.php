@@ -67,7 +67,7 @@ if ((isset($_REQUEST['product']) && ($_REQUEST['product'] != 0))
             && isset($_REQUEST['MvtType']) && $_REQUEST['MvtType'] != 0) {
 
 	$MovementType = $MovementTypeMapper->load(array('Id' => $_REQUEST['MvtType']));
-	$MvtTypeEntrieExit = $MovementType -> getEntrieExit(); // 0:ENTREE, 1:SORTIE
+	$MvtTypeEntrieExit = $MovementType -> getEntrieExit(); // 0:MovementType::TYPE_ENTRY, 1:MovementType::TYPE_EXIT
 
 	// Gestion des emplacements autorises pour ce produit TO DO
 	// on recupere les id et les noms des emplacements deja affectes pour le produit
@@ -88,7 +88,7 @@ if ((isset($_REQUEST['product']) && ($_REQUEST['product'] != 0))
             $filter, array('Location.Name' => SORT_ASC));
 
 	// Si entree ou si deplacement, on construit le select sur les Location
-	if ($MvtTypeEntrieExit == ENTREE) {
+	if ($MvtTypeEntrieExit == MovementType::TYPE_ENTRY) {
 		if (isset($_SESSION['LPQCollection'])) {
 		    $LPQCollectionForSession = unserialize($_SESSION['LPQCollection']);
 			for ($i=0;$i<$LPQCollectionForSession->getCount();$i++) {
@@ -125,7 +125,7 @@ if ((isset($_REQUEST['product']) && ($_REQUEST['product'] != 0))
 	    $Smarty->assign('TracingModeName', $tmArray[$Product->getTracingMode()]);
 	}
 
-	if ($MvtTypeEntrieExit == ENTREE) {  // pour le select sur les Locations
+	if ($MvtTypeEntrieExit == MovementType::TYPE_ENTRY) {  // pour le select sur les Locations
 		$Smarty->assign('HTMLLocationSelect', $HTMLLocationSelect);
 	}
 
@@ -201,7 +201,7 @@ else {
 		// on recupere les infos sur les produits pour les afficher dans le SELECT
 		require_once('SQLRequest.php');
 		// si sortie ou deplacement
-		if (SORTIE == $MovementType->GetEntrieExit()
+		if (MovementType::TYPE_EXIT == $MovementType->GetEntrieExit()
                 || ENTREE_DEPLACEMT == $_REQUEST['MvtType']) {
 			// Si pas pilote, filtre sur les Product vus
 			$SitOwnerId = (in_array(

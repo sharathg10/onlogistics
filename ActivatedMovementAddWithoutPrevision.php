@@ -52,6 +52,7 @@ $retURL = 'ActivatedMovementAddWithoutPrevision.php';
 ////////// On a selectionné produit & MvtType:  affichage du GRID /////////////
 // On a tapé une ref dans le champs text...
 if((isset($_REQUEST['productText']) && $_REQUEST['productText'] != '')) {
+    $_REQUEST['productText'] = trim($_REQUEST['productText']);
     $productMapper = Mapper::singleton('Product');
     $product = $productMapper->load(array('BaseReference'=>$_REQUEST['productText']));
     if(!($product instanceof Product)) {

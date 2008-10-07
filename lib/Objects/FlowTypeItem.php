@@ -184,9 +184,16 @@ class FlowTypeItem extends _FlowTypeItem {
                     foreach($invoiceItems as $invoiceItem) {
                         $ttc += troncature($invoiceItem->getTotalPriceHT() + troncature($invoiceItem->getTotalTVA()));
                     }
+                    // Retranche les sommes payees
+                    $paymentCol = $inv->getPaymentCollection(1); // exclu les paiments annules
+                    $count = $paymentCol->getCount();
+                    for ($i=0; $i<$count; $i++) {
+                        $payment = $paymentCol->getItem($i);
+                        $ttc    -= $payment->getTotalPriceTTC();
+                    }
+                    $total += $ttc;
+                    $totals['total'] += $coeff * $ttc;
                 }
-                $total += $ttc;
-                $totals['total'] += $coeff * $ttc;
             }
             // commandes non facturés: on ne détaille pas et on ajoute à la 
             // ligne des lignes de facture

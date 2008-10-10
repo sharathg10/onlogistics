@@ -72,6 +72,33 @@ function insertQtiesIntoSession() {
      }
 } 
 
+/**
+ * Retourne l'URL de retour
+ *
+ * @return string
+ */
+function getReturnURL($commandType) {
+    $from = isset($_REQUEST['from']) ? $_REQUEST['from'] : false;
+    switch ($from) {
+    case 'optimappro':
+        $returnURL = 'SupplyingOptimization.php?formSubmitted=1';
+        break;
+    case 'estimate':
+        $returnURL = 'EstimateList.php?dummy';
+        break;
+    default:
+        if ($commandType == Command::TYPE_SUPPLIER) {
+            $returnURL = 'SupplierCatalog.php?dummy';
+        } else {
+            if (in_array('readytowear', Preferences::get('TradeContext', array()))) {
+                $returnURL = 'dispatcher.php?entity=RTWModel&altname=RTWModelForCatalog'; 
+            } else {
+                $returnURL = 'CustomerCatalog.php?dummy';
+            }
+        }
+    }
+    return $returnURL;
+}
 
 /**
  *
@@ -79,22 +106,7 @@ function insertQtiesIntoSession() {
  * @return void
  **/
 function checkBeforeDisplay($commandType) {
-    if (isset($_REQUEST['from'])) {
-        switch ($_REQUEST['from']) {
-            case 'optimappro':
-                $returnURL = 'SupplyingOptimization.php?formSubmitted=1';
-                break;
-            case 'estimate':
-                $returnURL = 'EstimateList.php';
-                break;
-            default:
-                $returnURL = ($commandType == Command::TYPE_SUPPLIER)?
-                    'SupplierCatalog.php':'CustomerCatalog.php';
-        }
-    }else {
-        $returnURL = ($commandType == Command::TYPE_SUPPLIER)?
-                'SupplierCatalog.php':'CustomerCatalog.php';
-    }
+    $returnURL = getReturnURL($commandType);
     $pdtVarName = getProductSessionVarName($commandType);
     if (empty($_SESSION[$pdtVarName])) {
         Template::errorDialog(_('Please select at least one item.'), $returnURL);

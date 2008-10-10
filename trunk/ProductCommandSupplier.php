@@ -57,15 +57,13 @@ $fromOptimappro = (isset($_REQUEST['from']) && $_REQUEST['from'] == 'optimappro'
 $commandType = Command::TYPE_SUPPLIER;
 // On peut venir de la liste des devis ou du catalog fournisseur, ou d'optimappro
 if ($fromOptimappro) {
-    $catalogPage = 'SupplyingOptimization.php';
     $from = 'optimappro';
 } elseif (isset($_REQUEST['from']) && $_REQUEST['from'] == 'estimate') {
-    $catalogPage = 'EstimateList.php';
     $from = 'estimate';
 } else {
-    $catalogPage = 'SupplierCatalog.php';
     $from = '';
 }
+$catalogPage = getReturnURL($commandType);
 
 
 // Controles
@@ -123,7 +121,7 @@ if (isset($_POST['commandButton']) || isset($_POST['estimateButton'])) {
             $msg .= "<br/>" . sprintf(I_COMMAND_HANDING, $hbr);
         }
         if ($command->getIsEstimate()) {
-            $catalogPage .= '?editEstimate=1&estId='.$command->getId();
+            $catalogPage .= '&editEstimate=1&estId='.$command->getId();
         }
         Template::infoDialog($msg, $catalogPage);
     }
@@ -154,7 +152,7 @@ $form->addElement('select', 'cmdExpeditor', _('Shipper'),
 try {
     $destinatorList = getDestinatorList($pdtCollection, $Supplier);
 } catch (Exception $exc) {
-    Template::errorDialog($exc->getMessage(), $catalogPage . '?formSubmitted=1');
+    Template::errorDialog($exc->getMessage(), $catalogPage . '&formSubmitted=1');
     exit(1);
 }
 

@@ -566,7 +566,7 @@ $menu_metadata = array(
             ),
             array(
                 'title'       => _('Customer catalogue'),
-                'link'        => 'CustomerCatalog.php',
+                'link'        => 'dispatcher.php?entity=RTWModel&altname=RTWModelForCatalog',
                 'description' => _('Customer catalogue'),
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_CUSTOMER,UserAccount::PROFILE_COMMERCIAL,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_DIR_COMMERCIAL,UserAccount::PROFILE_OWNER_CUSTOMER,UserAccount::PROFILE_PRODUCT_MANAGER)
             ),

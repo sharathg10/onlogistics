@@ -273,7 +273,7 @@ $menu_metadata = array(
                 'title'       => _('Terms of payment'),
                 'link'        => 'dispatcher.php?entity=TermsOfPayment',
                 'description' => _('Terms of payment'),
-                'restrict_to' => array(UserAccount::PROFILE_ROOT)
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW)
             ),
         )
     ),

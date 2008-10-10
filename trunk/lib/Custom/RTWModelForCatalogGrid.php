@@ -57,6 +57,7 @@ class RTWModelForCatalogGrid extends RTWModelGrid
             exit(0);
         }
         parent::__construct($params);
+        $this->preserveGridItems = true;
         $this->jsRequirements = array('js/lib-functions/ClientCatalog.js');
 
         // Gestion de l'edition du devis si necessaire
@@ -84,11 +85,20 @@ class RTWModelForCatalogGrid extends RTWModelGrid
         $this->grid->setMapper(Mapper::Singleton('RTWProduct'));
         $this->searchForm->withResetButton = false;
         $this->searchForm->addAction(array(
-            'URL'     => $_SERVER['REQUEST_URI'] . '&new=1',
+            'URL'     => 'dispatcher.php?entity=RTWModel&altname=RTWModelForCatalog&new=1',
             'Caption' => _('Reset all')
         ));
+        // Si reinitialisation de toute la commande
+        if (isset($_REQUEST['new'])) {
+            SearchTools::cleanDataSession('noPrefix');
+        }
 
-        insertQtiesIntoSession();
+        // si on veut faire une nouvelle recherche, on vide ces var en session
+        if (isset($_REQUEST['search'])) {
+            $griditems = SearchTools::getGridItemsSessionName();
+             unset($_SESSION['formSubmitted'], $_SESSION['customer'],
+                $_SESSION['gridItems'], $_SESSION[$griditems]);
+        }
         $defaultValues = SearchTools::dataInSessionToDisplay();
         if (isset($_SESSION['customer']) && $_SESSION['customer'] != '##') {
             $defaultValues = array_merge($defaultValues,
@@ -97,10 +107,7 @@ class RTWModelForCatalogGrid extends RTWModelGrid
         } else {
             $this->searchForm->setDefaultValues(array('CustomerSelected' => 0));
         }
-        // Si reinitialisation de toute la commande
-        if (isset($_REQUEST['new'])) {
-            SearchTools::cleanDataSession('noPrefix');
-        }
+        insertQtiesIntoSession();
     }
     
     // }}} 
@@ -219,12 +226,6 @@ class RTWModelForCatalogGrid extends RTWModelGrid
             $CustomerFilter = array('Commercial' => $auth->getUserId(), 'Active' => 1);
         } else {
             $filter = array('Active' => 1);
-        }
-        // si on veut faire une nouvelle recherche, on vide ces var en session
-        if (isset($_REQUEST['search'])) {
-            $griditems = SearchTools::getGridItemsSessionName();
-             unset($_SESSION['formSubmitted'], $_SESSION['customer'],
-                $_SESSION['gridItems'], $_SESSION[$griditems]);
         }
 
         if (isset($_REQUEST['CustomerSelected'])) {

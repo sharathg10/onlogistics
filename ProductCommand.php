@@ -58,17 +58,6 @@ SearchTools::inputDataInSession(1, '', false);
 
 // Détermination du type de commande
 $commandType = Command::TYPE_CUSTOMER;
-// On peut venir de la liste des debis ou du catalog client
-if (isset($_REQUEST['from']) && $_REQUEST['from'] == 'estimate') {
-    $catalogPage = 'EstimateList.php';
-    $from = 'estimate';
-} else if (isset($_REQUEST['from']) && $_REQUEST['from'] == 'rtwcatalog') {
-    $catalogPage = 'RTWCatalog.php';
-    $from = 'rtwcatalog';
-} else {
-    $catalogPage = 'CustomerCatalog.php';
-    $from = '';
-}
 
 
 // Controles
@@ -82,6 +71,7 @@ $session->prolong($pdtVarName, 3);
 $currency = $customer->getCurrency();
 $curID  = $currency instanceof Currency?$currency->getId():1;
 $curStr = $currency instanceof Currency?$currency->getSymbol():'&euro;';
+$catalogPage = getReturnURL($commandType);
 
 // gestion du suppliercustomer
 $SupplierCustomer = findSupplierCustomer($auth->getActor(), $customer);
@@ -124,7 +114,7 @@ if (isset($_POST['commandButton']) || isset($_POST['estimateButton'])) {
             $msg .= "<br/>" . sprintf(I_COMMAND_HANDING, $hbr);
         }
         if ($command->getIsEstimate()) {
-            $catalogPage .= '?editEstimate=1&estId='.$command->getId();
+            $catalogPage .= '&editEstimate=1&estId='.$command->getId();
         }
         Template::infoDialog($msg, $catalogPage);
     }
@@ -285,6 +275,13 @@ if ($DeliveryZoneLabel != 'N/A') {
 }
 $smarty->assign('cmdProductGrid', $cmdProductGrid);
 $smarty->assign('customerId', $customer->getId());
+
+// On peut venir de la liste des devis ou du catalog client
+if (isset($_REQUEST['from']) && $_REQUEST['from'] == 'estimate') {
+    $from = 'estimate';
+} else {
+    $from = '';
+}
 $smarty->assign('from', $from);
 // Pour les saisies de qte d'UE
 $smarty->assign('ueQtyPref', (Preferences::get('ProductCommandUEQty'))?1:0);

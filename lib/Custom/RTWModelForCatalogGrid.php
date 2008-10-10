@@ -310,6 +310,7 @@ class RTWModelForCatalogGrid extends RTWModelGrid
             'actor'    => Object::load('Actor', $this->customerId),
             'Sortable' => false
         ));
+        $this->grid->newColumn('RTWModelCustomerCatalogTotal', _('Total'));
     }
 
     // }}}

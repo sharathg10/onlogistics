@@ -51,3 +51,26 @@ function getCheckBoxItem(pdtId) {
     }
     return false;
 }
+
+/**
+ * Update total of ordered products for current line.
+ *
+ */
+function updateLineTotal(modelId)
+{
+    totalWidget  = $('total_' + modelId);
+    parentWidget = $('table_' + modelId);
+    if (!totalWidget || !parentWidget) {
+        return;
+    }
+    qtyWidgets = getElementsByTagAndClassName(null, 'qty_item', parentWidget);
+    total      = 0;
+    for (var i=0; i<qtyWidgets.length; i++) {
+        w = qtyWidgets[i];
+        if (w.value > 0) {
+            total += parseInt(w.value);
+        }
+    }
+    totalWidget.value = total;
+}
+

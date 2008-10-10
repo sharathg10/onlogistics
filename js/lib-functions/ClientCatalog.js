@@ -53,6 +53,19 @@ function getCheckBoxItem(pdtId) {
 }
 
 /**
+ * Handles the deselection of a checkbox.
+ *
+ */
+function cbUnselected(cb)
+{
+    try {
+        $('qty_' + cb.value).value = (!cb.checked) ? '' : 1;
+    } catch (e) {
+        // do not fail
+    }
+}
+
+/**
  * Update total of ordered products for current line.
  *
  */

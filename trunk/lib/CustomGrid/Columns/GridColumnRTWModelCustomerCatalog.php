@@ -54,10 +54,10 @@ class GridColumnRTWModelCustomerCatalog extends AbstractGridColumn
         $col = $object->getRTWProductCollection();
         $ths = '';
         $tds = '';
-        $qty = (isset($_SESSION['catalogQties'][$object->getId()]))?
-            $_SESSION['catalogQties'][$object->getId()] : '';
+        $modelId = $object->getId();
+        $qty = (isset($_SESSION['catalogQties'][$modelId]))? $_SESSION['catalogQties'][$modelId] : '';
         $thTpl = '<th><input type="checkbox" name="gridItems[]" value="%s" onclick="fw.grid.handleCBDeselect(this);"/>%s</th>';
-        $tdTpl = '<td><input type="text" size="2" name="qty_%s" value="'.$qty.'" onkeyup="checkUncheck(%s);"/></td>';
+        $tdTpl = '<td><input type="text" size="2" class="qty_item" name="qty_%s" value="%s" onkeyup="checkUncheck(%s);updateLineTotal(%s);"/></td>';
         foreach ($col as $item) {
             if (!$item->getActivated() || !$item->getAffected()) {
                 continue;
@@ -65,11 +65,12 @@ class GridColumnRTWModelCustomerCatalog extends AbstractGridColumn
             $id = $item->getId();
             if ($item->getSizeId()) {
                 $ths .= sprintf($thTpl, $id, $item->getSize()->getName());
-                $tds .= sprintf($tdTpl, $id, $id);
+                $tds .= sprintf($tdTpl, $id, $qty, $id, $modelId);
             }
         }
         return sprintf(
-            '<table border="0"><tr>%s</tr><tr>%s</tr></table>',
+            '<table id="table_%s" border="0"><tr>%s</tr><tr>%s</tr></table>',
+            $modelId,
             $ths,
             $tds
         );

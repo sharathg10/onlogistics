@@ -51,16 +51,17 @@ class GridColumnRTWModelCustomerCatalog extends AbstractGridColumn
     }
 
     public function render($object) {
-        $col = $object->getRTWProductCollection();
+        $col = $object->getRTWProductCollection(
+            array('Activated' => 1, 'Affected' => 1),
+            array('Size.Name' => SORT_ASC),
+            array('Size')
+        );
         $ths = '';
         $tds = '';
         $modelId = $object->getId();
         $thTpl = '<th><input type="checkbox" id="cb_%s" name="gridItems[]" value="%s" onclick="fw.grid.handleCBDeselect(this);cbUnselected(this);updateLineTotal(%s);"%s/>%s</th>';
         $tdTpl = '<td><input type="text" size="2" class="qty_item" name="qty_%s" id="qty_%s" value="%s" onkeyup="checkUncheck(%s);updateLineTotal(%s);"/></td>';
         foreach ($col as $item) {
-            if (!$item->getActivated() || !$item->getAffected()) {
-                continue;
-            }
             $id = $item->getId();
             $qty = (isset($_SESSION['catalogQties'][$id]))? $_SESSION['catalogQties'][$id] : '';
             $checked = $qty > 0 ? ' checked="checked"' : '';

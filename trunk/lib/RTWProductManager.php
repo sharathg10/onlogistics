@@ -84,6 +84,9 @@ class RTWProductManager extends RTWManager
                 $product->setSize($sizeId);
                 // affecte le produit à la chaine
                 self::createAffectation($product, 'lc');
+                $oldReference = false;
+            } else {
+                $oldReference = $product->getBaseReference();
             }
             $product->setModel($model);
             $product->setName($model->getDescription());
@@ -103,7 +106,7 @@ class RTWProductManager extends RTWManager
             );
             self::createActorProduct($product, $apData);
             // Creation de la nomenclature
-            self::createNomenclature($product);
+            self::createNomenclature($product, $oldReference);
             $product->save();
         } 
     }
@@ -121,7 +124,7 @@ class RTWProductManager extends RTWManager
      * @throw  Exception
      * @static
      */
-    protected static function createNomenclature($product)
+    protected static function createNomenclature($product, $oldReference)
     {
         $nomenclature = Object::load('Nomenclature', array('Product'=>$product->getId()));
         if (!($nomenclature instanceof Nomenclature)) {
@@ -172,11 +175,18 @@ class RTWProductManager extends RTWManager
         }
         include_once 'Objects/Task.const.php';
         $newRef   = $product->getBaseReference();
-        $newChain = Object::load('Chain', array('Reference'=>$newRef));
+        $newDesc  = $chain->getDescription() . ' ' . $newRef;
+        if ($oldReference) {
+            $newChain = Object::load('Chain', array('Reference' => $oldReference));
+        } else {
+            $newChain = false;
+        }
         if (!($newChain instanceof Chain)) {
             include_once 'DuplicateChain.php';
-            $newDesc  = $chain->getDescription() . ' ' . $newRef;
             $newChain = duplicateChain($chain, $newRef, $newDesc);
+        } else {
+            $newChain->setReference($newRef);
+            $newChain->setDescription($newDesc);
         }
         // au cas ou...
         $newChain->setAutoAssignTo(Chain::AUTOASSIGN_NONE);

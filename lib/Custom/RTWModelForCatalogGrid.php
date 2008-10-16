@@ -315,6 +315,54 @@ class RTWModelForCatalogGrid extends RTWModelGrid
     }
 
     // }}}
+    // RTWModelForCatalogGrid::getToStringAttributeForMaterial1() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getToStringAttributeForMaterial1() {
+        return 'CommercialNameAndColor';
+    }
+
+    // }}}
+    // RTWModelForCatalogGrid::getToStringAttributeForMaterial2() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getToStringAttributeForMaterial2() {
+        return 'CommercialNameAndColor';
+    }
+
+    // }}}
+    // RTWModelForCatalogGrid::getToStringAttributeForAccessory1() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getToStringAttributeForAccessory1() {
+        return 'CommercialNameAndColor';
+    }
+
+    // }}}
+    // RTWModelForCatalogGrid::getToStringAttributeForAccessory2() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getToStringAttributeForAccessory2() {
+        return 'CommercialNameAndColor';
+    }
+
+    // }}}
 }
 
 ?>

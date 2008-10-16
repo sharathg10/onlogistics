@@ -163,11 +163,25 @@ function savePaymentDate($Invoice, $Command) {
             array('Supplier' => $Expeditor, 'Customer' => $Destinator));
 
     if (!Tools::isEmptyObject($SupplierCustomer)) {
-       // XXX TODO TERMS_OF_PAYMENT implement PaymentDate calculation
-	   $Invoice->setPaymentDate($Invoice->getEditionDate());
-	}
-	else {  // Pas de SupplierCustomer defini
-	   $Invoice->setPaymentDate($Invoice->getEditionDate());
+        // met la date de paiment de la facture au premier reglement
+        $top = $SupplierCustomer->getTermsOfPayment();
+        $paymentDate = false;
+        if ($top instanceof TermsOfPayment) {
+            $topItems = $top->getTermsOfPaymentItemCollection();
+            foreach ($topItems as $topItem) {
+                list($date, $amount, $actor) = $topItem->getDateAndAmountForOrder($Command);
+                if (!$paymentDate || $date < $paymentDate) {
+                    $paymentDate = $date;
+                }
+            }
+        }
+        if (!$paymentDate) {
+            // sinon on prend la date d'edition de la facture
+            $paymentDate = $Invoice->getEditionDate();
+        }
+	    $Invoice->setPaymentDate($paymentDate);
+	} else {  // Pas de SupplierCustomer defini
+	    $Invoice->setPaymentDate($Invoice->getEditionDate());
 	}
 }
 

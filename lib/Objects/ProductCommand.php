@@ -530,9 +530,9 @@ class ProductCommand extends _ProductCommand {
                 // on recupere la qte virtuelle du produit
                 $initVirtualQuantity = $pdt->getSellUnitVirtualQuantity();
                 $entrieExit = Tools::getValueFromMacro($acm, '%Type.EntrieExit%');
-                if ($entrieExit == ENTREE) {
+                if ($entrieExit == MovementType::TYPE_ENTRY) {
                     $qty = $initVirtualQuantity - $acm->getQuantity();
-                } elseif ($entrieExit == SORTIE) {
+                } elseif ($entrieExit == MovementType::TYPE_EXIT) {
                     $qty = $initVirtualQuantity + $acm->getQuantity();
                 }
                 $pdt->setSellUnitVirtualQuantity($qty);

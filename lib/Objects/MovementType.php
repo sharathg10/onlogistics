@@ -3,6 +3,8 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
+ * IMPORTANT: This is a generated file, please do not edit.
+ *
  * This file is part of Onlogistics, a web based ERP and supply chain 
  * management application. 
  *
@@ -34,8 +36,17 @@
  * @filesource
  */
 
+/**
+ * MovementType class
+ *
+ */
 class MovementType extends Object {
-    
+    // class constants {{{
+
+    const TYPE_ENTRY = 0;
+    const TYPE_EXIT = 1;
+
+    // }}}
     // Constructeur {{{
 
     /**
@@ -162,7 +173,7 @@ class MovementType extends Object {
     }
 
     // }}}
-    // EntrieExit string property + getter/setter {{{
+    // EntrieExit const property + getter/setter/getEntrieExitConstArray {{{
 
     /**
      * EntrieExit int property
@@ -195,6 +206,58 @@ class MovementType extends Object {
         }
     }
 
+    /**
+     * MovementType::getEntrieExitConstArray
+     * Retourne un tableau associatif avec la valeur de la constante en
+     * clef et sa représentation textuelle en valeur.
+     * Si $keys vaut true, seules les clefs sont retournées
+     *
+     * @access public
+     * @static
+     * @param boolean $keys
+     * @return array
+     */
+    public static function getEntrieExitConstArray($keys = false) {
+        $array = array(
+            MovementType::TYPE_ENTRY => _("Entry"), 
+            MovementType::TYPE_EXIT => _("Exit")
+        );
+        asort($array);
+        return $keys?array_keys($array):$array;
+    }
+
+    // }}}
+    // ConstName string property + getter/setter {{{
+
+    /**
+     * ConstName string property
+     *
+     * @access private
+     * @var string
+     */
+    private $_ConstName = '';
+
+    /**
+     * MovementType::getConstName
+     *
+     * @access public
+     * @return string
+     */
+    public function getConstName() {
+        return $this->_ConstName;
+    }
+
+    /**
+     * MovementType::setConstName
+     *
+     * @access public
+     * @param string $value
+     * @return void
+     */
+    public function setConstName($value) {
+        $this->_ConstName = $value;
+    }
+
     // }}}
     // getTableName() {{{
 
@@ -220,7 +283,7 @@ class MovementType extends Object {
      * @return string
      */
     public static function getObjectLabel() {
-        return _('None');
+        return _('Movement types');
     }
 
     // }}}
@@ -239,7 +302,8 @@ class MovementType extends Object {
         $return = array(
             'Name' => Object::TYPE_I18N_STRING,
             'Foreseeable' => Object::TYPE_INT,
-            'EntrieExit' => Object::TYPE_INT);
+            'EntrieExit' => Object::TYPE_CONST,
+            'ConstName' => Object::TYPE_STRING);
         return $return;
     }
 
@@ -284,7 +348,7 @@ class MovementType extends Object {
      * @return array
      */
     public static function getUniqueProperties() {
-        $return = array();
+        $return = array('ConstName');
         return $return;
     }
 
@@ -317,7 +381,7 @@ class MovementType extends Object {
      * @see Object.php
      */
     public static function getFeatures() {
-        return array();
+        return array('grid', 'add', 'edit');
     }
 
     // }}}
@@ -333,7 +397,34 @@ class MovementType extends Object {
      * @see Object.php
      */
     public static function getMapping() {
-        $return = array();
+        $return = array(
+            'Name'=>array(
+                'label'        => _('Name'),
+                'shortlabel'   => _('Name'),
+                'usedby'       => array('grid', 'addedit'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => ''
+            ),
+            'EntrieExit'=>array(
+                'label'        => _('Type'),
+                'shortlabel'   => _('Type'),
+                'usedby'       => array('grid', 'addedit'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => ''
+            ),
+            'ConstName'=>array(
+                'label'        => _('Constant name'),
+                'shortlabel'   => _('Constant name'),
+                'usedby'       => array('grid', 'addedit'),
+                'required'     => true,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => ''
+            ));
         return $return;
     }
 

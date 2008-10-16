@@ -209,9 +209,9 @@ if (isset($_REQUEST['FormSubmitted']) && $_REQUEST['FormSubmitted'] == 'true') {
                     'Location'=>$locationExit, 
                     'Product'=>$product->getId()));
                 $LPQ_in = getLocationProductQuantities(
-                    $product, $locationEntry, ENTREE, 'DocumentList.php');
-                updateLPQQuantity($LPQ_out, $qty, SORTIE, 'DocumentList.php');
-                updateLPQQuantity($LPQ_in, $qty, ENTREE, 'DocumentList.php');
+                    $product, $locationEntry, MovementType::TYPE_ENTRY, 'DocumentList.php');
+                updateLPQQuantity($LPQ_out, $qty, MovementType::TYPE_EXIT, 'DocumentList.php');
+                updateLPQQuantity($LPQ_in, $qty, MovementType::TYPE_ENTRY, 'DocumentList.php');
                 // }}}
             }
             // }}}

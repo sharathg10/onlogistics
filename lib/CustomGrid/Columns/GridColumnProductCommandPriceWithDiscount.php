@@ -55,6 +55,13 @@ class GridColumnProductCommandPriceWithDiscount extends AbstractGridColumn {
     }
 
     public function render($object) {
+        if ($object instanceof RTWModel) {
+            $col = $object->getRTWProductCollection();
+            if (!count($col)) {
+                return _('N/A');
+            }
+            $object = $col->getItem(0);
+        }
         require_once('FormatNumber.php');
         $return = '<div class="grid_formatnumber">';
         // On récupère le prix exact du produit pour le client qui commande

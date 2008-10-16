@@ -107,7 +107,7 @@
         $LocationPdtQuantitiesMapper = Mapper::singleton('LocationProductQuantities');
         $LocationPdtQuantities = $LocationPdtQuantitiesMapper->load(array('Location' => $LocationId, 'Product' => $ProductId));
 
-        if (($EntrieExit == ENTREE && (Tools::isEmptyObject($LocationPdtQuantities)
+        if (($EntrieExit == MovementType::TYPE_ENTRY && (Tools::isEmptyObject($LocationPdtQuantities)
             || $LocationPdtQuantities->getRealQuantity() < $this->getQuantity()))
             || (!Tools::isEmptyObject($LocationPdtQuantities) && 0 == $LocationPdtQuantities->getActivated())) {
             return array(false, $ErrorMsgeBegin . _(', because location was deactived or does not contain anymore this product in sufficient quantity.'));
@@ -261,7 +261,7 @@
         // prevu ou pas
         $foreseeable = Tools::getValueFromMacro($this, '%ExecutedMovement.Type.Foreseeable%');
         // pour editer un BL, il faut que ce soit une sortie, et prevu
-        if ($entrieExit <> SORTIE || $foreseeable != 1) {
+        if ($entrieExit <> MovementType::TYPE_EXIT || $foreseeable != 1) {
             return false;
         }
 
@@ -513,7 +513,7 @@
         // prevu ou pas
         $foreseeable = Tools::getValueFromMacro($this, '%ExecutedMovement.Type.Foreseeable%');
         // Pour existance d'un BL, il faut que ce soit une sortie, et prevu
-        if ($entrieExit <> SORTIE || $foreseeable != 1) {
+        if ($entrieExit <> MovementType::TYPE_EXIT || $foreseeable != 1) {
             return false;
         }
         // Recherche du 1er BL pour cette commande, dont EditionDate >= LEM.Date

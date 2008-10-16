@@ -168,6 +168,19 @@ class ChainAddEdit extends GenericAddEdit {
     }
 
     // }}}
+    // ChainAddEdit::renderAutoAssignTo() {{{
+
+    /**
+     * renderAutoAssignTo 
+     * 
+     * @access public
+     * @return void
+     */
+    public function renderAutoAssignTo() {
+        // forbid edition of AutoAssignTo property, too dangerous
+    }
+
+    // }}}
 }
 
 ?>

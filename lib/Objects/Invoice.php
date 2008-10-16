@@ -316,6 +316,7 @@ class Invoice extends _Invoice {
     function dataForRTWInvoice($currency = '€') {
         $data = $this->dataForInvoice($currency);
         $ret  = array();
+        $sizes = array();
         foreach ($data as $item) {
             if (!is_array($item)) {
                 continue;
@@ -330,10 +331,12 @@ class Invoice extends _Invoice {
             $model = $rtwProduct->getModel();
             $ref = $rtwProduct->getBaseReference() . "\n" . $model->getPressName()->toString();
             if (!isset($ret[$model->getId()])) {
+                $sizes[$model->getId()] = array();
+                $sizes[$model->getId()][$size->getName()] = intval($item[2]);
                 $ret[$model->getId()] = array(
                     $ref,
                     // taille: qte
-                    $rtwProduct->getName() . ($size ? "\n".$size->getName()."  ({$item[2]})" : ''),
+                    $rtwProduct->getName(),
                     // qte: sera incrementee
                     intval($item[2]),
                     // PUHT
@@ -344,7 +347,7 @@ class Invoice extends _Invoice {
                     $item[6]
                 );
             } else {
-                $ret[$model->getId()][1] .= ($size ? ", ".$size->getName()."  ({$item[2]})" : '');
+                $sizes[$model->getId()][$size->getName()] = intval($item[2]);
                 $ret[$model->getId()][2] += intval($item[2]);
                 foreach (array(4 => 4, 5 => 6) as $retIndex => $itemIndex) {
                     $ret[$model->getId()][$retIndex] = I18N::formatNumber(
@@ -361,7 +364,7 @@ class Invoice extends _Invoice {
                 $array[1] .= "\n\n" . $legalMentions;
             }
         }
-        return array_values($ret);
+        return array(array_values($ret), array_values($sizes));
     }
 
     // }}}

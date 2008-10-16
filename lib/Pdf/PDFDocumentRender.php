@@ -469,26 +469,34 @@ class PDFDocumentRender extends FpdfJS {
 
 	 * @return integer : nombre de colonnes
 	 */
-    public function tableHeader($columns, $color = 0, $border = 1) { // {{{
-        $this->_NbDataColumns = count($columns);
-        $return = false;
-        $ColumnHeader = array();
-        $ColumnWidth = array(); // va contenir les largeurs des cellules
-        foreach($columns as $label => $width) {
-            $ColumnWidth[] = $width;
-            $data[] = $label;
+    public function tableHeader($columns, $color = 0, $border = 1, $params = array()) { // {{{
+        $this->updateTableInfos($columns);
+        $data = array_keys($columns);
+        $defaultParams = array(
+            'color'      => $color,
+            'font'       => $this->defaultFamilyFont,
+            'fontStyle'  => 'B',
+            'fontSize'   => $this->defaultFontSize['SUBTITLE'],
+            'align'      => 'J',
+            'border'     => $border,
+            'lineHeight' => 6
+        );
+        foreach ($params as $k => $v) {
+            if (isset($defaultParams[$k])) {
+                $defaultParams[$k] = $v;
+            }
         }
-        $this->_ColumnWidths = $ColumnWidth;
         $x = $this->GetX();
         $y = $this->GetY();
-        $this->Row($data, array(),
-                   array('color'=>$color, 'font'=>$this->defaultFamilyFont,
-                         'fontStyle'=>'B',
-                         'fontSize'=>$this->defaultFontSize['SUBTITLE'],
-                         'align'=>'J', 'border'=>$border, 'lineHeight'=>6));
+        $this->Row($data, array(), $defaultParams);
         $this->restoreFont();
-        return(count($data) + 1);
+        return (count($data) + 1);
     } // }}}
+    
+    public function updateTableInfos($columns) {
+        $this->_NbDataColumns = count($columns);
+        $this->_ColumnWidths = array_values($columns);
+    }
 
     /**
 	 * Cree le corps d'un tableau de donnees
@@ -496,9 +504,9 @@ class PDFDocumentRender extends FpdfJS {
 	 * @param array $headerTable header du tableau
 	 * @return void
 	 */
-    public function tableBody($data, $headerTable=array()) { // {{{
+    public function tableBody($data, $headerTable=array(), $params=array()) { // {{{
         for ($i = 0; $i < count($data); $i++) {
-            $this->Row($data[$i], $headerTable);
+            $this->Row($data[$i], $headerTable, $params);
         }
     } // }}}
 

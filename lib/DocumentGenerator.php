@@ -1285,9 +1285,31 @@ class RTWInvoiceGenerator extends InvoiceGenerator
             _('Unit Price net of tax') . ' ' . $this->currency=>15,
             _('Disc')=>13,
             _('Total Price net of tax') . ' ' . $this->currency=>25);
-        $columnsData = $this->document->dataForRTWInvoice($this->currency);
+        list($columnsData, $sizes) = $this->document->dataForRTWInvoice($this->currency);
         $pdfDoc->tableHeader($columns, 1);
-        $pdfDoc->tableBody($columnsData, $columns);
+        // ce truc est vraiment perave, pfff...
+        for ($i=0; $i<count($columnsData); $i++) {
+            $this->pdf->updateTableInfos($columns);
+            $pdfDoc->row($columnsData[$i], $columns);
+            if (!isset($sizes[$i]) || empty($sizes[$i])) {
+                continue;
+            }
+            $sColumns = array();
+            $sColumns[_('Sizes')] = 34;
+            $sColumns += array_fill_keys(array_keys($sizes[$i]), 15);
+            $pdfDoc->tableHeader($sColumns, 0, 1, array(
+                'align'      => 'C',
+                'lineHeight' => 4,
+                'fontSize'   => 8,
+            ));
+            $sData = array_values($sizes[$i]);
+            array_unshift($sData, _('Quantities'));
+            $pdfDoc->row($sData, $sColumns, array(
+                'align'      => 'C',
+                'lineHeight' => 4,
+                'fontSize'   => 8,
+            ));
+        }
         $pdfDoc->ln(8);
         if ($pdfDoc->getY() >= PAGE_HEIGHT_LIMIT) {
             $pdfDoc->addPage();
@@ -3410,7 +3432,13 @@ class CommandReceiptGenerator extends CommandDocumentGenerator
      * @return void
      */
     public function __construct($document, $reedit=false) {
-        parent::__construct($document, $reedit, false, _('Order receipt'));
+        parent::__construct($document, $reedit, false);
+        $commandType = $this->command->getType();
+        if ($commandType == Command::TYPE_CUSTOMER) {
+            $this->docName = _('Order receipt');
+        } else {
+            $this->docName = _('Order');
+        }
         $this->pdf->showExpeditor = false;
     }
 
@@ -3458,17 +3486,6 @@ class CommandReceiptGenerator extends CommandDocumentGenerator
         }
         $this->pdf->addText(_('Wished date') . ' : ' .
             $wishedDate);
-        if (in_array('readytowear', Preferences::get('TradeContext', array()))) {
-            $this->pdf->addText(_('Season') . ' : ' . 
-                Tools::getValueFromMacro(
-                    $this->command,
-                    '%CommandItem()[0].Product.Model.Season.Name%'
-                )
-            );
-            $this->pdf->addText(_('Number of ordered products') . ': ' 
-                . $this->command->getNumberOfOrderedProducts());
-        }
-
         $header = array(_('Reference') => 30,
                         _('Description of goods') => 75,
                         _('Qty')  => 15,
@@ -3476,11 +3493,7 @@ class CommandReceiptGenerator extends CommandDocumentGenerator
                         _('Disc.')    => 15,
                         _('Amount excl. VAT') . ' ' . $this->currency   => 20,
                         _('Amount incl. VAT') . ' ' . $this->currency  => 20);
-        if (in_array('readytowear', Preferences::get('TradeContext', array()))) {
-            $data = $this->getDataForRTW();
-        } else {
-            $data = $this->getData();
-        }
+        $data = $this->getData();
         $this->pdf->tableHeader($header, 1);
         $this->pdf->tableBody($data, $header);
         $this->pdf->Ln(8);
@@ -3529,61 +3542,6 @@ class CommandReceiptGenerator extends CommandDocumentGenerator
     }
     
     // }}}
-    // CommandReceiptGenerator::getDataForRTW() {{{
-
-    protected function getDataForRTW() {
-        $commandType = $this->command->getType();
-        $supplierCustomer = $this->command->getSupplierCustomer();
-        $supplier = $supplierCustomer->getSupplier();
-        $commandItemCol = $this->command->getCommandItemCollection();
-        $count = $commandItemCol->getcount();
-        $registry = array();
-        for($i=0 ; $i<$count ; $i++) {
-            $commandItem = $commandItemCol->getItem($i);
-            $product = $commandItem->getProduct();
-            if ($product instanceof RTWMaterial) {
-                // commande matière: on appelle getData plutôt
-                return $this->getData();
-            }
-            $model   = $product->getModel();
-            $productRef = $model->getStyleNumber() . "\n" . $model->getPressName()->toString();
-            if (!(($size = $product->getSize()) instanceof RTWSize)) {
-                $size = false;
-            }
-            if (isset($registry[$model->getId()])) {
-                $registry[$model->getId()][1] .= ($size ? ", ".$size->getName().": " . $commandItem->getQuantity() : '');
-                $registry[$model->getId()][2] += $commandItem->getQuantity();
-                //$registry[$model->getId()][3] += $commandItem->getPriceHT();
-                $registry[$model->getId()][4] += $commandItem->getHanding();
-                $registry[$model->getId()][5] += $commandItem->getTotalHT();
-                $registry[$model->getId()][6] += $commandItem->getTotalTTC();
-            } else {
-                $registry[$model->getId()] = array(
-                    $productRef,
-                    $product->getName() . ($size ? "\n".$size->getName().": " . $commandItem->getQuantity(): ''),
-                    $commandItem->getQuantity(),
-                    $commandItem->getPriceHT(),
-                    $commandItem->getHanding(),
-                    $commandItem->getTotalHT(),
-                    $commandItem->getTotalTTC()
-                );
-            }
-        }
-        foreach ($registry as $i=>&$array) {
-            $model = Object::load('RTWModel', $i);
-            $legalMentions = $model->getLegalMentions();
-            if (!empty($legalMentions)) {
-                $array[1] .= "\n\n" . $legalMentions;
-            }
-            $array[3] = I18N::formatNumber($array[3]);
-            $array[4] = I18N::formatNumber($array[4]);
-            $array[5] = I18N::formatNumber($array[5]);
-            $array[6] = I18N::formatNumber($array[6]);
-        }
-        return array_values($registry);
-    }
-    
-    // }}}
     // CommandReceiptGenerator::renderTotalBlock() {{{
 
     /**
@@ -3625,6 +3583,143 @@ class CommandReceiptGenerator extends CommandDocumentGenerator
             _('To pay') . ' ' . $this->currency .' : ' . $toPay=>50));
     }
 
+    // }}}
+}
+
+// }}}
+// RTWCommandReceiptGenerator {{{
+
+/**
+ * classe de génération des récépissés de commandes.
+ *
+ */
+class RTWCommandReceiptGenerator extends CommandReceiptGenerator
+{ 
+    // RTWCommandReceiptGenerator::renderContent() {{{
+
+    /**
+     * Génére le contenu du doc :
+     * date souhaité, incoterm et tableau des infos de la commande.
+     *
+     * @return void
+     */
+    public function renderContent() {
+        $wishedDate = I18N::formatDate($this->command->getWishedStartDate());
+
+        if ($this->command->getWishedEndDate() != 0 &&
+            $this->command->getWishedEndDate() != 'NULL') {
+            $wishedDate = sprintf(
+                _('between %s and %s'),
+                $wishedDate,
+                I18N::formatDate($this->command->getWishedEndDate()
+            ));
+        }
+        $this->pdf->addText(_('Wished date') . ' : ' .
+            $wishedDate);
+        $this->pdf->addText(_('Season') . ' : ' . 
+            Tools::getValueFromMacro(
+                $this->command,
+                '%CommandItem()[0].Product.Model.Season.Name%'
+            )
+        );
+        $this->pdf->addText(_('Number of ordered products') . ': ' 
+            . $this->command->getNumberOfOrderedProducts());
+
+        $columns = array(_('Reference') => 30,
+                        _('Description of goods') => 75,
+                        _('Qty')  => 15,
+                        _('Unit Price net of tax') . ' ' . $this->currency=>15,
+                        _('Disc.')    => 15,
+                        _('Amount excl. VAT') . ' ' . $this->currency   => 20,
+                        _('Amount incl. VAT') . ' ' . $this->currency  => 20);
+        list($columnsData, $sizes) = $this->getData();
+        $this->pdf->tableHeader($columns, 1);
+        
+        // ce truc est vraiment perave, pfff...
+        for ($i=0; $i<count($columnsData); $i++) {
+            $this->pdf->updateTableInfos($columns);
+            $this->pdf->row($columnsData[$i], $columns);
+            if (!isset($sizes[$i]) || empty($sizes[$i])) {
+                continue;
+            }
+            $sColumns = array();
+            $sColumns[_('Sizes')] = 30;
+            $sColumns += array_fill_keys(array_keys($sizes[$i]), 15);
+            $this->pdf->tableHeader($sColumns, 0, 1, array(
+                'align'      => 'C',
+                'lineHeight' => 4,
+                'fontSize'   => 8,
+            ));
+            $sData = array_values($sizes[$i]);
+            array_unshift($sData, _('Quantities'));
+            
+            $this->pdf->row($sData, $sColumns, array(
+                'align'      => 'C',
+                'lineHeight' => 4,
+                'fontSize'   => 8,
+            ));
+        }
+        $this->pdf->Ln(8);
+    }
+
+    // }}}
+    // RTWCommandReceiptGenerator::getData() {{{
+
+    protected function getData() {
+        $commandType = $this->command->getType();
+        $supplierCustomer = $this->command->getSupplierCustomer();
+        $supplier = $supplierCustomer->getSupplier();
+        $commandItemCol = $this->command->getCommandItemCollection();
+        $count = $commandItemCol->getcount();
+        $registry = array();
+        $sizes = array();
+        for($i=0 ; $i<$count ; $i++) {
+            $commandItem = $commandItemCol->getItem($i);
+            $product = $commandItem->getProduct();
+            if ($product instanceof RTWMaterial) {
+                // commande matière: on appelle getData plutôt
+                return array(parent::getData(), array());
+            }
+            $model   = $product->getModel();
+            $productRef = $model->getStyleNumber() . "\n" . $model->getPressName()->toString();
+            if (!(($size = $product->getSize()) instanceof RTWSize)) {
+                $size = false;
+            }
+            if (isset($registry[$model->getId()])) {
+                $registry[$model->getId()][2] += $commandItem->getQuantity();
+                //$registry[$model->getId()][3] += $commandItem->getPriceHT();
+                $registry[$model->getId()][4] += $commandItem->getHanding();
+                $registry[$model->getId()][5] += $commandItem->getTotalHT();
+                $registry[$model->getId()][6] += $commandItem->getTotalTTC();
+            } else {
+                $registry[$model->getId()] = array(
+                    $productRef,
+                    $product->getName(),
+                    $commandItem->getQuantity(),
+                    $commandItem->getPriceHT(),
+                    $commandItem->getHanding(),
+                    $commandItem->getTotalHT(),
+                    $commandItem->getTotalTTC()
+                );
+            }
+            if ($size) {
+                $sizes[$model->getId()][$size->getName()] = $commandItem->getQuantity();
+            }
+        }
+        foreach ($registry as $i=>&$array) {
+            $model = Object::load('RTWModel', $i);
+            $legalMentions = $model->getLegalMentions();
+            if (!empty($legalMentions)) {
+                $array[1] .= "\n\n" . $legalMentions;
+            }
+            $array[3] = I18N::formatNumber($array[3]);
+            $array[4] = I18N::formatNumber($array[4]);
+            $array[5] = I18N::formatNumber($array[5]);
+            $array[6] = I18N::formatNumber($array[6]);
+        }
+        return array(array_values($registry), array_values($sizes));
+    }
+    
     // }}}
 }
 
@@ -3761,6 +3856,31 @@ class ChainCommandReceiptGenerator extends CommandReceiptGenerator
 class EstimateGenerator extends CommandReceiptGenerator
 {
     // EstimateGenerator::__construct() {{{
+
+    /**
+     * Constructeur.
+     *
+     * @param object $command commande
+     * @return void
+     */
+    public function __construct($document, $reedit=false) {
+        parent::__construct($document, $reedit);
+        $this->docName = _('Estimate');
+    }
+
+    // }}}
+}
+
+// }}}
+// RTWEstimateGenerator {{{
+
+/**
+ * classe de génération des devis pour les commandes produits
+ *
+ */
+class RTWEstimateGenerator extends RTWCommandReceiptGenerator
+{
+    // RTWEstimateGenerator::__construct() {{{
 
     /**
      * Constructeur.

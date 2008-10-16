@@ -90,14 +90,22 @@ function generateDocument($document, $reedit=0, $output='I') {
         if ($cmd instanceof ChainCommand) {
             $generator_name = 'ChainCommandReceiptGenerator';
         } else {
-            $generator_name = 'CommandReceiptGenerator';
+            if (in_array('readytowear', $context) && $cmd->getType() == Command::TYPE_CUSTOMER) {
+                $generator_name = 'RTWCommandReceiptGenerator';
+            } else {
+                $generator_name = 'CommandReceiptGenerator';
+            }
         }
     } else if (get_class($document) == 'Estimate') { 
         $cmd = $document->getCommand();
         if ($cmd instanceof ChainCommand) {
             $generator_name = 'ChainCommandEstimateGenerator';
         } else {
-            $generator_name = 'EstimateGenerator';
+            if (in_array('readytowear', $context) && $cmd->getType() == Command::TYPE_CUSTOMER) {
+                $generator_name = 'RTWEstimateGenerator';
+            } else {
+                $generator_name = 'EstimateGenerator';
+            }
         }
     } else {
         $generator_name = get_class($document) . 'Generator';

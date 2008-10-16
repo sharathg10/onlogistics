@@ -135,10 +135,10 @@ class _OnlogisticsAccount extends Object {
      */
     public static function getEnvironmentConstArray($keys = false) {
         $array = array(
-            _OnlogisticsAccount::ENV_CURRENT => _("current"),
-            _OnlogisticsAccount::ENV_RECETTE => _("recette"),
-            _OnlogisticsAccount::ENV_DEMO => _("demo"),
-            _OnlogisticsAccount::ENV_PROD => _("prod")
+            _OnlogisticsAccount::ENV_CURRENT => "current",
+            _OnlogisticsAccount::ENV_RECETTE => "recette",
+            _OnlogisticsAccount::ENV_DEMO => "demo",
+            _OnlogisticsAccount::ENV_PROD => "prod"
         );
         asort($array);
         return $keys?array_keys($array):$array;

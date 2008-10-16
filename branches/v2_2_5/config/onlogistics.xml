@@ -75,7 +75,8 @@
             label="Accounting model" emptyfordelete="1" />
         <property type="manytomany" name="FlowType" class="FlowType"
             field="FromAccount" linktable="accountFlowType"
-            linkfield="ToFlowType" usedby="searchform" emptyfordelete="1" />
+            linkfield="ToFlowType" usedby="searchform" emptyfordelete="1"
+            label="Flow type" />
         <property type="manytomany" name="FlowTypeItem" class="FlowTypeItem"
             field="FromAccount" linktable="accountFlowTypeItem"
             linkfield="ToFlowTypeItem" usedby="addedit"
@@ -726,7 +727,7 @@
         <property type="foreignkey" name="BarCodeType" class="BarCodeType"
             label="Barcode type" usedby="addedit"/>
         <property type="foreignkey" name="SiteTransition"
-            class="ActorSiteTransition" usedby="addedit"/>
+            class="ActorSiteTransition" label="Site" usedby="addedit"/>
         <property type="foreignkey" name="PivotTask" class="ChainTask" />
         <property type="int" name="PivotDateType" default="0" />
         <property type="int" name="CommandSequence" default="0" />
@@ -1991,10 +1992,18 @@
     </entity>
 
     <!-- entity MovementType -->
-    <entity name="MovementType" tablename="MovementType">
-        <property type="string" name="Name" i18n="1" />
+    <entity name="MovementType" tablename="MovementType" label="Movement types"
+        features="grid,add,edit">
+        <property type="string" name="Name" i18n="1" 
+            usedby="grid,addedit" label="Name" />
         <property type="int" length="1" name="Foreseeable" default="0" />
-        <property type="int" length="1" name="EntrieExit" default="0" />
+        <property type="const" name="EntrieExit" default="0"
+            usedby="grid,addedit" label="Type">
+            <const name="TYPE_ENTRY" label="Entry" value="0" />
+            <const name="TYPE_EXIT" label="Exit" value="1" />
+        </property>
+        <property type="string" name="ConstName" label="Constant name" 
+            usedby="grid,addedit" required="1" unique="1"/>
     </entity>
 
     <!-- entity Nomenclature -->
@@ -2165,7 +2174,7 @@
         <property type="foreignkey" name="Product" class="Product"
             navigable="1" label="Product" usedby="grid,searchform"/>
         <property type="foreignkey" name="ActorProduct" class="ActorProduct"
-            navigable="1" usedby="grid,searchform"/>
+            navigable="1" usedby="grid,searchform" label="Actor / Product"/>
         <property type="foreignkey" name="PricingZone" class="PricingZone"
             label="Pricing zone" usedby="grid,searchform"/>
     </entity>

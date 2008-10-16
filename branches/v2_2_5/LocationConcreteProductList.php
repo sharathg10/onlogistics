@@ -192,7 +192,7 @@ else {
 		// Si Sortie: une ligne par ConcreteProduct trouve ds les Locations choisis
 		// Si Entree: Nb de lignes depend de la saisie $_REQUEST['LotNumber']
 		elseif ($_REQUEST['TracingMode'] == Product::TRACINGMODE_LOT) {
-			if ($_REQUEST['MvtTypeEntrieExit'] == SORTIE || isChangeOfPosition()) {
+			if ($_REQUEST['MvtTypeEntrieExit'] == MovementType::TYPE_EXIT || isChangeOfPosition()) {
 			    $LCPCollection = $Location->getLocationConcreteProductCollection(
 				        array('ConcreteProduct.Product.Id' => $_REQUEST['Product_id']));
 				if (Tools::isEmptyObject($LCPCollection)) {
@@ -205,7 +205,7 @@ else {
 					$LCPGridCollection->setItem($LCP);
 				}
 				// Si sortie, on ajoute dans le title la quantite totale attendue
-				if ($_REQUEST['MvtTypeEntrieExit'] == SORTIE ) {
+				if ($_REQUEST['MvtTypeEntrieExit'] == MovementType::TYPE_EXIT ) {
 				    $qty = '&nbsp;(' . _('Total quantity expected')
                         . ': <script type="text/javascript"><!--
                 // <![CDATA[
@@ -246,7 +246,7 @@ $grid->NewColumn('FieldMapper', _('Location'),
 					   . ' name="LocationId[]" value="%Location.Id%" />'));
 if ($_REQUEST['TracingMode'] == Product::TRACINGMODE_LOT) {
 	// Si entree, il faut aussi proposer le SN a saisir
-	if ($_REQUEST['MvtTypeEntrieExit'] == ENTREE && false == isChangeOfPosition()) {
+	if ($_REQUEST['MvtTypeEntrieExit'] == MovementType::TYPE_ENTRY && false == isChangeOfPosition()) {
 	    $grid->NewColumn('FieldMapper', _('Lot'),
             array('Macro' => '%ConcreteProduct.SerialNumber|editable@SerialNumber@15%'));
 	}
@@ -269,7 +269,7 @@ else {
 // Si entree, il faut aussi proposer le EndOfLifeDate a saisir
 // et si ni changemt de position, ni reintegration en stock
 // Sinon, en lecture seule
-$readonly = ($_REQUEST['MvtTypeEntrieExit'] == SORTIE
+$readonly = ($_REQUEST['MvtTypeEntrieExit'] == MovementType::TYPE_EXIT
         || true == isChangeOfPosition() || true == isCancellation())?
                 'readonly="readonly" disabled="disabled"':'';
 $grid->NewColumn('FieldMapper', _('End of life'),

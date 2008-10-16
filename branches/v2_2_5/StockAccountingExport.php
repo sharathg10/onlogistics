@@ -116,9 +116,9 @@ if (isset($_REQUEST['formSubmitted'])) {
         			$item->setPropertyValue($rs2->fields['propertyValue']);
                     $Collection->insertItem($item, $newIndex);
     			}
-    			// Si entree et non annulateur ou EXM associe est une SORTIE et lem annulateur
-    			$coef = (($rs2->fields['entryExit'] == ENTREE && $rs2->fields['cancelledMvt'] == 0)
-    					|| ($rs2->fields['entryExit'] == SORTIE && $rs2->fields['cancelledMvt'] > 0))?-1:1;
+    			// Si entree et non annulateur ou EXM associe est une MovementType::TYPE_EXIT et lem annulateur
+    			$coef = (($rs2->fields['entryExit'] == MovementType::TYPE_ENTRY && $rs2->fields['cancelledMvt'] == 0)
+    					|| ($rs2->fields['entryExit'] == MovementType::TYPE_EXIT && $rs2->fields['cancelledMvt'] > 0))?-1:1;
 
     			$item->setQuantity($item->getQuantity() + ($coef * $rs2->fields['qty']));
     			$firstIndex = $newIndex;
@@ -174,9 +174,9 @@ if (isset($_REQUEST['formSubmitted'])) {
                 $Collection->setItem($item);
 			}
 			// Le LEM est une entree ssi:
-			// entree et non annulateur ou EXM associe est une SORTIE et lem annulateur
-			$entry = (($rs->fields['entryExit'] == ENTREE && $rs->fields['cancelledMvt'] == 0)
-					|| ($rs->fields['entryExit'] == SORTIE && $rs->fields['cancelledMvt'] > 0));
+			// entree et non annulateur ou EXM associe est une MovementType::TYPE_EXIT et lem annulateur
+			$entry = (($rs->fields['entryExit'] == MovementType::TYPE_ENTRY && $rs->fields['cancelledMvt'] == 0)
+					|| ($rs->fields['entryExit'] == MovementType::TYPE_EXIT && $rs->fields['cancelledMvt'] > 0));
 
             if ($entry) {
                 $item->setEntryQuantity($item->getEntryQuantity() + $rs->fields['qty']);

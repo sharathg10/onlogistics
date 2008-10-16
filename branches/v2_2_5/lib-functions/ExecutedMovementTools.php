@@ -279,7 +279,7 @@ function createOrUpdateLCP($tracingMode, $movementType, $CPParams, $LCPParams)
 		}
 		// Si LPQ pas encore sauve en base (cas d'une entree en stock)
 		// Il faut peut etre creer un ConcreteProduct dans ce cas
-		elseif ($MvtTypeEntrieExit == ENTREE && !mvmtIsChangeOfPosition($MvtType)) {
+		elseif ($MvtTypeEntrieExit == MovementType::TYPE_ENTRY && !mvmtIsChangeOfPosition($MvtType)) {
 			$LCP = Object::load('LocationConcreteProduct');
 
 
@@ -313,7 +313,7 @@ function createOrUpdateLCP($tracingMode, $movementType, $CPParams, $LCPParams)
 	// Si tracing au LOT, une ligne par ConcreteProduct trouve ds les Locations choisis
 	elseif ($tracingMode == Product::TRACINGMODE_LOT) {
 		// Si sortie ou chgt de position
-		if ($MvtTypeEntrieExit == SORTIE || mvmtIsChangeOfPosition($MvtType)) {
+		if ($MvtTypeEntrieExit == MovementType::TYPE_EXIT || mvmtIsChangeOfPosition($MvtType)) {
 
 		    if (!checkSerialIsInLocation($serialNumber, $Location->getId(), $product->getId())) {
 		        $error = 5;
@@ -562,7 +562,7 @@ function createLocationExecutedMovement($params, $retURL=null, $showErrorDialog=
  *
  */
 function getLocationProductQuantities($product, $location,
-    $MvtTypeEntrieExit=ENTREE, $retURL=null, $showErrorDialog=true)
+    $MvtTypeEntrieExit=MovementType::TYPE_ENTRY, $retURL=null, $showErrorDialog=true)
 {
     $LPQMapper = Mapper::singleton('LocationProductQuantities');
     $LPQ = $LPQMapper->load(
@@ -572,10 +572,10 @@ function getLocationProductQuantities($product, $location,
 	);
     if (!($LPQ instanceof LocationProductQuantities)
     || (0 == $LPQ->getId())) { // si un tel LPQ n'existe pas
-        if ($MvtTypeEntrieExit == SORTIE) {
+        if ($MvtTypeEntrieExit == MovementType::TYPE_EXIT) {
             return false;
         }
-        if ($MvtTypeEntrieExit == ENTREE) {
+        if ($MvtTypeEntrieExit == MovementType::TYPE_ENTRY) {
             $LPQ = Object::load('LocationProductQuantities');
             $LPQ->setProduct($product);
             $LPQ->setLocation($location);
@@ -596,12 +596,12 @@ function getLocationProductQuantities($product, $location,
  * @access public
  * @return Object/Boolean
  */
-function updateLPQQuantity($LPQ, $quantity, $MvtTypeEntryExit=ENTREE,
+function updateLPQQuantity($LPQ, $quantity, $MvtTypeEntryExit=MovementType::TYPE_ENTRY,
     $retURL=null, $showErrorDialog=true)
 {
-    if($MvtTypeEntryExit == SORTIE) {
+    if($MvtTypeEntryExit == MovementType::TYPE_EXIT) {
         $quantity = $LPQ->getRealQuantity() - $quantity;
-    } elseif ($MvtTypeEntryExit == ENTREE) {
+    } elseif ($MvtTypeEntryExit == MovementType::TYPE_ENTRY) {
         $quantity = $LPQ->getRealQuantity() + $quantity;
     }
     if($quantity==0) {

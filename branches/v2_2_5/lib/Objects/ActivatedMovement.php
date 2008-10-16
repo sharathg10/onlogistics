@@ -199,7 +199,7 @@ class ActivatedMovement extends _ActivatedMovement {
      *      SI ACM.Component:
      *          SI ENTREE_INTERNE:
      *              qty = AssembledQty de la tache précédente d'assemblage
-     *          SI SORTIE INTERNE:
+     *          SI MovementType::TYPE_EXIT INTERNE:
      *              qty = AssembledQty de la tache suivante d'assemblage * qty
      *                    de component
      *      SINON

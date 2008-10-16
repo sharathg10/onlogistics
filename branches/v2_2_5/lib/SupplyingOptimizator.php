@@ -210,14 +210,14 @@ class SupplyingOptimizator {
                 }
                 $rs->moveNext();  // strval(): necessaire, sinon, si seulemt la cle 0,
             }                     // ça donne une liste, et pas un dictionnaire!!
-            unset($rs);
+            
 
             // Si Qtes commandees par des Clients pour les semaines a venir,
             // on cherche si des livraisons ont ete faites en avance, et on retranche les qtes
             // N'influera pas le calcul des moyennes de conso, car ds le futur
             if ($j >= 1) {
                 $rs2 = getDeliveredQtyPerWeekForSupplier($this->_customerId,
-                        $this->_supplierId, $this->_tsArray[$j], $TimeStampEnd);
+                        $this->_supplierId, $this->_tsArray[$j], $TimeStampEnd, $this->_modelIds);
                 while ($rs2 && !$rs2->EOF){
                     if (isset($orderedQtyArray[$rs2->fields['pdtId']][strval($j)])) {
                         $orderedQtyArray[$rs2->fields['pdtId']][strval($j)] -=
@@ -233,7 +233,7 @@ class SupplyingOptimizator {
             // Si $week<1 => on ne recupere que les sorties internes (toutes: livrees ou non)
             // Si $week>=1 => on recupere les entrees et sorties internes *non encore livrees*
             $rs3 = getInternalActivatedMovementPerWeek(
-                    $this->_supplierId, $this->_tsArray[$j], $TimeStampEnd, $j);
+                    $this->_supplierId, $this->_tsArray[$j], $TimeStampEnd, $j, $this->_modelIds);
             while ($rs3 && !$rs3->EOF) {
                 $qty = floatval($rs3->fields['qty']);
                 if ($qty > 0) {
@@ -258,7 +258,7 @@ class SupplyingOptimizator {
         // que pour une date < au creneau de passe etudie!!
         // On considere que ces qtes vont sortir de stock d'ici a fin de semaine,
         // donc sert aussi à estimer le stock en fin de semaine 0
-        $rs = getLateOrderedQty($this->_supplierId, $this->_customerId, $weekEndTimestamp);
+        $rs = getLateOrderedQty($this->_supplierId, $this->_customerId, $weekEndTimestamp, $this->_modelIds);
         $orderedQtyBeforeEndOfWeek = array();
         while ($rs && !$rs->EOF) {
             // initialisation
@@ -594,7 +594,7 @@ class SupplyingOptimizator {
 
         // Recuperation des infos sur des Product de Substitution en stock
         ///$substitutionInfoList = self.safeExecute('optimAppro.getSubstitutionInfoList', AllProductIdArray)
-
+            
         $substitutionInfoList = SupplyingOptimizator::getSubstitutionInfoList(
                 $AllProductIdArray, $this->_supplierId);
         // Plus logique de stocker cette info dans $OrderedQtyPerWeek

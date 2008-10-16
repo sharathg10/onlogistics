@@ -99,12 +99,12 @@ if ($foreseeable != 1 || $LEM->isBLEditionPossible()) {
 
 	// Si on annule une sortie, on doit faire une entree: le LPQ doit encore
     // exister, sinon, on le recree
-	if ($entrieExit == SORTIE && Tools::isEmptyObject($LocationPdtQuantities)) {
+	if ($entrieExit == MovementType::TYPE_EXIT && Tools::isEmptyObject($LocationPdtQuantities)) {
 		$LocationPdtQuantities = Object::load('LocationProductQuantities');
 		$LocationPdtQuantities->setProduct($LEM->getProduct());
 		$LocationPdtQuantities->setLocation($LEM->getLocation());
 	}
-	$coef = ($entrieExit == SORTIE)?1:-1;
+	$coef = ($entrieExit == MovementType::TYPE_EXIT)?1:-1;
 	$initialQuantity = $LocationPdtQuantities->getRealQuantity();
 	$LocationPdtQuantities->setRealQuantity($initialQuantity + ($coef * $LEM->getQuantity()));
 
@@ -127,7 +127,7 @@ if ($foreseeable != 1 || $LEM->isBLEditionPossible()) {
 					'Location' => $LocationId));
 		// Si on annule une sortie, on doit faire une entree: le LCP doit
         // encore exister, sinon, on le recree
-		if ($entrieExit == SORTIE && Tools::isEmptyObject($LCP)) {
+		if ($entrieExit == MovementType::TYPE_EXIT && Tools::isEmptyObject($LCP)) {
 			$LCP = Object::load('LocationConcreteProduct');
 			$LCP->setConcreteProduct($LEMConcreteProduct->getConcreteProduct());
 			$LCP->setLocation($LEM->getLocation());
@@ -308,8 +308,8 @@ else {
 
 		/*  Creation du grid  */
 		$Product = $LEM->getProduct();
-		// Param ENTREE car on ne reintegre que des sorties: on fait donc des entrees
-		$grid = executionGrid($Product->getTracingMode(), ENTREE, $LPQCollection);
+		// Param MovementType::TYPE_ENTRY car on ne reintegre que des sorties: on fait donc des entrees
+		$grid = executionGrid($Product->getTracingMode(), MovementType::TYPE_ENTRY, $LPQCollection);
 		$ActivatedMvtGrid = $grid->render($LPQCollection);
 
 		/*  Affichage du formulaire avec smarty  */
@@ -320,7 +320,7 @@ else {
 									. '?returnURL=LocationExecutedMovementDelete.php');
 		$Smarty->assign('ActivatedMvtGrid', $ActivatedMvtGrid);
 		$Smarty->assign('CancellationType', $_REQUEST['CancellationType']);
-	    $Smarty->assign('MvtTypeEntrieExit', ENTREE);
+	    $Smarty->assign('MvtTypeEntrieExit', MovementType::TYPE_ENTRY);
 		$Smarty->assign('MvtTypeName', _('Stock reinstatement') . ': '
                 . $cancellationTypeArray[$_REQUEST['CancellationType']]);
         $qty = $LEM->getMaxQuantityForCancellation();

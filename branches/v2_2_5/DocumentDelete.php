@@ -72,7 +72,7 @@ foreach ($_REQUEST['id'] as $id) {
             $lpq = getLocationProductQuantities($lem->getProduct(), 
                 $lem->getLocation(), $mvtType, 'DocumentList.php');
             updateLPQQuantity($lpq, $lem->getQuantity(), 
-                $mvtType==ENTREE?SORTIE:ENTREE, 'DocumentList.php');
+                $mvtType==MovementType::TYPE_ENTRY?MovementType::TYPE_EXIT:MovementType::TYPE_ENTRY, 'DocumentList.php');
         } else {
             $lem->setForwardingForm(0);
             saveInstance($lem, 'DocumentList.php');

@@ -4586,7 +4586,6 @@ ALTER TABLE `ActivatedChainOperation` ADD `_InvoicePrestation` INT( 11 ) NOT NUL
 ALTER TABLE `ActivatedChainOperation` ADD INDEX ( `_InvoicePrestation` ) ;
 ALTER TABLE CronTask ADD _Active INT(1) DEFAULT 1;
 
-
 ####################################
 # Ne pas enlever
 COMMIT;

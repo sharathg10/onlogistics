@@ -140,7 +140,7 @@ if (true === $form->displayGrid()) {
         for($i=0 ; $i<$count ; $i++) {
             $filterCmpnts = array();
             $acm = $acmCol->getItem($i);
-            if (Tools::getValueFromMacro($acm, '%Type.EntrieExit%') == ENTREE) {
+            if (Tools::getValueFromMacro($acm, '%Type.EntrieExit%') == MovementType::TYPE_ENTRY) {
                 continue;
             }
             $filterCmpnts[] = SearchTools::NewFilterComponent(

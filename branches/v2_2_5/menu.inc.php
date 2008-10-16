@@ -264,6 +264,12 @@ $menu_metadata = array(
                 'restrict_to' => array(UserAccount::PROFILE_ROOT)
             ),
             array(
+                'title'       => _('Movement types'),
+                'link'        => 'dispatcher.php?entity=MovementType',
+                'description' => _('Movement types'),
+                'restrict_to' => array(UserAccount::PROFILE_ROOT)
+            ),
+            array(
                 'title'       => _('Terms of payment'),
                 'link'        => 'dispatcher.php?entity=TermsOfPayment',
                 'description' => _('Terms of payment'),
@@ -560,7 +566,7 @@ $menu_metadata = array(
             ),
             array(
                 'title'       => _('Customer catalogue'),
-                'link'        => 'CustomerCatalog.php',
+                'link'        => 'dispatcher.php?entity=RTWModel&altname=RTWModelForCatalog',
                 'description' => _('Customer catalogue'),
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_CUSTOMER,UserAccount::PROFILE_COMMERCIAL,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_DIR_COMMERCIAL,UserAccount::PROFILE_OWNER_CUSTOMER,UserAccount::PROFILE_PRODUCT_MANAGER)
             ),

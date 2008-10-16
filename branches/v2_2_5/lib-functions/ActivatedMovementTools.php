@@ -47,7 +47,7 @@ function executionGrid($TracingMode, $MvtTypeEntrieExit, $lpqCol, $quantity=0) {
     if ($quantity != 0 && $numRows == 1) {
         $lpq = $lpqCol->getItem(0);
         $locQuantity = $lpq->getRealQuantity();
-        $quantity = ($locQuantity < $quantity && $MvtTypeEntrieExit == SORTIE)?
+        $quantity = ($locQuantity < $quantity && $MvtTypeEntrieExit == MovementType::TYPE_EXIT)?
                 $locQuantity:$quantity;
     }
     else {
@@ -55,9 +55,9 @@ function executionGrid($TracingMode, $MvtTypeEntrieExit, $lpqCol, $quantity=0) {
     }
     // Ajout d'1 hidden par ligne pour controle js si sortie de stock:
     // On ne peut sortir plus que ce qu'il y a en stock
-    $maxQtyPerLine = ($MvtTypeEntrieExit == SORTIE)?
+    $maxQtyPerLine = ($MvtTypeEntrieExit == MovementType::TYPE_EXIT)?
             '<input type="hidden" name="maxQtyPerLine[]" value="%RealQuantity%" />':'';
-    $onkeyup = ($MvtTypeEntrieExit == SORTIE)?
+    $onkeyup = ($MvtTypeEntrieExit == MovementType::TYPE_EXIT)?
              ' onkeyup="checkMaxQtyPerLine(this);"':'';
 
     if ($TracingMode > 0 && $notEmptyGrid) {
@@ -86,7 +86,7 @@ function executionGrid($TracingMode, $MvtTypeEntrieExit, $lpqCol, $quantity=0) {
                        <input type="text" name="QuantityArray[]" size="10" value="'
                        . $quantity . '"' . $onkeyup . ' /> %Product.MeasuringUnit%')));
 
-	if ($TracingMode == Product::TRACINGMODE_LOT && $MvtTypeEntrieExit == ENTREE) {
+	if ($TracingMode == Product::TRACINGMODE_LOT && $MvtTypeEntrieExit == MovementType::TYPE_ENTRY) {
 	    $grid->NewColumn('FieldMapperWithTranslationExpression', _('Lot number'),
 			 array('Macro' => '%Activated%',
 			   	   'TranslationMap' => array(

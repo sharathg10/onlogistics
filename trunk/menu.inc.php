@@ -34,6 +34,8 @@
  * @filesource
  */
 
+$__ctx__ = Preferences::get('TradeContext', array());
+
 $menu_metadata = array(
     // Administration {{{
     array(
@@ -566,7 +568,8 @@ $menu_metadata = array(
             ),
             array(
                 'title'       => _('Customer catalogue'),
-                'link'        => 'dispatcher.php?entity=RTWModel&altname=RTWModelForCatalog',
+                'link'        => in_array('readytowear', $__ctx__) ? 
+                    'dispatcher.php?entity=RTWModel&altname=RTWModelForCatalog' : 'CustomerCatalog.php',
                 'description' => _('Customer catalogue'),
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_CUSTOMER,UserAccount::PROFILE_COMMERCIAL,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_DIR_COMMERCIAL,UserAccount::PROFILE_OWNER_CUSTOMER,UserAccount::PROFILE_PRODUCT_MANAGER)
             ),
@@ -583,15 +586,6 @@ $menu_metadata = array(
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_AERO_CUSTOMER,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_AERO_INSTRUCTOR,UserAccount::PROFILE_DIR_COMMERCIAL),
                 'restrict_to_context' => array('aero')
             ),
-            /*
-            array(
-                'title'       => _('Catalogue'),
-                'link'        => 'RTWCatalog.php',
-                'description' => _('Catalogue'),
-                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_PRODUCT_MANAGER),
-                'restrict_to_context' => array('readytowear'),
-            )
-            */
         )
     ),
     // }}}

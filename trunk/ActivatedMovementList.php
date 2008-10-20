@@ -129,6 +129,7 @@ if (true === $form->displayGrid()) {
             $FilterComponentArray, $form->buildFilterComponentArray());
     // Création du filtre complet
 	$Filter = SearchTools::filterAssembler($FilterComponentArray);
+    $Order = array('StartDate' => SORT_ASC, 'ProductCommand.CommandNo' => SORT_ASC, 'Product.Name' => SORT_ASC);
 
     //$acmCol = Object::loadCollection('ActivatedMovement', $Filter);
     // Filtre sur les sites autorises pour le user connecte:
@@ -174,10 +175,30 @@ if (true === $form->displayGrid()) {
                   'URL' => 'ActivatedMovementWithPrevisionExecuteSeveral.php?returnURL=ActivatedMovementList.php') 	 
             );
 	$grid->NewAction('Print', array());
-	$grid->NewAction('Export', array('FileName' => 'MvtsAttendus',
-			 'Profiles' => array(UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,
-                    UserAccount::PROFILE_GESTIONNAIRE_STOCK, UserAccount::PROFILE_SUPPLIER_CONSIGNE))
-			);
+    if (in_array('readytowear', Preferences::get('TradeContext', array()))) {
+        $grid->NewAction('ActivatedMovementListExport', array(
+            'Caption'  => _('Export'),
+            'Filter'   => $Filter,
+            'Order'    => $Order,
+            'FileName' => 'MvtsAttendus',
+            'Profiles' => array(
+                UserAccount::PROFILE_ADMIN,
+                UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,
+                UserAccount::PROFILE_GESTIONNAIRE_STOCK,
+                UserAccount::PROFILE_SUPPLIER_CONSIGNE
+            )
+        ));
+    } else {
+	    $grid->NewAction('Export', array(
+            'FileName' => 'MvtsAttendus',
+            'Profiles' => array(
+                UserAccount::PROFILE_ADMIN,
+                UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,
+                UserAccount::PROFILE_GESTIONNAIRE_STOCK,
+                UserAccount::PROFILE_SUPPLIER_CONSIGNE
+            )
+        ));
+    }
 
 	$grid->NewColumn('FieldMapper', _('Order'),
             array('Macro' => '%ProductCommand.CommandNo%'));
@@ -215,7 +236,6 @@ if (true === $form->displayGrid()) {
                 3 => sprintf($execAction, _('Partial')),
                 4 => _('Locked'))));
 
-    $Order = array('StartDate' => SORT_ASC, 'ProductCommand.CommandNo' => SORT_ASC, 'Product.Name' => SORT_ASC);
 
     //$form->setItemsCollection($acmCol);
     $form->displayResult($grid, true, $Filter, $Order, '', array(),

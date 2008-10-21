@@ -71,7 +71,8 @@ class GridColumnRTWModelCustomerCatalog extends AbstractGridColumn
             }
         }
         return sprintf(
-            '<table id="table_%s" border="0"><tr>%s</tr><tr>%s</tr></table>',
+            '<div>%s</div><table id="table_%s" border="0"><tr>%s</tr><tr>%s</tr></table>',
+            $object->getDescription(),
             $modelId,
             $ths,
             $tds

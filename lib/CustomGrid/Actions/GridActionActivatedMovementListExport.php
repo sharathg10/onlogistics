@@ -102,7 +102,7 @@ class GridActionActivatedMovementListExport extends AbstractGridAction
                 for ($i=0; $i<$sizesCount; $i++) {
                     $size = $sizes->getItem($i);
                     if ($product->getSizeId() == $size->getId()) {
-                        $qty = $item->getQuantity();
+                        $qty = $item->getRemainingQuantity();
                         $totalQty += $qty;
                         $registry[$index][$start+$i] = Grid::formatDataForExport(
                             $this->getQuantity($item)
@@ -123,25 +123,10 @@ class GridActionActivatedMovementListExport extends AbstractGridAction
         exit(0);
     } 
 
-    /**
-     * Return the movement qty formated.
-     *
-     * @param ActivatedMovement $object
-     * @param float             $qty
-     *
-     * @return string
-     */
     protected function getQuantity($object, $qty = null)
     {
-        if ($qty == null) {
-            $remainingQuantity = $object->getRemainingQuantity();
-            $product = $object->getProduct();
-            $qty = ($remainingQuantity < $object->getQuantity())?
-                I18N::formatNumber($remainingQuantity, 3, true) . "/"
-                    . I18N::formatNumber($object->getQuantity(), 3, true):
-                I18N::formatNumber($remainingQuantity, 3, true);
-        }
-        return $qty . $product->getMeasuringUnit();
+        $product = $object->getProduct();
+        return $object->getRemainingQuantity() . $product->getMeasuringUnit();
     }
 } 
 

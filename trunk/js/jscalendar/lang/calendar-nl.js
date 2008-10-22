@@ -71,3 +71,7 @@ Calendar._TT["TT_DATE_FORMAT"] = "%a, %e %b %Y";
 
 Calendar._TT["WK"] = "wk";
 Calendar._TT["TIME"] = "Tijd:";
+
+function dateStatusHandler(date, y, m, d) {
+    return false;
+}

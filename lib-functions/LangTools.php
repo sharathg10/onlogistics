@@ -41,8 +41,8 @@ function getJSCalendarLangFile() {
     if (file_exists(PROJECT_ROOT . '/' . $file)) {
         return $file;
     }
-    // par défaut on retourne le fichier pour la langue française
-    return sprintf($jsfile, 'fr');
+    // par defaut on retourne le fichier pour la langue anglaise
+    return sprintf($jsfile, 'en');
 }
 
 /**

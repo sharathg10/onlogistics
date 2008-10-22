@@ -122,3 +122,7 @@ Calendar._TT["TT_DATE_FORMAT"] = "%a, %b %e";
 
 Calendar._TT["WK"] = "wk";
 Calendar._TT["TIME"] = "Zeit:";
+
+function dateStatusHandler(date, y, m, d) {
+    return false;
+}

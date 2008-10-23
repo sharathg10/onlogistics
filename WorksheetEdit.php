@@ -36,24 +36,46 @@
 
 session_cache_limiter('private');
 
-require_once('config.inc.php');
-require_once('DocumentGenerator.php');
+if (isset($_REQUEST['directlink'])) {
+    // XXX hack pour MALOLES :(
+    // les fournisseurs doivent pouvoir telecharger les fiches techniques
+    // on fait vraiment tout et n'importequoi...
+    define('SKIP_CONNECTION', true);
+    require_once 'config.inc.php';
+    if (!defined('DSN_MALOLES') || !isset($_REQUEST['cmdID'])) {
+        exit(0);
+    }
+    
+    Database::connection(DSN_MALOLES);
+    require_once('DocumentGenerator.php');
+    $filter = SearchTools::newFilterComponent(
+        'Command',
+        'RTWProduct().ProductCommandItem().Command.Id',
+        'Equals',
+        $_REQUEST['cmdID'],
+        true,
+        'RTWModel'
+    );
+    $modelCollection = Object::loadCollection('RTWModel', $filter);
+    if (!count($modelCollection)) {
+        exit(0);
+    }
+} else {
+    require_once('config.inc.php');
+    require_once('DocumentGenerator.php');
+    $auth = Auth::Singleton();
+    $retURL = isset($_REQUEST['retURL'])?$_REQUEST['retURL']:'home.php';
 
-$auth = Auth::Singleton();
-$retURL = isset($_REQUEST['retURL'])?$_REQUEST['retURL']:'home.php';
-
-if (!isset($_REQUEST['modelIDs']) || empty($_REQUEST['modelIDs'])) {
-    Template::errorDialog(I_NEED_SELECT_ITEM, $retURL);
-    exit(1);
-}
-
-$modelCollection = Object::loadCollection(
-    'RTWModel',
-    array('Id' => $_REQUEST['modelIDs'])
-);
-if (!count($modelCollection)) {
-    Template::errorDialog(E_NO_RECORD_FOUND, $retURL);
-    exit(1);
+    if (!isset($_REQUEST['modelIDs']) || empty($_REQUEST['modelIDs'])) {
+        Template::errorDialog(I_NEED_SELECT_ITEM, $retURL);
+        exit(1);
+    }
+    $filter = array('Id' => $_REQUEST['modelIDs']);
+    $modelCollection = Object::loadCollection('RTWModel', $filter);
+    if (!count($modelCollection)) {
+        Template::errorDialog(E_NO_RECORD_FOUND, $retURL);
+        exit(1);
+    }
 }
 
 $gen = new WorksheetGenerator($modelCollection);

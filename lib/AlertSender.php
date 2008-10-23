@@ -297,6 +297,7 @@ class AlertSender{
      **/
     public static function send_ALERT_PRODUCT_COMMAND_RECEIPT($commandReceipt, $uacCol, $siteIds=array()) 
     {
+        $isHtml = false;
         if ($commandReceipt instanceof Estimate) {
             $alert = self::_loadAlert(ALERT_ESTIMATE_RECEIPT);
             $body  = sprintf(
@@ -305,15 +306,26 @@ class AlertSender{
             );
             $filename = 'estimate.pdf';
         } else {
-            if ($commandReceipt->getCommandType() == Command::TYPE_SUPPLIER) {
-                $alert = self::_loadAlert(ALERT_SUPPLIER_COMMAND_RECEIPT);
-            } else {
-                $alert = self::_loadAlert(ALERT_CLIENT_COMMAND_RECEIPT);
-            }
-            $body  = sprintf(
+            $body = sprintf(
                 _("Please find enclosed the receipt for order \"%s\".\n\nThe department of sales."),
                 $commandReceipt->getDocumentNo()
             );
+            if ($commandReceipt->getCommandType() == Command::TYPE_SUPPLIER) {
+                $alert = self::_loadAlert(ALERT_SUPPLIER_COMMAND_RECEIPT);
+                if (in_array('readytowear', Preferences::get('TradeContext', array()))) {
+                    $body   = nl2br($body);
+                    $isHtml = true;
+                    $url    = parse_url(ONLOGISTICS_API);
+                    $path   = '/WorksheetEdit.php?cmdID=' . $commandReceipt->getCommandId() . '&directlink';
+                    $body  .= sprintf(
+                        _("<br/><br/><a href=\"%s\">Click here</a> to view the order worksheets."),
+                        $url['scheme'] . '://' . $url['host'] . $path
+                    );
+                }
+            } else {
+                $alert = self::_loadAlert(ALERT_CLIENT_COMMAND_RECEIPT);
+            }
+            $body .= "\nThe department of sales.";
             $filename = 'command_receipt.pdf';
         }
         $alert->prepare(array(
@@ -329,7 +341,7 @@ class AlertSender{
             'fileName' => $filename,
             'isFile' => false
         );
-        self::_send($alert, $uacCol, false, $filter, $attachment);
+        self::_send($alert, $uacCol, $isHtml, $filter, $attachment);
     }
 
     // }}}

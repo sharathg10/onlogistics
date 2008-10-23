@@ -37,6 +37,11 @@
 function generateDocument($document, $reedit=0, $output='I') {
     require_once('DocumentGenerator.php');
     $context = Preferences::get('TradeContext', array());
+    if (in_array('readytowear', $context)) {
+        $prefix = 'RTW';
+    } else {
+        $prefix = '';
+    }
     if ($document instanceof Invoice) {
         $cmd = $document->getCommand();
         if ($cmd instanceof CourseCommand) {
@@ -46,11 +51,7 @@ function generateDocument($document, $reedit=0, $output='I') {
         } elseif ($cmd instanceof PrestationCommand) {
             $generator_name = 'PrestationInvoiceGenerator';
         } else {
-            if (in_array('readytowear', $context) && $cmd->getType() == Command::TYPE_CUSTOMER) {
-                $generator_name = 'RTWInvoiceGenerator';
-            } else {
-                $generator_name = 'InvoiceGenerator';
-            }
+            $generator_name = $prefix.'InvoiceGenerator';
         }
     } elseif ($document instanceof Collection) { // Facturation multiple
         $generator_name = 'InvoiceCollectionGenerator';
@@ -90,22 +91,14 @@ function generateDocument($document, $reedit=0, $output='I') {
         if ($cmd instanceof ChainCommand) {
             $generator_name = 'ChainCommandReceiptGenerator';
         } else {
-            if (in_array('readytowear', $context) && $cmd->getType() == Command::TYPE_CUSTOMER) {
-                $generator_name = 'RTWCommandReceiptGenerator';
-            } else {
-                $generator_name = 'CommandReceiptGenerator';
-            }
+            $generator_name = $prefix.'CommandReceiptGenerator';
         }
     } else if (get_class($document) == 'Estimate') { 
         $cmd = $document->getCommand();
         if ($cmd instanceof ChainCommand) {
             $generator_name = 'ChainCommandEstimateGenerator';
         } else {
-            if (in_array('readytowear', $context) && $cmd->getType() == Command::TYPE_CUSTOMER) {
-                $generator_name = 'RTWEstimateGenerator';
-            } else {
-                $generator_name = 'EstimateGenerator';
-            }
+            $generator_name = $prefix.'EstimateGenerator';
         }
     } else {
         $generator_name = get_class($document) . 'Generator';

@@ -240,7 +240,9 @@ class DocumentGenerator
         $pdfDoc->docTitle = $this->docName . ' N° ' .
             $this->document->getDocumentNo();
         $pdfDoc->docDate =  I18n::formatDate($this->document->getEditionDate(), I18N::DATE_SHORT);
-        $pdfDoc->logo = base64_decode($this->document->getLogo());
+        if (!$pdfDoc->logo) {
+            $pdfDoc->logo = base64_decode($this->document->getLogo());
+        }
     }
 
     // }}}
@@ -3438,6 +3440,7 @@ class CommandReceiptGenerator extends CommandDocumentGenerator
             $this->docName = _('Order receipt');
         } else {
             $this->docName = _('Order');
+            $this->pdf->logo = base64_decode($this->destinator->getLogo());
         }
         $this->pdf->showExpeditor = false;
     }
@@ -3518,10 +3521,14 @@ class CommandReceiptGenerator extends CommandDocumentGenerator
             $unitQty = $commandType==Command::TYPE_CUSTOMER?
                 $product->getSellUnitQuantity():
                 $product->getBuyUnitQuantity($supplier);
-            // Pas d'affichage des separateurs des milliers ici
+            $productName = $product->getName();
+            if ($commandType == Command::TYPE_SUPPLIER) {
+                $productName .= "\n" . _('Purchase reference') . ':'
+                              . $product->getReferenceByActor($supplier);
+            }
             $data[] = array(
                 $productRef,
-                $product->getName(),
+                $productName,
                 $commandItem->getQuantity() . ' (' . _('by') . ' ' .
                     $unitQty . ')',
                 $commandItem->getPriceHT(),
@@ -3581,6 +3588,24 @@ class CommandReceiptGenerator extends CommandDocumentGenerator
         $this->pdf->setX(150);
         $this->pdf->tableHeader(array(
             _('To pay') . ' ' . $this->currency .' : ' . $toPay=>50));
+    }
+
+    // }}}
+    // CommandDocumentGenerator::buildRightAddress() {{{
+
+    /**
+     * Affiche l'adresse de droite (par defaut: adresse de facturation).
+     *
+     * @access public
+     * @return void
+     */
+    protected function buildRightAddress() {
+        $site = $this->command->getExpeditorSite();
+        if ($site instanceof Site) {
+            $str = $site->getName() . "\n" . $site->getFormatAddressInfos("\n");
+            $this->pdf->additionalRightAddress = $str;
+        }
+        parent::buildRightAddress();
     }
 
     // }}}
@@ -3708,9 +3733,11 @@ class RTWCommandReceiptGenerator extends CommandReceiptGenerator
         }
         foreach ($registry as $i=>&$array) {
             $model = Object::load('RTWModel', $i);
-            $legalMentions = $model->getLegalMentions();
-            if (!empty($legalMentions)) {
-                $array[1] .= "\n\n" . $legalMentions;
+            if ($commandType == Command::TYPE_CUSTOMER) {
+                $legalMentions = $model->getLegalMentions();
+                if (!empty($legalMentions)) {
+                    $array[1] .= "\n\n" . $legalMentions;
+                }
             }
             $array[3] = I18N::formatNumber($array[3]);
             $array[4] = I18N::formatNumber($array[4]);

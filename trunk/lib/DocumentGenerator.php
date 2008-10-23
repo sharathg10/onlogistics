@@ -3515,9 +3515,10 @@ class CommandReceiptGenerator extends CommandDocumentGenerator
         for($i=0 ; $i<$count ; $i++) {
             $commandItem = $commandItemCol->getItem($i);
             $product = $commandItem->getProduct();
-            $productRef = $commandType==Command::TYPE_CUSTOMER?
-                $product->getBaseReference():
-                $product->getReferenceByActor($supplier);
+            //$productRef = $commandType==Command::TYPE_CUSTOMER?
+            //    $product->getBaseReference():
+            //    $product->getReferenceByActor($supplier);
+            $productRef = $product->getBaseReference();
             $unitQty = $commandType==Command::TYPE_CUSTOMER?
                 $product->getSellUnitQuantity():
                 $product->getBuyUnitQuantity($supplier);

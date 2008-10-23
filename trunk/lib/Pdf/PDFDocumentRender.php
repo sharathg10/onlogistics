@@ -413,21 +413,27 @@ class PDFDocumentRender extends FpdfJS {
 	 * @return void
 	 */
     public function addHeader($setY = 0, $parentDoc=false) { // {{{
-        if ($setY != 0) {
-            $this->SetXY(10, $setY);
-        } else {
-            $this->SetXY(10, 52);
+        $plus = 0;
+        if (!empty($this->additionalRightAddress)) {
+            $this->SetXY(130, 40);
+            $this->RestoreFont();
+            $this->MultiCell(52, 3.5, trim(str_replace("\n\n" , "\n" , $this->additionalRightAddress)));
+            $plus = 10;
         }
-        // adresse de livraison
+        if ($setY != 0) {
+            $this->SetXY(10, $setY + $plus);
+        } else {
+            $this->SetXY(10, 52 + $plus);
+        }
         $this->SetFont($this->defaultFamilyFont, 'bU', $this->defaultFontSize['TITLE']);
         $this->Cell(45, 3, $this->leftAdressCaption, 0, 0, 'L');
-        $this->SetXY(10, 58);
+        $this->SetXY(10, 58+$plus);
         $this->RestoreFont();
         $this->MultiCell(57, 3.5, trim(str_replace("\n\n", "\n", $this->leftAdress)));
-        $this->SetXY(130, 52);
+        $this->SetXY(130, 52+$plus);
         $this->SetFont($this->defaultFamilyFont, 'bU', $this->defaultFontSize['TITLE']);
         $this->Cell(45, 3, $this->rightAdressCaption, 0, 0, 'L');
-        $this->SetXY(130, 58);
+        $this->SetXY(130, 58+$plus);
         $this->RestoreFont();
         $this->MultiCell(57, 3.5, trim(str_replace("\n\n" , "\n" , $this->rightAdress)));
         $this->Ln(10);

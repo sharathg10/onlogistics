@@ -977,6 +977,10 @@
     <entity name="CommandReceipt" extends="AbstractDocument" 
         tablename="AbstractDocument"/>
 
+    <!-- entity CommandReceipt -->
+    <entity name="CommandReceiptSupplier" extends="AbstractDocument" 
+        tablename="AbstractDocument"/>
+
     <!-- entity CommunicationModality -->
     <entity name="CommunicationModality" tablename="CommunicationModality">
         <property type="string" name="Phone" />

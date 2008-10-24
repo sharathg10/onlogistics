@@ -109,13 +109,14 @@
     function getDocumentList()
     {
         return array(
-            'CommandReceipt' => _('Command receipt'),
-            'Invoice'        => _('Invoice'),
-            'Estimate'       => _('Estimate'),
-            'PackingList'    => _('Packing list'),
-            'ToHave'         => _('Credit note'),
-            'DeliveryOrder'  => _('Delivery order'),
-            'ForwardingForm' => _('Forwarding form')
+            'CommandReceipt'         => _('Command receipt'),
+            'CommandReceiptSupplier' => _('Supplier order'),
+            'Invoice'                => _('Invoice'),
+            'Estimate'               => _('Estimate'),
+            'PackingList'            => _('Packing list'),
+            'ToHave'                 => _('Credit note'),
+            'DeliveryOrder'          => _('Delivery order'),
+            'ForwardingForm'         => _('Forwarding form')
         );
     }
 
@@ -134,13 +135,14 @@
     function getDocumentReeditionURL($docType=false)
     {
         $urls = array(
-            'CommandReceipt' => 'CommandReceiptEdit.php?print=1&id=%d',
-            'Invoice'        => 'EditInvoice.php?print=1&InvoiceId=%d',
-            'Estimate'       => 'EstimateEdit.php?print=1&id=%d',
-            'PackingList'    => 'PackingListEdit.php?reedit=1&pId=%d',
-            'ToHave'         => 'ToHaveEdit.php?reedit=1&thId=%d',
-            'DeliveryOrder'  => 'DeliveryOrderEdit.php?reedit=1&idBL=%d',
-            'ForwardingForm' => 'ForwardingFormEdit.php?print=1&reedit=1&doc=%d'
+            'CommandReceipt'         => 'CommandReceiptEdit.php?print=1&id=%d',
+            'CommandReceiptSupplier' => 'CommandReceiptEdit.php?print=1&id=%d',
+            'Invoice'                => 'EditInvoice.php?print=1&InvoiceId=%d',
+            'Estimate'               => 'EstimateEdit.php?print=1&id=%d',
+            'PackingList'            => 'PackingListEdit.php?reedit=1&pId=%d',
+            'ToHave'                 => 'ToHaveEdit.php?reedit=1&thId=%d',
+            'DeliveryOrder'          => 'DeliveryOrderEdit.php?reedit=1&idBL=%d',
+            'ForwardingForm'         => 'ForwardingFormEdit.php?print=1&reedit=1&doc=%d'
         );
         return isset($urls[$docType]) ? $urls[$docType] : false;
     }

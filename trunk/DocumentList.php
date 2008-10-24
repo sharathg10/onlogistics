@@ -104,7 +104,7 @@ if (true == $form->displayGrid()){// || $form->isFirstArrival()) {
 	    unset($_SESSION['DateOrder1']);
 	}
     $clsName = SearchTools::requestOrSessionExist('ClassName');
-    if (in_array($clsName, array('DeliveryOrder', 'CommandReceipt', 'Invoice', 'Estimate'))) {
+    if (in_array($clsName, array('DeliveryOrder', 'CommandReceipt', 'CommandReceiptSupplier', 'Invoice', 'Estimate'))) {
         $FilterComponentArray[] = new FilterComponent(
             new FilterRule('Command', FilterRule::OPERATOR_GREATER_THAN, 0)
         );

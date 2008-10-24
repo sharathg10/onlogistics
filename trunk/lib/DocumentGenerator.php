@@ -3487,8 +3487,8 @@ class CommandReceiptGenerator extends CommandDocumentGenerator
                 I18N::formatDate($this->command->getWishedEndDate()
             ));
         }
-        $this->pdf->addText(_('Wished date') . ' : ' .
-            $wishedDate);
+        $this->pdf->addText(_('Wished date') . ' : ' . $wishedDate, 
+            array('fontSize'=>10, 'fontStyle'=>'B'));
         $header = array(_('Reference') => 30,
                         _('Description of goods') => 75,
                         _('Qty')  => 15,
@@ -3524,7 +3524,7 @@ class CommandReceiptGenerator extends CommandDocumentGenerator
                 $product->getBuyUnitQuantity($supplier);
             $productName = $product->getName();
             if ($commandType == Command::TYPE_SUPPLIER) {
-                $productName .= "\n" . _('Purchase reference') . ':'
+                $productName .= "\n" . _('Purchase reference') . ': '
                               . $product->getReferenceByActor($supplier);
             }
             $data[] = array(
@@ -3640,8 +3640,8 @@ class RTWCommandReceiptGenerator extends CommandReceiptGenerator
                 I18N::formatDate($this->command->getWishedEndDate()
             ));
         }
-        $this->pdf->addText(_('Wished date') . ' : ' .
-            $wishedDate);
+        $this->pdf->addText(_('Wished date') . ' : ' . $wishedDate,
+            array('fontSize'=>10, 'fontStyle'=>'B'));
         $this->pdf->addText(_('Season') . ' : ' . 
             Tools::getValueFromMacro(
                 $this->command,

@@ -39,11 +39,11 @@ require_once('GenerateDocument.php');
 
 $doc = false;
 if (isset($_GET['id'])) {
-    $doc = Object::load('CommandReceipt', $_GET['id']);
+    $doc = Object::load('AbstractDocument', $_GET['id']);
 } else if (isset($_GET['cmdId'])) {
-    $doc = Object::load('CommandReceipt', array('Command' => $_GET['cmdId']));
+    $doc = Object::load('AbstractDocument', array('Command' => $_GET['cmdId']));
 }
-if ($doc instanceof CommandReceipt) {
+if ($doc instanceof CommandReceipt || $doc instanceof CommandReceiptSupplier) {
     generateDocument($doc, true);
 } else {
     $errorBody = _('Error: order receipt could not be printed.');

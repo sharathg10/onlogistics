@@ -35,23 +35,9 @@ BEGIN;
 TRUNCATE TABLE IdHashTable;
 ####################################
 
-ALTER TABLE MovementType ADD _ConstName VARCHAR(255) DEFAULT NULL;
-ALTER TABLE MovementType CHANGE COLUMN _EntrieExit _EntrieExit INT(3) NOT NULL DEFAULT 0;
-
-UPDATE MovementType SET _ConstName="SORTIE_NORMALE" where _Id=1;
-UPDATE MovementType SET _ConstName="ENTREE_NORMALE" where _Id=2;
-UPDATE MovementType SET _ConstName="SORTIE_CASSE" where _Id=3;
-UPDATE MovementType SET _ConstName="ENTREE_SURPLUS" where _Id=4;
-UPDATE MovementType SET _ConstName="SORTIE_INVENT" where _Id=5;
-UPDATE MovementType SET _ConstName="ENTREE_INVENT" where _Id=6;
-UPDATE MovementType SET _ConstName="SORTIE_DEPLACEMT" where _Id=8;
-UPDATE MovementType SET _ConstName="ENTREE_DEPLACEMT" where _Id=9;
-UPDATE MovementType SET _ConstName="SORTIE_ECHANTILLON" where _Id=10;
-UPDATE MovementType SET _ConstName="ENTREE_ECHANTILLON" where _Id=11;
-UPDATE MovementType SET _ConstName="SORTIE_MODIF_COND" where _Id=12;
-UPDATE MovementType SET _ConstName="ENTREE_MODIF_COND" where _Id=13;
-UPDATE MovementType SET _ConstName="ENTREE_INTERNE" where _Id=14;
-UPDATE MovementType SET _ConstName="SORTIE_INTERNE" where _Id=15;
+UPDATE AbstractDocument SET _ClassName='CommandReceiptSupplier' where _ClassName='CommandReceipt' and _CommandType=2;
+set @id=(select IFNULL(max(_Id),0) from DocumentModel);
+INSERT INTO `DocumentModel` VALUES (@id+1,0,'COMMANDE FOURNISSEUR','',1,'CommandReceiptSupplier',1,0,1,1,1,0);
 
 ####################################
 # Ne pas enlever

@@ -69,6 +69,7 @@ class _UserAccount extends Object {
     const PROFILE_SUBSIDIARY_ACCOUNTANT = 23;
     const PROFILE_GED_PROJECT_MANAGER = 24;
     const PROFILE_PRODUCT_MANAGER = 25;
+    const PROFILE_RTW_SUPPLIER = 26;
 
     // }}}
     // Constructeur {{{
@@ -402,7 +403,8 @@ class _UserAccount extends Object {
             _UserAccount::PROFILE_OWNER_CUSTOMER => _("Owner customer"), 
             _UserAccount::PROFILE_SUBSIDIARY_ACCOUNTANT => _("Subsidiary accountant"), 
             _UserAccount::PROFILE_GED_PROJECT_MANAGER => _("Project manager"), 
-            _UserAccount::PROFILE_PRODUCT_MANAGER => _("Product manager")
+            _UserAccount::PROFILE_PRODUCT_MANAGER => _("Product manager"),
+            _UserAccount::PROFILE_RTW_SUPPLIER => _("Ready-to-wear supplier")
         );
         asort($array);
         return $keys?array_keys($array):$array;

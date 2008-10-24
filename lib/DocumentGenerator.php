@@ -3519,9 +3519,12 @@ class CommandReceiptGenerator extends CommandDocumentGenerator
             //    $product->getBaseReference():
             //    $product->getReferenceByActor($supplier);
             $productRef = $product->getBaseReference();
-            $unitQty = $commandType==Command::TYPE_CUSTOMER?
-                $product->getSellUnitQuantity():
-                $product->getBuyUnitQuantity($supplier);
+            $unitType = $product->getBuyUnitType();
+            if ($unitType instanceof SellUnitType) {
+                $unitType = ' ' . $unitType->getShortName();
+            } else {
+                $unitType = '';
+            }
             $productName = $product->getName();
             if ($commandType == Command::TYPE_SUPPLIER) {
                 $productName .= "\n" . _('Purchase reference') . ': '
@@ -3530,8 +3533,7 @@ class CommandReceiptGenerator extends CommandDocumentGenerator
             $data[] = array(
                 $productRef,
                 $productName,
-                $commandItem->getQuantity() . ' (' . _('by') . ' ' .
-                    $unitQty . ')',
+                $commandItem->getQuantity() . $unitType,
                 $commandItem->getPriceHT(),
                 /* XXX Commenté par david cf bug 0002626
                 $promoRate . ' ' . $symbol,*/

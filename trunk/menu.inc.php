@@ -593,7 +593,7 @@ $menu_metadata = array(
     array(
         'title'       => _('Orders follow-up'),
         'link'        => 'home.php?help_page=Commandes',
-        'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ACTOR,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_COMMERCIAL,UserAccount::PROFILE_CUSTOMER,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_AERO_CUSTOMER,UserAccount::PROFILE_CLIENT_TRANSPORT,UserAccount::PROFILE_DIR_COMMERCIAL,UserAccount::PROFILE_GED_PROJECT_MANAGER, UserAccount::PROFILE_PRODUCT_MANAGER),
+        'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ACTOR,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_COMMERCIAL,UserAccount::PROFILE_CUSTOMER,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_AERO_CUSTOMER,UserAccount::PROFILE_CLIENT_TRANSPORT,UserAccount::PROFILE_DIR_COMMERCIAL,UserAccount::PROFILE_GED_PROJECT_MANAGER, UserAccount::PROFILE_PRODUCT_MANAGER, UserAccount::PROFILE_RTW_SUPPLIER),
         'children'    => array(
             array(
                 'title'       => _('Product orders'),
@@ -631,6 +631,13 @@ $menu_metadata = array(
                 'link'        => 'ToHaveList.php',
                 'description' => _('List of credit notes'),
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES)
+            ),
+            array(
+                'title'       => _('Worksheets by orders'),
+                'link'        => 'dispatcher.php?entity=RTWModel&altname=RTWModelForSupplier',
+                'description' => _('Worksheets by orders'),
+                'restrict_to_context' => array('readytowear'),
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_RTW_SUPPLIER)
             ),
         )
     ),

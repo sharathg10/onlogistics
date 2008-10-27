@@ -3,6 +3,8 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
+ * IMPORTANT: This is a generated file, please do not edit.
+ *
  * This file is part of Onlogistics, a web based ERP and supply chain 
  * management application. 
  *
@@ -34,8 +36,12 @@
  * @filesource
  */
 
-class RTWSize extends RTWElement {
-    
+/**
+ * RTWSize class
+ *
+ * Class containing addon methods.
+ */
+class RTWSize extends _RTWSize {
     // Constructeur {{{
 
     /**
@@ -50,260 +56,27 @@ class RTWSize extends RTWElement {
     }
 
     // }}}
-    // Model one to many relation + getter/setter {{{
+    // RTWSize::canBeDeleted() {{{
 
     /**
-     * Model *..* relation
-     *
-     * @access private
-     * @var Collection
-     */
-    private $_ModelCollection = false;
-
-    /**
-     * RTWSize::getModelCollection
-     *
-     * @access public
-     * @return object Collection
-     */
-    public function getModelCollection($filter = array(),
-        $sortOrder = array(), $fields = array()) {
-        // si un paramètre est passé on force le rechargement de la collection
-        // on ne met en cache mémoire que les collections brutes
-        if (!empty($filter) || !empty($sortOrder) || !empty($fields)) {
-            $mapper = Mapper::singleton('RTWSize');
-            return $mapper->getManyToMany($this->getId(),
-                'Model', $filter, $sortOrder, $fields);
-        }
-        // si la collection n'est pas en mémoire on la charge
-        if (false == $this->_ModelCollection) {
-            $mapper = Mapper::singleton('RTWSize');
-            $this->_ModelCollection = $mapper->getManyToMany($this->getId(),
-                'Model');
-        }
-        return $this->_ModelCollection;
-    }
-
-    /**
-     * RTWSize::getModelCollectionIds
-     *
-     * @access public
-     * @param $filter FilterComponent or array
-     * @return array
-     */
-    public function getModelCollectionIds($filter = array()) {
-        if (!empty($filter)) {
-            $col = $this->getModelCollection($filter, array(), array('Id'));
-            return $col instanceof Collection?$col->getItemIds():array();
-        }
-        if (false == $this->_ModelCollection) {
-            $mapper = Mapper::singleton('RTWSize');
-            return $mapper->getManyToManyIds($this->getId(), 'Model');
-        }
-        return $this->_ModelCollection->getItemIds();
-    }
-
-    /**
-     * RTWSize::setModelCollectionIds
-     *
-     * @access public
-     * @return array
-     */
-    public function setModelCollectionIds($itemIds) {
-        $this->_ModelCollection = new Collection('Model');
-        foreach ($itemIds as $id) {
-            $this->_ModelCollection->setItem($id);
-        }
-    }
-
-    /**
-     * RTWSize::setModelCollection
-     *
-     * @access public
-     * @param object Collection $value
-     * @return void
-     */
-    public function setModelCollection($value) {
-        $this->_ModelCollection = $value;
-    }
-
-    /**
-     * RTWSize::ModelCollectionIsLoaded
+     * RTWSize::canBeDeleted()
      *
      * @access public
      * @return boolean
      */
-    public function ModelCollectionIsLoaded() {
-        return ($this->_ModelCollection !== false);
-    }
-
-    // }}}
-    // getTableName() {{{
-
-    /**
-     * Retourne le nom de la table sql correspondante
-     *
-     * @static
-     * @access public
-     * @return string
-     */
-    public static function getTableName() {
-        return 'RTWElement';
-    }
-
-    // }}}
-    // getObjectLabel() {{{
-
-    /**
-     * Retourne le "label" de la classe.
-     *
-     * @static
-     * @access public
-     * @return string
-     */
-    public static function getObjectLabel() {
-        return _('Sizes');
-    }
-
-    // }}}
-    // getProperties() {{{
-
-    /**
-     * Retourne le tableau des propriétés.
-     * Voir Object pour documentation.
-     *
-     * @static
-     * @access public
-     * @return array
-     * @see Object.php
-     */
-    public static function getProperties($ownOnly = false) {
-        $return = array();
-        return $ownOnly?$return:array_merge(parent::getProperties(), $return);
-    }
-
-    // }}}
-    // getLinks() {{{
-
-    /**
-     * Retourne le tableau des entités liées.
-     * Voir Object pour documentation.
-     *
-     * @static
-     * @access public
-     * @return array
-     * @see Object.php
-     */
-    public static function getLinks($ownOnly = false) {
-        $return = array(
-            'Model'=>array(
-                'linkClass'     => 'RTWModel',
-                'field'         => 'ToRTWSize',
-                'linkTable'     => 'rTWModelRTWSize',
-                'linkField'     => 'FromRTWModel',
-                'multiplicity'  => 'manytomany',
-                'bidirectional' => 0
+    public function canBeDeleted() {
+        $testCol = Object::loadCollection('RTWProduct', array('Size' => $this->getId()));
+        if ($testCol->getCount() > 0) {
+            throw new Exception(sprintf(
+                _('Size "%s" cannot be deleted because it is linked to one or several products.'),
+                $this->getName()
             ));
-        return $ownOnly?$return:array_merge(parent::getLinks(), $return);
-    }
-
-    // }}}
-    // getUniqueProperties() {{{
-
-    /**
-     * Retourne le tableau des propriétés qui ne peuvent prendre la même valeur
-     * pour 2 occurrences.
-     *
-     * @static
-     * @access public
-     * @return array
-     */
-    public static function getUniqueProperties() {
-        $return = array();
-        return array_merge(parent::getUniqueProperties(), $return);
-    }
-
-    // }}}
-    // getEmptyForDeleteProperties() {{{
-
-    /**
-     * Retourne le tableau des propriétés doivent être "vides" (0 ou '') pour
-     * qu'une occurrence puisse être supprimée en base de données.
-     *
-     * @static
-     * @access public
-     * @return array
-     */
-    public static function getEmptyForDeleteProperties() {
-        $return = array('Model');
-        return array_merge(parent::getEmptyForDeleteProperties(), $return);
-    }
-
-    // }}}
-    // getFeatures() {{{
-
-    /**
-     * Retourne le tableau des "fonctionalités" pour l'objet en cours.
-     * Voir Object pour documentation.
-     *
-     * @static
-     * @access public
-     * @return array
-     * @see Object.php
-     */
-    public static function getFeatures() {
-        return array('add', 'edit', 'del', 'grid');
-    }
-
-    // }}}
-    // getMapping() {{{
-
-    /**
-     * Retourne le mapping nécessaires aux composants génériques.
-     * Voir Object pour documentation.
-     *
-     * @static
-     * @access public
-     * @return array
-     * @see Object.php
-     */
-    public static function getMapping($ownOnly = false) {
-        $return = array();
-        return $ownOnly?$return:array_merge(parent::getMapping(), $return);
-    }
-
-    // }}}
-    // useInheritance() {{{
-
-    /**
-     * Détermine si l'entité est une entité qui utilise l'héritage.
-     * (classe parente ou classe fille). Ceci afin de differencier les entités
-     * dans le mapper car classes filles et parentes sont mappées dans la même
-     * table.
-     *
-     * @static
-     * @access public
-     * @return bool
-     */
-    public static function useInheritance() {
+        }
         return true;
     }
 
     // }}}
-    // getParentClassName() {{{
 
-    /**
-     * Retourne le nom de la première classe parente
-     *
-     * @static
-     * @access public
-     * @return string
-     */
-    public static function getParentClassName() {
-        return 'RTWElement';
-    }
-
-    // }}}
 }
 
 ?>

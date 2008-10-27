@@ -37,6 +37,11 @@
 function generateDocument($document, $reedit=0, $output='I') {
     require_once('DocumentGenerator.php');
     $context = Preferences::get('TradeContext', array());
+    if (in_array('readytowear', $context)) {
+        $prefix = 'RTW';
+    } else {
+        $prefix = '';
+    }
     if ($document instanceof Invoice) {
         $cmd = $document->getCommand();
         if ($cmd instanceof CourseCommand) {
@@ -46,11 +51,7 @@ function generateDocument($document, $reedit=0, $output='I') {
         } elseif ($cmd instanceof PrestationCommand) {
             $generator_name = 'PrestationInvoiceGenerator';
         } else {
-            if (in_array('readytowear', $context) && $cmd->getType() == Command::TYPE_CUSTOMER) {
-                $generator_name = 'RTWInvoiceGenerator';
-            } else {
-                $generator_name = 'InvoiceGenerator';
-            }
+            $generator_name = $prefix.'InvoiceGenerator';
         }
     } elseif ($document instanceof Collection) { // Facturation multiple
         $generator_name = 'InvoiceCollectionGenerator';
@@ -78,26 +79,26 @@ function generateDocument($document, $reedit=0, $output='I') {
 	    $pdf = $generator->render();
         $name = $reedit?'first_reedition.pdf':'original.pdf';
         return $pdf->output($name, $output);
-    } else if (get_class($document) == 'DeliveryOrder') { 
+    } else if ($document instanceof DeliveryOrder) { 
         $cmd = $document->getCommand();
         if (in_array('readytowear', $context) && $cmd->getType() == Command::TYPE_CUSTOMER) {
             $generator_name = 'RTWDeliveryOrderGenerator';
         } else {
             $generator_name = 'DeliveryOrderGenerator';
         }
-    } else if (get_class($document) == 'CommandReceipt') { 
+    } else if ($document instanceof CommandReceipt || $document instanceof CommandReceiptSupplier) { 
         $cmd = $document->getCommand();
         if ($cmd instanceof ChainCommand) {
             $generator_name = 'ChainCommandReceiptGenerator';
         } else {
-            $generator_name = 'CommandReceiptGenerator';
+            $generator_name = $prefix.'CommandReceiptGenerator';
         }
-    } else if (get_class($document) == 'Estimate') { 
+    } else if ($document instanceof Estimate) { 
         $cmd = $document->getCommand();
         if ($cmd instanceof ChainCommand) {
             $generator_name = 'ChainCommandEstimateGenerator';
         } else {
-            $generator_name = 'EstimateGenerator';
+            $generator_name = $prefix.'EstimateGenerator';
         }
     } else {
         $generator_name = get_class($document) . 'Generator';

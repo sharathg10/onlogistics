@@ -298,7 +298,7 @@ class RTWModelGrid extends GenericGrid
         // action copier
         $this->grid->newAction('Redirect', array(
             'Caption' => _('Copy'),
-            'Title' => _('Copy chain'),
+            'Title' => _('Copy worksheet'),
             'URL' => 'RTWModelDuplicate.php?modID=%d'
         ));
         $this->grid->NewAction('Redirect', array(

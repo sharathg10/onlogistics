@@ -977,6 +977,10 @@
     <entity name="CommandReceipt" extends="AbstractDocument" 
         tablename="AbstractDocument"/>
 
+    <!-- entity CommandReceipt -->
+    <entity name="CommandReceiptSupplier" extends="AbstractDocument" 
+        tablename="AbstractDocument"/>
+
     <!-- entity CommunicationModality -->
     <entity name="CommunicationModality" tablename="CommunicationModality">
         <property type="string" name="Phone" />
@@ -2845,6 +2849,7 @@
                 label="Subsidiary accountant"/>
             <const name="PROFILE_GED_PROJECT_MANAGER" value="24" label="Project manager"/>
             <const name="PROFILE_PRODUCT_MANAGER" value="25" label="Product manager"/>
+            <const name="PROFILE_RTW_SUPPLIER" value="26" label="Ready-to-wear supplier"/>
         </property>
         <property type="foreignkey" name="Catalog" class="Catalog"
             usedby="addedit" label="Customer catalogue" section="User account data"/>

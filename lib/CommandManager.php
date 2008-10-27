@@ -783,7 +783,12 @@ class CommandManager{
             $customer = $this->auth->getActor();
             $this->_debug('* Envoi du récépissé de la commande de produit ' .
                 $command->getCommandNo());
-            $docCls = $this->isEstimate ? 'Estimate' : 'CommandReceipt';
+            if ($this->isEstimate) {
+                $docCls = 'Estimate';
+            } else {
+                $docCls = $this->productCommandType == Command::TYPE_CUSTOMER ? 
+                    'CommandReceipt' : 'CommandReceiptSupplier';
+            }
             $doc = new $docCls();
             $doc->setCommand($command);
             $doc->setCommandType($this->productCommandType);

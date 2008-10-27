@@ -1,0 +1,20 @@
+    // RTWShape::canBeDeleted() {{{
+
+    /**
+     * RTWSize::canBeDeleted()
+     *
+     * @access public
+     * @return boolean
+     */
+    public function canBeDeleted() {
+        $testCol = Object::loadCollection('RTWProduct', array('Size' => $this->getId()));
+        if ($testCol->getCount() > 0) {
+            throw new Exception(sprintf(
+                _('Size "%s" cannot be deleted because it is linked to one or several products.'),
+                $this->getName()
+            ));
+        }
+        return true;
+    }
+
+    // }}}

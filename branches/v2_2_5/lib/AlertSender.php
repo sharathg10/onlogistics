@@ -305,15 +305,26 @@ class AlertSender{
             );
             $filename = 'estimate.pdf';
         } else {
-            if ($commandReceipt->getCommandType() == Command::TYPE_SUPPLIER) {
-                $alert = self::_loadAlert(ALERT_SUPPLIER_COMMAND_RECEIPT);
-            } else {
-                $alert = self::_loadAlert(ALERT_CLIENT_COMMAND_RECEIPT);
-            }
-            $body  = sprintf(
+            $body = sprintf(
                 _("Please find enclosed the receipt for order \"%s\".\n\nThe department of sales."),
                 $commandReceipt->getDocumentNo()
             );
+            if ($commandReceipt->getCommandType() == Command::TYPE_SUPPLIER) {
+                $body = sprintf(
+                    _("Please find enclosed our order document \"%s\".\n"),
+                    $commandReceipt->getDocumentNo() 
+                );
+                $alert = self::_loadAlert(ALERT_SUPPLIER_COMMAND_RECEIPT);
+                if (in_array('readytowear', Preferences::get('TradeContext', array()))) {
+                    $url  = parse_url(ONLOGISTICS_API);
+                    $body .= sprintf(
+                        "You can view related worksheets at the following url:\n%s",
+                        $url['scheme'] . '://' . $url['host']
+                    );
+                }
+            } else {
+                $alert = self::_loadAlert(ALERT_CLIENT_COMMAND_RECEIPT);
+            }
             $filename = 'command_receipt.pdf';
         }
         $alert->prepare(array(

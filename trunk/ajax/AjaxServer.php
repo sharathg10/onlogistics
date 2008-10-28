@@ -62,6 +62,7 @@ class OnlogisticsAjaxServer extends AjaxServer {
         $this->registeredMethods[] = 'getStoresForStorageSite';
         $this->registeredMethods[] = 'toHaveAdd_updateTotalHT';
         $this->registeredMethods[] = 'productCommand_getSitePlanningAndUnavailabilities';
+        $this->registeredMethods[] = 'productCommand_getSelectedExpeditorSite';
     }
     // }}}
 
@@ -604,6 +605,40 @@ class OnlogisticsAjaxServer extends AjaxServer {
         }
         return json_encode($return);
     }
+    // }}}
+    // productCommand_getSelectedExpeditorSite() {{{
+    
+    /**
+     * Returns the expeditor site to pre-select.
+     *
+     * @param integer The expeditor ID
+     * @param integer The destinator site ID
+     *
+     * @access public
+     * @return integer ID of the selected site
+     */
+    public function productCommand_getSelectedExpeditorSite($expId, $destSiteId)
+    {
+        $expSiteCol = Object::loadCollection('Site', array('Owner' => $expId));
+        $exp        = Object::load('Actor', $expId);
+        $destSite   = Object::load('Site', $destSiteId);
+        if (!($exp instanceof Actor)) {
+            return json_encode(0);
+        }
+        if (!($destSite instanceof Site)) {
+            return json_encode($exp->getMainSiteId());
+        }
+        foreach ($expSiteCol as $expSite) {
+            if (($zoneId = $expSite->getZoneId()) == 0) {
+                continue;
+            }
+            if ($zoneId == $destSite->getZoneId()) {
+                return json_encode($expSite->getId());
+            }
+        }
+        return json_encode($exp->getMainSiteId());
+    }
+
     // }}}
 }
 

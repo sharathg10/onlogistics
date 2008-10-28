@@ -44,7 +44,7 @@ $Auth->checkProfiles();
 $ProfileId = $Auth->getProfile();
 $UserConnectedActorId = $Auth->getActorId();  // l'Actor relie a l'user connecte
 $uac = $Auth->getUser();
-//$siteIds = $uac->getSiteCollectionIds();
+$siteIds = $uac->getSiteCollectionIds();
 // Suppression de cette var liee au mode de suivi
 unset($_SESSION['LCPCollection']);
 $FilterComponentArray = array(); // Tableau de filtres
@@ -124,6 +124,11 @@ if (true === $form->displayGrid()) {
         $FilterComponentArray[] = SearchTools::newFilterComponent(
                 'Actor', 'ActivatedChainTask.ActivatedOperation.Actor',
                 'Equals', $UserConnectedActorId, 1);
+        if (!empty($siteIds)) {
+            $FilterComponentArray[] = SearchTools::newFilterComponent(
+                'Site', 'ProductCommand.DestinatorSite.Id',
+                'In', $siteIds, 1);
+        }
     }
     $FilterComponentArray = array_merge(
             $FilterComponentArray, $form->buildFilterComponentArray());

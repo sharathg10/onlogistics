@@ -39,6 +39,8 @@ require_once('ActivatedMovementTools.php');
 require_once('Objects/MovementType.const.php');
 require_once('Objects/ActivatedMovement.php');
 
+//Database::connection()->debug = 1;
+
 $Auth = Auth::Singleton();
 $Auth->checkProfiles();
 $ProfileId = $Auth->getProfile();
@@ -125,9 +127,35 @@ if (true === $form->displayGrid()) {
                 'Actor', 'ActivatedChainTask.ActivatedOperation.Actor',
                 'Equals', $UserConnectedActorId, 1);
         if (!empty($siteIds)) {
-            $FilterComponentArray[] = SearchTools::newFilterComponent(
-                'Site', 'ProductCommand.DestinatorSite.Id',
-                'In', $siteIds, 1);
+            $FilterComponentArray[] = new FilterComponent(
+                new FilterComponent(
+                    new FilterRule(
+                        'ProductCommand.Type',
+                        FilterRule::OPERATOR_EQUALS,
+                        Command::TYPE_SUPPLIER
+                    ),
+                    FilterComponent::OPERATOR_AND,
+                    new FilterRule(
+                        'ProductCommand.DestinatorSite.Id',
+                        FilterRule::OPERATOR_IN,
+                        $siteIds
+                    )
+                ),
+                FilterComponent::OPERATOR_OR,
+                new FilterComponent(
+                    new FilterRule(
+                        'ProductCommand.Type',
+                        FilterRule::OPERATOR_EQUALS,
+                        Command::TYPE_CUSTOMER
+                    ),
+                    FilterComponent::OPERATOR_AND,
+                    new FilterRule(
+                        'ProductCommand.ExpeditorSite.Id',
+                        FilterRule::OPERATOR_IN,
+                        $siteIds
+                    )
+                )
+            );
         }
     }
     $FilterComponentArray = array_merge(

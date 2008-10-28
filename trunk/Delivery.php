@@ -40,7 +40,7 @@ $auth = Auth::Singleton();
 
 $auth->checkProfiles(array(UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW, UserAccount::PROFILE_ADMIN_VENTES,
             			   UserAccount::PROFILE_AERO_ADMIN_VENTES, UserAccount::PROFILE_COMMERCIAL,
-                           UserAccount::PROFILE_DIR_COMMERCIAL));
+                           UserAccount::PROFILE_DIR_COMMERCIAL,UserAccount::PROFILE_CUSTOMER));
 
 if (!isset($_GET['CommandId'])) {
     Template::errorDialog(_('No order selected'), 'javascript:window.close();', BASE_POPUP_TEMPLATE);

@@ -57,9 +57,13 @@ connect(window, 'onload', function() {
 function changeExpeditor() {
     var def = fw.ajax.updateSelect('cmdExpeditor', 'cmdExpeditorSite', 'Site', 'Owner', true);
     var myCallback = function () {
-        var dd = fw.ajax.call('load', 'Actor', $('cmdExpeditor').value, ['MainSite']);
+        var dd = fw.ajax.call(
+            'productCommand_getSelectedExpeditorSite',
+            $('cmdExpeditor').value,
+            $('cmdDestinatorSite').value
+        );
         var onSuccess = function (data) {
-            fw.dom.selectOptionByValue('cmdExpeditorSite', data['mainSite'].id);
+            fw.dom.selectOptionByValue('cmdExpeditorSite', data);
         }
         dd.addCallback(onSuccess);
     }

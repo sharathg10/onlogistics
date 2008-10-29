@@ -142,15 +142,15 @@ try {
     exit(1);
 }
 $expeditorArray = SearchTools::createArrayIDFromCollection(
-        'Actor', array('Id' => $expeditorList), '', 'Name');
+    'Actor', array('Id' => $expeditorList), '', 'Name');
 $form->addElement('select', 'cmdExpeditor', _('Shipper'),
-        $expeditorArray,
-        'onchange="changeExpeditor();" id="cmdExpeditor" style="width:100%"');
+    $expeditorArray,
+    'onchange="changeExpeditor();" id="cmdExpeditor" style="width:100%"');
 
 $destinatorArray = SearchTools::createArrayIDFromCollection(
-        'Actor', array('Id' => $customer->getId()), '', 'Name');
+    'Actor', array('Id' => $customer->getId()), '', 'Name');
 $form->addElement('select', 'cmdDestinator', _('Addressee'),
-        $destinatorArray, 'id="cmdDestinator" style="width:100%"');
+    $destinatorArray, 'id="cmdDestinator" style="width:100%"');
 $form->addElement('select', 'cmdExpeditorSite', _('Shipper site'),
         array(), 'id="cmdExpeditorSite" style="width:80%"');
 $custSiteArray = SearchTools::createArrayIDFromCollection(
@@ -163,7 +163,8 @@ $custSiteArray = SearchTools::createArrayIDFromCollection(
     'Name'
 );
 $form->addElement('select', 'cmdDestinatorSite', _('Addressee site'),
-        $custSiteArray, 'id="cmdDestinatorSite" style="width:80%"');
+    $custSiteArray,
+    'onchange="changeExpeditor();" id="cmdDestinatorSite" style="width:80%"');
 $commercialArray = SearchTools::createArrayIDFromCollection(
         'UserAccount', array('Profile' => UserAccount::PROFILE_COMMERCIAL),
         _('None'), 'Identity');

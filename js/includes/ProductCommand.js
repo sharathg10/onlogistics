@@ -42,6 +42,7 @@ connect(window, 'onload', function() {
     	        new Array("qty", "hdg", "CommandItemDate", "cmdExpeditor", "cmdExpeditorSite", "cmdDestinator", "cmdDestinatorSite", "Port", "Emballage", "Assurance", "GlobalHanding", "cmdIncoterm")
             );
             var subdCB = function() {
+                preselectDestinatorSite();
                 RecalculateTotal(true);
             }
             subd.addCallback(subdCB);
@@ -69,6 +70,22 @@ function changeExpeditor() {
     }
     def.addCallback(myCallback);
     return def;
+}
+
+/**
+ * Sur le onchange du select cmdExpeditor: selectionne le mainsite associe
+ * @return object Deferred
+ **/
+function preselectDestinatorSite() {
+    var dd = fw.ajax.call(
+        'productCommand_getSelectedDestinatorSite',
+        $('cmdDestinator').value,
+        $('cmdExpeditorSite').value
+    );
+    var onSuccess = function (data) {
+        fw.dom.selectOptionByValue('cmdDestinatorSite', data);
+    }
+    dd.addCallback(onSuccess);
 }
 
 function DisplayRemExcep() {

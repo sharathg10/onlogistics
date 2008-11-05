@@ -128,7 +128,7 @@ function request_StockProductRealandVirtualList(
 	}
 	if (SearchTools::RequestOrSessionExist('Activated') !== false) {
 		$where .= 'AND PDT._Activated=1 ';
-	}
+	 }
 	if (SearchTools::RequestOrSessionExist('NotActivated') !== false) {
 		$where .= 'AND PDT._Activated=0 ';
 	}
@@ -1930,9 +1930,10 @@ function request_groupableBoxCount($achID, $ackID, $currentBoxLevel) {
 function request_commandForCashBalance($cmdType, $currency) {
     $request = 'SELECT DISTINCT(CMD._Id) as cmdId, CMD._Type as cmdType, 
         CMD._TotalPriceTTC as cmdTotalTTC,
+        CMD._State as cmdState,
         SC._TermsOfPayment as scTermsOfPayment,
         IF((select count(_Id) from AbstractDocument where _ClassName="Invoice" and _Command=CMD._Id),
-            (select sum(_ToPay) from AbstractDocument where _ClassName="Invoice" and _Command=CMD._Id),
+            (select sum(_TotalPriceTTC) - sum(_ToPay) from AbstractDocument where _ClassName="Invoice" and _Command=CMD._Id),
             0) as cmdPayed';
     if($cmdType==Command::TYPE_TRANSPORT) {
         $request .= ', IF((select count(aco._Id) from ActivatedChainOperation aco, CommandItem cmi where cmi._Command=CMD._Id and cmi._ActivatedChain=aco._ActivatedChain and aco._PrestationFactured=0), 0, 1) as prsFactured';
@@ -1946,9 +1947,8 @@ function request_commandForCashBalance($cmdType, $currency) {
     if (defined('DATABASE_ID') && !Object::isPublicEntity('Product')) {
         $request .= ' AND CMD._DBId=' . DATABASE_ID;
     }
-    $request .= ' GROUP BY CMD._ID
-        HAVING cmdTotalTTC - cmdPayed > 0 ';
-    if($cmdType==Command::TYPE_TRANSPORT) {
+    $request .= ' GROUP BY CMD._ID HAVING cmdTotalTTC - cmdPayed > 0 ';
+    if($cmdType == Command::TYPE_TRANSPORT) {
         $request .= ' AND prsFactured=0';
     }
     $request .= ';';

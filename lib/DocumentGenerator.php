@@ -1296,6 +1296,7 @@ class RTWInvoiceGenerator extends InvoiceGenerator
             if (!isset($sizes[$i]) || empty($sizes[$i])) {
                 continue;
             }
+            ksort($sizes[$i]);
             $sColumns = array();
             $sColumns[_('Sizes')] = 34;
             $sColumns += array_fill_keys(array_keys($sizes[$i]), 15);
@@ -3670,6 +3671,7 @@ class RTWCommandReceiptGenerator extends CommandReceiptGenerator
             if (!isset($sizes[$i]) || empty($sizes[$i])) {
                 continue;
             }
+            ksort($sizes[$i]);
             $sColumns = array();
             $sColumns[_('Sizes')] = 30;
             $sColumns += array_fill_keys(array_keys($sizes[$i]), 15);

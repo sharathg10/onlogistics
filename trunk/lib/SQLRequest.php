@@ -1947,7 +1947,7 @@ function request_commandForCashBalance($cmdType, $currency) {
     if (defined('DATABASE_ID') && !Object::isPublicEntity('Product')) {
         $request .= ' AND CMD._DBId=' . DATABASE_ID;
     }
-    $request .= ' GROUP BY CMD._ID HAVING cmdTotalTTC - cmdPayed > 0 ';
+    $request .= ' GROUP BY CMD._ID';
     if($cmdType == Command::TYPE_TRANSPORT) {
         $request .= ' AND prsFactured=0';
     }

@@ -199,8 +199,10 @@ class FlowTypeItem extends _FlowTypeItem {
                     if ($result->fields['cmdState'] == Command::REGLEMT_PARTIEL ||
                         $result->fields['cmdState'] == Command::REGLEMT_TOTAL) {
                         $topay  = troncature($cmdTTC - $result->fields['cmdPayed']);
+                        $payed = $result->fields['cmdPayed'];
                     } else {
                         $topay = $cmdTTC;
+                        $payed = $cmdTTC;
                     }
                     
                     $topId  = $result->fields['scTermsOfPayment'];
@@ -211,8 +213,9 @@ class FlowTypeItem extends _FlowTypeItem {
                             list($date, $amount, $supplier) = $topItem->getDateAndAmountForOrder($order, $topay);
                             if ($date >= $beginDate && $date <= $endDate) {
                                 $total += $amount;
+                                $totals['total'] += $coeff * $amount;
                             }
-                            list($date, $amount, $supplier) = $topItem->getDateAndAmountForOrder($order, $cmdTTC);
+                            list($date, $amount, $supplier) = $topItem->getDateAndAmountForOrder($order, $payed);
                             if ($date >= $beginDate && $date <= $endDate) {
                                 $totals['total'] += $coeff * $amount;
                             }
@@ -222,7 +225,7 @@ class FlowTypeItem extends _FlowTypeItem {
                         $date = $order->getWishedDate();
                         if ($date >= $beginDate && $date <= $endDate) {
                             $total += $topay;
-                            $totals['total'] += $coeff * $cmdTTC;
+                            $totals['total'] += $coeff * $payed;
                         }
                     }
                     $result->moveNext();

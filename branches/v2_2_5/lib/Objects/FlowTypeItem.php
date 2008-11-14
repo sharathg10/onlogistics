@@ -179,21 +179,9 @@ class FlowTypeItem extends _FlowTypeItem {
                 } elseif($breakdownPart == self::BREAKDOWN_PORT) {
                     $ttc = troncature($inv->getPort() + troncature($inv->getPort() * 
                         $TVARates['DELIVERY EXPENSES'] / 100));
-                } elseif($breakdownPart == self::BREAKDOWN_INVOICE_ITEM) {
-                    $invoiceItems = $inv->getInvoiceItemCollection();
-                    foreach($invoiceItems as $invoiceItem) {
-                        $ttc += troncature($invoiceItem->getTotalPriceHT() + troncature($invoiceItem->getTotalTVA()));
-                    }
-                    // Retranche les sommes payees
-                    $paymentCol = $inv->getPaymentCollection(1); // exclu les paiments annules
-                    $count = $paymentCol->getCount();
-                    for ($i=0; $i<$count; $i++) {
-                        $payment = $paymentCol->getItem($i);
-                        $ttc    -= $payment->getTotalPriceTTC();
-                    }
-                    $total += $ttc;
-                    $totals['total'] += $coeff * $ttc;
                 }
+                $total += $ttc;
+                $totals['total'] += $coeff * $ttc;
             }
             // commandes non facturés: on ne détaille pas et on ajoute à la 
             // ligne des lignes de facture
@@ -206,8 +194,17 @@ class FlowTypeItem extends _FlowTypeItem {
                 //$beginDate;
                 //$endDate; 
                 while($result && !$result->EOF) {
+                    
                     $cmdTTC = $result->fields['cmdTotalTTC'];
-                    $topay  = troncature($cmdTTC - $result->fields['cmdPayed']);
+                    if ($result->fields['cmdState'] == Command::REGLEMT_PARTIEL ||
+                        $result->fields['cmdState'] == Command::REGLEMT_TOTAL) {
+                        $topay  = troncature($cmdTTC - $result->fields['cmdPayed']);
+                        $payed = $result->fields['cmdPayed'];
+                    } else {
+                        $topay = $cmdTTC;
+                        $payed = $cmdTTC;
+                    }
+                    
                     $topId  = $result->fields['scTermsOfPayment'];
                     if ($topId > 0 && ($top = Object::load('TermsOfPayment', $topId)) instanceof TermsOfPayment) {
                         $order = Object::load('Command', $result->fields['cmdId']);
@@ -218,6 +215,17 @@ class FlowTypeItem extends _FlowTypeItem {
                                 $total += $amount;
                                 $totals['total'] += $coeff * $amount;
                             }
+                            list($date, $amount, $supplier) = $topItem->getDateAndAmountForOrder($order, $payed);
+                            if ($date >= $beginDate && $date <= $endDate) {
+                                $totals['total'] += $coeff * $amount;
+                            }
+                        }
+                    } else {
+                        $order = Object::load('Command', $result->fields['cmdId']);
+                        $date = $order->getWishedDate();
+                        if ($date >= $beginDate && $date <= $endDate) {
+                            $total += $topay;
+                            $totals['total'] += $coeff * $payed;
                         }
                     }
                     $result->moveNext();

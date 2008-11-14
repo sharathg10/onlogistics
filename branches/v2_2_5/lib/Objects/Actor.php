@@ -127,21 +127,23 @@ class Actor extends _Actor {
      * @access public
      * @return SupplierCustomer
      */
-    public function getSupplierCustomer(){
+    public function getSupplierCustomer()
+    {
         require_once('Objects/SupplierCustomer.php');
         $auth = Auth::Singleton();
         $actor = $auth->getActor();
         $actorConnectedId = $actor->getId();
         $mapper = Mapper::singleton('SupplierCustomer');
         if ($actor instanceof Customer || $actor instanceof AeroCustomer) {
-            $spc = $mapper->load(array('Customer'=>$this->getId()));
+            $spc = $mapper->load(array(
+                'Supplier' => $this->getId(),
+                'Customer' => $actorConnectedId
+            ));
         } else {
-            $spc = $mapper->load(array('Supplier'=>$actorConnectedId,
-                'Customer'=>$this->getId()));
-            if (Tools::isException($spc)) {
-                $spc = $mapper->load(array('Customer'=>$actorConnectedId,
-                          'Supplier'=>$this->getId()));
-            }
+            $spc = $mapper->load(array(
+                'Supplier' => $actorConnectedId,
+                'Customer' => $this->getId()
+            ));
         }
         if (Tools::isException($spc)) {
             $spc = new SupplierCustomer();

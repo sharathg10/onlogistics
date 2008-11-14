@@ -42,6 +42,7 @@ connect(window, 'onload', function() {
     	        new Array("qty", "hdg", "CommandItemDate", "cmdExpeditor", "cmdExpeditorSite", "cmdDestinator", "cmdDestinatorSite", "Port", "Emballage", "Assurance", "GlobalHanding", "cmdIncoterm")
             );
             var subdCB = function() {
+                preselectDestinatorSite();
                 RecalculateTotal(true);
             }
             subd.addCallback(subdCB);
@@ -57,14 +58,34 @@ connect(window, 'onload', function() {
 function changeExpeditor() {
     var def = fw.ajax.updateSelect('cmdExpeditor', 'cmdExpeditorSite', 'Site', 'Owner', true);
     var myCallback = function () {
-        var dd = fw.ajax.call('load', 'Actor', $('cmdExpeditor').value, ['MainSite']);
+        var dd = fw.ajax.call(
+            'productCommand_getSelectedExpeditorSite',
+            $('cmdExpeditor').value,
+            $('cmdDestinatorSite').value
+        );
         var onSuccess = function (data) {
-            fw.dom.selectOptionByValue('cmdExpeditorSite', data['mainSite'].id);
+            fw.dom.selectOptionByValue('cmdExpeditorSite', data);
         }
         dd.addCallback(onSuccess);
     }
     def.addCallback(myCallback);
     return def;
+}
+
+/**
+ * Sur le onchange du select cmdExpeditor: selectionne le mainsite associe
+ * @return object Deferred
+ **/
+function preselectDestinatorSite() {
+    var dd = fw.ajax.call(
+        'productCommand_getSelectedDestinatorSite',
+        $('cmdDestinator').value,
+        $('cmdExpeditorSite').value
+    );
+    var onSuccess = function (data) {
+        fw.dom.selectOptionByValue('cmdDestinatorSite', data);
+    }
+    dd.addCallback(onSuccess);
 }
 
 function DisplayRemExcep() {
@@ -194,6 +215,9 @@ function RecalculateItemTotal(index, globalHandingFloat) {
 		}
 		if (index != -1) {
             var quantityWidget = elements["qty[]"][index];
+            if (/[.,]$/.test(quantityWidget.value)) {
+                return;
+            }
             var quantity = fw.i18n.extractNumber(quantityWidget.value);
 			var PUHT = parseFloat(elements["HiddenPrice[]"][index].value);
 			var TVA = parseFloat(elements["HiddenTVA[]"][index].value);
@@ -203,6 +227,9 @@ function RecalculateItemTotal(index, globalHandingFloat) {
 			var PriceHTWidget = elements["PriceHT[]"][index];
 		} else {
             var quantityWidget = elements["qty[]"];
+            if (/[.,]$/.test(quantityWidget.value)) {
+                return;
+            }
             var quantity = fw.i18n.extractNumber(quantityWidget.value);
 			var PUHT = parseFloat(elements["HiddenPrice[]"].value);  // deja tronque a 2 decimales cote serveur
 			var TVA = parseFloat(elements["HiddenTVA[]"].value);

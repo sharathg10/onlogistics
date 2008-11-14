@@ -39,12 +39,14 @@ require_once('ActivatedMovementTools.php');
 require_once('Objects/MovementType.const.php');
 require_once('Objects/ActivatedMovement.php');
 
+//Database::connection()->debug = 1;
+
 $Auth = Auth::Singleton();
 $Auth->checkProfiles();
 $ProfileId = $Auth->getProfile();
 $UserConnectedActorId = $Auth->getActorId();  // l'Actor relie a l'user connecte
 $uac = $Auth->getUser();
-//$siteIds = $uac->getSiteCollectionIds();
+$siteIds = $uac->getSiteCollectionIds();
 // Suppression de cette var liee au mode de suivi
 unset($_SESSION['LCPCollection']);
 $FilterComponentArray = array(); // Tableau de filtres
@@ -124,6 +126,37 @@ if (true === $form->displayGrid()) {
         $FilterComponentArray[] = SearchTools::newFilterComponent(
                 'Actor', 'ActivatedChainTask.ActivatedOperation.Actor',
                 'Equals', $UserConnectedActorId, 1);
+        if (!empty($siteIds)) {
+            $FilterComponentArray[] = new FilterComponent(
+                new FilterComponent(
+                    new FilterRule(
+                        'ProductCommand.Type',
+                        FilterRule::OPERATOR_EQUALS,
+                        Command::TYPE_SUPPLIER
+                    ),
+                    FilterComponent::OPERATOR_AND,
+                    new FilterRule(
+                        'ProductCommand.DestinatorSite.Id',
+                        FilterRule::OPERATOR_IN,
+                        $siteIds
+                    )
+                ),
+                FilterComponent::OPERATOR_OR,
+                new FilterComponent(
+                    new FilterRule(
+                        'ProductCommand.Type',
+                        FilterRule::OPERATOR_EQUALS,
+                        Command::TYPE_CUSTOMER
+                    ),
+                    FilterComponent::OPERATOR_AND,
+                    new FilterRule(
+                        'ProductCommand.ExpeditorSite.Id',
+                        FilterRule::OPERATOR_IN,
+                        $siteIds
+                    )
+                )
+            );
+        }
     }
     $FilterComponentArray = array_merge(
             $FilterComponentArray, $form->buildFilterComponentArray());

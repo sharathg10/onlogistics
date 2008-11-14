@@ -9,10 +9,10 @@
       <tr>
         <td>{t}Period covered by export{/t}</td>
         <td>
-          {html_select_date prefix="From_" time=$oneMonthBefore start_year="-5" 
+          {html_select_date prefix="From_" time=$oneMonthBefore start_year="-5" end_year="+5"
            reverse_years="true" month_format="%m" field_order="$dateFormat"}
           &nbsp;{t}to{/t}&nbsp;
-          {html_select_date prefix="To_" time=$smarty.now start_year="-5" 
+          {html_select_date prefix="To_" time=$smarty.now start_year="-5" end_year="+5"
            reverse_years="true" month_format="%m" field_order="$dateFormat"}
         </td>
         <td>{t}Columns separator:{/t}</td>

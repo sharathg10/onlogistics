@@ -35,10 +35,6 @@ BEGIN;
 TRUNCATE TABLE IdHashTable;
 ####################################
 
-UPDATE AbstractDocument SET _ClassName='CommandReceiptSupplier' where _ClassName='CommandReceipt' and _CommandType=2;
-set @id=(select IFNULL(max(_Id),0) from DocumentModel);
-INSERT INTO `DocumentModel` VALUES (@id+1,0,'COMMANDE FOURNISSEUR','',1,'CommandReceiptSupplier',1,0,1,1,1,0);
-
 ####################################
 # Ne pas enlever
 COMMIT;

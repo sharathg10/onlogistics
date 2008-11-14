@@ -1299,18 +1299,18 @@ class RTWInvoiceGenerator extends InvoiceGenerator
             ksort($sizes[$i]);
             $sColumns = array();
             $sColumns[_('Sizes')] = 34;
-            $sColumns += array_fill_keys(array_keys($sizes[$i]), 15);
+            $sColumns += array_fill_keys(array_keys($sizes[$i]), 10);
             $pdfDoc->tableHeader($sColumns, 0, 1, array(
                 'align'      => 'C',
                 'lineHeight' => 4,
-                'fontSize'   => 8,
+                'fontSize'   => 7,
             ));
             $sData = array_values($sizes[$i]);
             array_unshift($sData, _('Quantities'));
             $pdfDoc->row($sData, $sColumns, array(
                 'align'      => 'C',
                 'lineHeight' => 4,
-                'fontSize'   => 8,
+                'fontSize'   => 7,
             ));
         }
         $pdfDoc->ln(8);
@@ -3674,11 +3674,11 @@ class RTWCommandReceiptGenerator extends CommandReceiptGenerator
             ksort($sizes[$i]);
             $sColumns = array();
             $sColumns[_('Sizes')] = 30;
-            $sColumns += array_fill_keys(array_keys($sizes[$i]), 15);
+            $sColumns += array_fill_keys(array_keys($sizes[$i]), 10);
             $this->pdf->tableHeader($sColumns, 0, 1, array(
                 'align'      => 'C',
                 'lineHeight' => 4,
-                'fontSize'   => 8,
+                'fontSize'   => 7,
             ));
             $sData = array_values($sizes[$i]);
             array_unshift($sData, _('Quantities'));
@@ -3686,7 +3686,7 @@ class RTWCommandReceiptGenerator extends CommandReceiptGenerator
             $this->pdf->row($sData, $sColumns, array(
                 'align'      => 'C',
                 'lineHeight' => 4,
-                'fontSize'   => 8,
+                'fontSize'   => 7,
             ));
         }
         $this->pdf->Ln(8);

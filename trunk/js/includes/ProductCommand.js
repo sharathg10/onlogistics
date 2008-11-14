@@ -215,6 +215,9 @@ function RecalculateItemTotal(index, globalHandingFloat) {
 		}
 		if (index != -1) {
             var quantityWidget = elements["qty[]"][index];
+            if (/[.,]$/.test(quantityWidget.value)) {
+                return;
+            }
             var quantity = fw.i18n.extractNumber(quantityWidget.value);
 			var PUHT = parseFloat(elements["HiddenPrice[]"][index].value);
 			var TVA = parseFloat(elements["HiddenTVA[]"][index].value);
@@ -224,6 +227,9 @@ function RecalculateItemTotal(index, globalHandingFloat) {
 			var PriceHTWidget = elements["PriceHT[]"][index];
 		} else {
             var quantityWidget = elements["qty[]"];
+            if (/[.,]$/.test(quantityWidget.value)) {
+                return;
+            }
             var quantity = fw.i18n.extractNumber(quantityWidget.value);
 			var PUHT = parseFloat(elements["HiddenPrice[]"].value);  // deja tronque a 2 decimales cote serveur
 			var TVA = parseFloat(elements["HiddenTVA[]"].value);

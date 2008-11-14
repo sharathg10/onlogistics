@@ -267,7 +267,7 @@ function checkBeforeSeveralMovements() {
             exit;
         }
         // Controle: entree ou sortie normal only
-        if (!in_array($acm->getTypeId(), array(SORTIE_NORMALE, ENTREE_NORMALE))) {
+        if (!in_array($acm->getTypeId(), array(SORTIE_NORMALE, SORTIE_INTERNE, ENTREE_NORMALE))) {
             Template::errorDialog($e_onlyNormalMovement, $cancelLink);
             exit;
         }

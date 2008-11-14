@@ -191,6 +191,10 @@ if (!in_array($ProfileId,
             array('Location.Store.StorageSite.Owner' => $UserConnectedActorId));
 }
 
+if ($ProfileId == UserAccount::PROFILE_GESTIONNAIRE_STOCK && !empty($siteIds)) {
+    $filter['Location.Store.StorageSite'] = $siteIds;
+}
+
 $LPQCollection = $LPQMapper->loadCollection(
         $filter, array('Location.Name' => SORT_ASC));
 

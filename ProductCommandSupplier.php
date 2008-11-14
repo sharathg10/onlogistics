@@ -159,16 +159,17 @@ try {
 $destinatorArray = SearchTools::createArrayIDFromCollection(
         'Actor', array('Id' => $destinatorList), '', 'Name');
 $form->addElement('select', 'cmdDestinator', _('Addressee'),
-        $destinatorArray, 'style="width:100%"');
+        $destinatorArray, 'style="width:100%" id="cmdDestinator"');
 $supplSiteArray = SearchTools::createArrayIDFromCollection(
         'Site', array('Owner' => $Supplier->getId()), '', 'Name');
 
 $form->addElement('select', 'cmdExpeditorSite', _('Shipper site'),
-        $supplSiteArray, 'id="cmdExpeditorSite" style="width:80%"');
+    $supplSiteArray,
+    'onchange="preselectDestinatorSite();" id="cmdExpeditorSite" style="width:80%"');
 $custSiteArray = SearchTools::createArrayIDFromCollection(
         'Site', array('Owner' => $destinatorList), '', 'Name');
 $form->addElement('select', 'cmdDestinatorSite', _('Addressee site'),
-        $custSiteArray, 'style="width:80%"');
+        $custSiteArray, 'style="width:80%" id="cmdDestinatorSite"');
 
 $onKeyUp = 'onkeyup="RecalculateTotal();"';
 $form->addElement('text', 'Port', _('Forwarding charges'), $onKeyUp);

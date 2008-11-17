@@ -135,10 +135,7 @@ class Actor extends _Actor {
         $actorConnectedId = $actor->getId();
         $mapper = Mapper::singleton('SupplierCustomer');
         if ($actor instanceof Customer || $actor instanceof AeroCustomer) {
-            $spc = $mapper->load(array(
-                'Supplier' => $this->getId(),
-                'Customer' => $actorConnectedId
-            ));
+            $spc = $mapper->load(array('Customer' => $this->getId()));
         } else {
             $spc = $mapper->load(array(
                 'Supplier' => $actorConnectedId,

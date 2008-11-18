@@ -50,6 +50,8 @@ class GridColumnBoardCustomerCommand extends AbstractGridColumn {
  		$this->date_end = $params['end'];
  		$this->commandType = $params['commandType'];
         $this->currency = $params['currency'];
+        $this->season = $params['season'];
+        $this->factor = $params['factor'];
     } 
 
     function Render($object) {
@@ -65,6 +67,9 @@ class GridColumnBoardCustomerCommand extends AbstractGridColumn {
         if (!$this->commandType) {
             // devis
 		    $FilterComponentArray[] = SearchTools::NewFilterComponent('IsEstimate', "", 'Equals', 1, 1);
+        } else if ($this->req == 'estimate_num' || $this->req == 'ca_par_cli_estimates') {
+		    $FilterComponentArray[] = SearchTools::NewFilterComponent('IsEstimate', "", 'Equals', 1, 1);
+		    $FilterComponentArray[] = SearchTools::NewFilterComponent('Type', '', 'Equals', $this->commandType, 1);
         } else {
 		    $FilterComponentArray[] = SearchTools::NewFilterComponent('IsEstimate', "", 'Equals', 0, 1);
 		    $FilterComponentArray[] = SearchTools::NewFilterComponent('Type', '', 'Equals', $this->commandType, 1);
@@ -73,25 +78,42 @@ class GridColumnBoardCustomerCommand extends AbstractGridColumn {
 		$FilterComponentArray[] = SearchTools::NewFilterComponent('CommandDate', '', 'GreaterThanOrEquals', $this->date_start, 1);
 		$FilterComponentArray[] = SearchTools::NewFilterComponent('CommandDate', '', 'LowerThanOrEquals', $this->date_end, 1);
 		$FilterComponentArray[] = SearchTools::NewFilterComponent('Currency', '', 'Equals', $this->currency, 1);
+        if ($this->season !== false) {
+            $FilterComponentArray[] = SearchTools::NewFilterComponent('Season',
+                'CommandItem()@ProductCommandItem.Product@RTWProduct.Model.Season.Id',
+                'Equals',
+                $this->season,
+                1,
+                'Command');
+        }
+        if ($this->req == 'billed_amount') {
+            $FilterComponentArray[] = SearchTools::NewFilterComponent('State', '', 'In',
+                array(Command::FACT_PARTIELLE, Command::FACT_COMPLETE,
+                      Command::REGLEMT_PARTIEL, Command::REGLEMT_TOTAL), 1);
+        }
         $filter = SearchTools::FilterAssembler($FilterComponentArray);
-        $commandCollection = $commandMapper->loadCollection($filter, array(), array('TotalPriceHT'));
+        $commandCollection = $commandMapper->loadCollection($filter, array(), array('TotalPriceHT', 'TotalPriceTTC'));
         
-		if($this->req == 'command_num') {
+		if($this->req == 'command_num' || $this->req == 'estimate_num') {
         	return $commandCollection->getCount();
 		} else {
         	$count = $commandCollection->getCount();
-        	$ttForThisCustomer = 0;
+        	$htForThisCustomer = 0;
+        	$ttcForThisCustomer = 0;
         	for ($i=0; $i<$count; $i++) {
         	 	$item = $commandCollection->getItem($i);
-        	 	$ttForThisCustomer += $item->getTotalPriceHT();
+        	 	$htForThisCustomer += $item->getTotalPriceHT();
+        	 	$ttcForThisCustomer += $item->getTotalPriceTTC();
         	}
-			if($this->req == 'ca_par_cli') {
-        		return I18N::formatNumber($ttForThisCustomer);
+			if($this->req == 'ca_par_cli' || $this->req == 'ca_par_cli_estimates') {
+        		return I18N::formatNumber($htForThisCustomer);
+		    } else if ($this->req == 'billed_amount') {
+        		return I18N::formatNumber($ttcForThisCustomer);
         	} else if($this->req == 'ca_percent' && isset($this->totalCa)) {
         		if($this->totalCa == 0) { // NO DIIV BY ZERO
         			return _('N/A');
         		}
-        		$percent = $ttForThisCustomer / $this->totalCa * 100 ;
+        		$percent = $htForThisCustomer / $this->totalCa * 100 ;
         		return I18N::formatNumber($percent) . "%";
         	}
         }

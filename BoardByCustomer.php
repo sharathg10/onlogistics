@@ -55,6 +55,14 @@ $form->addElement('select', 'Id', _('Customer'),
 $types = Command::getTypeConstArray() + array(0 => _('Estimate'));
 $form->addElement('select', 'CommandType', _('Type of order'),
     array($types), array('Disable'=>true));
+
+if (in_array('readytowear', Preferences::get('TradeContext', array()))) {
+    $supplierArray = SearchTools::createArrayIDFromCollection('Supplier', array(), MSG_SELECT_AN_ELEMENT);
+    $form->addElement('select', 'Factor', _('Factor'), array($supplierArray), array('Disable'=>true));
+    $seasonArray = SearchTools::createArrayIDFromCollection('RTWSeason', array(), MSG_SELECT_AN_ELEMENT);
+    $form->addElement('select', 'Season', _('Season'), array($seasonArray), array('Disable'=>true));
+}
+
 $currencyArray = SearchTools::createArrayIDFromCollection(
     'Currency');
 $form->addElement('select', 'Currency', _('Currency'), array($currencyArray), array('Disable'=>true));
@@ -69,8 +77,8 @@ $form->addDate2DateElement(
 	    array('Name'   => 'EndDate',
 			  'Format' => array('minYear'   => date("Y") - 2),
 			  'Disable' => true),
-	   array('EndDate' => array('d' => date('d'), 'm' => date('m'), 'Y' => date('Y')),
-   			 'StartDate' => array('Y' => date('Y')))
+	    array('EndDate' => array('d' => date('d'), 'm' => date('m'), 'Y' => date('Y')),
+              'StartDate' => array('Y' => date('Y')))
 	  );
 
 $form->addElement('checkbox', 'NoNullCommands',
@@ -95,6 +103,8 @@ if (true === $form->displayGrid()) {
 	$MySQLEndDate = DateTimeTools::quickFormDateToMySQL('EndDate') . ' 23:59:59';
 	$commandType = SearchTools::requestOrSessionExist('CommandType');
     $currency = SearchTools::requestOrSessionExist('Currency');
+    $factor = SearchTools::requestOrSessionExist('Factor');
+    $season = SearchTools::requestOrSessionExist('Season');
 
 	list($ca_ht_num, $ca_ht_str) = getTotalCaByActorAndDates(
             $userConnectedActorId, $MySQLStartDate, $MySQLEndDate, $commandType, $currency);
@@ -108,6 +118,18 @@ if (true === $form->displayGrid()) {
 	// on force le ClassName:  Customer ou AeroCustomer
 	$FilterComponentArray[] = SearchTools::NewFilterComponent(
             'ClassName', '', 'In', array('Customer', 'AeroCustomer'), 1);
+    /*
+    if ($factor !== false) {
+        $FilterComponentArray[] = SearchTools::NewFilterComponent(
+            'Factor',
+            'SupplierCustomer().TermsOfPayment.TermsOfPaymentItem().Supplier',
+            'Equals',
+            $factor,
+            1,
+            'Actor'
+        );
+    }
+     */
 
 	/*  Construction du filtre  */
 	$FilterComponentArray = array_merge($FilterComponentArray,
@@ -118,27 +140,57 @@ if (true === $form->displayGrid()) {
 	$grid = new Grid();
 	$grid->itemPerPage = CUSTOMER_LIST_ITEM_PER_PAGE;
 	$grid->withNoCheckBox = true;
-	$grid->withNoSortableColumn = true;
+	$grid->withNoSortableColumn = false;
 
 	$grid->NewAction('Print', array());
 	$grid->NewAction('Export', array('FileName' => 'CAparClient'));
 
 	$grid->NewColumn('FieldMapper', _('Name'), array('Macro' => '%Name%'));
+    $grid->NewColumn('FieldMapper', _('Site'), 
+        array('Macro' => '%InvoicingSite.Name%', 'Sortable'=>false));
+    $grid->NewColumn('FieldMapper', _('Address'),
+        array('Macro' => '%InvoicingSite.FormatAddressInfos%', 'Sortable'=>false));
+	$grid->NewColumn('FieldMapper', _('RCS num.'), array('Macro' => '%RCS%'));
+	$grid->NewColumn('FieldMapper', _('VAT num.'), array('Macro' => '%TVA%'));
+    $grid->NewColumn('ActorListIncur', _('Allowed outstanding debts'),
+        array('Method'=>'getMaxIncur', 'Sortable'=>false));
+    $grid->NewColumn('ActorListIncur', _('Current outstanding debts'),
+        array('Method'=>'getUpdateIncur', 'Sortable'=>false));
+    $grid->NewColumn('FieldMapper', _('Terms of payment'),
+        array('Macro'=>'%SupplierCustomer.TermsOfPayment%', 'Sortable'=>false));
 	// Nombre de commandes
-	$grid->NewColumn('BoardCustomerCommand', _('Number of orders'),
+	$grid->NewColumn('BoardCustomerCommand', _('Num. of orders'),
 					 array('req' => 'command_num',
 						   'start' => $MySQLStartDate, 'end' => $MySQLEndDate,
-						   'commandType' => $commandType, 'currency'=>$currency));
+                           'commandType' => $commandType, 'currency'=>$currency,
+                           'factor'=>$factor, 'season'=>$season, 'Sortable'=>false));
 	// ca par Customer
-	$grid->NewColumn('BoardCustomerCommand', _('Turnover excl. VAT'),
+	$grid->NewColumn('BoardCustomerCommand', _('Turnover excl. VAT') . ' (' . _('orders') . ')',
 					 array('req' => 'ca_par_cli',
 						   'start' => $MySQLStartDate, 'end' => $MySQLEndDate,
-						   'commandType' => $commandType, 'currency'=>$currency));
+						   'commandType' => $commandType, 'currency'=>$currency,
+                           'factor'=>$factor, 'season'=>$season, 'Sortable'=>false));
+	$grid->NewColumn('BoardCustomerCommand', _('Num. of est.'),
+					 array('req' => 'estimate_num',
+						   'start' => $MySQLStartDate, 'end' => $MySQLEndDate,
+						   'commandType' => $commandType, 'currency'=>$currency,
+                           'factor'=>$factor, 'season'=>$season));
+	$grid->NewColumn('BoardCustomerCommand', _('Billed amount'),
+					 array('req' => 'billed_amount',
+						   'start' => $MySQLStartDate, 'end' => $MySQLEndDate,
+						   'commandType' => $commandType, 'currency'=>$currency,
+                           'factor'=>$factor, 'season'=>$season, 'Sortable'=>false));
+	$grid->NewColumn('BoardCustomerCommand', _('Turnover excl. VAT') . ' (' . _('est.') . ')',
+					 array('req' => 'ca_par_cli_estimates',
+						   'start' => $MySQLStartDate, 'end' => $MySQLEndDate,
+						   'commandType' => $commandType, 'currency'=>$currency,
+                           'factor'=>$factor, 'season'=>$season, 'Sortable'=>false));
 	// % ca par Customer
 	$grid->NewColumn('BoardCustomerCommand', _('% of total turnover'),
 					 array('req' => 'ca_percent', 'totalCa' => $ca_ht_num,
 						   'start' => $MySQLStartDate, 'end' => $MySQLEndDate,
-						   'commandType' => $commandType, 'currency'=>$currency));
+						   'commandType' => $commandType, 'currency'=>$currency,
+                           'factor'=>$factor, 'season'=>$season, 'Sortable'=>false));
 
 	$Order = array('Name' => SORT_ASC);
 

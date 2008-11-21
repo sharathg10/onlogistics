@@ -78,7 +78,7 @@ class GridColumnBoardCustomerCommand extends AbstractGridColumn {
 		$FilterComponentArray[] = SearchTools::NewFilterComponent('CommandDate', '', 'GreaterThanOrEquals', $this->date_start, 1);
 		$FilterComponentArray[] = SearchTools::NewFilterComponent('CommandDate', '', 'LowerThanOrEquals', $this->date_end, 1);
 		$FilterComponentArray[] = SearchTools::NewFilterComponent('Currency', '', 'Equals', $this->currency, 1);
-        if ($this->season !== false) {
+        if ($this->season !== false && $this->season != '##') {
             $FilterComponentArray[] = SearchTools::NewFilterComponent('Season',
                 'CommandItem()@ProductCommandItem.Product@RTWProduct.Model.Season.Id',
                 'Equals',

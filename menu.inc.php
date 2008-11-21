@@ -59,7 +59,7 @@ $menu_metadata = array(
                 'title'       => _('Alerts'),
                 'link'        => 'dispatcher.php?entity=Alert',
                 'description' => _('Alerts management'),
-                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW)
+                'restrict_to' => array(UserAccount::PROFILE_ROOT)
             ),
             array(
                 'title'       => _('Help'),

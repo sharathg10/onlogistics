@@ -36,8 +36,10 @@
 
 require_once('config.inc.php');
 require_once('GetTotalCaByActorAndDates.php');
+require_once('SQLRequest.php');
 require_once('Objects/Command.php');
 
+//Database::connection()->debug = 1;
 $Auth = Auth::Singleton();
 $Auth->checkProfiles();
 $userConnectedActorId = $Auth->getActorId();
@@ -118,18 +120,21 @@ if (true === $form->displayGrid()) {
 	// on force le ClassName:  Customer ou AeroCustomer
 	$FilterComponentArray[] = SearchTools::NewFilterComponent(
             'ClassName', '', 'In', array('Customer', 'AeroCustomer'), 1);
-    /*
-    if ($factor !== false) {
-        $FilterComponentArray[] = SearchTools::NewFilterComponent(
-            'Factor',
-            'SupplierCustomer().TermsOfPayment.TermsOfPaymentItem().Supplier',
-            'Equals',
-            $factor,
-            1,
-            'Actor'
-        );
+    
+    if ($factor !== false && $factor !== '##') {
+        $sql = 'SELECT DISTINCT T0._Id FROM Actor T0, SupplierCustomer T1, '
+             . 'TermsOfPayment T2,TermsOfPaymentItem T3 '
+             . 'WHERE T0._Id = T1._Customer AND T1._Supplier = '
+             . $userConnectedActorId . ' AND T2._Id = T1._TermsOfPayment AND '
+             . 'T2._Id = T3._TermsOfPayment AND T3._Supplier = \'' . $factor . '\'';
+        $ret = executeSQL($sql);
+        $ids = array();
+        while ($ret && !$ret->EOF) {
+            $ids[] = $ret->fields['_Id'];
+            $ret->moveNext();
+        }
+        $FilterComponentArray[] = SearchTools::NewFilterComponent('Id', 'Id', 'In', $ids, 1);
     }
-     */
 
 	/*  Construction du filtre  */
 	$FilterComponentArray = array_merge($FilterComponentArray,
@@ -157,7 +162,7 @@ if (true === $form->displayGrid()) {
     $grid->NewColumn('ActorListIncur', _('Current outstanding debts'),
         array('Method'=>'getUpdateIncur', 'Sortable'=>false));
     $grid->NewColumn('FieldMapper', _('Terms of payment'),
-        array('Macro'=>'%SupplierCustomer.TermsOfPayment%', 'Sortable'=>false));
+        array('Macro'=>'%SupplierCustomer.TermsOfPayment.Name%', 'Sortable'=>false));
 	// Nombre de commandes
 	$grid->NewColumn('BoardCustomerCommand', _('Num. of orders'),
 					 array('req' => 'command_num',
@@ -165,8 +170,13 @@ if (true === $form->displayGrid()) {
                            'commandType' => $commandType, 'currency'=>$currency,
                            'factor'=>$factor, 'season'=>$season, 'Sortable'=>false));
 	// ca par Customer
-	$grid->NewColumn('BoardCustomerCommand', _('Turnover excl. VAT') . ' (' . _('orders') . ')',
+	$grid->NewColumn('BoardCustomerCommand', _('Turnover') . ' (' . _('orders') . ')',
 					 array('req' => 'ca_par_cli',
+						   'start' => $MySQLStartDate, 'end' => $MySQLEndDate,
+						   'commandType' => $commandType, 'currency'=>$currency,
+                           'factor'=>$factor, 'season'=>$season, 'Sortable'=>false));
+	$grid->NewColumn('BoardCustomerCommand', _('Billed amount'),
+					 array('req' => 'billed_amount',
 						   'start' => $MySQLStartDate, 'end' => $MySQLEndDate,
 						   'commandType' => $commandType, 'currency'=>$currency,
                            'factor'=>$factor, 'season'=>$season, 'Sortable'=>false));
@@ -175,12 +185,7 @@ if (true === $form->displayGrid()) {
 						   'start' => $MySQLStartDate, 'end' => $MySQLEndDate,
 						   'commandType' => $commandType, 'currency'=>$currency,
                            'factor'=>$factor, 'season'=>$season));
-	$grid->NewColumn('BoardCustomerCommand', _('Billed amount'),
-					 array('req' => 'billed_amount',
-						   'start' => $MySQLStartDate, 'end' => $MySQLEndDate,
-						   'commandType' => $commandType, 'currency'=>$currency,
-                           'factor'=>$factor, 'season'=>$season, 'Sortable'=>false));
-	$grid->NewColumn('BoardCustomerCommand', _('Turnover excl. VAT') . ' (' . _('est.') . ')',
+	$grid->NewColumn('BoardCustomerCommand', _('Turnover') . ' (' . _('est.') . ')',
 					 array('req' => 'ca_par_cli_estimates',
 						   'start' => $MySQLStartDate, 'end' => $MySQLEndDate,
 						   'commandType' => $commandType, 'currency'=>$currency,

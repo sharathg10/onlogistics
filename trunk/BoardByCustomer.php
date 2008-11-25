@@ -83,10 +83,6 @@ $form->addDate2DateElement(
               'StartDate' => array('Y' => date('Y')))
 	  );
 
-$form->addElement('checkbox', 'NoNullCommands',
-				  _('Only customers who placed<br/>at least an order'),
-				  array(), array('Disable' => true));
-
 $defaultCurrency = Object::load('Currency', array('Name'=>'Euro'));
 $defaultValues = array();
 $defaultValues['Currency'] = $defaultCurrency->getId();
@@ -96,9 +92,6 @@ $form->setDefaultValues(array_merge($form->getDefaultValues(), $defaultValues));
 
 /*  Affichage du Grid  */
 if (true === $form->displayGrid()) {
-    // Evite les interaction entre $_POST et $_SESSION
-	SearchTools::cleanCheckBoxDataSession(array('NoNullCommands', 'DateOrder1'));
-
 	$StartDate = SearchTools::requestOrSessionExist('StartDate');
 	$MySQLStartDate = DateTimeTools::quickFormDateToMySQL('StartDate') . ' 00:00:00';
 	$EndDate = SearchTools::requestOrSessionExist('EndDate');
@@ -111,16 +104,14 @@ if (true === $form->displayGrid()) {
 	list($ca_ht_num, $ca_ht_str) = getTotalCaByActorAndDates(
             $userConnectedActorId, $MySQLStartDate, $MySQLEndDate, $commandType, $currency);
 
-	if (SearchTools::requestOrSessionExist('NoNullCommands')) {
-		$CustomerWithCommandsArray = getCustomersWithCommands(
-                $userConnectedActorId, $MySQLStartDate, $MySQLEndDate,$commandType, $currency);
-	    $FilterComponentArray[] = SearchTools::NewFilterComponent(
-                'Id', '', 'In', $CustomerWithCommandsArray, 1);
-	}
+	$CustomerWithCommandsArray = getCustomersWithCommands(
+            $userConnectedActorId, $MySQLStartDate, $MySQLEndDate,$commandType, $currency);
+    $FilterComponentArray[] = SearchTools::NewFilterComponent(
+            'Id', '', 'In', $CustomerWithCommandsArray, 1);
 	// on force le ClassName:  Customer ou AeroCustomer
 	$FilterComponentArray[] = SearchTools::NewFilterComponent(
             'ClassName', '', 'In', array('Customer', 'AeroCustomer'), 1);
-    
+
     if ($factor !== false && $factor !== '##') {
         $sql = 'SELECT DISTINCT T0._Id FROM Actor T0, SupplierCustomer T1, '
              . 'TermsOfPayment T2,TermsOfPaymentItem T3 '

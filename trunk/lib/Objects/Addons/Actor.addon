@@ -76,12 +76,15 @@
         $actor = $auth->getActor();
         $actorConnectedId = $actor->getId();
         $mapper = Mapper::singleton('SupplierCustomer');
-        if ($actor instanceof Customer || $actor instanceof AeroCustomer) {
-            $spc = $mapper->load(array('Customer' => $this->getId()));
+        if ($this instanceof Customer || $this instanceof AeroCustomer) {
+            $spc = $mapper->load(array(
+                'Customer' => $this->getId(),
+                'Supplier' => $actorConnectedId
+            ));
         } else {
             $spc = $mapper->load(array(
-                'Supplier' => $actorConnectedId,
-                'Customer' => $this->getId()
+                'Customer' => $actorConnectedId,
+                'Supplier' => $this->getId()
             ));
         }
         if (Tools::isException($spc)) {

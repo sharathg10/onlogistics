@@ -629,8 +629,8 @@ class Command extends _Command {
             if (!(($size = $rtwProduct->getSize()) instanceof RTWSize)) {
                 $size = false;
             }
-            $ref = $rtwProduct->getBaseReference();
             $model = $rtwProduct->getModel();
+            $ref = $model->getStyleNumber() . "\n" . $model->getPressName()->toString();
             if (!isset($ret[$model->getId()])) {
                 $ret[$model->getId()] = array(
                     $ref,

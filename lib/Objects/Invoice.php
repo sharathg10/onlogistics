@@ -329,7 +329,7 @@ class Invoice extends _Invoice {
                 $size = false;
             }
             $model = $rtwProduct->getModel();
-            $ref = $rtwProduct->getBaseReference() . "\n" . $model->getPressName()->toString();
+            $ref = $model->getStyleNumber() . "\n" . $model->getPressName()->toString();
             if (!isset($ret[$model->getId()])) {
                 $sizes[$model->getId()] = array();
                 $sizes[$model->getId()][$size->getName()] = intval($item[2]);

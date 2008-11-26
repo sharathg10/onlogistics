@@ -139,8 +139,6 @@ class Actor extends _Actor {
                 'Customer' => $this->getId(),
                 'Supplier' => $actorConnectedId
             ));
-        if ($actor instanceof Customer || $actor instanceof AeroCustomer) {
-            $spc = $mapper->load(array('Customer' => $this->getId()));
         } else {
             $spc = $mapper->load(array(
                 'Supplier' => $actorConnectedId,

@@ -52,6 +52,9 @@ class GridColumnPaymentId extends AbstractGridColumn {
     function render($object) { // $object est de type Payment
         $CancellationDate = $object->getCancellationDate();
         $Id = $object->getId();
+        if (!$Id) {
+            return _('N/A');
+        }
         if ($CancellationDate == "0000-00-00 00:00:00" || empty($CancellationDate)) {
             return $Id;
         }

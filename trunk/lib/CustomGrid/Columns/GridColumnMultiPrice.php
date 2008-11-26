@@ -45,6 +45,9 @@ class GridColumnMultiPrice extends AbstractGridColumn {
         if (isset($params['Method'])) {
             $this->_method = $params['Method'];
         }
+        if (isset($params['Currency'])) {
+            $this->_currency = $params['Currency'];
+        }
     }
     /**
      * Determine la methode à utiliser: getTotalPriceHT, getTotalPriceTTC ou
@@ -61,15 +64,18 @@ class GridColumnMultiPrice extends AbstractGridColumn {
      * @return string
      **/
     public function render($object) {
+        $cur = 0;
         if ($object instanceof ToHave) {
             $cur = $object->getCurrency();
         } else if ($object instanceof Payment) {
             // on récupère via le premier item de la collection de
             // invoicepayment
             $invPaymentCol = $object->getInvoicePaymentCollection();
-            $invPayment = $invPaymentCol->getItem(0);
-            $inv = $invPayment->getInvoice();
-            $cur = $inv->getCurrency();
+            if (count($invPaymentCol)) {
+                $invPayment = $invPaymentCol->getItem(0);
+                $inv = $invPayment->getInvoice();
+                $cur = $inv->getCurrency();
+            }
         } else if ($object instanceof InvoicePayment || $object instanceof InvoiceItem) {
             $inv = $object->getInvoice();
             $cur = $inv->getCurrency();
@@ -82,7 +88,8 @@ class GridColumnMultiPrice extends AbstractGridColumn {
             // cas non géré
             return _('N/A');
         }
-        $curStr = $cur instanceof Currency?$cur->getSymbol():'&euro;';
+        $curStr = $cur instanceof Currency ? 
+            $cur->getSymbol() : $this->_currency->getSymbol();
         $method = $this->_method;
         return I18N::formatCurrency($curStr, $object->$method());
     }

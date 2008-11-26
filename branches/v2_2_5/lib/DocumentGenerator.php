@@ -910,6 +910,8 @@ class RTWDeliveryOrderGenerator extends DeliveryOrderGenerator
      */
     function _renderContent() {
         //cellule désignation personnalisé dans Command.getDataForBL()
+        $this->pdf->addText(_('Number of ordered products') . ': ' 
+            . $this->command->getNumberOfOrderedProducts());
         $columns = array(
             _('Reference') => 34,
             _('Description') => 103,
@@ -1279,6 +1281,9 @@ class RTWInvoiceGenerator extends InvoiceGenerator
      */
     protected function _renderContent($pdfDoc=false) {
         $pdfDoc = (!$pdfDoc)?$this->pdf:$pdfDoc;
+
+        $pdfDoc->addText(_('Number of ordered products') . ': ' 
+            . $this->command->getNumberOfOrderedProducts());
         //cellule désignation personnalisé dans Invoice.DataForInvoice()
         $columns = array(
             _('Reference')=>34,

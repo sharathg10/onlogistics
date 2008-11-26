@@ -77,11 +77,11 @@ $grid->NewColumn('FieldMapper', _('Edition date'),
 $grid->NewColumn('FieldMapper', _('Reference'), array('Macro' => '%Reference%'));
 $grid->NewColumn('FieldMapperWithTranslation', _('Means of payment'),
     	array('Macro' => '%Modality%',
-              'TranslationMap' => TermsOfPaymentItem::getPaymentModalityConstArray()));
+              'TranslationMap' => array(-1=>_('N/A')) + TermsOfPaymentItem::getPaymentModalityConstArray()));
 $grid->NewColumn('FieldMapper', _('Bank'),
     	array('Macro' => '%ActorBankDetail.BankName|default%'));
 $grid->NewColumn('MultiPrice', _('Total amount incl. VAT'),
-    	array('Method' => 'getTotalPriceTTC'));
+    	array('Method' => 'getTotalPriceTTC', 'Currency' => $Command->getCurrency()));
 $grid->NewColumn('FieldMapper', _('Invoice(s)'),
         array('Macro' => '%InvoiceCollection%', 'Sortable' => false));
 
@@ -93,8 +93,15 @@ if ($grid->isPendingAction()) {
     if (Tools::isException($dispatchResult)) {
         Template::errorDialog($dispatchResult->getMessage(), $phpself);
     }
-}
-else {
+} else {
+    if (($inst = $Command->getInstallment()) > 0) {
+        $Payment = new Payment();
+        $Payment->setReference(_('Instalment'));
+        $Payment->setTotalPriceTTC($inst);
+        $Payment->setModality(-1);
+        $Payment->setActorBankDetail($Command->getInstallmentBank());
+        $PaymentCollection->setItem($Payment);
+    }
   	$result = $grid->render($PaymentCollection);
     Template::page(
 	    sprintf(_('List of payments for order %s'), $Command->getCommandNo()) . '  ',

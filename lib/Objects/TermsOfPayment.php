@@ -39,9 +39,9 @@
 /**
  * TermsOfPayment class
  *
+ * Class containing addon methods.
  */
-class TermsOfPayment extends Object {
-    
+class TermsOfPayment extends _TermsOfPayment {
     // Constructeur {{{
 
     /**
@@ -56,291 +56,31 @@ class TermsOfPayment extends Object {
     }
 
     // }}}
-    // Name i18n_string property + getter/setter {{{
+    // hasPrePayment() {{{
 
     /**
-     * Name foreignkey
-     *
-     * @access private
-     * @var mixed object I18nString or integer
-     */
-    private $_Name = 0;
-
-    /**
-     * TermsOfPayment::getName
+     * Determine if the terms of payment include a pre-payment (before delivery 
+     * or before order).
      *
      * @access public
-     * @param string $locale optional, default is the current locale code
-     * @param boolean $useDefaultLocaleIfEmpty determine if the getter must
-     * return the translation in the DEFAULT_LOCALE if no translation is found
-     * in the current locale.
-     * @return string
+     * @return bool
      */
-    public function getName($locale=false, $defaultLocaleIfEmpty=true) {
-        $locale = $locale !== false ? $locale : I18N::getLocaleCode();
-        if (is_int($this->_Name) && $this->_Name > 0) {
-            $this->_Name = Object::load('I18nString', $this->_Name);
-        }
-        $ret = null;
-        if ($this->_Name instanceof I18nString) {
-            $getter = 'getStringValue_' . $locale;
-            $ret = $this->_Name->$getter();
-            if ($ret == null && $defaultLocaleIfEmpty) {
-                $getter = 'getStringValue_' . LOCALE_DEFAULT;
-                $ret = $this->_Name->$getter();
+    public function hasPrePayment()
+    {
+        $tpiCol = $this->getTermsOfPaymentItemCollection();
+        foreach ($tpiCol as $tpi) {
+            $e = $tpi->getPaymentEvent();
+            if (in_array($e, array(TermsOfPaymentItem::BEFORE_ORDER,
+                                   TermsOfPaymentItem::BEFORE_DELIVERY)) ||
+                $tpi->getPaymentModality() == TermsOfPaymentItem::BACKDATED_CHECK) {
+                return true;
             }
         }
-        return $ret;
-    }
-
-    /**
-     * TermsOfPayment::getNameId
-     *
-     * @access public
-     * @return integer
-     */
-    public function getNameId() {
-        if ($this->_Name instanceof I18nString) {
-            return $this->_Name->getId();
-        }
-        return (int)$this->_Name;
-    }
-
-    /**
-     * TermsOfPayment::setName
-     *
-     * @access public
-     * @param string $value
-     * @param string $locale optional, default is the current locale code
-     * @return void
-     */
-    public function setName($value, $locale=false) {
-        if (is_numeric($value)) {
-            $this->_Name = (int)$value;
-        } else if ($value instanceof I18nString) {
-            $this->_Name = $value;
-        } else {
-            $locale = $locale !== false ? $locale : I18N::getLocaleCode();
-            if (!($this->_Name instanceof I18nString)) {
-                $this->_Name = Object::load('I18nString', $this->_Name);
-                if (!($this->_Name instanceof I18nString)) {
-                    $this->_Name = new I18nString();
-                }
-            }
-            $setter = 'setStringValue_'.$locale;
-            $this->_Name->$setter($value);
-            $this->_Name->save();
-        }
+        return false;
     }
 
     // }}}
-    // TermsOfPaymentItem one to many relation + getter/setter {{{
 
-    /**
-     * TermsOfPaymentItem 1..* relation
-     *
-     * @access private
-     * @var Collection
-     */
-    private $_TermsOfPaymentItemCollection = false;
-
-    /**
-     * TermsOfPayment::getTermsOfPaymentItemCollection
-     *
-     * @access public
-     * @return object Collection
-     */
-    public function getTermsOfPaymentItemCollection($filter = array(),
-        $sortOrder = array(), $fields = array()) {
-        // si un paramètre est passé on force le rechargement de la collection
-        // on ne met en cache mémoire que les collections brutes
-        if (!empty($filter) || !empty($sortOrder) || !empty($fields)) {
-            $mapper = Mapper::singleton('TermsOfPayment');
-            return $mapper->getOneToMany($this->getId(),
-                'TermsOfPaymentItem', $filter, $sortOrder, $fields);
-        }
-        // si la collection n'est pas en mémoire on la charge
-        if (false == $this->_TermsOfPaymentItemCollection) {
-            $mapper = Mapper::singleton('TermsOfPayment');
-            $this->_TermsOfPaymentItemCollection = $mapper->getOneToMany($this->getId(),
-                'TermsOfPaymentItem');
-        }
-        return $this->_TermsOfPaymentItemCollection;
-    }
-
-    /**
-     * TermsOfPayment::getTermsOfPaymentItemCollectionIds
-     *
-     * @access public
-     * @param $filter FilterComponent or array
-     * @return array
-     */
-    public function getTermsOfPaymentItemCollectionIds($filter = array()) {
-        $col = $this->getTermsOfPaymentItemCollection($filter, array(), array('Id'));
-        return $col instanceof Collection?$col->getItemIds():array();
-    }
-
-    /**
-     * TermsOfPayment::setTermsOfPaymentItemCollection
-     *
-     * @access public
-     * @param object Collection $value
-     * @return void
-     */
-    public function setTermsOfPaymentItemCollection($value) {
-        $this->_TermsOfPaymentItemCollection = $value;
-    }
-
-    // }}}
-    // getTableName() {{{
-
-    /**
-     * Retourne le nom de la table sql correspondante
-     *
-     * @static
-     * @access public
-     * @return string
-     */
-    public static function getTableName() {
-        return 'TermsOfPayment';
-    }
-
-    // }}}
-    // getObjectLabel() {{{
-
-    /**
-     * Retourne le "label" de la classe.
-     *
-     * @static
-     * @access public
-     * @return string
-     */
-    public static function getObjectLabel() {
-        return _('Terms of payment');
-    }
-
-    // }}}
-    // getProperties() {{{
-
-    /**
-     * Retourne le tableau des propriétés.
-     * Voir Object pour documentation.
-     *
-     * @static
-     * @access public
-     * @return array
-     * @see Object.php
-     */
-    public static function getProperties() {
-        $return = array(
-            'Name' => Object::TYPE_I18N_STRING);
-        return $return;
-    }
-
-    // }}}
-    // getLinks() {{{
-
-    /**
-     * Retourne le tableau des entités liées.
-     * Voir Object pour documentation.
-     *
-     * @static
-     * @access public
-     * @return array
-     * @see Object.php
-     */
-    public static function getLinks() {
-        $return = array(
-            'SupplierCustomer'=>array(
-                'linkClass'     => 'SupplierCustomer',
-                'field'         => 'TermsOfPayment',
-                'ondelete'      => 'nullify',
-                'multiplicity'  => 'onetomany'
-            ),
-            'TermsOfPaymentItem'=>array(
-                'linkClass'     => 'TermsOfPaymentItem',
-                'field'         => 'TermsOfPayment',
-                'ondelete'      => 'cascade',
-                'multiplicity'  => 'onetomany'
-            ));
-        return $return;
-    }
-
-    // }}}
-    // getUniqueProperties() {{{
-
-    /**
-     * Retourne le tableau des propriétés qui ne peuvent prendre la même valeur
-     * pour 2 occurrences.
-     *
-     * @static
-     * @access public
-     * @return array
-     */
-    public static function getUniqueProperties() {
-        $return = array();
-        return $return;
-    }
-
-    // }}}
-    // getEmptyForDeleteProperties() {{{
-
-    /**
-     * Retourne le tableau des propriétés doivent être "vides" (0 ou '') pour
-     * qu'une occurrence puisse être supprimée en base de données.
-     *
-     * @static
-     * @access public
-     * @return array
-     */
-    public static function getEmptyForDeleteProperties() {
-        $return = array();
-        return $return;
-    }
-
-    // }}}
-    // getFeatures() {{{
-
-    /**
-     * Retourne le tableau des "fonctionalités" pour l'objet en cours.
-     * Voir Object pour documentation.
-     *
-     * @static
-     * @access public
-     * @return array
-     * @see Object.php
-     */
-    public static function getFeatures() {
-        return array('add', 'edit', 'del', 'grid', 'searchform');
-    }
-
-    // }}}
-    // getMapping() {{{
-
-    /**
-     * Retourne le mapping nécessaires aux composants génériques.
-     * Voir Object pour documentation.
-     *
-     * @static
-     * @access public
-     * @return array
-     * @see Object.php
-     */
-    public static function getMapping() {
-        $return = array(
-            'Name'=>array(
-                'label'        => _('Designation'),
-                'shortlabel'   => _('Designation'),
-                'usedby'       => array('grid', 'searchform', 'addedit'),
-                'required'     => false,
-                'inplace_edit' => false,
-                'add_button'   => false,
-                'section'      => ''
-            ));
-        return $return;
-    }
-
-    // }}}
 }
 
 ?>

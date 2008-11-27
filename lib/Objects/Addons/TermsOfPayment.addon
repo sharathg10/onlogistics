@@ -1,0 +1,24 @@
+    // hasPrePayment() {{{
+
+    /**
+     * Determine if the terms of payment include a pre-payment (before delivery 
+     * or before order).
+     *
+     * @access public
+     * @return bool
+     */
+    public function hasPrePayment()
+    {
+        $tpiCol = $this->getTermsOfPaymentItemCollection();
+        foreach ($tpiCol as $tpi) {
+            $e = $tpi->getPaymentEvent();
+            if (in_array($e, array(TermsOfPaymentItem::BEFORE_ORDER,
+                TermsOfPaymentItem::BEFORE_DELIVERY)) ||
+                $tpi->getPaymentModality() == TermsOfPaymentItem::BACKDATED_CHECK) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // }}}

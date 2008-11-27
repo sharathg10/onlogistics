@@ -2694,6 +2694,8 @@
         </property>
         <property type="const" name="PaymentEvent" default="0" required="1"
             usedby="grid,searchform,addedit" label="Event">
+            <const name="BEFORE_ORDER" label="Before order" value="3" />
+            <const name="BEFORE_DELIVERY" label="Before delivery" value="4" />
             <const name="ORDER" label="Order" value="5" />
             <const name="DELIVERY" label="Delivery" value="6" />
         </property>
@@ -2706,6 +2708,7 @@
             <const name="TRANSFER" label="Transfer" value="4"/>
             <const name="ASSETS" label="Assets" value="5"/>
             <const name="PROMISSORY_NOTE" label="Promissory note" value="6"/>
+            <const name="BACKDATED_CHECK" label="Backdated check" value="7"/>
         </property>
         <property type="foreignkey" name="Supplier" class="Supplier" />
         <property type="foreignkey" name="TermsOfPayment"

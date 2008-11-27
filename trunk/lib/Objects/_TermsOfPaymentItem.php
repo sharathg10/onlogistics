@@ -46,10 +46,10 @@ class _TermsOfPaymentItem extends Object {
     const NET = 1;
     const END_OF_MONTH = 2;
     const END_OF_NEXT_MONTH = 3;
-    const BEFORE_ORDER = 1;
-    const BEFORE_DELIVERY = 2;
-    const ORDER = 3;
-    const DELIVERY = 4;
+    const BEFORE_ORDER = 3;
+    const BEFORE_DELIVERY = 4;
+    const ORDER = 5;
+    const DELIVERY = 6;
     const CHECK = 0;
     const CASH = 1;
     const CREDIT_CARD = 2;

@@ -545,6 +545,7 @@ class Actor extends _Actor {
     }
 
     // }}}
+
 }
 
 ?>

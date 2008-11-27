@@ -2649,6 +2649,7 @@
         <property type="bool" name="HasTvaSurtax" default="0" />
         <property type="bool" name="HasFodecTax" default="0" />
         <property type="bool" name="HasTaxStamp" default="0" />
+        <property type="foreignkey" name="Factor" class="Actor" />
         <property type="manytomany" name="DocumentModel" class="DocumentModel"
             field="FromSupplierCustomer" linktable="spcDocumentModel"
             linkfield="ToDocumentModel"/>

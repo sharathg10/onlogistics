@@ -668,6 +668,60 @@ class _SupplierCustomer extends Object {
     }
 
     // }}}
+    // Factor foreignkey property + getter/setter {{{
+
+    /**
+     * Factor foreignkey
+     *
+     * @access private
+     * @var mixed object Actor or integer
+     */
+    private $_Factor = false;
+
+    /**
+     * _SupplierCustomer::getFactor
+     *
+     * @access public
+     * @return object Actor
+     */
+    public function getFactor() {
+        if (is_int($this->_Factor) && $this->_Factor > 0) {
+            $mapper = Mapper::singleton('Actor');
+            $this->_Factor = $mapper->load(
+                array('Id'=>$this->_Factor));
+        }
+        return $this->_Factor;
+    }
+
+    /**
+     * _SupplierCustomer::getFactorId
+     *
+     * @access public
+     * @return integer
+     */
+    public function getFactorId() {
+        if ($this->_Factor instanceof Actor) {
+            return $this->_Factor->getId();
+        }
+        return (int)$this->_Factor;
+    }
+
+    /**
+     * _SupplierCustomer::setFactor
+     *
+     * @access public
+     * @param object Actor $value
+     * @return void
+     */
+    public function setFactor($value) {
+        if (is_numeric($value)) {
+            $this->_Factor = (int)$value;
+        } else {
+            $this->_Factor = $value;
+        }
+    }
+
+    // }}}
     // DocumentModel one to many relation + getter/setter {{{
 
     /**
@@ -927,7 +981,8 @@ class _SupplierCustomer extends Object {
             'HasTVA' => Object::TYPE_BOOL,
             'HasTvaSurtax' => Object::TYPE_BOOL,
             'HasFodecTax' => Object::TYPE_BOOL,
-            'HasTaxStamp' => Object::TYPE_BOOL);
+            'HasTaxStamp' => Object::TYPE_BOOL,
+            'Factor' => 'Actor');
         return $return;
     }
 

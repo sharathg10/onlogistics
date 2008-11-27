@@ -35,6 +35,8 @@ BEGIN;
 TRUNCATE TABLE IdHashTable;
 ####################################
 
+ALTER TABLE SupplierCustomer ADD _Factor INT(11) NOT NULL DEFAULT 0;
+
 ####################################
 # Ne pas enlever
 COMMIT;

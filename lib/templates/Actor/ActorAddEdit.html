@@ -497,6 +497,16 @@
         id="SupplierCustomer_UpateIncur" style="width:100%" value="{if $SupplierCustomer != 0}{$SupplierCustomer->getUpdateIncur()}{/if}" readonly="readonly" />
 	  </td>
     </tr>
+    <tr>
+      <td>{t}Factor{/t}:</td>
+      <td>
+	  	<select name="SupplierCustomer_Factor_ID" id="SupplierCustomer_Factor_ID" style="width:100%">
+	  		{$FactorList}
+        </select>
+	  </td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+    </tr>
 	</tbody>
 </table>
 <table id="ActorDocumentAppendix" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">

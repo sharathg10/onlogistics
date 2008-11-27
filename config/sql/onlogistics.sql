@@ -383,7 +383,7 @@ CREATE TABLE Actor (
   _Siret VARCHAR(255) DEFAULT NULL,
   _IATA VARCHAR(255) DEFAULT NULL,
   _Logo TEXT DEFAULT NULL,
-  _Slogan VARCHAR(255) DEFAULT NULL,
+  _Slogan INT(11) NOT NULL DEFAULT NULL,
   _TVA VARCHAR(255) DEFAULT NULL,
   _RCS VARCHAR(255) DEFAULT NULL,
   _Role VARCHAR(255) DEFAULT NULL,
@@ -2087,7 +2087,7 @@ DROP TABLE IF EXISTS MovementType;
 CREATE TABLE MovementType (
   _Id int(11) unsigned NOT NULL default 0,
   _DBId int(11) default 0,
-  _Name INT(11) NOT NULL DEFAULT NULL,
+  _Name VARCHAR(255) DEFAULT NULL,
   _Foreseeable INT(1) NOT NULL DEFAULT 0,
   _EntrieExit INT(3) NOT NULL DEFAULT 0,
   _ConstName VARCHAR(255) DEFAULT NULL,
@@ -2810,12 +2810,14 @@ CREATE TABLE SupplierCustomer (
   _HasTvaSurtax INT(1) DEFAULT 0,
   _HasFodecTax INT(1) DEFAULT 0,
   _HasTaxStamp INT(1) DEFAULT 0,
+  _Factor INT(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (_Id)
 ) TYPE=InnoDB CHARSET=latin1;
 
 CREATE INDEX _Supplier ON SupplierCustomer (_Supplier);
 CREATE INDEX _Customer ON SupplierCustomer (_Customer);
 CREATE INDEX _TermsOfPayment ON SupplierCustomer (_TermsOfPayment);
+CREATE INDEX _Factor ON SupplierCustomer (_Factor);
 
 --
 -- Table structure for Task

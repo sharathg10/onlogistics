@@ -46,8 +46,10 @@ class _TermsOfPaymentItem extends Object {
     const NET = 1;
     const END_OF_MONTH = 2;
     const END_OF_NEXT_MONTH = 3;
-    const ORDER = 5;
-    const DELIVERY = 6;
+    const BEFORE_ORDER = 1;
+    const BEFORE_DELIVERY = 2;
+    const ORDER = 3;
+    const DELIVERY = 4;
     const CHECK = 0;
     const CASH = 1;
     const CREDIT_CARD = 2;
@@ -55,6 +57,7 @@ class _TermsOfPaymentItem extends Object {
     const TRANSFER = 4;
     const ASSETS = 5;
     const PROMISSORY_NOTE = 6;
+    const BACKDATED_CHECK = 7;
 
     // }}}
     // Constructeur {{{
@@ -239,6 +242,8 @@ class _TermsOfPaymentItem extends Object {
      */
     public static function getPaymentEventConstArray($keys = false) {
         $array = array(
+            _TermsOfPaymentItem::BEFORE_ORDER => _("Before order"), 
+            _TermsOfPaymentItem::BEFORE_DELIVERY => _("Before delivery"), 
             _TermsOfPaymentItem::ORDER => _("Order"), 
             _TermsOfPaymentItem::DELIVERY => _("Delivery")
         );
@@ -299,7 +304,8 @@ class _TermsOfPaymentItem extends Object {
             _TermsOfPaymentItem::DRAFT => _("Draft"), 
             _TermsOfPaymentItem::TRANSFER => _("Transfer"), 
             _TermsOfPaymentItem::ASSETS => _("Assets"), 
-            _TermsOfPaymentItem::PROMISSORY_NOTE => _("Promissory note")
+            _TermsOfPaymentItem::PROMISSORY_NOTE => _("Promissory note"), 
+            _TermsOfPaymentItem::BACKDATED_CHECK => _("Backdated check")
         );
         asort($array);
         return $keys?array_keys($array):$array;

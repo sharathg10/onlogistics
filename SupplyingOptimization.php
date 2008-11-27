@@ -63,7 +63,8 @@ if (isset($_REQUEST['formSubmitted']) && $_REQUEST['formSubmitted'] == 1) {
         PreferencesByUser::set('WithExtrapolation', isset($_POST['WithExtrapolation']), $userId);
         PreferencesByUser::save();
     }
-    $supplierId = isset($_POST['Supplier'])?$_POST['Supplier']:$_SESSION['supplier'];
+    $supplierId = isset($_POST['Supplier'])?$_POST['Supplier'] : 
+        (isset($_SESSION['supplier']) ? $_SESSION['supplier'] : 0);
     $params = array('supplierId' => $supplierId);
     $modelIds = isset($_POST['Model']) ? $_POST['Model'] : (isset($_SESSION['Model']) ? $_SESSION['Model'] : array());
     if ($rtwContext) {

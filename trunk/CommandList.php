@@ -268,6 +268,8 @@ if (true === $form->displayGrid()) {
 
     $grid->NewColumn('CommandProduct', _('Order'),
             array('Sortable' => false));
+    $grid->NewColumn('FieldMapper', _('Date'),
+            array('Macro' => '%CommandDate|formatdate%'));
     $grid->NewColumn('FieldMapperWithTranslation', _('State'),
             array('Macro' => '%State%','TranslationMap' => $ShortCommandStateArray));
     $grid->NewColumn('MultiPrice', _('Amount incl. VAT'),

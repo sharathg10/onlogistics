@@ -295,6 +295,7 @@ class RTWModelGrid extends GenericGrid
      * @return array
      */
     protected function additionalGridActions() {
+        $this->grid->NewColumn('RTWModelDeletable', _('Can be deleted'), array('Sortable'=>false));
         // action copier
         $this->grid->newAction('Redirect', array(
             'Caption' => _('Copy'),

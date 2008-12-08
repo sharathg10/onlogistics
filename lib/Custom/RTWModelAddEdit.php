@@ -144,6 +144,14 @@ class RTWModelAddEdit extends GenericAddEdit {
                 }
             }
         }
+        $col = Object::loadCollection('RTWModel', array(
+            'StyleNumber' => trim($_POST['RTWModel_StyleNumber'])
+        ));
+        $count = $this->action == GenericController::FEATURE_EDIT ? 2 : 1;
+        if (count($col) == $count) {
+            Template::errorDialog(_('A worksheet with this style number already exists, please choose another one'));
+            exit(1);
+        }
     }
 
     // }}}

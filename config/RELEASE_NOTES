@@ -37,6 +37,13 @@ TRUNCATE TABLE IdHashTable;
 
 ALTER TABLE SupplierCustomer ADD _Factor INT(11) NOT NULL DEFAULT 0;
 
+ALTER TABLE RTWModel ADD _Material3 INT(11) NOT NULL DEFAULT 0 AFTER _Material2Quantity;
+ALTER TABLE RTWModel ADD _Material3Quantity DECIMAL(10,3) DEFAULT NULL AFTER _Material3;
+ALTER TABLE RTWModel ADD _Accessory3 INT(11) NOT NULL DEFAULT 0 AFTER _Accessory2Quantity;
+ALTER TABLE RTWModel ADD _Accessory3Quantity DECIMAL(10,3) DEFAULT NULL AFTER _Accessory3;
+CREATE INDEX _Material3 ON RTWModel (_Material3);
+CREATE INDEX _Accessory3 ON RTWModel (_Accessory3);
+
 ####################################
 # Ne pas enlever
 COMMIT;

@@ -165,6 +165,15 @@ class RTWModelForCatalogGrid extends RTWModelGrid
                 'add_button'   => false,
                 'section'      => '',
             ),
+            'Material3' => array(
+                'label'        => _('Material 3'),
+                'shortlabel'   => _('Material 3'),
+                'usedby'       => array('searchform'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => '',
+            ),
             'Accessory1' => array(
                 'label'        => _('Accessory 1'),
                 'shortlabel'   => _('Accessory 1'),
@@ -177,6 +186,15 @@ class RTWModelForCatalogGrid extends RTWModelGrid
             'Accessory2' => array(
                 'label'        => _('Accessory 2'),
                 'shortlabel'   => _('Accessory 2'),
+                'usedby'       => array('searchform'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => '',
+            ),
+            'Accessory3' => array(
+                'label'        => _('Accessory 3'),
+                'shortlabel'   => _('Accessory 3'),
                 'usedby'       => array('searchform'),
                 'required'     => false,
                 'inplace_edit' => false,
@@ -339,6 +357,18 @@ class RTWModelForCatalogGrid extends RTWModelGrid
     }
 
     // }}}
+    // RTWModelForCatalogGrid::getToStringAttributeForMaterial3() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getToStringAttributeForMaterial3() {
+        return 'CommercialNameAndColor';
+    }
+
+    // }}}
     // RTWModelForCatalogGrid::getToStringAttributeForAccessory1() {{{
 
     /**
@@ -359,6 +389,18 @@ class RTWModelForCatalogGrid extends RTWModelGrid
      * @return void
      */
     protected function getToStringAttributeForAccessory2() {
+        return 'CommercialNameAndColor';
+    }
+
+    // }}}
+    // RTWModelForCatalogGrid::getToStringAttributeForAccessory3() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getToStringAttributeForAccessory3() {
         return 'CommercialNameAndColor';
     }
 

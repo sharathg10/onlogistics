@@ -192,7 +192,7 @@ if ($product->getId() == 0) {
 
 // Affichage des données du produit
 $allProperties = $product->getAllClassProperties();
-$excludes = array('Shape', 'PressName', 'Material1', 'Material2', 'Accessory1', 'Accessory2');
+$excludes = array('Shape', 'PressName', 'Material1', 'Material2', 'Material3', 'Accessory1', 'Accessory2', 'Accessory3');
 foreach($allProperties as $name => $class) {
     if (in_array($class, $excludes)) {
         continue;
@@ -258,7 +258,8 @@ if ($ptype instanceof ProductType) {
     $dynproperties = $ptype->getPropertyArray();
     $properties = array();
     $excludes = array('Supplier', 'Price', 'SupplierReference', 'BuyUnitType',
-        'Shape', 'PressName', 'Material1', 'Material2', 'Accessory1', 'Accessory2');
+        'Shape', 'PressName', 'Material1', 'Material2', 'Material3',
+        'Accessory1', 'Accessory2', 'Accessory3');
 
     foreach($dynproperties as $name=>$property){
         if (!$property->isDynamic() || in_array($name, $excludes)) {

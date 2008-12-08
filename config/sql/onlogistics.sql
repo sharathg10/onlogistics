@@ -383,7 +383,7 @@ CREATE TABLE Actor (
   _Siret VARCHAR(255) DEFAULT NULL,
   _IATA VARCHAR(255) DEFAULT NULL,
   _Logo TEXT DEFAULT NULL,
-  _Slogan INT(11) NOT NULL DEFAULT NULL,
+  _Slogan VARCHAR(255) DEFAULT NULL,
   _TVA VARCHAR(255) DEFAULT NULL,
   _RCS VARCHAR(255) DEFAULT NULL,
   _Role VARCHAR(255) DEFAULT NULL,
@@ -3091,10 +3091,14 @@ CREATE TABLE RTWModel (
   _Material1Quantity DECIMAL(10,3) DEFAULT NULL,
   _Material2 INT(11) NOT NULL DEFAULT 0,
   _Material2Quantity DECIMAL(10,3) DEFAULT NULL,
+  _Material3 INT(11) NOT NULL DEFAULT 0,
+  _Material3Quantity DECIMAL(10,3) DEFAULT NULL,
   _Accessory1 INT(11) NOT NULL DEFAULT 0,
   _Accessory1Quantity DECIMAL(10,3) DEFAULT NULL,
   _Accessory2 INT(11) NOT NULL DEFAULT 0,
   _Accessory2Quantity DECIMAL(10,3) DEFAULT NULL,
+  _Accessory3 INT(11) NOT NULL DEFAULT 0,
+  _Accessory3Quantity DECIMAL(10,3) DEFAULT NULL,
   _Lining INT(11) NOT NULL DEFAULT 0,
   _LiningQuantity DECIMAL(10,3) DEFAULT NULL,
   _Insole INT(11) NOT NULL DEFAULT 0,
@@ -3133,8 +3137,10 @@ CREATE INDEX _Box ON RTWModel (_Box);
 CREATE INDEX _HandBag ON RTWModel (_HandBag);
 CREATE INDEX _Material1 ON RTWModel (_Material1);
 CREATE INDEX _Material2 ON RTWModel (_Material2);
+CREATE INDEX _Material3 ON RTWModel (_Material3);
 CREATE INDEX _Accessory1 ON RTWModel (_Accessory1);
 CREATE INDEX _Accessory2 ON RTWModel (_Accessory2);
+CREATE INDEX _Accessory3 ON RTWModel (_Accessory3);
 CREATE INDEX _Lining ON RTWModel (_Lining);
 CREATE INDEX _Insole ON RTWModel (_Insole);
 CREATE INDEX _UnderSole ON RTWModel (_UnderSole);

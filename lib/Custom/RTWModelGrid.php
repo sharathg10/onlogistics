@@ -94,6 +94,18 @@ class RTWModelGrid extends GenericGrid
     }
 
     // }}}
+    // RTWModelGrid::getFilterForMaterial3() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForMaterial3() {
+        return $this->getFilterForMaterial1();
+    }
+
+    // }}}
     // RTWModelGrid::getFilterForAccessory1() {{{
 
     /**
@@ -114,6 +126,18 @@ class RTWModelGrid extends GenericGrid
      * @return void
      */
     protected function getFilterForAccessory2() {
+        return $this->getFilterForAccessory1();
+    }
+
+    // }}}
+    // RTWModelGrid::getFilterForAccessory3() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForAccessory3() {
         return $this->getFilterForAccessory1();
     }
 

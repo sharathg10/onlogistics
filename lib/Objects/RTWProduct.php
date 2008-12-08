@@ -3,6 +3,8 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
+ * IMPORTANT: This is a generated file, please do not edit.
+ *
  * This file is part of Onlogistics, a web based ERP and supply chain 
  * management application. 
  *
@@ -34,6 +36,11 @@
  * @filesource
  */
 
+/**
+ * RTWProduct class
+ *
+ * Class containing addon methods.
+ */
 class RTWProduct extends _RTWProduct {
     // Constructeur {{{
 
@@ -65,7 +72,7 @@ class RTWProduct extends _RTWProduct {
         if (!($model instanceof RTWModel)) {
             return $ret;
         }
-        $attrs = array('Material1', 'Material2', 'Accessory1', 'Accessory2');
+        $attrs = array('Material1', 'Material2', 'Material3', 'Accessory1', 'Accessory2', 'Accessory3');
         foreach ($attrs as $attr) {
             $getter = 'get' . $attr;
             if (($obj = $model->$getter()) instanceof RTWMaterial) {

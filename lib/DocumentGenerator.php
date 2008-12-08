@@ -4339,13 +4339,15 @@ class LookbookGenerator extends WorksheetGenerator
         if (count($products) > 0) {
             $product = $products->getItem(0);
             $this->pdf->tableHeader(array(
-                _('Style number')      => 24,
-                _('Material 1')        => 31,
-                _('Material 2')        => 31,
-                _('Accessory 1')       => 28,
-                _('Accessory 2')       => 28,
-                _('Price')             => 24,
-                _('Recommended price') => 24
+                _('Style number')      => 18,
+                _('Material 1')        => 24,
+                _('Material 2')        => 24,
+                _('Material 3')        => 24,
+                _('Accessory 1')       => 24,
+                _('Accessory 2')       => 24,
+                _('Accessory 3')       => 24,
+                _('Price')             => 14,
+                _('Recommended price') => 14
             ), 0);
             $pbcCol = $product->getPriceByCurrencyCollection(array(
                 'PricingZone' => $this->zoneId
@@ -4368,17 +4370,23 @@ class LookbookGenerator extends WorksheetGenerator
                 $m->getCommercialNameAndColor() : '';
             $mat2 = ($m = $this->model->getMaterial2()) instanceof RTWMaterial ?
                 $m->getCommercialNameAndColor() : '';
+            $mat3 = ($m = $this->model->getMaterial3()) instanceof RTWMaterial ?
+                $m->getCommercialNameAndColor() : '';
             $acc1 = ($m = $this->model->getAccessory1()) instanceof RTWMaterial ?
                 $m->getCommercialNameAndColor() : '';
             $acc2 = ($m = $this->model->getAccessory2()) instanceof RTWMaterial ?
+                $m->getCommercialNameAndColor() : '';
+            $acc3 = ($m = $this->model->getAccessory3()) instanceof RTWMaterial ?
                 $m->getCommercialNameAndColor() : '';
 
             $this->pdf->tableBody(array(0 => array(
                 $this->model->getStyleNumber(),
                 $mat1,
                 $mat2,
+                $mat3,
                 $acc1,
                 $acc2,
+                $acc3,
                 $price,
                 $rprice
             )));

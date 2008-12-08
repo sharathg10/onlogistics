@@ -343,71 +343,83 @@ class _RTWMaterial extends Product {
             ),
             'RTWModel_6'=>array(
                 'linkClass'     => 'RTWModel',
-                'field'         => 'Accessory1',
+                'field'         => 'Material3',
                 'ondelete'      => 'nullify',
                 'multiplicity'  => 'onetomany'
             ),
             'RTWModel_7'=>array(
                 'linkClass'     => 'RTWModel',
-                'field'         => 'Accessory2',
+                'field'         => 'Accessory1',
                 'ondelete'      => 'nullify',
                 'multiplicity'  => 'onetomany'
             ),
             'RTWModel_8'=>array(
                 'linkClass'     => 'RTWModel',
-                'field'         => 'Lining',
+                'field'         => 'Accessory2',
                 'ondelete'      => 'nullify',
                 'multiplicity'  => 'onetomany'
             ),
             'RTWModel_9'=>array(
                 'linkClass'     => 'RTWModel',
-                'field'         => 'Insole',
+                'field'         => 'Accessory3',
                 'ondelete'      => 'nullify',
                 'multiplicity'  => 'onetomany'
             ),
             'RTWModel_10'=>array(
                 'linkClass'     => 'RTWModel',
-                'field'         => 'UnderSole',
+                'field'         => 'Lining',
                 'ondelete'      => 'nullify',
                 'multiplicity'  => 'onetomany'
             ),
             'RTWModel_11'=>array(
                 'linkClass'     => 'RTWModel',
-                'field'         => 'MediaPlanta',
+                'field'         => 'Insole',
                 'ondelete'      => 'nullify',
                 'multiplicity'  => 'onetomany'
             ),
             'RTWModel_12'=>array(
                 'linkClass'     => 'RTWModel',
-                'field'         => 'Lagrima',
+                'field'         => 'UnderSole',
                 'ondelete'      => 'nullify',
                 'multiplicity'  => 'onetomany'
             ),
             'RTWModel_13'=>array(
                 'linkClass'     => 'RTWModel',
-                'field'         => 'HeelCovering',
+                'field'         => 'MediaPlanta',
                 'ondelete'      => 'nullify',
                 'multiplicity'  => 'onetomany'
             ),
             'RTWModel_14'=>array(
                 'linkClass'     => 'RTWModel',
-                'field'         => 'Selvedge',
+                'field'         => 'Lagrima',
                 'ondelete'      => 'nullify',
                 'multiplicity'  => 'onetomany'
             ),
             'RTWModel_15'=>array(
                 'linkClass'     => 'RTWModel',
-                'field'         => 'Thread1',
+                'field'         => 'HeelCovering',
                 'ondelete'      => 'nullify',
                 'multiplicity'  => 'onetomany'
             ),
             'RTWModel_16'=>array(
                 'linkClass'     => 'RTWModel',
-                'field'         => 'Thread2',
+                'field'         => 'Selvedge',
                 'ondelete'      => 'nullify',
                 'multiplicity'  => 'onetomany'
             ),
             'RTWModel_17'=>array(
+                'linkClass'     => 'RTWModel',
+                'field'         => 'Thread1',
+                'ondelete'      => 'nullify',
+                'multiplicity'  => 'onetomany'
+            ),
+            'RTWModel_18'=>array(
+                'linkClass'     => 'RTWModel',
+                'field'         => 'Thread2',
+                'ondelete'      => 'nullify',
+                'multiplicity'  => 'onetomany'
+            ),
+            'RTWModel_19'=>array(
                 'linkClass'     => 'RTWModel',
                 'field'         => 'Bamboo',
                 'ondelete'      => 'nullify',

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Onlogistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-27 18:04+0100\n"
+"POT-Creation-Date: 2008-12-08 14:16+0100\n"
 "PO-Revision-Date: 2008-10-02 16:43+0100\n"
 "Last-Translator: David JL <david@ateor.com>\n"
 "Language-Team: Ateor dev team <dev@ateor.com>\n"
@@ -206,15 +206,15 @@ msgstr "Ubicación"
 #: ../lib/DocumentGenerator.php:2519 ../lib/DocumentGenerator.php:3290
 #: ../lib/DocumentGenerator.php:3308 ../lib/DocumentGenerator.php:3316
 #: ../lib/DocumentGenerator.php:3824 ../ProductCommandSupplier.php:215
-#: ../ProductByLocationList.php:146 ../ComponentAddEdit.php:209
-#: ../LocationConcreteProductList.php:260 ../ChainCommandList.php:190
-#: ../SupplierCatalog.php:324 ../StockProductRealandVirtualList.php:103
-#: ../AssemblyDetail.php:115 ../ProductCommand.php:232
-#: ../BoardByProduct.php:126 ../CommandList.php:287
+#: ../CommandList.php:289 ../ProductByLocationList.php:146
+#: ../ComponentAddEdit.php:209 ../LocationConcreteProductList.php:260
+#: ../ChainCommandList.php:190 ../SupplierCatalog.php:356
+#: ../StockProductRealandVirtualList.php:103 ../AssemblyDetail.php:115
+#: ../ProductCommand.php:232 ../BoardByProduct.php:126
 #: ../ComponentConcreteProduct.php:125 ../AssemblyDegradedModeDetail.php:98
 #: ../DetailedLocationByProductList.php:154
 #: ../ConcreteComponentAddEdit.php:160 ../AssemblyEdit.php:119
-#: ../CustomerCatalog.php:457 ../LocationByProductList.php:147 void:1
+#: ../CustomerCatalog.php:491 ../LocationByProductList.php:147 void:1
 msgid "Quantity"
 msgstr "Cantidad"
 
@@ -901,7 +901,7 @@ msgid "Resource type"
 msgstr "Tipo de recurso"
 
 #: ../lib/Custom/RessourceGroupGrid.php:96 ../lib/Custom/FlowTypeGrid.php:49
-#: ../lib/Custom/ChainGrid.php:94 ../lib/Custom/RTWModelGrid.php:300
+#: ../lib/Custom/ChainGrid.php:94 ../lib/Custom/RTWModelGrid.php:325
 #: ../NomenclatureList.php:88
 msgid "Copy"
 msgstr "Copia"
@@ -918,7 +918,7 @@ msgstr "producto"
 #: ../lib/Custom/PrestationCostAddEdit.php:341
 #: ../lib/Custom/PrestationCostGrid.php:54 ../lib/Objects/Alert.const.php:362
 #: ../lib/Objects/ConcreteProductPrestationCost.php:273
-#: ../lib/Objects/ConcreteProductPrestationCost.php:274 ../ProductList.php:282
+#: ../lib/Objects/ConcreteProductPrestationCost.php:274 ../ProductList.php:314
 #: ../AssemblyDetail.php:114 ../NomenclatureConcreteProductList.php:47
 #: ../NomenclatureConcreteProductList.php:74
 #: ../AssemblyDegradedModeDetail.php:96 ../ConcreteProductList.php:101
@@ -982,14 +982,13 @@ msgstr "NS / Lote disponible"
 msgid "Manage alerts"
 msgstr "Gestionar alertas"
 
-#: ../lib/Custom/AccountingTypeGrid.php:46 ../RTWCatalog.php:96 void:1
+#: ../lib/Custom/AccountingTypeGrid.php:46 void:1
 msgid "Select a model"
 msgstr "Seleccionar un modelo"
 
 #: ../lib/Custom/AccountingTypeGrid.php:48
 #: ../lib/CustomGrid/Actions/GridActionActivatedMovementListExport.php:62
 #: ../FlowList.php:50 ../FlowList.php:91 ../SupplyingOptimization.php:167
-#: ../RTWCatalog.php:97
 msgid "Model"
 msgstr "Modelo"
 
@@ -1125,17 +1124,17 @@ msgstr "Las imágenes deben estar en el formato \"png\" "
 msgid "Images must not exceed 1 megaoctet"
 msgstr "Las imágenes no deben superar 1 megaocteto"
 
-#: ../lib/Custom/RTWModelAddEdit.php:392 ../lib/Objects/_RTWModel.php:2894
-#: ../lib/Objects/_RTWModel.php:2895
+#: ../lib/Custom/RTWModelAddEdit.php:416 ../lib/Objects/_RTWModel.php:3110
+#: ../lib/Objects/_RTWModel.php:3111
 msgid "Black and white image"
 msgstr "Imagen en negro y blanco"
 
-#: ../lib/Custom/RTWModelAddEdit.php:397 ../lib/Custom/RTWModelAddEdit.php:417
+#: ../lib/Custom/RTWModelAddEdit.php:421 ../lib/Custom/RTWModelAddEdit.php:441
 msgid "Show/hide current image"
 msgstr "Mostrar/ocultar imagen actual"
 
-#: ../lib/Custom/RTWModelAddEdit.php:412 ../lib/Objects/_RTWModel.php:2903
-#: ../lib/Objects/_RTWModel.php:2904
+#: ../lib/Custom/RTWModelAddEdit.php:436 ../lib/Objects/_RTWModel.php:3119
+#: ../lib/Objects/_RTWModel.php:3120
 msgid "Color image"
 msgstr "Imagen en colores"
 
@@ -1146,7 +1145,7 @@ msgstr "Imagen en colores"
 #: ../lib/Custom/ActivatedChainTaskGrid.php:139
 #: ../lib/Custom/RTWModelForCatalogGrid.php:124
 #: ../lib/Custom/RTWModelForCatalogGrid.php:125
-#: ../lib/Custom/RTWModelForCatalogGrid.php:248
+#: ../lib/Custom/RTWModelForCatalogGrid.php:266
 #: ../lib/Objects/_ActorProduct.php:508 ../lib/Objects/_ActorProduct.php:509
 #: ../lib/Objects/_PrestationCustomer.php:320
 #: ../lib/Objects/_PrestationCustomer.php:321
@@ -1163,15 +1162,15 @@ msgstr "Imagen en colores"
 #: ../ActionList.php:105 ../ChainCommandList.php:90
 #: ../ChainCommandList.php:185 ../ActivatedChainTaskList.php:110
 #: ../ActivatedChainTaskList.php:235 ../EstimateList.php:77
-#: ../EstimateList.php:122 ../menu.inc.php:892 ../InvoiceList.php:67
-#: ../InvoiceList.php:149 ../UnavailabilityPlanning.php:135
-#: ../UnavailabilityPlanning.php:172 ../UnavailabilityPlanning.php:709
-#: ../UnavailabilityPlanning.php:714 ../PrestationCommandList.php:57
+#: ../EstimateList.php:122 ../InvoiceList.php:67 ../InvoiceList.php:149
+#: ../UnavailabilityPlanning.php:135 ../UnavailabilityPlanning.php:172
+#: ../UnavailabilityPlanning.php:709 ../UnavailabilityPlanning.php:714
+#: ../menu.inc.php:892 ../PrestationCommandList.php:57
 #: ../PrestationCommandList.php:128 ../AgedTrialBalance.php:54
 #: ../AgedTrialBalance.php:147 ../FlightNotebook.php:83
 #: ../CourseCommandList.php:64 ../CourseCommandList.php:151
 #: ../ToHaveList.php:65 ../ToHaveList.php:113 ../DocumentList.php:63
-#: ../CustomerCatalog.php:158 ../RTWCatalog.php:94 void:1
+#: ../CustomerCatalog.php:158 void:1
 msgid "Customer"
 msgstr "Cliente"
 
@@ -1336,7 +1335,7 @@ msgstr "Agentes genéricos"
 
 #: ../lib/Custom/SupplierPricesGrid.php:54
 #: ../lib/Custom/ProductPriceAddEdit.php:153
-#: ../lib/Custom/SellingPricesGrid.php:54 ../ProductList.php:270
+#: ../lib/Custom/SellingPricesGrid.php:54 ../ProductList.php:302
 #: ../menu.inc.php:504 ../menu.inc.php:506
 msgid "Selling prices"
 msgstr "Precios de venta"
@@ -1359,10 +1358,11 @@ msgstr "Precios de venta"
 #: ../lib/Objects/ProductPrestationCost.php:274
 #: ../lib/Objects/PriceByCurrency.php:502
 #: ../lib/Objects/PriceByCurrency.php:503 ../lib/Objects/Ressource.php:156
-#: ../ActivityBasedCosting.php:63 ../menu.inc.php:904 ../BoardByProduct.php:53
-#: ../CommandList.php:289 ../CommandList.php:290
+#: ../ActivityBasedCosting.php:63 ../CommandList.php:291
+#: ../CommandList.php:292 ../BoardByProduct.php:53
 #: ../InventoryDetailList.php:127 ../UnavailabilityPlanning.php:152
-#: ../ProductHandingByCategoryList.php:85 ../ConcreteProductList.php:99 void:1
+#: ../menu.inc.php:904 ../ProductHandingByCategoryList.php:85
+#: ../ConcreteProductList.php:99 void:1
 msgid "Product"
 msgstr "Producto"
 
@@ -1373,7 +1373,7 @@ msgstr "Producto"
 #: ../lib/Objects/PriceByCurrency.php:367
 #: ../lib/Objects/PriceByCurrency.php:483
 #: ../lib/Objects/PriceByCurrency.php:484 ../lib/Objects/_CostRange.php:753
-#: ../lib/Objects/_CostRange.php:754 ../lib/DocumentGenerator.php:4347
+#: ../lib/Objects/_CostRange.php:754 ../lib/DocumentGenerator.php:4349
 #: ../JS_Messages.php:321
 msgid "Price"
 msgstr "Precio"
@@ -1416,7 +1416,7 @@ msgstr "Puede seleccionar otro proveedor para editar sus precios"
 msgid "Supplier prices for product %s / %s"
 msgstr "Precios proveedores para producto %s / %s"
 
-#: ../lib/Custom/ProductPriceAddEdit.php:150 ../ProductList.php:276
+#: ../lib/Custom/ProductPriceAddEdit.php:150 ../ProductList.php:308
 #: ../menu.inc.php:510 ../menu.inc.php:512
 msgid "Supplier prices"
 msgstr "Precios proveedores"
@@ -1489,12 +1489,12 @@ msgid "List of prices by %s of service"
 msgstr "Lista de precios por %s de servicio"
 
 #: ../lib/Custom/ChainGrid.php:77 ../lib/Custom/UploadedDocumentGrid.php:123
-#: ../lib/Custom/AlertGrid.php:64 ../ProductList.php:288
+#: ../lib/Custom/AlertGrid.php:64 ../ProductList.php:320
 #: ../WorkOrderList.php:146
 msgid "Assign"
 msgstr "Asignar"
 
-#: ../lib/Custom/ChainGrid.php:78 ../ProductList.php:289
+#: ../lib/Custom/ChainGrid.php:78 ../ProductList.php:321
 msgid "Assign to chain"
 msgstr "Asignar a una cadena"
 
@@ -1516,11 +1516,11 @@ msgstr "Copiar cadena"
 #: ../lib/Custom/ActivatedChainTaskGrid.php:146
 #: ../lib/Objects/Alert.const.php:517 ../lib/Objects/_UploadedDocument.php:637
 #: ../lib/Objects/_UploadedDocument.php:638 ../ActivityBasedCosting.php:58
-#: ../ActivityBasedCosting.php:109
-#: ../GroupableBoxActivatedChainTaskList.php:139
-#: ../ActivatedChainTaskHistory.php:96 ../ActivatedChainTaskHistory.php:129
-#: ../ActivatedChainTaskList.php:102 ../ActivatedChainTaskList.php:227
-#: ../ChainTaskList.php:88 void:1
+#: ../ActivityBasedCosting.php:109 ../ActivatedChainTaskHistory.php:96
+#: ../ActivatedChainTaskHistory.php:129 ../ActivatedChainTaskList.php:102
+#: ../ActivatedChainTaskList.php:227
+#: ../GroupableBoxActivatedChainTaskList.php:139 ../ChainTaskList.php:88
+#: void:1
 msgid "Task"
 msgstr "Tarea"
 
@@ -1538,10 +1538,11 @@ msgstr "Nombre del cliente"
 #: ../lib/DocumentGenerator.php:3052 ../lib/DocumentGenerator.php:3781
 #: ../ProductionTaskValidation.php:106 ../PrestationInvoiceAddEdit.php:131
 #: ../ProductCommandSupplier.php:140 ../ActivatedChainList.php:67
-#: ../ActivatedMovementList.php:88 ../ForwardingFormEdit.php:346
-#: ../ChainCommandList.php:89 ../BoxList.php:50 ../InvoiceList.php:71
-#: ../ProductCommand.php:132 ../LocationExecutedMovementList.php:81
-#: ../CommandList.php:110 ../EstimateToOrder.php:155 ../WorkOrderList.php:79
+#: ../ActivatedMovementList.php:88 ../CommandList.php:110
+#: ../ForwardingFormEdit.php:346 ../ChainCommandList.php:89
+#: ../InvoiceList.php:71 ../ProductCommand.php:132
+#: ../LocationExecutedMovementList.php:81 ../BoxList.php:50
+#: ../EstimateToOrder.php:155 ../WorkOrderList.php:79
 #: ../PrestationCommandList.php:56 ../CourseCommandList.php:62
 #: ../CourseCommandList.php:148 ../DocumentList.php:60
 #: ../ToHavePaymentList.php:66 void:1
@@ -1557,12 +1558,16 @@ msgstr "Descargar"
 msgid "Unassign"
 msgstr "Desasignar"
 
-#: ../lib/Custom/RTWModelGrid.php:301
+#: ../lib/Custom/RTWModelGrid.php:322
+msgid "Can be deleted"
+msgstr ""
+
+#: ../lib/Custom/RTWModelGrid.php:326
 msgid "Copy worksheet"
 msgstr ""
 
-#: ../lib/Custom/RTWModelGrid.php:305
-#: ../lib/Custom/RTWModelForSupplierGrid.php:174
+#: ../lib/Custom/RTWModelGrid.php:330
+#: ../lib/Custom/RTWModelForSupplierGrid.php:192
 msgid "Print worksheet"
 msgstr "Imrpimir ficha técnica"
 
@@ -1609,7 +1614,7 @@ msgstr "Tipo"
 #: ../lib/Custom/SellingPricesGrid.php:79
 #: ../lib/Custom/SellingPricesGrid.php:80
 #: ../lib/Objects/PriceByCurrency.php:473
-#: ../lib/Objects/PriceByCurrency.php:474 ../lib/DocumentGenerator.php:4348
+#: ../lib/Objects/PriceByCurrency.php:474 ../lib/DocumentGenerator.php:4350
 #: ../JS_Messages.php:320
 msgid "Recommended price"
 msgstr "Precio recomendado"
@@ -1626,7 +1631,7 @@ msgstr "Banda de precios"
 #: ../lib/Custom/SellingPricesGrid.php:157
 #: ../lib/Custom/RTWModelForLookbookGrid.php:64
 #: ../lib/Custom/RTWModelForLookbookGrid.php:65
-#: ../lib/Objects/_RTWModel.php:2482 ../lib/Objects/_RTWModel.php:2483
+#: ../lib/Objects/_RTWModel.php:2660 ../lib/Objects/_RTWModel.php:2661
 #: ../lib/DocumentGenerator.php:3653 ../lib/DocumentGenerator.php:4128
 #: ../lib/DocumentGenerator.php:4312 ../BoardByCustomer.php:65
 #: ../SalesmenCommission.php:64
@@ -1640,7 +1645,7 @@ msgstr "Temporada"
 #: ../lib/Custom/RTWModelForCatalogGrid.php:143
 #: ../lib/Custom/RTWModelForSupplierGrid.php:69
 #: ../lib/Custom/RTWModelForSupplierGrid.php:70
-#: ../lib/Objects/_RTWModel.php:2500 ../lib/Objects/_RTWModel.php:2501
+#: ../lib/Objects/_RTWModel.php:2678 ../lib/Objects/_RTWModel.php:2679
 #: ../lib/DocumentGenerator.php:4314
 msgid "Press name"
 msgstr "Nombre de prensa"
@@ -1659,7 +1664,7 @@ msgstr "Tasa"
 #: ../lib/Custom/RTWModelForCatalogGrid.php:134
 #: ../lib/Custom/RTWModelForSupplierGrid.php:60
 #: ../lib/Custom/RTWModelForSupplierGrid.php:61
-#: ../lib/Objects/_RTWModel.php:2509 ../lib/Objects/_RTWModel.php:2510
+#: ../lib/Objects/_RTWModel.php:2687 ../lib/Objects/_RTWModel.php:2688
 #: ../lib/DocumentGenerator.php:4139 ../lib/DocumentGenerator.php:4342
 msgid "Style number"
 msgstr "Número de estilo "
@@ -1851,23 +1856,23 @@ msgstr "Operación"
 #: ../BoardByCommercial.php:61 ../FlyBoardBook.php:68
 #: ../ActivatedFlightList.php:105 ../BoardByCustomer.php:72
 #: ../ActivatedMovementList.php:94 ../ActivityBasedCosting.php:69
-#: ../GroupableBoxActivatedChainTaskList.php:54 ../ActionList.php:82
-#: ../ChainCommandList.php:96 ../ActivatedChainTaskHistory.php:97
-#: ../ActivatedChainTaskList.php:146 ../BoxList.php:56
-#: ../BoardByProduct.php:62 ../LocationExecutedMovementList.php:125
-#: ../CommandList.php:148 ../BoardBySupplier.php:63
-#: ../InventoryDetailList.php:83 ../WorkOrderList.php:86
-#: ../BoardByCategory.php:61 ../PrestationCommandList.php:61
-#: ../AgedTrialBalance.php:60 ../FlightNotebook.php:103 ../CashBalance.php:46
-#: ../CourseCommandList.php:77 ../ToHaveList.php:67 ../DocumentList.php:68
-#: ../SalesmenCommission.php:71 ../BoardByCoast.php:60
+#: ../CommandList.php:148 ../ActionList.php:82 ../ChainCommandList.php:96
+#: ../ActivatedChainTaskHistory.php:97 ../ActivatedChainTaskList.php:146
+#: ../GroupableBoxActivatedChainTaskList.php:54 ../BoardByProduct.php:62
+#: ../LocationExecutedMovementList.php:125 ../BoxList.php:56
+#: ../BoardBySupplier.php:63 ../InventoryDetailList.php:83
+#: ../WorkOrderList.php:86 ../BoardByCategory.php:61
+#: ../PrestationCommandList.php:61 ../AgedTrialBalance.php:60
+#: ../FlightNotebook.php:103 ../CashBalance.php:46 ../CourseCommandList.php:77
+#: ../ToHaveList.php:67 ../DocumentList.php:68 ../SalesmenCommission.php:71
+#: ../BoardByCoast.php:60
 msgid "Filter by date"
 msgstr "Filtrar por fecha"
 
 #: ../lib/Custom/ActivatedChainTaskGrid.php:135
 #: ../lib/Custom/RTWModelForSupplierGrid.php:51
 #: ../lib/Custom/RTWModelForSupplierGrid.php:52
-#: ../lib/Custom/RTWModelForSupplierGrid.php:157
+#: ../lib/Custom/RTWModelForSupplierGrid.php:175
 #: ../lib/Objects/Alert.const.php:133 ../lib/Objects/Alert.const.php:142
 #: ../lib/Objects/Alert.const.php:149 ../lib/Objects/Alert.const.php:151
 #: ../lib/Objects/Alert.const.php:159 ../lib/Objects/Alert.const.php:161
@@ -1882,16 +1887,15 @@ msgstr "Filtrar por fecha"
 #: ../WorkOrderOpeTaskList.php:138 ../ActivatedChainList.php:122
 #: ../ActivatedFlightList.php:193 ../ActivatedMovementList.php:236
 #: ../ActivityBasedCosting.php:46 ../ActivityBasedCosting.php:99
-#: ../DocumentModelPropertyAddEdit.php:323
-#: ../GroupableBoxActivatedChainTaskList.php:72
-#: ../GroupableBoxActivatedChainTaskList.php:136
+#: ../DocumentModelPropertyAddEdit.php:323 ../CommandList.php:269
 #: ../ActivatedChainTaskHistory.php:90 ../ActivatedChainTaskHistory.php:130
 #: ../ActivatedChainTaskList.php:93 ../ActivatedChainTaskList.php:228
 #: ../TransportChainList.php:85 ../TransportChainList.php:104
-#: ../menu.inc.php:230 ../BoxList.php:104 ../InvoiceList.php:145
-#: ../InvoiceCommandList.php:266 ../LocationExecutedMovementList.php:305
-#: ../CommandList.php:269 ../UnavailabilityPlanning.php:117
-#: ../UnavailabilityPlanning.php:704 ../PrestationCommandList.php:120
+#: ../InvoiceList.php:145 ../GroupableBoxActivatedChainTaskList.php:72
+#: ../GroupableBoxActivatedChainTaskList.php:136 ../InvoiceCommandList.php:266
+#: ../LocationExecutedMovementList.php:305 ../BoxList.php:104
+#: ../UnavailabilityPlanning.php:117 ../UnavailabilityPlanning.php:704
+#: ../menu.inc.php:230 ../PrestationCommandList.php:120
 #: ../GroupableBoxList.php:69 ../DocumentList.php:148
 #: ../SalesmenCommission.php:100 ../ActivatedChainOperationList.php:105
 #: ../ActivatedChainOperationList.php:214 void:1
@@ -2093,8 +2097,8 @@ msgstr "Reiniciar todo"
 #: ../lib/Custom/RTWModelForCatalogGrid.php:152
 #: ../lib/Custom/RTWModelForSupplierGrid.php:78
 #: ../lib/Custom/RTWModelForSupplierGrid.php:79 ../lib/Objects/RTWModel.php:95
-#: ../lib/Objects/_RTWModel.php:2648 ../lib/Objects/_RTWModel.php:2649
-#: ../lib/DocumentGenerator.php:4343 ../RTWCatalog.php:118
+#: ../lib/Objects/_RTWModel.php:2826 ../lib/Objects/_RTWModel.php:2827
+#: ../lib/DocumentGenerator.php:4343
 msgid "Material 1"
 msgstr "Material 1"
 
@@ -2102,8 +2106,8 @@ msgstr "Material 1"
 #: ../lib/Custom/RTWModelForCatalogGrid.php:161
 #: ../lib/Custom/RTWModelForSupplierGrid.php:87
 #: ../lib/Custom/RTWModelForSupplierGrid.php:88 ../lib/Objects/RTWModel.php:96
-#: ../lib/Objects/_RTWModel.php:2667 ../lib/Objects/_RTWModel.php:2668
-#: ../lib/DocumentGenerator.php:4344 ../RTWCatalog.php:119
+#: ../lib/Objects/_RTWModel.php:2845 ../lib/Objects/_RTWModel.php:2846
+#: ../lib/DocumentGenerator.php:4344
 msgid "Material 2"
 msgstr "Material 2"
 
@@ -2111,22 +2115,39 @@ msgstr "Material 2"
 #: ../lib/Custom/RTWModelForCatalogGrid.php:170
 #: ../lib/Custom/RTWModelForSupplierGrid.php:96
 #: ../lib/Custom/RTWModelForSupplierGrid.php:97 ../lib/Objects/RTWModel.php:97
-#: ../lib/Objects/_RTWModel.php:2686 ../lib/Objects/_RTWModel.php:2687
-#: ../lib/DocumentGenerator.php:4345 ../RTWCatalog.php:120
-msgid "Accessory 1"
-msgstr "Accesorio 1"
+#: ../lib/Objects/_RTWModel.php:2864 ../lib/Objects/_RTWModel.php:2865
+#: ../lib/DocumentGenerator.php:4345
+msgid "Material 3"
+msgstr ""
 
 #: ../lib/Custom/RTWModelForCatalogGrid.php:178
 #: ../lib/Custom/RTWModelForCatalogGrid.php:179
 #: ../lib/Custom/RTWModelForSupplierGrid.php:105
 #: ../lib/Custom/RTWModelForSupplierGrid.php:106
-#: ../lib/Objects/RTWModel.php:98 ../lib/Objects/_RTWModel.php:2705
-#: ../lib/Objects/_RTWModel.php:2706 ../lib/DocumentGenerator.php:4346
-#: ../RTWCatalog.php:121
+#: ../lib/Objects/RTWModel.php:98 ../lib/Objects/_RTWModel.php:2883
+#: ../lib/Objects/_RTWModel.php:2884 ../lib/DocumentGenerator.php:4346
+msgid "Accessory 1"
+msgstr "Accesorio 1"
+
+#: ../lib/Custom/RTWModelForCatalogGrid.php:187
+#: ../lib/Custom/RTWModelForCatalogGrid.php:188
+#: ../lib/Custom/RTWModelForSupplierGrid.php:114
+#: ../lib/Custom/RTWModelForSupplierGrid.php:115
+#: ../lib/Objects/RTWModel.php:99 ../lib/Objects/_RTWModel.php:2902
+#: ../lib/Objects/_RTWModel.php:2903 ../lib/DocumentGenerator.php:4347
 msgid "Accessory 2"
 msgstr "Accesorio 2"
 
-#: ../lib/Custom/RTWModelForCatalogGrid.php:218 ../ActivatedFlightList.php:93
+#: ../lib/Custom/RTWModelForCatalogGrid.php:196
+#: ../lib/Custom/RTWModelForCatalogGrid.php:197
+#: ../lib/Custom/RTWModelForSupplierGrid.php:123
+#: ../lib/Custom/RTWModelForSupplierGrid.php:124
+#: ../lib/Objects/RTWModel.php:100 ../lib/Objects/_RTWModel.php:2921
+#: ../lib/Objects/_RTWModel.php:2922 ../lib/DocumentGenerator.php:4348
+msgid "Accessory 3"
+msgstr ""
+
+#: ../lib/Custom/RTWModelForCatalogGrid.php:236 ../ActivatedFlightList.php:93
 #: ../ToHaveAdd.php:138 ../ActivatedChainTaskList.php:109
 #: ../UnavailabilityPlanning.php:134 ../AgedTrialBalance.php:53
 #: ../FlightNotebook.php:82 ../InvoicePrestationList.php:62
@@ -2134,27 +2155,27 @@ msgstr "Accesorio 2"
 msgid "Select a customer"
 msgstr "Seleccione un cliente"
 
-#: ../lib/Custom/RTWModelForCatalogGrid.php:280 ../SupplierCatalog.php:329
-#: ../TransportChainList.php:92 ../CustomerCatalog.php:466 void:1
+#: ../lib/Custom/RTWModelForCatalogGrid.php:298 ../SupplierCatalog.php:361
+#: ../TransportChainList.php:92 ../CustomerCatalog.php:500
 msgid "Ask for estimate"
 msgstr "Pida presupuesto"
 
-#: ../lib/Custom/RTWModelForCatalogGrid.php:287 ../SupplierCatalog.php:337
-#: ../CustomerCatalog.php:474
+#: ../lib/Custom/RTWModelForCatalogGrid.php:305 ../SupplierCatalog.php:369
+#: ../CustomerCatalog.php:508
 msgid "Order selected items"
 msgstr "Pedir artículos seleccionados"
 
-#: ../lib/Custom/RTWModelForCatalogGrid.php:306
+#: ../lib/Custom/RTWModelForCatalogGrid.php:324
 #: ../lib/Objects/_RTWSize.php:171 ../lib/DocumentGenerator.php:1306
 #: ../lib/DocumentGenerator.php:3681 ../menu.inc.php:423
 msgid "Sizes"
 msgstr "Tamaños"
 
-#: ../lib/Custom/RTWModelForCatalogGrid.php:310 ../ProductList.php:241
+#: ../lib/Custom/RTWModelForCatalogGrid.php:328 ../ProductList.php:273
 msgid "Unit price"
 msgstr "Precio por unidad"
 
-#: ../lib/Custom/RTWModelForCatalogGrid.php:314
+#: ../lib/Custom/RTWModelForCatalogGrid.php:332
 #: ../lib/Objects/ProductHandingByCategory.php:229
 #: ../lib/Objects/_Promotion.php:242 ../lib/CashBalanceManager.php:270
 #: ../lib/CashBalanceManager.php:271 ../lib/CashBalanceManager.php:318
@@ -2495,9 +2516,9 @@ msgid "Delivery possible"
 msgstr "Entrega posible"
 
 #: ../lib/CustomGrid/Columns/GridColumnPrestationCommandItemList.php:54
-#: ../EstimateList.php:75 ../BoxList.php:54
+#: ../CommandList.php:113 ../EstimateList.php:75
 #: ../NomenclatureConcreteProductList.php:45
-#: ../NomenclatureConcreteProductList.php:72 ../CommandList.php:113
+#: ../NomenclatureConcreteProductList.php:72 ../BoxList.php:54
 #: ../ProductHandingByCategoryAddEdit.php:59 ../NomenclatureList.php:46
 #: ../NomenclatureList.php:92 ../ProductHandingByCategoryList.php:48
 #: ../ConcreteProductList.php:51 void:1
@@ -2570,14 +2591,16 @@ msgstr "Cualquier/a"
 #: ../lib/Objects/Catalog.php:348 ../ProductList.php:65 ../ProductList.php:85
 #: ../ProductList.php:100 ../ProductList.php:115 ../ProductList.php:131
 #: ../ProductList.php:147 ../ProductList.php:163 ../ProductList.php:179
-#: ../SupplierCatalog.php:134 ../SupplierCatalog.php:151
-#: ../SupplierCatalog.php:167 ../SupplierCatalog.php:183
-#: ../SupplierCatalog.php:199 ../SupplierCatalog.php:215
-#: ../CustomerCatalog.php:181 ../CustomerCatalog.php:201
-#: ../CustomerCatalog.php:216 ../CustomerCatalog.php:230
-#: ../CustomerCatalog.php:246 ../CustomerCatalog.php:263
-#: ../CustomerCatalog.php:280 ../CustomerCatalog.php:297
-#: ../../../pwak/trunk/lib/GenericMessages.php:76
+#: ../ProductList.php:195 ../ProductList.php:211 ../SupplierCatalog.php:134
+#: ../SupplierCatalog.php:151 ../SupplierCatalog.php:167
+#: ../SupplierCatalog.php:183 ../SupplierCatalog.php:199
+#: ../SupplierCatalog.php:215 ../SupplierCatalog.php:231
+#: ../SupplierCatalog.php:247 ../CustomerCatalog.php:181
+#: ../CustomerCatalog.php:201 ../CustomerCatalog.php:216
+#: ../CustomerCatalog.php:230 ../CustomerCatalog.php:246
+#: ../CustomerCatalog.php:263 ../CustomerCatalog.php:280
+#: ../CustomerCatalog.php:297 ../CustomerCatalog.php:314
+#: ../CustomerCatalog.php:331 ../../../pwak/trunk/lib/GenericMessages.php:76
 msgid "Select one or more items"
 msgstr "Elija uno o varios elementos"
 
@@ -2712,12 +2735,13 @@ msgstr "Fecha de creación"
 
 #: ../lib/Objects/_Chain.php:1214 ../lib/Objects/_Chain.php:1215
 #: ../ActivatedMovementList.php:265 ../ActivityBasedCosting.php:112
-#: ../GroupableBoxActivatedChainTaskList.php:149 ../ChainCommandList.php:109
+#: ../CommandList.php:145 ../CommandList.php:273 ../ChainCommandList.php:109
 #: ../ChainCommandList.php:183 ../ActivatedChainTaskList.php:158
-#: ../ActivatedChainTaskList.php:253 ../CommandList.php:145
-#: ../CommandList.php:271 ../PrestationCommandList.php:73
-#: ../PrestationCommandList.php:123 ../CourseCommandList.php:74
-#: ../CourseCommandList.php:166 ../ConcreteProductList.php:55
+#: ../ActivatedChainTaskList.php:253
+#: ../GroupableBoxActivatedChainTaskList.php:149
+#: ../PrestationCommandList.php:73 ../PrestationCommandList.php:123
+#: ../CourseCommandList.php:74 ../CourseCommandList.php:166
+#: ../ConcreteProductList.php:55
 msgid "State"
 msgstr "Estado"
 
@@ -2775,11 +2799,11 @@ msgstr "Flotante"
 #: ../lib/DocumentGenerator.php:1842 ../lib/DocumentGenerator.php:2063
 #: ../lib/DocumentGenerator.php:4123 ../lib/DocumentGenerator.php:4308
 #: ../PaymentToHaveList.php:87 ../FlyBoardBook.php:125
-#: ../ActivatedFlightList.php:177 ../ActionList.php:111
-#: ../ChainCommandList.php:175 ../CommandList.php:289 ../CommandList.php:290
-#: ../PrestationCommandList.php:121 ../FlightNotebook.php:161
-#: ../ToHaveList.php:117 ../DocumentList.php:151 ../SalesmenCommission.php:97
-#: void:1
+#: ../ActivatedFlightList.php:177 ../CommandList.php:271
+#: ../CommandList.php:291 ../CommandList.php:292 ../ActionList.php:111
+#: ../ChainCommandList.php:175 ../PrestationCommandList.php:121
+#: ../FlightNotebook.php:161 ../ToHaveList.php:117 ../DocumentList.php:151
+#: ../SalesmenCommission.php:97 void:1
 msgid "Date"
 msgstr "Fecha"
 
@@ -3073,78 +3097,78 @@ msgstr "%"
 msgid "Price by products associated to the service"
 msgstr "Precio para productos asociados con el servicio"
 
-#: ../lib/Objects/RTWModel.php:102 ../lib/Objects/_RTWModel.php:2857
-#: ../lib/Objects/_RTWModel.php:2858
+#: ../lib/Objects/RTWModel.php:104 ../lib/Objects/_RTWModel.php:3073
+#: ../lib/Objects/_RTWModel.php:3074
 msgid "Thread 1"
 msgstr "Hilo 1"
 
-#: ../lib/Objects/RTWModel.php:103 ../lib/Objects/_RTWModel.php:2866
-#: ../lib/Objects/_RTWModel.php:2867
+#: ../lib/Objects/RTWModel.php:105 ../lib/Objects/_RTWModel.php:3082
+#: ../lib/Objects/_RTWModel.php:3083
 msgid "Thread 2"
 msgstr "hilo 2"
 
-#: ../lib/Objects/RTWModel.php:107 ../lib/Objects/_RTWModel.php:2838
-#: ../lib/Objects/_RTWModel.php:2839
+#: ../lib/Objects/RTWModel.php:109 ../lib/Objects/_RTWModel.php:3054
+#: ../lib/Objects/_RTWModel.php:3055
 msgid "Selvedge"
 msgstr "Pespuntes"
 
-#: ../lib/Objects/RTWModel.php:108 ../lib/Objects/RTWModel.php:177
-#: ../lib/Objects/_RTWModel.php:2724 ../lib/Objects/_RTWModel.php:2725
+#: ../lib/Objects/RTWModel.php:110 ../lib/Objects/RTWModel.php:179
+#: ../lib/Objects/_RTWModel.php:2940 ../lib/Objects/_RTWModel.php:2941
 msgid "Lining"
 msgstr "Forro"
 
-#: ../lib/Objects/RTWModel.php:109 ../lib/Objects/_RTWModel.php:2743
-#: ../lib/Objects/_RTWModel.php:2744
+#: ../lib/Objects/RTWModel.php:111 ../lib/Objects/_RTWModel.php:2959
+#: ../lib/Objects/_RTWModel.php:2960
 msgid "Insole"
 msgstr "Planta"
 
-#: ../lib/Objects/RTWModel.php:110 ../lib/Objects/_RTWModel.php:2762
-#: ../lib/Objects/_RTWModel.php:2763
+#: ../lib/Objects/RTWModel.php:112 ../lib/Objects/_RTWModel.php:2978
+#: ../lib/Objects/_RTWModel.php:2979
 msgid "Under-sole"
 msgstr "Puente"
 
-#: ../lib/Objects/RTWModel.php:111 ../lib/Objects/_RTWModel.php:2781
-#: ../lib/Objects/_RTWModel.php:2782
+#: ../lib/Objects/RTWModel.php:113 ../lib/Objects/_RTWModel.php:2997
+#: ../lib/Objects/_RTWModel.php:2998
 msgid "Media planta"
 msgstr "Media planta"
 
-#: ../lib/Objects/RTWModel.php:112 ../lib/Objects/_RTWModel.php:2800
-#: ../lib/Objects/_RTWModel.php:2801
+#: ../lib/Objects/RTWModel.php:114 ../lib/Objects/_RTWModel.php:3016
+#: ../lib/Objects/_RTWModel.php:3017
 msgid "Lagrima"
 msgstr "Lagrima"
 
-#: ../lib/Objects/RTWModel.php:113 ../lib/Objects/RTWModel.php:179
-#: ../lib/Objects/_RTWMaterial.php:153 ../lib/Objects/_RTWModel.php:2591
-#: ../lib/Objects/_RTWModel.php:2592
+#: ../lib/Objects/RTWModel.php:115 ../lib/Objects/RTWModel.php:181
+#: ../lib/Objects/_RTWMaterial.php:153 ../lib/Objects/_RTWModel.php:2769
+#: ../lib/Objects/_RTWModel.php:2770
 msgid "Sole"
 msgstr "Suela"
 
-#: ../lib/Objects/RTWModel.php:114 ../lib/Objects/_RTWModel.php:2572
-#: ../lib/Objects/_RTWModel.php:2573
+#: ../lib/Objects/RTWModel.php:116 ../lib/Objects/_RTWModel.php:2750
+#: ../lib/Objects/_RTWModel.php:2751
 msgid "Heel reference"
 msgstr "Referencia de tacón"
 
-#: ../lib/Objects/RTWModel.php:115 ../lib/Objects/RTWModel.php:175
-#: ../lib/Objects/_RTWModel.php:2819 ../lib/Objects/_RTWModel.php:2820
+#: ../lib/Objects/RTWModel.php:117 ../lib/Objects/RTWModel.php:177
+#: ../lib/Objects/_RTWModel.php:3035 ../lib/Objects/_RTWModel.php:3036
 msgid "Heel covering"
 msgstr "Cubierta del tacón"
 
-#: ../lib/Objects/RTWModel.php:116 ../lib/Objects/_RTWMaterial.php:152
-#: ../lib/Objects/_RTWModel.php:2875 ../lib/Objects/_RTWModel.php:2876
+#: ../lib/Objects/RTWModel.php:118 ../lib/Objects/_RTWMaterial.php:152
+#: ../lib/Objects/_RTWModel.php:3091 ../lib/Objects/_RTWModel.php:3092
 msgid "Bamboo"
 msgstr "Tapa"
 
-#: ../lib/Objects/RTWModel.php:117 ../lib/Objects/_RTWModel.php:2610
-#: ../lib/Objects/_RTWModel.php:2611
+#: ../lib/Objects/RTWModel.php:119 ../lib/Objects/_RTWModel.php:2788
+#: ../lib/Objects/_RTWModel.php:2789
 msgid "Box"
 msgstr "Caja"
 
-#: ../lib/Objects/RTWModel.php:118 ../lib/Objects/_RTWModel.php:2629
-#: ../lib/Objects/_RTWModel.php:2630
+#: ../lib/Objects/RTWModel.php:120 ../lib/Objects/_RTWModel.php:2807
+#: ../lib/Objects/_RTWModel.php:2808
 msgid "Hand bag"
 msgstr "Bolsillo/bolsa"
 
-#: ../lib/Objects/RTWModel.php:172
+#: ../lib/Objects/RTWModel.php:174
 msgid "Upper"
 msgstr "Empeine"
 
@@ -3210,19 +3234,19 @@ msgstr "Hilo"
 msgid "Heel"
 msgstr "Tacón"
 
-#: ../lib/Objects/_RTWMaterial.php:482 ../lib/Objects/_RTWMaterial.php:483
+#: ../lib/Objects/_RTWMaterial.php:494 ../lib/Objects/_RTWMaterial.php:495
 msgid "Scientific terminology"
 msgstr "Terminología científica"
 
-#: ../lib/Objects/_RTWMaterial.php:491 ../lib/Objects/_RTWMaterial.php:492
+#: ../lib/Objects/_RTWMaterial.php:503 ../lib/Objects/_RTWMaterial.php:504
 msgid "MaterialType"
 msgstr "Tipo de material"
 
-#: ../lib/Objects/_RTWMaterial.php:500 ../lib/Objects/_RTWMaterial.php:501
+#: ../lib/Objects/_RTWMaterial.php:512 ../lib/Objects/_RTWMaterial.php:513
 msgid "Color"
 msgstr "Color"
 
-#: ../lib/Objects/_RTWMaterial.php:509 ../lib/Objects/_RTWMaterial.php:510
+#: ../lib/Objects/_RTWMaterial.php:521 ../lib/Objects/_RTWMaterial.php:522
 msgid "origin"
 msgstr "origen"
 
@@ -3232,7 +3256,7 @@ msgstr "Flujos previstos"
 
 #: ../lib/Objects/ForecastFlow.php:504 ../lib/Objects/ForecastFlow.php:505
 #: ../lib/Objects/_Incoterm.php:418 ../lib/Objects/_Incoterm.php:419
-#: ../lib/Objects/_RTWModel.php:2518 ../lib/Objects/_RTWModel.php:2519
+#: ../lib/Objects/_RTWModel.php:2696 ../lib/Objects/_RTWModel.php:2697
 #: ../lib/DocumentGenerator.php:917 ../lib/DocumentGenerator.php:1290
 #: ../lib/DocumentGenerator.php:2518 ../lib/DocumentGenerator.php:4143
 #: ../lib/DocumentGenerator.php:4315 ../ActivatedChainList.php:127
@@ -3269,9 +3293,9 @@ msgstr "Código cliente"
 #: ../lib/Objects/DocumentModelProperty.php:128
 #: ../lib/Objects/_UserAccount.php:386 ../lib/ActionTools.php:117
 #: ../BoardByCommercial.php:53 ../PrestationInvoiceAddEdit.php:137
-#: ../menu.inc.php:872 ../PreferencesWebSite.php:73 ../ProductCommand.php:171
-#: ../CommandList.php:159 ../CommandList.php:282
-#: ../SalesmenCommissionSettings.php:67 ../PrestationCommandList.php:129
+#: ../CommandList.php:159 ../CommandList.php:284 ../PreferencesWebSite.php:73
+#: ../ProductCommand.php:171 ../SalesmenCommissionSettings.php:67
+#: ../menu.inc.php:872 ../PrestationCommandList.php:129
 #: ../SalesmenCommission.php:47 ../SalesmenCommission.php:94
 #: ../ActorList.php:101 ../ActorList.php:275 void:1
 msgid "Salesman"
@@ -3753,9 +3777,9 @@ msgstr "Importe excl. IVA"
 #: ../lib/Objects/Alert.const.php:297 ../lib/DocumentGenerator.php:3504
 #: ../lib/DocumentGenerator.php:3575 ../lib/DocumentGenerator.php:3668
 #: ../lib/DocumentGenerator.php:3865 ../PaymentToHaveList.php:93
-#: ../ToHaveAdd.php:147 ../ChainCommandList.php:187 ../FlowAddEdit.php:232
-#: ../EstimateList.php:127 ../InvoiceList.php:154
-#: ../InvoiceCommandList.php:272 ../FlowList.php:96 ../CommandList.php:273
+#: ../ToHaveAdd.php:147 ../CommandList.php:275 ../ChainCommandList.php:187
+#: ../FlowAddEdit.php:232 ../EstimateList.php:127 ../InvoiceList.php:154
+#: ../InvoiceCommandList.php:272 ../FlowList.php:96
 #: ../PrestationCommandList.php:125 ../CourseCommandList.php:164
 #: ../ToHaveList.php:120 void:1
 msgid "Amount incl. VAT"
@@ -3765,7 +3789,7 @@ msgstr "Importe incl. IVA"
 #: ../lib/DocumentGenerator.php:1662 ../lib/DocumentGenerator.php:2175
 #: ../lib/DocumentGenerator.php:3596 ../lib/DocumentGenerator.php:3866
 #: ../PrestationInvoiceAddEdit.php:153 ../ProductCommandSupplier.php:180
-#: ../ProductCommand.php:194 ../CommandList.php:234
+#: ../CommandList.php:234 ../ProductCommand.php:194
 #: ../PaymentCommandList.php:99 void:1
 msgid "Instalment"
 msgstr "Plazo (de pago)"
@@ -3778,8 +3802,8 @@ msgstr "A pagar"
 #: ../lib/Objects/Alert.const.php:303 ../lib/Objects/Alert.const.php:346
 #: ../lib/Objects/Alert.const.php:382 ../lib/Objects/Alert.const.php:425
 #: ../lib/Objects/_UploadedDocument.php:610
-#: ../lib/Objects/_UploadedDocument.php:611 ../lib/Objects/_RTWModel.php:2921
-#: ../lib/Objects/_RTWModel.php:2922 ../lib/Objects/_RTWModel.php:2927
+#: ../lib/Objects/_UploadedDocument.php:611 ../lib/Objects/_RTWModel.php:3137
+#: ../lib/Objects/_RTWModel.php:3138 ../lib/Objects/_RTWModel.php:3143
 #: ../lib/DocumentGenerator.php:592 ../ProductionTaskValidation.php:129
 #: ../PrestationInvoiceAddEdit.php:156 ../WorkOrderOpeTaskList.php:147
 #: ../ProductCommandSupplier.php:183 ../ActionAddEdit.php:168
@@ -4180,8 +4204,8 @@ msgid "Locked order"
 msgstr "Pedido bloqueado"
 
 #: ../lib/Objects/Command.const.php:50 ../lib/Objects/Command.const.php:61
-#: ../lib/Objects/Command.const.php:72 ../ChainCommandList.php:107
-#: ../ActivatedChainTaskList.php:156 ../CommandList.php:143
+#: ../lib/Objects/Command.const.php:72 ../CommandList.php:143
+#: ../ChainCommandList.php:107 ../ActivatedChainTaskList.php:156
 #: ../PrestationCommandList.php:71
 msgid "Select one or more states"
 msgstr "Seleccione uno o varios Estados"
@@ -4270,7 +4294,7 @@ msgstr "cualquier(a)"
 msgid "multiple"
 msgstr "múltiple"
 
-#: ../lib/Objects/RTWProduct.php:76 ../lib/Objects/_RTWProduct.php:302
+#: ../lib/Objects/RTWProduct.php:83 ../lib/Objects/_RTWProduct.php:302
 #: ../lib/Objects/_RTWProduct.php:303
 msgid "Size"
 msgstr "Tamaño"
@@ -4750,109 +4774,117 @@ msgstr "Reducido(a)"
 msgid "Press names"
 msgstr "Nombres de prensas"
 
-#: ../lib/Objects/_RTWModel.php:2321 ../menu.inc.php:543 ../menu.inc.php:664
+#: ../lib/Objects/_RTWModel.php:2495 ../menu.inc.php:543 ../menu.inc.php:664
 #: ../menu.inc.php:836
 msgid "Models"
 msgstr "Modelos"
 
-#: ../lib/Objects/_RTWModel.php:2491 ../lib/Objects/_RTWModel.php:2492
+#: ../lib/Objects/_RTWModel.php:2669 ../lib/Objects/_RTWModel.php:2670
 #: ../lib/DocumentGenerator.php:4150 ../lib/DocumentGenerator.php:4313
 msgid "Shape"
 msgstr "Forma"
 
-#: ../lib/Objects/_RTWModel.php:2527 ../lib/Objects/_RTWModel.php:2528
+#: ../lib/Objects/_RTWModel.php:2705 ../lib/Objects/_RTWModel.php:2706
 #: ../lib/DocumentGenerator.php:4134
 msgid "Manufacturer"
 msgstr "Fabricante"
 
-#: ../lib/Objects/_RTWModel.php:2536 ../lib/Objects/_RTWModel.php:2537
+#: ../lib/Objects/_RTWModel.php:2714 ../lib/Objects/_RTWModel.php:2715
 #: ../lib/DocumentGenerator.php:4148
 msgid "Construction type"
 msgstr "Tipo de construcción "
 
-#: ../lib/Objects/_RTWModel.php:2545 ../lib/Objects/_RTWModel.php:2546
+#: ../lib/Objects/_RTWModel.php:2723 ../lib/Objects/_RTWModel.php:2724
 #: ../lib/DocumentGenerator.php:4149
 msgid "Construction code"
 msgstr "Código de construcción "
 
-#: ../lib/Objects/_RTWModel.php:2554 ../lib/Objects/_RTWModel.php:2555
+#: ../lib/Objects/_RTWModel.php:2732 ../lib/Objects/_RTWModel.php:2733
 #: ../lib/DocumentGenerator.php:4188
 msgid "Label (griffe)"
 msgstr "Sello"
 
-#: ../lib/Objects/_RTWModel.php:2563 ../lib/Objects/_RTWModel.php:2564
+#: ../lib/Objects/_RTWModel.php:2741 ../lib/Objects/_RTWModel.php:2742
 msgid "Heel height"
 msgstr "Altura de tacón"
 
-#: ../lib/Objects/_RTWModel.php:2581 ../lib/Objects/_RTWModel.php:2582
+#: ../lib/Objects/_RTWModel.php:2759 ../lib/Objects/_RTWModel.php:2760
 msgid "Heel reference quantity"
 msgstr "Cantidad de tacón"
 
-#: ../lib/Objects/_RTWModel.php:2600 ../lib/Objects/_RTWModel.php:2601
+#: ../lib/Objects/_RTWModel.php:2778 ../lib/Objects/_RTWModel.php:2779
 msgid "Sole quantity"
 msgstr "Cantidad de suela"
 
-#: ../lib/Objects/_RTWModel.php:2619 ../lib/Objects/_RTWModel.php:2620
+#: ../lib/Objects/_RTWModel.php:2797 ../lib/Objects/_RTWModel.php:2798
 msgid "Box quantity"
 msgstr "Cantidad de cajas"
 
-#: ../lib/Objects/_RTWModel.php:2638 ../lib/Objects/_RTWModel.php:2639
+#: ../lib/Objects/_RTWModel.php:2816 ../lib/Objects/_RTWModel.php:2817
 msgid "Hand bag quantity"
 msgstr "Cantidad de bolsillos/bolsas"
 
-#: ../lib/Objects/_RTWModel.php:2657 ../lib/Objects/_RTWModel.php:2658
+#: ../lib/Objects/_RTWModel.php:2835 ../lib/Objects/_RTWModel.php:2836
 msgid "Material 1 quantity"
 msgstr "Cantidad del material 1"
 
-#: ../lib/Objects/_RTWModel.php:2676 ../lib/Objects/_RTWModel.php:2677
+#: ../lib/Objects/_RTWModel.php:2854 ../lib/Objects/_RTWModel.php:2855
 msgid "Material 2 quantity"
 msgstr "Cantidad del material 2"
 
-#: ../lib/Objects/_RTWModel.php:2695 ../lib/Objects/_RTWModel.php:2696
+#: ../lib/Objects/_RTWModel.php:2873 ../lib/Objects/_RTWModel.php:2874
+msgid "Material 3 quantity"
+msgstr ""
+
+#: ../lib/Objects/_RTWModel.php:2892 ../lib/Objects/_RTWModel.php:2893
 msgid "Accessory 1 quantity"
 msgstr "Cantidad de accesorios 1"
 
-#: ../lib/Objects/_RTWModel.php:2714 ../lib/Objects/_RTWModel.php:2715
+#: ../lib/Objects/_RTWModel.php:2911 ../lib/Objects/_RTWModel.php:2912
 msgid "Accessory 2 quantity"
 msgstr "Cantidad de accesorios 2"
 
-#: ../lib/Objects/_RTWModel.php:2733 ../lib/Objects/_RTWModel.php:2734
+#: ../lib/Objects/_RTWModel.php:2930 ../lib/Objects/_RTWModel.php:2931
+msgid "Accessory 3 quantity"
+msgstr ""
+
+#: ../lib/Objects/_RTWModel.php:2949 ../lib/Objects/_RTWModel.php:2950
 msgid "Lining quantity"
 msgstr "Cantidad de forro"
 
-#: ../lib/Objects/_RTWModel.php:2752 ../lib/Objects/_RTWModel.php:2753
+#: ../lib/Objects/_RTWModel.php:2968 ../lib/Objects/_RTWModel.php:2969
 msgid "Insole quantity"
 msgstr "Cantidad de plantas"
 
-#: ../lib/Objects/_RTWModel.php:2771 ../lib/Objects/_RTWModel.php:2772
+#: ../lib/Objects/_RTWModel.php:2987 ../lib/Objects/_RTWModel.php:2988
 msgid "Under-sole quantity"
 msgstr "Cantidad de puentes"
 
-#: ../lib/Objects/_RTWModel.php:2790 ../lib/Objects/_RTWModel.php:2791
+#: ../lib/Objects/_RTWModel.php:3006 ../lib/Objects/_RTWModel.php:3007
 msgid "Media planta quantity"
 msgstr "Cantidad de media planta"
 
-#: ../lib/Objects/_RTWModel.php:2809 ../lib/Objects/_RTWModel.php:2810
+#: ../lib/Objects/_RTWModel.php:3025 ../lib/Objects/_RTWModel.php:3026
 msgid "Lagrima quantity"
 msgstr "Cantidad de lagrima"
 
-#: ../lib/Objects/_RTWModel.php:2828 ../lib/Objects/_RTWModel.php:2829
+#: ../lib/Objects/_RTWModel.php:3044 ../lib/Objects/_RTWModel.php:3045
 msgid "Heel covering quantity"
 msgstr "Cantidad de cubiertas de tacón"
 
-#: ../lib/Objects/_RTWModel.php:2847 ../lib/Objects/_RTWModel.php:2848
+#: ../lib/Objects/_RTWModel.php:3063 ../lib/Objects/_RTWModel.php:3064
 msgid "Selvedge quantity"
 msgstr "Cantidad de pespuntes"
 
-#: ../lib/Objects/_RTWModel.php:2884 ../lib/Objects/_RTWModel.php:2885
+#: ../lib/Objects/_RTWModel.php:3100 ../lib/Objects/_RTWModel.php:3101
 msgid "Bamboo quantity"
 msgstr "Cantidad de tapas"
 
-#: ../lib/Objects/_RTWModel.php:2900 ../lib/Objects/_RTWModel.php:2909
+#: ../lib/Objects/_RTWModel.php:3116 ../lib/Objects/_RTWModel.php:3125
 msgid "Images"
 msgstr "Imágenes"
 
-#: ../lib/Objects/_RTWModel.php:2912 ../lib/Objects/_RTWModel.php:2913
+#: ../lib/Objects/_RTWModel.php:3128 ../lib/Objects/_RTWModel.php:3129
 #: ../lib/DocumentGenerator.php:4195 ../lib/DocumentGenerator.php:4331
 msgid "Available sizes"
 msgstr "Tamaños disponibles"
@@ -5192,8 +5224,8 @@ msgid "Expense or receipt"
 msgstr "Gastos o recibo"
 
 #: ../lib/Objects/_FlowType.php:656 ../lib/Objects/_FlowType.php:657
-#: ../menu.inc.php:898 ../StockProductRealandVirtualList.php:121
-#: ../PreferencesWebSite.php:77 ../ProductQuantityByCategoryList.php:67
+#: ../StockProductRealandVirtualList.php:121 ../PreferencesWebSite.php:77
+#: ../ProductQuantityByCategoryList.php:67 ../menu.inc.php:898
 #: ../BoardByCategory.php:52 ../ActorList.php:109 void:1
 msgid "Category"
 msgstr "Categoría"
@@ -5340,8 +5372,8 @@ msgid "Subsidiary accountant"
 msgstr "Contable secundario"
 
 #: ../lib/Objects/_UserAccount.php:405 ../lib/Objects/Actor.inc.php:48
-#: ../ActivatedChainTaskList.php:123 ../ProductCommand.php:182
-#: ../CommandList.php:130 ../UnavailabilityPlanning.php:129
+#: ../CommandList.php:130 ../ActivatedChainTaskList.php:123
+#: ../ProductCommand.php:182 ../UnavailabilityPlanning.php:129
 msgid "Project manager"
 msgstr "Director de proyecto"
 
@@ -6102,27 +6134,27 @@ msgstr ""
 "Las propiedades del proveedor están incompletas, el pedido no se puede "
 "completar. Por favor, póngase en contacto con su admin."
 
-#: ../lib/CommandManager.php:781 ../lib/CommandManager.php:933
+#: ../lib/CommandManager.php:783 ../lib/CommandManager.php:935
 #: ../CourseCommand.php:75
 msgid "Database transaction failed."
 msgstr "La transacción de base de datos ha fallado."
 
-#: ../lib/CommandManager.php:1515 ../rpc/api_site.php:735
+#: ../lib/CommandManager.php:1517 ../rpc/api_site.php:735
 #, php-format
 msgid "array must contain the element \"%s\""
 msgstr "la selección debe contener el elemento \"%s\""
 
-#: ../lib/CommandManager.php:1523 ../rpc/api_site.php:741
+#: ../lib/CommandManager.php:1525 ../rpc/api_site.php:741
 #, php-format
 msgid "\"%s\" must be an integer"
 msgstr "\"%s\" debe ser un número entero"
 
-#: ../lib/CommandManager.php:1532 ../rpc/api_site.php:750
+#: ../lib/CommandManager.php:1534 ../rpc/api_site.php:750
 #, php-format
 msgid "\"%s\" must be a float number"
 msgstr "\"%s\" debe ser un valor flotante"
 
-#: ../lib/CommandManager.php:1539 ../rpc/api_site.php:757
+#: ../lib/CommandManager.php:1541 ../rpc/api_site.php:757
 #, php-format
 msgid "\"%s\" must be a date at the format AAAA-MM-JJ HH:MM:SS"
 msgstr "\"%s\" debe ser una fecha con el formato AAAA-MM-JJ HH:MM:SS"
@@ -6213,17 +6245,15 @@ msgid "Euro"
 msgstr "Euro"
 
 #: ../lib/DocumentGenerator.php:292 ../ProductCommandSupplier.php:148
-#: ../ChainCommandList.php:92 ../ChainCommandList.php:177
-#: ../ProductCommand.php:146 ../CommandList.php:132 ../CommandList.php:276
-#: void:1
+#: ../CommandList.php:132 ../CommandList.php:278 ../ChainCommandList.php:92
+#: ../ChainCommandList.php:177 ../ProductCommand.php:146 void:1
 msgid "Shipper"
 msgstr "Consignador"
 
 #: ../lib/DocumentGenerator.php:315 ../ProductCommandSupplier.php:161
-#: ../ActivatedChainList.php:73 ../ForwardingFormEdit.php:329
-#: ../ChainCommandList.php:94 ../ChainCommandList.php:179
-#: ../ProductCommand.php:152 ../CommandList.php:134 ../CommandList.php:278
-#: void:1
+#: ../ActivatedChainList.php:73 ../CommandList.php:134 ../CommandList.php:280
+#: ../ForwardingFormEdit.php:329 ../ChainCommandList.php:94
+#: ../ChainCommandList.php:179 ../ProductCommand.php:152 void:1
 msgid "Addressee"
 msgstr "Destinatario"
 
@@ -8065,9 +8095,9 @@ msgstr "pedido"
 msgid "Shipper site"
 msgstr "Ubicación del consignador"
 
-#: ../ProductCommandSupplier.php:171 ../ForwardingFormEdit.php:335
-#: ../ChainCommandList.php:181 ../ProductCommand.php:165
-#: ../CommandList.php:280
+#: ../ProductCommandSupplier.php:171 ../CommandList.php:282
+#: ../ForwardingFormEdit.php:335 ../ChainCommandList.php:181
+#: ../ProductCommand.php:165
 msgid "Addressee site"
 msgstr "Ubicación del destinatario"
 
@@ -8121,27 +8151,27 @@ msgstr ""
 msgid "You must configure a catalogue and assign it to this screen."
 msgstr "Tiene que configurar un catálogo y asignarlo a esta pantalla."
 
-#: ../ProductList.php:192
+#: ../ProductList.php:224
 msgid "A catalogue must contain at least a criterion."
 msgstr "Un catálogo debe contener al menos criterio."
 
-#: ../ProductList.php:271
+#: ../ProductList.php:303
 msgid "Selling prices management"
 msgstr "Gestión de los precios de venta"
 
-#: ../ProductList.php:277
+#: ../ProductList.php:309
 msgid "Supplier prices management"
 msgstr "Gestión de los precios proveedores "
 
-#: ../ProductList.php:283
+#: ../ProductList.php:315
 msgid "Add SN/Lot"
 msgstr "Añadir NS/lote"
 
-#: ../ProductList.php:296
+#: ../ProductList.php:328
 msgid "Order quantities"
 msgstr "Cantidades de pedido"
 
-#: ../ProductList.php:297
+#: ../ProductList.php:329
 msgid "Manage ordered quantities"
 msgstr "Administrar cantidades pedidas"
 
@@ -8406,11 +8436,10 @@ msgstr "Ejecutar varios movimientos"
 msgid "Export"
 msgstr "Exportar"
 
-#: ../ActivatedMovementList.php:252
-#: ../GroupableBoxActivatedChainTaskList.php:145
-#: ../ActivatedChainTaskHistory.php:133 ../ActivatedChainTaskList.php:245
-#: ../SaisonalityList.php:88 ../PromotionList.php:60
-#: ../GroupableBoxList.php:80 void:1
+#: ../ActivatedMovementList.php:252 ../ActivatedChainTaskHistory.php:133
+#: ../ActivatedChainTaskList.php:245
+#: ../GroupableBoxActivatedChainTaskList.php:145 ../SaisonalityList.php:88
+#: ../PromotionList.php:60 ../GroupableBoxList.php:80 void:1
 msgid "Beginning date"
 msgstr "Fecha de Inicio"
 
@@ -8644,31 +8673,68 @@ msgstr "Seleccione un tipo"
 msgid "Add a credit note"
 msgstr "Añadir una nota de crédito"
 
-#: ../GroupableBoxActivatedChainTaskList.php:47
-msgid ""
-"Please select the tasks you want to regroup then click the \"Regroup\" button"
-msgstr ""
-"Por favor, seleccione las tareas que quiere reagrupar y haga clic en el "
-"botón \"Reagrupar\""
+#: ../CommandList.php:126 ../ActivatedChainTaskList.php:119
+#: ../UnavailabilityPlanning.php:125
+msgid "Select a project manager"
+msgstr "Seleccione un director de proyecto"
 
-#: ../GroupableBoxActivatedChainTaskList.php:77
-#: ../GroupableBoxActivatedChainTaskList.php:140 ../GroupableBoxList.php:74
-msgid "Departure city"
-msgstr "Ciudad de salida"
+#: ../CommandList.php:136
+msgid "Document number (invoice, delivery order, etc...)"
+msgstr "Número de documento (factura, entrega a domicilio, etc.)"
 
-#: ../GroupableBoxActivatedChainTaskList.php:85
-#: ../GroupableBoxActivatedChainTaskList.php:143 ../GroupableBoxList.php:77
-msgid "Arrival city"
-msgstr "Ciudad de llegada"
+#: ../CommandList.php:139 ../WorkOrderList.php:82 ../WorkOrderList.php:173
+msgid "Closed"
+msgstr "Cerrado/a"
 
-#: ../GroupableBoxActivatedChainTaskList.php:94
-#: ../GroupableBoxActivatedChainTaskList.php:99
-msgid "Select a zone"
-msgstr "Seleccione una zona"
+#: ../CommandList.php:162
+msgid "Filter by creation date"
+msgstr "Filtrar por fecha de creación"
 
-#: ../GroupableBoxActivatedChainTaskList.php:154 ../GroupableBoxList.php:94
-msgid "Regroup"
-msgstr "Reagrupar"
+#: ../CommandList.php:214 ../CourseCommandList.php:115
+msgid "Unlock"
+msgstr "Abrir"
+
+#: ../CommandList.php:220 ../ChainCommandList.php:141
+#: ../CourseCommandList.php:129
+msgid "Charge"
+msgstr "Tarifa"
+
+#: ../CommandList.php:227 ../ChainCommandList.php:148
+#: ../PrestationCommandList.php:108 ../CourseCommandList.php:139
+msgid "Show invoices"
+msgstr "Mostrar facturas"
+
+#: ../CommandList.php:235
+msgid "Add or update instalment"
+msgstr "Añadir o actualizar plazo de pago"
+
+#: ../CommandList.php:241 ../ChainCommandList.php:152
+msgid "Show payments"
+msgstr "Mostrar pagos"
+
+#: ../CommandList.php:249 ../ChainCommandList.php:163
+msgid "Shipment"
+msgstr "Consignación"
+
+#: ../CommandList.php:250 ../ChainCommandList.php:164
+msgid "Shipment informations"
+msgstr "Detalles de consignación"
+
+#: ../CommandList.php:256 ../ChainCommandList.php:156
+msgid "Receipt"
+msgstr "Recibo"
+
+#: ../CommandList.php:257 ../ChainCommandList.php:157
+msgid "Print order receipt"
+msgstr "Imprimir recibo del pedido"
+
+#: ../CommandList.php:289 ../CustomerCatalog.php:491
+msgid "Selling unit qty"
+msgstr "Cantidad de unidades de mercancía"
+
+#: ../CommandList.php:291 ../ProductCommand.php:232
+msgid "Qty pack."
+msgstr "Pack de cantidad."
 
 #: ../ProductByLocationList.php:58
 #, php-format
@@ -9069,6 +9135,10 @@ msgstr "Acción"
 msgid "Statistics by action type"
 msgstr "Estadisticas por tipo de acción"
 
+#: ../PackingListEdit.php:44
+msgid "An error occurred, packing list could not be printed."
+msgstr "Se ha producido un error, la lista de contenidos no se pudo imprimir."
+
 #: ../ForwardingFormEdit.php:55
 msgid "The document was created."
 msgstr "El documento ha sido creado."
@@ -9127,36 +9197,6 @@ msgstr "Ubicación de llegada del transportista"
 msgid "Print forwarding form"
 msgstr "Imprimir formulario de transporte"
 
-#: ../ChainCommandList.php:141 ../CommandList.php:220
-#: ../CourseCommandList.php:129
-msgid "Charge"
-msgstr "Tarifa"
-
-#: ../ChainCommandList.php:148 ../CommandList.php:227
-#: ../PrestationCommandList.php:108 ../CourseCommandList.php:139
-msgid "Show invoices"
-msgstr "Mostrar facturas"
-
-#: ../ChainCommandList.php:152 ../CommandList.php:241
-msgid "Show payments"
-msgstr "Mostrar pagos"
-
-#: ../ChainCommandList.php:156 ../CommandList.php:256
-msgid "Receipt"
-msgstr "Recibo"
-
-#: ../ChainCommandList.php:157 ../CommandList.php:257
-msgid "Print order receipt"
-msgstr "Imprimir recibo del pedido"
-
-#: ../ChainCommandList.php:163 ../CommandList.php:249
-msgid "Shipment"
-msgstr "Consignación"
-
-#: ../ChainCommandList.php:164 ../CommandList.php:250
-msgid "Shipment informations"
-msgstr "Detalles de consignación"
-
 #: ../ChainCommandList.php:174
 msgid "number "
 msgstr "número"
@@ -9207,7 +9247,7 @@ msgstr ""
 "Usted no tiene ningún catálogo definido, por favor póngase en contacto con "
 "su administrador."
 
-#: ../SupplierCatalog.php:322
+#: ../SupplierCatalog.php:354
 msgid "Sold by"
 msgstr "Vendido por"
 
@@ -9535,11 +9575,6 @@ msgstr "Referencia del componente"
 msgid "Select an operation"
 msgstr "Seleccione una operación"
 
-#: ../ActivatedChainTaskList.php:119 ../CommandList.php:126
-#: ../UnavailabilityPlanning.php:125
-msgid "Select a project manager"
-msgstr "Seleccione un director de proyecto"
-
 #: ../ActivatedChainTaskList.php:127 ../UnavailabilityPlanning.php:139 void:1
 msgid "Signatory"
 msgstr "Firmante"
@@ -9736,6 +9771,811 @@ msgstr "Por favor, seleccione un producto."
 #: ../NomenclatureAddEdit.php:241
 msgid "Please provide a version."
 msgstr "Por favor, proporcione una versión."
+
+#: ../ActivatedMovementAddWithoutPrevisionToBeExecuted.php:115
+msgid "Please select a destination location"
+msgstr "Por favor, seleccione una ubicación de destino"
+
+#: ../StockProductRealandVirtualList.php:63 ../ConcreteProductList.php:58
+#: ../DetailedLocationByProductList.php:156 ../StorebyStorageSiteList.php:244
+#: void:1
+msgid "Owner"
+msgstr "Propietario"
+
+#: ../StockProductRealandVirtualList.php:68
+msgid "At a fixed date"
+msgstr "A fecha fija"
+
+#: ../StockProductRealandVirtualList.php:114 void:1
+msgid "Virtual qty"
+msgstr "Cantidad virtual"
+
+#: ../StockProductRealandVirtualList.php:118 ../ProductCommand.php:234
+#: ../CustomerCatalog.php:487 void:1
+msgid "Minimum qty"
+msgstr "Cantidad mínima"
+
+#: ../StoreActiveDesactive.php:82
+#, php-format
+msgid ""
+"The following stores could not be deactivated because one of their locations "
+"is not empty: %s"
+msgstr ""
+"No se ha podido desactivar los siguientes almacenes porque una de sus "
+"ubicaciones no está vacía: %s"
+
+#: ../PreferencesWebSite.php:68 void:1
+msgid "Generic actor"
+msgstr "Agente genérico"
+
+#: ../InvoiceList.php:74
+msgid "Payment reference"
+msgstr "Referencia del pago"
+
+#: ../InvoiceList.php:77
+msgid "Filter by date of issue"
+msgstr "Filtrar por fecha de emisión"
+
+#: ../InvoiceList.php:89
+msgid "Filter by expiration date"
+msgstr "Filtrar por fecha de caducidad"
+
+#: ../InvoiceList.php:120
+msgid "Reprint"
+msgstr "Reimprimir"
+
+#: ../InvoiceList.php:121
+msgid "Print invoice copy"
+msgstr "Imprimir una copia de la factura"
+
+#: ../InvoiceList.php:126 ../ToHaveList.php:101 void:1
+msgid "Details"
+msgstr "Detalles"
+
+#: ../InvoiceList.php:127 ../InvoiceDetail.php:189
+#: ../ChainCommandInvoiceDetail.php:123 ../CourseCommandList.php:123
+#: ../CourseInvoiceDetail.php:118 void:1
+msgid "Invoice details"
+msgstr "Detalles sobre la factura"
+
+#: ../InvoiceList.php:131
+msgid "Payments"
+msgstr "Pagos"
+
+#: ../InvoiceList.php:132 ../PrestationCommandList.php:113 void:1
+msgid "List of payments"
+msgstr "Lista de pagos"
+
+#: ../ChainEdit.php:66
+msgid "Chain cannot be created."
+msgstr "La cadena no se puede crear."
+
+#: ../ChainEdit.php:647
+msgid "Chain cannot be saved."
+msgstr "La cadena ne se puede guardar."
+
+#: ../ChainEdit.php:653
+msgid "Chain, operations and tasks were successfully saved."
+msgstr "Cadenas, operaciones y tareas se han guardado con éxito."
+
+#: ../ChainEdit.php:679
+msgid "Chain building"
+msgstr "Construcción de cadena"
+
+#: ../CatalogAddEdit.php:54
+msgid "Catalogue cannot be saved."
+msgstr "El catálogo ne se puede guardar."
+
+#: ../CatalogAddEdit.php:56
+#, php-format
+msgid "Catalogue \"%s\" was successfully saved."
+msgstr "El catálogo \"%s\" se ha guardado con éxito."
+
+#: ../CatalogAddEdit.php:57
+msgid "Add or update catalogue"
+msgstr "Añadir o actualizar catálogo"
+
+#: ../GroupableBoxActivatedChainTaskList.php:47
+msgid ""
+"Please select the tasks you want to regroup then click the \"Regroup\" button"
+msgstr ""
+"Por favor, seleccione las tareas que quiere reagrupar y haga clic en el "
+"botón \"Reagrupar\""
+
+#: ../GroupableBoxActivatedChainTaskList.php:77
+#: ../GroupableBoxActivatedChainTaskList.php:140 ../GroupableBoxList.php:74
+msgid "Departure city"
+msgstr "Ciudad de salida"
+
+#: ../GroupableBoxActivatedChainTaskList.php:85
+#: ../GroupableBoxActivatedChainTaskList.php:143 ../GroupableBoxList.php:77
+msgid "Arrival city"
+msgstr "Ciudad de llegada"
+
+#: ../GroupableBoxActivatedChainTaskList.php:94
+#: ../GroupableBoxActivatedChainTaskList.php:99
+msgid "Select a zone"
+msgstr "Seleccione una zona"
+
+#: ../GroupableBoxActivatedChainTaskList.php:154 ../GroupableBoxList.php:94
+msgid "Regroup"
+msgstr "Reagrupar"
+
+#: ../LocationDelete.php:85
+msgid "The following locations could not be deleted"
+msgstr "Las ubicaciones siguientes no se han podido suprimir"
+
+#: ../AssemblyDetail.php:67
+msgid "Assembly has no registered item."
+msgstr "El montaje no tiene ningún artículo registrado."
+
+#: ../AssemblyDetail.php:112 ../AssemblyDegradedModeDetail.php:93
+#: ../AssemblyEdit.php:110
+msgid "Tracing mode"
+msgstr "Modalidad de seguimiento"
+
+#: ../AssemblyDetail.php:187 ../ProductHandingByCategoryAddEdit.php:65
+#: ../../../pwak/trunk/lib/GenericMessages.php:93 void:1
+msgid "Back"
+msgstr "Atrás"
+
+#: ../AssemblyDetail.php:192 ../AssemblyEdit.php:449
+msgid "of assembly"
+msgstr "de montaje"
+
+#: ../AssemblyDetail.php:192 ../AssemblyEdit.php:451
+msgid "of material tracking"
+msgstr "de seguimiento de material"
+
+#: ../AssemblyDetail.php:198
+msgid "Details "
+msgstr "Detalles"
+
+#: ../FormModelDelete.php:42
+msgid "Select form models were successfully deleted."
+msgstr ""
+"Los modelos de formularios seleccionados han sido suprimidos con éxito."
+
+#: ../FormModelDelete.php:43
+#, php-format
+msgid ""
+"The following form model could not be deleted because it is linked to an "
+"action: %s"
+msgstr ""
+"El modelo de formulario siguiente no se ha podido suprimir porque está "
+"vinculado con una acción: %s"
+
+#: ../FormModelDelete.php:44
+#, php-format
+msgid ""
+"The following form models could not be deleted because they are linked to an "
+"action: %s"
+msgstr ""
+"Los modelos siguientes de modelos de formularios no se han podido suprimir "
+"porque están vinculados con una acción: %s"
+
+#: ../ContactAddEdit.php:59
+msgid "Contact cannot be saved"
+msgstr "El contacto no se puede guardar"
+
+#: ../ContactAddEdit.php:60
+msgid "Create/update contact"
+msgstr "Crear/actualizar contacto"
+
+#: ../NomenclatureConcreteProductList.php:65
+msgid "Assign to a nomenclature"
+msgstr "Asignar a una nomenclatura"
+
+#: ../NomenclatureConcreteProductList.php:67 ../NomenclatureList.php:81
+msgid "Show by components"
+msgstr "Mostrar por componentes"
+
+#: ../NomenclatureConcreteProductList.php:69 ../NomenclatureList.php:83
+msgid "Show by sets"
+msgstr "Mostrar por series"
+
+#: ../NomenclatureConcreteProductList.php:76 ../NomenclatureList.php:48
+#: ../NomenclatureList.php:97
+msgid "Nomenclature version"
+msgstr "Versión de nomenclatura"
+
+#: ../ProductQuantityByCategoryEdit.php:44
+#: ../ProductQuantityByCategoryList.php:44
+#, php-format
+msgid "Minimum quantity for order of product \"%s\""
+msgstr "Cantidad mínima para pedido del producto \"%s\""
+
+#: ../ProductQuantityByCategoryEdit.php:45
+#, php-format
+msgid " and category %s"
+msgstr "y categoría %s"
+
+#: ../ProductQuantityByCategoryEdit.php:92
+#: ../ProductQuantityByCategoryList.php:150
+msgid "Minimum ordered quantity"
+msgstr "Cantidad miníma pedida "
+
+#: ../ProductQuantityByCategoryEdit.php:93
+#: ../ProductQuantityByCategoryList.php:69
+#: ../ProductQuantityByCategoryList.php:151
+msgid "Quantity type"
+msgstr "Tipo de cantidad"
+
+#: ../ProductCommand.php:226
+msgid "Basis excl. VAT "
+msgstr "Base excl. IVA"
+
+#: ../AnswerModelSelect.php:47
+msgid "This answer is already linked to this question."
+msgstr "Esta respuesta ya está vinculada con esta pregunta."
+
+#: ../AnswerModelSelect.php:123
+msgid "Select an answer"
+msgstr "Elija una respuesta"
+
+#: ../AnswerModelSelect.php:126
+msgid "Answer order"
+msgstr "Contestar al pedido"
+
+#: ../AnswerModelSelect.php:129
+msgid "Please select a question."
+msgstr "Por favor, seleccione una pregunta."
+
+#: ../BoardByProduct.php:51 ../ProductHandingByCategoryAddEdit.php:54
+msgid "select one or more products"
+msgstr "seleccion uno o varios productos"
+
+#: ../BoardByProduct.php:76
+msgid "Only ordered products"
+msgstr "Solamente productos pedidos"
+
+#: ../InvoiceCommandList.php:76
+msgid "No invoices related to this order."
+msgstr "No hay facturas relacionadas con este pedido."
+
+#: ../InvoiceCommandList.php:83 ../InvoiceCommandList.php:111
+msgid "Please select an invoice."
+msgstr "Por favor, seleccione una factura."
+
+#: ../InvoiceCommandList.php:269
+msgid "Deadline for payment"
+msgstr "Plazo de pago"
+
+#: ../InvoiceCommandList.php:273
+msgid "Amount to pay incl. VAT"
+msgstr "Importe para pagar incl. IVA"
+
+#: ../InvoiceCommandList.php:282 void:1
+msgid "List of invoices"
+msgstr "Lista de facturas"
+
+#: ../InvoiceCommandList.php:359
+msgid "List of invoices and execution of a payment"
+msgstr "Lista de facturas y cumplimiento de un pago"
+
+#: ../ProductAddEdit.php:58
+msgid "Product was not found in the database."
+msgstr "El producto no se encontró en la base de datos."
+
+#: ../ProductAddEdit.php:59
+msgid "Product cannot be saved"
+msgstr "El producto ne se puede guardar"
+
+#: ../ProductAddEdit.php:60
+#, php-format
+msgid "Product \"%s\" was successfully modified."
+msgstr "El producto \"%s\" se ha modificado con éxito."
+
+#: ../ProductAddEdit.php:61
+msgid "Add or update product"
+msgstr "Añadir o actualizar un producto"
+
+#: ../ProductAddEdit.php:62
+#, php-format
+msgid "A product already exists with this reference \"%s\", please correct."
+msgstr "Un producto con esta referencia ya existe \"%s\"; por favor, corrija."
+
+#: ../ProductAddEdit.php:135
+msgid "You cannot change tracing mode for a product involved in a nomenclature"
+msgstr ""
+"No puede cambiar el modo de seguimiento para un producto en una nomenclatura"
+
+#: ../CommandReceiptEdit.php:49
+msgid "Error: order receipt could not be printed."
+msgstr "Error: el recibo del pedido no se puede imprimir"
+
+#: ../FlowList.php:54
+msgid "Filter by payment date"
+msgstr "Filtrar por fecha de pago"
+
+#: ../FlowList.php:93
+msgid "Registration date"
+msgstr "Fecha de registro"
+
+#: ../LocationExecutedMovementList.php:61
+msgid "This movement was cancelled."
+msgstr "Este movimiento ha sido cancelado."
+
+#: ../LocationExecutedMovementList.php:121
+msgid "Not cancelled"
+msgstr "Sin cancelar"
+
+#: ../LocationExecutedMovementList.php:277
+msgid "Print delivery order"
+msgstr "Imprimir pedido de entrega"
+
+#: ../LocationExecutedMovementList.php:295
+msgid "Cancel movement"
+msgstr "Cancelar movimiento"
+
+#: ../LocationExecutedMovementList.php:302
+msgid "Executed movements"
+msgstr "Movimientos ejecutados"
+
+#: ../LocationExecutedMovementList.php:337
+msgid "List of partial movements executed."
+msgstr "Lista de movimientos parciales ejecutados."
+
+#: ../ActorBankDetailAddEdit.php:54 void:1
+msgid "Add or update bank"
+msgstr "Agregar o actualizar banco"
+
+#: ../ActorBankDetailAddEdit.php:74 ../SiteAddEdit.php:92
+msgid "Actor was not found in the database."
+msgstr "El agente no se encuentra en la base de datos."
+
+#: ../ActorBankDetailAddEdit.php:103
+msgid "Bank was not found in the database."
+msgstr "El banco no se encuentra en la base de datos."
+
+#: ../UploadedDocumentActivatedChainTask.php:62
+#, php-format
+msgid "Document \"%s\" has been assigned to task \"%s\""
+msgstr "El documento \"%s\" ha sido asignado a la tarea \"%s\""
+
+#: ../UploadedDocumentActivatedChainTask.php:73
+#, php-format
+msgid "Document \"%s\" has been unassigned from its task."
+msgstr "El documento \"%s\" ha sido desasignado de su tarea."
+
+#: ../BoxList.php:45
+msgid "You are about to ungroup all parcels, continue ?"
+msgstr "Está a punto de desagrupar todos los paquetes, ¿seguir? "
+
+#: ../BoxList.php:52
+msgid "Regrouping reference (parcel, pallet, etc...)"
+msgstr "Reagrupación de referencia (paquete, palé, etc.)"
+
+#: ../BoxList.php:93
+msgid "Cancel regrouping"
+msgstr "Cancelar reagrupación"
+
+#: ../BoxList.php:96
+msgid "Print packing list"
+msgstr "Imprimir lista de contenidos"
+
+#: ../BoxList.php:106
+msgid "Regrouping reference"
+msgstr "Referencia de reagrupación "
+
+#: ../BoxList.php:108
+msgid "Content reference"
+msgstr "Referencia del contenido"
+
+#: ../EstimateToOrder.php:74
+#, php-format
+msgid "Selected estimate has already given rise to order \"%s\"."
+msgstr "El presupuesto seleccionado ya ha dado lugar al pedido \"%s\"."
+
+#: ../EstimateToOrder.php:87
+#, php-format
+msgid ""
+"Estimate \"%s\" is not valid anymore (%d days passed since it was issued)."
+msgstr ""
+"El presupuesto \"%s\" ya no es válido (%días han pasado desde su emisión)."
+
+#: ../EstimateToOrder.php:179
+#, php-format
+msgid "Order for estimate number \"%s\""
+msgstr "Pedido para el presupuesto número  \"%s\""
+
+#: ../WorkOrder.php:75
+msgid "saved"
+msgstr "guardado"
+
+#: ../WorkOrder.php:80
+msgid "Modified data is no more compatible with work order items.\n"
+msgstr ""
+"Los datos modificados ya no son compatibles con los artículos de pedido de "
+"trabajo.\n"
+
+#: ../WorkOrder.php:81
+msgid "modified"
+msgstr "modificado"
+
+#: ../WorkOrder.php:161
+msgid "Work order data were successfully "
+msgstr "Los datos del pedido de trabajo fueron correctamente"
+
+#: ../WorkOrder.php:185
+msgid "Add a work order"
+msgstr "Añadir un pedido de trabajo"
+
+#: ../WorkOrder.php:193 ../WorkOrder.php:247 void:1
+msgid "h."
+msgstr "h."
+
+#: ../WorkOrder.php:195 ../WorkOrder.php:249
+msgid "m."
+msgstr "m."
+
+#: ../WorkOrder.php:204
+msgid "Update work order"
+msgstr "Actualizar un pedido de trabajo"
+
+#: ../InvoiceDetail.php:54
+msgid "Invoice was not found in the database."
+msgstr "La factura no se encontró en la base de datos."
+
+#: ../ActivatedMovementAddWithPrevision.php:58
+msgid "No movement selected"
+msgstr "Ningún movimiento seleccionado"
+
+#: ../ActivatedMovementAddWithPrevision.php:70
+msgid "Selected movement is locked. "
+msgstr "Movimiento seleccionado bloqueado."
+
+#: ../ActivatedMovementAddWithPrevision.php:71
+msgid "Selected movement is already being executed or was executed completely."
+msgstr ""
+"El movimiento seleccionado ya se está ejecutando o fue ejecutado por "
+"completo."
+
+#: ../ActivatedMovementAddWithPrevision.php:73
+msgid "You cannot execute it."
+msgstr "Usted no puede ejecutarlo."
+
+#: ../ActivatedMovementAddWithPrevision.php:234
+msgid "Execution of an expected movement"
+msgstr "Ejecución de un movimiento anticipado"
+
+#: ../SaisonalityList.php:63
+#, php-format
+msgid "The following seasonalities could not be renewed: %s"
+msgstr "Las estacionalidades siguientes no se han podido renovar: %s"
+
+#: ../SaisonalityList.php:74
+msgid "Renewal"
+msgstr "Renovación"
+
+#: ../SaisonalityList.php:82
+msgid "Seasonality"
+msgstr "Temporalidad"
+
+#: ../SaisonalityList.php:84 void:1
+msgid "Properties"
+msgstr "Propiedades"
+
+#: ../SalesmenCommissionSettings.php:70
+msgid "Commission percent by invoice"
+msgstr "Porcentaje de comisión por factura"
+
+#: ../CommandDelete.php:57
+msgid "Order was not found in the database."
+msgstr "El pedido no se encuentra en la base de datos."
+
+#: ../CommandDelete.php:62
+msgid "You cannot delete an estimate that is linked to an order"
+msgstr "No puede suprimir un presupuesto vinculado con un pedido"
+
+#: ../CommandDelete.php:67
+msgid "You cannot delete an order which state is different from \"Activated\""
+msgstr "No puede suprimir un pedido cuyo estado no es \"Activated\""
+
+#: ../CommandDelete.php:73
+msgid "You cannot delete a closed order."
+msgstr "No puede suprimir un pedido cerrado."
+
+#: ../CommandDelete.php:80
+#, php-format
+msgid "Are you sure you want to delete %s ?"
+msgstr "¿Está seguro de que desea suprimir %s?"
+
+#: ../CommandDelete.php:81
+msgid "this estimate"
+msgstr "este presupuesto"
+
+#: ../CommandDelete.php:81
+msgid "this order"
+msgstr "este pedido"
+
+#: ../CommandDelete.php:97
+msgid ""
+"This order cannot be deleted because one of its task is linked to a document."
+msgstr ""
+"Este pedido ne se puede suprimir porque una de sus tareas está vinculada con "
+"un documento."
+
+#: ../ProductQuantityByCategoryList.php:145 ../BoardByCategory.php:51
+#: ../ProductHandingByCategoryList.php:52
+#: ../CustomerAttractivityAddEdit.php:139 void:1
+msgid "Select one or more categories"
+msgstr "Seleccione una o varias categorías"
+
+#: ../ProductQuantityByCategoryList.php:147
+msgid "Concerned categories"
+msgstr "Categorías afectadas"
+
+#: ../ActivatedChainGantt.php:57 ../ActivatedChainGantt.php:67
+msgid "Gantt diagram of a scheduled chain"
+msgstr "Diagrama de Gantt de una cadena programada"
+
+#: ../BoardBySupplier.php:53 ../BoardByCoast.php:51
+msgid "Select one or more suppliers"
+msgstr "Elija uno o varios proveedores"
+
+#: ../BoardBySupplier.php:78 ../BoardByCoast.php:74
+msgid "Only suppliers whose products<br>have already been ordered"
+msgstr "Sólo proveedores cuyos productos<br>han sido pedidos ya"
+
+#: ../ZoneList.php:52 ../menu.inc.php:366
+msgid "list of zones"
+msgstr "lista de zonas"
+
+#: ../PaymentCommandList.php:72 ../menu.inc.php:601 ../menu.inc.php:607
+msgid "State of orders"
+msgstr "Estado de pedidos"
+
+#: ../PaymentCommandList.php:74 ../ToHavePaymentList.php:61
+msgid "Payment number"
+msgstr "Número del pago"
+
+#: ../PaymentCommandList.php:85
+msgid "Invoice(s)"
+msgstr "Factura(s)"
+
+#: ../PaymentCommandList.php:107
+#, php-format
+msgid "List of payments for order %s"
+msgstr "Lista de pagos del pedido %s"
+
+#: ../DocumentReedit.php:57 ../DocumentReedit.php:67
+#: ../../../pwak/trunk/lib/GenericMessages.php:43
+msgid "An error occurred, please try again later."
+msgstr "Se ha producido un error, por favor, inténte de nuevo más tarde."
+
+#: ../InventoryDetailList.php:113 ../InventoryDetailList.php:115
+#: ../menu.inc.php:797 ../menu.inc.php:799
+msgid "Inventory"
+msgstr "Inventario"
+
+#: ../InventoryDetailList.php:131
+msgid "Purchase unit price excl. VAT"
+msgstr "Precio por unidad de compra excl. IVA"
+
+#: ../ContactDelete.php:59
+#, php-format
+msgid "Contact %s cannot be deleted"
+msgstr "El contacto %s no se puede suprimir"
+
+#: ../ActivatedMovementWithPrevisionExecuteSeveral.php:81
+msgid "Execute several movement"
+msgstr "Ejecutar varios movimientos"
+
+#: ../SiteAddEdit.php:63
+msgid "Site cannot be saved"
+msgstr "La ubicación no se puede guardar"
+
+#: ../SiteAddEdit.php:65
+#, php-format
+msgid "Site \"%s\" was successfully saved."
+msgstr "La ubicación \"%s\"  se ha guardado con éxito."
+
+#: ../SiteAddEdit.php:66
+msgid "Add or update site"
+msgstr "Añadir o actualizar ubicación"
+
+#: ../SiteAddEdit.php:67
+msgid "More than one result match."
+msgstr "Corresponde a más de un resultado."
+
+#: ../SiteAddEdit.php:68
+msgid "More than one result match, please select a result:"
+msgstr "Más de una correspondencia; por favor, seleccione un resultado:"
+
+#: ../SiteAddEdit.php:69
+#, php-format
+msgid "A site already exists with the name \"%s\", please correct."
+msgstr "Una ubicación con el nombre  \"%s\" ya existe; por favor, corrija."
+
+#: ../SiteAddEdit.php:129
+msgid "Site was not found in the database"
+msgstr "La ubicación no se encontró en la base de datos"
+
+#: ../ComponentConcreteProduct.php:113
+msgid "Parts nomenclature reference "
+msgstr "Referencia de la nomenclatura de piezas"
+
+#: ../ComponentConcreteProduct.php:124
+msgid "SN or Lot"
+msgstr "NS o lote"
+
+#: ../ComponentConcreteProduct.php:153
+msgid "none"
+msgstr "ninguno"
+
+#: ../CommandUnlock.php:52
+msgid "Selected order must be in locked state."
+msgstr "El pedido seleccionado debe estar en estado de bloqueado."
+
+#: ../CommandUnlock.php:57
+msgid "You cannot unlock a closed order"
+msgstr "No se puede abrir un pedido cerrado"
+
+#: ../CommandUnlock.php:62
+msgid "Are you sure you want to unlock this order ?"
+msgstr "¿Está seguro de que desea abrir este pedido?"
+
+#: ../ChainTaskList.php:92 void:1
+msgid "Departure date"
+msgstr "Fecha de salida"
+
+#: ../ChainTaskList.php:93 void:1
+msgid "Arrival date"
+msgstr "Fecha de llegada"
+
+#: ../ChainTaskList.php:99
+msgid "List of fixed date task or weekly task"
+msgstr "Lista de tareas con fechas fijas o tarea semanal"
+
+#: ../SupplyingOptimization.php:76
+msgid "No order found for last weeks."
+msgstr "Ningún pedido encontrado para las últimas semanas."
+
+#: ../SupplyingOptimization.php:146
+msgid "No suggested quantity to order for the selected date."
+msgstr "Ninguna cantidad sugerida a pedir para la fecha seleccionada."
+
+#: ../SupplyingOptimization.php:229
+msgid "Number of weeks in history"
+msgstr "Número de semanas en historial"
+
+#: ../SupplyingOptimization.php:231
+msgid "Number of weeks of forecast"
+msgstr "Número de semanas de previsión"
+
+#: ../SupplyingOptimization.php:233
+msgid "Default delivery within (days)"
+msgstr "Entrega por defecto dentro de (días)"
+
+#: ../SupplyingOptimization.php:236
+msgid "Forecasts with extrapolation"
+msgstr "Previsiones con extrapolacion"
+
+#: ../UnavailabilityPlanning.php:45
+msgid "Monthly schedule"
+msgstr "Programa mensual"
+
+#: ../UnavailabilityPlanning.php:46 ../menu.inc.php:1002
+msgid "Weekly schedule"
+msgstr "Programa semanal"
+
+#: ../UnavailabilityPlanning.php:110
+msgid "Select an operator"
+msgstr "Seleccione un operador"
+
+#: ../UnavailabilityPlanning.php:171
+msgid "Select a customer."
+msgstr "Seleccione un cliente."
+
+#: ../UnavailabilityPlanning.php:201 ../PotentialsEdit.php:54
+msgid "Select a matriculation"
+msgstr "Seleccione una matrícula"
+
+#: ../UnavailabilityPlanning.php:408
+msgid "Class - "
+msgstr "Clase -"
+
+#: ../UnavailabilityPlanning.php:410
+msgid "Beginning: "
+msgstr "Inicio:"
+
+#: ../UnavailabilityPlanning.php:428 void:1
+msgid "Student"
+msgstr "Estudiante"
+
+#: ../UnavailabilityPlanning.php:430
+msgid "Class, beginning"
+msgstr "Clase, inicio"
+
+#: ../UnavailabilityPlanning.php:431 void:1
+msgid "duration"
+msgstr "duración"
+
+#: ../UnavailabilityPlanning.php:432
+msgid "airplane: "
+msgstr "avión:"
+
+#: ../UnavailabilityPlanning.php:463
+#: ../../../pwak/trunk/lib/Search/SearchForm.php:569
+msgid " to "
+msgstr "a"
+
+#: ../UnavailabilityPlanning.php:647
+msgid "previous"
+msgstr "anterior"
+
+#: ../UnavailabilityPlanning.php:653
+msgid "next"
+msgstr "próximo"
+
+#: ../UnavailabilityPlanning.php:659 void:1
+msgid "Month"
+msgstr "Mes"
+
+#: ../UnavailabilityPlanning.php:666 void:1
+msgid "Week"
+msgstr "Semana"
+
+#: ../UnavailabilityPlanning.php:673
+msgid "Day"
+msgstr "Día"
+
+#: ../UnavailabilityPlanning.php:726 ../UnavailabilityPlanning.php:730
+msgid "List of unavailabilities"
+msgstr "Lista de indisponibilidades"
+
+#: ../UnavailabilityPlanning.php:726
+msgid " for "
+msgstr "para"
+
+#: ../FlowTypeDuplicate.php:82
+msgid "Expenses and receipts model copy"
+msgstr "Copia de modelo de gastos y recibos"
+
+#: ../Download.php:82 void:1
+msgid "Onlogistics download zone"
+msgstr "Zona de descargar Onlogistics"
+
+#: ../WorkOrderList.php:76 void:1
+msgid "Work order name"
+msgstr "Nombre del pedido de trabajo"
+
+#: ../WorkOrderList.php:147
+msgid "Assign selected items"
+msgstr "Asignar artículos seleccionados"
+
+#: ../WorkOrderList.php:203 ../WorkOrderList.php:209
+msgid "Work order management"
+msgstr "Gestión de pedidos de trabajo"
+
+#: ../ChainActivationTaskDetail.php:77
+msgid "Chain to activate"
+msgstr "Cadena por activar"
+
+#: ../ChainActivationTaskDetail.php:91 void:1
+msgid "task beginning date/time"
+msgstr " fecha / hora de inicio de la tarea"
+
+#: ../ChainActivationTaskDetail.php:92 void:1
+msgid "task end date/time"
+msgstr "fecha / hora de finalización de la tarea"
+
+#: ../ChainActivationTaskDetail.php:93 void:1
+msgid "Deadline date"
+msgstr "Fecha del plazo"
+
+#: ../ChainActivationTaskDetail.php:98 ../menu.inc.php:538 void:1
+msgid "Nomenclatures"
+msgstr "Nomenclaturas"
+
+#: ../ChainActivationTaskDetail.php:101
+msgid "Components"
+msgstr "Componentes"
+
+#: ../ChainActivationTaskDetail.php:110
+msgid "Take into account volume of nomenclature"
+msgstr "Tener en cuenta el volumen de nomenclatura"
 
 #: ../menu.inc.php:47 ../menu.inc.php:49
 msgid "Profiles table"
@@ -10003,10 +10843,6 @@ msgstr "Configuración del suministro"
 msgid "Zones"
 msgstr "Zonas"
 
-#: ../menu.inc.php:366 ../ZoneList.php:52
-msgid "list of zones"
-msgstr "lista de zonas"
-
 #: ../menu.inc.php:370 ../menu.inc.php:618
 msgid "Services"
 msgstr "Servicios"
@@ -10119,10 +10955,6 @@ msgstr "Descuentos por categoría"
 msgid "List of discounts by customer category"
 msgstr "Lista de descuentos por categoría de cliente"
 
-#: ../menu.inc.php:538 ../ChainActivationTaskDetail.php:98 void:1
-msgid "Nomenclatures"
-msgstr "Nomenclaturas"
-
 #: ../menu.inc.php:545
 msgid "List of nomenclatures models"
 msgstr "Lista de modelos de nomenclatura"
@@ -10142,10 +10974,6 @@ msgstr "Seguimiento de pedidos"
 #: ../menu.inc.php:599
 msgid "Product orders"
 msgstr "Pedidos de productos"
-
-#: ../menu.inc.php:601 ../menu.inc.php:607 ../PaymentCommandList.php:72
-msgid "State of orders"
-msgstr "Estado de pedidos"
 
 #: ../menu.inc.php:605
 msgid "Carriage orders"
@@ -10285,11 +11113,6 @@ msgstr "Ejecución de un movimimiento imprevisto"
 msgid "List of executed movements"
 msgstr "Lista de movimientos ejecutados"
 
-#: ../menu.inc.php:797 ../menu.inc.php:799 ../InventoryDetailList.php:113
-#: ../InventoryDetailList.php:115
-msgid "Inventory"
-msgstr "Inventario"
-
 #: ../menu.inc.php:803 ../menu.inc.php:805
 msgid "Material accounting"
 msgstr "Contabilidad material"
@@ -10410,10 +11233,6 @@ msgstr "Lista de vuelos previstos"
 msgid "List of completed flights"
 msgstr "Lista de vuelos completados"
 
-#: ../menu.inc.php:1002 ../UnavailabilityPlanning.php:46
-msgid "Weekly schedule"
-msgstr "Programa semanal"
-
 #: ../menu.inc.php:1011
 msgid "EDM"
 msgstr "GDE"
@@ -10433,796 +11252,6 @@ msgstr "Tipos de documentos"
 #: ../menu.inc.php:1027
 msgid "List of document types"
 msgstr "Lista de tipos de doucmentos"
-
-#: ../ActivatedMovementAddWithoutPrevisionToBeExecuted.php:115
-msgid "Please select a destination location"
-msgstr "Por favor, seleccione una ubicación de destino"
-
-#: ../StockProductRealandVirtualList.php:63 ../ConcreteProductList.php:58
-#: ../DetailedLocationByProductList.php:156 ../StorebyStorageSiteList.php:244
-#: void:1
-msgid "Owner"
-msgstr "Propietario"
-
-#: ../StockProductRealandVirtualList.php:68
-msgid "At a fixed date"
-msgstr "A fecha fija"
-
-#: ../StockProductRealandVirtualList.php:114 void:1
-msgid "Virtual qty"
-msgstr "Cantidad virtual"
-
-#: ../StockProductRealandVirtualList.php:118 ../ProductCommand.php:234
-#: ../CustomerCatalog.php:453 void:1
-msgid "Minimum qty"
-msgstr "Cantidad mínima"
-
-#: ../StoreActiveDesactive.php:82
-#, php-format
-msgid ""
-"The following stores could not be deactivated because one of their locations "
-"is not empty: %s"
-msgstr ""
-"No se ha podido desactivar los siguientes almacenes porque una de sus "
-"ubicaciones no está vacía: %s"
-
-#: ../PreferencesWebSite.php:68 void:1
-msgid "Generic actor"
-msgstr "Agente genérico"
-
-#: ../BoxList.php:45
-msgid "You are about to ungroup all parcels, continue ?"
-msgstr "Está a punto de desagrupar todos los paquetes, ¿seguir? "
-
-#: ../BoxList.php:52
-msgid "Regrouping reference (parcel, pallet, etc...)"
-msgstr "Reagrupación de referencia (paquete, palé, etc.)"
-
-#: ../BoxList.php:93
-msgid "Cancel regrouping"
-msgstr "Cancelar reagrupación"
-
-#: ../BoxList.php:96
-msgid "Print packing list"
-msgstr "Imprimir lista de contenidos"
-
-#: ../BoxList.php:106
-msgid "Regrouping reference"
-msgstr "Referencia de reagrupación "
-
-#: ../BoxList.php:108
-msgid "Content reference"
-msgstr "Referencia del contenido"
-
-#: ../InvoiceList.php:74
-msgid "Payment reference"
-msgstr "Referencia del pago"
-
-#: ../InvoiceList.php:77
-msgid "Filter by date of issue"
-msgstr "Filtrar por fecha de emisión"
-
-#: ../InvoiceList.php:89
-msgid "Filter by expiration date"
-msgstr "Filtrar por fecha de caducidad"
-
-#: ../InvoiceList.php:120
-msgid "Reprint"
-msgstr "Reimprimir"
-
-#: ../InvoiceList.php:121
-msgid "Print invoice copy"
-msgstr "Imprimir una copia de la factura"
-
-#: ../InvoiceList.php:126 ../ToHaveList.php:101 void:1
-msgid "Details"
-msgstr "Detalles"
-
-#: ../InvoiceList.php:127 ../InvoiceDetail.php:189
-#: ../ChainCommandInvoiceDetail.php:123 ../CourseCommandList.php:123
-#: ../CourseInvoiceDetail.php:118 void:1
-msgid "Invoice details"
-msgstr "Detalles sobre la factura"
-
-#: ../InvoiceList.php:131
-msgid "Payments"
-msgstr "Pagos"
-
-#: ../InvoiceList.php:132 ../PrestationCommandList.php:113 void:1
-msgid "List of payments"
-msgstr "Lista de pagos"
-
-#: ../ChainEdit.php:66
-msgid "Chain cannot be created."
-msgstr "La cadena no se puede crear."
-
-#: ../ChainEdit.php:647
-msgid "Chain cannot be saved."
-msgstr "La cadena ne se puede guardar."
-
-#: ../ChainEdit.php:653
-msgid "Chain, operations and tasks were successfully saved."
-msgstr "Cadenas, operaciones y tareas se han guardado con éxito."
-
-#: ../ChainEdit.php:679
-msgid "Chain building"
-msgstr "Construcción de cadena"
-
-#: ../CatalogAddEdit.php:54
-msgid "Catalogue cannot be saved."
-msgstr "El catálogo ne se puede guardar."
-
-#: ../CatalogAddEdit.php:56
-#, php-format
-msgid "Catalogue \"%s\" was successfully saved."
-msgstr "El catálogo \"%s\" se ha guardado con éxito."
-
-#: ../CatalogAddEdit.php:57
-msgid "Add or update catalogue"
-msgstr "Añadir o actualizar catálogo"
-
-#: ../LocationDelete.php:85
-msgid "The following locations could not be deleted"
-msgstr "Las ubicaciones siguientes no se han podido suprimir"
-
-#: ../AssemblyDetail.php:67
-msgid "Assembly has no registered item."
-msgstr "El montaje no tiene ningún artículo registrado."
-
-#: ../AssemblyDetail.php:112 ../AssemblyDegradedModeDetail.php:93
-#: ../AssemblyEdit.php:110
-msgid "Tracing mode"
-msgstr "Modalidad de seguimiento"
-
-#: ../AssemblyDetail.php:187 ../ProductHandingByCategoryAddEdit.php:65
-#: ../../../pwak/trunk/lib/GenericMessages.php:93 void:1
-msgid "Back"
-msgstr "Atrás"
-
-#: ../AssemblyDetail.php:192 ../AssemblyEdit.php:449
-msgid "of assembly"
-msgstr "de montaje"
-
-#: ../AssemblyDetail.php:192 ../AssemblyEdit.php:451
-msgid "of material tracking"
-msgstr "de seguimiento de material"
-
-#: ../AssemblyDetail.php:198
-msgid "Details "
-msgstr "Detalles"
-
-#: ../FormModelDelete.php:42
-msgid "Select form models were successfully deleted."
-msgstr ""
-"Los modelos de formularios seleccionados han sido suprimidos con éxito."
-
-#: ../FormModelDelete.php:43
-#, php-format
-msgid ""
-"The following form model could not be deleted because it is linked to an "
-"action: %s"
-msgstr ""
-"El modelo de formulario siguiente no se ha podido suprimir porque está "
-"vinculado con una acción: %s"
-
-#: ../FormModelDelete.php:44
-#, php-format
-msgid ""
-"The following form models could not be deleted because they are linked to an "
-"action: %s"
-msgstr ""
-"Los modelos siguientes de modelos de formularios no se han podido suprimir "
-"porque están vinculados con una acción: %s"
-
-#: ../ContactAddEdit.php:59
-msgid "Contact cannot be saved"
-msgstr "El contacto no se puede guardar"
-
-#: ../ContactAddEdit.php:60
-msgid "Create/update contact"
-msgstr "Crear/actualizar contacto"
-
-#: ../NomenclatureConcreteProductList.php:65
-msgid "Assign to a nomenclature"
-msgstr "Asignar a una nomenclatura"
-
-#: ../NomenclatureConcreteProductList.php:67 ../NomenclatureList.php:81
-msgid "Show by components"
-msgstr "Mostrar por componentes"
-
-#: ../NomenclatureConcreteProductList.php:69 ../NomenclatureList.php:83
-msgid "Show by sets"
-msgstr "Mostrar por series"
-
-#: ../NomenclatureConcreteProductList.php:76 ../NomenclatureList.php:48
-#: ../NomenclatureList.php:97
-msgid "Nomenclature version"
-msgstr "Versión de nomenclatura"
-
-#: ../ProductQuantityByCategoryEdit.php:44
-#: ../ProductQuantityByCategoryList.php:44
-#, php-format
-msgid "Minimum quantity for order of product \"%s\""
-msgstr "Cantidad mínima para pedido del producto \"%s\""
-
-#: ../ProductQuantityByCategoryEdit.php:45
-#, php-format
-msgid " and category %s"
-msgstr "y categoría %s"
-
-#: ../ProductQuantityByCategoryEdit.php:92
-#: ../ProductQuantityByCategoryList.php:150
-msgid "Minimum ordered quantity"
-msgstr "Cantidad miníma pedida "
-
-#: ../ProductQuantityByCategoryEdit.php:93
-#: ../ProductQuantityByCategoryList.php:69
-#: ../ProductQuantityByCategoryList.php:151
-msgid "Quantity type"
-msgstr "Tipo de cantidad"
-
-#: ../ProductCommand.php:226
-msgid "Basis excl. VAT "
-msgstr "Base excl. IVA"
-
-#: ../ProductCommand.php:232 ../CommandList.php:289
-msgid "Qty pack."
-msgstr "Pack de cantidad."
-
-#: ../AnswerModelSelect.php:47
-msgid "This answer is already linked to this question."
-msgstr "Esta respuesta ya está vinculada con esta pregunta."
-
-#: ../AnswerModelSelect.php:123
-msgid "Select an answer"
-msgstr "Elija una respuesta"
-
-#: ../AnswerModelSelect.php:126
-msgid "Answer order"
-msgstr "Contestar al pedido"
-
-#: ../AnswerModelSelect.php:129
-msgid "Please select a question."
-msgstr "Por favor, seleccione una pregunta."
-
-#: ../BoardByProduct.php:51 ../ProductHandingByCategoryAddEdit.php:54
-msgid "select one or more products"
-msgstr "seleccion uno o varios productos"
-
-#: ../BoardByProduct.php:76
-msgid "Only ordered products"
-msgstr "Solamente productos pedidos"
-
-#: ../InvoiceCommandList.php:76
-msgid "No invoices related to this order."
-msgstr "No hay facturas relacionadas con este pedido."
-
-#: ../InvoiceCommandList.php:83 ../InvoiceCommandList.php:111
-msgid "Please select an invoice."
-msgstr "Por favor, seleccione una factura."
-
-#: ../InvoiceCommandList.php:269
-msgid "Deadline for payment"
-msgstr "Plazo de pago"
-
-#: ../InvoiceCommandList.php:273
-msgid "Amount to pay incl. VAT"
-msgstr "Importe para pagar incl. IVA"
-
-#: ../InvoiceCommandList.php:282 void:1
-msgid "List of invoices"
-msgstr "Lista de facturas"
-
-#: ../InvoiceCommandList.php:359
-msgid "List of invoices and execution of a payment"
-msgstr "Lista de facturas y cumplimiento de un pago"
-
-#: ../ProductAddEdit.php:58
-msgid "Product was not found in the database."
-msgstr "El producto no se encontró en la base de datos."
-
-#: ../ProductAddEdit.php:59
-msgid "Product cannot be saved"
-msgstr "El producto ne se puede guardar"
-
-#: ../ProductAddEdit.php:60
-#, php-format
-msgid "Product \"%s\" was successfully modified."
-msgstr "El producto \"%s\" se ha modificado con éxito."
-
-#: ../ProductAddEdit.php:61
-msgid "Add or update product"
-msgstr "Añadir o actualizar un producto"
-
-#: ../ProductAddEdit.php:62
-#, php-format
-msgid "A product already exists with this reference \"%s\", please correct."
-msgstr "Un producto con esta referencia ya existe \"%s\"; por favor, corrija."
-
-#: ../ProductAddEdit.php:135
-msgid "You cannot change tracing mode for a product involved in a nomenclature"
-msgstr ""
-"No puede cambiar el modo de seguimiento para un producto en una nomenclatura"
-
-#: ../CommandReceiptEdit.php:49
-msgid "Error: order receipt could not be printed."
-msgstr "Error: el recibo del pedido no se puede imprimir"
-
-#: ../FlowList.php:54
-msgid "Filter by payment date"
-msgstr "Filtrar por fecha de pago"
-
-#: ../FlowList.php:93
-msgid "Registration date"
-msgstr "Fecha de registro"
-
-#: ../LocationExecutedMovementList.php:61
-msgid "This movement was cancelled."
-msgstr "Este movimiento ha sido cancelado."
-
-#: ../LocationExecutedMovementList.php:121
-msgid "Not cancelled"
-msgstr "Sin cancelar"
-
-#: ../LocationExecutedMovementList.php:277
-msgid "Print delivery order"
-msgstr "Imprimir pedido de entrega"
-
-#: ../LocationExecutedMovementList.php:295
-msgid "Cancel movement"
-msgstr "Cancelar movimiento"
-
-#: ../LocationExecutedMovementList.php:302
-msgid "Executed movements"
-msgstr "Movimientos ejecutados"
-
-#: ../LocationExecutedMovementList.php:337
-msgid "List of partial movements executed."
-msgstr "Lista de movimientos parciales ejecutados."
-
-#: ../ActorBankDetailAddEdit.php:54 void:1
-msgid "Add or update bank"
-msgstr "Agregar o actualizar banco"
-
-#: ../ActorBankDetailAddEdit.php:74 ../SiteAddEdit.php:92
-msgid "Actor was not found in the database."
-msgstr "El agente no se encuentra en la base de datos."
-
-#: ../ActorBankDetailAddEdit.php:103
-msgid "Bank was not found in the database."
-msgstr "El banco no se encuentra en la base de datos."
-
-#: ../UploadedDocumentActivatedChainTask.php:62
-#, php-format
-msgid "Document \"%s\" has been assigned to task \"%s\""
-msgstr "El documento \"%s\" ha sido asignado a la tarea \"%s\""
-
-#: ../UploadedDocumentActivatedChainTask.php:73
-#, php-format
-msgid "Document \"%s\" has been unassigned from its task."
-msgstr "El documento \"%s\" ha sido desasignado de su tarea."
-
-#: ../CommandList.php:136
-msgid "Document number (invoice, delivery order, etc...)"
-msgstr "Número de documento (factura, entrega a domicilio, etc.)"
-
-#: ../CommandList.php:139 ../WorkOrderList.php:82 ../WorkOrderList.php:173
-msgid "Closed"
-msgstr "Cerrado/a"
-
-#: ../CommandList.php:162
-msgid "Filter by creation date"
-msgstr "Filtrar por fecha de creación"
-
-#: ../CommandList.php:214 ../CourseCommandList.php:115
-msgid "Unlock"
-msgstr "Abrir"
-
-#: ../CommandList.php:235
-msgid "Add or update instalment"
-msgstr "Añadir o actualizar plazo de pago"
-
-#: ../CommandList.php:287 ../CustomerCatalog.php:457
-msgid "Selling unit qty"
-msgstr "Cantidad de unidades de mercancía"
-
-#: ../EstimateToOrder.php:74
-#, php-format
-msgid "Selected estimate has already given rise to order \"%s\"."
-msgstr "El presupuesto seleccionado ya ha dado lugar al pedido \"%s\"."
-
-#: ../EstimateToOrder.php:87
-#, php-format
-msgid ""
-"Estimate \"%s\" is not valid anymore (%d days passed since it was issued)."
-msgstr ""
-"El presupuesto \"%s\" ya no es válido (%días han pasado desde su emisión)."
-
-#: ../EstimateToOrder.php:179
-#, php-format
-msgid "Order for estimate number \"%s\""
-msgstr "Pedido para el presupuesto número  \"%s\""
-
-#: ../WorkOrder.php:75
-msgid "saved"
-msgstr "guardado"
-
-#: ../WorkOrder.php:80
-msgid "Modified data is no more compatible with work order items.\n"
-msgstr ""
-"Los datos modificados ya no son compatibles con los artículos de pedido de "
-"trabajo.\n"
-
-#: ../WorkOrder.php:81
-msgid "modified"
-msgstr "modificado"
-
-#: ../WorkOrder.php:161
-msgid "Work order data were successfully "
-msgstr "Los datos del pedido de trabajo fueron correctamente"
-
-#: ../WorkOrder.php:185
-msgid "Add a work order"
-msgstr "Añadir un pedido de trabajo"
-
-#: ../WorkOrder.php:193 ../WorkOrder.php:247 void:1
-msgid "h."
-msgstr "h."
-
-#: ../WorkOrder.php:195 ../WorkOrder.php:249
-msgid "m."
-msgstr "m."
-
-#: ../WorkOrder.php:204
-msgid "Update work order"
-msgstr "Actualizar un pedido de trabajo"
-
-#: ../InvoiceDetail.php:54
-msgid "Invoice was not found in the database."
-msgstr "La factura no se encontró en la base de datos."
-
-#: ../ActivatedMovementAddWithPrevision.php:58
-msgid "No movement selected"
-msgstr "Ningún movimiento seleccionado"
-
-#: ../ActivatedMovementAddWithPrevision.php:70
-msgid "Selected movement is locked. "
-msgstr "Movimiento seleccionado bloqueado."
-
-#: ../ActivatedMovementAddWithPrevision.php:71
-msgid "Selected movement is already being executed or was executed completely."
-msgstr ""
-"El movimiento seleccionado ya se está ejecutando o fue ejecutado por "
-"completo."
-
-#: ../ActivatedMovementAddWithPrevision.php:73
-msgid "You cannot execute it."
-msgstr "Usted no puede ejecutarlo."
-
-#: ../ActivatedMovementAddWithPrevision.php:234
-msgid "Execution of an expected movement"
-msgstr "Ejecución de un movimiento anticipado"
-
-#: ../SaisonalityList.php:63
-#, php-format
-msgid "The following seasonalities could not be renewed: %s"
-msgstr "Las estacionalidades siguientes no se han podido renovar: %s"
-
-#: ../SaisonalityList.php:74
-msgid "Renewal"
-msgstr "Renovación"
-
-#: ../SaisonalityList.php:82
-msgid "Seasonality"
-msgstr "Temporalidad"
-
-#: ../SaisonalityList.php:84 void:1
-msgid "Properties"
-msgstr "Propiedades"
-
-#: ../SalesmenCommissionSettings.php:70
-msgid "Commission percent by invoice"
-msgstr "Porcentaje de comisión por factura"
-
-#: ../CommandDelete.php:57
-msgid "Order was not found in the database."
-msgstr "El pedido no se encuentra en la base de datos."
-
-#: ../CommandDelete.php:62
-msgid "You cannot delete an estimate that is linked to an order"
-msgstr "No puede suprimir un presupuesto vinculado con un pedido"
-
-#: ../CommandDelete.php:67
-msgid "You cannot delete an order which state is different from \"Activated\""
-msgstr "No puede suprimir un pedido cuyo estado no es \"Activated\""
-
-#: ../CommandDelete.php:73
-msgid "You cannot delete a closed order."
-msgstr "No puede suprimir un pedido cerrado."
-
-#: ../CommandDelete.php:80
-#, php-format
-msgid "Are you sure you want to delete %s ?"
-msgstr "¿Está seguro de que desea suprimir %s?"
-
-#: ../CommandDelete.php:81
-msgid "this estimate"
-msgstr "este presupuesto"
-
-#: ../CommandDelete.php:81
-msgid "this order"
-msgstr "este pedido"
-
-#: ../CommandDelete.php:97
-msgid ""
-"This order cannot be deleted because one of its task is linked to a document."
-msgstr ""
-"Este pedido ne se puede suprimir porque una de sus tareas está vinculada con "
-"un documento."
-
-#: ../ProductQuantityByCategoryList.php:145 ../BoardByCategory.php:51
-#: ../ProductHandingByCategoryList.php:52
-#: ../CustomerAttractivityAddEdit.php:139 void:1
-msgid "Select one or more categories"
-msgstr "Seleccione una o varias categorías"
-
-#: ../ProductQuantityByCategoryList.php:147
-msgid "Concerned categories"
-msgstr "Categorías afectadas"
-
-#: ../ActivatedChainGantt.php:57 ../ActivatedChainGantt.php:67
-msgid "Gantt diagram of a scheduled chain"
-msgstr "Diagrama de Gantt de una cadena programada"
-
-#: ../BoardBySupplier.php:53 ../BoardByCoast.php:51
-msgid "Select one or more suppliers"
-msgstr "Elija uno o varios proveedores"
-
-#: ../BoardBySupplier.php:78 ../BoardByCoast.php:74
-msgid "Only suppliers whose products<br>have already been ordered"
-msgstr "Sólo proveedores cuyos productos<br>han sido pedidos ya"
-
-#: ../PaymentCommandList.php:74 ../ToHavePaymentList.php:61
-msgid "Payment number"
-msgstr "Número del pago"
-
-#: ../PaymentCommandList.php:85
-msgid "Invoice(s)"
-msgstr "Factura(s)"
-
-#: ../PaymentCommandList.php:107
-#, php-format
-msgid "List of payments for order %s"
-msgstr "Lista de pagos del pedido %s"
-
-#: ../DocumentReedit.php:57 ../DocumentReedit.php:67
-#: ../../../pwak/trunk/lib/GenericMessages.php:43
-msgid "An error occurred, please try again later."
-msgstr "Se ha producido un error, por favor, inténte de nuevo más tarde."
-
-#: ../InventoryDetailList.php:131
-msgid "Purchase unit price excl. VAT"
-msgstr "Precio por unidad de compra excl. IVA"
-
-#: ../ContactDelete.php:59
-#, php-format
-msgid "Contact %s cannot be deleted"
-msgstr "El contacto %s no se puede suprimir"
-
-#: ../ActivatedMovementWithPrevisionExecuteSeveral.php:81
-msgid "Execute several movement"
-msgstr "Ejecutar varios movimientos"
-
-#: ../SiteAddEdit.php:63
-msgid "Site cannot be saved"
-msgstr "La ubicación no se puede guardar"
-
-#: ../SiteAddEdit.php:65
-#, php-format
-msgid "Site \"%s\" was successfully saved."
-msgstr "La ubicación \"%s\"  se ha guardado con éxito."
-
-#: ../SiteAddEdit.php:66
-msgid "Add or update site"
-msgstr "Añadir o actualizar ubicación"
-
-#: ../SiteAddEdit.php:67
-msgid "More than one result match."
-msgstr "Corresponde a más de un resultado."
-
-#: ../SiteAddEdit.php:68
-msgid "More than one result match, please select a result:"
-msgstr "Más de una correspondencia; por favor, seleccione un resultado:"
-
-#: ../SiteAddEdit.php:69
-#, php-format
-msgid "A site already exists with the name \"%s\", please correct."
-msgstr "Una ubicación con el nombre  \"%s\" ya existe; por favor, corrija."
-
-#: ../SiteAddEdit.php:129
-msgid "Site was not found in the database"
-msgstr "La ubicación no se encontró en la base de datos"
-
-#: ../ComponentConcreteProduct.php:113
-msgid "Parts nomenclature reference "
-msgstr "Referencia de la nomenclatura de piezas"
-
-#: ../ComponentConcreteProduct.php:124
-msgid "SN or Lot"
-msgstr "NS o lote"
-
-#: ../ComponentConcreteProduct.php:153
-msgid "none"
-msgstr "ninguno"
-
-#: ../CommandUnlock.php:52
-msgid "Selected order must be in locked state."
-msgstr "El pedido seleccionado debe estar en estado de bloqueado."
-
-#: ../CommandUnlock.php:57
-msgid "You cannot unlock a closed order"
-msgstr "No se puede abrir un pedido cerrado"
-
-#: ../CommandUnlock.php:62
-msgid "Are you sure you want to unlock this order ?"
-msgstr "¿Está seguro de que desea abrir este pedido?"
-
-#: ../ChainTaskList.php:92 void:1
-msgid "Departure date"
-msgstr "Fecha de salida"
-
-#: ../ChainTaskList.php:93 void:1
-msgid "Arrival date"
-msgstr "Fecha de llegada"
-
-#: ../ChainTaskList.php:99
-msgid "List of fixed date task or weekly task"
-msgstr "Lista de tareas con fechas fijas o tarea semanal"
-
-#: ../SupplyingOptimization.php:76
-msgid "No order found for last weeks."
-msgstr "Ningún pedido encontrado para las últimas semanas."
-
-#: ../SupplyingOptimization.php:146
-msgid "No suggested quantity to order for the selected date."
-msgstr "Ninguna cantidad sugerida a pedir para la fecha seleccionada."
-
-#: ../SupplyingOptimization.php:229
-msgid "Number of weeks in history"
-msgstr "Número de semanas en historial"
-
-#: ../SupplyingOptimization.php:231
-msgid "Number of weeks of forecast"
-msgstr "Número de semanas de previsión"
-
-#: ../SupplyingOptimization.php:233
-msgid "Default delivery within (days)"
-msgstr "Entrega por defecto dentro de (días)"
-
-#: ../SupplyingOptimization.php:236
-msgid "Forecasts with extrapolation"
-msgstr "Previsiones con extrapolacion"
-
-#: ../UnavailabilityPlanning.php:45
-msgid "Monthly schedule"
-msgstr "Programa mensual"
-
-#: ../UnavailabilityPlanning.php:110
-msgid "Select an operator"
-msgstr "Seleccione un operador"
-
-#: ../UnavailabilityPlanning.php:171
-msgid "Select a customer."
-msgstr "Seleccione un cliente."
-
-#: ../UnavailabilityPlanning.php:201 ../PotentialsEdit.php:54
-msgid "Select a matriculation"
-msgstr "Seleccione una matrícula"
-
-#: ../UnavailabilityPlanning.php:408
-msgid "Class - "
-msgstr "Clase -"
-
-#: ../UnavailabilityPlanning.php:410
-msgid "Beginning: "
-msgstr "Inicio:"
-
-#: ../UnavailabilityPlanning.php:428 void:1
-msgid "Student"
-msgstr "Estudiante"
-
-#: ../UnavailabilityPlanning.php:430
-msgid "Class, beginning"
-msgstr "Clase, inicio"
-
-#: ../UnavailabilityPlanning.php:431 void:1
-msgid "duration"
-msgstr "duración"
-
-#: ../UnavailabilityPlanning.php:432
-msgid "airplane: "
-msgstr "avión:"
-
-#: ../UnavailabilityPlanning.php:463
-#: ../../../pwak/trunk/lib/Search/SearchForm.php:569
-msgid " to "
-msgstr "a"
-
-#: ../UnavailabilityPlanning.php:647
-msgid "previous"
-msgstr "anterior"
-
-#: ../UnavailabilityPlanning.php:653
-msgid "next"
-msgstr "próximo"
-
-#: ../UnavailabilityPlanning.php:659 void:1
-msgid "Month"
-msgstr "Mes"
-
-#: ../UnavailabilityPlanning.php:666 void:1
-msgid "Week"
-msgstr "Semana"
-
-#: ../UnavailabilityPlanning.php:673
-msgid "Day"
-msgstr "Día"
-
-#: ../UnavailabilityPlanning.php:726 ../UnavailabilityPlanning.php:730
-msgid "List of unavailabilities"
-msgstr "Lista de indisponibilidades"
-
-#: ../UnavailabilityPlanning.php:726
-msgid " for "
-msgstr "para"
-
-#: ../FlowTypeDuplicate.php:82
-msgid "Expenses and receipts model copy"
-msgstr "Copia de modelo de gastos y recibos"
-
-#: ../Download.php:82 void:1
-msgid "Onlogistics download zone"
-msgstr "Zona de descargar Onlogistics"
-
-#: ../WorkOrderList.php:76 void:1
-msgid "Work order name"
-msgstr "Nombre del pedido de trabajo"
-
-#: ../WorkOrderList.php:147
-msgid "Assign selected items"
-msgstr "Asignar artículos seleccionados"
-
-#: ../WorkOrderList.php:203 ../WorkOrderList.php:209
-msgid "Work order management"
-msgstr "Gestión de pedidos de trabajo"
-
-#: ../ChainActivationTaskDetail.php:77
-msgid "Chain to activate"
-msgstr "Cadena por activar"
-
-#: ../ChainActivationTaskDetail.php:91 void:1
-msgid "task beginning date/time"
-msgstr " fecha / hora de inicio de la tarea"
-
-#: ../ChainActivationTaskDetail.php:92 void:1
-msgid "task end date/time"
-msgstr "fecha / hora de finalización de la tarea"
-
-#: ../ChainActivationTaskDetail.php:93 void:1
-msgid "Deadline date"
-msgstr "Fecha del plazo"
-
-#: ../ChainActivationTaskDetail.php:101
-msgid "Components"
-msgstr "Componentes"
-
-#: ../ChainActivationTaskDetail.php:110
-msgid "Take into account volume of nomenclature"
-msgstr "Tener en cuenta el volumen de nomenclatura"
-
-#: ../PackingListEdit.php:44
-msgid "An error occurred, packing list could not be printed."
-msgstr "Se ha producido un error, la lista de contenidos no se pudo imprimir."
 
 #: ../FormModelList.php:57
 msgid "List of form models"

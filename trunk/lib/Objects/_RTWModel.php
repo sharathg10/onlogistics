@@ -1074,6 +1074,93 @@ class _RTWModel extends Object {
     }
 
     // }}}
+    // Material3 foreignkey property + getter/setter {{{
+
+    /**
+     * Material3 foreignkey
+     *
+     * @access private
+     * @var mixed object RTWMaterial or integer
+     */
+    private $_Material3 = false;
+
+    /**
+     * _RTWModel::getMaterial3
+     *
+     * @access public
+     * @return object RTWMaterial
+     */
+    public function getMaterial3() {
+        if (is_int($this->_Material3) && $this->_Material3 > 0) {
+            $mapper = Mapper::singleton('RTWMaterial');
+            $this->_Material3 = $mapper->load(
+                array('Id'=>$this->_Material3));
+        }
+        return $this->_Material3;
+    }
+
+    /**
+     * _RTWModel::getMaterial3Id
+     *
+     * @access public
+     * @return integer
+     */
+    public function getMaterial3Id() {
+        if ($this->_Material3 instanceof RTWMaterial) {
+            return $this->_Material3->getId();
+        }
+        return (int)$this->_Material3;
+    }
+
+    /**
+     * _RTWModel::setMaterial3
+     *
+     * @access public
+     * @param object RTWMaterial $value
+     * @return void
+     */
+    public function setMaterial3($value) {
+        if (is_numeric($value)) {
+            $this->_Material3 = (int)$value;
+        } else {
+            $this->_Material3 = $value;
+        }
+    }
+
+    // }}}
+    // Material3Quantity float property + getter/setter {{{
+
+    /**
+     * Material3Quantity float property
+     *
+     * @access private
+     * @var float
+     */
+    private $_Material3Quantity = null;
+
+    /**
+     * _RTWModel::getMaterial3Quantity
+     *
+     * @access public
+     * @return float
+     */
+    public function getMaterial3Quantity() {
+        return $this->_Material3Quantity;
+    }
+
+    /**
+     * _RTWModel::setMaterial3Quantity
+     *
+     * @access public
+     * @param float $value
+     * @return void
+     */
+    public function setMaterial3Quantity($value) {
+        $this->_Material3Quantity = ($value===null || $value === '')?
+            null:round(I18N::extractNumber($value), 3);
+    }
+
+    // }}}
     // Accessory1 foreignkey property + getter/setter {{{
 
     /**
@@ -1244,6 +1331,93 @@ class _RTWModel extends Object {
      */
     public function setAccessory2Quantity($value) {
         $this->_Accessory2Quantity = ($value===null || $value === '')?
+            null:round(I18N::extractNumber($value), 3);
+    }
+
+    // }}}
+    // Accessory3 foreignkey property + getter/setter {{{
+
+    /**
+     * Accessory3 foreignkey
+     *
+     * @access private
+     * @var mixed object RTWMaterial or integer
+     */
+    private $_Accessory3 = false;
+
+    /**
+     * _RTWModel::getAccessory3
+     *
+     * @access public
+     * @return object RTWMaterial
+     */
+    public function getAccessory3() {
+        if (is_int($this->_Accessory3) && $this->_Accessory3 > 0) {
+            $mapper = Mapper::singleton('RTWMaterial');
+            $this->_Accessory3 = $mapper->load(
+                array('Id'=>$this->_Accessory3));
+        }
+        return $this->_Accessory3;
+    }
+
+    /**
+     * _RTWModel::getAccessory3Id
+     *
+     * @access public
+     * @return integer
+     */
+    public function getAccessory3Id() {
+        if ($this->_Accessory3 instanceof RTWMaterial) {
+            return $this->_Accessory3->getId();
+        }
+        return (int)$this->_Accessory3;
+    }
+
+    /**
+     * _RTWModel::setAccessory3
+     *
+     * @access public
+     * @param object RTWMaterial $value
+     * @return void
+     */
+    public function setAccessory3($value) {
+        if (is_numeric($value)) {
+            $this->_Accessory3 = (int)$value;
+        } else {
+            $this->_Accessory3 = $value;
+        }
+    }
+
+    // }}}
+    // Accessory3Quantity float property + getter/setter {{{
+
+    /**
+     * Accessory3Quantity float property
+     *
+     * @access private
+     * @var float
+     */
+    private $_Accessory3Quantity = null;
+
+    /**
+     * _RTWModel::getAccessory3Quantity
+     *
+     * @access public
+     * @return float
+     */
+    public function getAccessory3Quantity() {
+        return $this->_Accessory3Quantity;
+    }
+
+    /**
+     * _RTWModel::setAccessory3Quantity
+     *
+     * @access public
+     * @param float $value
+     * @return void
+     */
+    public function setAccessory3Quantity($value) {
+        $this->_Accessory3Quantity = ($value===null || $value === '')?
             null:round(I18N::extractNumber($value), 3);
     }
 
@@ -2357,10 +2531,14 @@ class _RTWModel extends Object {
             'Material1Quantity' => Object::TYPE_DECIMAL,
             'Material2' => 'RTWMaterial',
             'Material2Quantity' => Object::TYPE_DECIMAL,
+            'Material3' => 'RTWMaterial',
+            'Material3Quantity' => Object::TYPE_DECIMAL,
             'Accessory1' => 'RTWMaterial',
             'Accessory1Quantity' => Object::TYPE_DECIMAL,
             'Accessory2' => 'RTWMaterial',
             'Accessory2Quantity' => Object::TYPE_DECIMAL,
+            'Accessory3' => 'RTWMaterial',
+            'Accessory3Quantity' => Object::TYPE_DECIMAL,
             'Lining' => 'RTWMaterial',
             'LiningQuantity' => Object::TYPE_DECIMAL,
             'Insole' => 'RTWMaterial',
@@ -2682,6 +2860,25 @@ class _RTWModel extends Object {
                 'section'      => '',
                 'dec_num'      => 3
             ),
+            'Material3'=>array(
+                'label'        => _('Material 3'),
+                'shortlabel'   => _('Material 3'),
+                'usedby'       => array('addedit', 'grid', 'searchform'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => ''
+            ),
+            'Material3Quantity'=>array(
+                'label'        => _('Material 3 quantity'),
+                'shortlabel'   => _('Material 3 quantity'),
+                'usedby'       => array('addedit'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => '',
+                'dec_num'      => 3
+            ),
             'Accessory1'=>array(
                 'label'        => _('Accessory 1'),
                 'shortlabel'   => _('Accessory 1'),
@@ -2713,6 +2910,25 @@ class _RTWModel extends Object {
             'Accessory2Quantity'=>array(
                 'label'        => _('Accessory 2 quantity'),
                 'shortlabel'   => _('Accessory 2 quantity'),
+                'usedby'       => array('addedit'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => '',
+                'dec_num'      => 3
+            ),
+            'Accessory3'=>array(
+                'label'        => _('Accessory 3'),
+                'shortlabel'   => _('Accessory 3'),
+                'usedby'       => array('addedit', 'grid', 'searchform'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => ''
+            ),
+            'Accessory3Quantity'=>array(
+                'label'        => _('Accessory 3 quantity'),
+                'shortlabel'   => _('Accessory 3 quantity'),
                 'usedby'       => array('addedit'),
                 'required'     => false,
                 'inplace_edit' => false,

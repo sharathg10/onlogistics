@@ -189,6 +189,18 @@ class RTWModelAddEdit extends GenericAddEdit {
     }
 
     // }}}
+    // RTWModelAddEdit::getFilterForMaterial3() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForMaterial3() {
+        return $this->getFilterForMaterial1();
+    }
+
+    // }}}
     // RTWModelAddEdit::getFilterForAccessory1() {{{
 
     /**
@@ -209,6 +221,18 @@ class RTWModelAddEdit extends GenericAddEdit {
      * @return void
      */
     protected function getFilterForAccessory2() {
+        return $this->getFilterForAccessory1();
+    }
+
+    // }}}
+    // RTWModelAddEdit::getFilterForAccessory3() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function getFilterForAccessory3() {
         return $this->getFilterForAccessory1();
     }
 

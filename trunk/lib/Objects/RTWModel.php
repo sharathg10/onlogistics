@@ -94,8 +94,10 @@ class RTWModel extends _RTWModel {
         $return = array(
             'Material1'     => _('Material 1'),
             'Material2'     => _('Material 2'),
+            'Material3'     => _('Material 3'),
             'Accessory1'    => _('Accessory 1'),
             'Accessory2'    => _('Accessory 2'),
+            'Accessory3'    => _('Accessory 3'),
         );
         if (!$onlyForNomenclature) {
             $return += array(
@@ -161,7 +163,7 @@ class RTWModel extends _RTWModel {
         $nl    = $asHtml ? '<br/>' : "\n";
         $lines = array();
         $upper = array();
-        $mats  = array('Material1', 'Material2', 'Accessory1', 'Accessory2');
+        $mats  = array('Material1', 'Material2', 'Material3', 'Accessory1', 'Accessory2', 'Accessory3');
         foreach ($mats as $mat) {
             $getter = 'get' . $mat;
             if (($matObj = $this->$getter()) instanceof RTWMaterial) {

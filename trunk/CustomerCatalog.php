@@ -270,6 +270,23 @@ if (in_array('readytowear', $tradeContext)) {
             'Operator'=>'In'
         )
     );
+    $customArray['Material3'] = array(
+        'Name'=>'Material3',
+        'Type'=>'select',
+        'Params'=> array(
+            SearchTools::createArrayIDFromCollection(
+                'RTWMaterial',
+                array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL),
+                _('Select one or more items'),
+                'CommercialNameAndColor'
+            ),
+            'multiple, size="6"'
+        ),
+        'SearchOptions'=>array(
+            'Path'=>'Model.Material3.Id',
+            'Operator'=>'In'
+        )
+    );
     $customArray['Accessory1'] = array(
         'Name'=>'Accessory1',
         'Type'=>'select',
@@ -301,6 +318,23 @@ if (in_array('readytowear', $tradeContext)) {
         ),
         'SearchOptions'=>array(
             'Path'=>'Model.Accessory2.Id',
+            'Operator'=>'In'
+        )
+    );
+    $customArray['Accessory3'] = array(
+        'Name'=>'Accessory3',
+        'Type'=>'select',
+        'Params'=> array(
+            SearchTools::createArrayIDFromCollection(
+                'RTWMaterial',
+                array('MaterialType' => RTWMaterial::TYPE_ACCESSORY),
+                _('Select one or more items'),
+                'CommercialNameAndColor'
+            ),
+            'multiple, size="6"'
+        ),
+        'SearchOptions'=>array(
+            'Path'=>'Model.Accessory3.Id',
             'Operator'=>'In'
         )
     );

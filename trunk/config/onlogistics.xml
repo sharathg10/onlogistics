@@ -3011,6 +3011,11 @@
         <property type="decimal" length="10,3" name="Material2Quantity" 
             label="Material 2 quantity" usedby="addedit" />
 
+        <property type="foreignkey" name="Material3" label="Material 3"
+            class="RTWMaterial" usedby="addedit,grid,searchform" />
+        <property type="decimal" length="10,3" name="Material3Quantity" 
+            label="Material 3 quantity" usedby="addedit" />
+
         <property type="foreignkey" name="Accessory1" label="Accessory 1"
             class="RTWMaterial" usedby="addedit,grid,searchform" />
         <property type="decimal" length="10,3" name="Accessory1Quantity" 
@@ -3020,6 +3025,11 @@
             class="RTWMaterial" usedby="addedit,grid,searchform" />
         <property type="decimal" length="10,3" name="Accessory2Quantity" 
             label="Accessory 2 quantity" usedby="addedit" />
+
+        <property type="foreignkey" name="Accessory3" label="Accessory 3"
+            class="RTWMaterial" usedby="addedit,grid,searchform" />
+        <property type="decimal" length="10,3" name="Accessory3Quantity" 
+            label="Accessory 3 quantity" usedby="addedit" />
 
         <property type="foreignkey" name="Lining" label="Lining"
             class="RTWMaterial" usedby="addedit" />

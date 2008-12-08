@@ -92,6 +92,15 @@ class RTWModelForSupplierGrid extends RTWModelGrid
                 'add_button'   => false,
                 'section'      => '',
             ),
+            'Material3' => array(
+                'label'        => _('Material 3'),
+                'shortlabel'   => _('Material 3'),
+                'usedby'       => array('grid'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => '',
+            ),
             'Accessory1' => array(
                 'label'        => _('Accessory 1'),
                 'shortlabel'   => _('Accessory 1'),
@@ -104,6 +113,15 @@ class RTWModelForSupplierGrid extends RTWModelGrid
             'Accessory2' => array(
                 'label'        => _('Accessory 2'),
                 'shortlabel'   => _('Accessory 2'),
+                'usedby'       => array('grid'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => '',
+            ),
+            'Accessory3' => array(
+                'label'        => _('Accessory 3'),
+                'shortlabel'   => _('Accessory 3'),
                 'usedby'       => array('grid'),
                 'required'     => false,
                 'inplace_edit' => false,

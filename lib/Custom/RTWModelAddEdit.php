@@ -453,6 +453,264 @@ class RTWModelAddEdit extends GenericAddEdit {
     }
 
     // }}}
+    // RTWModelAddEdit::renderHeelReferenceQuantity() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function renderHeelReferenceQuantity() {
+        $this->_renderQuantityWidget('HeelReference', _('Heel reference quantity'));
+    }
+
+    // }}}
+    // RTWModelAddEdit::renderSoleQuantity() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function renderSoleQuantity() {
+        $this->_renderQuantityWidget('Sole', _('Sole quantity'));
+    }
+
+    // }}}
+    // RTWModelAddEdit::renderBoxQuantity() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function renderBoxQuantity() {
+        $this->_renderQuantityWidget('Box', _('Box quantity'));
+    }
+
+    // }}}
+    // RTWModelAddEdit::renderHandBagQuantity() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function renderHandBagQuantity() {
+        $this->_renderQuantityWidget('HandBag', _('Hand bag quantity'));
+    }
+
+    // }}}
+    // RTWModelAddEdit::renderMaterial1Quantity() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function renderMaterial1Quantity() {
+        $this->_renderQuantityWidget('Material1', _('Material 1 quantity'));
+    }
+
+    // }}}
+    // RTWModelAddEdit::renderMaterial2Quantity() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function renderMaterial2Quantity() {
+        $this->_renderQuantityWidget('Material2', _('Material 2 quantity'));
+    }
+
+    // }}}
+    // RTWModelAddEdit::renderMaterial3Quantity() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function renderMaterial3Quantity() {
+        $this->_renderQuantityWidget('Material3', _('Material 3 quantity'));
+    }
+
+    // }}}
+    // RTWModelAddEdit::renderAccessory1Quantity() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function renderAccessory1Quantity() {
+        $this->_renderQuantityWidget('Accessory1', _('Accessory 1 quantity'));
+    }
+
+    // }}}
+    // RTWModelAddEdit::renderAccessory2Quantity() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function renderAccessory2Quantity() {
+        $this->_renderQuantityWidget('Accessory2', _('Accessory 2 quantity'));
+    }
+
+    // }}}
+    // RTWModelAddEdit::renderAccessory3Quantity() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function renderAccessory3Quantity() {
+        $this->_renderQuantityWidget('Accessory3', _('Accessory 3 quantity'));
+    }
+
+    // }}}
+    // RTWModelAddEdit::renderLiningQuantity() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function renderLiningQuantity() {
+        $this->_renderQuantityWidget('Lining', _('Lining quantity'));
+    }
+
+    // }}}
+    // RTWModelAddEdit::renderInsoleQuantity() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function renderInsoleQuantity() {
+        $this->_renderQuantityWidget('Insole', _('Insole quantity'));
+    }
+
+    // }}}
+    // RTWModelAddEdit::renderUnderSoleQuantity() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function renderUnderSoleQuantity() {
+        $this->_renderQuantityWidget('UnderSole', _('Under sole quantity'));
+    }
+
+    // }}}
+    // RTWModelAddEdit::renderMediaPlantaQuantity() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function renderMediaPlantaQuantity() {
+        $this->_renderQuantityWidget('MediaPlanta', _('Media planta quantity'));
+    }
+
+    // }}}
+    // RTWModelAddEdit::renderLagrimaQuantity() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function renderLagrimaQuantity() {
+        $this->_renderQuantityWidget('Lagrima', _('Lagrima quantity'));
+    }
+
+    // }}}
+    // RTWModelAddEdit::renderHeelCoveringQuantity() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function renderHeelCoveringQuantity() {
+        $this->_renderQuantityWidget('HeelCovering', _('Heel covering quantity'));
+    }
+
+    // }}}
+    // RTWModelAddEdit::renderSelvedgeQuantity() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function renderSelvedgeQuantity() {
+        $this->_renderQuantityWidget('Selvedge', _('Selvedge quantity'));
+    }
+
+    // }}}
+    // RTWModelAddEdit::renderBambooQuantity() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function renderBambooQuantity() {
+        $this->_renderQuantityWidget('Bamboo', _('Bamboo quantity'));
+    }
+
+    // }}}
+    // RTWModelAddEdit::_renderQuantityWidget() {{{
+
+    /**
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function _renderQuantityWidget($name, $label) {
+        $elts = array();
+        $elts[] = $this->form->createElement(
+            'text',
+            'RTWModel_' . $name . 'Quantity',
+            '',
+            array('style' => 'width: 70px;')
+        );
+        $elts[] = $this->form->createElement(
+            'radio',
+            'RTWModel_' . $name . 'Nomenclature',
+            '',
+            A_YES,
+            1,
+            array('id' => 'RTWModel_' . $name . 'Nomenclature_0')
+        );
+        $elts[] = $this->form->createElement(
+            'radio',
+            'RTWModel_' . $name . 'Nomenclature',
+            '',
+            A_NO,
+            0,
+            array('id' => 'RTWModel_' . $name . 'Nomenclature_1')
+        );
+        $label .= ' / ' . _('Nomenclature');
+        $this->form->addGroup($elts, $name . '_Group', $label, null, false);
+        $getterQ = 'get' . $name . 'Quantity';
+        $getterN = 'get' . $name . 'Nomenclature';
+        $this->form->setDefaults(array(
+            'RTWModel_' . $name . 'Quantity'     => I18N::formatNumber($this->object->$getterQ(), 3),
+            'RTWModel_' . $name . 'Nomenclature' => $this->object->$getterN(),
+        ));
+    }
+
+    // }}}
     // RTWModelAddEdit::postContent() {{{
 
     /**

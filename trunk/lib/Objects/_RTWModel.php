@@ -639,6 +639,40 @@ class _RTWModel extends Object {
     }
 
     // }}}
+    // HeelReferenceNomenclature string property + getter/setter {{{
+
+    /**
+     * HeelReferenceNomenclature int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_HeelReferenceNomenclature = 1;
+
+    /**
+     * _RTWModel::getHeelReferenceNomenclature
+     *
+     * @access public
+     * @return integer
+     */
+    public function getHeelReferenceNomenclature() {
+        return $this->_HeelReferenceNomenclature;
+    }
+
+    /**
+     * _RTWModel::setHeelReferenceNomenclature
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setHeelReferenceNomenclature($value) {
+        if ($value !== null) {
+            $this->_HeelReferenceNomenclature = (int)$value;
+        }
+    }
+
+    // }}}
     // Sole foreignkey property + getter/setter {{{
 
     /**
@@ -723,6 +757,40 @@ class _RTWModel extends Object {
     public function setSoleQuantity($value) {
         $this->_SoleQuantity = ($value===null || $value === '')?
             null:round(I18N::extractNumber($value), 3);
+    }
+
+    // }}}
+    // SoleNomenclature string property + getter/setter {{{
+
+    /**
+     * SoleNomenclature int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_SoleNomenclature = 1;
+
+    /**
+     * _RTWModel::getSoleNomenclature
+     *
+     * @access public
+     * @return integer
+     */
+    public function getSoleNomenclature() {
+        return $this->_SoleNomenclature;
+    }
+
+    /**
+     * _RTWModel::setSoleNomenclature
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setSoleNomenclature($value) {
+        if ($value !== null) {
+            $this->_SoleNomenclature = (int)$value;
+        }
     }
 
     // }}}
@@ -813,6 +881,40 @@ class _RTWModel extends Object {
     }
 
     // }}}
+    // BoxNomenclature string property + getter/setter {{{
+
+    /**
+     * BoxNomenclature int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_BoxNomenclature = 1;
+
+    /**
+     * _RTWModel::getBoxNomenclature
+     *
+     * @access public
+     * @return integer
+     */
+    public function getBoxNomenclature() {
+        return $this->_BoxNomenclature;
+    }
+
+    /**
+     * _RTWModel::setBoxNomenclature
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setBoxNomenclature($value) {
+        if ($value !== null) {
+            $this->_BoxNomenclature = (int)$value;
+        }
+    }
+
+    // }}}
     // HandBag foreignkey property + getter/setter {{{
 
     /**
@@ -897,6 +999,40 @@ class _RTWModel extends Object {
     public function setHandBagQuantity($value) {
         $this->_HandBagQuantity = ($value===null || $value === '')?
             null:round(I18N::extractNumber($value), 3);
+    }
+
+    // }}}
+    // HandBagNomenclature string property + getter/setter {{{
+
+    /**
+     * HandBagNomenclature int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_HandBagNomenclature = 1;
+
+    /**
+     * _RTWModel::getHandBagNomenclature
+     *
+     * @access public
+     * @return integer
+     */
+    public function getHandBagNomenclature() {
+        return $this->_HandBagNomenclature;
+    }
+
+    /**
+     * _RTWModel::setHandBagNomenclature
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setHandBagNomenclature($value) {
+        if ($value !== null) {
+            $this->_HandBagNomenclature = (int)$value;
+        }
     }
 
     // }}}
@@ -987,6 +1123,40 @@ class _RTWModel extends Object {
     }
 
     // }}}
+    // Material1Nomenclature string property + getter/setter {{{
+
+    /**
+     * Material1Nomenclature int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_Material1Nomenclature = 1;
+
+    /**
+     * _RTWModel::getMaterial1Nomenclature
+     *
+     * @access public
+     * @return integer
+     */
+    public function getMaterial1Nomenclature() {
+        return $this->_Material1Nomenclature;
+    }
+
+    /**
+     * _RTWModel::setMaterial1Nomenclature
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setMaterial1Nomenclature($value) {
+        if ($value !== null) {
+            $this->_Material1Nomenclature = (int)$value;
+        }
+    }
+
+    // }}}
     // Material2 foreignkey property + getter/setter {{{
 
     /**
@@ -1071,6 +1241,40 @@ class _RTWModel extends Object {
     public function setMaterial2Quantity($value) {
         $this->_Material2Quantity = ($value===null || $value === '')?
             null:round(I18N::extractNumber($value), 3);
+    }
+
+    // }}}
+    // Material2Nomenclature string property + getter/setter {{{
+
+    /**
+     * Material2Nomenclature int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_Material2Nomenclature = 1;
+
+    /**
+     * _RTWModel::getMaterial2Nomenclature
+     *
+     * @access public
+     * @return integer
+     */
+    public function getMaterial2Nomenclature() {
+        return $this->_Material2Nomenclature;
+    }
+
+    /**
+     * _RTWModel::setMaterial2Nomenclature
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setMaterial2Nomenclature($value) {
+        if ($value !== null) {
+            $this->_Material2Nomenclature = (int)$value;
+        }
     }
 
     // }}}
@@ -1161,6 +1365,40 @@ class _RTWModel extends Object {
     }
 
     // }}}
+    // Material3Nomenclature string property + getter/setter {{{
+
+    /**
+     * Material3Nomenclature int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_Material3Nomenclature = 1;
+
+    /**
+     * _RTWModel::getMaterial3Nomenclature
+     *
+     * @access public
+     * @return integer
+     */
+    public function getMaterial3Nomenclature() {
+        return $this->_Material3Nomenclature;
+    }
+
+    /**
+     * _RTWModel::setMaterial3Nomenclature
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setMaterial3Nomenclature($value) {
+        if ($value !== null) {
+            $this->_Material3Nomenclature = (int)$value;
+        }
+    }
+
+    // }}}
     // Accessory1 foreignkey property + getter/setter {{{
 
     /**
@@ -1245,6 +1483,40 @@ class _RTWModel extends Object {
     public function setAccessory1Quantity($value) {
         $this->_Accessory1Quantity = ($value===null || $value === '')?
             null:round(I18N::extractNumber($value), 3);
+    }
+
+    // }}}
+    // Accessory1Nomenclature string property + getter/setter {{{
+
+    /**
+     * Accessory1Nomenclature int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_Accessory1Nomenclature = 1;
+
+    /**
+     * _RTWModel::getAccessory1Nomenclature
+     *
+     * @access public
+     * @return integer
+     */
+    public function getAccessory1Nomenclature() {
+        return $this->_Accessory1Nomenclature;
+    }
+
+    /**
+     * _RTWModel::setAccessory1Nomenclature
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setAccessory1Nomenclature($value) {
+        if ($value !== null) {
+            $this->_Accessory1Nomenclature = (int)$value;
+        }
     }
 
     // }}}
@@ -1335,6 +1607,40 @@ class _RTWModel extends Object {
     }
 
     // }}}
+    // Accessory2Nomenclature string property + getter/setter {{{
+
+    /**
+     * Accessory2Nomenclature int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_Accessory2Nomenclature = 1;
+
+    /**
+     * _RTWModel::getAccessory2Nomenclature
+     *
+     * @access public
+     * @return integer
+     */
+    public function getAccessory2Nomenclature() {
+        return $this->_Accessory2Nomenclature;
+    }
+
+    /**
+     * _RTWModel::setAccessory2Nomenclature
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setAccessory2Nomenclature($value) {
+        if ($value !== null) {
+            $this->_Accessory2Nomenclature = (int)$value;
+        }
+    }
+
+    // }}}
     // Accessory3 foreignkey property + getter/setter {{{
 
     /**
@@ -1419,6 +1725,40 @@ class _RTWModel extends Object {
     public function setAccessory3Quantity($value) {
         $this->_Accessory3Quantity = ($value===null || $value === '')?
             null:round(I18N::extractNumber($value), 3);
+    }
+
+    // }}}
+    // Accessory3Nomenclature string property + getter/setter {{{
+
+    /**
+     * Accessory3Nomenclature int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_Accessory3Nomenclature = 1;
+
+    /**
+     * _RTWModel::getAccessory3Nomenclature
+     *
+     * @access public
+     * @return integer
+     */
+    public function getAccessory3Nomenclature() {
+        return $this->_Accessory3Nomenclature;
+    }
+
+    /**
+     * _RTWModel::setAccessory3Nomenclature
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setAccessory3Nomenclature($value) {
+        if ($value !== null) {
+            $this->_Accessory3Nomenclature = (int)$value;
+        }
     }
 
     // }}}
@@ -1509,6 +1849,40 @@ class _RTWModel extends Object {
     }
 
     // }}}
+    // LiningNomenclature string property + getter/setter {{{
+
+    /**
+     * LiningNomenclature int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_LiningNomenclature = 1;
+
+    /**
+     * _RTWModel::getLiningNomenclature
+     *
+     * @access public
+     * @return integer
+     */
+    public function getLiningNomenclature() {
+        return $this->_LiningNomenclature;
+    }
+
+    /**
+     * _RTWModel::setLiningNomenclature
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setLiningNomenclature($value) {
+        if ($value !== null) {
+            $this->_LiningNomenclature = (int)$value;
+        }
+    }
+
+    // }}}
     // Insole foreignkey property + getter/setter {{{
 
     /**
@@ -1593,6 +1967,40 @@ class _RTWModel extends Object {
     public function setInsoleQuantity($value) {
         $this->_InsoleQuantity = ($value===null || $value === '')?
             null:round(I18N::extractNumber($value), 3);
+    }
+
+    // }}}
+    // InsoleNomenclature string property + getter/setter {{{
+
+    /**
+     * InsoleNomenclature int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_InsoleNomenclature = 1;
+
+    /**
+     * _RTWModel::getInsoleNomenclature
+     *
+     * @access public
+     * @return integer
+     */
+    public function getInsoleNomenclature() {
+        return $this->_InsoleNomenclature;
+    }
+
+    /**
+     * _RTWModel::setInsoleNomenclature
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setInsoleNomenclature($value) {
+        if ($value !== null) {
+            $this->_InsoleNomenclature = (int)$value;
+        }
     }
 
     // }}}
@@ -1683,6 +2091,40 @@ class _RTWModel extends Object {
     }
 
     // }}}
+    // UnderSoleNomenclature string property + getter/setter {{{
+
+    /**
+     * UnderSoleNomenclature int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_UnderSoleNomenclature = 1;
+
+    /**
+     * _RTWModel::getUnderSoleNomenclature
+     *
+     * @access public
+     * @return integer
+     */
+    public function getUnderSoleNomenclature() {
+        return $this->_UnderSoleNomenclature;
+    }
+
+    /**
+     * _RTWModel::setUnderSoleNomenclature
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setUnderSoleNomenclature($value) {
+        if ($value !== null) {
+            $this->_UnderSoleNomenclature = (int)$value;
+        }
+    }
+
+    // }}}
     // MediaPlanta foreignkey property + getter/setter {{{
 
     /**
@@ -1767,6 +2209,40 @@ class _RTWModel extends Object {
     public function setMediaPlantaQuantity($value) {
         $this->_MediaPlantaQuantity = ($value===null || $value === '')?
             null:round(I18N::extractNumber($value), 3);
+    }
+
+    // }}}
+    // MediaPlantaNomenclature string property + getter/setter {{{
+
+    /**
+     * MediaPlantaNomenclature int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_MediaPlantaNomenclature = 1;
+
+    /**
+     * _RTWModel::getMediaPlantaNomenclature
+     *
+     * @access public
+     * @return integer
+     */
+    public function getMediaPlantaNomenclature() {
+        return $this->_MediaPlantaNomenclature;
+    }
+
+    /**
+     * _RTWModel::setMediaPlantaNomenclature
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setMediaPlantaNomenclature($value) {
+        if ($value !== null) {
+            $this->_MediaPlantaNomenclature = (int)$value;
+        }
     }
 
     // }}}
@@ -1857,6 +2333,40 @@ class _RTWModel extends Object {
     }
 
     // }}}
+    // LagrimaNomenclature string property + getter/setter {{{
+
+    /**
+     * LagrimaNomenclature int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_LagrimaNomenclature = 1;
+
+    /**
+     * _RTWModel::getLagrimaNomenclature
+     *
+     * @access public
+     * @return integer
+     */
+    public function getLagrimaNomenclature() {
+        return $this->_LagrimaNomenclature;
+    }
+
+    /**
+     * _RTWModel::setLagrimaNomenclature
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setLagrimaNomenclature($value) {
+        if ($value !== null) {
+            $this->_LagrimaNomenclature = (int)$value;
+        }
+    }
+
+    // }}}
     // HeelCovering foreignkey property + getter/setter {{{
 
     /**
@@ -1944,6 +2454,40 @@ class _RTWModel extends Object {
     }
 
     // }}}
+    // HeelCoveringNomenclature string property + getter/setter {{{
+
+    /**
+     * HeelCoveringNomenclature int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_HeelCoveringNomenclature = 1;
+
+    /**
+     * _RTWModel::getHeelCoveringNomenclature
+     *
+     * @access public
+     * @return integer
+     */
+    public function getHeelCoveringNomenclature() {
+        return $this->_HeelCoveringNomenclature;
+    }
+
+    /**
+     * _RTWModel::setHeelCoveringNomenclature
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setHeelCoveringNomenclature($value) {
+        if ($value !== null) {
+            $this->_HeelCoveringNomenclature = (int)$value;
+        }
+    }
+
+    // }}}
     // Selvedge foreignkey property + getter/setter {{{
 
     /**
@@ -2028,6 +2572,40 @@ class _RTWModel extends Object {
     public function setSelvedgeQuantity($value) {
         $this->_SelvedgeQuantity = ($value===null || $value === '')?
             null:round(I18N::extractNumber($value), 3);
+    }
+
+    // }}}
+    // SelvedgeNomenclature string property + getter/setter {{{
+
+    /**
+     * SelvedgeNomenclature int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_SelvedgeNomenclature = 1;
+
+    /**
+     * _RTWModel::getSelvedgeNomenclature
+     *
+     * @access public
+     * @return integer
+     */
+    public function getSelvedgeNomenclature() {
+        return $this->_SelvedgeNomenclature;
+    }
+
+    /**
+     * _RTWModel::setSelvedgeNomenclature
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setSelvedgeNomenclature($value) {
+        if ($value !== null) {
+            $this->_SelvedgeNomenclature = (int)$value;
+        }
     }
 
     // }}}
@@ -2223,6 +2801,40 @@ class _RTWModel extends Object {
     public function setBambooQuantity($value) {
         $this->_BambooQuantity = ($value===null || $value === '')?
             null:round(I18N::extractNumber($value), 3);
+    }
+
+    // }}}
+    // BambooNomenclature string property + getter/setter {{{
+
+    /**
+     * BambooNomenclature int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_BambooNomenclature = 1;
+
+    /**
+     * _RTWModel::getBambooNomenclature
+     *
+     * @access public
+     * @return integer
+     */
+    public function getBambooNomenclature() {
+        return $this->_BambooNomenclature;
+    }
+
+    /**
+     * _RTWModel::setBambooNomenclature
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setBambooNomenclature($value) {
+        if ($value !== null) {
+            $this->_BambooNomenclature = (int)$value;
+        }
     }
 
     // }}}
@@ -2521,42 +3133,60 @@ class _RTWModel extends Object {
             'HeelHeight' => 'RTWHeelHeight',
             'HeelReference' => 'RTWMaterial',
             'HeelReferenceQuantity' => Object::TYPE_DECIMAL,
+            'HeelReferenceNomenclature' => Object::TYPE_BOOL,
             'Sole' => 'RTWMaterial',
             'SoleQuantity' => Object::TYPE_DECIMAL,
+            'SoleNomenclature' => Object::TYPE_BOOL,
             'Box' => 'RTWMaterial',
             'BoxQuantity' => Object::TYPE_DECIMAL,
+            'BoxNomenclature' => Object::TYPE_BOOL,
             'HandBag' => 'RTWMaterial',
             'HandBagQuantity' => Object::TYPE_DECIMAL,
+            'HandBagNomenclature' => Object::TYPE_BOOL,
             'Material1' => 'RTWMaterial',
             'Material1Quantity' => Object::TYPE_DECIMAL,
+            'Material1Nomenclature' => Object::TYPE_BOOL,
             'Material2' => 'RTWMaterial',
             'Material2Quantity' => Object::TYPE_DECIMAL,
+            'Material2Nomenclature' => Object::TYPE_BOOL,
             'Material3' => 'RTWMaterial',
             'Material3Quantity' => Object::TYPE_DECIMAL,
+            'Material3Nomenclature' => Object::TYPE_BOOL,
             'Accessory1' => 'RTWMaterial',
             'Accessory1Quantity' => Object::TYPE_DECIMAL,
+            'Accessory1Nomenclature' => Object::TYPE_BOOL,
             'Accessory2' => 'RTWMaterial',
             'Accessory2Quantity' => Object::TYPE_DECIMAL,
+            'Accessory2Nomenclature' => Object::TYPE_BOOL,
             'Accessory3' => 'RTWMaterial',
             'Accessory3Quantity' => Object::TYPE_DECIMAL,
+            'Accessory3Nomenclature' => Object::TYPE_BOOL,
             'Lining' => 'RTWMaterial',
             'LiningQuantity' => Object::TYPE_DECIMAL,
+            'LiningNomenclature' => Object::TYPE_BOOL,
             'Insole' => 'RTWMaterial',
             'InsoleQuantity' => Object::TYPE_DECIMAL,
+            'InsoleNomenclature' => Object::TYPE_BOOL,
             'UnderSole' => 'RTWMaterial',
             'UnderSoleQuantity' => Object::TYPE_DECIMAL,
+            'UnderSoleNomenclature' => Object::TYPE_BOOL,
             'MediaPlanta' => 'RTWMaterial',
             'MediaPlantaQuantity' => Object::TYPE_DECIMAL,
+            'MediaPlantaNomenclature' => Object::TYPE_BOOL,
             'Lagrima' => 'RTWMaterial',
             'LagrimaQuantity' => Object::TYPE_DECIMAL,
+            'LagrimaNomenclature' => Object::TYPE_BOOL,
             'HeelCovering' => 'RTWMaterial',
             'HeelCoveringQuantity' => Object::TYPE_DECIMAL,
+            'HeelCoveringNomenclature' => Object::TYPE_BOOL,
             'Selvedge' => 'RTWMaterial',
             'SelvedgeQuantity' => Object::TYPE_DECIMAL,
+            'SelvedgeNomenclature' => Object::TYPE_BOOL,
             'Thread1' => 'RTWMaterial',
             'Thread2' => 'RTWMaterial',
             'Bamboo' => 'RTWMaterial',
             'BambooQuantity' => Object::TYPE_DECIMAL,
+            'BambooNomenclature' => Object::TYPE_BOOL,
             'Image' => Object::TYPE_IMAGE,
             'ColorImage' => Object::TYPE_IMAGE,
             'Comment' => Object::TYPE_TEXT);

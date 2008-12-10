@@ -4116,32 +4116,32 @@ class WorksheetGenerator extends DocumentGenerator
         $this->pdf->Ln();
         $this->pdf->addText(
             _('Worksheet') . ' ' . $this->model->toString(),
-            array('fontSize'=>14, 'lineHeight'=>8)
+            array('fontSize'=>13, 'lineHeight'=>6)
         );
         $this->pdf->Ln(50);
         $this->pdf->addText(
             _('Date') . ': ' . I18N::formatDate(time(), I18N::DATE_LONG),
-            array('fontSize'=>12, 'lineHeight'=>5)
+            array('fontSize'=>10, 'lineHeight'=>4)
         );
         if ($this->model->getSeason() instanceof RTWSeason) {
             $this->pdf->addText(
                 _('Season') . ': ' . $this->model->getSeason()->toString(),
-                array('fontSize'=>12, 'lineHeight'=>5)
+                array('fontSize'=>10, 'lineHeight'=>4)
             );
         }
         if ($this->model->getManufacturer() instanceof Actor) {
             $this->pdf->addText(
                 _('Manufacturer') . ': ' . $this->model->getManufacturer()->toString(),
-                array('fontSize'=>12, 'lineHeight'=>5)
+                array('fontSize'=>10, 'lineHeight'=>4)
             );
         }
         $this->pdf->addText(
             _('Style number') . ': ' . $this->model->getStyleNumber(),
-            array('fontSize'=>12, 'lineHeight'=>5)
+            array('fontSize'=>10, 'lineHeight'=>4)
         );
         $this->pdf->addText(
             _('Description') . ': ' . $this->model->getDescription(),
-            array('fontSize'=>12, 'lineHeight'=>5)
+            array('fontSize'=>10, 'lineHeight'=>4)
         );
         $this->pdf->Ln();
         $items = array(
@@ -4155,7 +4155,7 @@ class WorksheetGenerator extends DocumentGenerator
                 $this->pdf->tableHeader(array(
                     $v => 35, 
                     $this->model->$getter()->toString() => 155),
-                0);
+                    0, 1, array('fontSize' => 8));
             }
         }
         $items = $this->model->getMaterialProperties();
@@ -4181,25 +4181,26 @@ class WorksheetGenerator extends DocumentGenerator
                 $value = _('N/A');
                 $qty   =  '';
             }
-            $this->pdf->tableHeader(array($label => 35, $value => 130, (string)$qty => 25), 0);
+            $this->pdf->tableHeader(array($label => 35, $value => 130, (string)$qty => 25),
+                0, 1, array('fontSize' => 8));
         }
         if ($this->model->getLabel() instanceof RTWLabel) {
             $this->pdf->tableHeader(array(
                 _('Label (griffe)') => 35, 
                 $this->model->getLabel()->toString() => 155),
-            0);
+                0, 1, array('fontSize' => 8));
         }
         $sizes = $this->model->getSizeCollection();
         if (count($sizes) > 0) {
             $this->pdf->tableHeader(array(
                 _('Available sizes') => 35,
                 implode(', ', array_values($sizes->toArray())) => 155), 
-            0);
+                0, 1, array('fontSize' => 8));
         }
         $this->pdf->tableHeader(array(
             _('Observations') => 35,
             $this->model->getComment() => 155), 
-        0);
+            0, 1, array('fontSize' => 8));
     }
 
     // }}}

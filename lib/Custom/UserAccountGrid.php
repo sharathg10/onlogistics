@@ -35,25 +35,6 @@
  */
 
 class UserAccountGrid extends GenericGrid {
-    // UserAccountGrid::additionalGridActions() {{{
-
-    /**
-     * additionalGridActions
-     *
-     * @access public
-     * @return void
-     */
-    public function additionalGridActions() {
-        $this->grid->newAction(
-            'Redirect',
-            array(
-                'Caption'=>_('Manage alerts'),
-                'URL' => 'dispatcher.php?entity=Alert&uacId=%d'
-            )
-        );
-    }
-
-    // }}}
     // UserAccountGrid::getGridFilter() {{{
     /**
      * Méthode à surcharger dans les classes filles.

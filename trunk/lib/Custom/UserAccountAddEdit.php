@@ -153,20 +153,8 @@ class UserAccountAddEdit extends GenericAddEdit {
      * @access public
      * @return void
      */
-    public function renderSite() {
-        require_once('HTML/QuickForm/advmultiselect.php');
-        
-        $elt = HTML_QuickForm::createElement(
-            'advmultiselect', 'advmultiselectUserAccount_Site_IDs',
-            array('', _('Available sites'), _('Allowed sites')),
-            SearchTools::createArrayIDFromCollection('Site',
-                array('Owner'=>$this->object->getActorId())),
-            array('size'=>8, 'style'=>'width:400px;', 'id'=>'advmultiselectUserAccount_Site_IDs'));
-        $this->form->addElement($elt);
-
-        // valeurs par défaut en mode édition
-        $this->formDefaults['advmultiselectUserAccount_Site_IDs'] = 
-            $this->object->getSiteCollectionIds();
+    public function getFilterForSite() {
+        return array('Owner'=>$this->object->getActorId());
     }
 
     // }}}

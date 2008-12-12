@@ -2860,9 +2860,13 @@
         <property type="foreignkey" name="SupplierCatalog" class="Catalog"
             usedby="addedit" label="Supplier catalogue" section="User account data"/>
         <property type="decimal" name="CommissionPercent" default="0" />
+        <property type="manytomany" name="Alert" class="Alert"
+            field="ToUserAccount" linktable="alertUserAccount"
+            linkfield="FromAlert" section="Alerts"
+            label="Alerts" usedby="addedit" />
         <property type="manytomany" name="Site" class="Site"
             field="ToUserAccount" linktable="siteUserAccount"
-            linkfield="FromSite" section="User account data"
+            linkfield="FromSite" section="Sites"
             label="Sites" usedby="addedit" />
         <property type="manytomany" name="ChainTask" class="ChainTask"
             field="ToUserAccount" linktable="chtUserAccount"
@@ -2870,9 +2874,6 @@
         <property type="manytomany" name="ActivatedChainTask"
             class="ActivatedChainTask" field="ToUserAccount"
             linktable="ackUserAccount" linkfield="FromActivatedChainTask" />
-        <property type="manytomany" name="Alert" class="Alert"
-            field="ToUserAccount" linktable="alertUserAccount"
-            linkfield="FromAlert" />
     </entity>
 
     <!-- entity WeeklyInstant -->

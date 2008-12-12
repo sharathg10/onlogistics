@@ -403,7 +403,7 @@ class _UserAccount extends Object {
             _UserAccount::PROFILE_OWNER_CUSTOMER => _("Owner customer"), 
             _UserAccount::PROFILE_SUBSIDIARY_ACCOUNTANT => _("Subsidiary accountant"), 
             _UserAccount::PROFILE_GED_PROJECT_MANAGER => _("Project manager"), 
-            _UserAccount::PROFILE_PRODUCT_MANAGER => _("Product manager"),
+            _UserAccount::PROFILE_PRODUCT_MANAGER => _("Product manager"), 
             _UserAccount::PROFILE_RTW_SUPPLIER => _("Ready-to-wear supplier")
         );
         asort($array);
@@ -550,6 +550,94 @@ class _UserAccount extends Object {
         if ($value !== null) {
             $this->_CommissionPercent = round(I18N::extractNumber($value), 2);
         }
+    }
+
+    // }}}
+    // Alert one to many relation + getter/setter {{{
+
+    /**
+     * Alert *..* relation
+     *
+     * @access private
+     * @var Collection
+     */
+    private $_AlertCollection = false;
+
+    /**
+     * _UserAccount::getAlertCollection
+     *
+     * @access public
+     * @return object Collection
+     */
+    public function getAlertCollection($filter = array(),
+        $sortOrder = array(), $fields = array()) {
+        // si un paramètre est passé on force le rechargement de la collection
+        // on ne met en cache mémoire que les collections brutes
+        if (!empty($filter) || !empty($sortOrder) || !empty($fields)) {
+            $mapper = Mapper::singleton('UserAccount');
+            return $mapper->getManyToMany($this->getId(),
+                'Alert', $filter, $sortOrder, $fields);
+        }
+        // si la collection n'est pas en mémoire on la charge
+        if (false == $this->_AlertCollection) {
+            $mapper = Mapper::singleton('UserAccount');
+            $this->_AlertCollection = $mapper->getManyToMany($this->getId(),
+                'Alert');
+        }
+        return $this->_AlertCollection;
+    }
+
+    /**
+     * _UserAccount::getAlertCollectionIds
+     *
+     * @access public
+     * @param $filter FilterComponent or array
+     * @return array
+     */
+    public function getAlertCollectionIds($filter = array()) {
+        if (!empty($filter)) {
+            $col = $this->getAlertCollection($filter, array(), array('Id'));
+            return $col instanceof Collection?$col->getItemIds():array();
+        }
+        if (false == $this->_AlertCollection) {
+            $mapper = Mapper::singleton('UserAccount');
+            return $mapper->getManyToManyIds($this->getId(), 'Alert');
+        }
+        return $this->_AlertCollection->getItemIds();
+    }
+
+    /**
+     * _UserAccount::setAlertCollectionIds
+     *
+     * @access public
+     * @return array
+     */
+    public function setAlertCollectionIds($itemIds) {
+        $this->_AlertCollection = new Collection('Alert');
+        foreach ($itemIds as $id) {
+            $this->_AlertCollection->setItem($id);
+        }
+    }
+
+    /**
+     * _UserAccount::setAlertCollection
+     *
+     * @access public
+     * @param object Collection $value
+     * @return void
+     */
+    public function setAlertCollection($value) {
+        $this->_AlertCollection = $value;
+    }
+
+    /**
+     * _UserAccount::AlertCollectionIsLoaded
+     *
+     * @access public
+     * @return boolean
+     */
+    public function AlertCollectionIsLoaded() {
+        return ($this->_AlertCollection !== false);
     }
 
     // }}}
@@ -817,94 +905,6 @@ class _UserAccount extends Object {
     }
 
     // }}}
-    // Alert one to many relation + getter/setter {{{
-
-    /**
-     * Alert *..* relation
-     *
-     * @access private
-     * @var Collection
-     */
-    private $_AlertCollection = false;
-
-    /**
-     * _UserAccount::getAlertCollection
-     *
-     * @access public
-     * @return object Collection
-     */
-    public function getAlertCollection($filter = array(),
-        $sortOrder = array(), $fields = array()) {
-        // si un paramètre est passé on force le rechargement de la collection
-        // on ne met en cache mémoire que les collections brutes
-        if (!empty($filter) || !empty($sortOrder) || !empty($fields)) {
-            $mapper = Mapper::singleton('UserAccount');
-            return $mapper->getManyToMany($this->getId(),
-                'Alert', $filter, $sortOrder, $fields);
-        }
-        // si la collection n'est pas en mémoire on la charge
-        if (false == $this->_AlertCollection) {
-            $mapper = Mapper::singleton('UserAccount');
-            $this->_AlertCollection = $mapper->getManyToMany($this->getId(),
-                'Alert');
-        }
-        return $this->_AlertCollection;
-    }
-
-    /**
-     * _UserAccount::getAlertCollectionIds
-     *
-     * @access public
-     * @param $filter FilterComponent or array
-     * @return array
-     */
-    public function getAlertCollectionIds($filter = array()) {
-        if (!empty($filter)) {
-            $col = $this->getAlertCollection($filter, array(), array('Id'));
-            return $col instanceof Collection?$col->getItemIds():array();
-        }
-        if (false == $this->_AlertCollection) {
-            $mapper = Mapper::singleton('UserAccount');
-            return $mapper->getManyToManyIds($this->getId(), 'Alert');
-        }
-        return $this->_AlertCollection->getItemIds();
-    }
-
-    /**
-     * _UserAccount::setAlertCollectionIds
-     *
-     * @access public
-     * @return array
-     */
-    public function setAlertCollectionIds($itemIds) {
-        $this->_AlertCollection = new Collection('Alert');
-        foreach ($itemIds as $id) {
-            $this->_AlertCollection->setItem($id);
-        }
-    }
-
-    /**
-     * _UserAccount::setAlertCollection
-     *
-     * @access public
-     * @param object Collection $value
-     * @return void
-     */
-    public function setAlertCollection($value) {
-        $this->_AlertCollection = $value;
-    }
-
-    /**
-     * _UserAccount::AlertCollectionIsLoaded
-     *
-     * @access public
-     * @return boolean
-     */
-    public function AlertCollectionIsLoaded() {
-        return ($this->_AlertCollection !== false);
-    }
-
-    // }}}
     // Action one to many relation + getter/setter {{{
 
     /**
@@ -1148,6 +1148,14 @@ class _UserAccount extends Object {
      */
     public static function getLinks() {
         $return = array(
+            'Alert'=>array(
+                'linkClass'     => 'Alert',
+                'field'         => 'ToUserAccount',
+                'linkTable'     => 'alertUserAccount',
+                'linkField'     => 'FromAlert',
+                'multiplicity'  => 'manytomany',
+                'bidirectional' => 0
+            ),
             'Site'=>array(
                 'linkClass'     => 'Site',
                 'field'         => 'ToUserAccount',
@@ -1169,14 +1177,6 @@ class _UserAccount extends Object {
                 'field'         => 'ToUserAccount',
                 'linkTable'     => 'ackUserAccount',
                 'linkField'     => 'FromActivatedChainTask',
-                'multiplicity'  => 'manytomany',
-                'bidirectional' => 0
-            ),
-            'Alert'=>array(
-                'linkClass'     => 'Alert',
-                'field'         => 'ToUserAccount',
-                'linkTable'     => 'alertUserAccount',
-                'linkField'     => 'FromAlert',
                 'multiplicity'  => 'manytomany',
                 'bidirectional' => 0
             ),
@@ -1371,6 +1371,15 @@ class _UserAccount extends Object {
                 'add_button'   => false,
                 'section'      => _('User account data')
             ),
+            'Alert'=>array(
+                'label'        => _('Alerts'),
+                'shortlabel'   => _('Alerts'),
+                'usedby'       => array('addedit'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => _('Alerts')
+            ),
             'Site'=>array(
                 'label'        => _('Sites'),
                 'shortlabel'   => _('Sites'),
@@ -1378,7 +1387,7 @@ class _UserAccount extends Object {
                 'required'     => false,
                 'inplace_edit' => false,
                 'add_button'   => false,
-                'section'      => _('User account data')
+                'section'      => _('Sites')
             ));
         return $return;
     }

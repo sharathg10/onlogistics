@@ -154,7 +154,7 @@ class UserAccountAddEdit extends GenericAddEdit {
      * @return void
      */
     public function getFilterForSite() {
-        return array('Owner'=>$this->object->getActorId());
+        return array('ClassName' => 'StorageSite');
     }
 
     // }}}

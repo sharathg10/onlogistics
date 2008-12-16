@@ -110,6 +110,12 @@ $filterArray[] = SearchTools::NewFilterComponent(
     'Task', '', 'NotEquals', TASK_STOCK_EXIT, 1);
 $filterArray[] = SearchTools::NewFilterComponent('State', '', 'In',
     	array(ActivatedChainTask::STATE_TODO, ActivatedChainTask::STATE_IN_PROGRESS), 1);
+if ($profileID == UserAccount::PROFILE_RTW_SUPPLIER) {
+    $filterArray[] = SearchTools::NewFilterComponent('Expeditor', 
+        'ActivatedOperation.ActivatedChain.CommandItem()@ProductCommandItem.Product.ActorProduct().Actor', 'Equals',
+    	$actorID, 1, 'ActivatedChainTask');
+
+}
 //Database::connection()->debug = true;
 if ($profileID == UserAccount::PROFILE_GESTIONNAIRE_STOCK ||
     $profileID == UserAccount::PROFILE_TRANSPORTEUR) {

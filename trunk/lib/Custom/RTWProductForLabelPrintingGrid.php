@@ -34,8 +34,9 @@
  * @filesource
  */
 
+require_once 'ProductCommandTools.php';
 
-class RTWModelForSupplierGrid extends GenericGrid
+class RTWProductForLabelPrintingGrid extends GenericGrid
 {
     // Constructeur {{{
 
@@ -53,10 +54,30 @@ class RTWModelForSupplierGrid extends GenericGrid
             UserAccount::PROFILE_RTW_SUPPLIER,
         );
         parent::__construct($params);
+        $this->jsRequirements = array('js/lib-functions/ClientCatalog.js');
     }
     
     // }}} 
-    //  RTWModelForSupplierGrid::getMapping() {{{
+    // render() {{{
+    public function render() {
+        parent::render();
+        if (!isset($_REQUEST['gridItems'])) {
+            return;
+        }
+        $qties = array();
+     	foreach ($_REQUEST['gridItems'] as $id) {
+            if (isset($_REQUEST['qty_' . $id]) 
+                && is_numeric($_REQUEST['qty_' . $id])
+                && $_REQUEST['qty_' . $id] > 1)
+            {
+     	         $qties[$id] = $_REQUEST['qty_' . $id];
+     	    }
+     	}
+     	$this->session->register('productQuantities', $qties, 2);
+     }
+
+    // }}} 
+    //  RTWProductForLabelPrintingGrid::getMapping() {{{
 
     /**
      *
@@ -65,18 +86,9 @@ class RTWModelForSupplierGrid extends GenericGrid
      */
     public function getMapping() {
         return array(
-            'StyleNumber'=>array(
-                'label'        => _('Style number'),
-                'shortlabel'   => _('Style number'),
-                'usedby'       => array('grid', 'searchform'),
-                'required'     => true,
-                'inplace_edit' => false,
-                'add_button'   => false,
-                'section'      => ''
-            ),
-            'Season'=>array(
-                'label'        => _('Season'),
-                'shortlabel'   => _('Season'),
+            'BaseReference'=>array(
+                'label'        => _('Reference'),
+                'shortlabel'   => _('Reference'),
                 'usedby'       => array('grid', 'searchform'),
                 'required'     => true,
                 'inplace_edit' => false,
@@ -87,7 +99,7 @@ class RTWModelForSupplierGrid extends GenericGrid
     }
     
     // }}} 
-    // RTWModelForSupplierGrid::getFeatures() {{{
+    // RTWProductForLabelPrintingGrid::getFeatures() {{{
 
     /**
      * Retourne le tableau des "fonctionalités" pour l'objet en cours.
@@ -103,7 +115,7 @@ class RTWModelForSupplierGrid extends GenericGrid
     }
 
     // }}}
-    // RTWModelForSupplierGrid::getGridFilter() {{{
+    // RTWProductForLabelPrintingGrid::getGridFilter() {{{
 
     /**
      *
@@ -112,15 +124,15 @@ class RTWModelForSupplierGrid extends GenericGrid
      */
     public function getGridFilter() {
         if ($this->auth->getProfile() == UserAccount::PROFILE_RTW_SUPPLIER) {
-            // on n'affiche que les fiches techniques dont les produits 
-            // déclinés ont comme fournisseur l'acteur de l'utilisateur
+            // on n'affiche que les produits qui ont comme fournisseur l'acteur
+            // de l'utilisateur connecte
             return SearchTools::newFilterComponent(
                 'Owner',
-                'RTWProduct().ActorProduct().Actor',
+                'ActorProduct().Actor',
                 'Equals',
                 $this->auth->getActorId(),
                 1,
-                'RTWModel'
+                'RTWProduct'
             );
         }
         // sinon pas de filtre particulier
@@ -128,20 +140,36 @@ class RTWModelForSupplierGrid extends GenericGrid
     }
 
     // }}}
-    // RTWModelForSupplierGrid::additionalGridActions() {{{
+    // RTWProductForLabelPrintingGrid::additionalGridActions() {{{
 
     /**
-     * Ajoute l'action imprimer fiche technique.
+     * Ajoute l'action imprimer etiquettes.
      *
      * @access protected
      * @return array
      */
     protected function additionalGridActions() {
         $this->grid->NewAction('Redirect', array(
-            'Caption' => _('Print worksheet'),
+            'Caption' => _('Print product labels'),
             'TargetPopup' => true,
-            'URL' => 'WorksheetEdit.php',
-            'TransmitedArrayName' => 'modelIds'
+            'URL' => 'ProductLabelEdit.php',
+            'TransmitedArrayName' => 'pdtIds'
+        ));
+    }
+
+    // }}}
+    // RTWProductForLabelPrintingGrid::additionalGridColumns() {{{
+
+    /**
+     * Ajoute la colonne pour gerer la quantite
+     *
+     * @access protected
+     * @return array
+     */
+    protected function additionalGridColumns() {
+        $this->grid->NewColumn('FieldMapper', _('Quantity to print'), array(
+            'Macro' => '<input name="qty_%Id%" type="text" style="width: 50px;" value="1"/>',
+            'Sortable' => false,
         ));
     }
 

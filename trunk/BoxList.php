@@ -39,7 +39,7 @@ require_once('config.inc.php');
 $Auth = Auth::Singleton();
 $Auth->checkProfiles();
 
-//Database::connection()->debug=1;
+// Database::connection()->debug=1;
 // message de suppression
 define('I_BOX_DELETE',
     _('You are about to ungroup all parcels, continue ?'));
@@ -50,9 +50,9 @@ $form = new SearchForm('Box');
 $form->addElement('text', 'CommandNo', _('Order number'), array(),
         array('Path' => 'ActivatedChain.CommandItem().Command.CommandNo'));
 $form->addElement('text', 'Reference', _('Regrouping reference (parcel, pallet, etc...)'), array(),
-		array('Path' => 'ParentBox.Reference'));
-$form->addElement('text', 'BaseReference', _('Product reference'), array(),
 		array('Path' => 'Reference'));
+$form->addElement('text', 'BaseReference', _('Product reference'), array(),
+		array('Path' => 'Box().Reference'));
 $form->addElement('checkbox', 'DateOrder1', _('Filter by date'),
 		array('', 'onClick="$(\\\'Date1\\\').style.'
                 . 'display=this.checked?\\\'block\\\':\\\'none\\\';"'));
@@ -60,10 +60,10 @@ $form->addElement('checkbox', 'DateOrder1', _('Filter by date'),
 $form->addDate2DateElement(
         array('Name'   => 'StartDate',
 			  'Format' => array('minYear'   => date('Y') - 5, 'maxYear'   => date('Y')),
-			  'Path' => 'ParentBox.Date'),
+			  'Path' => 'Date'),
 		array('Name'   => 'EndDate',
 			  'Format' => array('minYear'   => date('Y') - 5, 'maxYear'   => date('Y')),
-			  'Path' => 'ParentBox.Date'),
+			  'Path' => 'Date'),
         array('EndDate' => array('d' => date('d'), 'm' => date('m'), 'Y' => date('Y')),
         	  'StartDate' => array('Y' => date('Y')))
         );
@@ -78,43 +78,53 @@ if (true === $form->displayGrid()) {
 	    unset($_SESSION['DateOrder1']);
 	}
 
-	// Filtre par defaut: on n'affiche que les Box ayant une ParentBox
-	$FilterComponentArray = array(SearchTools::NewFilterComponent(
-            'ParentBox', '', 'GreaterThan', 0, 1));
-	$FilterComponentArray = array_merge($FilterComponentArray,
-            $form->buildFilterComponentArray());
+	// Filtre par defaut: on n'affiche que les ParentBox
+    $FilterComponentArray = array();
+	$FilterComponentArray[] = SearchTools::NewFilterComponent('ParentBox', '', 'Equals', 0, 1);
+	$FilterComponentArray[] = SearchTools::NewFilterComponent('Level', '', 'Equals', 3, 1);
+	$filter = array_merge($FilterComponentArray, $form->buildFilterComponentArray());
 	//  Construction du filtre
-	$Filter = SearchTools::filterAssembler($FilterComponentArray);
+	$filter = SearchTools::filterAssembler($filter);
 
 	$grid = new Grid();
 	$grid->itemPerPage = 100;
 
-	$grid->NewAction('Delete', array('EntityType' => 'Box',
-            'Caption' => _('Cancel regrouping'),
-            'TransmitedArrayName' => 'boxIDs',
-            'ConfirmMessage' => I_BOX_DELETE));
-	$grid->NewAction('Redirect', array('Caption' => _('Print packing list'),
-            'TargetPopup' => true,
-			'TransmitedArrayName' => 'boxId',
-			'URL' => 'PackingListEdit.php?boxId=%d&'. SID));
+    $grid->NewAction('Delete', array(
+        'EntityType'          => 'Box',
+        'Caption'             => _('Cancel regrouping'),
+        'TransmitedArrayName' => 'boxIDs',
+        'ConfirmMessage'      => I_BOX_DELETE
+    ));
+    /*
+    $grid->NewAction('Redirect', array(
+        'Caption'             => _('Print packing list'),
+        'TargetPopup'         => true,
+        'TransmitedArrayName' => 'boxIds',
+        'URL'                 => 'PackingListEdit.php'
+    ));
+     */
+    $grid->NewAction('Redirect', array(
+        'Caption'             => _('Print grouping labels'),
+        'TargetPopup'         => true,
+        'TransmitedArrayName' => 'boxIds',
+        'URL'                 => 'BoxLabelEdit.php'
+    ));
 	$grid->NewAction('Print');
 	$grid->NewAction('Export', array('FileName' => 'PackingLists'));
 
 	/*  Colonnes du grid  */
 	$grid->NewColumn('FieldMapper', _('Order'),
-			array('Macro' => '%ActivatedChain.CommandItem[0].Command.CommandNo%'));
+			array('Macro' => '%Box[0].ActivatedChain.CommandItem[0].Command.CommandNo%'));
 	$grid->NewColumn('FieldMapper', _('Regrouping reference'),
-            array('Macro' => '%ParentBox.Reference%'));
-	$grid->NewColumn('FieldMapperWithTranslation', _('Content reference'),
-			array('Macro' => '%Reference%', 'TranslationMap' => array('0' => 'N/A')));
+            array('Macro' => '%Reference%'));
+	$grid->NewColumn('ChildrenBoxList', array(_('Content reference')));
 
-    $Filter = isset($Filter)?$Filter:array();
 	// Pas gerable par le fw
 	/*'ActivatedChain.CommandItem[0].Command.WishedStartDate' => SORT_DESC,
 	  'ActivatedChainTask.Begin' => SORT_DESC*/
-	$Order = array('ParentBox.Reference');
+	$order = array('Reference');
 
-	$form->displayResult($grid, true, $Filter);
+	$form->displayResult($grid, true, $filter, $order);
 } // fin FormSubmitted
 
 else { // on n'affiche que le formulaire de recherche, pas le Grid

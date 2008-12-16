@@ -51,7 +51,7 @@ class Box extends _Box {
     // }}}
 
     /**
-     * Retourne la date de début de l'ACK ou de l'ACH s'il s'agit d'une box de
+     * Retourne la date de dÃ©but de l'ACK ou de l'ACH s'il s'agit d'une box de
      * niveau 1.
      *
      * @access public
@@ -72,7 +72,7 @@ class Box extends _Box {
     }
 
     /**
-     * Retourne l'unité de regroupement du Box.
+     * Retourne l'unitÃ© de regroupement du Box.
      *
      * @access public
      * @return object SellUnitType
@@ -108,8 +108,8 @@ class Box extends _Box {
     }
 
     /**
-     * Retourne toutes les box inférieures dans la hiérarchie, si un level est
-     * précisé seuls les box de ce level seront retournées.
+     * Retourne toutes les box infÃ©rieures dans la hiÃ©rarchie, si un level est
+     * prÃ©cisÃ© seuls les box de ce level seront retournÃ©es.
      *
      * @access public
      * @param int $level
@@ -336,6 +336,46 @@ class Box extends _Box {
         }
 
         return $dataArray;
+    }
+
+    /**
+     * Retourne les donnees pour les etiquettes.
+     *
+     * @access public
+     * @param int $level
+     * @return object Collection
+     */
+    function getDataForLabel()
+    {
+        if ($this->getParentBoxId()) {
+            return array();
+        }
+        $return = array(
+            'reference'      => $this->getReference(),
+            'expeditor'      => $this->getExpeditor(),
+            'expeditorSite'  => $this->getExpeditorSite(),
+            'destinator'     => $this->getDestinator(),
+            'destinatorSite' => $this->getDestinatorSite(),
+        );
+        $boxes = $this->getBoxCollection();
+        $children = array();
+        foreach ($boxes as $box) {
+            $cmi   = $box->getCommandItem();
+            if (!$cmi instanceof CommandItem) {
+                continue;
+            }
+            $cmiId = $cmi->getId();
+            if (isset($children[$cmiId])) {
+                $children[$cmiId]['quantity'] += 1;
+                continue;
+            }
+            $children[$cmiId] = array(
+                'cmi'      => $cmi,
+                'quantity' => 1,
+            );
+        }
+        $return['children'] = $children;
+        return $return;
     }
 
 }

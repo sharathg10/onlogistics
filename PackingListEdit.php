@@ -43,32 +43,46 @@ $auth = Auth::Singleton();
 
 $errorBody = _('An error occurred, packing list could not be printed.');
 
-if (!isset($_GET['boxId']) && !isset($_GET['pId'])) {
-    die('1 : ' . $errorBody);
-}
-
 if(!isset($_GET['reedit'])) {
     SearchTools::ProlongDataInSession();  // prolonge les datas du form de recherche en session
-
-    $box = Object::load('Box', $_GET['boxId']);
-    if (Tools::isEmptyObject($box)) {
-        die('2 : ' . $errorBody);
+    if (!isset($_REQUEST['boxIds'])) {
+        Template::errorDialog(I_NEED_SELECT_ITEM, 'javascript:window.close();', BASE_POPUP_TEMPLATE);
+        exit(1);
     }
 
-    // si ce n'est pas une parentbox qui est passée en paramètre on va la récupérer
-    if (!isset($_REQUEST['fromParent'])) {
-        $parentBox = $box->getParentBox();
-    } else {
-        $parentBox = $box;
+    $boxCol = Object::loadCollection('Box', array('Id' => $_GET['boxIds']));
+    if (count($boxCol) == 0) {
+        Template::errorDialog(I_NEED_SELECT_ITEM, 'javascript:window.close();', BASE_POPUP_TEMPLATE);
+        exit(1);
     }
 
-    $packingList = $parentBox->getPackingList();
     $isReedition = false; // inutilise
+    $packingList = Object::load('PackingList');
+    $packingList->generateId();
+    $packingList->setDocumentNo($packingList->getId());
+    $packingList->setEditionDate(date('Y-m-d H:i:s'));
+    $documentModel = $packingList->findDocumentModel();
+    if (false != $documentModel) {
+        $packingList->setDocumentModel($documentModel);
+    }
+    
+    $packingList->setBox($this);
+    $scMapper = Mapper::singleton('SupplierCustomer');
+    $sc = $scMapper->load(array(
+        'Supplier' => $this->getExpeditorId(),
+        'customer' => $this->getDestinatorId()
+    ));
+    if (Tools::isEmptyObject($sc)) {
+        $sc = Object::load('SupplierCustomer');
+        $sc->setSupplier($this->getExpeditor());
+        $sc->setCustomer($this->getDestinator());
+        $sc->save();
+    }
+        $packingList->setSupplierCustomer($sc);
+        $packingList->save();
 
-    // Creation de la PackingList si elle n'existe pas
     Database::connection()->startTrans();
-
-    $packingList = $parentBox->createPackingList();
+    $packingList = $box->createPackingList();
 
     // Commit de la transaction, si elle a réussi
     if (Database::connection()->hasFailedTrans()) {

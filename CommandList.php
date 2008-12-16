@@ -69,6 +69,13 @@ elseif ($ProfileId == UserAccount::PROFILE_COMMERCIAL){
     $FilterComponentArray[] = SearchTools::NewFilterComponent(
             'Commercial', '', 'Equals', $auth->getUserId(), 1);
 }
+elseif ($ProfileId == UserAccount::PROFILE_RTW_SUPPLIER){
+    // restriction aux commandes qui ont pour fournisseur l'acteur connecte
+    $FilterComponentArray[] = SearchTools::NewFilterComponent(
+            'Type', '', 'Equals', Command::TYPE_SUPPLIER, 1);
+    $FilterComponentArray[] = SearchTools::NewFilterComponent(
+            'Expeditor', '', 'Equals', $auth->getActorId(), 1);
+}
 elseif ($ProfileId == UserAccount::PROFILE_DIR_COMMERCIAL){
     // restriction aux commandes client
     $FilterComponentArray[] = SearchTools::NewFilterComponent(
@@ -108,15 +115,6 @@ $form->customizationEnabled = true;  // les criteres de recherches sont desactiv
 $form->hiddenCriteriaByDefault = array('Commercial', 'CommandDate');
 
 $form->addElement('text', 'CommandNo', _('Order number'));
-$form->addElement('text', 'Name', _('Product designation'), array(),
-        array('Path' => 'CommandItem().Product.Name'));
-$form->addElement('text', 'BaseReference', _('Product reference'), array(),
-        array('Path' => 'CommandItem().Product.BaseReference'));
-// Le profile client ne voit pas les ref d'achat
-if ($ProfileId != UserAccount::PROFILE_CUSTOMER){
-    $form->addElement('text', 'SupplierReference', _('Purchase reference'), array(),
-        array('Path' => 'CommandItem().Product.ActorProduct().AssociatedProductReference'));
-}
 if ($consultingContext) {
     $pmFilter = array('Generic' => 0);
     if ($ProfileId == UserAccount::PROFILE_GED_PROJECT_MANAGER) {
@@ -129,46 +127,60 @@ if ($consultingContext) {
         'ProjectManager', $pmFilter, $firstItem);
     $form->addElement('select', 'ProjectManager', _('Project manager'), array($pmArray));
 }
-$form->addElement('text', 'Expeditor', _('Shipper'), array(),
+if ($ProfileId != UserAccount::PROFILE_RTW_SUPPLIER) {
+    // Le profile client ne voit pas les ref d'achat
+    if ($ProfileId != UserAccount::PROFILE_CUSTOMER){
+        $form->addElement('text', 'SupplierReference', _('Purchase reference'), array(),
+            array('Path' => 'CommandItem().Product.ActorProduct().AssociatedProductReference'));
+    }
+    $form->addElement('text', 'Name', _('Product designation'), array(),
+        array('Path' => 'CommandItem().Product.Name'));
+    $form->addElement('text', 'BaseReference', _('Product reference'), array(),
+        array('Path' => 'CommandItem().Product.BaseReference'));
+    $form->addElement('text', 'Expeditor', _('Shipper'), array(),
         array('Path' => 'Expeditor.Name'));
-$form->addElement('text', 'Destinator', _('Addressee'), array(),
+    $form->addElement('text', 'Destinator', _('Addressee'), array(),
         array('Path' => 'Destinator.Name'));
-$form->addElement('text', 'InvoiceNo', _('Document number (invoice, delivery order, etc...)'),
+    $form->addElement('text', 'InvoiceNo', _('Document number (invoice, delivery order, etc...)'),
         array(), array('Path' => 'AbstractDocument().DocumentNo'));
 
-$form->addElement('checkbox', 'Closed', _('Closed'));
-$form->addElement('checkbox', 'NotClosed', _('Not closed'), array(),
+    $form->addElement('checkbox', 'Closed', _('Closed'));
+    $form->addElement('checkbox', 'NotClosed', _('Not closed'), array(),
         array('Path' => 'Closed', 'Operator' => 'NotEquals'));
-
-$CommandStateArray = array('##'=>_('Select one or more states'))
+    $CommandStateArray = array('##'=>_('Select one or more states'))
         + Command::getStateConstArray();
-$form->addElement('select', 'State', _('State'),
+    $form->addElement('select', 'State', _('State'),
         array($CommandStateArray, 'multiple="multiple" size="5"'));
 
-$form->addElement('checkbox', 'DateOrder1', _('Filter by date'),
+    $form->addElement('checkbox', 'DateOrder1', _('Filter by date'),
         array('', 'onclick="$(\\\'Date1\\\').style.'
                 . 'display=this.checked?\\\'block\\\':\\\'none\\\';"'));
 
-$form->addDate2DateElement(
+    $form->addDate2DateElement(
         array('Name' => 'StartDate', 'Path' => 'WishedStartDate'),
         array('Name' => 'EndDate', 'Path' => 'WishedStartDate'),
         array('EndDate' => array('d' => date('d'), 'm' => date('m'), 'Y' => date('Y')),
               'StartDate' => array('Y' => date('Y')))
       );
       
-$form->addElement('text', 'Commercial', _('Salesman'), array(),
+    $form->addElement('text', 'Commercial', _('Salesman'), array(),
         array('Path' => 'Commercial.Name'));
         
-$form->addElement('checkbox', 'DateOrder2', _('Filter by creation date'),
+    $form->addElement('checkbox', 'DateOrder2', _('Filter by creation date'),
         array('', 'onclick="$(\\\'Date2\\\').style.'
                 . 'display=this.checked?\\\'block\\\':\\\'none\\\';"'));
 
-$form->addDate2DateElement(
+    $form->addDate2DateElement(
         array('Name' => 'StartCommandDate', 'Path' => 'CommandDate'),
         array('Name' => 'EndCommandDate', 'Path' => 'CommandDate'),
         array('EndCommandDate' => array('d' => date('d'), 'm' => date('m'), 'Y' => date('Y')),
               'StartCommandDate' => array('Y' => date('Y')))
       );        
+} else {
+    $form->addElement('text', 'StyleNumber', _('Style number'), array(), array(
+        'Path' => 'CommandItem().Product@RTWProduct.Model.StyleNumber'
+    ));
+}
 
 
 $defaultValues = $form->getDefaultValues();
@@ -263,6 +275,24 @@ if (true === $form->displayGrid()) {
                             UserAccount::PROFILE_COMMERCIAL,UserAccount::PROFILE_CUSTOMER,
                             UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_DIR_COMMERCIAL)));
 
+    $grid->NewAction('Redirect', array(
+        'Caption' => _('Print product labels'),
+        'Title' => _('Print product labels'),
+        'TargetPopup' => true,
+	    'URL' => 'ProductLabelEdit.php?cmdId=%d',
+        'ReturnURL' => 'javascript:window.close();',
+        'Profiles' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,
+                            UserAccount::PROFILE_RTW_SUPPLIER)));
+
+    $grid->NewAction('Redirect', array(
+        'Caption' => _('Print worksheets'),
+        'Title' => _('Print worksheets'),
+        'TargetPopup' => true,
+        'URL' => 'WorksheetEdit.php?cmdId=%d',
+        'ReturnURL' => 'javascript:window.close();',
+        'Profiles' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,
+                            UserAccount::PROFILE_RTW_SUPPLIER)));
+
     $grid->NewAction('Print');
     $grid->NewAction('Export', array('FileName' => 'Commandes'));
 
@@ -270,29 +300,31 @@ if (true === $form->displayGrid()) {
             array('Sortable' => false));
     $grid->NewColumn('FieldMapper', _('Date'),
             array('Macro' => '%CommandDate|formatdate@DATE_SHORT%'));
-    $grid->NewColumn('FieldMapperWithTranslation', _('State'),
+    if ($ProfileId != UserAccount::PROFILE_RTW_SUPPLIER) {
+        $grid->NewColumn('FieldMapperWithTranslation', _('State'),
             array('Macro' => '%State%','TranslationMap' => $ShortCommandStateArray));
-    $grid->NewColumn('MultiPrice', _('Amount incl. VAT'),
+        $grid->NewColumn('MultiPrice', _('Amount incl. VAT'),
             array('Method' => 'getTotalPriceTTC', 'Sortable' => false,
                   'DataType' => 'numeric'));
-    $grid->NewColumn('FieldMapper', _('Shipper'),
+        $grid->NewColumn('FieldMapper', _('Shipper'),
             array('Macro' => '%Expeditor.Name%'));
-    $grid->NewColumn('FieldMapper', _('Addressee'),
+        $grid->NewColumn('FieldMapper', _('Addressee'),
             array('Macro' => '%Destinator.Name%'));
-    $grid->NewColumn('FieldMapper', _('Addressee site'),
+        $grid->NewColumn('FieldMapper', _('Addressee site'),
             array('Macro' => '%DestinatorSite.Name%'));
-    $grid->NewColumn('FieldMapper', _('Salesman'),
+        $grid->NewColumn('FieldMapper', _('Salesman'),
             array('Macro' => '%Commercial.Identity|default%'));
-    // Si la preference est activee, on affiche une colonne de plus:
-    // Si ce sont des qtes d'UE, et la colonne Quantity est renommee
-    $qtyCaption = (Preferences::get('ProductCommandUEQty'))?
+        // Si la preference est activee, on affiche une colonne de plus:
+        // Si ce sont des qtes d'UE, et la colonne Quantity est renommee
+        $qtyCaption = (Preferences::get('ProductCommandUEQty'))?
            _('Selling unit qty'):_('Quantity');
-    $columns = (Preferences::get('ProductCommandUEQty'))?
+        $columns = (Preferences::get('ProductCommandUEQty'))?
             array(_('Product'), _('Qty pack.'), $qtyCaption, _('Date')):
             array(_('Product'), $qtyCaption, _('Date'));
-    $grid->NewColumn('CommandItemList', $columns, 
+        $grid->NewColumn('CommandItemList', $columns, 
             array('PackagingUnitQty' => Preferences::get('ProductCommandUEQty'), 
                   'Sortable' => false));
+    }
 
     $order = array('WishedStartDate' => SORT_DESC);
 

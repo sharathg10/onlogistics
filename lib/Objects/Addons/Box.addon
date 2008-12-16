@@ -286,3 +286,45 @@
 
         return $dataArray;
     }
+
+    /**
+     * Retourne les donnees pour les etiquettes.
+     *
+     * @access public
+     * @param int $level
+     * @return object Collection
+     */
+    function getDataForLabel()
+    {
+        if ($this->getParentBoxId()) {
+            return array();
+        }
+        $return = array(
+            'reference'      => $this->getReference(),
+            'expeditor'      => $this->getExpeditor(),
+            'expeditorSite'  => $this->getExpeditorSite(),
+            'destinator'     => $this->getDestinator(),
+            'destinatorSite' => $this->getDestinatorSite(),
+        );
+        $boxes = $this->getBoxCollection();
+        $children = array();
+        foreach ($boxes as $box) {
+            $cmi   = $box->getCommandItem();
+            if (!$cmi instanceof CommandItem) {
+                continue;
+            }
+            $cmiId = $cmi->getId();
+            if (isset($children[$cmiId])) {
+                $children[$cmiId]['quantity'] += 1;
+                continue;
+            }
+            $children[$cmiId] = array(
+                'cmi'      => $cmi,
+                'quantity' => 1,
+            );
+        }
+        $return['children'] = $children;
+        return $return;
+    }
+
+

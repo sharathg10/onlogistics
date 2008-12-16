@@ -196,6 +196,9 @@ for($i = 0; $i < $count; $i++){
 
 // génération de la packing list
 $redirect = 'GroupableBoxActivatedChainTaskList.php';
+Tools::redirectTo($redirect);
+
+/*
 if ($generatePL) {
 	echo "
 <script type=\"text/javascript\">
@@ -207,5 +210,5 @@ location.href = \"".$redirect."\";
 } else {
     Tools::redirectTo($redirect);
 }
-
+*/
 ?>

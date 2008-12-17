@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Onlogistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-08 14:16+0100\n"
+"POT-Creation-Date: 2008-12-17 13:54+0100\n"
 "PO-Revision-Date: 2008-07-30 10:05+0100\n"
 "Last-Translator: David JL <david@ateor.com>\n"
 "Language-Team: Ateor dev team <dev@ateor.com>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Bookmarks: 878,164,2272,2333,-1,-1,-1,-1,-1,-1\n"
 
-#: ../scripts/RepairAffectations.php:69 ../lib/RTWProductManager.php:172
+#: ../scripts/RepairAffectations.php:69 ../lib/RTWProductManager.php:173
 #, php-format
 msgid "You must create a chain with reference \"%s\""
 msgstr "\"%s\" referansı ile bir zincir oluşturmalısınız."
@@ -204,12 +204,12 @@ msgstr "Mevki"
 #: ../lib/Objects/Alert.const.php:282 ../lib/DocumentGenerator.php:562
 #: ../lib/DocumentGenerator.php:2519 ../lib/DocumentGenerator.php:3290
 #: ../lib/DocumentGenerator.php:3308 ../lib/DocumentGenerator.php:3316
-#: ../lib/DocumentGenerator.php:3824 ../ProductCommandSupplier.php:215
-#: ../CommandList.php:289 ../ProductByLocationList.php:146
+#: ../lib/DocumentGenerator.php:3824 ../lib/DocumentGenerator.php:4728
+#: ../ProductCommandSupplier.php:215 ../ProductByLocationList.php:146
 #: ../ComponentAddEdit.php:209 ../LocationConcreteProductList.php:260
 #: ../ChainCommandList.php:190 ../SupplierCatalog.php:356
 #: ../StockProductRealandVirtualList.php:103 ../AssemblyDetail.php:115
-#: ../ProductCommand.php:232 ../BoardByProduct.php:126
+#: ../ProductCommand.php:232 ../BoardByProduct.php:126 ../CommandList.php:320
 #: ../ComponentConcreteProduct.php:125 ../AssemblyDegradedModeDetail.php:98
 #: ../DetailedLocationByProductList.php:154
 #: ../ConcreteComponentAddEdit.php:160 ../AssemblyEdit.php:119
@@ -946,10 +946,6 @@ msgstr "tahsis edilen"
 msgid "Available SN/Lot"
 msgstr "Mevcut SN/Lot"
 
-#: ../lib/Custom/UserAccountGrid.php:50
-msgid "Manage alerts"
-msgstr "Uyarıları düzenle"
-
 #: ../lib/Custom/AccountingTypeGrid.php:46 void:1
 msgid "Select a model"
 msgstr "Bir model seçiniz"
@@ -1062,14 +1058,6 @@ msgstr ""
 msgid "Actor"
 msgstr "Partner"
 
-#: ../lib/Custom/UserAccountAddEdit.php:161
-msgid "Available sites"
-msgstr "Mevcut bölgeler"
-
-#: ../lib/Custom/UserAccountAddEdit.php:161
-msgid "Allowed sites"
-msgstr "İzin verilen bölgeler"
-
 #: ../lib/Custom/RTWModelAddEdit.php:64 ../lib/Custom/RTWModelGrid.php:65
 #: ../lib/Objects/RTWModel.php:78
 msgid ""
@@ -1089,19 +1077,117 @@ msgstr "Resimler \"png\" formatında olmalıdır."
 msgid "Images must not exceed 1 megaoctet"
 msgstr "Resimler 1megaoctet'i geçmemelidir "
 
-#: ../lib/Custom/RTWModelAddEdit.php:416 ../lib/Objects/_RTWModel.php:3110
-#: ../lib/Objects/_RTWModel.php:3111
+#: ../lib/Custom/RTWModelAddEdit.php:152
+msgid ""
+"A worksheet with this style number already exists, please choose another one"
+msgstr ""
+
+#: ../lib/Custom/RTWModelAddEdit.php:424 ../lib/Objects/_RTWModel.php:3740
+#: ../lib/Objects/_RTWModel.php:3741
 msgid "Black and white image"
 msgstr "Siyah ve beyaz resim"
 
-#: ../lib/Custom/RTWModelAddEdit.php:421 ../lib/Custom/RTWModelAddEdit.php:441
+#: ../lib/Custom/RTWModelAddEdit.php:429 ../lib/Custom/RTWModelAddEdit.php:449
 msgid "Show/hide current image"
 msgstr ""
 
-#: ../lib/Custom/RTWModelAddEdit.php:436 ../lib/Objects/_RTWModel.php:3119
-#: ../lib/Objects/_RTWModel.php:3120
+#: ../lib/Custom/RTWModelAddEdit.php:444 ../lib/Objects/_RTWModel.php:3749
+#: ../lib/Objects/_RTWModel.php:3750
 msgid "Color image"
 msgstr "Renkli resim"
+
+#: ../lib/Custom/RTWModelAddEdit.php:464 ../lib/Objects/_RTWModel.php:3389
+#: ../lib/Objects/_RTWModel.php:3390
+msgid "Heel reference quantity"
+msgstr "Topuk referans miktarı"
+
+#: ../lib/Custom/RTWModelAddEdit.php:476 ../lib/Objects/_RTWModel.php:3408
+#: ../lib/Objects/_RTWModel.php:3409
+msgid "Sole quantity"
+msgstr "Taban miktarı"
+
+#: ../lib/Custom/RTWModelAddEdit.php:488 ../lib/Objects/_RTWModel.php:3427
+#: ../lib/Objects/_RTWModel.php:3428
+msgid "Box quantity"
+msgstr "Box miktarı"
+
+#: ../lib/Custom/RTWModelAddEdit.php:500 ../lib/Objects/_RTWModel.php:3446
+#: ../lib/Objects/_RTWModel.php:3447
+msgid "Hand bag quantity"
+msgstr "El çantası miktarı"
+
+#: ../lib/Custom/RTWModelAddEdit.php:512 ../lib/Objects/_RTWModel.php:3465
+#: ../lib/Objects/_RTWModel.php:3466
+msgid "Material 1 quantity"
+msgstr "Malzeme 1 miktarı"
+
+#: ../lib/Custom/RTWModelAddEdit.php:524 ../lib/Objects/_RTWModel.php:3484
+#: ../lib/Objects/_RTWModel.php:3485
+msgid "Material 2 quantity"
+msgstr "Malzeme 2 miktarı"
+
+#: ../lib/Custom/RTWModelAddEdit.php:536 ../lib/Objects/_RTWModel.php:3503
+#: ../lib/Objects/_RTWModel.php:3504
+msgid "Material 3 quantity"
+msgstr ""
+
+#: ../lib/Custom/RTWModelAddEdit.php:548 ../lib/Objects/_RTWModel.php:3522
+#: ../lib/Objects/_RTWModel.php:3523
+msgid "Accessory 1 quantity"
+msgstr "Aksesuar 1 miktarı"
+
+#: ../lib/Custom/RTWModelAddEdit.php:560 ../lib/Objects/_RTWModel.php:3541
+#: ../lib/Objects/_RTWModel.php:3542
+msgid "Accessory 2 quantity"
+msgstr "Aksesuar 2 miktarı"
+
+#: ../lib/Custom/RTWModelAddEdit.php:572 ../lib/Objects/_RTWModel.php:3560
+#: ../lib/Objects/_RTWModel.php:3561
+msgid "Accessory 3 quantity"
+msgstr ""
+
+#: ../lib/Custom/RTWModelAddEdit.php:584 ../lib/Objects/_RTWModel.php:3579
+#: ../lib/Objects/_RTWModel.php:3580
+msgid "Lining quantity"
+msgstr "Astar miktarı"
+
+#: ../lib/Custom/RTWModelAddEdit.php:596 ../lib/Objects/_RTWModel.php:3598
+#: ../lib/Objects/_RTWModel.php:3599
+msgid "Insole quantity"
+msgstr "Ayakkabı astarı miktarı"
+
+#: ../lib/Custom/RTWModelAddEdit.php:608
+msgid "Under sole quantity"
+msgstr ""
+
+#: ../lib/Custom/RTWModelAddEdit.php:620 ../lib/Objects/_RTWModel.php:3636
+#: ../lib/Objects/_RTWModel.php:3637
+msgid "Media planta quantity"
+msgstr "Medya planta miktarı"
+
+#: ../lib/Custom/RTWModelAddEdit.php:632 ../lib/Objects/_RTWModel.php:3655
+#: ../lib/Objects/_RTWModel.php:3656
+msgid "Lagrima quantity"
+msgstr "Lagrima miktarı"
+
+#: ../lib/Custom/RTWModelAddEdit.php:644 ../lib/Objects/_RTWModel.php:3674
+#: ../lib/Objects/_RTWModel.php:3675
+msgid "Heel covering quantity"
+msgstr "Topuk kaplama miktarı"
+
+#: ../lib/Custom/RTWModelAddEdit.php:656 ../lib/Objects/_RTWModel.php:3693
+#: ../lib/Objects/_RTWModel.php:3694
+msgid "Selvedge quantity"
+msgstr "Kumaş kenarı miktarı"
+
+#: ../lib/Custom/RTWModelAddEdit.php:668 ../lib/Objects/_RTWModel.php:3730
+#: ../lib/Objects/_RTWModel.php:3731
+msgid "Bamboo quantity"
+msgstr "Bambu miktarı"
+
+#: ../lib/Custom/RTWModelAddEdit.php:703 ../ChainTaskDetails.php:64 void:1
+msgid "Nomenclature"
+msgstr "Ürün modeli"
 
 #: ../lib/Custom/ActorProductGrid.php:42
 #: ../lib/Custom/ActorProductAddEdit.php:46
@@ -1121,21 +1207,21 @@ msgstr "Renkli resim"
 #: ../lib/Objects/_UploadedDocument.php:629
 #: ../lib/Objects/_UserAccount.php:387 ../lib/Objects/Actor.inc.php:46
 #: ../lib/Objects/Actor.inc.php:49 ../lib/DocumentGenerator.php:2472
-#: ../ActivatedChainList.php:76 ../ActivatedFlightList.php:88
-#: ../ActivatedFlightList.php:94 ../ActivatedFlightList.php:186
-#: ../BoardByCustomer.php:55 ../ToHaveAdd.php:139 ../ActionList.php:75
-#: ../ActionList.php:105 ../ChainCommandList.php:90
-#: ../ChainCommandList.php:185 ../ActivatedChainTaskList.php:110
-#: ../ActivatedChainTaskList.php:235 ../EstimateList.php:77
-#: ../EstimateList.php:122 ../InvoiceList.php:67 ../InvoiceList.php:149
+#: ../lib/DocumentGenerator.php:4696 ../ActivatedChainList.php:76
+#: ../ActivatedFlightList.php:88 ../ActivatedFlightList.php:94
+#: ../ActivatedFlightList.php:186 ../BoardByCustomer.php:55
+#: ../ToHaveAdd.php:139 ../ActionList.php:75 ../ActionList.php:105
+#: ../ChainCommandList.php:90 ../ChainCommandList.php:185
+#: ../ActivatedChainTaskList.php:110 ../ActivatedChainTaskList.php:235
+#: ../EstimateList.php:77 ../EstimateList.php:122 ../menu.inc.php:899
+#: ../InvoiceList.php:67 ../InvoiceList.php:149
 #: ../UnavailabilityPlanning.php:135 ../UnavailabilityPlanning.php:172
 #: ../UnavailabilityPlanning.php:709 ../UnavailabilityPlanning.php:714
-#: ../menu.inc.php:892 ../PrestationCommandList.php:57
-#: ../PrestationCommandList.php:128 ../AgedTrialBalance.php:54
-#: ../AgedTrialBalance.php:147 ../FlightNotebook.php:83
-#: ../CourseCommandList.php:64 ../CourseCommandList.php:151
-#: ../ToHaveList.php:65 ../ToHaveList.php:113 ../DocumentList.php:63
-#: ../CustomerCatalog.php:158 void:1
+#: ../PrestationCommandList.php:57 ../PrestationCommandList.php:128
+#: ../AgedTrialBalance.php:54 ../AgedTrialBalance.php:147
+#: ../FlightNotebook.php:83 ../CourseCommandList.php:64
+#: ../CourseCommandList.php:151 ../ToHaveList.php:65 ../ToHaveList.php:113
+#: ../DocumentList.php:63 ../CustomerCatalog.php:158 void:1
 msgid "Customer"
 msgstr "Müşteri"
 
@@ -1144,6 +1230,9 @@ msgstr "Müşteri"
 #: ../lib/Custom/PrestationCostGrid.php:111
 #: ../lib/Custom/SellingPricesGrid.php:185
 #: ../lib/Custom/RTWMaterialGrid.php:49 ../lib/Custom/RTWMaterialGrid.php:50
+#: ../lib/Custom/RTWProductForLabelPrintingGrid.php:90
+#: ../lib/Custom/RTWProductForLabelPrintingGrid.php:91
+#: ../lib/CustomGrid/Columns/GridColumnChildrenBoxList.php:41
 #: ../lib/Objects/_Chain.php:1133 ../lib/Objects/_Chain.php:1134
 #: ../lib/Objects/Alert.const.php:92 ../lib/Objects/Alert.const.php:102
 #: ../lib/Objects/Alert.const.php:112 ../lib/Objects/Alert.const.php:122
@@ -1154,15 +1243,16 @@ msgstr "Müşteri"
 #: ../lib/DocumentGenerator.php:1916 ../lib/DocumentGenerator.php:2517
 #: ../lib/DocumentGenerator.php:2880 ../lib/DocumentGenerator.php:3288
 #: ../lib/DocumentGenerator.php:3498 ../lib/DocumentGenerator.php:3662
-#: ../StockStorageSiteList.php:70 ../AffectationList.php:46
-#: ../AffectationList.php:70 ../WorkOrderOpeTaskList.php:233
-#: ../SaisonalityPromotionProductList.php:67 ../ProductCommandSupplier.php:207
-#: ../ActivatedChainList.php:71 ../InvoicePaymentList.php:66
-#: ../ProductSubstitutionList.php:218 ../ActivatedMovementList.php:90
-#: ../ActivatedMovementList.php:241 ../ProductByLocationList.php:74
-#: ../ProductByLocationList.php:145 ../InvoiceAddEdit.php:336
-#: ../SaisonalityAdd.php:239 ../TransportChainList.php:72
-#: ../TransportChainList.php:86 ../ProductHandingByCategoryAddEditE3.php:183
+#: ../lib/DocumentGenerator.php:4725 ../StockStorageSiteList.php:70
+#: ../AffectationList.php:46 ../AffectationList.php:70
+#: ../WorkOrderOpeTaskList.php:233 ../SaisonalityPromotionProductList.php:67
+#: ../ProductCommandSupplier.php:207 ../ActivatedChainList.php:71
+#: ../InvoicePaymentList.php:66 ../ProductSubstitutionList.php:218
+#: ../ActivatedMovementList.php:90 ../ActivatedMovementList.php:241
+#: ../ProductByLocationList.php:74 ../ProductByLocationList.php:145
+#: ../InvoiceAddEdit.php:336 ../SaisonalityAdd.php:239
+#: ../TransportChainList.php:72 ../TransportChainList.php:86
+#: ../ProductHandingByCategoryAddEditE3.php:183
 #: ../StockProductRealandVirtualList.php:53
 #: ../StockProductRealandVirtualList.php:101 ../AssemblyDetail.php:111
 #: ../ProductCommand.php:222 ../BoardByProduct.php:123
@@ -1317,11 +1407,10 @@ msgstr "Satış fiyatları"
 #: ../lib/Objects/ProductPrestationCost.php:274
 #: ../lib/Objects/PriceByCurrency.php:502
 #: ../lib/Objects/PriceByCurrency.php:503 ../lib/Objects/Ressource.php:156
-#: ../ActivityBasedCosting.php:63 ../CommandList.php:291
-#: ../CommandList.php:292 ../BoardByProduct.php:53
+#: ../ActivityBasedCosting.php:63 ../menu.inc.php:911 ../BoardByProduct.php:53
+#: ../CommandList.php:322 ../CommandList.php:323
 #: ../InventoryDetailList.php:127 ../UnavailabilityPlanning.php:152
-#: ../menu.inc.php:904 ../ProductHandingByCategoryList.php:85
-#: ../ConcreteProductList.php:99 void:1
+#: ../ProductHandingByCategoryList.php:85 ../ConcreteProductList.php:99 void:1
 msgid "Product"
 msgstr "Ürün "
 
@@ -1332,7 +1421,7 @@ msgstr "Ürün "
 #: ../lib/Objects/PriceByCurrency.php:367
 #: ../lib/Objects/PriceByCurrency.php:483
 #: ../lib/Objects/PriceByCurrency.php:484 ../lib/Objects/_CostRange.php:753
-#: ../lib/Objects/_CostRange.php:754 ../lib/DocumentGenerator.php:4349
+#: ../lib/Objects/_CostRange.php:754 ../lib/DocumentGenerator.php:4350
 #: ../JS_Messages.php:321
 msgid "Price"
 msgstr "Fiyat"
@@ -1447,8 +1536,7 @@ msgid "List of prices by %s of service"
 msgstr "%s servisi tarafından belirlenen fiyatların listesi "
 
 #: ../lib/Custom/ChainGrid.php:77 ../lib/Custom/UploadedDocumentGrid.php:123
-#: ../lib/Custom/AlertGrid.php:64 ../ProductList.php:320
-#: ../WorkOrderList.php:146
+#: ../ProductList.php:320 ../WorkOrderList.php:146
 msgid "Assign"
 msgstr "Atama"
 
@@ -1474,11 +1562,11 @@ msgstr "Zincir kopyala"
 #: ../lib/Custom/ActivatedChainTaskGrid.php:146
 #: ../lib/Objects/Alert.const.php:517 ../lib/Objects/_UploadedDocument.php:637
 #: ../lib/Objects/_UploadedDocument.php:638 ../ActivityBasedCosting.php:58
-#: ../ActivityBasedCosting.php:109 ../ActivatedChainTaskHistory.php:96
-#: ../ActivatedChainTaskHistory.php:129 ../ActivatedChainTaskList.php:102
-#: ../ActivatedChainTaskList.php:227
-#: ../GroupableBoxActivatedChainTaskList.php:139 ../ChainTaskList.php:88
-#: void:1
+#: ../ActivityBasedCosting.php:109
+#: ../GroupableBoxActivatedChainTaskList.php:145
+#: ../ActivatedChainTaskHistory.php:96 ../ActivatedChainTaskHistory.php:129
+#: ../ActivatedChainTaskList.php:102 ../ActivatedChainTaskList.php:227
+#: ../ChainTaskList.php:88 void:1
 msgid "Task"
 msgstr "Görev"
 
@@ -1494,12 +1582,12 @@ msgstr "Müşteri ismi"
 #: ../lib/Objects/Alert.const.php:270 ../lib/DocumentGenerator.php:1839
 #: ../lib/DocumentGenerator.php:1915 ../lib/DocumentGenerator.php:2062
 #: ../lib/DocumentGenerator.php:3052 ../lib/DocumentGenerator.php:3781
-#: ../ProductionTaskValidation.php:106 ../PrestationInvoiceAddEdit.php:131
-#: ../ProductCommandSupplier.php:140 ../ActivatedChainList.php:67
-#: ../ActivatedMovementList.php:88 ../CommandList.php:110
-#: ../ForwardingFormEdit.php:346 ../ChainCommandList.php:89
+#: ../lib/DocumentGenerator.php:4724 ../ProductionTaskValidation.php:106
+#: ../PrestationInvoiceAddEdit.php:131 ../ProductCommandSupplier.php:140
+#: ../ActivatedChainList.php:67 ../ActivatedMovementList.php:88
+#: ../ForwardingFormEdit.php:346 ../ChainCommandList.php:89 ../BoxList.php:50
 #: ../InvoiceList.php:71 ../ProductCommand.php:132
-#: ../LocationExecutedMovementList.php:81 ../BoxList.php:50
+#: ../LocationExecutedMovementList.php:81 ../CommandList.php:117
 #: ../EstimateToOrder.php:155 ../WorkOrderList.php:79
 #: ../PrestationCommandList.php:56 ../CourseCommandList.php:62
 #: ../CourseCommandList.php:148 ../DocumentList.php:60
@@ -1525,7 +1613,7 @@ msgid "Copy worksheet"
 msgstr ""
 
 #: ../lib/Custom/RTWModelGrid.php:330
-#: ../lib/Custom/RTWModelForSupplierGrid.php:192
+#: ../lib/Custom/RTWModelForSupplierGrid.php:141
 msgid "Print worksheet"
 msgstr "Çalışma taslağı yazdır"
 
@@ -1571,7 +1659,7 @@ msgstr "Tür"
 #: ../lib/Custom/SellingPricesGrid.php:79
 #: ../lib/Custom/SellingPricesGrid.php:80
 #: ../lib/Objects/PriceByCurrency.php:473
-#: ../lib/Objects/PriceByCurrency.php:474 ../lib/DocumentGenerator.php:4350
+#: ../lib/Objects/PriceByCurrency.php:474 ../lib/DocumentGenerator.php:4351
 #: ../JS_Messages.php:320
 msgid "Recommended price"
 msgstr "Önerilen fiyat"
@@ -1588,10 +1676,12 @@ msgstr "Fiyat bölgesi"
 #: ../lib/Custom/SellingPricesGrid.php:157
 #: ../lib/Custom/RTWModelForLookbookGrid.php:64
 #: ../lib/Custom/RTWModelForLookbookGrid.php:65
-#: ../lib/Objects/_RTWModel.php:2660 ../lib/Objects/_RTWModel.php:2661
+#: ../lib/Custom/RTWModelForSupplierGrid.php:78
+#: ../lib/Custom/RTWModelForSupplierGrid.php:79
+#: ../lib/Objects/_RTWModel.php:3290 ../lib/Objects/_RTWModel.php:3291
 #: ../lib/DocumentGenerator.php:3653 ../lib/DocumentGenerator.php:4128
-#: ../lib/DocumentGenerator.php:4312 ../BoardByCustomer.php:65
-#: ../SalesmenCommission.php:64
+#: ../lib/DocumentGenerator.php:4313 ../lib/DocumentGenerator.php:4538
+#: ../BoardByCustomer.php:65 ../SalesmenCommission.php:64
 msgid "Season"
 msgstr "Sezon"
 
@@ -1600,10 +1690,8 @@ msgstr "Sezon"
 #: ../lib/Custom/RTWModelForLookbookGrid.php:83
 #: ../lib/Custom/RTWModelForCatalogGrid.php:142
 #: ../lib/Custom/RTWModelForCatalogGrid.php:143
-#: ../lib/Custom/RTWModelForSupplierGrid.php:69
-#: ../lib/Custom/RTWModelForSupplierGrid.php:70
-#: ../lib/Objects/_RTWModel.php:2678 ../lib/Objects/_RTWModel.php:2679
-#: ../lib/DocumentGenerator.php:4314
+#: ../lib/Objects/_RTWModel.php:3308 ../lib/Objects/_RTWModel.php:3309
+#: ../lib/DocumentGenerator.php:4315
 msgid "Press name"
 msgstr "Baskı ismi"
 
@@ -1617,12 +1705,13 @@ msgstr "Oran"
 
 #: ../lib/Custom/RTWModelForLookbookGrid.php:73
 #: ../lib/Custom/RTWModelForLookbookGrid.php:74
+#: ../lib/Custom/RTWModelForSupplierGrid.php:69
+#: ../lib/Custom/RTWModelForSupplierGrid.php:70
 #: ../lib/Custom/RTWModelForCatalogGrid.php:133
 #: ../lib/Custom/RTWModelForCatalogGrid.php:134
-#: ../lib/Custom/RTWModelForSupplierGrid.php:60
-#: ../lib/Custom/RTWModelForSupplierGrid.php:61
-#: ../lib/Objects/_RTWModel.php:2687 ../lib/Objects/_RTWModel.php:2688
-#: ../lib/DocumentGenerator.php:4139 ../lib/DocumentGenerator.php:4342
+#: ../lib/Objects/_RTWModel.php:3317 ../lib/Objects/_RTWModel.php:3318
+#: ../lib/DocumentGenerator.php:4139 ../lib/DocumentGenerator.php:4343
+#: ../lib/DocumentGenerator.php:4549 ../CommandList.php:180
 msgid "Style number"
 msgstr "Stil numarası"
 
@@ -1811,23 +1900,20 @@ msgstr "Operasyon"
 #: ../BoardByCommercial.php:61 ../FlyBoardBook.php:68
 #: ../ActivatedFlightList.php:105 ../BoardByCustomer.php:72
 #: ../ActivatedMovementList.php:94 ../ActivityBasedCosting.php:69
-#: ../CommandList.php:148 ../ActionList.php:82 ../ChainCommandList.php:96
-#: ../ActivatedChainTaskHistory.php:97 ../ActivatedChainTaskList.php:146
-#: ../GroupableBoxActivatedChainTaskList.php:54 ../BoardByProduct.php:62
-#: ../LocationExecutedMovementList.php:125 ../BoxList.php:56
-#: ../BoardBySupplier.php:63 ../InventoryDetailList.php:83
-#: ../WorkOrderList.php:86 ../BoardByCategory.php:61
-#: ../PrestationCommandList.php:61 ../AgedTrialBalance.php:60
-#: ../FlightNotebook.php:103 ../CashBalance.php:46 ../CourseCommandList.php:77
-#: ../ToHaveList.php:67 ../DocumentList.php:68 ../SalesmenCommission.php:71
-#: ../BoardByCoast.php:60
+#: ../GroupableBoxActivatedChainTaskList.php:54 ../ActionList.php:82
+#: ../ChainCommandList.php:96 ../ActivatedChainTaskHistory.php:97
+#: ../ActivatedChainTaskList.php:146 ../BoxList.php:56
+#: ../BoardByProduct.php:62 ../LocationExecutedMovementList.php:125
+#: ../CommandList.php:155 ../BoardBySupplier.php:63
+#: ../InventoryDetailList.php:83 ../WorkOrderList.php:86
+#: ../BoardByCategory.php:61 ../PrestationCommandList.php:61
+#: ../AgedTrialBalance.php:60 ../FlightNotebook.php:103 ../CashBalance.php:46
+#: ../CourseCommandList.php:77 ../ToHaveList.php:67 ../DocumentList.php:68
+#: ../SalesmenCommission.php:71 ../BoardByCoast.php:60
 msgid "Filter by date"
 msgstr "Tarihe göre filtrele"
 
 #: ../lib/Custom/ActivatedChainTaskGrid.php:135
-#: ../lib/Custom/RTWModelForSupplierGrid.php:51
-#: ../lib/Custom/RTWModelForSupplierGrid.php:52
-#: ../lib/Custom/RTWModelForSupplierGrid.php:175
 #: ../lib/Objects/Alert.const.php:133 ../lib/Objects/Alert.const.php:142
 #: ../lib/Objects/Alert.const.php:149 ../lib/Objects/Alert.const.php:151
 #: ../lib/Objects/Alert.const.php:159 ../lib/Objects/Alert.const.php:161
@@ -1842,15 +1928,16 @@ msgstr "Tarihe göre filtrele"
 #: ../WorkOrderOpeTaskList.php:138 ../ActivatedChainList.php:122
 #: ../ActivatedFlightList.php:193 ../ActivatedMovementList.php:236
 #: ../ActivityBasedCosting.php:46 ../ActivityBasedCosting.php:99
-#: ../DocumentModelPropertyAddEdit.php:323 ../CommandList.php:269
+#: ../DocumentModelPropertyAddEdit.php:323
+#: ../GroupableBoxActivatedChainTaskList.php:72
+#: ../GroupableBoxActivatedChainTaskList.php:142
 #: ../ActivatedChainTaskHistory.php:90 ../ActivatedChainTaskHistory.php:130
 #: ../ActivatedChainTaskList.php:93 ../ActivatedChainTaskList.php:228
 #: ../TransportChainList.php:85 ../TransportChainList.php:104
-#: ../InvoiceList.php:145 ../GroupableBoxActivatedChainTaskList.php:72
-#: ../GroupableBoxActivatedChainTaskList.php:136 ../InvoiceCommandList.php:266
-#: ../LocationExecutedMovementList.php:305 ../BoxList.php:104
-#: ../UnavailabilityPlanning.php:117 ../UnavailabilityPlanning.php:704
-#: ../menu.inc.php:230 ../PrestationCommandList.php:120
+#: ../menu.inc.php:230 ../BoxList.php:116 ../InvoiceList.php:145
+#: ../InvoiceCommandList.php:266 ../LocationExecutedMovementList.php:305
+#: ../CommandList.php:299 ../UnavailabilityPlanning.php:117
+#: ../UnavailabilityPlanning.php:704 ../PrestationCommandList.php:120
 #: ../GroupableBoxList.php:69 ../DocumentList.php:148
 #: ../SalesmenCommission.php:100 ../ActivatedChainOperationList.php:105
 #: ../ActivatedChainOperationList.php:214 void:1
@@ -1985,10 +2072,6 @@ msgstr ""
 msgid "Selected items were successfully deleted. "
 msgstr "Seçilen maddeler başarılı bir şekilde silindi."
 
-#: ../lib/Custom/AlertGrid.php:65
-msgid "Update alert settings for user"
-msgstr "Kullanıcı için alarm ayarlarını güncelle"
-
 #: ../lib/Custom/CustomerSituationAddEdit.php:100
 msgid ""
 "The following situations cannot be deleted because they are link to one or "
@@ -2041,56 +2124,44 @@ msgid "Reset all"
 msgstr "Hepsini sıfırla"
 
 #: ../lib/Custom/RTWModelForCatalogGrid.php:151
-#: ../lib/Custom/RTWModelForCatalogGrid.php:152
-#: ../lib/Custom/RTWModelForSupplierGrid.php:78
-#: ../lib/Custom/RTWModelForSupplierGrid.php:79 ../lib/Objects/RTWModel.php:95
-#: ../lib/Objects/_RTWModel.php:2826 ../lib/Objects/_RTWModel.php:2827
-#: ../lib/DocumentGenerator.php:4343
+#: ../lib/Custom/RTWModelForCatalogGrid.php:152 ../lib/Objects/RTWModel.php:95
+#: ../lib/Objects/_RTWModel.php:3456 ../lib/Objects/_RTWModel.php:3457
+#: ../lib/DocumentGenerator.php:4344
 msgid "Material 1"
 msgstr "Malzeme 1"
 
 #: ../lib/Custom/RTWModelForCatalogGrid.php:160
-#: ../lib/Custom/RTWModelForCatalogGrid.php:161
-#: ../lib/Custom/RTWModelForSupplierGrid.php:87
-#: ../lib/Custom/RTWModelForSupplierGrid.php:88 ../lib/Objects/RTWModel.php:96
-#: ../lib/Objects/_RTWModel.php:2845 ../lib/Objects/_RTWModel.php:2846
-#: ../lib/DocumentGenerator.php:4344
+#: ../lib/Custom/RTWModelForCatalogGrid.php:161 ../lib/Objects/RTWModel.php:96
+#: ../lib/Objects/_RTWModel.php:3475 ../lib/Objects/_RTWModel.php:3476
+#: ../lib/DocumentGenerator.php:4345
 msgid "Material 2"
 msgstr "Malzeme 2"
 
 #: ../lib/Custom/RTWModelForCatalogGrid.php:169
-#: ../lib/Custom/RTWModelForCatalogGrid.php:170
-#: ../lib/Custom/RTWModelForSupplierGrid.php:96
-#: ../lib/Custom/RTWModelForSupplierGrid.php:97 ../lib/Objects/RTWModel.php:97
-#: ../lib/Objects/_RTWModel.php:2864 ../lib/Objects/_RTWModel.php:2865
-#: ../lib/DocumentGenerator.php:4345
+#: ../lib/Custom/RTWModelForCatalogGrid.php:170 ../lib/Objects/RTWModel.php:97
+#: ../lib/Objects/_RTWModel.php:3494 ../lib/Objects/_RTWModel.php:3495
+#: ../lib/DocumentGenerator.php:4346
 msgid "Material 3"
 msgstr ""
 
 #: ../lib/Custom/RTWModelForCatalogGrid.php:178
-#: ../lib/Custom/RTWModelForCatalogGrid.php:179
-#: ../lib/Custom/RTWModelForSupplierGrid.php:105
-#: ../lib/Custom/RTWModelForSupplierGrid.php:106
-#: ../lib/Objects/RTWModel.php:98 ../lib/Objects/_RTWModel.php:2883
-#: ../lib/Objects/_RTWModel.php:2884 ../lib/DocumentGenerator.php:4346
+#: ../lib/Custom/RTWModelForCatalogGrid.php:179 ../lib/Objects/RTWModel.php:98
+#: ../lib/Objects/_RTWModel.php:3513 ../lib/Objects/_RTWModel.php:3514
+#: ../lib/DocumentGenerator.php:4347
 msgid "Accessory 1"
 msgstr "Aksesuar 1"
 
 #: ../lib/Custom/RTWModelForCatalogGrid.php:187
-#: ../lib/Custom/RTWModelForCatalogGrid.php:188
-#: ../lib/Custom/RTWModelForSupplierGrid.php:114
-#: ../lib/Custom/RTWModelForSupplierGrid.php:115
-#: ../lib/Objects/RTWModel.php:99 ../lib/Objects/_RTWModel.php:2902
-#: ../lib/Objects/_RTWModel.php:2903 ../lib/DocumentGenerator.php:4347
+#: ../lib/Custom/RTWModelForCatalogGrid.php:188 ../lib/Objects/RTWModel.php:99
+#: ../lib/Objects/_RTWModel.php:3532 ../lib/Objects/_RTWModel.php:3533
+#: ../lib/DocumentGenerator.php:4348
 msgid "Accessory 2"
 msgstr "Aksesuar 2"
 
 #: ../lib/Custom/RTWModelForCatalogGrid.php:196
 #: ../lib/Custom/RTWModelForCatalogGrid.php:197
-#: ../lib/Custom/RTWModelForSupplierGrid.php:123
-#: ../lib/Custom/RTWModelForSupplierGrid.php:124
-#: ../lib/Objects/RTWModel.php:100 ../lib/Objects/_RTWModel.php:2921
-#: ../lib/Objects/_RTWModel.php:2922 ../lib/DocumentGenerator.php:4348
+#: ../lib/Objects/RTWModel.php:100 ../lib/Objects/_RTWModel.php:3551
+#: ../lib/Objects/_RTWModel.php:3552 ../lib/DocumentGenerator.php:4349
 msgid "Accessory 3"
 msgstr ""
 
@@ -2130,6 +2201,15 @@ msgstr "Birim fiyat"
 #: ../lib/DocumentGenerator.php:2805 void:1
 msgid "Total"
 msgstr "Toplam"
+
+#: ../lib/Custom/RTWProductForLabelPrintingGrid.php:153 ../CommandList.php:279
+#: ../CommandList.php:280
+msgid "Print product labels"
+msgstr ""
+
+#: ../lib/Custom/RTWProductForLabelPrintingGrid.php:170
+msgid "Quantity to print"
+msgstr ""
 
 #: ../lib/Scheduler/Scheduler.php:125
 msgid "Chain is not activated."
@@ -2290,10 +2370,11 @@ msgstr "Toplam miktar"
 #: ../lib/Objects/Container.php:231 ../lib/Objects/Container.php:286
 #: ../lib/Objects/Container.php:342 ../lib/AlertSender.php:431
 #: ../lib/AlertSender.php:495 ../lib/DocumentGenerator.php:4181
-#: ../crons/AlertTenDaysSinceLastFly.php:75 ../JS_Messages.php:322
-#: ../InstallmentAddEdit.php:145 ../InstallmentAddEdit.php:146
-#: ../InvoiceAddEdit.php:390 ../PaymentCommandList.php:80
-#: ../WorkOrderList.php:183 ../WorkOrderList.php:186 ../ActorAddEdit.php:699
+#: ../lib/DocumentGenerator.php:4591 ../crons/AlertTenDaysSinceLastFly.php:75
+#: ../JS_Messages.php:322 ../InstallmentAddEdit.php:145
+#: ../InstallmentAddEdit.php:146 ../InvoiceAddEdit.php:390
+#: ../PaymentCommandList.php:80 ../WorkOrderList.php:183
+#: ../WorkOrderList.php:186 ../ActorAddEdit.php:699
 #: ../ActivatedChainOperationList.php:221
 #: ../ActivatedChainOperationList.php:224
 #: ../ActivatedChainOperationList.php:227
@@ -2304,7 +2385,7 @@ msgstr "N/A"
 
 #: ../lib/CustomGrid/Columns/GridColumnSaisonalityBaseReference.php:55
 #: ../DocumentModelList.php:57
-#: ../../../pwak/trunk/lib/Crud/GenericGrid.php:811
+#: ../../../pwak/trunk/lib/Crud/GenericGrid.php:810
 #: ../../../pwak/trunk/lib/GenericMessages.php:91 void:1
 msgid "No"
 msgstr "Hayır"
@@ -2463,9 +2544,9 @@ msgid "Delivery possible"
 msgstr "Teslimat mümkündür"
 
 #: ../lib/CustomGrid/Columns/GridColumnPrestationCommandItemList.php:54
-#: ../CommandList.php:113 ../EstimateList.php:75
+#: ../EstimateList.php:75 ../BoxList.php:54
 #: ../NomenclatureConcreteProductList.php:45
-#: ../NomenclatureConcreteProductList.php:72 ../BoxList.php:54
+#: ../NomenclatureConcreteProductList.php:72 ../CommandList.php:138
 #: ../ProductHandingByCategoryAddEdit.php:59 ../NomenclatureList.php:46
 #: ../NomenclatureList.php:92 ../ProductHandingByCategoryList.php:48
 #: ../ConcreteProductList.php:51 void:1
@@ -2512,7 +2593,7 @@ msgstr "Sembol"
 
 #: ../lib/Objects/Operation.php:693 ../lib/Objects/Operation.php:694
 #: ../lib/Objects/_ActivatedChainTask.php:2582 ../lib/Objects/Task.php:477
-#: ../menu.inc.php:932 void:1
+#: ../menu.inc.php:939 void:1
 msgid "Tasks"
 msgstr "Görevler"
 
@@ -2531,7 +2612,7 @@ msgid "Display order"
 msgstr "Siparişi göster"
 
 #: ../lib/Objects/Catalog.php:337 ../lib/Objects/_Site.php:794
-#: ../../../pwak/trunk/lib/Crud/GenericGrid.php:811 void:1
+#: ../../../pwak/trunk/lib/Crud/GenericGrid.php:810 void:1
 msgid "Any"
 msgstr "Herhangibir"
 
@@ -2682,18 +2763,17 @@ msgstr "Oluşum tarihi"
 
 #: ../lib/Objects/_Chain.php:1214 ../lib/Objects/_Chain.php:1215
 #: ../ActivatedMovementList.php:265 ../ActivityBasedCosting.php:112
-#: ../CommandList.php:145 ../CommandList.php:273 ../ChainCommandList.php:109
+#: ../GroupableBoxActivatedChainTaskList.php:155 ../ChainCommandList.php:109
 #: ../ChainCommandList.php:183 ../ActivatedChainTaskList.php:158
-#: ../ActivatedChainTaskList.php:253
-#: ../GroupableBoxActivatedChainTaskList.php:149
-#: ../PrestationCommandList.php:73 ../PrestationCommandList.php:123
-#: ../CourseCommandList.php:74 ../CourseCommandList.php:166
-#: ../ConcreteProductList.php:55
+#: ../ActivatedChainTaskList.php:253 ../CommandList.php:152
+#: ../CommandList.php:304 ../PrestationCommandList.php:73
+#: ../PrestationCommandList.php:123 ../CourseCommandList.php:74
+#: ../CourseCommandList.php:166 ../ConcreteProductList.php:55
 msgid "State"
 msgstr "Pozisyon"
 
-#: ../lib/Objects/CurrencyConverter.php:291 ../menu.inc.php:725
-#: ../menu.inc.php:727
+#: ../lib/Objects/CurrencyConverter.php:291 ../menu.inc.php:718
+#: ../menu.inc.php:720
 msgid "Currency converter"
 msgstr "Para birimi dönüştürücü"
 
@@ -2744,13 +2824,14 @@ msgstr "Float"
 #: ../lib/Objects/DocumentModelProperty.inc.php:210
 #: ../lib/ApportionmentManager.php:302 ../lib/DocumentGenerator.php:636
 #: ../lib/DocumentGenerator.php:1842 ../lib/DocumentGenerator.php:2063
-#: ../lib/DocumentGenerator.php:4123 ../lib/DocumentGenerator.php:4308
-#: ../PaymentToHaveList.php:87 ../FlyBoardBook.php:125
-#: ../ActivatedFlightList.php:177 ../CommandList.php:271
-#: ../CommandList.php:291 ../CommandList.php:292 ../ActionList.php:111
-#: ../ChainCommandList.php:175 ../PrestationCommandList.php:121
-#: ../FlightNotebook.php:161 ../ToHaveList.php:117 ../DocumentList.php:151
-#: ../SalesmenCommission.php:97 void:1
+#: ../lib/DocumentGenerator.php:4123 ../lib/DocumentGenerator.php:4309
+#: ../lib/DocumentGenerator.php:4533 ../PaymentToHaveList.php:87
+#: ../FlyBoardBook.php:125 ../ActivatedFlightList.php:177
+#: ../ActionList.php:111 ../ChainCommandList.php:175 ../CommandList.php:301
+#: ../CommandList.php:322 ../CommandList.php:323
+#: ../PrestationCommandList.php:121 ../FlightNotebook.php:161
+#: ../ToHaveList.php:117 ../DocumentList.php:151 ../SalesmenCommission.php:97
+#: void:1
 msgid "Date"
 msgstr "Tarih"
 
@@ -3044,74 +3125,74 @@ msgstr "%"
 msgid "Price by products associated to the service"
 msgstr "Hizmete ilişkin ürünlere göre fiyat"
 
-#: ../lib/Objects/RTWModel.php:104 ../lib/Objects/_RTWModel.php:3073
-#: ../lib/Objects/_RTWModel.php:3074
+#: ../lib/Objects/RTWModel.php:104 ../lib/Objects/_RTWModel.php:3703
+#: ../lib/Objects/_RTWModel.php:3704
 msgid "Thread 1"
 msgstr "İplik 1"
 
-#: ../lib/Objects/RTWModel.php:105 ../lib/Objects/_RTWModel.php:3082
-#: ../lib/Objects/_RTWModel.php:3083
+#: ../lib/Objects/RTWModel.php:105 ../lib/Objects/_RTWModel.php:3712
+#: ../lib/Objects/_RTWModel.php:3713
 msgid "Thread 2"
 msgstr "İplik 2"
 
-#: ../lib/Objects/RTWModel.php:109 ../lib/Objects/_RTWModel.php:3054
-#: ../lib/Objects/_RTWModel.php:3055
+#: ../lib/Objects/RTWModel.php:109 ../lib/Objects/_RTWModel.php:3684
+#: ../lib/Objects/_RTWModel.php:3685
 msgid "Selvedge"
 msgstr "Kumaş kenarı"
 
 #: ../lib/Objects/RTWModel.php:110 ../lib/Objects/RTWModel.php:179
-#: ../lib/Objects/_RTWModel.php:2940 ../lib/Objects/_RTWModel.php:2941
+#: ../lib/Objects/_RTWModel.php:3570 ../lib/Objects/_RTWModel.php:3571
 msgid "Lining"
 msgstr "Astar"
 
-#: ../lib/Objects/RTWModel.php:111 ../lib/Objects/_RTWModel.php:2959
-#: ../lib/Objects/_RTWModel.php:2960
+#: ../lib/Objects/RTWModel.php:111 ../lib/Objects/_RTWModel.php:3589
+#: ../lib/Objects/_RTWModel.php:3590
 msgid "Insole"
 msgstr "Ayakkabı astarı"
 
-#: ../lib/Objects/RTWModel.php:112 ../lib/Objects/_RTWModel.php:2978
-#: ../lib/Objects/_RTWModel.php:2979
+#: ../lib/Objects/RTWModel.php:112 ../lib/Objects/_RTWModel.php:3608
+#: ../lib/Objects/_RTWModel.php:3609
 msgid "Under-sole"
 msgstr "Taban altı"
 
-#: ../lib/Objects/RTWModel.php:113 ../lib/Objects/_RTWModel.php:2997
-#: ../lib/Objects/_RTWModel.php:2998
+#: ../lib/Objects/RTWModel.php:113 ../lib/Objects/_RTWModel.php:3627
+#: ../lib/Objects/_RTWModel.php:3628
 msgid "Media planta"
 msgstr "Media planta"
 
-#: ../lib/Objects/RTWModel.php:114 ../lib/Objects/_RTWModel.php:3016
-#: ../lib/Objects/_RTWModel.php:3017
+#: ../lib/Objects/RTWModel.php:114 ../lib/Objects/_RTWModel.php:3646
+#: ../lib/Objects/_RTWModel.php:3647
 msgid "Lagrima"
 msgstr "Lagrima"
 
 #: ../lib/Objects/RTWModel.php:115 ../lib/Objects/RTWModel.php:181
-#: ../lib/Objects/_RTWMaterial.php:153 ../lib/Objects/_RTWModel.php:2769
-#: ../lib/Objects/_RTWModel.php:2770
+#: ../lib/Objects/_RTWMaterial.php:153 ../lib/Objects/_RTWModel.php:3399
+#: ../lib/Objects/_RTWModel.php:3400
 msgid "Sole"
 msgstr "Taban"
 
-#: ../lib/Objects/RTWModel.php:116 ../lib/Objects/_RTWModel.php:2750
-#: ../lib/Objects/_RTWModel.php:2751
+#: ../lib/Objects/RTWModel.php:116 ../lib/Objects/_RTWModel.php:3380
+#: ../lib/Objects/_RTWModel.php:3381
 msgid "Heel reference"
 msgstr "Topuk referansı"
 
 #: ../lib/Objects/RTWModel.php:117 ../lib/Objects/RTWModel.php:177
-#: ../lib/Objects/_RTWModel.php:3035 ../lib/Objects/_RTWModel.php:3036
+#: ../lib/Objects/_RTWModel.php:3665 ../lib/Objects/_RTWModel.php:3666
 msgid "Heel covering"
 msgstr "Topuk kaplama"
 
 #: ../lib/Objects/RTWModel.php:118 ../lib/Objects/_RTWMaterial.php:152
-#: ../lib/Objects/_RTWModel.php:3091 ../lib/Objects/_RTWModel.php:3092
+#: ../lib/Objects/_RTWModel.php:3721 ../lib/Objects/_RTWModel.php:3722
 msgid "Bamboo"
 msgstr "Bambu"
 
-#: ../lib/Objects/RTWModel.php:119 ../lib/Objects/_RTWModel.php:2788
-#: ../lib/Objects/_RTWModel.php:2789
+#: ../lib/Objects/RTWModel.php:119 ../lib/Objects/_RTWModel.php:3418
+#: ../lib/Objects/_RTWModel.php:3419
 msgid "Box"
 msgstr "Box"
 
-#: ../lib/Objects/RTWModel.php:120 ../lib/Objects/_RTWModel.php:2807
-#: ../lib/Objects/_RTWModel.php:2808
+#: ../lib/Objects/RTWModel.php:120 ../lib/Objects/_RTWModel.php:3437
+#: ../lib/Objects/_RTWModel.php:3438
 msgid "Hand bag"
 msgstr "El çantası"
 
@@ -3203,11 +3284,11 @@ msgstr "Tahmini hareket"
 
 #: ../lib/Objects/ForecastFlow.php:504 ../lib/Objects/ForecastFlow.php:505
 #: ../lib/Objects/_Incoterm.php:418 ../lib/Objects/_Incoterm.php:419
-#: ../lib/Objects/_RTWModel.php:2696 ../lib/Objects/_RTWModel.php:2697
+#: ../lib/Objects/_RTWModel.php:3326 ../lib/Objects/_RTWModel.php:3327
 #: ../lib/DocumentGenerator.php:917 ../lib/DocumentGenerator.php:1290
 #: ../lib/DocumentGenerator.php:2518 ../lib/DocumentGenerator.php:4143
-#: ../lib/DocumentGenerator.php:4315 ../ActivatedChainList.php:127
-#: ../TransportChainList.php:88 void:1
+#: ../lib/DocumentGenerator.php:4316 ../lib/DocumentGenerator.php:4553
+#: ../ActivatedChainList.php:127 ../TransportChainList.php:88 void:1
 msgid "Description"
 msgstr "Tanımlama"
 
@@ -3240,9 +3321,9 @@ msgstr "Müşteri kodu"
 #: ../lib/Objects/DocumentModelProperty.php:128
 #: ../lib/Objects/_UserAccount.php:386 ../lib/ActionTools.php:117
 #: ../BoardByCommercial.php:53 ../PrestationInvoiceAddEdit.php:137
-#: ../CommandList.php:159 ../CommandList.php:284 ../PreferencesWebSite.php:73
-#: ../ProductCommand.php:171 ../SalesmenCommissionSettings.php:67
-#: ../menu.inc.php:872 ../PrestationCommandList.php:129
+#: ../menu.inc.php:879 ../PreferencesWebSite.php:73 ../ProductCommand.php:171
+#: ../CommandList.php:166 ../CommandList.php:315
+#: ../SalesmenCommissionSettings.php:67 ../PrestationCommandList.php:129
 #: ../SalesmenCommission.php:47 ../SalesmenCommission.php:94
 #: ../ActorList.php:101 ../ActorList.php:275 void:1
 msgid "Salesman"
@@ -3399,7 +3480,7 @@ msgid "breaking-down of discount"
 msgstr "İndirimin  başa baş noktası"
 
 #: ../lib/Objects/_Account.php:668 ../lib/Objects/_OnlogisticsAccount.php:478
-#: ../menu.inc.php:652
+#: ../menu.inc.php:645
 msgid "Accounts"
 msgstr "Hesaplar"
 
@@ -3477,7 +3558,7 @@ msgstr "Lütfen en yakın planlanmış olanı tedarik et."
 #: ../lib/Objects/Alert.const.php:97 ../lib/Objects/Alert.const.php:107
 #: ../lib/Objects/Alert.const.php:117 ../lib/Objects/Alert.const.php:126
 #: ../lib/Objects/Alert.const.php:380 ../lib/Objects/Alert.const.php:390
-#: ../CommandList.php:111
+#: ../CommandList.php:136
 msgid "Product designation"
 msgstr "Ürün etiket ismi"
 
@@ -3722,9 +3803,9 @@ msgstr "KDV hariç miktar"
 #: ../lib/Objects/Alert.const.php:297 ../lib/DocumentGenerator.php:3504
 #: ../lib/DocumentGenerator.php:3575 ../lib/DocumentGenerator.php:3668
 #: ../lib/DocumentGenerator.php:3865 ../PaymentToHaveList.php:93
-#: ../ToHaveAdd.php:147 ../CommandList.php:275 ../ChainCommandList.php:187
-#: ../FlowAddEdit.php:232 ../EstimateList.php:127 ../InvoiceList.php:154
-#: ../InvoiceCommandList.php:272 ../FlowList.php:96
+#: ../ToHaveAdd.php:147 ../ChainCommandList.php:187 ../FlowAddEdit.php:232
+#: ../EstimateList.php:127 ../InvoiceList.php:154
+#: ../InvoiceCommandList.php:272 ../FlowList.php:96 ../CommandList.php:306
 #: ../PrestationCommandList.php:125 ../CourseCommandList.php:164
 #: ../ToHaveList.php:120 void:1
 msgid "Amount incl. VAT"
@@ -3734,7 +3815,7 @@ msgstr "KDV dahil miktar"
 #: ../lib/DocumentGenerator.php:1662 ../lib/DocumentGenerator.php:2175
 #: ../lib/DocumentGenerator.php:3596 ../lib/DocumentGenerator.php:3866
 #: ../PrestationInvoiceAddEdit.php:153 ../ProductCommandSupplier.php:180
-#: ../CommandList.php:234 ../ProductCommand.php:194
+#: ../ProductCommand.php:194 ../CommandList.php:246
 #: ../PaymentCommandList.php:99 void:1
 msgid "Instalment"
 msgstr "Taksit"
@@ -3747,8 +3828,8 @@ msgstr "Ödeme"
 #: ../lib/Objects/Alert.const.php:303 ../lib/Objects/Alert.const.php:346
 #: ../lib/Objects/Alert.const.php:382 ../lib/Objects/Alert.const.php:425
 #: ../lib/Objects/_UploadedDocument.php:610
-#: ../lib/Objects/_UploadedDocument.php:611 ../lib/Objects/_RTWModel.php:3137
-#: ../lib/Objects/_RTWModel.php:3138 ../lib/Objects/_RTWModel.php:3143
+#: ../lib/Objects/_UploadedDocument.php:611 ../lib/Objects/_RTWModel.php:3767
+#: ../lib/Objects/_RTWModel.php:3768 ../lib/Objects/_RTWModel.php:3773
 #: ../lib/DocumentGenerator.php:592 ../ProductionTaskValidation.php:129
 #: ../PrestationInvoiceAddEdit.php:156 ../WorkOrderOpeTaskList.php:147
 #: ../ProductCommandSupplier.php:183 ../ActionAddEdit.php:168
@@ -4145,13 +4226,13 @@ msgid "Locked order"
 msgstr "Kilitlenen sipariş"
 
 #: ../lib/Objects/Command.const.php:50 ../lib/Objects/Command.const.php:61
-#: ../lib/Objects/Command.const.php:72 ../CommandList.php:143
-#: ../ChainCommandList.php:107 ../ActivatedChainTaskList.php:156
+#: ../lib/Objects/Command.const.php:72 ../ChainCommandList.php:107
+#: ../ActivatedChainTaskList.php:156 ../CommandList.php:150
 #: ../PrestationCommandList.php:71
 msgid "Select one or more states"
 msgstr "Bir veya daha fazla durum seçiniz "
 
-#: ../lib/Objects/Command.const.php:54 ../menu.inc.php:993
+#: ../lib/Objects/Command.const.php:54 ../menu.inc.php:1000
 msgid "Completed flights"
 msgstr "Tamamlanan uçuşlar"
 
@@ -4236,7 +4317,7 @@ msgid "multiple"
 msgstr "çok"
 
 #: ../lib/Objects/RTWProduct.php:83 ../lib/Objects/_RTWProduct.php:302
-#: ../lib/Objects/_RTWProduct.php:303
+#: ../lib/Objects/_RTWProduct.php:303 ../lib/DocumentGenerator.php:4727
 msgid "Size"
 msgstr "Boyuk"
 
@@ -4245,12 +4326,14 @@ msgid "In alert"
 msgstr "Alarm durumu"
 
 #: ../lib/Objects/Contact.const.php:50 ../lib/Objects/_UserAccount.php:1339
-#: ../lib/Objects/_UserAccount.php:1340 void:1
+#: ../lib/Objects/_UserAccount.php:1340 ../lib/DocumentGenerator.php:4686
+#: ../lib/DocumentGenerator.php:4703 void:1
 msgid "Email"
 msgstr "Email"
 
 #: ../lib/Objects/Contact.const.php:51 ../lib/Objects/_UserAccount.php:1321
-#: ../lib/Objects/_UserAccount.php:1322 void:1
+#: ../lib/Objects/_UserAccount.php:1322 ../lib/DocumentGenerator.php:4683
+#: ../lib/DocumentGenerator.php:4700 void:1
 msgid "Phone"
 msgstr "Telefon"
 
@@ -4412,8 +4495,8 @@ msgstr "kiralık "
 msgid "To be validated"
 msgstr "Onaylanmış olan"
 
-#: ../lib/Objects/DocumentAppendix.php:211 ../menu.inc.php:856
-#: ../menu.inc.php:858 void:1
+#: ../lib/Objects/DocumentAppendix.php:211 ../menu.inc.php:849
+#: ../menu.inc.php:851 void:1
 msgid "Document appendices"
 msgstr "Belge ekleri"
 
@@ -4713,122 +4796,59 @@ msgstr "Azaltılmış"
 msgid "Press names"
 msgstr "Baskı isimleri"
 
-#: ../lib/Objects/_RTWModel.php:2495 ../menu.inc.php:543 ../menu.inc.php:664
-#: ../menu.inc.php:836
+#: ../lib/Objects/_RTWModel.php:3107 ../menu.inc.php:543 ../menu.inc.php:657
+#: ../menu.inc.php:829
 msgid "Models"
 msgstr "Modeller"
 
-#: ../lib/Objects/_RTWModel.php:2669 ../lib/Objects/_RTWModel.php:2670
-#: ../lib/DocumentGenerator.php:4150 ../lib/DocumentGenerator.php:4313
+#: ../lib/Objects/_RTWModel.php:3299 ../lib/Objects/_RTWModel.php:3300
+#: ../lib/DocumentGenerator.php:4150 ../lib/DocumentGenerator.php:4314
+#: ../lib/DocumentGenerator.php:4560
 msgid "Shape"
 msgstr "Şekil"
 
-#: ../lib/Objects/_RTWModel.php:2705 ../lib/Objects/_RTWModel.php:2706
-#: ../lib/DocumentGenerator.php:4134
+#: ../lib/Objects/_RTWModel.php:3335 ../lib/Objects/_RTWModel.php:3336
+#: ../lib/DocumentGenerator.php:4134 ../lib/DocumentGenerator.php:4544
 msgid "Manufacturer"
 msgstr "İmalatçı"
 
-#: ../lib/Objects/_RTWModel.php:2714 ../lib/Objects/_RTWModel.php:2715
-#: ../lib/DocumentGenerator.php:4148
+#: ../lib/Objects/_RTWModel.php:3344 ../lib/Objects/_RTWModel.php:3345
+#: ../lib/DocumentGenerator.php:4148 ../lib/DocumentGenerator.php:4558
 msgid "Construction type"
 msgstr "Yapım tipi"
 
-#: ../lib/Objects/_RTWModel.php:2723 ../lib/Objects/_RTWModel.php:2724
-#: ../lib/DocumentGenerator.php:4149
+#: ../lib/Objects/_RTWModel.php:3353 ../lib/Objects/_RTWModel.php:3354
+#: ../lib/DocumentGenerator.php:4149 ../lib/DocumentGenerator.php:4559
+#: ../lib/DocumentGenerator.php:4726
 msgid "Construction code"
 msgstr "Yapım kodu"
 
-#: ../lib/Objects/_RTWModel.php:2732 ../lib/Objects/_RTWModel.php:2733
-#: ../lib/DocumentGenerator.php:4188
+#: ../lib/Objects/_RTWModel.php:3362 ../lib/Objects/_RTWModel.php:3363
+#: ../lib/DocumentGenerator.php:4189 ../lib/DocumentGenerator.php:4598
 msgid "Label (griffe)"
 msgstr "Etiket (bilgi)"
 
-#: ../lib/Objects/_RTWModel.php:2741 ../lib/Objects/_RTWModel.php:2742
+#: ../lib/Objects/_RTWModel.php:3371 ../lib/Objects/_RTWModel.php:3372
 msgid "Heel height"
 msgstr "Topuk yüksekliği"
 
-#: ../lib/Objects/_RTWModel.php:2759 ../lib/Objects/_RTWModel.php:2760
-msgid "Heel reference quantity"
-msgstr "Topuk referans miktarı"
-
-#: ../lib/Objects/_RTWModel.php:2778 ../lib/Objects/_RTWModel.php:2779
-msgid "Sole quantity"
-msgstr "Taban miktarı"
-
-#: ../lib/Objects/_RTWModel.php:2797 ../lib/Objects/_RTWModel.php:2798
-msgid "Box quantity"
-msgstr "Box miktarı"
-
-#: ../lib/Objects/_RTWModel.php:2816 ../lib/Objects/_RTWModel.php:2817
-msgid "Hand bag quantity"
-msgstr "El çantası miktarı"
-
-#: ../lib/Objects/_RTWModel.php:2835 ../lib/Objects/_RTWModel.php:2836
-msgid "Material 1 quantity"
-msgstr "Malzeme 1 miktarı"
-
-#: ../lib/Objects/_RTWModel.php:2854 ../lib/Objects/_RTWModel.php:2855
-msgid "Material 2 quantity"
-msgstr "Malzeme 2 miktarı"
-
-#: ../lib/Objects/_RTWModel.php:2873 ../lib/Objects/_RTWModel.php:2874
-msgid "Material 3 quantity"
-msgstr ""
-
-#: ../lib/Objects/_RTWModel.php:2892 ../lib/Objects/_RTWModel.php:2893
-msgid "Accessory 1 quantity"
-msgstr "Aksesuar 1 miktarı"
-
-#: ../lib/Objects/_RTWModel.php:2911 ../lib/Objects/_RTWModel.php:2912
-msgid "Accessory 2 quantity"
-msgstr "Aksesuar 2 miktarı"
-
-#: ../lib/Objects/_RTWModel.php:2930 ../lib/Objects/_RTWModel.php:2931
-msgid "Accessory 3 quantity"
-msgstr ""
-
-#: ../lib/Objects/_RTWModel.php:2949 ../lib/Objects/_RTWModel.php:2950
-msgid "Lining quantity"
-msgstr "Astar miktarı"
-
-#: ../lib/Objects/_RTWModel.php:2968 ../lib/Objects/_RTWModel.php:2969
-msgid "Insole quantity"
-msgstr "Ayakkabı astarı miktarı"
-
-#: ../lib/Objects/_RTWModel.php:2987 ../lib/Objects/_RTWModel.php:2988
+#: ../lib/Objects/_RTWModel.php:3617 ../lib/Objects/_RTWModel.php:3618
 msgid "Under-sole quantity"
 msgstr "Ayakkabı taban altı miktarı"
 
-#: ../lib/Objects/_RTWModel.php:3006 ../lib/Objects/_RTWModel.php:3007
-msgid "Media planta quantity"
-msgstr "Medya planta miktarı"
-
-#: ../lib/Objects/_RTWModel.php:3025 ../lib/Objects/_RTWModel.php:3026
-msgid "Lagrima quantity"
-msgstr "Lagrima miktarı"
-
-#: ../lib/Objects/_RTWModel.php:3044 ../lib/Objects/_RTWModel.php:3045
-msgid "Heel covering quantity"
-msgstr "Topuk kaplama miktarı"
-
-#: ../lib/Objects/_RTWModel.php:3063 ../lib/Objects/_RTWModel.php:3064
-msgid "Selvedge quantity"
-msgstr "Kumaş kenarı miktarı"
-
-#: ../lib/Objects/_RTWModel.php:3100 ../lib/Objects/_RTWModel.php:3101
-msgid "Bamboo quantity"
-msgstr "Bambu miktarı"
-
-#: ../lib/Objects/_RTWModel.php:3116 ../lib/Objects/_RTWModel.php:3125
+#: ../lib/Objects/_RTWModel.php:3746 ../lib/Objects/_RTWModel.php:3755
 msgid "Images"
 msgstr "Resimler"
 
-#: ../lib/Objects/_RTWModel.php:3128 ../lib/Objects/_RTWModel.php:3129
-#: ../lib/DocumentGenerator.php:4195 ../lib/DocumentGenerator.php:4331
+#: ../lib/Objects/_RTWModel.php:3758 ../lib/Objects/_RTWModel.php:3759
+#: ../lib/DocumentGenerator.php:4196 ../lib/DocumentGenerator.php:4332
+#: ../lib/DocumentGenerator.php:4605
 msgid "Available sizes"
 msgstr "Mevcut boyutlar"
 
-#: ../lib/Objects/_Alert.php:307 ../menu.inc.php:59
+#: ../lib/Objects/_Alert.php:307 ../lib/Objects/_UserAccount.php:1375
+#: ../lib/Objects/_UserAccount.php:1376 ../lib/Objects/_UserAccount.php:1381
+#: ../menu.inc.php:59
 msgid "Alerts"
 msgstr "Uyarılar"
 
@@ -5160,8 +5180,8 @@ msgid "Expense or receipt"
 msgstr "Gider veya gelir"
 
 #: ../lib/Objects/_FlowType.php:656 ../lib/Objects/_FlowType.php:657
-#: ../StockProductRealandVirtualList.php:121 ../PreferencesWebSite.php:77
-#: ../ProductQuantityByCategoryList.php:67 ../menu.inc.php:898
+#: ../menu.inc.php:905 ../StockProductRealandVirtualList.php:121
+#: ../PreferencesWebSite.php:77 ../ProductQuantityByCategoryList.php:67
 #: ../BoardByCategory.php:52 ../ActorList.php:109 void:1
 msgid "Category"
 msgstr "Kategori"
@@ -5308,8 +5328,8 @@ msgid "Subsidiary accountant"
 msgstr "Yardımcı muhasebeci"
 
 #: ../lib/Objects/_UserAccount.php:405 ../lib/Objects/Actor.inc.php:48
-#: ../CommandList.php:130 ../ActivatedChainTaskList.php:123
-#: ../ProductCommand.php:182 ../UnavailabilityPlanning.php:129
+#: ../ActivatedChainTaskList.php:123 ../ProductCommand.php:182
+#: ../CommandList.php:128 ../UnavailabilityPlanning.php:129
 msgid "Project manager"
 msgstr "Proje müdürü"
 
@@ -5334,7 +5354,6 @@ msgstr "Tam isim"
 #: ../lib/Objects/_UserAccount.php:1327 ../lib/Objects/_UserAccount.php:1336
 #: ../lib/Objects/_UserAccount.php:1345 ../lib/Objects/_UserAccount.php:1354
 #: ../lib/Objects/_UserAccount.php:1363 ../lib/Objects/_UserAccount.php:1372
-#: ../lib/Objects/_UserAccount.php:1381
 msgid "User account data"
 msgstr "Kullanıcı hesabı verisi"
 
@@ -5362,8 +5381,8 @@ msgstr "Müşteri kataloğu"
 msgid "Supplier catalogue"
 msgstr "Tedarikçi kataloğu"
 
-#: ../lib/Objects/_UserAccount.php:1375 ../lib/Objects/_UserAccount.php:1376
-#: void:1
+#: ../lib/Objects/_UserAccount.php:1384 ../lib/Objects/_UserAccount.php:1385
+#: ../lib/Objects/_UserAccount.php:1390 void:1
 msgid "Sites"
 msgstr "Bölgeler"
 
@@ -5469,7 +5488,7 @@ msgstr "Kolilerin toplam ağırlığı (Kg)"
 
 #: ../lib/Objects/DocumentModelProperty.inc.php:309
 #: ../lib/DocumentGenerator.php:826 ../lib/DocumentGenerator.php:1553
-#: ../GroupableBoxActivatedChainTaskList.php:147
+#: ../GroupableBoxActivatedChainTaskList.php:153
 msgid "Number of parcels"
 msgstr "Kolilerin sayısı"
 
@@ -5583,7 +5602,7 @@ msgstr "Bayan"
 msgid "Sir"
 msgstr "Bay"
 
-#: ../lib/Objects/_WorkOrder.php:466 ../CommandList.php:140
+#: ../lib/Objects/_WorkOrder.php:466 ../CommandList.php:148
 #: ../WorkOrderList.php:83
 msgid "Not closed"
 msgstr "kapalı değil"
@@ -6167,15 +6186,17 @@ msgid "Euro"
 msgstr "Euro"
 
 #: ../lib/DocumentGenerator.php:292 ../ProductCommandSupplier.php:148
-#: ../CommandList.php:132 ../CommandList.php:278 ../ChainCommandList.php:92
-#: ../ChainCommandList.php:177 ../ProductCommand.php:146 void:1
+#: ../ChainCommandList.php:92 ../ChainCommandList.php:177
+#: ../ProductCommand.php:146 ../CommandList.php:140 ../CommandList.php:309
+#: void:1
 msgid "Shipper"
 msgstr "Gönderen"
 
 #: ../lib/DocumentGenerator.php:315 ../ProductCommandSupplier.php:161
-#: ../ActivatedChainList.php:73 ../CommandList.php:134 ../CommandList.php:280
-#: ../ForwardingFormEdit.php:329 ../ChainCommandList.php:94
-#: ../ChainCommandList.php:179 ../ProductCommand.php:152 void:1
+#: ../ActivatedChainList.php:73 ../ForwardingFormEdit.php:329
+#: ../ChainCommandList.php:94 ../ChainCommandList.php:179
+#: ../ProductCommand.php:152 ../CommandList.php:142 ../CommandList.php:311
+#: void:1
 msgid "Addressee"
 msgstr "Alıcı"
 
@@ -6517,7 +6538,8 @@ msgstr "Efektif süreç"
 msgid "Date and operator"
 msgstr "Tarih and operatör"
 
-#: ../lib/DocumentGenerator.php:3121 ../lib/DocumentGenerator.php:4200
+#: ../lib/DocumentGenerator.php:3121 ../lib/DocumentGenerator.php:4201
+#: ../lib/DocumentGenerator.php:4610
 msgid "Observations"
 msgstr "Gözlemler"
 
@@ -6567,7 +6589,7 @@ msgid "Disc."
 msgstr "Diskount"
 
 #: ../lib/DocumentGenerator.php:3536 ../ActivatedMovementList.php:244
-#: ../CommandList.php:117 ../ActorProductAddEdit.php:167
+#: ../CommandList.php:133 ../ActorProductAddEdit.php:167
 msgid "Purchase reference"
 msgstr "Satın alma referansı"
 
@@ -6588,17 +6610,21 @@ msgstr "Birim ağırlık"
 msgid "Estimate number"
 msgstr "Tahmini numara"
 
-#: ../lib/DocumentGenerator.php:4118
+#: ../lib/DocumentGenerator.php:4118 ../lib/DocumentGenerator.php:4528
 msgid "Worksheet"
 msgstr "Çalışma tablosu"
 
-#: ../lib/DocumentGenerator.php:4293
+#: ../lib/DocumentGenerator.php:4294
 msgid "Lookbook"
 msgstr "Log defteri"
 
-#: ../lib/DocumentGenerator.php:4316
+#: ../lib/DocumentGenerator.php:4317
 msgid "Heel Height"
 msgstr "Topuk Yüksekliği"
+
+#: ../lib/DocumentGenerator.php:4743
+msgid "Made in CE"
+msgstr ""
 
 #: ../rpc/XmlRpcServer.php:1489
 msgid "Cannot find task number "
@@ -7885,26 +7911,6 @@ msgstr "Oluştur"
 msgid " of a district"
 msgstr " bir bölge"
 
-#: ../AffectAlertToUserAccount.php:45
-#, php-format
-msgid "Alerts were successfully modified for user \"%s\"."
-msgstr "Kulanıcı \"%s\" için alarm başarıyla değiştirildi."
-
-#: ../AffectAlertToUserAccount.php:89
-#, php-format
-msgid "User \"%s\" was configured to receive no alerts."
-msgstr "Kullanıcı \"%s\" hiçbir alarm kabul etmemek için yapılandırıldı."
-
-#: ../AffectAlertToUserAccount.php:93
-#, php-format
-msgid "User \"%s\" was configured to receive alert \"%s\""
-msgstr "Kullanıcı \"%s\" \"%s\" alarmı kabul etmek icin yapılandırıldı"
-
-#: ../AffectAlertToUserAccount.php:96
-#, php-format
-msgid "User \"%s\" was configured to receive the following alerts: %s"
-msgstr "Kullanıcı \"%s\" bu alarmı: \"%s\" kabul etmek için yapılandırıldı "
-
 #: ../PaymentDelete.php:52
 msgid "payment"
 msgstr "ödeme"
@@ -7989,9 +7995,9 @@ msgstr "sipariş"
 msgid "Shipper site"
 msgstr "Gönderici yeri"
 
-#: ../ProductCommandSupplier.php:171 ../CommandList.php:282
-#: ../ForwardingFormEdit.php:335 ../ChainCommandList.php:181
-#: ../ProductCommand.php:165
+#: ../ProductCommandSupplier.php:171 ../ForwardingFormEdit.php:335
+#: ../ChainCommandList.php:181 ../ProductCommand.php:165
+#: ../CommandList.php:313
 msgid "Addressee site"
 msgstr "Alıcı yeri"
 
@@ -8328,10 +8334,11 @@ msgstr "Birçok faaliyeti gerçekleştir"
 msgid "Export"
 msgstr "Export"
 
-#: ../ActivatedMovementList.php:252 ../ActivatedChainTaskHistory.php:133
-#: ../ActivatedChainTaskList.php:245
-#: ../GroupableBoxActivatedChainTaskList.php:145 ../SaisonalityList.php:88
-#: ../PromotionList.php:60 ../GroupableBoxList.php:80 void:1
+#: ../ActivatedMovementList.php:252
+#: ../GroupableBoxActivatedChainTaskList.php:151
+#: ../ActivatedChainTaskHistory.php:133 ../ActivatedChainTaskList.php:245
+#: ../SaisonalityList.php:88 ../PromotionList.php:60
+#: ../GroupableBoxList.php:80 void:1
 msgid "Beginning date"
 msgstr "Başlangıç tarihi"
 
@@ -8552,68 +8559,31 @@ msgstr "Bir tip seçiniz"
 msgid "Add a credit note"
 msgstr "Bir kredi notu ekleyiniz"
 
-#: ../CommandList.php:126 ../ActivatedChainTaskList.php:119
-#: ../UnavailabilityPlanning.php:125
-msgid "Select a project manager"
-msgstr "Bir proje müdürü seçiniz"
+#: ../GroupableBoxActivatedChainTaskList.php:47
+msgid ""
+"Please select the tasks you want to regroup then click the \"Regroup\" button"
+msgstr ""
+"Yeniden gruplamak istediğiniz görevleri seçiniz ve sonra \"Yenidengrupla\" "
+"tuşuna basınız"
 
-#: ../CommandList.php:136
-msgid "Document number (invoice, delivery order, etc...)"
-msgstr "Belge numarası (fatura, teslimat emri, etc...)"
+#: ../GroupableBoxActivatedChainTaskList.php:77
+#: ../GroupableBoxActivatedChainTaskList.php:146 ../GroupableBoxList.php:74
+msgid "Departure city"
+msgstr "Kalkış şehri"
 
-#: ../CommandList.php:139 ../WorkOrderList.php:82 ../WorkOrderList.php:173
-msgid "Closed"
-msgstr "Kapalı"
+#: ../GroupableBoxActivatedChainTaskList.php:85
+#: ../GroupableBoxActivatedChainTaskList.php:149 ../GroupableBoxList.php:77
+msgid "Arrival city"
+msgstr "Varış şehri"
 
-#: ../CommandList.php:162
-msgid "Filter by creation date"
-msgstr "Oluşturma tarihine göre filtrele"
+#: ../GroupableBoxActivatedChainTaskList.php:94
+#: ../GroupableBoxActivatedChainTaskList.php:99
+msgid "Select a zone"
+msgstr "Bir zone seçiniz"
 
-#: ../CommandList.php:214 ../CourseCommandList.php:115
-msgid "Unlock"
-msgstr "Serbest bırak"
-
-#: ../CommandList.php:220 ../ChainCommandList.php:141
-#: ../CourseCommandList.php:129
-msgid "Charge"
-msgstr "Faturala"
-
-#: ../CommandList.php:227 ../ChainCommandList.php:148
-#: ../PrestationCommandList.php:108 ../CourseCommandList.php:139
-msgid "Show invoices"
-msgstr "Faturaları göster"
-
-#: ../CommandList.php:235
-msgid "Add or update instalment"
-msgstr "Taksitli ödeme ekle yada güncelle"
-
-#: ../CommandList.php:241 ../ChainCommandList.php:152
-msgid "Show payments"
-msgstr "Ödemeleri göster"
-
-#: ../CommandList.php:249 ../ChainCommandList.php:163
-msgid "Shipment"
-msgstr "Sevkiyat"
-
-#: ../CommandList.php:250 ../ChainCommandList.php:164
-msgid "Shipment informations"
-msgstr "Sevkiyat bilgileri"
-
-#: ../CommandList.php:256 ../ChainCommandList.php:156
-msgid "Receipt"
-msgstr "Makbuz"
-
-#: ../CommandList.php:257 ../ChainCommandList.php:157
-msgid "Print order receipt"
-msgstr "Sipariş makbuzlarını yazdır"
-
-#: ../CommandList.php:289 ../CustomerCatalog.php:491
-msgid "Selling unit qty"
-msgstr "Satılan birim miktarı"
-
-#: ../CommandList.php:291 ../ProductCommand.php:232
-msgid "Qty pack."
-msgstr "Paketleme kalitesi"
+#: ../GroupableBoxActivatedChainTaskList.php:160 ../GroupableBoxList.php:94
+msgid "Regroup"
+msgstr "Yeniden gruplandırma"
 
 #: ../ProductByLocationList.php:58
 #, php-format
@@ -9003,10 +8973,6 @@ msgstr "Eylem"
 msgid "Statistics by action type"
 msgstr "Eylem tipine göre istatistik"
 
-#: ../PackingListEdit.php:44
-msgid "An error occurred, packing list could not be printed."
-msgstr "Bir hata oluştu, paketleme listesi yazdırılamadı."
-
 #: ../ForwardingFormEdit.php:55
 msgid "The document was created."
 msgstr "Belge oluşturuldu."
@@ -9064,6 +9030,36 @@ msgstr "Taşıyıcı varış yeri"
 #: ../ForwardingFormEdit.php:378 ../LocationExecutedMovementList.php:286
 msgid "Print forwarding form"
 msgstr "Gönderme formu yazdır"
+
+#: ../ChainCommandList.php:141 ../CommandList.php:232
+#: ../CourseCommandList.php:129
+msgid "Charge"
+msgstr "Faturala"
+
+#: ../ChainCommandList.php:148 ../CommandList.php:239
+#: ../PrestationCommandList.php:108 ../CourseCommandList.php:139
+msgid "Show invoices"
+msgstr "Faturaları göster"
+
+#: ../ChainCommandList.php:152 ../CommandList.php:253
+msgid "Show payments"
+msgstr "Ödemeleri göster"
+
+#: ../ChainCommandList.php:156 ../CommandList.php:268
+msgid "Receipt"
+msgstr "Makbuz"
+
+#: ../ChainCommandList.php:157 ../CommandList.php:269
+msgid "Print order receipt"
+msgstr "Sipariş makbuzlarını yazdır"
+
+#: ../ChainCommandList.php:163 ../CommandList.php:261
+msgid "Shipment"
+msgstr "Sevkiyat"
+
+#: ../ChainCommandList.php:164 ../CommandList.php:262
+msgid "Shipment informations"
+msgstr "Sevkiyat bilgileri"
 
 #: ../ChainCommandList.php:174
 msgid "number "
@@ -9413,6 +9409,10 @@ msgstr "Kalkış partneri kayıptır."
 msgid "arrival actor is missing."
 msgstr "varış partneri kayıptır."
 
+#: ../WorksheetEdit.php:58
+msgid "No product found in selected order"
+msgstr ""
+
 #: ../DeliveryOrderEdit.php:43
 msgid "Error: delivery order could not be printed."
 msgstr "Hata: dağıtım siparişi yazdırılamadı."
@@ -9437,6 +9437,11 @@ msgstr "Bileşen referansı"
 #: ../ActivatedChainTaskList.php:105 ../UnavailabilityPlanning.php:148
 msgid "Select an operation"
 msgstr "Bir operasyon seçiniz"
+
+#: ../ActivatedChainTaskList.php:119 ../CommandList.php:124
+#: ../UnavailabilityPlanning.php:125
+msgid "Select a project manager"
+msgstr "Bir proje müdürü seçiniz"
 
 #: ../ActivatedChainTaskList.php:127 ../UnavailabilityPlanning.php:139 void:1
 msgid "Signatory"
@@ -9531,7 +9536,7 @@ msgstr "bölge"
 msgid "Property"
 msgstr "Özellik"
 
-#: ../StockAccountingExport.php:76 ../menu.inc.php:762 void:1
+#: ../StockAccountingExport.php:76 ../menu.inc.php:755 void:1
 msgid "Stock"
 msgstr "Stok"
 
@@ -9603,10 +9608,6 @@ msgstr "Lütfen önce bir sipariş seçiniz."
 msgid "this order is closed."
 msgstr "bu sipariş kapalıdır."
 
-#: ../ChainTaskDetails.php:64 void:1
-msgid "Nomenclature"
-msgstr "Ürün modeli"
-
 #: ../ChainTaskDetails.php:67
 msgid "Linked component"
 msgstr "Bağlı bileşenler"
@@ -9631,802 +9632,6 @@ msgstr "Lütfen bir ürün seçiniz."
 #: ../NomenclatureAddEdit.php:241
 msgid "Please provide a version."
 msgstr "Lütfen bir sürüm giriniz."
-
-#: ../ActivatedMovementAddWithoutPrevisionToBeExecuted.php:115
-msgid "Please select a destination location"
-msgstr "Lütfen bir varış lokasyonu seçiniz"
-
-#: ../StockProductRealandVirtualList.php:63 ../ConcreteProductList.php:58
-#: ../DetailedLocationByProductList.php:156 ../StorebyStorageSiteList.php:244
-#: void:1
-msgid "Owner"
-msgstr "Sahip"
-
-#: ../StockProductRealandVirtualList.php:68
-msgid "At a fixed date"
-msgstr "Kesin bir tarihte"
-
-#: ../StockProductRealandVirtualList.php:114 void:1
-msgid "Virtual qty"
-msgstr "Sanal miktar"
-
-#: ../StockProductRealandVirtualList.php:118 ../ProductCommand.php:234
-#: ../CustomerCatalog.php:487 void:1
-msgid "Minimum qty"
-msgstr "Minimum miktar"
-
-#: ../StoreActiveDesactive.php:82
-#, php-format
-msgid ""
-"The following stores could not be deactivated because one of their locations "
-"is not empty: %s"
-msgstr ""
-"Takip eden depolar etkisizleştirilemeyebilir çünkü lokasyonlardan biri boş "
-"değildir: %s"
-
-#: ../PreferencesWebSite.php:68 void:1
-msgid "Generic actor"
-msgstr "Jenerik partner"
-
-#: ../InvoiceList.php:74
-msgid "Payment reference"
-msgstr "Ödeme referansı"
-
-#: ../InvoiceList.php:77
-msgid "Filter by date of issue"
-msgstr "Çıkış tarihine göre filtrele"
-
-#: ../InvoiceList.php:89
-msgid "Filter by expiration date"
-msgstr "Son kullanım tarihine göre filtrele"
-
-#: ../InvoiceList.php:120
-msgid "Reprint"
-msgstr "Yeniden yazdır"
-
-#: ../InvoiceList.php:121
-msgid "Print invoice copy"
-msgstr "Fatura kopyası yazdır"
-
-#: ../InvoiceList.php:126 ../ToHaveList.php:101 void:1
-msgid "Details"
-msgstr "Detaylar"
-
-#: ../InvoiceList.php:127 ../InvoiceDetail.php:189
-#: ../ChainCommandInvoiceDetail.php:123 ../CourseCommandList.php:123
-#: ../CourseInvoiceDetail.php:118 void:1
-msgid "Invoice details"
-msgstr "Fatura ayrıntıları"
-
-#: ../InvoiceList.php:131
-msgid "Payments"
-msgstr "Ödemeler"
-
-#: ../InvoiceList.php:132 ../PrestationCommandList.php:113 void:1
-msgid "List of payments"
-msgstr "odemelerin listesi"
-
-#: ../ChainEdit.php:66
-msgid "Chain cannot be created."
-msgstr "Zincir oluşturulamaz."
-
-#: ../ChainEdit.php:647
-msgid "Chain cannot be saved."
-msgstr "Zincir kaydedilemez."
-
-#: ../ChainEdit.php:653
-msgid "Chain, operations and tasks were successfully saved."
-msgstr "Zincir, operasyon ve vazifeler başarıyla kaydedildi."
-
-#: ../ChainEdit.php:679
-msgid "Chain building"
-msgstr "Zincir oluşturma"
-
-#: ../CatalogAddEdit.php:54
-msgid "Catalogue cannot be saved."
-msgstr "Katalog kaydedilemez."
-
-#: ../CatalogAddEdit.php:56
-#, php-format
-msgid "Catalogue \"%s\" was successfully saved."
-msgstr "Katalog \"%s\" başarılı bir şekilde kaydedildi."
-
-#: ../CatalogAddEdit.php:57
-msgid "Add or update catalogue"
-msgstr "Katalog ekle veya güncelle"
-
-#: ../GroupableBoxActivatedChainTaskList.php:47
-msgid ""
-"Please select the tasks you want to regroup then click the \"Regroup\" button"
-msgstr ""
-"Yeniden gruplamak istediğiniz görevleri seçiniz ve sonra \"Yenidengrupla\" "
-"tuşuna basınız"
-
-#: ../GroupableBoxActivatedChainTaskList.php:77
-#: ../GroupableBoxActivatedChainTaskList.php:140 ../GroupableBoxList.php:74
-msgid "Departure city"
-msgstr "Kalkış şehri"
-
-#: ../GroupableBoxActivatedChainTaskList.php:85
-#: ../GroupableBoxActivatedChainTaskList.php:143 ../GroupableBoxList.php:77
-msgid "Arrival city"
-msgstr "Varış şehri"
-
-#: ../GroupableBoxActivatedChainTaskList.php:94
-#: ../GroupableBoxActivatedChainTaskList.php:99
-msgid "Select a zone"
-msgstr "Bir zone seçiniz"
-
-#: ../GroupableBoxActivatedChainTaskList.php:154 ../GroupableBoxList.php:94
-msgid "Regroup"
-msgstr "Yeniden gruplandırma"
-
-#: ../LocationDelete.php:85
-msgid "The following locations could not be deleted"
-msgstr "Takip eden lokasyonlar silinemedi"
-
-#: ../AssemblyDetail.php:67
-msgid "Assembly has no registered item."
-msgstr "Asamble kayıtlı öğeye sahip değildir."
-
-#: ../AssemblyDetail.php:112 ../AssemblyDegradedModeDetail.php:93
-#: ../AssemblyEdit.php:110
-msgid "Tracing mode"
-msgstr "İzleme modu"
-
-#: ../AssemblyDetail.php:187 ../ProductHandingByCategoryAddEdit.php:65
-#: ../../../pwak/trunk/lib/GenericMessages.php:93 void:1
-msgid "Back"
-msgstr "Geri"
-
-#: ../AssemblyDetail.php:192 ../AssemblyEdit.php:449
-msgid "of assembly"
-msgstr "montaj"
-
-#: ../AssemblyDetail.php:192 ../AssemblyEdit.php:451
-msgid "of material tracking"
-msgstr "materyal izleme"
-
-#: ../AssemblyDetail.php:198
-msgid "Details "
-msgstr "Ayrıntılar"
-
-#: ../FormModelDelete.php:42
-msgid "Select form models were successfully deleted."
-msgstr "Seçilen form örneği başarıyla silindi."
-
-#: ../FormModelDelete.php:43
-#, php-format
-msgid ""
-"The following form model could not be deleted because it is linked to an "
-"action: %s"
-msgstr "Takip eden form örneği silinemedi çünkü o bir harekete bağlıdır: %s"
-
-#: ../FormModelDelete.php:44
-#, php-format
-msgid ""
-"The following form models could not be deleted because they are linked to an "
-"action: %s"
-msgstr ""
-"Aşağıdaki form örnekleri silinemedi çünkü onlar bir eyleme bağlıdır: %s"
-
-#: ../ContactAddEdit.php:59
-msgid "Contact cannot be saved"
-msgstr "Kontakt personel kaydedilemez"
-
-#: ../ContactAddEdit.php:60
-msgid "Create/update contact"
-msgstr "Kontakt oluştur/güncelle"
-
-#: ../NomenclatureConcreteProductList.php:65
-msgid "Assign to a nomenclature"
-msgstr "Bir terminolojiye atama"
-
-#: ../NomenclatureConcreteProductList.php:67 ../NomenclatureList.php:81
-msgid "Show by components"
-msgstr "Bileşenlere göre göster"
-
-#: ../NomenclatureConcreteProductList.php:69 ../NomenclatureList.php:83
-msgid "Show by sets"
-msgstr "Setlere göre göster"
-
-#: ../NomenclatureConcreteProductList.php:76 ../NomenclatureList.php:48
-#: ../NomenclatureList.php:97
-msgid "Nomenclature version"
-msgstr "Ürün modeli versiyonu"
-
-#: ../ProductQuantityByCategoryEdit.php:44
-#: ../ProductQuantityByCategoryList.php:44
-#, php-format
-msgid "Minimum quantity for order of product \"%s\""
-msgstr "Ürün siparişi için minimum miktar \"%s\""
-
-#: ../ProductQuantityByCategoryEdit.php:45
-#, php-format
-msgid " and category %s"
-msgstr "ve kategori %s"
-
-#: ../ProductQuantityByCategoryEdit.php:92
-#: ../ProductQuantityByCategoryList.php:150
-msgid "Minimum ordered quantity"
-msgstr "Minimum sipariş edilen miktar"
-
-#: ../ProductQuantityByCategoryEdit.php:93
-#: ../ProductQuantityByCategoryList.php:69
-#: ../ProductQuantityByCategoryList.php:151
-msgid "Quantity type"
-msgstr "Miktar tipi"
-
-#: ../ProductCommand.php:226
-msgid "Basis excl. VAT "
-msgstr "Baz KDV hariç"
-
-#: ../AnswerModelSelect.php:47
-msgid "This answer is already linked to this question."
-msgstr "Bu yanıt bu soruya zaten bağlanmıştır."
-
-#: ../AnswerModelSelect.php:123
-msgid "Select an answer"
-msgstr "Bir yanıt seçiniz"
-
-#: ../AnswerModelSelect.php:126
-msgid "Answer order"
-msgstr "Siparişi kabulunu cevapla"
-
-#: ../AnswerModelSelect.php:129
-msgid "Please select a question."
-msgstr "Lütfen bir soru seçiniz."
-
-#: ../BoardByProduct.php:51 ../ProductHandingByCategoryAddEdit.php:54
-msgid "select one or more products"
-msgstr "bir veya birkaç ürün seçiniz"
-
-#: ../BoardByProduct.php:76
-msgid "Only ordered products"
-msgstr "Yalnızca sipariş edilen ürünler"
-
-#: ../InvoiceCommandList.php:76
-msgid "No invoices related to this order."
-msgstr "Bu siparişle ilgili faturalar yok"
-
-#: ../InvoiceCommandList.php:83 ../InvoiceCommandList.php:111
-msgid "Please select an invoice."
-msgstr "Lütfen bir fatura seç"
-
-#: ../InvoiceCommandList.php:269
-msgid "Deadline for payment"
-msgstr "Ödeme çizelgesi"
-
-#: ../InvoiceCommandList.php:273
-msgid "Amount to pay incl. VAT"
-msgstr "KDV dahil ödeme miktarı"
-
-#: ../InvoiceCommandList.php:282 void:1
-msgid "List of invoices"
-msgstr "Faturaların listesi"
-
-#: ../InvoiceCommandList.php:359
-msgid "List of invoices and execution of a payment"
-msgstr "Faturaların listesi ve bir ödemenin yerine getirilmesi"
-
-#: ../ProductAddEdit.php:58
-msgid "Product was not found in the database."
-msgstr "Ürün veritabanında bulunamadı."
-
-#: ../ProductAddEdit.php:59
-msgid "Product cannot be saved"
-msgstr "Ürün kaydedilemedi"
-
-#: ../ProductAddEdit.php:60
-#, php-format
-msgid "Product \"%s\" was successfully modified."
-msgstr "Ürün \"%s\" başarıyla değiştirildi."
-
-#: ../ProductAddEdit.php:61
-msgid "Add or update product"
-msgstr "Ürün ekle yada güncelle"
-
-#: ../ProductAddEdit.php:62
-#, php-format
-msgid "A product already exists with this reference \"%s\", please correct."
-msgstr "Bu referans \"%s\" ile bir ürün zaten mevcut, lütfen düzeltiniz."
-
-#: ../ProductAddEdit.php:135
-msgid "You cannot change tracing mode for a product involved in a nomenclature"
-msgstr "Terminoloji ile ilgili bir ürünün izleme modunu değiştiremezsiniz"
-
-#: ../CommandReceiptEdit.php:49
-msgid "Error: order receipt could not be printed."
-msgstr ""
-
-#: ../FlowList.php:54
-msgid "Filter by payment date"
-msgstr "Ödeme tarihine göre filtrele"
-
-#: ../FlowList.php:93
-msgid "Registration date"
-msgstr "Kayıt tarihi"
-
-#: ../LocationExecutedMovementList.php:61
-msgid "This movement was cancelled."
-msgstr "Bu hareket iptal edildi."
-
-#: ../LocationExecutedMovementList.php:121
-msgid "Not cancelled"
-msgstr "İptal edilemedi"
-
-#: ../LocationExecutedMovementList.php:277
-msgid "Print delivery order"
-msgstr "Dağıtım siparişini yazdır"
-
-#: ../LocationExecutedMovementList.php:295
-msgid "Cancel movement"
-msgstr "Hareketi iptal et"
-
-#: ../LocationExecutedMovementList.php:302
-msgid "Executed movements"
-msgstr "Yürütülen hareket"
-
-#: ../LocationExecutedMovementList.php:337
-msgid "List of partial movements executed."
-msgstr "Gerçekleşen kısmi hareketlerin listesi"
-
-#: ../ActorBankDetailAddEdit.php:54 void:1
-msgid "Add or update bank"
-msgstr "Banka ekle veya güncelle"
-
-#: ../ActorBankDetailAddEdit.php:74 ../SiteAddEdit.php:92
-msgid "Actor was not found in the database."
-msgstr "Ortak veritabanı içinde bulunamadı."
-
-#: ../ActorBankDetailAddEdit.php:103
-msgid "Bank was not found in the database."
-msgstr "Banka veritabanı içinde bulunamadı."
-
-#: ../UploadedDocumentActivatedChainTask.php:62
-#, php-format
-msgid "Document \"%s\" has been assigned to task \"%s\""
-msgstr "Belge \"%s\" görev \"%s\" için atanmıştır"
-
-#: ../UploadedDocumentActivatedChainTask.php:73
-#, php-format
-msgid "Document \"%s\" has been unassigned from its task."
-msgstr "Belge \"%s\" görev tayini durdurulmuştur."
-
-#: ../BoxList.php:45
-msgid "You are about to ungroup all parcels, continue ?"
-msgstr "Tüm koli gruplarını dağıtmak üzeresiniz, devam etmek istiyormusunuz?"
-
-#: ../BoxList.php:52
-msgid "Regrouping reference (parcel, pallet, etc...)"
-msgstr "Yeniden gruplama referansı (koli, palet, vb...)"
-
-#: ../BoxList.php:93
-msgid "Cancel regrouping"
-msgstr "Yeniden gruplamayı iptal et"
-
-#: ../BoxList.php:96
-msgid "Print packing list"
-msgstr "Paketleme listesini yazdır"
-
-#: ../BoxList.php:106
-msgid "Regrouping reference"
-msgstr "Yeniden gruplama referansı"
-
-#: ../BoxList.php:108
-msgid "Content reference"
-msgstr "İçerik referansı"
-
-#: ../EstimateToOrder.php:74
-#, php-format
-msgid "Selected estimate has already given rise to order \"%s\"."
-msgstr "Seçilen tahmin siparişe \"%s\" bir artış vermiştir."
-
-#: ../EstimateToOrder.php:87
-#, php-format
-msgid ""
-"Estimate \"%s\" is not valid anymore (%d days passed since it was issued)."
-msgstr ""
-"Tahmin \"%s\" bundan sonra geçerli değildir (yayınlandığından beri %d gün "
-"geçmiştir)"
-
-#: ../EstimateToOrder.php:179
-#, php-format
-msgid "Order for estimate number \"%s\""
-msgstr "Tahmini number \"%s\" için sipariş"
-
-#: ../WorkOrder.php:75
-msgid "saved"
-msgstr "kaydedildi"
-
-#: ../WorkOrder.php:80
-msgid "Modified data is no more compatible with work order items.\n"
-msgstr "Değiştirilen veri iş emri öğeleri ile uyumlu değildir.\n"
-
-#: ../WorkOrder.php:81
-msgid "modified"
-msgstr "değiştirildi"
-
-#: ../WorkOrder.php:161
-msgid "Work order data were successfully "
-msgstr "Sipariş emri verisi başarılıydı"
-
-#: ../WorkOrder.php:185
-msgid "Add a work order"
-msgstr "Bir iş emri ekle"
-
-#: ../WorkOrder.php:193 ../WorkOrder.php:247 void:1
-msgid "h."
-msgstr "h."
-
-#: ../WorkOrder.php:195 ../WorkOrder.php:249
-msgid "m."
-msgstr "m."
-
-#: ../WorkOrder.php:204
-msgid "Update work order"
-msgstr "İş emri güncelle"
-
-#: ../InvoiceDetail.php:54
-msgid "Invoice was not found in the database."
-msgstr "Fatura veritabanı içinde bulunamadı."
-
-#: ../ActivatedMovementAddWithPrevision.php:58
-msgid "No movement selected"
-msgstr "İşlem seçilmedi"
-
-#: ../ActivatedMovementAddWithPrevision.php:70
-msgid "Selected movement is locked. "
-msgstr "Seçilen işlem kilitlidir."
-
-#: ../ActivatedMovementAddWithPrevision.php:71
-msgid "Selected movement is already being executed or was executed completely."
-msgstr "Seçilen işlem zaten yapıliyordur ya da tamamıyla bitirilmiştir."
-
-#: ../ActivatedMovementAddWithPrevision.php:73
-msgid "You cannot execute it."
-msgstr "Onu gerçekleştiremezsin."
-
-#: ../ActivatedMovementAddWithPrevision.php:234
-msgid "Execution of an expected movement"
-msgstr "Beklenen bir işlemin yapılması"
-
-#: ../SaisonalityList.php:63
-#, php-format
-msgid "The following seasonalities could not be renewed: %s"
-msgstr "Takip eden mevsimsellik yenilenemez: %s"
-
-#: ../SaisonalityList.php:74
-msgid "Renewal"
-msgstr "Yenileme"
-
-#: ../SaisonalityList.php:82
-msgid "Seasonality"
-msgstr "Mevsimlik"
-
-#: ../SaisonalityList.php:84 void:1
-msgid "Properties"
-msgstr "Özellikler"
-
-#: ../SalesmenCommissionSettings.php:70
-msgid "Commission percent by invoice"
-msgstr "Faturaya göre komisyon oranı"
-
-#: ../CommandDelete.php:57
-msgid "Order was not found in the database."
-msgstr "Sipariş bu veritabanı içinde bulunamadı."
-
-#: ../CommandDelete.php:62
-msgid "You cannot delete an estimate that is linked to an order"
-msgstr "Bir siparişe bağlı tahmini silemezsin"
-
-#: ../CommandDelete.php:67
-msgid "You cannot delete an order which state is different from \"Activated\""
-msgstr "\"Aktiv edilen\" pozisyonunundan farklı bir sipariş silemezsiniz."
-
-#: ../CommandDelete.php:73
-msgid "You cannot delete a closed order."
-msgstr "Kapalı siparişi silemezsiniz."
-
-#: ../CommandDelete.php:80
-#, php-format
-msgid "Are you sure you want to delete %s ?"
-msgstr "Silmek istediğinden eminmisin %s ?"
-
-#: ../CommandDelete.php:81
-msgid "this estimate"
-msgstr "bu tahmin"
-
-#: ../CommandDelete.php:81
-msgid "this order"
-msgstr "bu sipariş"
-
-#: ../CommandDelete.php:97
-msgid ""
-"This order cannot be deleted because one of its task is linked to a document."
-msgstr ""
-"Bu sipariş silinemez çünkü görevlerinden biri bir belgeye bağlanmiştır."
-
-#: ../ProductQuantityByCategoryList.php:145 ../BoardByCategory.php:51
-#: ../ProductHandingByCategoryList.php:52
-#: ../CustomerAttractivityAddEdit.php:139 void:1
-msgid "Select one or more categories"
-msgstr "Bir veya daha fazla kategori seçiniz"
-
-#: ../ProductQuantityByCategoryList.php:147
-msgid "Concerned categories"
-msgstr "İlgili kategoriler"
-
-#: ../ActivatedChainGantt.php:57 ../ActivatedChainGantt.php:67
-msgid "Gantt diagram of a scheduled chain"
-msgstr "Planlanan bir zincirin Gantt diyagramı"
-
-#: ../BoardBySupplier.php:53 ../BoardByCoast.php:51
-msgid "Select one or more suppliers"
-msgstr "Bir veya daha fazla tedarikçi seçiniz"
-
-#: ../BoardBySupplier.php:78 ../BoardByCoast.php:74
-msgid "Only suppliers whose products<br>have already been ordered"
-msgstr "Yalnızca ürünleri<br> sipariş edilen tedarikçiler"
-
-#: ../ZoneList.php:52 ../menu.inc.php:366
-msgid "list of zones"
-msgstr "Zonların listesi"
-
-#: ../PaymentCommandList.php:72 ../menu.inc.php:601 ../menu.inc.php:607
-msgid "State of orders"
-msgstr "Siparişlerin durumu"
-
-#: ../PaymentCommandList.php:74 ../ToHavePaymentList.php:61
-msgid "Payment number"
-msgstr "Ödeme numarası"
-
-#: ../PaymentCommandList.php:85
-msgid "Invoice(s)"
-msgstr "Fatura(lar)"
-
-#: ../PaymentCommandList.php:107
-#, php-format
-msgid "List of payments for order %s"
-msgstr "Sipariş için ödemelerin listesi %s"
-
-#: ../DocumentReedit.php:57 ../DocumentReedit.php:67
-#: ../../../pwak/trunk/lib/GenericMessages.php:43
-msgid "An error occurred, please try again later."
-msgstr "Bir hata oluştu, lütfen sonra tekrar deneyin."
-
-#: ../InventoryDetailList.php:113 ../InventoryDetailList.php:115
-#: ../menu.inc.php:797 ../menu.inc.php:799
-msgid "Inventory"
-msgstr "Envanter"
-
-#: ../InventoryDetailList.php:131
-msgid "Purchase unit price excl. VAT"
-msgstr "KDV hariç satınalma birim fiyatı"
-
-#: ../ContactDelete.php:59
-#, php-format
-msgid "Contact %s cannot be deleted"
-msgstr "%s kontakt personel silinemez."
-
-#: ../ActivatedMovementWithPrevisionExecuteSeveral.php:81
-msgid "Execute several movement"
-msgstr "Birçok faaliyet gerçekleştir"
-
-#: ../SiteAddEdit.php:63
-msgid "Site cannot be saved"
-msgstr "Site kaydedilemiyebilir"
-
-#: ../SiteAddEdit.php:65
-#, php-format
-msgid "Site \"%s\" was successfully saved."
-msgstr "Bölge \"%s\" başarılı bir şekilde kaydedildi."
-
-#: ../SiteAddEdit.php:66
-msgid "Add or update site"
-msgstr "Bölge ekle veya güncelle"
-
-#: ../SiteAddEdit.php:67
-msgid "More than one result match."
-msgstr "Birden daha  fazla sonuç çıktı."
-
-#: ../SiteAddEdit.php:68
-msgid "More than one result match, please select a result:"
-msgstr "Birden daha  fazla sonuç çıktı, lütfen birini seçiniz."
-
-#: ../SiteAddEdit.php:69
-#, php-format
-msgid "A site already exists with the name \"%s\", please correct."
-msgstr "Bu isimle \"%s\" bir yer zaten var, lütfen düzeltiniz."
-
-#: ../SiteAddEdit.php:129
-msgid "Site was not found in the database"
-msgstr "Bölge veritabanı içinde bulunamadı"
-
-#: ../ComponentConcreteProduct.php:113
-msgid "Parts nomenclature reference "
-msgstr "Ürün modeli referans parçaları"
-
-#: ../ComponentConcreteProduct.php:124
-msgid "SN or Lot"
-msgstr "SN veya Lot"
-
-#: ../ComponentConcreteProduct.php:153
-msgid "none"
-msgstr "none"
-
-#: ../CommandUnlock.php:52
-msgid "Selected order must be in locked state."
-msgstr "Seçilen sipariş kilitli durumda olmalıdır."
-
-#: ../CommandUnlock.php:57
-msgid "You cannot unlock a closed order"
-msgstr "Kapalı bir siparişi serbest bırakamazsınız"
-
-#: ../CommandUnlock.php:62
-msgid "Are you sure you want to unlock this order ?"
-msgstr "Bu siparişi serbest bırakmak istediğinizden eminmisiniz?"
-
-#: ../ChainTaskList.php:92 void:1
-msgid "Departure date"
-msgstr "Kalkış tarihi"
-
-#: ../ChainTaskList.php:93 void:1
-msgid "Arrival date"
-msgstr "Varış tarihi"
-
-#: ../ChainTaskList.php:99
-msgid "List of fixed date task or weekly task"
-msgstr "Kesin tarihli görev veya haftalık görev listesi"
-
-#: ../SupplyingOptimization.php:76
-msgid "No order found for last weeks."
-msgstr "Son haftalarda sipariş bulunamadı."
-
-#: ../SupplyingOptimization.php:146
-msgid "No suggested quantity to order for the selected date."
-msgstr "Seçilen tarihde önerilen miktarda sipariş yok. "
-
-#: ../SupplyingOptimization.php:229
-msgid "Number of weeks in history"
-msgstr "Geçmiş haftaların sayısı"
-
-#: ../SupplyingOptimization.php:231
-msgid "Number of weeks of forecast"
-msgstr "Tahmini haftaların sayısı"
-
-#: ../SupplyingOptimization.php:233
-msgid "Default delivery within (days)"
-msgstr "Genel teslimat (gün)"
-
-#: ../SupplyingOptimization.php:236
-msgid "Forecasts with extrapolation"
-msgstr "Geçmiş yıllara ait rakamlara göre tahminler"
-
-#: ../UnavailabilityPlanning.php:45
-msgid "Monthly schedule"
-msgstr "Aylık çizelge"
-
-#: ../UnavailabilityPlanning.php:46 ../menu.inc.php:1002
-msgid "Weekly schedule"
-msgstr "Haftalık çizelge"
-
-#: ../UnavailabilityPlanning.php:110
-msgid "Select an operator"
-msgstr "Bir operatör seçiniz"
-
-#: ../UnavailabilityPlanning.php:171
-msgid "Select a customer."
-msgstr "Bir müşteri seçiniz."
-
-#: ../UnavailabilityPlanning.php:201 ../PotentialsEdit.php:54
-msgid "Select a matriculation"
-msgstr "Bir kayıt seçiniz"
-
-#: ../UnavailabilityPlanning.php:408
-msgid "Class - "
-msgstr "Ders - "
-
-#: ../UnavailabilityPlanning.php:410
-msgid "Beginning: "
-msgstr "Başlangıç:"
-
-#: ../UnavailabilityPlanning.php:428 void:1
-msgid "Student"
-msgstr "Öğrenci"
-
-#: ../UnavailabilityPlanning.php:430
-msgid "Class, beginning"
-msgstr "Ders, başlangıç"
-
-#: ../UnavailabilityPlanning.php:431 void:1
-msgid "duration"
-msgstr "süreç"
-
-#: ../UnavailabilityPlanning.php:432
-msgid "airplane: "
-msgstr "uçak:"
-
-#: ../UnavailabilityPlanning.php:463
-#: ../../../pwak/trunk/lib/Search/SearchForm.php:569
-msgid " to "
-msgstr "to"
-
-#: ../UnavailabilityPlanning.php:647
-msgid "previous"
-msgstr "önceki"
-
-#: ../UnavailabilityPlanning.php:653
-msgid "next"
-msgstr "sonraki"
-
-#: ../UnavailabilityPlanning.php:659 void:1
-msgid "Month"
-msgstr "Ay"
-
-#: ../UnavailabilityPlanning.php:666 void:1
-msgid "Week"
-msgstr "Hafta"
-
-#: ../UnavailabilityPlanning.php:673
-msgid "Day"
-msgstr "Gün"
-
-#: ../UnavailabilityPlanning.php:726 ../UnavailabilityPlanning.php:730
-msgid "List of unavailabilities"
-msgstr "Mevcut olmayanların listesi"
-
-#: ../UnavailabilityPlanning.php:726
-msgid " for "
-msgstr "için"
-
-#: ../FlowTypeDuplicate.php:82
-msgid "Expenses and receipts model copy"
-msgstr "Gelir ve giderlerin örnek kopyası"
-
-#: ../Download.php:82 void:1
-msgid "Onlogistics download zone"
-msgstr "Onlogistics yükleme yeri"
-
-#: ../WorkOrderList.php:76 void:1
-msgid "Work order name"
-msgstr "Sipariş emri ismi"
-
-#: ../WorkOrderList.php:147
-msgid "Assign selected items"
-msgstr "Seçili öğeleri belirle"
-
-#: ../WorkOrderList.php:203 ../WorkOrderList.php:209
-msgid "Work order management"
-msgstr "Sipariş emri yönetimi"
-
-#: ../ChainActivationTaskDetail.php:77
-msgid "Chain to activate"
-msgstr "Aftiv edilecek zincir "
-
-#: ../ChainActivationTaskDetail.php:91 void:1
-msgid "task beginning date/time"
-msgstr "görev baslangıç tarihi/zamanı"
-
-#: ../ChainActivationTaskDetail.php:92 void:1
-msgid "task end date/time"
-msgstr "görev bitiş tarihi/zamanı"
-
-#: ../ChainActivationTaskDetail.php:93 void:1
-msgid "Deadline date"
-msgstr "Sürenin bitiş tarihi"
-
-#: ../ChainActivationTaskDetail.php:98 ../menu.inc.php:538 void:1
-msgid "Nomenclatures"
-msgstr "Ürün modelleri"
-
-#: ../ChainActivationTaskDetail.php:101
-msgid "Components"
-msgstr "Bileşenler"
-
-#: ../ChainActivationTaskDetail.php:110
-msgid "Take into account volume of nomenclature"
-msgstr "Terimlendirme yoğunluğunu göz önüne alma"
 
 #: ../menu.inc.php:47 ../menu.inc.php:49
 msgid "Profiles table"
@@ -10581,7 +9786,7 @@ msgstr "Faaliyetler"
 msgid "Movement execution preferences"
 msgstr "Faaliyet uygulama tercihleri"
 
-#: ../menu.inc.php:218 ../menu.inc.php:809
+#: ../menu.inc.php:218 ../menu.inc.php:802
 msgid "Supplying optimization"
 msgstr "Tedarik optimizasyonu"
 
@@ -10693,6 +9898,10 @@ msgstr "Tedarik ayarları"
 msgid "Zones"
 msgstr "Zonlar"
 
+#: ../menu.inc.php:366 ../ZoneList.php:52
+msgid "list of zones"
+msgstr "Zonların listesi"
+
 #: ../menu.inc.php:370 ../menu.inc.php:618
 msgid "Services"
 msgstr "Servisler"
@@ -10769,7 +9978,7 @@ msgstr "Topuk yüksekliği yönetimi"
 msgid "Materials management"
 msgstr "Malzeme yönetimi"
 
-#: ../menu.inc.php:488
+#: ../menu.inc.php:488 ../menu.inc.php:863 ../menu.inc.php:865
 msgid "Worksheets"
 msgstr "Çalışma tabloları"
 
@@ -10805,6 +10014,10 @@ msgstr "Kategoriye göre indirim"
 msgid "List of discounts by customer category"
 msgstr "Müşteri kategorisine göre indirim listesi"
 
+#: ../menu.inc.php:538 ../ChainActivationTaskDetail.php:98 void:1
+msgid "Nomenclatures"
+msgstr "Ürün modelleri"
+
 #: ../menu.inc.php:545
 msgid "List of nomenclatures models"
 msgstr "Terminoloji modelleri listesi"
@@ -10824,6 +10037,10 @@ msgstr "Sipariş takibi"
 #: ../menu.inc.php:599
 msgid "Product orders"
 msgstr "Ürün siparişleri"
+
+#: ../menu.inc.php:601 ../menu.inc.php:607 ../PaymentCommandList.php:72
+msgid "State of orders"
+msgstr "Siparişlerin durumu"
 
 #: ../menu.inc.php:605
 msgid "Carriage orders"
@@ -10849,259 +10066,1053 @@ msgstr "Tahminlerim listesi"
 msgid "Credit notes"
 msgstr "Kredi notları"
 
-#: ../menu.inc.php:636 ../menu.inc.php:638
-msgid "Worksheets by orders"
-msgstr ""
-
-#: ../menu.inc.php:647 ../menu.inc.php:713 ../menu.inc.php:715
+#: ../menu.inc.php:640 ../menu.inc.php:706 ../menu.inc.php:708
 #: ../CashBalance.php:71 void:1
 msgid "Cash flow"
 msgstr "Nakit akışı"
 
-#: ../menu.inc.php:654
+#: ../menu.inc.php:647
 msgid "Accounts management"
 msgstr "Muhasebe yönetimi"
 
-#: ../menu.inc.php:658
+#: ../menu.inc.php:651
 msgid "Banks"
 msgstr "Bankalar"
 
-#: ../menu.inc.php:660
+#: ../menu.inc.php:653
 msgid "List of banks"
 msgstr "Banka listeleri"
 
-#: ../menu.inc.php:669
+#: ../menu.inc.php:662
 msgid "Accounting types"
 msgstr "Muhasebe çeşitleri"
 
-#: ../menu.inc.php:671
+#: ../menu.inc.php:664
 msgid "Accounting types management"
 msgstr "Muhasebe çeşidi yönetimi"
 
-#: ../menu.inc.php:675 ../menu.inc.php:677
+#: ../menu.inc.php:668 ../menu.inc.php:670
 msgid "Categories of expenses and receipts"
 msgstr "Gelir ve gider kategorileri"
 
-#: ../menu.inc.php:681 ../menu.inc.php:683
+#: ../menu.inc.php:674 ../menu.inc.php:676
 msgid "Expenses and receipts models"
 msgstr "Gelir ve gider modelleri"
 
-#: ../menu.inc.php:689 ../menu.inc.php:691
+#: ../menu.inc.php:682 ../menu.inc.php:684
 msgid "Forecasts of expenses and receipts"
 msgstr "Gelir ve gider tahminleri"
 
-#: ../menu.inc.php:695 ../menu.inc.php:697
+#: ../menu.inc.php:688 ../menu.inc.php:690
 msgid "Expenses and receipts"
 msgstr "Gelir ve giderler"
 
-#: ../menu.inc.php:701 ../menu.inc.php:703 ../menu.inc.php:791
-#: ../menu.inc.php:943
+#: ../menu.inc.php:694 ../menu.inc.php:696 ../menu.inc.php:784
+#: ../menu.inc.php:950
 msgid "History"
 msgstr "Geçmiş"
 
-#: ../menu.inc.php:707 ../menu.inc.php:709
+#: ../menu.inc.php:700 ../menu.inc.php:702
 msgid "Accounts receivable aging"
 msgstr "Alacak hesapları sıralaması"
 
-#: ../menu.inc.php:719
+#: ../menu.inc.php:712
 msgid "Breaking-down"
 msgstr "Kırılma noktası"
 
-#: ../menu.inc.php:721 void:1
+#: ../menu.inc.php:714 void:1
 msgid "Breaking-down data export"
 msgstr "Kırılma noktası data export"
 
-#: ../menu.inc.php:735 void:1
+#: ../menu.inc.php:728 void:1
 msgid "Work order"
 msgstr "Sipariş emri"
 
-#: ../menu.inc.php:740
+#: ../menu.inc.php:733
 msgid "Scheduled chains"
 msgstr "Zamanlanmış zincir"
 
-#: ../menu.inc.php:742 ../menu.inc.php:957
+#: ../menu.inc.php:735 ../menu.inc.php:964
 msgid "List of activated chains"
 msgstr "Aktif edilmiş zincir listesi"
 
-#: ../menu.inc.php:746
+#: ../menu.inc.php:739
 msgid "Work orders"
 msgstr "Sipariş emirleri"
 
-#: ../menu.inc.php:748
+#: ../menu.inc.php:741
 msgid "Work orders management"
 msgstr "Sipariş emirleri yönetimi"
 
-#: ../menu.inc.php:752 ../menu.inc.php:754
+#: ../menu.inc.php:745 ../menu.inc.php:747
 msgid "Regrouping in work order"
 msgstr "İş emrine göre yeniden gruplama"
 
-#: ../menu.inc.php:767 ../menu.inc.php:769 void:1
+#: ../menu.inc.php:760 ../menu.inc.php:762 void:1
 msgid "Amount of stock"
 msgstr "Stok miktarı"
 
-#: ../menu.inc.php:773
+#: ../menu.inc.php:766
 msgid "Stock state"
 msgstr "Stok durumu"
 
-#: ../menu.inc.php:775
+#: ../menu.inc.php:768
 msgid "List of storage sites"
 msgstr "Depolama yerleri listesi"
 
-#: ../menu.inc.php:779 ../menu.inc.php:781
+#: ../menu.inc.php:772 ../menu.inc.php:774
 msgid "Expected movements"
 msgstr "Stok hareketleri"
 
-#: ../menu.inc.php:785
+#: ../menu.inc.php:778
 msgid "Unexpected movements"
 msgstr "Beklenmeyen stok hareketleri"
 
-#: ../menu.inc.php:787
+#: ../menu.inc.php:780
 msgid "Unexpected movement execution"
 msgstr "Beklenmeyen hareketlerin uygulaması"
 
-#: ../menu.inc.php:793
+#: ../menu.inc.php:786
 msgid "List of executed movements"
 msgstr "Gerçekleşmiş eylemlerin listesi"
 
-#: ../menu.inc.php:803 ../menu.inc.php:805
+#: ../menu.inc.php:790 ../menu.inc.php:792 ../InventoryDetailList.php:113
+#: ../InventoryDetailList.php:115
+msgid "Inventory"
+msgstr "Envanter"
+
+#: ../menu.inc.php:796 ../menu.inc.php:798
 msgid "Material accounting"
 msgstr "Malzeme hesabı"
 
-#: ../menu.inc.php:811
+#: ../menu.inc.php:804
 msgid "Supplying quantities optimization"
 msgstr "Tedarik miktarları optimizasyonu"
 
-#: ../menu.inc.php:815 void:1
+#: ../menu.inc.php:808 void:1
 msgid "Regrouping"
 msgstr "Yeniden gruplama"
 
-#: ../menu.inc.php:817
+#: ../menu.inc.php:810
 msgid "List of regrouping tasks"
 msgstr "Yeniden gruplama görev listesi"
 
-#: ../menu.inc.php:821 ../menu.inc.php:823
+#: ../menu.inc.php:814 ../menu.inc.php:816
 msgid "History of regroupings"
 msgstr "Yeniden gruplama geçmişi"
 
-#: ../menu.inc.php:831 ../menu.inc.php:1018 void:1
+#: ../menu.inc.php:824 ../menu.inc.php:1025 void:1
 msgid "Documents"
 msgstr "Belgeler"
 
-#: ../menu.inc.php:838
+#: ../menu.inc.php:831
 msgid "List of document models"
 msgstr "Belge örnekleri listesi"
 
-#: ../menu.inc.php:843 ../menu.inc.php:845
+#: ../menu.inc.php:836 ../menu.inc.php:838
 msgid "Reprinting of documents"
 msgstr "Belgelerin yeniden yazdırılması"
 
-#: ../menu.inc.php:849 ../menu.inc.php:851
+#: ../menu.inc.php:842 ../menu.inc.php:844
 msgid "Lookbook printing"
 msgstr "Log defteri yazdırma"
 
-#: ../menu.inc.php:867 void:1
+#: ../menu.inc.php:856 ../menu.inc.php:858
+msgid "Product labels"
+msgstr ""
+
+#: ../menu.inc.php:874 void:1
 msgid "Scoreboard"
 msgstr "Skorbord"
 
-#: ../menu.inc.php:874
+#: ../menu.inc.php:881
 msgid "salesman"
 msgstr "satış elemanı"
 
-#: ../menu.inc.php:878 ../menu.inc.php:880
+#: ../menu.inc.php:885 ../menu.inc.php:887
 msgid "Turnover by salesman"
 msgstr "Pazarlamacı cirosu"
 
-#: ../menu.inc.php:884 ../menu.inc.php:886
+#: ../menu.inc.php:891 ../menu.inc.php:893
 msgid "Salesmen commissions"
 msgstr "Satış elemanı komisyonları"
 
-#: ../menu.inc.php:894
+#: ../menu.inc.php:901
 msgid "Turnover by customer"
 msgstr "Müşteri göre iş hacmi"
 
-#: ../menu.inc.php:900
+#: ../menu.inc.php:907
 msgid "Turnover by category"
 msgstr "Kategoriye göre iş hacmi"
 
-#: ../menu.inc.php:906
+#: ../menu.inc.php:913
 msgid "Turnover by product"
 msgstr "Ürüne göre ciro"
 
-#: ../menu.inc.php:910 ../menu.inc.php:912
+#: ../menu.inc.php:917 ../menu.inc.php:919
 msgid "Turnover by supplier"
 msgstr "Tedarikçi iş hacmi"
 
-#: ../menu.inc.php:916
+#: ../menu.inc.php:923
 msgid "Turnover by customer/supplier"
 msgstr "Müşteri/tedarikçi iş hacmi"
 
-#: ../menu.inc.php:918
+#: ../menu.inc.php:925
 msgid "Details of customer turnover sorted by supplier"
 msgstr "Tedarikçilerin sırasına göre müşteri cirosu detayları"
 
-#: ../menu.inc.php:922 ../menu.inc.php:924
+#: ../menu.inc.php:929 ../menu.inc.php:931
 msgid "Activity based costing"
 msgstr "Faaliyet temelli maliyet hesabı"
 
-#: ../menu.inc.php:937
+#: ../menu.inc.php:944
 msgid "Validation"
 msgstr "Onay"
 
-#: ../menu.inc.php:939 ../menu.inc.php:945
+#: ../menu.inc.php:946 ../menu.inc.php:952
 msgid "List of tasks"
 msgstr "Görevlerin listesi"
 
-#: ../menu.inc.php:949 ../menu.inc.php:951 ../menu.inc.php:1000
+#: ../menu.inc.php:956 ../menu.inc.php:958 ../menu.inc.php:1007
 msgid "Time schedule"
 msgstr "Zaman çizelgesi"
 
-#: ../menu.inc.php:955
+#: ../menu.inc.php:962
 msgid "Gantt"
 msgstr ""
 
-#: ../menu.inc.php:966
+#: ../menu.inc.php:973
 msgid "Flights"
 msgstr "Uçuşlar"
 
-#: ../menu.inc.php:972 ../menu.inc.php:974
+#: ../menu.inc.php:979 ../menu.inc.php:981
 msgid "Log book"
 msgstr "Log defteri"
 
-#: ../menu.inc.php:979 ../menu.inc.php:981
+#: ../menu.inc.php:986 ../menu.inc.php:988
 msgid "Board book"
 msgstr "Kart defteri"
 
-#: ../menu.inc.php:986
+#: ../menu.inc.php:993
 msgid "Expected flights"
 msgstr "Beklenen uçuşlar"
 
-#: ../menu.inc.php:988
+#: ../menu.inc.php:995
 msgid "List of expected flights"
 msgstr "Beklenen uçuş listesi"
 
-#: ../menu.inc.php:995
+#: ../menu.inc.php:1002
 msgid "List of completed flights"
 msgstr "Tamamlanan uçuş listesi"
 
-#: ../menu.inc.php:1011
+#: ../menu.inc.php:1009 ../UnavailabilityPlanning.php:46
+msgid "Weekly schedule"
+msgstr "Haftalık çizelge"
+
+#: ../menu.inc.php:1018
 msgid "EDM"
 msgstr ""
 
-#: ../menu.inc.php:1012
+#: ../menu.inc.php:1019
 msgid "Electronic document management"
 msgstr "Elektronik belge yönetimi"
 
-#: ../menu.inc.php:1020
+#: ../menu.inc.php:1027
 msgid "List of uploaded documents"
 msgstr "Yüklenen belgelerin yönetimi"
 
-#: ../menu.inc.php:1025
+#: ../menu.inc.php:1032
 msgid "Document Types"
 msgstr "Belge tipleri"
 
-#: ../menu.inc.php:1027
+#: ../menu.inc.php:1034
 msgid "List of document types"
 msgstr "Belge tipleri listesi"
+
+#: ../ActivatedMovementAddWithoutPrevisionToBeExecuted.php:115
+msgid "Please select a destination location"
+msgstr "Lütfen bir varış lokasyonu seçiniz"
+
+#: ../StockProductRealandVirtualList.php:63 ../ConcreteProductList.php:58
+#: ../DetailedLocationByProductList.php:156 ../StorebyStorageSiteList.php:244
+#: void:1
+msgid "Owner"
+msgstr "Sahip"
+
+#: ../StockProductRealandVirtualList.php:68
+msgid "At a fixed date"
+msgstr "Kesin bir tarihte"
+
+#: ../StockProductRealandVirtualList.php:114 void:1
+msgid "Virtual qty"
+msgstr "Sanal miktar"
+
+#: ../StockProductRealandVirtualList.php:118 ../ProductCommand.php:234
+#: ../CustomerCatalog.php:487 void:1
+msgid "Minimum qty"
+msgstr "Minimum miktar"
+
+#: ../StoreActiveDesactive.php:82
+#, php-format
+msgid ""
+"The following stores could not be deactivated because one of their locations "
+"is not empty: %s"
+msgstr ""
+"Takip eden depolar etkisizleştirilemeyebilir çünkü lokasyonlardan biri boş "
+"değildir: %s"
+
+#: ../PreferencesWebSite.php:68 void:1
+msgid "Generic actor"
+msgstr "Jenerik partner"
+
+#: ../BoxList.php:45
+msgid "You are about to ungroup all parcels, continue ?"
+msgstr "Tüm koli gruplarını dağıtmak üzeresiniz, devam etmek istiyormusunuz?"
+
+#: ../BoxList.php:52
+msgid "Regrouping reference (parcel, pallet, etc...)"
+msgstr "Yeniden gruplama referansı (koli, palet, vb...)"
+
+#: ../BoxList.php:94
+msgid "Cancel regrouping"
+msgstr "Yeniden gruplamayı iptal et"
+
+#: ../BoxList.php:107
+msgid "Print grouping labels"
+msgstr ""
+
+#: ../BoxList.php:118
+msgid "Regrouping reference"
+msgstr "Yeniden gruplama referansı"
+
+#: ../BoxList.php:120
+msgid "Content reference"
+msgstr "İçerik referansı"
+
+#: ../InvoiceList.php:74
+msgid "Payment reference"
+msgstr "Ödeme referansı"
+
+#: ../InvoiceList.php:77
+msgid "Filter by date of issue"
+msgstr "Çıkış tarihine göre filtrele"
+
+#: ../InvoiceList.php:89
+msgid "Filter by expiration date"
+msgstr "Son kullanım tarihine göre filtrele"
+
+#: ../InvoiceList.php:120
+msgid "Reprint"
+msgstr "Yeniden yazdır"
+
+#: ../InvoiceList.php:121
+msgid "Print invoice copy"
+msgstr "Fatura kopyası yazdır"
+
+#: ../InvoiceList.php:126 ../ToHaveList.php:101 void:1
+msgid "Details"
+msgstr "Detaylar"
+
+#: ../InvoiceList.php:127 ../InvoiceDetail.php:189
+#: ../ChainCommandInvoiceDetail.php:123 ../CourseCommandList.php:123
+#: ../CourseInvoiceDetail.php:118 void:1
+msgid "Invoice details"
+msgstr "Fatura ayrıntıları"
+
+#: ../InvoiceList.php:131
+msgid "Payments"
+msgstr "Ödemeler"
+
+#: ../InvoiceList.php:132 ../PrestationCommandList.php:113 void:1
+msgid "List of payments"
+msgstr "odemelerin listesi"
+
+#: ../ChainEdit.php:66
+msgid "Chain cannot be created."
+msgstr "Zincir oluşturulamaz."
+
+#: ../ChainEdit.php:647
+msgid "Chain cannot be saved."
+msgstr "Zincir kaydedilemez."
+
+#: ../ChainEdit.php:653
+msgid "Chain, operations and tasks were successfully saved."
+msgstr "Zincir, operasyon ve vazifeler başarıyla kaydedildi."
+
+#: ../ChainEdit.php:679
+msgid "Chain building"
+msgstr "Zincir oluşturma"
+
+#: ../CatalogAddEdit.php:54
+msgid "Catalogue cannot be saved."
+msgstr "Katalog kaydedilemez."
+
+#: ../CatalogAddEdit.php:56
+#, php-format
+msgid "Catalogue \"%s\" was successfully saved."
+msgstr "Katalog \"%s\" başarılı bir şekilde kaydedildi."
+
+#: ../CatalogAddEdit.php:57
+msgid "Add or update catalogue"
+msgstr "Katalog ekle veya güncelle"
+
+#: ../LocationDelete.php:85
+msgid "The following locations could not be deleted"
+msgstr "Takip eden lokasyonlar silinemedi"
+
+#: ../AssemblyDetail.php:67
+msgid "Assembly has no registered item."
+msgstr "Asamble kayıtlı öğeye sahip değildir."
+
+#: ../AssemblyDetail.php:112 ../AssemblyDegradedModeDetail.php:93
+#: ../AssemblyEdit.php:110
+msgid "Tracing mode"
+msgstr "İzleme modu"
+
+#: ../AssemblyDetail.php:187 ../ProductHandingByCategoryAddEdit.php:65
+#: ../../../pwak/trunk/lib/GenericMessages.php:93 void:1
+msgid "Back"
+msgstr "Geri"
+
+#: ../AssemblyDetail.php:192 ../AssemblyEdit.php:449
+msgid "of assembly"
+msgstr "montaj"
+
+#: ../AssemblyDetail.php:192 ../AssemblyEdit.php:451
+msgid "of material tracking"
+msgstr "materyal izleme"
+
+#: ../AssemblyDetail.php:198
+msgid "Details "
+msgstr "Ayrıntılar"
+
+#: ../FormModelDelete.php:42
+msgid "Select form models were successfully deleted."
+msgstr "Seçilen form örneği başarıyla silindi."
+
+#: ../FormModelDelete.php:43
+#, php-format
+msgid ""
+"The following form model could not be deleted because it is linked to an "
+"action: %s"
+msgstr "Takip eden form örneği silinemedi çünkü o bir harekete bağlıdır: %s"
+
+#: ../FormModelDelete.php:44
+#, php-format
+msgid ""
+"The following form models could not be deleted because they are linked to an "
+"action: %s"
+msgstr ""
+"Aşağıdaki form örnekleri silinemedi çünkü onlar bir eyleme bağlıdır: %s"
+
+#: ../ContactAddEdit.php:59
+msgid "Contact cannot be saved"
+msgstr "Kontakt personel kaydedilemez"
+
+#: ../ContactAddEdit.php:60
+msgid "Create/update contact"
+msgstr "Kontakt oluştur/güncelle"
+
+#: ../NomenclatureConcreteProductList.php:65
+msgid "Assign to a nomenclature"
+msgstr "Bir terminolojiye atama"
+
+#: ../NomenclatureConcreteProductList.php:67 ../NomenclatureList.php:81
+msgid "Show by components"
+msgstr "Bileşenlere göre göster"
+
+#: ../NomenclatureConcreteProductList.php:69 ../NomenclatureList.php:83
+msgid "Show by sets"
+msgstr "Setlere göre göster"
+
+#: ../NomenclatureConcreteProductList.php:76 ../NomenclatureList.php:48
+#: ../NomenclatureList.php:97
+msgid "Nomenclature version"
+msgstr "Ürün modeli versiyonu"
+
+#: ../ProductQuantityByCategoryEdit.php:44
+#: ../ProductQuantityByCategoryList.php:44
+#, php-format
+msgid "Minimum quantity for order of product \"%s\""
+msgstr "Ürün siparişi için minimum miktar \"%s\""
+
+#: ../ProductQuantityByCategoryEdit.php:45
+#, php-format
+msgid " and category %s"
+msgstr "ve kategori %s"
+
+#: ../ProductQuantityByCategoryEdit.php:92
+#: ../ProductQuantityByCategoryList.php:150
+msgid "Minimum ordered quantity"
+msgstr "Minimum sipariş edilen miktar"
+
+#: ../ProductQuantityByCategoryEdit.php:93
+#: ../ProductQuantityByCategoryList.php:69
+#: ../ProductQuantityByCategoryList.php:151
+msgid "Quantity type"
+msgstr "Miktar tipi"
+
+#: ../ProductCommand.php:226
+msgid "Basis excl. VAT "
+msgstr "Baz KDV hariç"
+
+#: ../ProductCommand.php:232 ../CommandList.php:322
+msgid "Qty pack."
+msgstr "Paketleme kalitesi"
+
+#: ../AnswerModelSelect.php:47
+msgid "This answer is already linked to this question."
+msgstr "Bu yanıt bu soruya zaten bağlanmıştır."
+
+#: ../AnswerModelSelect.php:123
+msgid "Select an answer"
+msgstr "Bir yanıt seçiniz"
+
+#: ../AnswerModelSelect.php:126
+msgid "Answer order"
+msgstr "Siparişi kabulunu cevapla"
+
+#: ../AnswerModelSelect.php:129
+msgid "Please select a question."
+msgstr "Lütfen bir soru seçiniz."
+
+#: ../BoardByProduct.php:51 ../ProductHandingByCategoryAddEdit.php:54
+msgid "select one or more products"
+msgstr "bir veya birkaç ürün seçiniz"
+
+#: ../BoardByProduct.php:76
+msgid "Only ordered products"
+msgstr "Yalnızca sipariş edilen ürünler"
+
+#: ../InvoiceCommandList.php:76
+msgid "No invoices related to this order."
+msgstr "Bu siparişle ilgili faturalar yok"
+
+#: ../InvoiceCommandList.php:83 ../InvoiceCommandList.php:111
+msgid "Please select an invoice."
+msgstr "Lütfen bir fatura seç"
+
+#: ../InvoiceCommandList.php:269
+msgid "Deadline for payment"
+msgstr "Ödeme çizelgesi"
+
+#: ../InvoiceCommandList.php:273
+msgid "Amount to pay incl. VAT"
+msgstr "KDV dahil ödeme miktarı"
+
+#: ../InvoiceCommandList.php:282 void:1
+msgid "List of invoices"
+msgstr "Faturaların listesi"
+
+#: ../InvoiceCommandList.php:359
+msgid "List of invoices and execution of a payment"
+msgstr "Faturaların listesi ve bir ödemenin yerine getirilmesi"
+
+#: ../ProductAddEdit.php:58
+msgid "Product was not found in the database."
+msgstr "Ürün veritabanında bulunamadı."
+
+#: ../ProductAddEdit.php:59
+msgid "Product cannot be saved"
+msgstr "Ürün kaydedilemedi"
+
+#: ../ProductAddEdit.php:60
+#, php-format
+msgid "Product \"%s\" was successfully modified."
+msgstr "Ürün \"%s\" başarıyla değiştirildi."
+
+#: ../ProductAddEdit.php:61
+msgid "Add or update product"
+msgstr "Ürün ekle yada güncelle"
+
+#: ../ProductAddEdit.php:62
+#, php-format
+msgid "A product already exists with this reference \"%s\", please correct."
+msgstr "Bu referans \"%s\" ile bir ürün zaten mevcut, lütfen düzeltiniz."
+
+#: ../ProductAddEdit.php:135
+msgid "You cannot change tracing mode for a product involved in a nomenclature"
+msgstr "Terminoloji ile ilgili bir ürünün izleme modunu değiştiremezsiniz"
+
+#: ../CommandReceiptEdit.php:49
+msgid "Error: order receipt could not be printed."
+msgstr ""
+
+#: ../FlowList.php:54
+msgid "Filter by payment date"
+msgstr "Ödeme tarihine göre filtrele"
+
+#: ../FlowList.php:93
+msgid "Registration date"
+msgstr "Kayıt tarihi"
+
+#: ../LocationExecutedMovementList.php:61
+msgid "This movement was cancelled."
+msgstr "Bu hareket iptal edildi."
+
+#: ../LocationExecutedMovementList.php:121
+msgid "Not cancelled"
+msgstr "İptal edilemedi"
+
+#: ../LocationExecutedMovementList.php:277
+msgid "Print delivery order"
+msgstr "Dağıtım siparişini yazdır"
+
+#: ../LocationExecutedMovementList.php:295
+msgid "Cancel movement"
+msgstr "Hareketi iptal et"
+
+#: ../LocationExecutedMovementList.php:302
+msgid "Executed movements"
+msgstr "Yürütülen hareket"
+
+#: ../LocationExecutedMovementList.php:337
+msgid "List of partial movements executed."
+msgstr "Gerçekleşen kısmi hareketlerin listesi"
+
+#: ../ActorBankDetailAddEdit.php:54 void:1
+msgid "Add or update bank"
+msgstr "Banka ekle veya güncelle"
+
+#: ../ActorBankDetailAddEdit.php:74 ../SiteAddEdit.php:92
+msgid "Actor was not found in the database."
+msgstr "Ortak veritabanı içinde bulunamadı."
+
+#: ../ActorBankDetailAddEdit.php:103
+msgid "Bank was not found in the database."
+msgstr "Banka veritabanı içinde bulunamadı."
+
+#: ../UploadedDocumentActivatedChainTask.php:62
+#, php-format
+msgid "Document \"%s\" has been assigned to task \"%s\""
+msgstr "Belge \"%s\" görev \"%s\" için atanmıştır"
+
+#: ../UploadedDocumentActivatedChainTask.php:73
+#, php-format
+msgid "Document \"%s\" has been unassigned from its task."
+msgstr "Belge \"%s\" görev tayini durdurulmuştur."
+
+#: ../CommandList.php:144
+msgid "Document number (invoice, delivery order, etc...)"
+msgstr "Belge numarası (fatura, teslimat emri, etc...)"
+
+#: ../CommandList.php:147 ../WorkOrderList.php:82 ../WorkOrderList.php:173
+msgid "Closed"
+msgstr "Kapalı"
+
+#: ../CommandList.php:169
+msgid "Filter by creation date"
+msgstr "Oluşturma tarihine göre filtrele"
+
+#: ../CommandList.php:226 ../CourseCommandList.php:115
+msgid "Unlock"
+msgstr "Serbest bırak"
+
+#: ../CommandList.php:247
+msgid "Add or update instalment"
+msgstr "Taksitli ödeme ekle yada güncelle"
+
+#: ../CommandList.php:288 ../CommandList.php:289
+msgid "Print worksheets"
+msgstr ""
+
+#: ../CommandList.php:320 ../CustomerCatalog.php:491
+msgid "Selling unit qty"
+msgstr "Satılan birim miktarı"
+
+#: ../EstimateToOrder.php:74
+#, php-format
+msgid "Selected estimate has already given rise to order \"%s\"."
+msgstr "Seçilen tahmin siparişe \"%s\" bir artış vermiştir."
+
+#: ../EstimateToOrder.php:87
+#, php-format
+msgid ""
+"Estimate \"%s\" is not valid anymore (%d days passed since it was issued)."
+msgstr ""
+"Tahmin \"%s\" bundan sonra geçerli değildir (yayınlandığından beri %d gün "
+"geçmiştir)"
+
+#: ../EstimateToOrder.php:179
+#, php-format
+msgid "Order for estimate number \"%s\""
+msgstr "Tahmini number \"%s\" için sipariş"
+
+#: ../WorkOrder.php:75
+msgid "saved"
+msgstr "kaydedildi"
+
+#: ../WorkOrder.php:80
+msgid "Modified data is no more compatible with work order items.\n"
+msgstr "Değiştirilen veri iş emri öğeleri ile uyumlu değildir.\n"
+
+#: ../WorkOrder.php:81
+msgid "modified"
+msgstr "değiştirildi"
+
+#: ../WorkOrder.php:161
+msgid "Work order data were successfully "
+msgstr "Sipariş emri verisi başarılıydı"
+
+#: ../WorkOrder.php:185
+msgid "Add a work order"
+msgstr "Bir iş emri ekle"
+
+#: ../WorkOrder.php:193 ../WorkOrder.php:247 void:1
+msgid "h."
+msgstr "h."
+
+#: ../WorkOrder.php:195 ../WorkOrder.php:249
+msgid "m."
+msgstr "m."
+
+#: ../WorkOrder.php:204
+msgid "Update work order"
+msgstr "İş emri güncelle"
+
+#: ../InvoiceDetail.php:54
+msgid "Invoice was not found in the database."
+msgstr "Fatura veritabanı içinde bulunamadı."
+
+#: ../ActivatedMovementAddWithPrevision.php:58
+msgid "No movement selected"
+msgstr "İşlem seçilmedi"
+
+#: ../ActivatedMovementAddWithPrevision.php:70
+msgid "Selected movement is locked. "
+msgstr "Seçilen işlem kilitlidir."
+
+#: ../ActivatedMovementAddWithPrevision.php:71
+msgid "Selected movement is already being executed or was executed completely."
+msgstr "Seçilen işlem zaten yapıliyordur ya da tamamıyla bitirilmiştir."
+
+#: ../ActivatedMovementAddWithPrevision.php:73
+msgid "You cannot execute it."
+msgstr "Onu gerçekleştiremezsin."
+
+#: ../ActivatedMovementAddWithPrevision.php:234
+msgid "Execution of an expected movement"
+msgstr "Beklenen bir işlemin yapılması"
+
+#: ../SaisonalityList.php:63
+#, php-format
+msgid "The following seasonalities could not be renewed: %s"
+msgstr "Takip eden mevsimsellik yenilenemez: %s"
+
+#: ../SaisonalityList.php:74
+msgid "Renewal"
+msgstr "Yenileme"
+
+#: ../SaisonalityList.php:82
+msgid "Seasonality"
+msgstr "Mevsimlik"
+
+#: ../SaisonalityList.php:84 void:1
+msgid "Properties"
+msgstr "Özellikler"
+
+#: ../SalesmenCommissionSettings.php:70
+msgid "Commission percent by invoice"
+msgstr "Faturaya göre komisyon oranı"
+
+#: ../CommandDelete.php:57
+msgid "Order was not found in the database."
+msgstr "Sipariş bu veritabanı içinde bulunamadı."
+
+#: ../CommandDelete.php:62
+msgid "You cannot delete an estimate that is linked to an order"
+msgstr "Bir siparişe bağlı tahmini silemezsin"
+
+#: ../CommandDelete.php:67
+msgid "You cannot delete an order which state is different from \"Activated\""
+msgstr "\"Aktiv edilen\" pozisyonunundan farklı bir sipariş silemezsiniz."
+
+#: ../CommandDelete.php:73
+msgid "You cannot delete a closed order."
+msgstr "Kapalı siparişi silemezsiniz."
+
+#: ../CommandDelete.php:80
+#, php-format
+msgid "Are you sure you want to delete %s ?"
+msgstr "Silmek istediğinden eminmisin %s ?"
+
+#: ../CommandDelete.php:81
+msgid "this estimate"
+msgstr "bu tahmin"
+
+#: ../CommandDelete.php:81
+msgid "this order"
+msgstr "bu sipariş"
+
+#: ../CommandDelete.php:97
+msgid ""
+"This order cannot be deleted because one of its task is linked to a document."
+msgstr ""
+"Bu sipariş silinemez çünkü görevlerinden biri bir belgeye bağlanmiştır."
+
+#: ../ProductQuantityByCategoryList.php:145 ../BoardByCategory.php:51
+#: ../ProductHandingByCategoryList.php:52
+#: ../CustomerAttractivityAddEdit.php:139 void:1
+msgid "Select one or more categories"
+msgstr "Bir veya daha fazla kategori seçiniz"
+
+#: ../ProductQuantityByCategoryList.php:147
+msgid "Concerned categories"
+msgstr "İlgili kategoriler"
+
+#: ../ActivatedChainGantt.php:57 ../ActivatedChainGantt.php:67
+msgid "Gantt diagram of a scheduled chain"
+msgstr "Planlanan bir zincirin Gantt diyagramı"
+
+#: ../BoardBySupplier.php:53 ../BoardByCoast.php:51
+msgid "Select one or more suppliers"
+msgstr "Bir veya daha fazla tedarikçi seçiniz"
+
+#: ../BoardBySupplier.php:78 ../BoardByCoast.php:74
+msgid "Only suppliers whose products<br>have already been ordered"
+msgstr "Yalnızca ürünleri<br> sipariş edilen tedarikçiler"
+
+#: ../PaymentCommandList.php:74 ../ToHavePaymentList.php:61
+msgid "Payment number"
+msgstr "Ödeme numarası"
+
+#: ../PaymentCommandList.php:85
+msgid "Invoice(s)"
+msgstr "Fatura(lar)"
+
+#: ../PaymentCommandList.php:107
+#, php-format
+msgid "List of payments for order %s"
+msgstr "Sipariş için ödemelerin listesi %s"
+
+#: ../DocumentReedit.php:57 ../DocumentReedit.php:67
+#: ../../../pwak/trunk/lib/GenericMessages.php:43
+msgid "An error occurred, please try again later."
+msgstr "Bir hata oluştu, lütfen sonra tekrar deneyin."
+
+#: ../InventoryDetailList.php:131
+msgid "Purchase unit price excl. VAT"
+msgstr "KDV hariç satınalma birim fiyatı"
+
+#: ../ContactDelete.php:59
+#, php-format
+msgid "Contact %s cannot be deleted"
+msgstr "%s kontakt personel silinemez."
+
+#: ../ActivatedMovementWithPrevisionExecuteSeveral.php:81
+msgid "Execute several movement"
+msgstr "Birçok faaliyet gerçekleştir"
+
+#: ../SiteAddEdit.php:63
+msgid "Site cannot be saved"
+msgstr "Site kaydedilemiyebilir"
+
+#: ../SiteAddEdit.php:65
+#, php-format
+msgid "Site \"%s\" was successfully saved."
+msgstr "Bölge \"%s\" başarılı bir şekilde kaydedildi."
+
+#: ../SiteAddEdit.php:66
+msgid "Add or update site"
+msgstr "Bölge ekle veya güncelle"
+
+#: ../SiteAddEdit.php:67
+msgid "More than one result match."
+msgstr "Birden daha  fazla sonuç çıktı."
+
+#: ../SiteAddEdit.php:68
+msgid "More than one result match, please select a result:"
+msgstr "Birden daha  fazla sonuç çıktı, lütfen birini seçiniz."
+
+#: ../SiteAddEdit.php:69
+#, php-format
+msgid "A site already exists with the name \"%s\", please correct."
+msgstr "Bu isimle \"%s\" bir yer zaten var, lütfen düzeltiniz."
+
+#: ../SiteAddEdit.php:129
+msgid "Site was not found in the database"
+msgstr "Bölge veritabanı içinde bulunamadı"
+
+#: ../ComponentConcreteProduct.php:113
+msgid "Parts nomenclature reference "
+msgstr "Ürün modeli referans parçaları"
+
+#: ../ComponentConcreteProduct.php:124
+msgid "SN or Lot"
+msgstr "SN veya Lot"
+
+#: ../ComponentConcreteProduct.php:153
+msgid "none"
+msgstr "none"
+
+#: ../CommandUnlock.php:52
+msgid "Selected order must be in locked state."
+msgstr "Seçilen sipariş kilitli durumda olmalıdır."
+
+#: ../CommandUnlock.php:57
+msgid "You cannot unlock a closed order"
+msgstr "Kapalı bir siparişi serbest bırakamazsınız"
+
+#: ../CommandUnlock.php:62
+msgid "Are you sure you want to unlock this order ?"
+msgstr "Bu siparişi serbest bırakmak istediğinizden eminmisiniz?"
+
+#: ../ChainTaskList.php:92 void:1
+msgid "Departure date"
+msgstr "Kalkış tarihi"
+
+#: ../ChainTaskList.php:93 void:1
+msgid "Arrival date"
+msgstr "Varış tarihi"
+
+#: ../ChainTaskList.php:99
+msgid "List of fixed date task or weekly task"
+msgstr "Kesin tarihli görev veya haftalık görev listesi"
+
+#: ../SupplyingOptimization.php:76
+msgid "No order found for last weeks."
+msgstr "Son haftalarda sipariş bulunamadı."
+
+#: ../SupplyingOptimization.php:146
+msgid "No suggested quantity to order for the selected date."
+msgstr "Seçilen tarihde önerilen miktarda sipariş yok. "
+
+#: ../SupplyingOptimization.php:229
+msgid "Number of weeks in history"
+msgstr "Geçmiş haftaların sayısı"
+
+#: ../SupplyingOptimization.php:231
+msgid "Number of weeks of forecast"
+msgstr "Tahmini haftaların sayısı"
+
+#: ../SupplyingOptimization.php:233
+msgid "Default delivery within (days)"
+msgstr "Genel teslimat (gün)"
+
+#: ../SupplyingOptimization.php:236
+msgid "Forecasts with extrapolation"
+msgstr "Geçmiş yıllara ait rakamlara göre tahminler"
+
+#: ../UnavailabilityPlanning.php:45
+msgid "Monthly schedule"
+msgstr "Aylık çizelge"
+
+#: ../UnavailabilityPlanning.php:110
+msgid "Select an operator"
+msgstr "Bir operatör seçiniz"
+
+#: ../UnavailabilityPlanning.php:171
+msgid "Select a customer."
+msgstr "Bir müşteri seçiniz."
+
+#: ../UnavailabilityPlanning.php:201 ../PotentialsEdit.php:54
+msgid "Select a matriculation"
+msgstr "Bir kayıt seçiniz"
+
+#: ../UnavailabilityPlanning.php:408
+msgid "Class - "
+msgstr "Ders - "
+
+#: ../UnavailabilityPlanning.php:410
+msgid "Beginning: "
+msgstr "Başlangıç:"
+
+#: ../UnavailabilityPlanning.php:428 void:1
+msgid "Student"
+msgstr "Öğrenci"
+
+#: ../UnavailabilityPlanning.php:430
+msgid "Class, beginning"
+msgstr "Ders, başlangıç"
+
+#: ../UnavailabilityPlanning.php:431 void:1
+msgid "duration"
+msgstr "süreç"
+
+#: ../UnavailabilityPlanning.php:432
+msgid "airplane: "
+msgstr "uçak:"
+
+#: ../UnavailabilityPlanning.php:463
+#: ../../../pwak/trunk/lib/Search/SearchForm.php:569
+msgid " to "
+msgstr "to"
+
+#: ../UnavailabilityPlanning.php:647
+msgid "previous"
+msgstr "önceki"
+
+#: ../UnavailabilityPlanning.php:653
+msgid "next"
+msgstr "sonraki"
+
+#: ../UnavailabilityPlanning.php:659 void:1
+msgid "Month"
+msgstr "Ay"
+
+#: ../UnavailabilityPlanning.php:666 void:1
+msgid "Week"
+msgstr "Hafta"
+
+#: ../UnavailabilityPlanning.php:673
+msgid "Day"
+msgstr "Gün"
+
+#: ../UnavailabilityPlanning.php:726 ../UnavailabilityPlanning.php:730
+msgid "List of unavailabilities"
+msgstr "Mevcut olmayanların listesi"
+
+#: ../UnavailabilityPlanning.php:726
+msgid " for "
+msgstr "için"
+
+#: ../FlowTypeDuplicate.php:82
+msgid "Expenses and receipts model copy"
+msgstr "Gelir ve giderlerin örnek kopyası"
+
+#: ../Download.php:82 void:1
+msgid "Onlogistics download zone"
+msgstr "Onlogistics yükleme yeri"
+
+#: ../WorkOrderList.php:76 void:1
+msgid "Work order name"
+msgstr "Sipariş emri ismi"
+
+#: ../WorkOrderList.php:147
+msgid "Assign selected items"
+msgstr "Seçili öğeleri belirle"
+
+#: ../WorkOrderList.php:203 ../WorkOrderList.php:209
+msgid "Work order management"
+msgstr "Sipariş emri yönetimi"
+
+#: ../ChainActivationTaskDetail.php:77
+msgid "Chain to activate"
+msgstr "Aftiv edilecek zincir "
+
+#: ../ChainActivationTaskDetail.php:91 void:1
+msgid "task beginning date/time"
+msgstr "görev baslangıç tarihi/zamanı"
+
+#: ../ChainActivationTaskDetail.php:92 void:1
+msgid "task end date/time"
+msgstr "görev bitiş tarihi/zamanı"
+
+#: ../ChainActivationTaskDetail.php:93 void:1
+msgid "Deadline date"
+msgstr "Sürenin bitiş tarihi"
+
+#: ../ChainActivationTaskDetail.php:101
+msgid "Components"
+msgstr "Bileşenler"
+
+#: ../ChainActivationTaskDetail.php:110
+msgid "Take into account volume of nomenclature"
+msgstr "Terimlendirme yoğunluğunu göz önüne alma"
+
+#: ../PackingListEdit.php:44
+msgid "An error occurred, packing list could not be printed."
+msgstr "Bir hata oluştu, paketleme listesi yazdırılamadı."
 
 #: ../FormModelList.php:57
 msgid "List of form models"
@@ -11431,7 +11442,7 @@ msgid "A credit note exists with the same number, please correct."
 msgstr "Aynı numarayla bir kredi notu vardır, lütfen düzeltiniz."
 
 #: ../DocumentModelList.php:58
-#: ../../../pwak/trunk/lib/Crud/GenericGrid.php:811
+#: ../../../pwak/trunk/lib/Crud/GenericGrid.php:810
 #: ../../../pwak/trunk/lib/GenericMessages.php:90 void:1
 msgid "Yes"
 msgstr "Evet"
@@ -12091,6 +12102,10 @@ msgstr "Etkili olan işlemlerin listesi"
 #: ../WorkOrderOpeTaskDelete.php:54
 msgid "You are not allowed to modify this work order."
 msgstr "Bu iş emrini değiştirmeye izniniz yok."
+
+#: ../BoxLabelEdit.php:54
+msgid "No regrouping found for selected order"
+msgstr ""
 
 #: ../../../pwak/trunk/lib/Grid/Actions/Renderers/GridActionRendererSelectForSingleSelection.php:43
 msgid "For selected item: "
@@ -15807,6 +15822,33 @@ msgstr "fransızca"
 #: void:1
 msgid "english"
 msgstr "ingilizce"
+
+#~ msgid "Manage alerts"
+#~ msgstr "Uyarıları düzenle"
+
+#~ msgid "Available sites"
+#~ msgstr "Mevcut bölgeler"
+
+#~ msgid "Allowed sites"
+#~ msgstr "İzin verilen bölgeler"
+
+#~ msgid "Update alert settings for user"
+#~ msgstr "Kullanıcı için alarm ayarlarını güncelle"
+
+#~ msgid "Alerts were successfully modified for user \"%s\"."
+#~ msgstr "Kulanıcı \"%s\" için alarm başarıyla değiştirildi."
+
+#~ msgid "User \"%s\" was configured to receive no alerts."
+#~ msgstr "Kullanıcı \"%s\" hiçbir alarm kabul etmemek için yapılandırıldı."
+
+#~ msgid "User \"%s\" was configured to receive alert \"%s\""
+#~ msgstr "Kullanıcı \"%s\" \"%s\" alarmı kabul etmek icin yapılandırıldı"
+
+#~ msgid "User \"%s\" was configured to receive the following alerts: %s"
+#~ msgstr "Kullanıcı \"%s\" bu alarmı: \"%s\" kabul etmek için yapılandırıldı "
+
+#~ msgid "Print packing list"
+#~ msgstr "Paketleme listesini yazdır"
 
 #~ msgid "Only customers who placed<br/>at least an order"
 #~ msgstr "En az bir sipariş veren<br/> müşteriler"

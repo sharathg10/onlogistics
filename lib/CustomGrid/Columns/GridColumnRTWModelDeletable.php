@@ -27,26 +27,23 @@
  * @author    ATEOR dev team <dev@ateor.com>
  * @copyright 2003-2008 ATEOR <contact@ateor.com> 
  * @license   http://www.fsf.org/licensing/licenses/agpl-3.0.html GNU AGPL
- * @version   SVN: $Id$
+ * @version   SVN: $Id: GridColumnProductCommandPriceWithDiscount.php 9 2008-06-06 09:12:09Z izimobil $
  * @link      http://www.onlogistics.org
  * @link      http://onlogistics.googlecode.com
  * @since     File available since release 0.1.0
  * @filesource
  */
 
-class UserAccountGrid extends GenericGrid {
-    // UserAccountGrid::getGridFilter() {{{
-    /**
-     * Méthode à surcharger dans les classes filles.
-     * Retourne un tableau de FilterComponent
-     *
-     * @access protected
-     * @return mixed array of FilterComponent
-     */
-    protected function getGridFilter() {
-        return array(
-            SearchTools::NewFilterComponent('Login','','NotEquals','ecustomer',1));
+class GridColumnRTWModelDeletable extends AbstractGridColumn
+{
+
+    public function render($object) {
+        try {
+            return $object->canBeDeleted() ? A_YES : A_NO;
+        } catch (Exception $exc) {
+            return A_NO;
+        }
     }
-    // }}}
 }
+
 ?>

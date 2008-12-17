@@ -153,6 +153,22 @@ if (in_array('readytowear', $tradeContext)) {
             'Operator'=>'In'
         )
     );
+    $customArray['Material3'] = array(
+        'Name'=>'Material3',
+        'Type'=>'select',
+        'Params'=> array(
+            SearchTools::createArrayIDFromCollection(
+                'RTWMaterial',
+                array('MaterialType' => RTWMaterial::TYPE_RAW_MATERIAL),
+                _('Select one or more items')
+            ),
+            'multiple, size="6"'
+        ),
+        'SearchOptions'=>array(
+            'Path'=>'Model.Material3.Id',
+            'Operator'=>'In'
+        )
+    );
     $customArray['Accessory1'] = array(
         'Name'=>'Accessory1',
         'Type'=>'select',
@@ -185,6 +201,22 @@ if (in_array('readytowear', $tradeContext)) {
             'Operator'=>'In'
         )
     );
+    $customArray['Accessory3'] = array(
+        'Name'=>'Accessory3',
+        'Type'=>'select',
+        'Params'=> array(
+            SearchTools::createArrayIDFromCollection(
+                'RTWMaterial',
+                array('MaterialType' => RTWMaterial::TYPE_ACCESSORY),
+                _('Select one or more items')
+            ),
+            'multiple, size="6"'
+        ),
+        'SearchOptions'=>array(
+            'Path'=>'Model.Accessory3.Id',
+            'Operator'=>'In'
+        )
+    );
 }
 $res = $catalog->buildSearchForm($form, array(), $customArray);
 if (false == $res) {
@@ -201,7 +233,7 @@ $form->addAction(array('URL'=>'ProductAddEdit.php?returnURL=ProductList.php'));
 if (true === $form->displayGrid()) {
     if (in_array('readytowear', $tradeContext)) {
         $rtwProductProperties = array('PressName', 'Material1', 'Material2',
-            'Accessory1', 'Accessory2');
+            'Material3', 'Accessory1', 'Accessory2', 'Accessory3');
         foreach ($rtwProductProperties as $prop) {
             if (SearchTools::requestOrSessionExist($prop, array(0=>'##'), 'NotEquals')) {
                 $form->entity = 'RTWProduct';

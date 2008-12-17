@@ -2442,7 +2442,7 @@ class PackingListGenerator extends DocumentGenerator
     }
 
     // }}}
-    // PackingListGenerator::render() {{{
+    // PackingListGenerator::renderAddressesBloc() {{{
 
     /**
      * Donnees a afficher dans toutes les pages, juste en dessous du header
@@ -4116,32 +4116,32 @@ class WorksheetGenerator extends DocumentGenerator
         $this->pdf->Ln();
         $this->pdf->addText(
             _('Worksheet') . ' ' . $this->model->toString(),
-            array('fontSize'=>14, 'lineHeight'=>8)
+            array('fontSize'=>13, 'lineHeight'=>6)
         );
         $this->pdf->Ln(50);
         $this->pdf->addText(
             _('Date') . ': ' . I18N::formatDate(time(), I18N::DATE_LONG),
-            array('fontSize'=>12, 'lineHeight'=>5)
+            array('fontSize'=>10, 'lineHeight'=>4)
         );
         if ($this->model->getSeason() instanceof RTWSeason) {
             $this->pdf->addText(
                 _('Season') . ': ' . $this->model->getSeason()->toString(),
-                array('fontSize'=>12, 'lineHeight'=>5)
+                array('fontSize'=>10, 'lineHeight'=>4)
             );
         }
         if ($this->model->getManufacturer() instanceof Actor) {
             $this->pdf->addText(
                 _('Manufacturer') . ': ' . $this->model->getManufacturer()->toString(),
-                array('fontSize'=>12, 'lineHeight'=>5)
+                array('fontSize'=>10, 'lineHeight'=>4)
             );
         }
         $this->pdf->addText(
             _('Style number') . ': ' . $this->model->getStyleNumber(),
-            array('fontSize'=>12, 'lineHeight'=>5)
+            array('fontSize'=>10, 'lineHeight'=>4)
         );
         $this->pdf->addText(
             _('Description') . ': ' . $this->model->getDescription(),
-            array('fontSize'=>12, 'lineHeight'=>5)
+            array('fontSize'=>10, 'lineHeight'=>4)
         );
         $this->pdf->Ln();
         $items = array(
@@ -4155,7 +4155,7 @@ class WorksheetGenerator extends DocumentGenerator
                 $this->pdf->tableHeader(array(
                     $v => 35, 
                     $this->model->$getter()->toString() => 155),
-                0);
+                    0, 1, array('fontSize' => 8));
             }
         }
         $items = $this->model->getMaterialProperties();
@@ -4181,25 +4181,26 @@ class WorksheetGenerator extends DocumentGenerator
                 $value = _('N/A');
                 $qty   =  '';
             }
-            $this->pdf->tableHeader(array($label => 35, $value => 130, (string)$qty => 25), 0);
+            $this->pdf->tableHeader(array($label => 35, $value => 130, (string)$qty => 25),
+                0, 1, array('fontSize' => 8));
         }
         if ($this->model->getLabel() instanceof RTWLabel) {
             $this->pdf->tableHeader(array(
                 _('Label (griffe)') => 35, 
                 $this->model->getLabel()->toString() => 155),
-            0);
+                0, 1, array('fontSize' => 8));
         }
         $sizes = $this->model->getSizeCollection();
         if (count($sizes) > 0) {
             $this->pdf->tableHeader(array(
                 _('Available sizes') => 35,
                 implode(', ', array_values($sizes->toArray())) => 155), 
-            0);
+                0, 1, array('fontSize' => 8));
         }
         $this->pdf->tableHeader(array(
             _('Observations') => 35,
             $this->model->getComment() => 155), 
-        0);
+            0, 1, array('fontSize' => 8));
     }
 
     // }}}
@@ -4339,13 +4340,15 @@ class LookbookGenerator extends WorksheetGenerator
         if (count($products) > 0) {
             $product = $products->getItem(0);
             $this->pdf->tableHeader(array(
-                _('Style number')      => 24,
-                _('Material 1')        => 31,
-                _('Material 2')        => 31,
-                _('Accessory 1')       => 28,
-                _('Accessory 2')       => 28,
-                _('Price')             => 24,
-                _('Recommended price') => 24
+                _('Style number')      => 18,
+                _('Material 1')        => 24,
+                _('Material 2')        => 24,
+                _('Material 3')        => 24,
+                _('Accessory 1')       => 24,
+                _('Accessory 2')       => 24,
+                _('Accessory 3')       => 24,
+                _('Price')             => 14,
+                _('Recommended price') => 14
             ), 0);
             $pbcCol = $product->getPriceByCurrencyCollection(array(
                 'PricingZone' => $this->zoneId
@@ -4368,21 +4371,437 @@ class LookbookGenerator extends WorksheetGenerator
                 $m->getCommercialNameAndColor() : '';
             $mat2 = ($m = $this->model->getMaterial2()) instanceof RTWMaterial ?
                 $m->getCommercialNameAndColor() : '';
+            $mat3 = ($m = $this->model->getMaterial3()) instanceof RTWMaterial ?
+                $m->getCommercialNameAndColor() : '';
             $acc1 = ($m = $this->model->getAccessory1()) instanceof RTWMaterial ?
                 $m->getCommercialNameAndColor() : '';
             $acc2 = ($m = $this->model->getAccessory2()) instanceof RTWMaterial ?
+                $m->getCommercialNameAndColor() : '';
+            $acc3 = ($m = $this->model->getAccessory3()) instanceof RTWMaterial ?
                 $m->getCommercialNameAndColor() : '';
 
             $this->pdf->tableBody(array(0 => array(
                 $this->model->getStyleNumber(),
                 $mat1,
                 $mat2,
+                $mat3,
                 $acc1,
                 $acc2,
+                $acc3,
                 $price,
                 $rprice
             )));
         }
+    }
+
+    // }}}
+}
+
+// }}}
+// ProductLabelGenerator {{{
+
+/**
+ * ProductLabelGenerator.
+ * Classe utilisée pour les fiches techniques.
+ *
+ */
+class ProductLabelGenerator extends DocumentGenerator
+{
+    // __construct() {{{
+
+    /**
+     * Constructor
+     *
+     * @access protected
+     */
+    public function __construct($productInfo) {
+        // doc fictif car on ne sauve pas ces fiches suiveuses
+        $document = new AbstractDocument();
+        $cur = false; // pas important ici...
+        parent::__construct($document, false, false, $cur, '');
+        $this->pdf->showExpeditor   = false;
+        $this->pdf->showPageNumbers = false;
+        $this->pdf->showEditionDate = false;
+        $this->pdf->setAutoPageBreak(true, 0);
+        $this->productInfo = $productInfo;
+    }
+
+    // }}}
+    // ProductLabelGenerator::render() {{{
+
+    /**
+     * Construit le doc pdf
+     *
+     * @access public
+     * @return void
+     */
+    public function render() {
+        $i = 0;
+        $cache = array();
+        foreach ($this->productInfo as $array) {
+            list($product, $qty) = $array;
+            for ($j=0; $j<$qty; $j++) {
+                if ($i == 0 || !($i % 12)) {
+                    $x = 2;
+                    $y  = 4;
+                    $newPage = true;
+                    $this->pdf->addPage();
+                } else {
+                    $newPage = false;
+                }
+                if ($i % 2 == 0) {
+                    $x = 2;
+                    if (!$newPage) {
+                        $y += 48;
+                    }
+                } else {
+                    $x = 107;
+                }
+                $i++;
+                if (($model = $product->getModel()) instanceof RTWModel) {
+                    $mid = $model->getId();
+                    if (!isset($cache[$mid])) {
+                        $cache[$mid] = array();
+                        // image du produit
+                        $infos = ImageManager::getFileInfo(md5($model->getImage()));
+                        if ($infos['width'] > $infos['height']) {
+                            $cache[$mid]['w'] = 40;
+                            $cache[$mid]['h'] = 0;
+                        } else {
+                            $cache[$mid]['w'] = 0;
+                            $cache[$mid]['h'] = 40;
+                        }
+                        if (is_array($infos) && !empty($infos['data'])) {
+                            list(,$type) = explode('/', $infos['mimetype']);
+                            $cache[$mid]['type'] = $type;
+                            $cache[$mid]['data'] = $infos['data'];
+                        }
+                        // style number
+                        $cache[$mid]['pressname'] = $model->getPressName()->toString();
+                    }
+                    $this->pdf->setXY($x, $y);
+                    $this->pdf->image($cache[$mid]['data'], $x, $y,
+                        $cache[$mid]['w'], $cache[$mid]['h'], $cache[$mid]['type']);
+                    $this->pdf->setXY($x+50, $y);
+                    $this->pdf->addText(
+                        $cache[$mid]['pressname'],
+                        array('fontSize' => 10, 'lineHeight' => 4)
+                    );
+                }
+                $this->pdf->setXY($x+86, $y);
+                if (($size = $product->getSize()) instanceof RTWSize) {
+                    // taille
+                    $this->pdf->addText(
+                        $size->getName(),
+                        array('fontSize' => 12, 'lineHeight' => 4, 'fontStyle' => 'B')
+                    );
+                }
+                $this->pdf->setXY($x+50, $y+5);
+                // reference
+                $this->pdf->addText(
+                    $product->getBaseReference(),
+                    array('fontSize' => 8, 'lineHeight' => 4)
+                );
+                // code barre
+                $this->pdf->Code128($x+50, $y+10, $product->getBaseReference(), 50, 10);
+                $this->pdf->setXY($x, $y+37);
+                $this->pdf->addText(
+                    $product->getName(),
+                    array('fontSize' => 8, 'lineHeight' => 4, 'width' => 105, 'align' => 'C')
+                );
+            }
+        }
+        return $this->pdf;
+    }
+
+    // }}}
+    // ProductLabelGenerator::_renderContent() {{{
+
+    /**
+     * Tableau 'principal'
+     * @access protected
+     * @return void
+     */
+    protected function _renderContent() {
+        $this->pdf->Ln();
+        $this->pdf->addText(
+            _('Worksheet') . ' ' . $this->model->toString(),
+            array('fontSize'=>14, 'lineHeight'=>8)
+        );
+        $this->pdf->Ln(50);
+        $this->pdf->addText(
+            _('Date') . ': ' . I18N::formatDate(time(), I18N::DATE_LONG),
+            array('fontSize'=>12, 'lineHeight'=>5)
+        );
+        if ($this->model->getSeason() instanceof RTWSeason) {
+            $this->pdf->addText(
+                _('Season') . ': ' . $this->model->getSeason()->toString(),
+                array('fontSize'=>12, 'lineHeight'=>5)
+            );
+        }
+        if ($this->model->getManufacturer() instanceof Actor) {
+            $this->pdf->addText(
+                _('Manufacturer') . ': ' . $this->model->getManufacturer()->toString(),
+                array('fontSize'=>12, 'lineHeight'=>5)
+            );
+        }
+        $this->pdf->addText(
+            _('Style number') . ': ' . $this->model->getStyleNumber(),
+            array('fontSize'=>12, 'lineHeight'=>5)
+        );
+        $this->pdf->addText(
+            _('Description') . ': ' . $this->model->getDescription(),
+            array('fontSize'=>12, 'lineHeight'=>5)
+        );
+        $this->pdf->Ln();
+        $items = array(
+            'ConstructionType' => _('Construction type'),
+            'ConstructionCode' => _('Construction code'),
+            'Shape'            => _('Shape'),
+        );
+        foreach ($items as $k => $v) {
+            $getter = 'get' . $k;
+            if (is_object($this->model->$getter()) && !($this->model->$getter() instanceof Exception)) {
+                $this->pdf->tableHeader(array(
+                    $v => 35, 
+                    $this->model->$getter()->toString() => 155),
+                0);
+            }
+        }
+        $items = $this->model->getMaterialProperties();
+        $products = $this->model->getRTWProductCollection();
+        foreach ($items as $attrName => $label) {
+            $getter = 'get' . $attrName;
+            $mat    = $this->model->$getter();
+            if ($mat instanceof RTWMaterial) {
+                $value = $mat->toString();
+                $qtyGetter = 'get' . $attrName . 'Quantity';
+                $qty = method_exists($this->model, $qtyGetter) ? $this->model->$qtyGetter() : '';
+                $unitType = $mat->getBuyUnitType();
+                if ($unitType instanceof SellUnitType) {
+                    /*
+                    $unitQty = $mat->getBuyUnitQuantity();
+                    if (is_numeric($qty) && $unitQty > 0) {
+                        $qty *= $unitQty;
+                    }
+                    */
+                    $qty .= ' ' . $unitType->getShortName();
+                }
+            } else {
+                $value = _('N/A');
+                $qty   =  '';
+            }
+            $this->pdf->tableHeader(array($label => 35, $value => 130, (string)$qty => 25), 0);
+        }
+        if ($this->model->getLabel() instanceof RTWLabel) {
+            $this->pdf->tableHeader(array(
+                _('Label (griffe)') => 35, 
+                $this->model->getLabel()->toString() => 155),
+            0);
+        }
+        $sizes = $this->model->getSizeCollection();
+        if (count($sizes) > 0) {
+            $this->pdf->tableHeader(array(
+                _('Available sizes') => 35,
+                implode(', ', array_values($sizes->toArray())) => 155), 
+            0);
+        }
+        $this->pdf->tableHeader(array(
+            _('Observations') => 35,
+            $this->model->getComment() => 155), 
+        0);
+    }
+
+    // }}}
+}
+
+// }}}
+// BoxLabelGenerator {{{
+
+/**
+ * ProductLabelGenerator.
+ * Classe utilisée pour les fiches techniques.
+ *
+ */
+class BoxLabelGenerator extends DocumentGenerator
+{
+    // __construct() {{{
+
+    /**
+     * Constructor
+     *
+     * @access protected
+     */
+    public function __construct($boxCollection) {
+        // doc fictif car on ne sauve pas ces fiches suiveuses
+        $document = new AbstractDocument();
+        $cur = false; // pas important ici...
+        parent::__construct($document, false, false, $cur, '');
+        $this->pdf->showExpeditor   = false;
+        $this->pdf->showPageNumbers = false;
+        $this->pdf->showEditionDate = false;
+        $this->pdf->setAutoPageBreak(true, 0);
+        $this->boxCollection = $boxCollection;
+    }
+
+    // }}}
+    // ProductLabelGenerator::render() {{{
+
+    /**
+     * Construit le doc pdf
+     *
+     * @access public
+     * @return void
+     */
+    public function render() {
+        $i = 0;
+        $cache = array();
+        foreach ($this->boxCollection as $box) {
+            $x = 4;
+            if ($i % 2 == 0) {
+                $this->pdf->addPage();
+                $y = 2;
+            } else {
+                $y = 150;
+            }
+            $i++;
+            
+            $data  = $box->getDataForLabel();
+            $exp   = $data['expeditor'];
+            $expId = $exp->getId();
+            if (($logo = $exp->getLogo()) != '') {
+                if (!isset($cache[$expId])) {
+                    $cache[$expId] = base64_decode($logo);
+                }
+                $this->pdf->image($cache[$expId], $x, $y, 0, 17, 'png');
+            }
+            $this->pdf->setXY($x, $y+20);
+
+            if ($data['expeditorSite'] instanceof Site) {
+                $str  = $data['expeditorSite']->getFormatAddressInfos(" - ");
+                if (($phone = $data['expeditorSite']->getPhone()) != '') {
+                    $str .= ' - ' . _('Phone') . ': ' . $phone;
+                }
+                if (($email = $data['expeditorSite']->getEmail()) != '') {
+                    $str .= ' - ' . _('Email') . ': ' . $email;
+                }
+                $this->pdf->addText(
+                    $str,
+                    array('fontSize' => 8, 'lineHeight' => 3)
+                );
+                $this->pdf->ln(7);
+            }
+
+            if ($data['destinatorSite'] instanceof Site) {
+                $str = _('Customer') . ":\n\n"
+                 . $data['destinatorSite']->getName() . "\n" 
+                 . $data['destinatorSite']->getFormatAddressInfos("\n");
+                if (($phone = $data['destinatorSite']->getPhone()) != '') {
+                    $str .= "\n" . _('Phone') . ': ' . $phone;
+                }
+                if (($email = $data['destinatorSite']->getEmail()) != '') {
+                    $str .= "\n" . _('Email') . ': ' . $email;
+                }
+                $this->pdf->addText(
+                    $str,
+                    array('fontSize' => 10, 'lineHeight' => 4, 'border' => 1, 'width'=>100)
+                );
+            }
+            $this->pdf->setXY($x+160, $y+5);
+            if (($coverType = $box->getCoverType()) instanceof Covertype) {
+                $this->pdf->addText(
+                    $coverType->toString() . ' (' . $i . '/' . count($this->boxCollection) . ')',
+                    array('fontSize' => 10, 'lineHeight' => 6)
+                );
+            }
+            $this->pdf->Code128($x+120, $y+35, $data['reference'], 50, 15);
+            $this->pdf->setXY($x+120, $y+50);
+            $this->pdf->addText(
+                $data['reference'],
+                array('fontSize' => 10, 'lineHeight' => 6)
+            );
+            $headers = array(
+                _('Order number') => 50,
+                _('Reference') => 50,
+                _('Construction code') => 45,
+                _('Size') => 25,
+                _('Quantity') => 20,
+            );
+            $this->pdf->ln(13);
+            $this->pdf->tableHeader($headers);
+            foreach ($data['children'] as $itemData) {
+                $this->pdf->tableBody(array(0 => array(
+                    Tools::getValueFromMacro($itemData['cmi'], '%Command.CommandNo%'),
+                    Tools::getValueFromMacro($itemData['cmi'], '%Product.BaseReference%'),
+                    Tools::getValueFromMacro($itemData['cmi'], '%Product.Model.ConstructionCode%'),
+                    Tools::getValueFromMacro($itemData['cmi'], '%Product.Size%'),
+                    $itemData['quantity'],
+                )));
+            }
+            $this->pdf->ln(3);
+            $this->pdf->addText(
+                _('Made in CE'),
+                array('fontSize' => 10, 'lineHeight' => 6, 'align' => 'R')
+            );
+            /*
+            $this->pdf->addText(
+                    $cache[$mid]['pressname'],
+                    array('fontSize' => 10, 'lineHeight' => 4)
+                    );
+                if (($model = $product->getModel()) instanceof RTWModel) {
+                    $mid = $model->getId();
+                    if (!isset($cache[$mid])) {
+                        $cache[$mid] = array();
+                        // image du produit
+                        $infos = ImageManager::getFileInfo(md5($model->getImage()));
+                        if ($infos['width'] > $infos['height']) {
+                            $cache[$mid]['w'] = 40;
+                            $cache[$mid]['h'] = 0;
+                        } else {
+                            $cache[$mid]['w'] = 0;
+                            $cache[$mid]['h'] = 40;
+                        }
+                        if (is_array($infos) && !empty($infos['data'])) {
+                            list(,$type) = explode('/', $infos['mimetype']);
+                            $cache[$mid]['type'] = $type;
+                            $cache[$mid]['data'] = $infos['data'];
+                        }
+                        // style number
+                        $cache[$mid]['pressname'] = $model->getPressName()->toString();
+                    }
+                    $this->pdf->setXY($x, $y);
+                    $this->pdf->image($cache[$mid]['data'], $x, $y,
+                        $cache[$mid]['w'], $cache[$mid]['h'], $cache[$mid]['type']);
+                    $this->pdf->setXY($x+50, $y);
+                    $this->pdf->addText(
+                        $cache[$mid]['pressname'],
+                        array('fontSize' => 10, 'lineHeight' => 4)
+                    );
+                }
+                $this->pdf->setXY($x+86, $y);
+                if (($size = $product->getSize()) instanceof RTWSize) {
+                    // taille
+                    $this->pdf->addText(
+                        $size->getName(),
+                        array('fontSize' => 12, 'lineHeight' => 4, 'fontStyle' => 'B')
+                    );
+                }
+                $this->pdf->setXY($x+50, $y+5);
+                // reference
+                $this->pdf->addText(
+                    $product->getBaseReference(),
+                    array('fontSize' => 8, 'lineHeight' => 4)
+                );
+                // code barre
+                $this->pdf->Code128($x+50, $y+10, $product->getBaseReference(), 50, 10);
+                $this->pdf->setXY($x, $y+37);
+                $this->pdf->addText(
+                    $product->getName(),
+                    array('fontSize' => 8, 'lineHeight' => 4, 'width' => 105, 'align' => 'C')
+                );
+             */
+        }
+        return $this->pdf;
     }
 
     // }}}

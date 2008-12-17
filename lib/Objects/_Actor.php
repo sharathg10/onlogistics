@@ -2348,6 +2348,12 @@ class _Actor extends Object {
                 'ondelete'      => 'cascade',
                 'multiplicity'  => 'onetomany'
             ),
+            'SupplierCustomer_2'=>array(
+                'linkClass'     => 'SupplierCustomer',
+                'field'         => 'Factor',
+                'ondelete'      => 'nullify',
+                'multiplicity'  => 'onetomany'
+            ),
             'UploadedDocument'=>array(
                 'linkClass'     => 'UploadedDocument',
                 'field'         => 'Customer',

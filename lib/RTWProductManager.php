@@ -153,7 +153,8 @@ class RTWProductManager extends RTWManager
         foreach ($attributes as $attrName => $label) {
             $getter = 'get' . $attrName;
         	$pdt = $model->$getter();
-        	if ($pdt instanceof Product) {
+            $getterNom = 'get' . $attrName . 'Nomenclature';
+        	if ($model->$getterNom() && $pdt instanceof Product) {
                 $qtyGetter = 'get' . $attrName . 'Quantity';
         	    $compt = new Component();
         		$compt->setNomenclature($nomenclature);

@@ -427,6 +427,15 @@ $topList = FormTools::writeOptionsFromObject(
     array('Name' => SORT_ASC)
 );
 $smarty->assign('TermsOfPaymentList', join("\n\t\t", $topList));
+
+$factorList = FormTools::writeOptionsFromObject(
+    'Supplier',
+    $_SESSION['supplierCustomer']->getFactorId(),
+    array(),
+    array('Name' => SORT_ASC)
+);
+$smarty->assign('FactorList', join("\n\t\t", $factorList));
+
 $supplier = $_SESSION['supplierCustomer']->getSupplier();
 // soumis à la TVA ?
 $hasTVA = $_SESSION['supplierCustomer']->getHasTVA();

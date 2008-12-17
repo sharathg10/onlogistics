@@ -741,6 +741,14 @@ class CommandManager{
                     $currency->getShortName()));
             }
         }
+
+        if (!$this->isEstimate && $this->productCommandType == Command::TYPE_CUSTOMER) {
+            $tp = $sc->getTermsOfPayment();
+            if ($tp->hasPrePayment()) {
+                $command->blockDeblock(1, false);
+            }
+        }
+
         $command->save();
 
         // active les processus fils uniquement si ce n'est pas un devis

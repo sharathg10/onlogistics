@@ -330,7 +330,7 @@ class RTWModelGrid extends GenericGrid
             'Caption' => _('Print worksheet'),
             'TargetPopup' => true,
             'URL' => 'WorksheetEdit.php?retURL='.$_SERVER['PHP_SELF'],
-            'TransmitedArrayName' => 'modelIDs'
+            'TransmitedArrayName' => 'modelIds'
         ));
     }
 

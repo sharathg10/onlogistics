@@ -693,13 +693,15 @@
      * @param integer $block : 1 pour bloquer (par defaut), et 0 pour debloquer
      * @return void
      */
-    function BlockDeblock($block=1) {
+    function BlockDeblock($block=1, $useTransaction=true) {
         require_once('Objects/Command.const.php');
         require_once('Objects/ActivatedMovement.php');
         require_once('Objects/Task.const.php');
 
         /*  Ouverture de la transaction  */
-        Database::connection()->startTrans();
+        if ($useTransaction) {
+            Database::connection()->startTrans();
+        }
 
         if ($block == 1) {
             $this->setState(Command::BLOCAGE_CDE);
@@ -751,12 +753,14 @@
             }
         }
 
-        if (Database::connection()->HasFailedTrans()) {
-            Database::connection()->rollbackTrans();
-            Template::errorDialog(E_MSG_TRY_AGAIN, 'CommandList.php');
+        if ($useTransaction) {
+            if (Database::connection()->HasFailedTrans()) {
+                Database::connection()->rollbackTrans();
+                Template::errorDialog(E_MSG_TRY_AGAIN, 'CommandList.php');
+            }
+            /*  Commit de la transaction  */
+            Database::connection()->completeTrans();
         }
-        /*  Commit de la transaction  */
-        Database::connection()->completeTrans();
     }
 
     // }}}

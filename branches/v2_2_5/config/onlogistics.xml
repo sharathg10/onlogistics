@@ -2649,6 +2649,7 @@
         <property type="bool" name="HasTvaSurtax" default="0" />
         <property type="bool" name="HasFodecTax" default="0" />
         <property type="bool" name="HasTaxStamp" default="0" />
+        <property type="foreignkey" name="Factor" class="Actor" />
         <property type="manytomany" name="DocumentModel" class="DocumentModel"
             field="FromSupplierCustomer" linktable="spcDocumentModel"
             linkfield="ToDocumentModel"/>
@@ -2694,6 +2695,8 @@
         </property>
         <property type="const" name="PaymentEvent" default="0" required="1"
             usedby="grid,searchform,addedit" label="Event">
+            <const name="BEFORE_ORDER" label="Before order" value="3" />
+            <const name="BEFORE_DELIVERY" label="Before delivery" value="4" />
             <const name="ORDER" label="Order" value="5" />
             <const name="DELIVERY" label="Delivery" value="6" />
         </property>
@@ -2706,6 +2709,7 @@
             <const name="TRANSFER" label="Transfer" value="4"/>
             <const name="ASSETS" label="Assets" value="5"/>
             <const name="PROMISSORY_NOTE" label="Promissory note" value="6"/>
+            <const name="BACKDATED_CHECK" label="Backdated check" value="7"/>
         </property>
         <property type="foreignkey" name="Supplier" class="Supplier" />
         <property type="foreignkey" name="TermsOfPayment"
@@ -2856,9 +2860,13 @@
         <property type="foreignkey" name="SupplierCatalog" class="Catalog"
             usedby="addedit" label="Supplier catalogue" section="User account data"/>
         <property type="decimal" name="CommissionPercent" default="0" />
+        <property type="manytomany" name="Alert" class="Alert"
+            field="ToUserAccount" linktable="alertUserAccount"
+            linkfield="FromAlert" section="Alerts"
+            label="Alerts" usedby="addedit" />
         <property type="manytomany" name="Site" class="Site"
             field="ToUserAccount" linktable="siteUserAccount"
-            linkfield="FromSite" section="User account data"
+            linkfield="FromSite" section="Sites"
             label="Sites" usedby="addedit" />
         <property type="manytomany" name="ChainTask" class="ChainTask"
             field="ToUserAccount" linktable="chtUserAccount"
@@ -2866,9 +2874,6 @@
         <property type="manytomany" name="ActivatedChainTask"
             class="ActivatedChainTask" field="ToUserAccount"
             linktable="ackUserAccount" linkfield="FromActivatedChainTask" />
-        <property type="manytomany" name="Alert" class="Alert"
-            field="ToUserAccount" linktable="alertUserAccount"
-            linkfield="FromAlert" />
     </entity>
 
     <!-- entity WeeklyInstant -->
@@ -2981,76 +2986,103 @@
             class="RTWMaterial" usedby="addedit" />
         <property type="decimal" length="10,3" name="HeelReferenceQuantity" 
             label="Heel reference quantity" usedby="addedit" />
+        <property type="bool" default="1" name="HeelReferenceNomenclature"/>
 
         <property type="foreignkey" name="Sole" label="Sole"
             class="RTWMaterial" usedby="addedit" />
         <property type="decimal" length="10,3" name="SoleQuantity" 
             label="Sole quantity" usedby="addedit" />
+        <property type="bool" default="1" name="SoleNomenclature"/>
 
         <property type="foreignkey" name="Box" label="Box"
             class="RTWMaterial" usedby="addedit" />
         <property type="decimal" length="10,3" name="BoxQuantity" 
             label="Box quantity" usedby="addedit" />
+        <property type="bool" default="1" name="BoxNomenclature"/>
 
         <property type="foreignkey" name="HandBag" label="Hand bag"
             class="RTWMaterial" usedby="addedit" />
         <property type="decimal" length="10,3" name="HandBagQuantity" 
             label="Hand bag quantity" usedby="addedit" />
+        <property type="bool" default="1" name="HandBagNomenclature"/>
 
         <property type="foreignkey" name="Material1" label="Material 1"
             class="RTWMaterial" usedby="addedit,grid,searchform" />
         <property type="decimal" length="10,3" name="Material1Quantity" 
             label="Material 1 quantity" usedby="addedit" />
+        <property type="bool" default="1" name="Material1Nomenclature"/>
 
         <property type="foreignkey" name="Material2" label="Material 2"
             class="RTWMaterial" usedby="addedit,grid,searchform" />
         <property type="decimal" length="10,3" name="Material2Quantity" 
             label="Material 2 quantity" usedby="addedit" />
+        <property type="bool" default="1" name="Material2Nomenclature"/>
+
+        <property type="foreignkey" name="Material3" label="Material 3"
+            class="RTWMaterial" usedby="addedit,grid,searchform" />
+        <property type="decimal" length="10,3" name="Material3Quantity" 
+            label="Material 3 quantity" usedby="addedit" />
+        <property type="bool" default="1" name="Material3Nomenclature"/>
 
         <property type="foreignkey" name="Accessory1" label="Accessory 1"
             class="RTWMaterial" usedby="addedit,grid,searchform" />
         <property type="decimal" length="10,3" name="Accessory1Quantity" 
             label="Accessory 1 quantity" usedby="addedit" />
+        <property type="bool" default="1" name="Accessory1Nomenclature"/>
 
         <property type="foreignkey" name="Accessory2" label="Accessory 2"
             class="RTWMaterial" usedby="addedit,grid,searchform" />
         <property type="decimal" length="10,3" name="Accessory2Quantity" 
             label="Accessory 2 quantity" usedby="addedit" />
+        <property type="bool" default="1" name="Accessory2Nomenclature"/>
+
+        <property type="foreignkey" name="Accessory3" label="Accessory 3"
+            class="RTWMaterial" usedby="addedit,grid,searchform" />
+        <property type="decimal" length="10,3" name="Accessory3Quantity" 
+            label="Accessory 3 quantity" usedby="addedit" />
+        <property type="bool" default="1" name="Accessory3Nomenclature"/>
 
         <property type="foreignkey" name="Lining" label="Lining"
             class="RTWMaterial" usedby="addedit" />
         <property type="decimal" length="10,3" name="LiningQuantity" 
             label="Lining quantity" usedby="addedit" />
+        <property type="bool" default="1" name="LiningNomenclature"/>
 
         <property type="foreignkey" name="Insole" label="Insole"
             class="RTWMaterial" usedby="addedit" />
         <property type="decimal" length="10,3" name="InsoleQuantity" 
             label="Insole quantity" usedby="addedit" />
+        <property type="bool" default="1" name="InsoleNomenclature"/>
 
         <property type="foreignkey" name="UnderSole" label="Under-sole"
             class="RTWMaterial" usedby="addedit" />
         <property type="decimal" length="10,3" name="UnderSoleQuantity" 
             label="Under-sole quantity" usedby="addedit" />
+        <property type="bool" default="1" name="UnderSoleNomenclature"/>
 
         <property type="foreignkey" name="MediaPlanta" label="Media planta"
             class="RTWMaterial" usedby="addedit" />
         <property type="decimal" length="10,3" name="MediaPlantaQuantity" 
             label="Media planta quantity" usedby="addedit" />
+        <property type="bool" default="1" name="MediaPlantaNomenclature"/>
 
         <property type="foreignkey" name="Lagrima" label="Lagrima"
             class="RTWMaterial" usedby="addedit" />
         <property type="decimal" length="10,3" name="LagrimaQuantity" 
             label="Lagrima quantity" usedby="addedit" />
+        <property type="bool" default="1" name="LagrimaNomenclature"/>
 
         <property type="foreignkey" name="HeelCovering" label="Heel covering"
             class="RTWMaterial" usedby="addedit" />
         <property type="decimal" length="10,3" name="HeelCoveringQuantity" 
             label="Heel covering quantity" usedby="addedit" />
+        <property type="bool" default="1" name="HeelCoveringNomenclature"/>
 
         <property type="foreignkey" name="Selvedge" label="Selvedge"
             class="RTWMaterial" usedby="addedit" />
         <property type="decimal" length="10,3" name="SelvedgeQuantity" 
             label="Selvedge quantity" usedby="addedit" />
+        <property type="bool" default="1" name="SelvedgeNomenclature"/>
 
         <property type="foreignkey" name="Thread1" label="Thread 1"
             class="RTWMaterial" usedby="addedit" />
@@ -3061,6 +3093,7 @@
             class="RTWMaterial" usedby="addedit" />
         <property type="decimal" length="10,3" name="BambooQuantity" 
             label="Bamboo quantity" usedby="addedit" />
+        <property type="bool" default="1" name="BambooNomenclature"/>
 
         <property type="image" name="Image" label="Black and white image"
             usedby="addedit" section="Images"/>

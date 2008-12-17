@@ -14,7 +14,7 @@
         if (!($model instanceof RTWModel)) {
             return $ret;
         }
-        $attrs = array('Material1', 'Material2', 'Accessory1', 'Accessory2');
+        $attrs = array('Material1', 'Material2', 'Material3', 'Accessory1', 'Accessory2', 'Accessory3');
         foreach ($attrs as $attr) {
             $getter = 'get' . $attr;
             if (($obj = $model->$getter()) instanceof RTWMaterial) {

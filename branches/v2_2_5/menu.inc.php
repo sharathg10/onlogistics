@@ -599,7 +599,7 @@ $menu_metadata = array(
                 'title'       => _('Product orders'),
                 'link'        => 'CommandList.php',
                 'description' => _('State of orders'),
-                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ACTOR,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_COMMERCIAL,UserAccount::PROFILE_CUSTOMER,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_DIR_COMMERCIAL,UserAccount::PROFILE_GED_PROJECT_MANAGER, UserAccount::PROFILE_PRODUCT_MANAGER)
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ACTOR,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_COMMERCIAL,UserAccount::PROFILE_CUSTOMER,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_DIR_COMMERCIAL,UserAccount::PROFILE_GED_PROJECT_MANAGER, UserAccount::PROFILE_PRODUCT_MANAGER,UserAccount::PROFILE_RTW_SUPPLIER)
             ),
             array(
                 'title'       => _('Carriage orders'),
@@ -631,13 +631,6 @@ $menu_metadata = array(
                 'link'        => 'ToHaveList.php',
                 'description' => _('List of credit notes'),
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES)
-            ),
-            array(
-                'title'       => _('Worksheets by orders'),
-                'link'        => 'dispatcher.php?entity=RTWModel&altname=RTWModelForSupplier',
-                'description' => _('Worksheets by orders'),
-                'restrict_to_context' => array('readytowear'),
-                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_RTW_SUPPLIER)
             ),
         )
     ),
@@ -761,7 +754,7 @@ $menu_metadata = array(
     array(
         'title'       => _('Stock'),
         'link'        => 'home.php?help_page=Stock',
-        'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_SUPPLIER,UserAccount::PROFILE_ACTOR,UserAccount::PROFILE_GESTIONNAIRE_STOCK,UserAccount::PROFILE_SUPPLIER_CONSIGNE,UserAccount::PROFILE_OPERATOR,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_OWNER_CUSTOMER),
+        'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_SUPPLIER,UserAccount::PROFILE_ACTOR,UserAccount::PROFILE_GESTIONNAIRE_STOCK,UserAccount::PROFILE_SUPPLIER_CONSIGNE,UserAccount::PROFILE_OPERATOR,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_OWNER_CUSTOMER, UserAccount::PROFILE_RTW_SUPPLIER),
         'children'    => array(
             array(
                 'title'       => _('Amount of stock'),
@@ -815,13 +808,13 @@ $menu_metadata = array(
                 'title'       => _('Regrouping'),
                 'link'        => 'GroupableBoxActivatedChainTaskList.php',
                 'description' => _('List of regrouping tasks'),
-                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_TRANSPORTEUR,UserAccount::PROFILE_GESTIONNAIRE_STOCK)
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_TRANSPORTEUR,UserAccount::PROFILE_GESTIONNAIRE_STOCK, UserAccount::PROFILE_RTW_SUPPLIER)
             ),
             array(
                 'title'       => _('History of regroupings'),
                 'link'        => 'BoxList.php',
                 'description' => _('History of regroupings'),
-                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_TRANSPORTEUR,UserAccount::PROFILE_GESTIONNAIRE_STOCK)
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_TRANSPORTEUR,UserAccount::PROFILE_GESTIONNAIRE_STOCK, UserAccount::PROFILE_RTW_SUPPLIER)
             )
         )
     ),
@@ -830,7 +823,7 @@ $menu_metadata = array(
     array(
         'title'       => _('Documents'),
         'link'        => 'home.php?help_page=Documents',
-        'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_GESTIONNAIRE_STOCK,UserAccount::PROFILE_OPERATOR,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_TRANSPORTEUR,UserAccount::PROFILE_DIR_COMMERCIAL),
+        'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_GESTIONNAIRE_STOCK,UserAccount::PROFILE_OPERATOR,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_TRANSPORTEUR,UserAccount::PROFILE_DIR_COMMERCIAL,UserAccount::PROFILE_RTW_SUPPLIER),
         'children'    => array(
             array(
                 'title'       => _('Models'),
@@ -858,6 +851,20 @@ $menu_metadata = array(
                 'description' => _('Document appendices'),
                 'restrict_to_context' => array('readytowear'),
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_TRANSPORTEUR,UserAccount::PROFILE_DIR_COMMERCIAL)
+            ),
+            array(
+                'title'       => _('Product labels'),
+                'link'        => 'dispatcher.php?entity=RTWProduct&altname=RTWProductForLabelPrinting',
+                'description' => _('Product labels'),
+                'restrict_to_context' => array('readytowear'),
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_RTW_SUPPLIER)
+            ),
+            array(
+                'title'       => _('Worksheets'),
+                'link'        => 'dispatcher.php?entity=RTWModel&altname=RTWModelForSupplier',
+                'description' => _('Worksheets'),
+                'restrict_to_context' => array('readytowear'),
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_RTW_SUPPLIER)
             ),
         )
     ),

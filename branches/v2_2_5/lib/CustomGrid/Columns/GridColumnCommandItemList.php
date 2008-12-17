@@ -73,10 +73,10 @@ class GridColumnCommandItemList extends SubGridColumn {
             array('Macro' => '%Quantity%%Product.MeasuringUnit%'));
         if ($object->getCadenced()) {
             $subGrid->NewColumn('FieldMapper', 'Wished date', 
-                array('Macro' => '%WishedDate|formatdate@DATETIME_SHORT%'));
+                array('Macro' => '%WishedDate|formatdate@DATE_SHORT%'));
         } else {
             $subGrid->NewColumn('FieldMapper', 'wished date', 
-                array('Macro' => '%Command.WishedStartDate|formatdate@DATETIME_SHORT%'));
+                array('Macro' => '%Command.WishedStartDate|formatdate@DATE_SHORT%'));
         }
         $mapper = Mapper::singleton('ProductCommandItem');
         

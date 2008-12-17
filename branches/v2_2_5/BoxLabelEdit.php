@@ -27,57 +27,35 @@
  * @author    ATEOR dev team <dev@ateor.com>
  * @copyright 2003-2008 ATEOR <contact@ateor.com> 
  * @license   http://www.fsf.org/licensing/licenses/agpl-3.0.html GNU AGPL
- * @version   SVN: $Id$
+ * @version   SVN: $Id: config.inc.php 45 2008-06-19 08:15:01Z izimobil $
  * @link      http://www.onlogistics.org
  * @link      http://onlogistics.googlecode.com
  * @since     File available since release 0.1.0
  * @filesource
  */
 
-session_cache_limiter('private');
+require_once 'config.inc.php';
+require_once 'DocumentGenerator.php';
 
-require_once('config.inc.php');
-require_once('DocumentGenerator.php');
-require_once('DocumentGenerator.php');
-
-$auth = Auth::Singleton();
+$auth = Auth::singleton();
 $auth->checkProfiles(array(
     UserAccount::PROFILE_ADMIN,
     UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,
     UserAccount::PROFILE_RTW_SUPPLIER,
 ));
 
-if (isset($_REQUEST['cmdId'])) {
-    $order = Object::load('Command', $_REQUEST['cmdId']);
-    if (!$order instanceof Command) {
-        Template::errorDialog(MSG_SELECT_AN_ELEMENT);
-        exit(1);
-    }
-    $productCollection = $order->getProductCollection();
-    if (!count($productCollection)) {
-        Template::errorDialog(_('No product found in selected order'));
-        exit(1);
-    }
-    $modelCollection = new Collection('RTWModel', false);
-    foreach ($productCollection as $product) {
-        if (($model = $product->getModel()) instanceof RTWModel) {
-            $modelCollection->setItem($product->getModel());
-        }
-    }
-} else if (isset($_REQUEST['modelIds'])) {
-    $modelCollection = Object::loadCollection(
-        'RTWModel',
-        array('Id' => $_REQUEST['modelIds']),
-        array('StyleNumber' => SORT_ASC)
-    );
-}
-
-if (!isset($modelCollection) || !count($modelCollection)) {
-    Template::errorDialog(E_NO_RECORD_FOUND);
+if (!isset($_REQUEST['boxIds'])) {
+    Template::errorDialog(MSG_SELECT_AN_ELEMENT);
     exit(1);
 }
 
-$gen = new WorksheetGenerator($modelCollection);
+$boxCollection = Object::loadCollection('Box', array('Id' => $_REQUEST['boxIds']));
+if (!count($boxCollection)) {
+    Template::errorDialog(_('No regrouping found for selected order'));
+    exit(1);
+}
+
+$gen = new BoxLabelGenerator($boxCollection);
 $pdf = $gen->render();
 $pdf->output();
 

@@ -2087,7 +2087,7 @@ DROP TABLE IF EXISTS MovementType;
 CREATE TABLE MovementType (
   _Id int(11) unsigned NOT NULL default 0,
   _DBId int(11) default 0,
-  _Name INT(11) NOT NULL DEFAULT NULL,
+  _Name VARCHAR(255) DEFAULT NULL,
   _Foreseeable INT(1) NOT NULL DEFAULT 0,
   _EntrieExit INT(3) NOT NULL DEFAULT 0,
   _ConstName VARCHAR(255) DEFAULT NULL,
@@ -2810,12 +2810,14 @@ CREATE TABLE SupplierCustomer (
   _HasTvaSurtax INT(1) DEFAULT 0,
   _HasFodecTax INT(1) DEFAULT 0,
   _HasTaxStamp INT(1) DEFAULT 0,
+  _Factor INT(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (_Id)
 ) TYPE=InnoDB CHARSET=latin1;
 
 CREATE INDEX _Supplier ON SupplierCustomer (_Supplier);
 CREATE INDEX _Customer ON SupplierCustomer (_Customer);
 CREATE INDEX _TermsOfPayment ON SupplierCustomer (_TermsOfPayment);
+CREATE INDEX _Factor ON SupplierCustomer (_Factor);
 
 --
 -- Table structure for Task
@@ -3079,38 +3081,60 @@ CREATE TABLE RTWModel (
   _HeelHeight INT(11) NOT NULL DEFAULT 0,
   _HeelReference INT(11) NOT NULL DEFAULT 0,
   _HeelReferenceQuantity DECIMAL(10,3) DEFAULT NULL,
+  _HeelReferenceNomenclature INT(1) DEFAULT 1,
   _Sole INT(11) NOT NULL DEFAULT 0,
   _SoleQuantity DECIMAL(10,3) DEFAULT NULL,
+  _SoleNomenclature INT(1) DEFAULT 1,
   _Box INT(11) NOT NULL DEFAULT 0,
   _BoxQuantity DECIMAL(10,3) DEFAULT NULL,
+  _BoxNomenclature INT(1) DEFAULT 1,
   _HandBag INT(11) NOT NULL DEFAULT 0,
   _HandBagQuantity DECIMAL(10,3) DEFAULT NULL,
+  _HandBagNomenclature INT(1) DEFAULT 1,
   _Material1 INT(11) NOT NULL DEFAULT 0,
   _Material1Quantity DECIMAL(10,3) DEFAULT NULL,
+  _Material1Nomenclature INT(1) DEFAULT 1,
   _Material2 INT(11) NOT NULL DEFAULT 0,
   _Material2Quantity DECIMAL(10,3) DEFAULT NULL,
+  _Material2Nomenclature INT(1) DEFAULT 1,
+  _Material3 INT(11) NOT NULL DEFAULT 0,
+  _Material3Quantity DECIMAL(10,3) DEFAULT NULL,
+  _Material3Nomenclature INT(1) DEFAULT 1,
   _Accessory1 INT(11) NOT NULL DEFAULT 0,
   _Accessory1Quantity DECIMAL(10,3) DEFAULT NULL,
+  _Accessory1Nomenclature INT(1) DEFAULT 1,
   _Accessory2 INT(11) NOT NULL DEFAULT 0,
   _Accessory2Quantity DECIMAL(10,3) DEFAULT NULL,
+  _Accessory2Nomenclature INT(1) DEFAULT 1,
+  _Accessory3 INT(11) NOT NULL DEFAULT 0,
+  _Accessory3Quantity DECIMAL(10,3) DEFAULT NULL,
+  _Accessory3Nomenclature INT(1) DEFAULT 1,
   _Lining INT(11) NOT NULL DEFAULT 0,
   _LiningQuantity DECIMAL(10,3) DEFAULT NULL,
+  _LiningNomenclature INT(1) DEFAULT 1,
   _Insole INT(11) NOT NULL DEFAULT 0,
   _InsoleQuantity DECIMAL(10,3) DEFAULT NULL,
+  _InsoleNomenclature INT(1) DEFAULT 1,
   _UnderSole INT(11) NOT NULL DEFAULT 0,
   _UnderSoleQuantity DECIMAL(10,3) DEFAULT NULL,
+  _UnderSoleNomenclature INT(1) DEFAULT 1,
   _MediaPlanta INT(11) NOT NULL DEFAULT 0,
   _MediaPlantaQuantity DECIMAL(10,3) DEFAULT NULL,
+  _MediaPlantaNomenclature INT(1) DEFAULT 1,
   _Lagrima INT(11) NOT NULL DEFAULT 0,
   _LagrimaQuantity DECIMAL(10,3) DEFAULT NULL,
+  _LagrimaNomenclature INT(1) DEFAULT 1,
   _HeelCovering INT(11) NOT NULL DEFAULT 0,
   _HeelCoveringQuantity DECIMAL(10,3) DEFAULT NULL,
+  _HeelCoveringNomenclature INT(1) DEFAULT 1,
   _Selvedge INT(11) NOT NULL DEFAULT 0,
   _SelvedgeQuantity DECIMAL(10,3) DEFAULT NULL,
+  _SelvedgeNomenclature INT(1) DEFAULT 1,
   _Thread1 INT(11) NOT NULL DEFAULT 0,
   _Thread2 INT(11) NOT NULL DEFAULT 0,
   _Bamboo INT(11) NOT NULL DEFAULT 0,
   _BambooQuantity DECIMAL(10,3) DEFAULT NULL,
+  _BambooNomenclature INT(1) DEFAULT 1,
   _Image VARCHAR(255) DEFAULT NULL,
   _ColorImage VARCHAR(255) DEFAULT NULL,
   _Comment TEXT DEFAULT NULL,
@@ -3131,8 +3155,10 @@ CREATE INDEX _Box ON RTWModel (_Box);
 CREATE INDEX _HandBag ON RTWModel (_HandBag);
 CREATE INDEX _Material1 ON RTWModel (_Material1);
 CREATE INDEX _Material2 ON RTWModel (_Material2);
+CREATE INDEX _Material3 ON RTWModel (_Material3);
 CREATE INDEX _Accessory1 ON RTWModel (_Accessory1);
 CREATE INDEX _Accessory2 ON RTWModel (_Accessory2);
+CREATE INDEX _Accessory3 ON RTWModel (_Accessory3);
 CREATE INDEX _Lining ON RTWModel (_Lining);
 CREATE INDEX _Insole ON RTWModel (_Insole);
 CREATE INDEX _UnderSole ON RTWModel (_UnderSole);

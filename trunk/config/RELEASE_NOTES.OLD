@@ -4893,6 +4893,33 @@ UPDATE AbstractDocument SET _ClassName='CommandReceiptSupplier' where _ClassName
 set @id=(select IFNULL(max(_Id),0) from DocumentModel);
 INSERT INTO `DocumentModel` VALUES (@id+1,0,'COMMANDE FOURNISSEUR','',1,'CommandReceiptSupplier',1,0,1,1,1,0);
 
+ALTER TABLE SupplierCustomer ADD _Factor INT(11) NOT NULL DEFAULT 0;
+
+ALTER TABLE RTWModel ADD _Material3 INT(11) NOT NULL DEFAULT 0 AFTER _Material2Quantity;
+ALTER TABLE RTWModel ADD _Material3Quantity DECIMAL(10,3) DEFAULT NULL AFTER _Material3;
+ALTER TABLE RTWModel ADD _Accessory3 INT(11) NOT NULL DEFAULT 0 AFTER _Accessory2Quantity;
+ALTER TABLE RTWModel ADD _Accessory3Quantity DECIMAL(10,3) DEFAULT NULL AFTER _Accessory3;
+CREATE INDEX _Material3 ON RTWModel (_Material3);
+CREATE INDEX _Accessory3 ON RTWModel (_Accessory3);
+
+ALTER TABLE RTWModel ADD _HeelReferenceNomenclature INT(1) DEFAULT 1 AFTER _HeelReferenceQuantity;
+ALTER TABLE RTWModel ADD _SoleNomenclature INT(1) DEFAULT 1 AFTER _SoleQuantity;
+ALTER TABLE RTWModel ADD _BoxNomenclature INT(1) DEFAULT 1 AFTER _BoxQuantity;
+ALTER TABLE RTWModel ADD _HandBagNomenclature INT(1) DEFAULT 1 AFTER _HandBagQuantity;
+ALTER TABLE RTWModel ADD _Material1Nomenclature INT(1) DEFAULT 1 AFTER _Material1Quantity;
+ALTER TABLE RTWModel ADD _Material2Nomenclature INT(1) DEFAULT 1 AFTER _Material2Quantity;
+ALTER TABLE RTWModel ADD _Material3Nomenclature INT(1) DEFAULT 1 AFTER _Material3Quantity;
+ALTER TABLE RTWModel ADD _Accessory1Nomenclature INT(1) DEFAULT 1 AFTER _Accessory1Quantity;
+ALTER TABLE RTWModel ADD _Accessory2Nomenclature INT(1) DEFAULT 1 AFTER _Accessory2Quantity;
+ALTER TABLE RTWModel ADD _Accessory3Nomenclature INT(1) DEFAULT 1 AFTER _Accessory3Quantity;
+ALTER TABLE RTWModel ADD _LiningNomenclature INT(1) DEFAULT 1 AFTER _LiningQuantity;
+ALTER TABLE RTWModel ADD _InsoleNomenclature INT(1) DEFAULT 1 AFTER _InsoleQuantity;
+ALTER TABLE RTWModel ADD _UnderSoleNomenclature INT(1) DEFAULT 1 AFTER _UnderSoleQuantity;
+ALTER TABLE RTWModel ADD _MediaPlantaNomenclature INT(1) DEFAULT 1 AFTER _MediaPlantaQuantity;
+ALTER TABLE RTWModel ADD _LagrimaNomenclature INT(1) DEFAULT 1 AFTER _LagrimaQuantity;
+ALTER TABLE RTWModel ADD _HeelCoveringNomenclature INT(1) DEFAULT 1 AFTER _HeelCoveringQuantity;
+ALTER TABLE RTWModel ADD _SelvedgeNomenclature INT(1) DEFAULT 1 AFTER _SelvedgeQuantity;
+ALTER TABLE RTWModel ADD _BambooNomenclature INT(1) DEFAULT 1 AFTER _BambooQuantity;
 
 ####################################
 # Ne pas enlever

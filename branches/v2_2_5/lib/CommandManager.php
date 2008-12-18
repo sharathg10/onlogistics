@@ -744,7 +744,7 @@ class CommandManager{
 
         if (!$this->isEstimate && $this->productCommandType == Command::TYPE_CUSTOMER) {
             $tp = $sc->getTermsOfPayment();
-            if ($tp->hasPrePayment()) {
+            if ($tp instanceof TermsOfPayment && $tp->hasPrePayment()) {
                 $command->blockDeblock(1, false);
             }
         }

@@ -38,34 +38,39 @@ require_once('Objects/MovementType.const.php');
 require_once('Objects/ActivatedMovement.php');
 require_once('Objects/Command.const.php');
 
-//Database::connection()->debug = true;
 // volontairement mis ici pour ne pas planter le script du serveur XMLRPC
 ini_set('max_execution_time', 120);
 
 /**
- * Classe abstraite pour la collecte d'infos et la construction
- * d'un objet MovementExecutionData qui sera dumpé dans un fichier xml
+ * Classe qui recupere les commandes pour l'execution des mouvements sur les 
+ * zaurus.
+ *
  */
-class MovementExecutionDataProvider {
+class MovementExecutionDataProvider
+{
     /**
      * Constructor
+     *
+     * @param UserAccount $user   The connected user
+     * @param string      $cmdnum An optional order number pattern
      * 
-     * @access protected 
+     * @access public 
+     * @return void
      */
-    function MovementExecutionDataProvider($user, $cmdnum=false)
+    public function __construct($user, $cmdnum=false)
     {
         $this->user = $user;
         $this->cmdnumber = $cmdnum==false?'%':str_replace('*', '%', $cmdnum);
     }
 
     /**
+     * Retourne le tableau des commandes recuperees en base de donnees.
      * 
      * @access public 
-     * @return object the ExecutionData object
+     * @return array The orders array
      */
-    function execute()
+    public function execute()
     {
-        $pciMapper = Mapper::singleton('ProductCommandItem'); 
         // on récupère la collection de commanditems filtrés
         $filter = new FilterComponent(
             new FilterComponent(
@@ -127,29 +132,28 @@ class MovementExecutionDataProvider {
                 )
             )
         ); 
+        $order = array(
+            'ActivatedMovement.StartDate' => SORT_ASC,
+            'ActivatedMovement.Type' => SORT_ASC
+        );
         // on limite à 50
-        $pciCollection = $pciMapper->loadCollection($filter, 
-            array(), array('Command', 'ActivatedChain'), 0, 1, 50); 
+        $col = Object::loadCollection('ProductCommandItem', $filter, $order, array(), 0, 1, 50); 
         // on instancie le bon executiondata
         $commands = array();
-        if ($pciCollection instanceof Collection) {
-            $lastCommandID = 0;
-            $count = $pciCollection->getCount();
-            for($i = 0; $i < $count; $i++) {
-                $pci = $pciCollection->getitem($i);
-                $command = $pci->getCommand();
-                if ($lastCommandID == $command->getId()) {
-                    continue;
-                }
-                if (commandIsCompatibleWithUser($pci, $this->user)) {
-                    $commands[] = $command;
-                    $lastCommandID = $command->getId();
-                }
-                unset($pci, $command);
-                if (count($commands) == 3) {
-                    break;
-                }
-            } 
+        $lastCommandID = 0;
+        foreach ($col as $pci) {
+            $command = $pci->getCommand();
+            if ($lastCommandID == $command->getId()) {
+                continue;
+            }
+            if (commandIsCompatibleWithUser($pci, $this->user)) {
+                $commands[] = $command;
+                $lastCommandID = $command->getId();
+            }
+            unset($pci, $command);
+            if (count($commands) == 3) {
+                break;
+            }
         } 
         return $commands;
     } 
@@ -160,10 +164,11 @@ class MovementExecutionDataProvider {
  * 
  * @access public
  * @return boolean 
- **/
+ */
 function commandIsCompatibleWithUser($commandItem, $user){
     // XXX Voir avec dalhia pourquoi c'est désactivé
     return true;
+
     require_once('SQLRequest.php');
     require_once('Objects/Operation.const.php');
     // l'ID de la chaine rattachée à l'item de la commande

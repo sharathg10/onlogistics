@@ -3,6 +3,8 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
+ * IMPORTANT: This is a generated file, please do not edit.
+ *
  * This file is part of Onlogistics, a web based ERP and supply chain 
  * management application. 
  *
@@ -34,6 +36,11 @@
  * @filesource
  */
 
+/**
+ * PackingList class
+ *
+ * Class containing addon methods.
+ */
 class PackingList extends _PackingList {
     // Constructeur {{{
 
@@ -49,47 +56,63 @@ class PackingList extends _PackingList {
     }
 
     // }}}
+    // getLogo() {{{
 
     /**
-     * Retourne le logo (sous forme base64), ou une string vide
+     * Retourne le logo (sous forme base64), ou une string vide.
+     *
      * @access public
      * @return string 
-     **/
+     */
     function getLogo() {
-        require_once('Objects/DocumentModel.php');
-        $DocumentModel = $this->getDocumentModel();
-        
-        if (Tools::isEmptyObject($DocumentModel)) {
+        $dm = $this->getDocumentModel();
+        if (!$dm instanceof DocumentModel) {
             return '';
         }
-        $Box = $this->getBox();
-        
-        switch($DocumentModel->getLogoType()) {
+        $boxCol = $this->getBoxCollection();
+        $box    = $boxCol->getItem(0);
+        switch($dm->getLogoType()) {
             case DocumentModel::EXPEDITOR:
-                if (Tools::isEmptyObject($Box->getExpeditor())) {
-                    return '';
-                }
-                $Actor = $Box->getExpeditor();
+                $actor = $box->getExpeditor();
                 break;
             case DocumentModel::DESTINATOR: 
-                if (Tools::isEmptyObject($Box->getDestinator())) {
-                    return '';
-                }
-                $Actor = $Box->getDestinator();
+                $actor = $box->getDestinator();
                 break;
             case DocumentModel::ONE_ACTOR: 
-                $Actor = $DocumentModel->getActor();
+                $actor = $dm->getActor();
                 break;
             default:
                 return '';
-        } // switch
-        
-        if (!Tools::isEmptyObject($Actor)) {
-            $result = (is_null($Actor->getLogo()))?'':$Actor->getLogo();
-            return $result;
+        }
+        if ($actor instanceof Actor) { 
+            return $actor->getLogo();
         }
         return '';
     }
+
+    // }}}
+    // getCommandCollection() {{{
+
+    /**
+     * Retourne la collection de commandes de la packinglist.
+     *
+     * @access public
+     * @return Collection 
+     */
+    function getCommandCollection() {
+        $boxCol = $this->getBoxCollection();
+        $cmdCol = new Collection('ProductCommand', false);
+        foreach ($boxCol as $box) {
+            $cmi = $box->getCommandItem();
+            if ($cmi instanceof CommandItem) {
+                $cmdCol->setItem($cmi->getCommand());
+            }
+        }
+        return $cmdCol;
+    }
+
+    // }}}
+
 }
 
 ?>

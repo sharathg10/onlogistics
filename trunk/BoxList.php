@@ -95,14 +95,14 @@ if (true === $form->displayGrid()) {
         'TransmitedArrayName' => 'boxIDs',
         'ConfirmMessage'      => I_BOX_DELETE
     ));
-    /*
+
     $grid->NewAction('Redirect', array(
         'Caption'             => _('Print packing list'),
         'TargetPopup'         => true,
         'TransmitedArrayName' => 'boxIds',
         'URL'                 => 'PackingListEdit.php'
     ));
-     */
+
     $grid->NewAction('Redirect', array(
         'Caption'             => _('Print grouping labels'),
         'TargetPopup'         => true,
@@ -115,6 +115,10 @@ if (true === $form->displayGrid()) {
 	/*  Colonnes du grid  */
 	$grid->NewColumn('FieldMapper', _('Order'),
 			array('Macro' => '%Box[0].ActivatedChain.CommandItem[0].Command.CommandNo%'));
+	$grid->NewColumn('FieldMapper', _('Packing list'),
+			array('Macro' => '%PackingList.DocumentNo|default%'));
+	$grid->NewColumn('FieldMapper', _('Date'),
+			array('Macro' => '%Date|formatdate%'));
 	$grid->NewColumn('FieldMapper', _('Regrouping reference'),
             array('Macro' => '%Reference%'));
 	$grid->NewColumn('ChildrenBoxList', array(_('Content reference')));
@@ -122,7 +126,7 @@ if (true === $form->displayGrid()) {
 	// Pas gerable par le fw
 	/*'ActivatedChain.CommandItem[0].Command.WishedStartDate' => SORT_DESC,
 	  'ActivatedChainTask.Begin' => SORT_DESC*/
-	$order = array('Reference');
+	$order = array('Date' => SORT_DESC);
 
 	$form->displayResult($grid, true, $filter, $order);
 } // fin FormSubmitted

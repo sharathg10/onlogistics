@@ -49,6 +49,7 @@ class CommandItem extends _CommandItem {
     }
 
     // }}}
+    // handingType() {{{
     
     /**
      * CommandItem::HandingType()
@@ -56,18 +57,21 @@ class CommandItem extends _CommandItem {
      * 
      * @return string
      **/
-    function HandingType() {
-        if (ereg("/", $this->GetHanding())) {
+    function handingType() {
+        if (ereg("/", $this->getHanding())) {
             $Type = "frac";
-        } elseif (ereg("%", $this->GetHanding())) {
+        } elseif (ereg("%", $this->getHanding())) {
             $Type = "percent";
-        } elseif (ereg("[0-9]", $this->GetHanding())) {
+        } elseif (ereg("[0-9]", $this->getHanding())) {
             $Type = "currency";
         } else {
             $Type = "N/A";
         }
         return $Type;
     }
+
+    // }}}
+    // getDisplayedHanding() {{{
     
     /**
      * Le montant ou taux de la remise a afficher (soit avec % soit €, soit x/y)
@@ -77,15 +81,18 @@ class CommandItem extends _CommandItem {
      **/
     function getDisplayedHanding() {
         if ('frac' == $this->HandingType()) {
-            return $this->GetHanding();
+            return $this->getHanding();
         } else if ('currency' == $this->HandingType()) {
-            return I18N::formatNumber($this->GetHanding());
+            return I18N::formatNumber($this->getHanding());
         } else if ('percent' == $this->HandingType()) {
-            $Handing = substr($this->GetHanding(), 0, strlen($this->GetHanding())-1);
+            $Handing = substr($this->getHanding(), 0, strlen($this->getHanding())-1);
             return I18N::formatPercent($Handing);
         }
         return '';
     }
+
+    // }}}
+    // getTotalHT() {{{
 
     /**
      * Retourne le total HT du commanditem, cad qté fois prix HT.
@@ -106,6 +113,9 @@ class CommandItem extends _CommandItem {
         // troncature à 2 décimales
         return I18N::formatNumber($res);
     }
+
+    // }}}
+    // getTotalTTC() {{{
     
     /**
      * Retourne le total HT du commanditem, cad total HT fois TVA.
@@ -128,27 +138,46 @@ class CommandItem extends _CommandItem {
         }
         return I18N::formatNumber($res);
     }
+
+    // }}}
+    // getSurface() {{{
  
     /**
      * Retourne la surface du commanditem
+     *
+     * @param int $qty optional: if not given the quantity is the ordered qty
      * 
      * @access public
      * @return float 
      */
-    function getSurface(){
-        return $this->getQuantity() * $this->getWidth() * $this->getLength();
+    function getSurface($qty = false) {
+        if ($qty === false) {
+            $qty = $this->getQuantity();
+        }
+        return $qty * $this->getWidth() * $this->getLength();
     }
+
+    // }}}
+    // getVolume() {{{
 
     /**
      * Retourne le volume du commanditem
+     *
+     * @param int $qty optional: if not given the quantity is the ordered qty
      * 
      * @access public
      * @return float 
-     **/
-    function getVolume(){
-        return $this->getQuantity() * $this->getWidth() * $this->getLength() 
+     */
+    function getVolume($qty = false) {
+        if ($qty === false) {
+            $qty = $this->getQuantity();
+        }
+        return $qty * $this->getWidth() * $this->getLength() 
             * $this->getHeight();
     }
+
+    // }}}
+    // getRealTvaRate() {{{
 
     /**
      * Retourne le taux de TVA tenant eventuellement compte de la tva surtaxee
@@ -167,7 +196,8 @@ class CommandItem extends _CommandItem {
         $tvaSurtaxRate = ($hasTvaSurtax)?Preferences::get('TvaSurtax', 0):0;
         return $tva->getRealTvaRate($tvaSurtaxRate);
     }
-    
+
+    // }}}
 }
 
 ?>

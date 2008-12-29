@@ -49,10 +49,7 @@ class ProductCommandItem extends _ProductCommandItem {
     }
 
     // }}}
-/**
-     * Addons ProductCommandItem
-     * pour assurer la compatibilité au niveau des addons de command
-     */
+    // getWidth() {{{
 
     /**
      *
@@ -61,9 +58,12 @@ class ProductCommandItem extends _ProductCommandItem {
      */
     function getWidth()
     {
-        $Product = $this->GetProduct();
-        return $Product->GetSellUnitWidth();
+        $product = $this->getProduct();
+        return $product->getSellUnitWidth();
     }
+
+    // }}}
+    // getLength() {{{
 
     /**
      *
@@ -72,9 +72,13 @@ class ProductCommandItem extends _ProductCommandItem {
      */
     function getLength()
     {
-        $Product = $this->GetProduct();
-        return $Product->GetSellUnitLength();
+        $product = $this->getProduct();
+        return $product->getSellUnitLength();
     }
+
+
+    // }}}
+    // getHeight() {{{
 
     /**
      *
@@ -83,9 +87,12 @@ class ProductCommandItem extends _ProductCommandItem {
      */
     function getHeight()
     {
-        $Product = $this->GetProduct();
-        return $Product->GetSellUnitHeight();
+        $product = $this->getProduct();
+        return $product->getSellUnitHeight();
     }
+
+    // }}}
+    // getWeight() {{{
 
     /**
      *
@@ -94,9 +101,12 @@ class ProductCommandItem extends _ProductCommandItem {
      */
     function getWeight()
     {
-        $Product = $this->GetProduct();
-        return $Product->GetSellUnitWeight();
+        $product = $this->getProduct();
+        return $product->getSellUnitWeight();
     }
+
+    // }}}
+    // getGerbability() {{{
 
     /**
      *
@@ -105,9 +115,12 @@ class ProductCommandItem extends _ProductCommandItem {
      */
     function getGerbability()
     {
-        $Product = $this->GetProduct();
-        return $Product->GetSellUnitGerbability();
+        $product = $this->getProduct();
+        return $product->getSellUnitGerbability();
     }
+
+    // }}}
+    // getMasterDimension() {{{
 
     /**
      *
@@ -116,17 +129,22 @@ class ProductCommandItem extends _ProductCommandItem {
      */
     function getMasterDimension()
     {
-        $Product = $this->GetProduct();
-        return $Product->GetSellUnitMasterDimension();
+        $product = $this->getProduct();
+        return $product->getSellUnitMasterDimension();
     }
+
+    // }}}
+    // getVolume() {{{
 
     /**
      * Retourne le volume du produit lié
      *
+     * @param int $qty optional: if not given the quantity is the ordered qty
+     *
      * @access public
      * @return float
-     **/
-    function getVolume(){
+     */
+    function getVolume($qty = false) {
         $product = $this->getProduct();
         $volume  = $product->getVolume();
         if (0 == $volume) {
@@ -134,8 +152,14 @@ class ProductCommandItem extends _ProductCommandItem {
                 $product->getSellUnitLength() *
                 $product->getSellUnitHeight();
         }
-        return $this->getQuantity() * $volume;
+        if ($qty === false) {
+            $qty = $this->getQuantity();
+        }
+        return $qty * $volume;
     }
+
+    // }}}
+    // getProductType() {{{
 
     /**
      * Retourne le producttype du produit lié
@@ -152,16 +176,19 @@ class ProductCommandItem extends _ProductCommandItem {
         return $return;
     }
 
+    // }}}
+    // createActivatedMovement() {{{
+
     /**
      * Methode AddOn pour creer un activatedMovement et mettre a jour
      * la qte virtuelle en stock de product associe
-      * retourne un tableau de strings vide si pas d'alerte qd on met a jour la qte virtuelle
-      * ou contenant le body du ou des mails d'alerte a envoyer
+     * retourne un tableau de strings vide si pas d'alerte qd on met a jour la qte virtuelle
+     * ou contenant le body du ou des mails d'alerte a envoyer
      *
      * @access public
      * @return array
      */
-    function CreateActivatedMovement() {
+    function createActivatedMovement() {
         require_once('Objects/Task.const.php');
         require_once("Objects/Command.php");
         require_once("Objects/Command.const.php");
@@ -169,7 +196,7 @@ class ProductCommandItem extends _ProductCommandItem {
         $Command = $this->getCommand();
 
 
-        $CommandType = $Command->GetType();
+        $CommandType = $Command->getType();
         $ActivatedChain = $this->getActivatedChain();
 
         // Dans ce cas, on ne cree pas d'ActivatedMovement et tout ce qui s'en suit (MAJ qtes...)
@@ -222,6 +249,7 @@ class ProductCommandItem extends _ProductCommandItem {
         return ($AlertMailData);
     }
 
+    // }}}
 }
 
 ?>

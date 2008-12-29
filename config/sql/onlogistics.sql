@@ -34,7 +34,6 @@ CREATE TABLE AbstractDocument (
   _RemainingTTC DECIMAL(10,2) DEFAULT NULL,
   _Comment TEXT DEFAULT NULL,
   _TVA INT(11) NOT NULL DEFAULT 0,
-  _Box INT(11) NOT NULL DEFAULT 0,
   _BeginDate DATETIME DEFAULT NULL,
   _EndDate DATETIME DEFAULT NULL,
   _Port DECIMAL(10,2) NOT NULL DEFAULT 0,
@@ -63,7 +62,6 @@ CREATE INDEX _Currency ON AbstractDocument (_Currency);
 CREATE INDEX _AccountingTypeActor ON AbstractDocument (_AccountingTypeActor);
 CREATE INDEX _PDFDocument ON AbstractDocument (_PDFDocument);
 CREATE INDEX _TVA ON AbstractDocument (_TVA);
-CREATE INDEX _Box ON AbstractDocument (_Box);
 CREATE INDEX _DestinatorSite ON AbstractDocument (_DestinatorSite);
 CREATE INDEX _Transporter ON AbstractDocument (_Transporter);
 CREATE INDEX _ConveyorArrivalSite ON AbstractDocument (_ConveyorArrivalSite);

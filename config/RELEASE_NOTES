@@ -35,6 +35,36 @@ BEGIN;
 TRUNCATE TABLE IdHashTable;
 ####################################
 
+ALTER TABLE AbstractDocument DROP _Box;
+ALTER TABLE Product ADD _ProductModel INT(11) NOT NULL DEFAULT 0 AFTER _Owner;
+CREATE INDEX _ProductModel ON Product (_ProductModel);
+
+DROP TABLE IF EXISTS ProductModel;
+CREATE TABLE ProductModel (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _BaseReference VARCHAR(255) DEFAULT NULL,
+  _ProductType INT(11) NOT NULL DEFAULT 0,
+  _Owner INT(11) NOT NULL DEFAULT 0,
+  _Manufacturer INT(11) NOT NULL DEFAULT 0,
+  _TVA INT(11) NOT NULL DEFAULT 0,
+  _Description TEXT DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE UNIQUE INDEX _BaseReference ON ProductModel (_BaseReference);
+CREATE INDEX _ProductType ON ProductModel (_ProductType);
+CREATE INDEX _Owner ON ProductModel (_Owner);
+CREATE INDEX _Manufacturer ON ProductModel (_Manufacturer);
+CREATE INDEX _TVA ON ProductModel (_TVA);
+
+DROP TABLE IF EXISTS productModelRTWSize;
+CREATE TABLE productModelRTWSize (
+  _FromProductModel int(11) unsigned NOT NULL default 0,
+  _ToRTWSize int(11) unsigned NOT NULL default 0,
+  PRIMARY KEY (_FromProductModel, _ToRTWSize)
+) TYPE=InnoDB CHARSET=latin1;
+
 ####################################
 # Ne pas enlever
 COMMIT;

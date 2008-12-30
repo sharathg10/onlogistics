@@ -1,0 +1,24 @@
+    // RTWModel::canBeDeleted() {{{
+
+    /**
+     * Retourne true si l'objet peut etre detruit en base de donnees.
+     *
+     * @access public
+     * @return boolean
+     */
+    public function canBeDeleted() {
+        try {
+            parent::canBeDeleted();
+            $pdtCol = $this->getProductCollection();
+            foreach ($pdtCol as $pdt) {
+                if (!$pdt->isDeletable(false)) {
+                    throw new Exception('');
+                }
+            }
+        } catch (Exception $exc) {
+            throw new Exception(_('This model can not be modified because it is already used in one or more orders'));
+        }
+        return true;
+    }
+
+    // }}}

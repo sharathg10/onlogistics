@@ -34,13 +34,13 @@
  * @filesource
  */
 
-require_once 'RTWManager.php';
+require_once 'AbstractProductManager.php';
 
 /**
  * RTWMaterialManager.
  * Classe gerant la creation des mat. 1eres pour le contexte pret a porter.
  */
-class RTWMaterialManager extends RTWManager
+class RTWMaterialManager extends AbstractProductManager
 {
     // RTWMaterialManager::createMaterials() {{{
 
@@ -68,7 +68,7 @@ class RTWMaterialManager extends RTWManager
     }
 
     // }}}
-    // RTWManager::setProductDefaults() {{{
+    // RTWMaterialManager::setProductDefaults() {{{
 
     /**
      * Renseigne les valeurs par defaut du produit nouvellement cree.

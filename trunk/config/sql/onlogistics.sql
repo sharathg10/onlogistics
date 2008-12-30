@@ -2293,7 +2293,7 @@ CREATE TABLE Product (
   _Id int(11) unsigned NOT NULL default '0',
   _DBId int(11) default 0,
   _ClassName VARCHAR(255) DEFAULT NULL,
-  _Name VARCHAR(255) DEFAULT NULL,
+  _Name INT(11) NOT NULL DEFAULT NULL,
   _BaseReference VARCHAR(255) DEFAULT NULL,
   _Volume FLOAT NOT NULL DEFAULT 0,
   _CustomsNaming VARCHAR(255) DEFAULT NULL,
@@ -2338,8 +2338,9 @@ CREATE TABLE Product (
   _Description VARCHAR(255) DEFAULT NULL,
   _Image VARCHAR(255) DEFAULT NULL,
   _Owner INT(11) NOT NULL DEFAULT 0,
-  _Model INT(11) NOT NULL DEFAULT 0,
+  _ProductModel INT(11) NOT NULL DEFAULT 0,
   _Size INT(11) NOT NULL DEFAULT 0,
+  _Model INT(11) NOT NULL DEFAULT 0,
   _ScientificName VARCHAR(255) DEFAULT NULL,
   _MaterialType INT(3) NOT NULL DEFAULT 0,
   _Color INT(11) NOT NULL DEFAULT 0,
@@ -2358,8 +2359,9 @@ CREATE INDEX _ConditioningRecommended ON Product (_ConditioningRecommended);
 CREATE INDEX _PackagingRecommended ON Product (_PackagingRecommended);
 CREATE INDEX _GroupingRecommended ON Product (_GroupingRecommended);
 CREATE INDEX _Owner ON Product (_Owner);
-CREATE INDEX _Model ON Product (_Model);
+CREATE INDEX _ProductModel ON Product (_ProductModel);
 CREATE INDEX _Size ON Product (_Size);
+CREATE INDEX _Model ON Product (_Model);
 CREATE INDEX _Color ON Product (_Color);
 CREATE INDEX _FlyType ON Product (_FlyType);
 
@@ -2409,6 +2411,28 @@ CREATE TABLE ProductKind (
 ) TYPE=InnoDB CHARSET=latin1;
 
 CREATE INDEX _ProductType ON ProductKind (_ProductType);
+
+--
+-- Table structure for ProductModel
+--
+DROP TABLE IF EXISTS ProductModel;
+CREATE TABLE ProductModel (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _BaseReference VARCHAR(255) DEFAULT NULL,
+  _ProductType INT(11) NOT NULL DEFAULT 0,
+  _Owner INT(11) NOT NULL DEFAULT 0,
+  _Manufacturer INT(11) NOT NULL DEFAULT 0,
+  _TVA INT(11) NOT NULL DEFAULT 0,
+  _Description TEXT DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE UNIQUE INDEX _BaseReference ON ProductModel (_BaseReference);
+CREATE INDEX _ProductType ON ProductModel (_ProductType);
+CREATE INDEX _Owner ON ProductModel (_Owner);
+CREATE INDEX _Manufacturer ON ProductModel (_Manufacturer);
+CREATE INDEX _TVA ON ProductModel (_TVA);
 
 --
 -- Table structure for ProductQuantityByCategory
@@ -3600,6 +3624,16 @@ CREATE TABLE ppcProduct (
   _FromProductPrestationCost int(11) unsigned NOT NULL default '0',
   _ToProduct int(11) unsigned NOT NULL default '0',
   PRIMARY KEY (_FromProductPrestationCost, _ToProduct)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- Table structure for productModelRTWSize
+--
+DROP TABLE IF EXISTS productModelRTWSize;
+CREATE TABLE productModelRTWSize (
+  _FromProductModel int(11) unsigned NOT NULL default '0',
+  _ToRTWSize int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromProductModel, _ToRTWSize)
 ) TYPE=InnoDB CHARSET=latin1;
 
 --

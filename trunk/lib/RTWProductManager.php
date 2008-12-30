@@ -34,13 +34,13 @@
  * @filesource
  */
 
-require_once 'RTWManager.php';
+require_once 'AbstractProductManager.php';
 
 /**
  * RTWProductManager.
  * Classe gerant la creation des produits pour le contexte pret a porter.
  */
-class RTWProductManager extends RTWManager
+class RTWProductManager extends AbstractProductManager
 {
     // RTWProductManager::createProducts() {{{
 

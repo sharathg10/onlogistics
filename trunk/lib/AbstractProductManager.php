@@ -41,9 +41,9 @@ require_once 'Objects/SellUnitType.const.php';
  * RTWManager.
  * Classe gerant la creation des produits pour le contexte pret a porter.
  */
-class RTWManager
+abstract class AbstractProductManager
 {
-    // RTWManager::createAffectation() {{{
+    // AbstractProductManager::createAffectation() {{{
 
     /**
      * Affecte le produit $product à la chaine parametree.
@@ -89,7 +89,7 @@ class RTWManager
     }
 
     // }}}
-    // RTWManager::createActorProduct() {{{
+    // AbstractProductManager::createActorProduct() {{{
 
     /**
      * Cree l'actorProduct correspondant aux données passées.

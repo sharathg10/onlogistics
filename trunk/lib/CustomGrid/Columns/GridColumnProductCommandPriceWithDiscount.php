@@ -55,8 +55,10 @@ class GridColumnProductCommandPriceWithDiscount extends AbstractGridColumn {
     }
 
     public function render($object) {
-        if ($object instanceof RTWModel) {
-            $col = $object->getRTWProductCollection();
+        if ($object instanceof RTWModel || $object instanceof ProductModel) {
+            $method = $object instanceof RTWModel ? 
+                'getRTWProductCollection' : 'getProductCollection';
+            $col = $object->$method();
             if (!count($col)) {
                 return _('N/A');
             }

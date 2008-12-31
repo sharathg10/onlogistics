@@ -404,6 +404,13 @@ $menu_metadata = array(
                     )
                 )
             ),
+            array(
+                'title'       => _('Sizes management'),
+                'link'        => 'dispatcher.php?entity=RTWSize',
+                'description' => _('Sizes management'),
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_PRODUCT_MANAGER),
+                'restrict_to_context' => array('readytowear2'),
+            ),
             // pret a porter
             array(
                 'title'       => _('Data management'),
@@ -487,9 +494,16 @@ $menu_metadata = array(
             array(
                 'title'       => _('Worksheets'),
                 'link'        => 'dispatcher.php?entity=RTWModel',
-                'description' => _('Worksheets management'),
+                'description' => _('Worksheets'),
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_PRODUCT_MANAGER),
                 'restrict_to_context' => array('readytowear'),
+            ),
+            array(
+                'title'       => _('Product models'),
+                'link'        => 'dispatcher.php?entity=ProductModel',
+                'description' => _('Product models'),
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_PRODUCT_MANAGER),
+                'restrict_to_context' => array('readytowear2'),
             ),
         )
     ),
@@ -568,8 +582,11 @@ $menu_metadata = array(
             ),
             array(
                 'title'       => _('Customer catalogue'),
-                'link'        => in_array('readytowear', $__ctx__) ? 
-                    'dispatcher.php?entity=RTWModel&altname=RTWModelForCatalog' : 'CustomerCatalog.php',
+                'link'        => in_array('readytowear', $__ctx__) || in_array('readytowear2', $__ctx__) ? 
+                                    (in_array('readytowear', $__ctx__) 
+                                    ? 'dispatcher.php?entity=RTWModel&altname=RTWModelForCatalog' 
+                                    : 'dispatcher.php?entity=ProductModel&altname=ProductModelForCatalog') 
+                                : 'CustomerCatalog.php',
                 'description' => _('Customer catalogue'),
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_CUSTOMER,UserAccount::PROFILE_COMMERCIAL,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_DIR_COMMERCIAL,UserAccount::PROFILE_OWNER_CUSTOMER,UserAccount::PROFILE_PRODUCT_MANAGER)
             ),

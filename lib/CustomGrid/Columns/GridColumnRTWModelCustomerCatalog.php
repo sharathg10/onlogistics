@@ -37,6 +37,7 @@
 class GridColumnRTWModelCustomerCatalog extends AbstractGridColumn
 {
     protected $actor = false;
+    protected $method = 'getRTWProductCollection';
 
     /**
      * Constructor
@@ -48,14 +49,19 @@ class GridColumnRTWModelCustomerCatalog extends AbstractGridColumn
         if (isset($params['actor'])) {
             $this->actor = $params['actor'];
         }
+        if (isset($params['method'])) {
+            $this->method = $params['method'];
+        }
     }
 
     public function render($object) {
-        $col = $object->getRTWProductCollection(
+        $method = $this->method;
+        $col = $object->$method(
             array('Activated' => 1, 'Affected' => 1),
             array('Size.Name' => SORT_ASC),
             array('Size')
         );
+        
         $ths = '';
         $tds = '';
         $modelId = $object->getId();

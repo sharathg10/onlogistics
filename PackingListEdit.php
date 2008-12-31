@@ -34,30 +34,65 @@
  * @filesource
  */
 
-session_cache_limiter('private');
-
 require_once('config.inc.php');
 require_once('GenerateDocument.php');
 
 $auth = Auth::Singleton();
+$auth->checkProfiles(array(
+    UserAccount::PROFILE_ADMIN,
+    UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,
+    UserAccount::PROFILE_TRANSPORTEUR,
+    UserAccount::PROFILE_GESTIONNAIRE_STOCK,
+    UserAccount::PROFILE_RTW_SUPPLIER
+));
 
-$errorBody = _('An error occurred, packing list could not be printed.');
+$error = _('An error occurred, packing list could not be printed.');
 
-if(!isset($_GET['reedit'])) {
-    SearchTools::ProlongDataInSession();  // prolonge les datas du form de recherche en session
+if (!isset($_GET['reedit'])) {
+    // prolonge les datas du form de recherche en session
+    SearchTools::ProlongDataInSession();
     if (!isset($_REQUEST['boxIds'])) {
         Template::errorDialog(I_NEED_SELECT_ITEM, 'javascript:window.close();', BASE_POPUP_TEMPLATE);
         exit(1);
     }
-
     $boxCol = Object::loadCollection('Box', array('Id' => $_GET['boxIds']));
     if (count($boxCol) == 0) {
         Template::errorDialog(I_NEED_SELECT_ITEM, 'javascript:window.close();', BASE_POPUP_TEMPLATE);
         exit(1);
     }
+    // check que les box sont compatibles:
+    // - elles doivent toutes etre liees au meme destinataire/expediteur
+    // - elles ne doivent pas etre deja affectees a une packinglist
+    $firstBox   = $boxCol->getItem(0);
+    $expSiteId  = $firstBox->getExpeditorSiteId();
+    $destSiteId = $firstBox->getDestinatorSiteId();
+    foreach ($boxCol as $box) {
+        if ($box->getExpeditorSiteId() != $expSiteId || $box->getDestinatorSiteId() != $destSiteId) {
+            Template::errorDialog(
+                $error . '<br/>' . _('Expeditor and destinator must be the same for all selected boxes'),
+                'javascript:window.close();', 
+                BASE_POPUP_TEMPLATE
+            );
+            exit(1);
+        }
+        if (($pList = $box->getPackingList()) instanceof PackingList) {
+            Template::errorDialog(
+                $error . '<br/>' . sprintf(
+                    _('Box "%s" is already in packing list "%s".'),
+                    $box->getReference(), $pList->getDocumentNo()
+                ),
+                'javascript:window.close();', 
+                BASE_POPUP_TEMPLATE
+            );
+            exit(1);
+        }
+    }
 
-    $isReedition = false; // inutilise
-    $packingList = Object::load('PackingList');
+    // allright, on cree la packinglist
+    Database::connection()->startTrans();
+
+    $isReedition = false;
+    $packingList = new PackingList();
     $packingList->generateId();
     $packingList->setDocumentNo($packingList->getId());
     $packingList->setEditionDate(date('Y-m-d H:i:s'));
@@ -65,41 +100,52 @@ if(!isset($_GET['reedit'])) {
     if (false != $documentModel) {
         $packingList->setDocumentModel($documentModel);
     }
-    
-    $packingList->setBox($this);
-    $scMapper = Mapper::singleton('SupplierCustomer');
-    $sc = $scMapper->load(array(
-        'Supplier' => $this->getExpeditorId(),
-        'customer' => $this->getDestinatorId()
+    $sc = Object::load('SupplierCustomer', array(
+        'Supplier' => $firstBox->getExpeditorId(),
+        'customer' => $firstBox->getDestinatorId(),
     ));
-    if (Tools::isEmptyObject($sc)) {
+    if (!$sc instanceof SupplierCustomer) {
         $sc = Object::load('SupplierCustomer');
-        $sc->setSupplier($this->getExpeditor());
-        $sc->setCustomer($this->getDestinator());
+        $sc->setSupplier($firstBox->getExpeditorId());
+        $sc->setCustomer($firstBox->getDestinatorId());
         $sc->save();
     }
-        $packingList->setSupplierCustomer($sc);
-        $packingList->save();
+    $packingList->setSupplierCustomer($sc);
+    $packingList->save();
 
-    Database::connection()->startTrans();
-    $packingList = $box->createPackingList();
+    // met a jour la fkey packinglist des box
+    foreach ($boxCol as $box) {
+        $box->setPackingList($packingList);
+        $box->save();
+    }
 
     // Commit de la transaction, si elle a réussi
     if (Database::connection()->hasFailedTrans()) {
-        trigger_error(Database::connection()->errorMsg(), E_USER_WARNING);
         Database::connection()->rollbackTrans();
-        Template::errorDialog($errorBody, $returnURL);
-        exit;
+        Template::errorDialog(
+            $error . "<br/>" . Database::connection()->errorMsg(),
+            'javascript:window.close()',
+            BASE_POPUP_TEMPLATE
+        );
+        exit(1);
     }
     Database::connection()->completeTrans();
-} else {
+} else if (isset($_REQUEST['pId'])) {
     // reedit=1 on arrive de la reedition des documents
     $isReedition = true;
-    $mapper = Mapper::singleton('PackingList');
-    $packingList = $mapper->load(array('Id' => $_GET['pId']));
+    $packingList = Object::load('PackingList', array('Id' => $_REQUEST['pId']));
     if(!($packingList instanceof PackingList)) {
-        Template::errorDialog($errorBody, 'javascript:window.close();', BASE_POPUP_TEMPLATE);
+        Template::errorDialog(
+            $error,
+            'javascript:window.close();',
+            BASE_POPUP_TEMPLATE
+        );
+        exit(1);
     }
+} else {
+    // rien a faire ici...
+    Tools::redirectTo('home.php');
+    exit(0);
 }
 
 generateDocument($packingList, $isReedition);

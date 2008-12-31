@@ -42,9 +42,10 @@ II. Prérequis
 - modules PEAR: HTML_Common, Log, HTML_QuickForm, XML_Util, XML_Parser,
   XML_Beautifier, Config, Mail, Numbers_Words, Calendar, Date, Net_SMTP,
   Mail_Mime, HTML_QuickForm_advmultiselect, Net_UserAgent_Detect,
-  Console_CommandLine.
-  note: Console_CommandLine, Numbers_Words et Calendar sont en version beta,
-  donc s'installent avec un "pear install -f".
+  note: Numbers_Words et Calendar sont en version beta, donc s'installent avec
+  un "pear install -f".
+- Le module PEAR Console_CommandLine est utile pour le developpement (mais 
+  n'est pas nécessaire pour le fonctionnement en prod).
 - les modules PEAR suivants sont _peut-être_ utiles (ou pas), les installer
   au cas où : Cache_Lite, HTTP_Upload, HTTP_REQUEST, DB, HTML_Template_IT
 - le path de PEAR doit être dans le include_path de php.ini, 

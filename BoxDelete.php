@@ -60,55 +60,29 @@ if (!isset($_REQUEST['boxIDs'])) {
 }
 
 // on charge la collection des box à partir des IDs passés en paramètre
-$mapper = Mapper::singleton('Box');
-$col = $mapper->loadCollection(array('Id'=>$_REQUEST['boxIDs']));
-
-// si la collection est vide, message d'erreur
-if (Tools::isEmptyObject($col)) {
-    Template::errorDialog(E_NO_ITEM_FOUND, $retURL);
-    exit;
-}
-
-// construction de la collection de parentBox
-// note: 
-//  $boxMapper->loadCollection(array('ParentBox.Id'=>$_REQUEST['boxIDs']))
-// ne marche pas, d'ou cette boucle
-$parentBoxes = new Collection();
-$count = $col->getCount();
-for($i = 0; $i < $count; $i++){
-    $box = $col->getItem($i);
-    if (in_array($box->getParentBoxId(), $parentBoxes->getItemIds())) {
-        continue;
-    }
-    $parentBox = $box->getParentBox();
-    $parentBoxes->setItem($parentBox);
-}
+$col = Object::loadCollection('Box', array('Id'=>$_REQUEST['boxIDs']));
 
 // on demarre une transaction 
 Database::connection()->startTrans();
 
-// on parcours les parentBoxes
+// on parcours les boxes
 $false = false;
-$count = $parentBoxes->getCount();
-for($i = 0; $i < $count; $i++){
-    $parentBox = $parentBoxes->getItem($i);
+foreach ($col as $box) {
     // on parcours les ack liées et on passe leur état à "en cours"
-    $ackCollection = $parentBox->getActivatedChainTaskCollection();      
-    if (!Tools::isEmptyObject($ackCollection)) {
-        $colCount = $ackCollection->getCount();
-        for($k = 0; $k < $colCount; $k++){
-            $ack = $ackCollection->getItem($k);
-            $ack->setState(ActivatedChainTask::STATE_IN_PROGRESS);
-            saveInstance($ack, $retURL);
-        }
+    $ackCollection = $box->getActivatedChainTaskCollection();      
+    $colCount = $ackCollection->getCount();
+    for($k = 0; $k < $colCount; $k++){
+        $ack = $ackCollection->getItem($k);
+        $ack->setState(ActivatedChainTask::STATE_IN_PROGRESS);
+        saveInstance($ack, $retURL);
     }
     // suppression de la packinglist liée
-    $pkl = $parentBox->getPackingList();
+    $pkl = $box->getPackingList();
     if ($pkl instanceof PackingList) {
         deleteInstance($pkl, $retURL);
     }    
     // suppression de la box parente
-    deleteInstance($parentBox, $retURL);
+    deleteInstance($box, $retURL);
 }
 
 // On commite

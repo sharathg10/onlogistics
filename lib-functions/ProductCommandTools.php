@@ -90,8 +90,11 @@ function getReturnURL($commandType) {
         if ($commandType == Command::TYPE_SUPPLIER) {
             $returnURL = 'SupplierCatalog.php?dummy';
         } else {
-            if (in_array('readytowear', Preferences::get('TradeContext', array()))) {
+            $ctx = Preferences::get('TradeContext', array());
+            if (in_array('readytowear', $ctx)) {
                 $returnURL = 'dispatcher.php?entity=RTWModel&altname=RTWModelForCatalog'; 
+            } else if (in_array('readytowear2', $ctx)) {
+                $returnURL = 'dispatcher.php?entity=ProductModel&altname=ProductModelForCatalog'; 
             } else {
                 $returnURL = 'CustomerCatalog.php?dummy';
             }

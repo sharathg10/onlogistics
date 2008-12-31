@@ -285,32 +285,35 @@ set @id=(select IFNULL(max(_Id),0) from DocumentModel);
 INSERT INTO `DocumentModel` VALUES (@id+1,0,'COMMANDE FOURNISSEUR','',1,'CommandReceiptSupplier',1,0,1,1,1,0);
 
 ALTER TABLE SupplierCustomer ADD _Factor INT(11) NOT NULL DEFAULT 0;
+ALTER TABLE AbstractDocument DROP _Box;
+ALTER TABLE Product ADD _ProductModel INT(11) NOT NULL DEFAULT 0 AFTER _Owner;
+CREATE INDEX _ProductModel ON Product (_ProductModel);
 
-ALTER TABLE RTWModel ADD _Material3 INT(11) NOT NULL DEFAULT 0 AFTER _Material2Quantity;
-ALTER TABLE RTWModel ADD _Material3Quantity DECIMAL(10,3) DEFAULT NULL AFTER _Material3;
-ALTER TABLE RTWModel ADD _Accessory3 INT(11) NOT NULL DEFAULT 0 AFTER _Accessory2Quantity;
-ALTER TABLE RTWModel ADD _Accessory3Quantity DECIMAL(10,3) DEFAULT NULL AFTER _Accessory3;
-CREATE INDEX _Material3 ON RTWModel (_Material3);
-CREATE INDEX _Accessory3 ON RTWModel (_Accessory3);
+DROP TABLE IF EXISTS ProductModel;
+CREATE TABLE ProductModel (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _BaseReference VARCHAR(255) DEFAULT NULL,
+  _ProductType INT(11) NOT NULL DEFAULT 0,
+  _Owner INT(11) NOT NULL DEFAULT 0,
+  _Manufacturer INT(11) NOT NULL DEFAULT 0,
+  _TVA INT(11) NOT NULL DEFAULT 0,
+  _Description TEXT DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
 
-ALTER TABLE RTWModel ADD _HeelReferenceNomenclature INT(1) DEFAULT 1 AFTER _HeelReferenceQuantity;
-ALTER TABLE RTWModel ADD _SoleNomenclature INT(1) DEFAULT 1 AFTER _SoleQuantity;
-ALTER TABLE RTWModel ADD _BoxNomenclature INT(1) DEFAULT 1 AFTER _BoxQuantity;
-ALTER TABLE RTWModel ADD _HandBagNomenclature INT(1) DEFAULT 1 AFTER _HandBagQuantity;
-ALTER TABLE RTWModel ADD _Material1Nomenclature INT(1) DEFAULT 1 AFTER _Material1Quantity;
-ALTER TABLE RTWModel ADD _Material2Nomenclature INT(1) DEFAULT 1 AFTER _Material2Quantity;
-ALTER TABLE RTWModel ADD _Material3Nomenclature INT(1) DEFAULT 1 AFTER _Material3Quantity;
-ALTER TABLE RTWModel ADD _Accessory1Nomenclature INT(1) DEFAULT 1 AFTER _Accessory1Quantity;
-ALTER TABLE RTWModel ADD _Accessory2Nomenclature INT(1) DEFAULT 1 AFTER _Accessory2Quantity;
-ALTER TABLE RTWModel ADD _Accessory3Nomenclature INT(1) DEFAULT 1 AFTER _Accessory3Quantity;
-ALTER TABLE RTWModel ADD _LiningNomenclature INT(1) DEFAULT 1 AFTER _LiningQuantity;
-ALTER TABLE RTWModel ADD _InsoleNomenclature INT(1) DEFAULT 1 AFTER _InsoleQuantity;
-ALTER TABLE RTWModel ADD _UnderSoleNomenclature INT(1) DEFAULT 1 AFTER _UnderSoleQuantity;
-ALTER TABLE RTWModel ADD _MediaPlantaNomenclature INT(1) DEFAULT 1 AFTER _MediaPlantaQuantity;
-ALTER TABLE RTWModel ADD _LagrimaNomenclature INT(1) DEFAULT 1 AFTER _LagrimaQuantity;
-ALTER TABLE RTWModel ADD _HeelCoveringNomenclature INT(1) DEFAULT 1 AFTER _HeelCoveringQuantity;
-ALTER TABLE RTWModel ADD _SelvedgeNomenclature INT(1) DEFAULT 1 AFTER _SelvedgeQuantity;
-ALTER TABLE RTWModel ADD _BambooNomenclature INT(1) DEFAULT 1 AFTER _BambooQuantity;
+CREATE UNIQUE INDEX _BaseReference ON ProductModel (_BaseReference);
+CREATE INDEX _ProductType ON ProductModel (_ProductType);
+CREATE INDEX _Owner ON ProductModel (_Owner);
+CREATE INDEX _Manufacturer ON ProductModel (_Manufacturer);
+CREATE INDEX _TVA ON ProductModel (_TVA);
+
+DROP TABLE IF EXISTS productModelRTWSize;
+CREATE TABLE productModelRTWSize (
+  _FromProductModel int(11) unsigned NOT NULL default 0,
+  _ToRTWSize int(11) unsigned NOT NULL default 0,
+  PRIMARY KEY (_FromProductModel, _ToRTWSize)
+) TYPE=InnoDB CHARSET=latin1;
 
 ####################################
 # Ne pas enlever

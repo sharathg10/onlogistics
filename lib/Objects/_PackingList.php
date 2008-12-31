@@ -3,6 +3,8 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
+ * IMPORTANT: This is a generated file, please do not edit.
+ *
  * This file is part of Onlogistics, a web based ERP and supply chain 
  * management application. 
  *
@@ -34,6 +36,10 @@
  * @filesource
  */
 
+/**
+ * _PackingList class
+ *
+ */
 class _PackingList extends AbstractDocument {
     
     // Constructeur {{{
@@ -50,57 +56,61 @@ class _PackingList extends AbstractDocument {
     }
 
     // }}}
-    // Box foreignkey property + getter/setter {{{
+    // Box one to many relation + getter/setter {{{
 
     /**
-     * Box foreignkey
+     * Box 1..* relation
      *
      * @access private
-     * @var mixed object Box or integer
+     * @var Collection
      */
-    private $_Box = false;
+    private $_BoxCollection = false;
 
     /**
-     * _PackingList::getBox
+     * _PackingList::getBoxCollection
      *
      * @access public
-     * @return object Box
+     * @return object Collection
      */
-    public function getBox() {
-        if (is_int($this->_Box) && $this->_Box > 0) {
-            $mapper = Mapper::singleton('Box');
-            $this->_Box = $mapper->load(
-                array('Id'=>$this->_Box));
+    public function getBoxCollection($filter = array(),
+        $sortOrder = array(), $fields = array()) {
+        // si un paramètre est passé on force le rechargement de la collection
+        // on ne met en cache mémoire que les collections brutes
+        if (!empty($filter) || !empty($sortOrder) || !empty($fields)) {
+            $mapper = Mapper::singleton('PackingList');
+            return $mapper->getOneToMany($this->getId(),
+                'Box', $filter, $sortOrder, $fields);
         }
-        return $this->_Box;
+        // si la collection n'est pas en mémoire on la charge
+        if (false == $this->_BoxCollection) {
+            $mapper = Mapper::singleton('PackingList');
+            $this->_BoxCollection = $mapper->getOneToMany($this->getId(),
+                'Box');
+        }
+        return $this->_BoxCollection;
     }
 
     /**
-     * _PackingList::getBoxId
+     * _PackingList::getBoxCollectionIds
      *
      * @access public
-     * @return integer
+     * @param $filter FilterComponent or array
+     * @return array
      */
-    public function getBoxId() {
-        if ($this->_Box instanceof Box) {
-            return $this->_Box->getId();
-        }
-        return (int)$this->_Box;
+    public function getBoxCollectionIds($filter = array()) {
+        $col = $this->getBoxCollection($filter, array(), array('Id'));
+        return $col instanceof Collection?$col->getItemIds():array();
     }
 
     /**
-     * _PackingList::setBox
+     * _PackingList::setBoxCollection
      *
      * @access public
-     * @param object Box $value
+     * @param object Collection $value
      * @return void
      */
-    public function setBox($value) {
-        if (is_numeric($value)) {
-            $this->_Box = (int)$value;
-        } else {
-            $this->_Box = $value;
-        }
+    public function setBoxCollection($value) {
+        $this->_BoxCollection = $value;
     }
 
     // }}}
@@ -144,8 +154,7 @@ class _PackingList extends AbstractDocument {
      * @see Object.php
      */
     public static function getProperties($ownOnly = false) {
-        $return = array(
-            'Box' => 'Box');
+        $return = array();
         return $ownOnly?$return:array_merge(parent::getProperties(), $return);
     }
 

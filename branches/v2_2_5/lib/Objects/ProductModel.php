@@ -29,7 +29,7 @@
  * @author    ATEOR dev team <dev@ateor.com>
  * @copyright 2003-2008 ATEOR <contact@ateor.com> 
  * @license   http://www.fsf.org/licensing/licenses/agpl-3.0.html GNU AGPL
- * @version   SVN: $Id$
+ * @version   SVN: $Id: SiteAddEdit.php 9 2008-06-06 09:12:09Z izimobil $
  * @link      http://www.onlogistics.org
  * @link      http://onlogistics.googlecode.com
  * @since     File available since release 0.1.0
@@ -37,15 +37,15 @@
  */
 
 /**
- * PackingList class
+ * ProductModel class
  *
  * Class containing addon methods.
  */
-class PackingList extends _PackingList {
+class ProductModel extends _ProductModel {
     // Constructeur {{{
 
     /**
-     * PackingList::__construct()
+     * ProductModel::__construct()
      * Constructeur
      *
      * @access public
@@ -56,59 +56,27 @@ class PackingList extends _PackingList {
     }
 
     // }}}
-    // getLogo() {{{
+    // RTWModel::canBeDeleted() {{{
 
     /**
-     * Retourne le logo (sous forme base64), ou une string vide.
+     * Retourne true si l'objet peut etre detruit en base de donnees.
      *
      * @access public
-     * @return string 
+     * @return boolean
      */
-    function getLogo() {
-        $dm = $this->getDocumentModel();
-        if (!$dm instanceof DocumentModel) {
-            return '';
-        }
-        $boxCol = $this->getBoxCollection();
-        $box    = $boxCol->getItem(0);
-        switch($dm->getLogoType()) {
-            case DocumentModel::EXPEDITOR:
-                $actor = $box->getExpeditor();
-                break;
-            case DocumentModel::DESTINATOR: 
-                $actor = $box->getDestinator();
-                break;
-            case DocumentModel::ONE_ACTOR: 
-                $actor = $dm->getActor();
-                break;
-            default:
-                return '';
-        }
-        if ($actor instanceof Actor) { 
-            return $actor->getLogo();
-        }
-        return '';
-    }
-
-    // }}}
-    // getCommandCollection() {{{
-
-    /**
-     * Retourne la collection de commandes de la packinglist.
-     *
-     * @access public
-     * @return Collection 
-     */
-    function getCommandCollection() {
-        $boxCol = $this->getBoxCollection();
-        $cmdCol = new Collection('ProductCommand', false);
-        foreach ($boxCol as $box) {
-            $cmi = $box->getCommandItem();
-            if ($cmi instanceof CommandItem) {
-                $cmdCol->setItem($cmi->getCommand());
+    public function canBeDeleted() {
+        try {
+            parent::canBeDeleted();
+            $pdtCol = $this->getProductCollection();
+            foreach ($pdtCol as $pdt) {
+                if (!$pdt->isDeletable(false)) {
+                    throw new Exception('');
+                }
             }
+        } catch (Exception $exc) {
+            throw new Exception(_('This model can not be modified because it is already used in one or more orders'));
         }
-        return $cmdCol;
+        return true;
     }
 
     // }}}

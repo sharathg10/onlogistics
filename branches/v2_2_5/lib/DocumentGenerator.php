@@ -2391,14 +2391,6 @@ class ToHaveGenerator extends DocumentGenerator
  */
 class PackingListGenerator extends DocumentGenerator
 {
-    // properties {{{
-
-    /**
-     * proprietes de classe servant de raccourcis pour les diverses methodes
-     */
-    public $Box = false;
-
-    // }}}
     // __construct() {{{
 
     /**
@@ -2409,15 +2401,14 @@ class PackingListGenerator extends DocumentGenerator
      * @access protected
      */
     public function __construct($document, $isReedition = false) {
-        $this->Box = $document->getBox();
         $this->supplierCustomer = $document->getSupplierCustomer();
         $this->expeditor = $this->supplierCustomer->getSupplier();
         $this->expeditorSite = $this->expeditor->getMainSite();
         $this->destinator = $this->supplierCustomer->getCustomer();
         $this->destinatorSite = $this->destinator->getMainSite();
-        $cur = $document->getCurrency();
-        parent::__construct($document, $isReedition, true, $cur,
-                            _('Packing list'));
+        $this->totalWeight = 0;
+        $this->totalVolume = 0;
+        parent::__construct($document, $isReedition, true, false, _('Packing list'));
     }
 
     // }}}
@@ -2442,68 +2433,6 @@ class PackingListGenerator extends DocumentGenerator
     }
 
     // }}}
-    // PackingListGenerator::renderAddressesBloc() {{{
-
-    /**
-     * Donnees a afficher dans toutes les pages, juste en dessous du header
-     * @access public
-     * @return void
-     */
-    public function renderAddressesBloc() {
-        // adresse de facturation: seulement si une seule Command liee a la Box!
-        $Command = $this->Box->getCommand();
-        if (!Tools::isEmptyObject($Command)) {
-            parent::renderAddressesBloc();
-        }
-    }
-
-    // }}}
-    // PackingListGenerator::_renderPackingListBloc() {{{
-
-    /**
-     * affiche les infos sur la facture et le client et le commercial
-     * @access private
-     * @return void
-     */
-    private function _renderPackingListBloc() {
-        $columnsData = array();  // Les donnees a afficher
-        $columns = array(
-            _('Packing list') => 32,
-            _('Customer') => 40,
-            _('Order') => 30,
-            _('Customer order number') => 30,
-            _('Deal number') . ' ' => 35,
-            _('Carriage cost') . ' ' => 25
-            );
-        $this->pdf->tableHeader($columns, 1);
-
-        $editionDate = $this->document->getEditionDate('localedate_short');
-
-        $CommandCollection = $this->Box->getCommandCollection();
-        $count = $CommandCollection->getCount();
-        for($i = 0; $i < $count; $i++) {
-            $currentData = array();
-            $Command = $CommandCollection->getItem($i);
-            $CustomerName = Tools::getValueFromMacro($Command, '%Destinator.Name%');
-            $CustomerPhone = Tools::getValueFromMacro($Command, '%DestinatorSite.Phone%');
-
-            $currentData[0] = ($i == 0)?
-            sprintf(_('Number %s from %s'), $this->document->getDocumentNo(), $editionDate):'';
-            $currentData = $currentData
-                + array(1 => sprintf(_("%s \n (Tel: %s)"), $CustomerName, $CustomerPhone),
-                    2 => $Command->getCommandNo(),
-                    3 => Tools::getValueFromMacro($Command, '%CommandExpeditionDetail.CustomerCommandNo%'),
-                    4 => Tools::getValueFromMacro($Command, '%CommandExpeditionDetail.Deal%'),
-                    5 => Tools::getValueFromMacro($Command, '%Incoterm.Label%'));
-            $columnsData[$i] = $currentData;
-            unset($currentData);
-        }
-
-        $this->pdf->tableBody($columnsData);
-        $this->pdf->ln(5);
-    }
-
-    // }}}
     // PackingListGenerator::_renderContent() {{{
 
     /**
@@ -2514,38 +2443,63 @@ class PackingListGenerator extends DocumentGenerator
     protected function _renderContent() {
         //cellule description personalisée dans Box.getContentInfoForPackingList()
         $columns = array(
-            _('Reference') => 42,
-            _('Description') => 60,
+            _('Reference') => 50,
+            _('Description') => 40,
+            _('Order') => 20,
             _('Quantity') => 20,
             _('Weight (kg)')  => 20,
-            _('Dimensions') => 30,
-            _('Volume (l)') => 20
-            );
+            _('Dimensions') => 20,
+            _('Volume (l)') => 20,
+        );
         $this->pdf->tableHeader($columns, 1);
-
-        $BoxCollection = $this->Box->getBoxCollection();
-        $count = $BoxCollection->getCount();
-        $columnsData = array();
-        /*for($i = 0; $i < $count; $i++){
-        $Box = $BoxCollection->getItem($i);
-        $columnsData = array_merge($columnsData, $Box->getDataForPackingList());
-        }*/
-        $PackingList = $this->Box->getPackingList();
-        $columnsData = $this->Box->getDataForPackingList($this->Box->getLevel(),
-        $PackingList->getDocumentModel());
-
-        $this->pdf->tableBody($columnsData, $columns);
-        $this->pdf->ln(5);
-        if ($this->pdf->getY() >= PAGE_HEIGHT_LIMIT) {
-            $this->pdf->addPage();
-            $this->pdf->addHeader();
-            //apres viendra le tableau poid volume, on reaffiche
-            // la derniere ligne des donnees pour qu'il ne soit pas seul
-            $count = sizeof($columnsData);
-            $this->pdf->tableHeader($columns, 1);
-            $this->pdf->tableBody(array($columnsData[$count-1]), $columns);
-            $this->pdf->ln(5);
+        $boxCol = $this->document->getBoxCollection();
+        foreach ($boxCol as $box) {
+            $childrenData = array();
+            $totalQty = $totalVolume = $totalWeight = 0;
+            $data = $box->getDataForDocument();
+            foreach ($data['children'] as $childData) {
+                if (!$childData['cmi'] instanceof CommandItem) {
+                    continue;
+                }
+                $reference = $childData['reference'];
+                $totalQty += $childData['quantity'];
+                $weight = $childData['cmi']->getWeight($childData['quantity']);
+                $volume = $childData['cmi']->getVolume($childData['quantity']);
+                $totalWeight += $weight;
+                $totalVolume += $volume;
+                $dimensions = $childData['cmi']->getLength() . 'x' 
+                            . $childData['cmi']->getWidth() . 'x' 
+                            . $childData['cmi']->getHeight();
+                $childrenData[] = array(
+                    $childData['reference'],
+                    Tools::getValueFromMacro($childData['cmi'], '%Product.ProductType.Name%'),
+                    Tools::getValueFromMacro($childData['cmi'], '%Command.CommandNo%'),
+                    $childData['quantity'],
+                    $totalWeight,
+                    $dimensions,
+                    $totalVolume,
+                );
+            }
+            $boxWeight = $box->getWeight();
+            $boxVolume = $box->getVolume();
+            $this->pdf->tableBody(
+                array(0 => array(
+                    $data['reference'],
+                    '',
+                    '',
+                    $totalQty,
+                    $boxWeight ? $boxWeight : $totalWeight,
+                    $box->getDimensions(),
+                    $boxVolume ? $boxVolume : $totalVolume
+                )), 
+                $columns, 
+                array('fontStyle' => 'B')
+            );
+            $this->pdf->tableBody($childrenData, $columns);
+            $this->totalVolume += $totalVolume;
+            $this->totalWeight += $totalWeight;
         }
+        $this->pdf->ln(5);
     }
 
     // }}}
@@ -2558,10 +2512,10 @@ class PackingListGenerator extends DocumentGenerator
      */
     private function _renderTotalBloc() {
         $this->pdf->tableHeader(
-            array(_('Total weight (kg)') . ': ' . DocumentGenerator::formatNumber($this->Box->getWeight()) => 192)
+            array(_('Total weight (kg)') . ': ' . DocumentGenerator::formatNumber($this->totalWeight) => 192)
             );
         $this->pdf->tableHeader(
-            array(_('Total volume (m3)') . ': ' . DocumentGenerator::formatNumber($this->Box->getVolume() / 1000, 3) => 192)
+            array(_('Total volume (m3)') . ': ' . DocumentGenerator::formatNumber($this->totalVolume / 1000, 3) => 192)
             );
         $this->pdf->ln(3);
     }
@@ -2582,8 +2536,14 @@ class PackingListGenerator extends DocumentGenerator
         require_once ('Objects/DocumentModelProperty.inc.php');
         $unique = array(DocumentModelProperty::CELL_NO_DOC);
         $dom = $this->document->findDocumentModel();
+        $cmdIds = array();
         if($dom instanceof DocumentModel) {
-            $CommandCollection = $this->Box->getCommandCollection();
+            $boxCol = $this->document->getBoxCollection();
+            $CommandCollection = new Collection('Command', false);
+            foreach ($boxCol as $box) {
+                $tmpcol = $box->getCommandCollection();
+                $CommandCollection = $CommandCollection->merge($tmpcol);
+            }
             $commandCount = $CommandCollection->getCount();
 
             $domPropCol = $dom->getDocumentModelPropertyCollection(array('Property'=>0));
@@ -4666,7 +4626,7 @@ class BoxLabelGenerator extends DocumentGenerator
             }
             $i++;
             
-            $data  = $box->getDataForLabel();
+            $data  = $box->getDataForDocument();
             $exp   = $data['expeditor'];
             $expId = $exp->getId();
             if (($logo = $exp->getLogo()) != '') {

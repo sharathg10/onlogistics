@@ -177,7 +177,11 @@ class ChainAddEdit extends GenericAddEdit {
      * @return void
      */
     public function renderAutoAssignTo() {
-        // forbid edition of AutoAssignTo property, too dangerous
+        // allow edition of AutoAssignTo property only to root user
+        if ($this->auth->isRootUserAccount()) {
+            // propage la creation de l'element
+            return 'pass';
+        }
     }
 
     // }}}

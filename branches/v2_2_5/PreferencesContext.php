@@ -54,8 +54,11 @@ if (isset($_POST['Ok'])) {
     if (isset($_POST['ConsultingContext'])) {
         $tradeContext[] = 'consulting';
     }
-    if (isset($_POST['ReadyToWearContext'])) {
+    if (isset($_POST['ReadyToWearContext1'])) {
         $tradeContext[] = 'readytowear';
+    }
+    if (isset($_POST['ReadyToWearContext2'])) {
+        $tradeContext[] = 'readytowear2';
     }
     Preferences::set('TradeContext', $tradeContext);
     Preferences::save();
@@ -80,8 +83,10 @@ $smarty->assign('AeroContext',
         (is_array($olContext) && in_array('aero', $olContext)));
 $smarty->assign('ConsultingContext',
         (is_array($olContext) && in_array('consulting', $olContext)));
-$smarty->assign('ReadyToWearContext',
+$smarty->assign('ReadyToWearContext1',
         (is_array($olContext) && in_array('readytowear', $olContext)));
+$smarty->assign('ReadyToWearContext2',
+        (is_array($olContext) && in_array('readytowear2', $olContext)));
 
 Template::page('', $smarty->fetch('Preferences/PreferencesContext.html'));
 

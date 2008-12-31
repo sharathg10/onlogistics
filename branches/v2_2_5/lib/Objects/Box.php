@@ -3,6 +3,8 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
+ * IMPORTANT: This is a generated file, please do not edit.
+ *
  * This file is part of Onlogistics, a web based ERP and supply chain 
  * management application. 
  *
@@ -34,6 +36,11 @@
  * @filesource
  */
 
+/**
+ * Box class
+ *
+ * Class containing addon methods.
+ */
 class Box extends _Box {
     // Constructeur {{{
 
@@ -49,14 +56,15 @@ class Box extends _Box {
     }
 
     // }}}
+    // getExecutionDate() {{{
 
     /**
-     * Retourne la date de dÃ©but de l'ACK ou de l'ACH s'il s'agit d'une box de
+     * Retourne la date de début de l'ACK ou de l'ACH s'il s'agit d'une box de
      * niveau 1.
      *
      * @access public
      * @return string
-     **/
+     */
     function getExecutionDate($format='localedate_short'){
         if ($this->getLevel() == 1) {
             $ach = $this->getActivatedChain();
@@ -71,23 +79,29 @@ class Box extends _Box {
         return _('N/A');
     }
 
+    // }}}
+    // getSellUnitType() {{{
+
     /**
-     * Retourne l'unitÃ© de regroupement du Box.
+     * Retourne l'unité de regroupement du Box.
      *
      * @access public
      * @return object SellUnitType
-     **/
+     */
     function getSellUnitType(){
         // TODO
         return false;
     }
+
+    // }}}
+    // getProductTypeCollection() {{{
 
     /**
      * Retourne la collection de types de produits du Box.
      *
      * @access public
      * @return object SellUnitType
-     **/
+     */
     function getProductTypeCollection(){
         $col = new Collection('', false);
         $boxcol = $this->getBoxCollection();
@@ -107,9 +121,12 @@ class Box extends _Box {
         return $col;
     }
 
+    // }}}
+    // getChildrenBoxes() {{{
+
     /**
-     * Retourne toutes les box infÃ©rieures dans la hiÃ©rarchie, si un level est
-     * prÃ©cisÃ© seuls les box de ce level seront retournÃ©es.
+     * Retourne toutes les box inférieures dans la hiérarchie, si un level est
+     * précisé seuls les box de ce level seront retournées.
      *
      * @access public
      * @param int $level
@@ -130,6 +147,9 @@ class Box extends _Box {
         }
         return $return;
     }
+
+    // }}}
+    // createPackingList() {{{
 
     /**
      * Cree la PackingList associee si elle n'existe pas deja
@@ -168,13 +188,16 @@ class Box extends _Box {
         return $PackingList;
     }
 
+    // }}}
+    // getCommandCollection() {{{
+
     /**
      * Retourne la collection des Command liees, via le path:
      * Box > ActivatedChain > CommandItem > Command
      * Si la Box le permet
      * @access public
      * @return Object Collection
-     **/
+     */
     function getCommandCollection() {
         $CommandCollection = new Collection();  // La collection retournee
         // Ne marche pas a cause de la recursivite...
@@ -220,11 +243,14 @@ class Box extends _Box {
         return $CommandCollection;
     }
 
+    // }}}
+    // getCommand() {{{
+
     /**
      * Retourne, si la Box le permet la Command liee, si elle n'est liee qu'a une seule Command
      * @access public
      * @return void
-     **/
+     */
     function getCommand(){
         $CommandCollection = $this->getCommandCollection();
 
@@ -235,117 +261,17 @@ class Box extends _Box {
         return false;
     }
 
-    /**
-     * Retourne un tableau de donnees a afficher dans la PackingList
-     * Les donnees n'ont pas la meme source, selon le Level de la Box
-     *
-     * @param $topLevel: Level de la ParentBox pour laquelle on edite
-     * une PackingList: sert pour l'indentation des references
-     * @access public
-     * @return array
-     **/
-    function getContentInfoForPackingList($topLevel, $documentModel) {
-        require_once ('Objects/Property.inc.php');
-        $return = array();  // Le tableau qui sera retourne
-        $CommandItem = $this->getCommandItem();
-
-
-        $numberOfDomProps = 0;
-        if ($documentModel instanceof DocumentModel) {
-            $domPropertyCol = $documentModel->getDocumentModelPropertyCollection(
-                  array('PropertyType'=>0), array('Order'=>SORT_ASC));
-            $numberOfDomProps = $domPropertyCol->getCount();
-        }
-
-        if (!Tools::isEmptyObject($CommandItem) && $CommandItem instanceof ProductCommandItem) {
-            $CommandItem  = $this->getCommandItem();
-            $baseReference = Tools::getValueFromMacro($CommandItem, '%Product.BaseReference%');
-            $PdtTypeName = Tools::getValueFromMacro($CommandItem, '%Product.ProductType.Name%');
-            $PdtId = Tools::getValueFromMacro($CommandItem, '%Product.Id%');
-            $customDesignation = '';
-            for ($i=0 ; $i<$numberOfDomProps ; $i++) {
-                $domProperty = $domPropertyCol->getItem($i);
-                $property = $domProperty->getProperty();
-                $product = $CommandItem->getProduct();
-                if($product instanceof Product) {
-                    $customDesignation .= ' ' .
-                        Tools::getValueFromMacro($product, '%' . $property->getName() . '%');
-                }
-            }
-
-            $return =  array('Reference' => $baseReference,
-                              'Description' => $PdtTypeName . $customDesignation,
-                              'Quantity' => $CommandItem->getQuantity(),
-                              'Dimension' => $CommandItem->getLength() . ' x '
-                                            . $CommandItem->getWidth() . ' x '
-                                           . $CommandItem->getHeight());
-        }
-        else {
-            $CoverTypeName = Tools::getValueFromMacro($this, '%CoverType.Name%');
-            $return = array('Reference' => $this->getReference(),
-                             'Description' => $CoverTypeName,
-                             'Quantity' => 1,
-                             'Dimension' => $this->getDimensions());
-        }
-        $return['Weight'] = $this->getWeight();
-        $return['Volume'] = $this->getVolume();
-
-        $indent = '';
-        for($j = 0; $j < $topLevel - $this->getLevel(); $j++) {
-            $indent .= '   ';
-        }
-
-        return array(0 => $indent . $return['Reference'],
-                     1 => $return['Description'],
-                     2 => $return['Quantity'],
-                     3 => $return['Weight'],
-                     4 => $return['Dimension'],
-                     5 => $return['Volume']);
-    }
+    // }}}
+    // getDataForDocument() {{{
 
     /**
-     * Retourne les donnees a afficher ds la PackingList.
-     *
-     * @access public
-     * @param $topLevel: Level de la ParentBox pour laquelle on edite
-     * une PackingList: sert pour l'indentation des references
-     * @return object SellUnitType
-     **/
-     function getDataForPackingList($topLevel, $documentModel) {
-         // les donnees qui seront retournees
-         $dataArray = array($this->getContentInfoForPackingList($topLevel, $documentModel));
-
-        if ($this->getLevel() == 1) {
-            return $dataArray;
-        }
-
-        $level = $this->getLevel();
-        for($currentLevel = $level - 1; $currentLevel > 0; $currentLevel--) {
-            $BoxCollection = $this->getChildrenBoxes($currentLevel);
-            $count = $BoxCollection->getCount();
-            // A chaque level inferieur a celui de plus haut niveau ne correspond
-            // pas forcement une Box
-            if ($count == 0) {
-                continue;
-            }
-            for($i = 0; $i < $count; $i++) {
-                $currentBox = $BoxCollection->getItem($i);
-                $dataArray = array_merge($dataArray, $currentBox->getDataForPackingList($topLevel, $documentModel));
-                unset($currentBox);
-            }
-        }
-
-        return $dataArray;
-    }
-
-    /**
-     * Retourne les donnees pour les etiquettes.
+     * Retourne les donnees pour les etiquettes ou la packinglist.
      *
      * @access public
      * @param int $level
      * @return object Collection
      */
-    function getDataForLabel()
+    function getDataForDocument()
     {
         if ($this->getParentBoxId()) {
             return array();
@@ -370,14 +296,16 @@ class Box extends _Box {
                 continue;
             }
             $children[$cmiId] = array(
-                'cmi'      => $cmi,
-                'quantity' => 1,
+                'cmi'       => $cmi,
+                'quantity'  => 1,
+                'reference' => $box->getReference(),
             );
         }
         $return['children'] = $children;
         return $return;
     }
 
+    // }}}
 }
 
 ?>

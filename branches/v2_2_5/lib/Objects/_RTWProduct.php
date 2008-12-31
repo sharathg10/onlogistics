@@ -110,60 +110,6 @@ class _RTWProduct extends Product {
     }
 
     // }}}
-    // Size foreignkey property + getter/setter {{{
-
-    /**
-     * Size foreignkey
-     *
-     * @access private
-     * @var mixed object RTWSize or integer
-     */
-    private $_Size = false;
-
-    /**
-     * _RTWProduct::getSize
-     *
-     * @access public
-     * @return object RTWSize
-     */
-    public function getSize() {
-        if (is_int($this->_Size) && $this->_Size > 0) {
-            $mapper = Mapper::singleton('RTWSize');
-            $this->_Size = $mapper->load(
-                array('Id'=>$this->_Size));
-        }
-        return $this->_Size;
-    }
-
-    /**
-     * _RTWProduct::getSizeId
-     *
-     * @access public
-     * @return integer
-     */
-    public function getSizeId() {
-        if ($this->_Size instanceof RTWSize) {
-            return $this->_Size->getId();
-        }
-        return (int)$this->_Size;
-    }
-
-    /**
-     * _RTWProduct::setSize
-     *
-     * @access public
-     * @param object RTWSize $value
-     * @return void
-     */
-    public function setSize($value) {
-        if (is_numeric($value)) {
-            $this->_Size = (int)$value;
-        } else {
-            $this->_Size = $value;
-        }
-    }
-
-    // }}}
     // getTableName() {{{
 
     /**
@@ -205,8 +151,7 @@ class _RTWProduct extends Product {
      */
     public static function getProperties($ownOnly = false) {
         $return = array(
-            'Model' => 'RTWModel',
-            'Size' => 'RTWSize');
+            'Model' => 'RTWModel');
         return $ownOnly?$return:array_merge(parent::getProperties(), $return);
     }
 
@@ -294,15 +239,6 @@ class _RTWProduct extends Product {
                 'shortlabel'   => _('model'),
                 'usedby'       => array('addedit', 'grid', 'searchform'),
                 'required'     => true,
-                'inplace_edit' => false,
-                'add_button'   => false,
-                'section'      => ''
-            ),
-            'Size'=>array(
-                'label'        => _('Size'),
-                'shortlabel'   => _('Size'),
-                'usedby'       => array('addedit'),
-                'required'     => false,
                 'inplace_edit' => false,
                 'add_button'   => false,
                 'section'      => ''

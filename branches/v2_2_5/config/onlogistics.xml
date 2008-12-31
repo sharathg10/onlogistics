@@ -646,7 +646,8 @@
         <property type="foreignkey" name="ExpeditorSite" class="Site" />
         <property type="foreignkey" name="Destinator" class="Actor" />
         <property type="foreignkey" name="DestinatorSite" class="Site" />
-        <property type="foreignkey" name="PackingList" class="PackingList" />
+        <property type="foreignkey" name="PackingList" class="PackingList" 
+            navigable="1" />
         <property type="manytomany" name="ActivatedChainTask"
             class="ActivatedChainTask" field="FromBox"
             linktable="boxActivatedChainTask" linkfield="ToActivatedChainTask"/>
@@ -2060,9 +2061,7 @@
     <entity name="Packaging" extends="Container" tablename="Container" />
 
     <!-- entity PackingList -->
-    <entity name="PackingList" extends="AbstractDocument"
-        tablename="AbstractDocument">
-        <property type="foreignkey" name="Box" class="Box" />
+    <entity name="PackingList" extends="AbstractDocument" tablename="AbstractDocument">
     </entity>
 
     <!-- entity ParagraphModel -->
@@ -2248,6 +2247,10 @@
         <property type="string" name="Description" />
         <property type="string" name="Image" />
         <property type="foreignkey" name="Owner" class="Actor" />
+        <property type="foreignkey" name="ProductModel" class="ProductModel"
+            navigable="1"/>
+        <property type="foreignkey" name="Size" label="Size"
+            class="RTWSize" usedby="addedit" />
     </entity>
 
     <!-- entity ProductChainLink -->
@@ -2296,6 +2299,27 @@
             usedby="searchform,grid,addedit" label="Name" required="1" />
         <property type="foreignkey" name="ProductType" class="ProductType"
             usedby="searchform,grid,addedit" label="Product type" required="1" />
+    </entity>
+
+    <!-- entity ProductModel -->
+    <entity name="ProductModel" tablename="ProductModel"
+        features="searchform,grid,add,edit,del" tostring="BaseReference">
+        <property type="string" name="BaseReference" label="Reference"
+            usedby="searchform,grid,addedit" required="1" unique="1" />
+       <property type="foreignkey" name="ProductType" class="ProductType"
+           usedby="searchform,grid,addedit" label="Product type" required="1"/>
+       <property type="foreignkey" name="Owner" class="Actor"
+           usedby="searchform,grid,addedit" label="Owner" required="1" />
+       <property type="foreignkey" name="Manufacturer" class="Supplier"
+           usedby="searchform,grid,addedit" label="Manufacturer" required="1" />
+        <property type="foreignkey" name="TVA" class="TVA" 
+           usedby="grid,addedit" label="VAT"/>
+        <property type="text" name="Description" label="Description"
+            usedby="grid,addedit" />
+        <property type="manytomany" name="Size" class="RTWSize"
+            field="FromProductModel" linkfield="ToRTWSize"
+            linktable="productModelRTWSize" label="Available sizes"
+            usedby="addedit"/>
     </entity>
 
     <!-- entity ProductPrestationCost -->
@@ -3115,8 +3139,6 @@
         <property type="foreignkey" name="Model" class="RTWModel" label="model"
             usedby="addedit,grid,searchform" required="1" ondelete="cascade"
             navigable="1"/>
-        <property type="foreignkey" name="Size" label="Size"
-            class="RTWSize" usedby="addedit" />
     </entity>
 
     <!-- Entity RTWElement -->

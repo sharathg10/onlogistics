@@ -129,7 +129,7 @@ function getDocumentModelPropertyCellValue($cell, $documentGenerator, $cmd=false
     	            if(!in_array($lem->getDate(), $dateArray)) {
     	                $dateArray[] = $lem->getDate();
     	                $filter = new FilterComponent();
-    	                if($document instanceof Invoice) {
+    	                if($document instanceof Invoice || $document instanceof PackingList) {
                             $filter->setItem(new FilterRule(
                                 'Command',
                                 FilterRule::OPERATOR_EQUALS,
@@ -157,6 +157,15 @@ function getDocumentModelPropertyCellValue($cell, $documentGenerator, $cmd=false
                         }
     	            }
     	        }
+            } elseif ($document instanceof PackingList) {
+                $doCol = Object::loadCollection('DeliveryOrder', array('Command' => $cmd->getId()));
+                foreach ($doCol as $do) {
+                    $value .= sprintf(
+                        _("No %s from %s\n"),
+                        $do->getDocumentNo(),
+                        $do->getEditionDate('localedate_short')
+                    );
+                }
             } elseif (method_exists($document, 'getDocumentNo') && method_exists($document, 'geteditionDate')) {
                 $value .= sprintf(_("No %s from %s\n"), $document->getDocumentNo(),
                         $document->getEditionDate('localedate_short'));
@@ -353,14 +362,11 @@ function getDocumentModelPropertyCellValue($cell, $documentGenerator, $cmd=false
                     }
                 }
             } elseif ($document instanceof PackingList) {
-                $box = $document->getBox();
-                $parentBox = $box->getParentBox();
-                if($parentBox instanceof Box) {
-                    $boxCol = $parentBox->getChildrenBoxes();
-                } else {
-                    $boxCol = $box->getChildrenBoxes();
+                $boxCol     = $document->getBoxCollection();
+                $totalPiece = 0;
+                foreach ($boxCol as $box) {
+                    $totalPiece += count($box->getChildrenBoxes());
                 }
-                $totalPiece = $boxCol->getCount();
             } elseif ($document instanceof ForwardingForm) {
                 // pour ne pas tenir compte des lem lié à un des products
                 // liés à un ForwardingFormPacking

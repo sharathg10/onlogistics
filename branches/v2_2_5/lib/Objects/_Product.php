@@ -1981,6 +1981,114 @@ class _Product extends Object {
     }
 
     // }}}
+    // ProductModel foreignkey property + getter/setter {{{
+
+    /**
+     * ProductModel foreignkey
+     *
+     * @access private
+     * @var mixed object ProductModel or integer
+     */
+    private $_ProductModel = false;
+
+    /**
+     * _Product::getProductModel
+     *
+     * @access public
+     * @return object ProductModel
+     */
+    public function getProductModel() {
+        if (is_int($this->_ProductModel) && $this->_ProductModel > 0) {
+            $mapper = Mapper::singleton('ProductModel');
+            $this->_ProductModel = $mapper->load(
+                array('Id'=>$this->_ProductModel));
+        }
+        return $this->_ProductModel;
+    }
+
+    /**
+     * _Product::getProductModelId
+     *
+     * @access public
+     * @return integer
+     */
+    public function getProductModelId() {
+        if ($this->_ProductModel instanceof ProductModel) {
+            return $this->_ProductModel->getId();
+        }
+        return (int)$this->_ProductModel;
+    }
+
+    /**
+     * _Product::setProductModel
+     *
+     * @access public
+     * @param object ProductModel $value
+     * @return void
+     */
+    public function setProductModel($value) {
+        if (is_numeric($value)) {
+            $this->_ProductModel = (int)$value;
+        } else {
+            $this->_ProductModel = $value;
+        }
+    }
+
+    // }}}
+    // Size foreignkey property + getter/setter {{{
+
+    /**
+     * Size foreignkey
+     *
+     * @access private
+     * @var mixed object RTWSize or integer
+     */
+    private $_Size = false;
+
+    /**
+     * _Product::getSize
+     *
+     * @access public
+     * @return object RTWSize
+     */
+    public function getSize() {
+        if (is_int($this->_Size) && $this->_Size > 0) {
+            $mapper = Mapper::singleton('RTWSize');
+            $this->_Size = $mapper->load(
+                array('Id'=>$this->_Size));
+        }
+        return $this->_Size;
+    }
+
+    /**
+     * _Product::getSizeId
+     *
+     * @access public
+     * @return integer
+     */
+    public function getSizeId() {
+        if ($this->_Size instanceof RTWSize) {
+            return $this->_Size->getId();
+        }
+        return (int)$this->_Size;
+    }
+
+    /**
+     * _Product::setSize
+     *
+     * @access public
+     * @param object RTWSize $value
+     * @return void
+     */
+    public function setSize($value) {
+        if (is_numeric($value)) {
+            $this->_Size = (int)$value;
+        } else {
+            $this->_Size = $value;
+        }
+    }
+
+    // }}}
     // ActorProduct one to many relation + getter/setter {{{
 
     /**
@@ -2704,7 +2812,9 @@ class _Product extends Object {
             'LicenceYear' => Object::TYPE_INT,
             'Description' => Object::TYPE_STRING,
             'Image' => Object::TYPE_STRING,
-            'Owner' => 'Actor');
+            'Owner' => 'Actor',
+            'ProductModel' => 'ProductModel',
+            'Size' => 'RTWSize');
         return $return;
     }
 
@@ -2922,7 +3032,16 @@ class _Product extends Object {
      * @see Object.php
      */
     public static function getMapping() {
-        $return = array();
+        $return = array(
+            'Size'=>array(
+                'label'        => _('Size'),
+                'shortlabel'   => _('Size'),
+                'usedby'       => array('addedit'),
+                'required'     => false,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => ''
+            ));
         return $return;
     }
 

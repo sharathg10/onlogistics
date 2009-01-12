@@ -834,7 +834,9 @@ class Scheduler{
 				return array('Start' => $creneau['End'] - $taskDuration,
 					'End' => $creneau['End']);
 			}
-			Assert($creneau['Start'] < $curDate);
+            // En prod on desactive la generation du warning
+            assert_options(ASSERT_WARNING,  false);
+			assert($creneau['Start'] < $curDate);
 			$curDate = $creneau['Start'];
 		}
 		$this->fullErrorMessage = __LINE__ . ' : ' . 

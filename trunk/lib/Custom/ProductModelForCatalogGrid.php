@@ -131,6 +131,15 @@ class ProductModelForCatalogGrid extends GenericGrid
      */
     public function getMapping() {
         return array(
+            'BaseReference'=>array(
+                'label'        => _('Reference'),
+                'shortlabel'   => _('Reference'),
+                'usedby'       => array('grid', 'searchform'),
+                'required'     => true,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => ''
+            ),
             'Customer'=>array(
                 'label'        => _('Customer'),
                 'shortlabel'   => _('Customer'),
@@ -144,15 +153,6 @@ class ProductModelForCatalogGrid extends GenericGrid
                 'label'        => _('Owner'),
                 'shortlabel'   => _('Owner'),
                 'usedby'       => array('searchform'),
-                'required'     => true,
-                'inplace_edit' => false,
-                'add_button'   => false,
-                'section'      => ''
-            ),
-            'BaseReference'=>array(
-                'label'        => _('Reference'),
-                'shortlabel'   => _('Reference'),
-                'usedby'       => array('grid', 'searchform'),
                 'required'     => true,
                 'inplace_edit' => false,
                 'add_button'   => false,

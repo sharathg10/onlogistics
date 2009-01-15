@@ -41,6 +41,7 @@ class ProductModelForCatalogGrid extends GenericGrid
     // ProductModelForCatalogGrid::properties {{{
 
     protected $customerId = false;
+    protected $ownerId = false;
 
     // }}}
     // ProductModelForCatalogGrid::__construct() {{{
@@ -96,10 +97,11 @@ class ProductModelForCatalogGrid extends GenericGrid
         // si on veut faire une nouvelle recherche, on vide ces var en session
         if (isset($_REQUEST['search'])) {
             $griditems = SearchTools::getGridItemsSessionName();
-             unset($_SESSION['formSubmitted'], $_SESSION['customer'],
+             unset($_SESSION['formSubmitted'], $_SESSION['customer'], $_SESSION['owner'],
                 $_SESSION['gridItems'], $_SESSION[$griditems]);
         }
         $defaultValues = SearchTools::dataInSessionToDisplay();
+
         if (isset($_SESSION['customer']) && $_SESSION['customer'] != '##') {
             $defaultValues = array_merge($defaultValues,
                 array('CustomerSelected' => $_SESSION['customer']));
@@ -107,6 +109,15 @@ class ProductModelForCatalogGrid extends GenericGrid
         } else {
             $this->searchForm->setDefaultValues(array('CustomerSelected' => 0));
         }
+
+        if (isset($_SESSION['owner']) && $_SESSION['owner'] != '##') {
+            $defaultValues = array_merge($defaultValues,
+                array( 'OwnerSelected' => $_SESSION['owner']));
+            $this->searchForm->setDefaultValues($defaultValues);
+        } else {
+            $this->searchForm->setDefaultValues(array('OwnerSelected' => 0));
+        }
+
         insertQtiesIntoSession();
     }
     
@@ -120,6 +131,15 @@ class ProductModelForCatalogGrid extends GenericGrid
      */
     public function getMapping() {
         return array(
+            'BaseReference'=>array(
+                'label'        => _('Reference'),
+                'shortlabel'   => _('Reference'),
+                'usedby'       => array('grid', 'searchform'),
+                'required'     => true,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => ''
+            ),
             'Customer'=>array(
                 'label'        => _('Customer'),
                 'shortlabel'   => _('Customer'),
@@ -129,10 +149,10 @@ class ProductModelForCatalogGrid extends GenericGrid
                 'add_button'   => false,
                 'section'      => ''
             ),
-            'BaseReference'=>array(
-                'label'        => _('Reference'),
-                'shortlabel'   => _('Reference'),
-                'usedby'       => array('grid', 'searchform'),
+            'Owner'=>array(
+                'label'        => _('Owner'),
+                'shortlabel'   => _('Owner'),
+                'usedby'       => array('searchform'),
                 'required'     => true,
                 'inplace_edit' => false,
                 'add_button'   => false,
@@ -207,6 +227,67 @@ class ProductModelForCatalogGrid extends GenericGrid
     }
 
     // }}}
+    // ProductModelForCatalogGrid::renderSearchFormOwner() {{{
+
+    /**
+     * Render custom du customer
+     *
+     * @access protected
+     * @return void
+     */
+    protected function renderSearchFormOwner()
+    {
+        /*
+        $pf    = $this->auth->getProfile();
+        $actor = $this->auth->getActorId();
+        $ownerSelectMsg = _('Select an actor');
+        $clientIsConnected = false;
+
+        if ($pf == UserAccount::PROFILE_SUPPLIER_CONSIGNE || $pf == UserAccount::PROFILE_OWNER_CUSTOMER) {
+            $filter = array('Id' => $actor) ;
+            $ownerSelectMsg = '';
+            $clientIsConnected = true;
+        } else {
+            $filter = array();
+        }
+
+        if (isset($_REQUEST['OwnerSelected'])) {
+            $this->ownerId= $_REQUEST['OwnerSelected'];
+        } else if (isset($_SESSION['owner'])) {
+            $this->ownerId= $_SESSION['owner'];
+        } else if ($clientIsConnected) {
+            $this->ownerId= $this->auth->getActorId();
+        }
+        $disabled = '';
+        if ($this->ownerId != false) {
+            $this->session->register('owner', $this->ownerId, 2);
+            $disabled = 'disabled="disabled"';
+        }
+        $owners = SearchTools::createArrayIDFromCollection(
+            array('Actor'),
+            $filter,
+            $ownerSelectMsg
+        );
+        $this->searchForm->addElement('select', 'Owner', _('Owner'),
+            array($owners, $disabled),
+            array('Disable' => true)
+        ); */
+
+
+        if (in_array($this->auth->getProfile(), array(UserAccount::PROFILE_OWNER_CUSTOMER, UserAccount::PROFILE_SUPPLIER_CONSIGNE))) {
+            $owners = SearchTools::createArrayIDFromCollection(
+                'Actor', array('Id' => $this->auth->getActorId()));
+        }else {
+            $owners = SearchTools::createArrayIDFromCollection(
+                'Actor', array(),_('Select an actor'));
+        }
+           $this->searchForm->addElement('select', 'Owner', _('Owner'), array($owners));
+
+
+    }
+
+    // }}}
+
     // ProductModelForCatalogGrid::additionalGridActions() {{{
 
     /**

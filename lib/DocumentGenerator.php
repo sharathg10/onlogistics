@@ -4403,7 +4403,7 @@ class ProductLabelGenerator extends DocumentGenerator
             for ($j=0; $j<$qty; $j++) {
                 if ($i == 0 || !($i % 12)) {
                     $x = 2;
-                    $y  = 4;
+                    $y  = 7;
                     $newPage = true;
                     $this->pdf->addPage();
                 } else {

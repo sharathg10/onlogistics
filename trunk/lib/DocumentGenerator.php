@@ -4490,7 +4490,7 @@ class ProductLabelGenerator extends DocumentGenerator
                     // Nom Presse
                     $this->pdf->setXY($x+$PictureWidth , $y);
                     $this->pdf->addText(
-                        $cache[$mid]['pressname'],
+                        trim($cache[$mid]['pressname']),
                         array('fontSize' => 10, 'lineHeight' => 4)
                     ); 
                     
@@ -4498,7 +4498,7 @@ class ProductLabelGenerator extends DocumentGenerator
 
                 // Taille
                 if (($size = $product->getSize()) instanceof RTWSize) {
-                    $this->pdf->setXY($x+$PictureWidth + $CodeWidth - 10, $y);
+                    $this->pdf->setXY($x + $PictureWidth + $CodeWidth , $y);
                     $this->pdf->addText( 
                         $size->getName(),
                         array('fontSize' => 12, 'lineHeight' => $LineHeight , 'fontStyle' => 'B', 'align' => 'L')

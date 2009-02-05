@@ -4396,78 +4396,130 @@ class ProductLabelGenerator extends DocumentGenerator
      * @return void
      */
     public function render() {
+
         $i = 0;
         $cache = array();
+
+        $PageHeight = 296 ;
+        $PageWidth = 210 ;
+
+        $PageMargeTop = 4 ;
+        $PageMargeBottom = 4 ;
+        $PageMargeLeft = 4 ;
+        $PageMargeRight = 4 ;
+
+        $StickerMargeLeft = 2 ;
+        $StickerMargeRight= 2 ;
+        $StickerMargeTop = 2 ;
+        $StickerMargeBottom = 2 ;
+        $StickerPerLine = 2 ;
+        $StickerPerRow = 6 ;
+        $StickerSpacing = 0 ;
+
+        $CodeHeight = 10 ;
+        $CodeWidth = 50 ;
+        $LineHeight = 4 ;
+
+        $DocumentWidth = $PageWidth - ($PageMargeLeft + $PageMargeRight) ;
+        $StickerWidth = $DocumentWidth / $StickerPerLine ;
+        $StickerRealWidth = $StickerWidth - ($StickerMargeLeft + $StickerMargeRight) ;
+        $PictureWidth = $StickerRealWidth - $CodeWidth - 20 ;
+
+        $DocumentHeight = $PageHeight - $PageMargeTop - $PageMargeBottom ;
+        $StickerHeight = ($DocumentHeight - (($StickerPerRow - 1) * $StickerSpacing )) / 6 ;
+        $StickerRealHeight = $StickerHeight - $StickerMargeTop - $StickerMargeBottom ;
+        $PictureHeight = $StickerRealHeight - 20 ;
+
         foreach ($this->productInfo as $array) {
+
             list($product, $qty) = $array;
             for ($j=0; $j<$qty; $j++) {
-                if ($i == 0 || !($i % 12)) {
-                    $x = 2;
-                    $y  = 7;
+
+                if ($i == 0 || ($i%12==0)) {
+                    $x = $PageMargeLeft ;
+                    $y  = $PageMargeTop +$StickerMargeTop ;
                     $newPage = true;
                     $this->pdf->addPage();
                 } else {
                     $newPage = false;
                 }
+
+
                 if ($i % 2 == 0) {
-                    $x = 2;
-                    if (!$newPage) {
-                        $y += 48;
-                    }
+                    $x = $PageMargeLeft ;
+                    if (!$newPage) $y += $StickerHeight+$StickerMargeTop ;
                 } else {
-                    $x = 107;
+                    $x = $PageWidth / 2 ;
                 }
+
+                $x += $StickerMargeLeft ;
+
                 $i++;
+
                 if (($model = $product->getModel()) instanceof RTWModel) {
                     $mid = $model->getId();
                     if (!isset($cache[$mid])) {
                         $cache[$mid] = array();
+
                         // image du produit
                         $infos = ImageManager::getFileInfo(md5($model->getImage()));
                         if ($infos['width'] > $infos['height']) {
-                            $cache[$mid]['w'] = 40;
                             $cache[$mid]['h'] = 0;
                         } else {
                             $cache[$mid]['w'] = 0;
-                            $cache[$mid]['h'] = 40;
                         }
+
+                        $cache[$mid]['w'] = $PictureWidth;
+                        $cache[$mid]['h'] = $PictureHeight;
+
                         if (is_array($infos) && !empty($infos['data'])) {
                             list(,$type) = explode('/', $infos['mimetype']);
                             $cache[$mid]['type'] = $type;
                             $cache[$mid]['data'] = $infos['data'];
                         }
+
                         // style number
                         $cache[$mid]['pressname'] = $model->getPressName()->toString();
                     }
+
+                    // Image
                     $this->pdf->setXY($x, $y);
                     $this->pdf->image($cache[$mid]['data'], $x, $y,
-                        $cache[$mid]['w'], $cache[$mid]['h'], $cache[$mid]['type']);
-                    $this->pdf->setXY($x+50, $y);
+                        $PictureWidth, $PictureHeight, $cache[$mid]['type']);
+
+                    // Nom Presse
+                    $this->pdf->setXY($x+$PictureWidth , $y);
                     $this->pdf->addText(
                         $cache[$mid]['pressname'],
                         array('fontSize' => 10, 'lineHeight' => 4)
-                    );
+                    ); 
+                    
                 }
-                $this->pdf->setXY($x+86, $y);
+
+                // Taille
                 if (($size = $product->getSize()) instanceof RTWSize) {
-                    // taille
-                    $this->pdf->addText(
+                    $this->pdf->setXY($x+$PictureWidth + $CodeWidth - 10, $y);
+                    $this->pdf->addText( 
                         $size->getName(),
-                        array('fontSize' => 12, 'lineHeight' => 4, 'fontStyle' => 'B')
+                        array('fontSize' => 12, 'lineHeight' => $LineHeight , 'fontStyle' => 'B', 'align' => 'L')
                     );
                 }
-                $this->pdf->setXY($x+50, $y+5);
-                // reference
-                $this->pdf->addText(
+                // reference 
+                $this->pdf->setXY($x + $PictureWidth, $y + $LineHeight+1 );
+                $this->pdf->addText( 
                     $product->getBaseReference(),
-                    array('fontSize' => 8, 'lineHeight' => 4)
+                    array('fontSize' => 8, 'lineHeight' => $LineHeight , 'align' => 'L')
                 );
+
                 // code barre
-                $this->pdf->Code128($x+50, $y+10, $product->getBaseReference(), 50, 10);
-                $this->pdf->setXY($x, $y+37);
+                $this->pdf->setXY($x + $PictureWidth , $y + 10 );
+                $this->pdf->Code128($x+ $PictureWidth, $y+10, $product->getBaseReference(), $CodeWidth , $CodeHeight );
+
+                // ligne descriptive ...
+                $this->pdf->setXY($x, $y+$PictureHeight);
                 $this->pdf->addText(
                     $product->getName(),
-                    array('fontSize' => 8, 'lineHeight' => 4, 'width' => 105, 'align' => 'C')
+                    array('fontSize' => 8, 'lineHeight' => 4, 'width' => $StickerRealWidth, 'align' => 'C')
                 );
             }
         }

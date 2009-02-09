@@ -48,7 +48,7 @@ define('I_BOX_DELETE',
 $form = new SearchForm('Box');
 
 $form->addElement('text', 'CommandNo', _('Order number'), array(),
-        array('Path' => 'ActivatedChain.CommandItem().Command.CommandNo'));
+        array('Path' => 'Box().ActivatedChain.CommandItem().Command.CommandNo'));
 $form->addElement('text', 'Reference', _('Regrouping reference (parcel, pallet, etc...)'), array(),
 		array('Path' => 'Reference'));
 $form->addElement('text', 'BaseReference', _('Product reference'), array(),
@@ -78,12 +78,19 @@ if (true === $form->displayGrid()) {
 	    unset($_SESSION['DateOrder1']);
 	}
 
+
+    // Evite les interaction entre $_POST et $_SESSION
+    SearchTools::cleanCheckBoxDataSession(array('DateOrder1'));
+
+
 	// Filtre par defaut: on n'affiche que les ParentBox
     $FilterComponentArray = array();
 	$FilterComponentArray[] = SearchTools::NewFilterComponent('ParentBox', '', 'Equals', 0, 1);
 	$FilterComponentArray[] = SearchTools::NewFilterComponent('Level', '', 'Equals', 3, 1);
 	$filter = array_merge($FilterComponentArray, $form->buildFilterComponentArray());
+	$gilter = $form->buildFilterComponentArray();
 	//  Construction du filtre
+    print_r($gilter);
 	$filter = SearchTools::filterAssembler($filter);
 
 	$grid = new Grid();
@@ -127,7 +134,6 @@ if (true === $form->displayGrid()) {
 	/*'ActivatedChain.CommandItem[0].Command.WishedStartDate' => SORT_DESC,
 	  'ActivatedChainTask.Begin' => SORT_DESC*/
 	$order = array('Date' => SORT_DESC);
-
 	$form->displayResult($grid, true, $filter, $order);
 } // fin FormSubmitted
 

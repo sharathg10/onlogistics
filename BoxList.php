@@ -88,9 +88,7 @@ if (true === $form->displayGrid()) {
 	$FilterComponentArray[] = SearchTools::NewFilterComponent('ParentBox', '', 'Equals', 0, 1);
 	$FilterComponentArray[] = SearchTools::NewFilterComponent('Level', '', 'Equals', 3, 1);
 	$filter = array_merge($FilterComponentArray, $form->buildFilterComponentArray());
-	$gilter = $form->buildFilterComponentArray();
 	//  Construction du filtre
-    print_r($gilter);
 	$filter = SearchTools::filterAssembler($filter);
 
 	$grid = new Grid();

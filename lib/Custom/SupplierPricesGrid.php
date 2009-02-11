@@ -129,15 +129,10 @@ class SupplierPricesGrid extends GenericGrid
             )),
             array('Path' => 'ActorProduct.Actor.Id')
         );
-        $this->searchForm->addElement('select', 'Product2', 
+        $this->searchForm->addElement('text', 'Product2', 
             _('Product'),
-            array(SearchTools::createArrayIDFromCollection(
-                array('Product', 'AeroProduct', 'RTWMaterial'),
-                array(),
-                MSG_SELECT_AN_ELEMENT,
-                'BaseReference'
-            )),
-            array('Path' => 'ActorProduct.Product.Id')
+            array(),
+            array('Path' => 'ActorProduct.Product.BaseReference')
         );
     }
 

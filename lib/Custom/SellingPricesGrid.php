@@ -143,16 +143,13 @@ class SellingPricesGrid extends GenericGrid
         if (!in_array('readytowear', Preferences::get('TradeContext', array()))) {
             return false;
         }
-        $this->searchForm->addElement('select', 'Product', 
+
+        $this->searchForm->addElement('text', 'Product', 
             _('Product'),
-            array(SearchTools::createArrayIDFromCollection(
-                'RTWProduct',
-                array(),
-                MSG_SELECT_AN_ELEMENT,
-                'BaseReference'
-            )),
-            array('Path' => 'Product@RTWProduct.Id')
+            array(),
+            array('Path' => 'Product@RTWProduct.BaseReference')
         );
+
         $this->searchForm->addElement('select', 'Season', 
             _('Season'),
             array(SearchTools::createArrayIDFromCollection(

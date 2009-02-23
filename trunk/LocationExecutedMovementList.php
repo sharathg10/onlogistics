@@ -53,7 +53,10 @@ $session = Session::Singleton();
 $grid = new Grid();
 // Pour ne pas avoir d'erreur js liee a customisation searchForms
 $grid->javascriptFormOwnerName = 'LocationExecutedMovementList';
+$grid->customizationEnabled = true;
+$grid->setNbSubGridColumns(2);
 $grid->itemPerPage = 50;
+
 $grid->NewColumn('FieldMapperWithTranslationExpression', _('Movement'),
         array('Macro' =>'%Cancelled%',
               'TranslationMap' => array (-1 => '<a href="javascript:void(0);" '
@@ -322,6 +325,9 @@ if (isset($_REQUEST['exmId']) || true === $form->displayGrid() || $form->isFirst
                         SELLUNITTYPE_UR => '%Quantity|formatnumber@3@1%'),
                   'DefaultValue' => '%Quantity|formatnumber@3@1% %Product.SellUnitType.ShortName%',
                   'DataType'=>'numeric'));
+
+    $columns = array(_('SN/Lots'), _('Quantity'));
+    $grid->NewColumn('LEMSerialNumberList', $columns, array('Sortable' => false));
 
     $grid->NewColumn('FieldMapper', _('Site'), array('Macro' =>'%Location.Store.StorageSite.Name%'));
     $grid->NewColumn('FieldMapper', _('Store'), array('Macro' =>'%Location.Store.Name%'));

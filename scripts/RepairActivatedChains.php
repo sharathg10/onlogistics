@@ -62,23 +62,23 @@ require_once('config.inc.php');
 
 Database::connection(DSN_MALOLES);
 
-$chain = Object::load('Chain', array('Reference' => 'LC'));
+$chain = Object::load('Chain', array('Reference' => 'LC-EXP'));
 
 if (!($chain instanceof Chain)) {
-    echo "Error: Chain \"LC\" does not exists\n";
+    echo "Error: Chain \"LC-EXP\" does not exists\n";
     exit(1);
 }
 
 $opeCol = $chain->getChainOperationCollection();
 if (count($opeCol) != 3) {
-    echo "Error: Chain \"LC\" must contain 3 operations\n";
+    echo "Error: Chain \"LC-EXP\" must contain 3 operations\n";
     exit(1);
 }
 
 list(,$groupingOpe,) = $opeCol;
 list($groupingTask, $packingListTask) = $groupingOpe->getChainTaskCollection();
 
-$achCol = Object::loadCollection('ActivatedChain', array('Reference' => 'LC'));
+$achCol = Object::loadCollection('ActivatedChain', array('Reference' => 'LC-EXP'));
 
 Database::connection()->startTrans();
 echo ">>> Transaction started\n";

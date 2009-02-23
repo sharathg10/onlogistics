@@ -141,8 +141,8 @@ class Actor extends _Actor {
             ));
         } else {
             $spc = $mapper->load(array(
-                'Supplier' => $actorConnectedId,
-                'Customer' => $this->getId()
+                'Customer' => $actorConnectedId,
+                'Supplier' => $this->getId()
             ));
         }
         if (Tools::isException($spc)) {

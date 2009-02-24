@@ -199,7 +199,19 @@ if (true === $form->displayGrid()) {
 	$grid->itemPerPage = 50;
 	$grid->javascriptFormOwnerName = 'ActivatedMovementList';  // Pour ne pas avoir d'erreur js
 	//$grid->withNoCheckBox = true;  // Commente pour l'execution par lot
-    
+
+    $grid->NewAction('Redirect', array(
+                    'Caption' => _('Print order labels'),
+                    'Profiles' => array(UserAccount::PROFILE_ADMIN,
+                                UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,
+                                UserAccount::PROFILE_ADMIN_VENTES,
+                                UserAccount::PROFILE_AERO_ADMIN_VENTES,
+                                UserAccount::PROFILE_GESTIONNAIRE_STOCK), 	 
+                    'TargetPopup' => true,
+                    'URL' => 'CommandLabelEdit.php',
+                    'TransmitedArrayName' => 'mvtId')
+            );
+
 	$grid->NewAction('Redirect', array('Caption' => _('Execute several movements'),  	 
                   'Profiles' => array(UserAccount::PROFILE_ADMIN,
                                 UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,

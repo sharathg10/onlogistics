@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Onlogistics\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-12-30 12:19+0100\n"
+"POT-Creation-Date: 2009-02-24 15:03+0100\n"
 "PO-Revision-Date: 2008-10-02 16:43+0100\n"
 "Last-Translator: David JL <david@ateor.com>\n"
 "Language-Team: Ateor dev team <dev@ateor.com>\n"
@@ -170,29 +170,29 @@ msgstr "de salida"
 
 #: ../lib-functions/ActivatedMovementTools.php:73
 #: ../lib/Objects/_Chain.php:1196 ../lib/Objects/_Chain.php:1197
-#: ../BoardByCustomer.php:145 ../ActivatedMovementList.php:247
+#: ../BoardByCustomer.php:145 ../ActivatedMovementList.php:259
 #: ../LocationConcreteProductList.php:241 ../StockAccountingExport.php:233
-#: ../LocationExecutedMovementList.php:91
-#: ../LocationExecutedMovementList.php:326 ../InventoryDetailList.php:75
+#: ../LocationExecutedMovementList.php:94
+#: ../LocationExecutedMovementList.php:332 ../InventoryDetailList.php:75
 #: ../InventoryDetailList.php:121 ../StorebyStorageSiteList.php:73 void:1
 msgid "Site"
 msgstr "Ubicación"
 
 #: ../lib-functions/ActivatedMovementTools.php:75
 #: ../lib/Objects/_CostRange.php:810 ../lib/Objects/_CostRange.php:811
-#: ../lib/DocumentGenerator.php:1889 ../ActivatedMovementList.php:249
+#: ../lib/DocumentGenerator.php:1889 ../ActivatedMovementList.php:261
 #: ../LocationConcreteProductList.php:243 ../StockAccountingExport.php:75
-#: ../StockAccountingExport.php:149 ../LocationExecutedMovementList.php:89
-#: ../LocationExecutedMovementList.php:327 ../InventoryDetailList.php:78
+#: ../StockAccountingExport.php:149 ../LocationExecutedMovementList.php:92
+#: ../LocationExecutedMovementList.php:333 ../InventoryDetailList.php:78
 #: ../InventoryDetailList.php:123 ../StorebyStorageSiteList.php:242
 msgid "Store"
 msgstr "Almacén"
 
 #: ../lib-functions/ActivatedMovementTools.php:77
-#: ../lib/DocumentGenerator.php:1889 ../ActivatedMovementList.php:251
+#: ../lib/DocumentGenerator.php:1889 ../ActivatedMovementList.php:263
 #: ../ProductByLocationList.php:89 ../LocationConcreteProductList.php:244
-#: ../LocationExecutedMovementList.php:85
-#: ../LocationExecutedMovementList.php:328 ../InventoryDetailList.php:82
+#: ../LocationExecutedMovementList.php:88
+#: ../LocationExecutedMovementList.php:334 ../InventoryDetailList.php:82
 #: ../InventoryDetailList.php:125 ../DetailedLocationByProductList.php:100
 #: ../DetailedLocationByProductList.php:153 ../LocationByProductList.php:89
 #: ../LocationByProductList.php:146 void:1
@@ -206,12 +206,13 @@ msgstr "Ubicación"
 #: ../lib/Objects/Alert.const.php:282 ../lib/DocumentGenerator.php:562
 #: ../lib/DocumentGenerator.php:2449 ../lib/DocumentGenerator.php:3250
 #: ../lib/DocumentGenerator.php:3268 ../lib/DocumentGenerator.php:3276
-#: ../lib/DocumentGenerator.php:3784 ../lib/DocumentGenerator.php:4688
+#: ../lib/DocumentGenerator.php:3784 ../lib/DocumentGenerator.php:4740
 #: ../ProductCommandSupplier.php:215 ../ProductByLocationList.php:146
 #: ../ComponentAddEdit.php:209 ../LocationConcreteProductList.php:260
 #: ../ChainCommandList.php:190 ../SupplierCatalog.php:356
 #: ../StockProductRealandVirtualList.php:103 ../AssemblyDetail.php:115
-#: ../ProductCommand.php:232 ../BoardByProduct.php:126 ../CommandList.php:320
+#: ../ProductCommand.php:232 ../BoardByProduct.php:126
+#: ../LocationExecutedMovementList.php:329 ../CommandList.php:320
 #: ../ComponentConcreteProduct.php:125 ../AssemblyDegradedModeDetail.php:98
 #: ../DetailedLocationByProductList.php:154
 #: ../ConcreteComponentAddEdit.php:160 ../AssemblyEdit.php:119
@@ -692,7 +693,7 @@ msgstr "Euros"
 #: ../lib/Objects/Product.php:859 ../lib/Objects/Product.php:863
 #: ../lib/Objects/Product.php:873 ../lib/Objects/Product.php:879
 #: ../lib/DocumentGenerator.php:796 ../lib/DocumentGenerator.php:919
-#: ../AffectationList.php:74 ../LocationExecutedMovementList.php:270 void:1
+#: ../AffectationList.php:74 ../LocationExecutedMovementList.php:273 void:1
 msgid "Selling unit"
 msgstr "Unidad de venta"
 
@@ -1234,9 +1235,9 @@ msgstr "Nomenclatura"
 #: ../lib/Custom/RTWModelForCatalogGrid.php:124
 #: ../lib/Custom/RTWModelForCatalogGrid.php:125
 #: ../lib/Custom/RTWModelForCatalogGrid.php:266
-#: ../lib/Custom/ProductModelForCatalogGrid.php:124
-#: ../lib/Custom/ProductModelForCatalogGrid.php:125
-#: ../lib/Custom/ProductModelForCatalogGrid.php:203
+#: ../lib/Custom/ProductModelForCatalogGrid.php:144
+#: ../lib/Custom/ProductModelForCatalogGrid.php:145
+#: ../lib/Custom/ProductModelForCatalogGrid.php:223
 #: ../lib/Objects/_ActorProduct.php:508 ../lib/Objects/_ActorProduct.php:509
 #: ../lib/Objects/_PrestationCustomer.php:320
 #: ../lib/Objects/_PrestationCustomer.php:321
@@ -1246,7 +1247,7 @@ msgstr "Nomenclatura"
 #: ../lib/Objects/_UploadedDocument.php:628
 #: ../lib/Objects/_UploadedDocument.php:629
 #: ../lib/Objects/_UserAccount.php:387 ../lib/Objects/Actor.inc.php:46
-#: ../lib/Objects/Actor.inc.php:49 ../lib/DocumentGenerator.php:4656
+#: ../lib/Objects/Actor.inc.php:49 ../lib/DocumentGenerator.php:4708
 #: ../ActivatedChainList.php:76 ../ActivatedFlightList.php:88
 #: ../ActivatedFlightList.php:94 ../ActivatedFlightList.php:186
 #: ../BoardByCustomer.php:55 ../ToHaveAdd.php:139 ../ActionList.php:75
@@ -1268,10 +1269,10 @@ msgstr "Cliente"
 #: ../lib/Custom/ActorProductGrid.php:56 ../lib/Custom/ActorProductGrid.php:65
 #: ../lib/Custom/PrestationCostGrid.php:107
 #: ../lib/Custom/PrestationCostGrid.php:111
-#: ../lib/Custom/SellingPricesGrid.php:185
+#: ../lib/Custom/SellingPricesGrid.php:182
 #: ../lib/Custom/RTWMaterialGrid.php:49 ../lib/Custom/RTWMaterialGrid.php:50
-#: ../lib/Custom/ProductModelForCatalogGrid.php:133
-#: ../lib/Custom/ProductModelForCatalogGrid.php:134
+#: ../lib/Custom/ProductModelForCatalogGrid.php:135
+#: ../lib/Custom/ProductModelForCatalogGrid.php:136
 #: ../lib/Custom/RTWProductForLabelPrintingGrid.php:90
 #: ../lib/Custom/RTWProductForLabelPrintingGrid.php:91
 #: ../lib/CustomGrid/Columns/GridColumnChildrenBoxList.php:41
@@ -1286,12 +1287,12 @@ msgstr "Cliente"
 #: ../lib/DocumentGenerator.php:1916 ../lib/DocumentGenerator.php:2446
 #: ../lib/DocumentGenerator.php:2840 ../lib/DocumentGenerator.php:3248
 #: ../lib/DocumentGenerator.php:3458 ../lib/DocumentGenerator.php:3622
-#: ../lib/DocumentGenerator.php:4685 ../StockStorageSiteList.php:70
+#: ../lib/DocumentGenerator.php:4737 ../StockStorageSiteList.php:70
 #: ../AffectationList.php:46 ../AffectationList.php:70
 #: ../WorkOrderOpeTaskList.php:233 ../SaisonalityPromotionProductList.php:67
 #: ../ProductCommandSupplier.php:207 ../ActivatedChainList.php:71
 #: ../InvoicePaymentList.php:66 ../ProductSubstitutionList.php:218
-#: ../ActivatedMovementList.php:90 ../ActivatedMovementList.php:241
+#: ../ActivatedMovementList.php:90 ../ActivatedMovementList.php:253
 #: ../ProductByLocationList.php:74 ../ProductByLocationList.php:145
 #: ../InvoiceAddEdit.php:336 ../SaisonalityAdd.php:239
 #: ../TransportChainList.php:72 ../TransportChainList.php:86
@@ -1299,8 +1300,8 @@ msgstr "Cliente"
 #: ../StockProductRealandVirtualList.php:53
 #: ../StockProductRealandVirtualList.php:101 ../AssemblyDetail.php:111
 #: ../ProductCommand.php:222 ../BoardByProduct.php:123
-#: ../LocationExecutedMovementList.php:83
-#: ../LocationExecutedMovementList.php:263 ../InvoiceDetail.php:81
+#: ../LocationExecutedMovementList.php:86
+#: ../LocationExecutedMovementList.php:266 ../InvoiceDetail.php:81
 #: ../SaisonalityList.php:87 ../PaymentCommandList.php:77
 #: ../InventoryDetailList.php:77 ../ProductHandingByCategoryAddEdit.php:88
 #: ../WorkOrderList.php:169 ../PromotionList.php:59 ../GroupableBoxList.php:72
@@ -1314,21 +1315,21 @@ msgid "Reference"
 msgstr "Referencia"
 
 #: ../lib/Custom/ActorProductGrid.php:59 ../lib/Custom/ActorProductGrid.php:66
-#: ../lib/Custom/SellingPricesGrid.php:188 ../lib/Objects/_Chain.php:1151
+#: ../lib/Custom/SellingPricesGrid.php:185 ../lib/Objects/_Chain.php:1151
 #: ../lib/Objects/_Chain.php:1152 ../lib/Objects/RTWElement.php:256
 #: ../lib/Objects/RTWElement.php:257 ../lib/Objects/_TermsOfPayment.php:332
 #: ../lib/Objects/_TermsOfPayment.php:333 ../StockStorageSiteList.php:72
 #: ../AffectationList.php:48 ../AffectationList.php:72
 #: ../SaisonalityPromotionProductList.php:68 ../ActivatedMovementList.php:92
-#: ../ActivatedMovementList.php:243 ../DocumentModelPropertyAddEdit.php:273
+#: ../ActivatedMovementList.php:255 ../DocumentModelPropertyAddEdit.php:273
 #: ../ProductByLocationList.php:77 ../InvoiceAddEdit.php:344
 #: ../SaisonalityAdd.php:240 ../TransportChainList.php:73
 #: ../ProductHandingByCategoryAddEditE3.php:184 ../NomenclatureAddEdit.php:80
 #: ../StockProductRealandVirtualList.php:54
 #: ../StockProductRealandVirtualList.php:102
 #: ../NomenclatureConcreteProductList.php:75 ../BoardByProduct.php:124
-#: ../LocationExecutedMovementList.php:87
-#: ../LocationExecutedMovementList.php:265 ../InvoiceDetail.php:82
+#: ../LocationExecutedMovementList.php:90
+#: ../LocationExecutedMovementList.php:268 ../InvoiceDetail.php:82
 #: ../ProductHandingByCategoryAddEdit.php:60
 #: ../ProductHandingByCategoryAddEdit.php:89 ../NomenclatureList.php:96
 #: ../DetailedLocationByProductList.php:96 ../StorebyStorageSiteList.php:115
@@ -1441,10 +1442,10 @@ msgstr "Precios de venta"
 #: ../lib/Custom/SupplierPricesGrid.php:70
 #: ../lib/Custom/SupplierPricesGrid.php:71
 #: ../lib/Custom/SupplierPricesGrid.php:133
-#: ../lib/Custom/SupplierPricesGrid.php:153
+#: ../lib/Custom/SupplierPricesGrid.php:148
 #: ../lib/Custom/SellingPricesGrid.php:70
 #: ../lib/Custom/SellingPricesGrid.php:71
-#: ../lib/Custom/SellingPricesGrid.php:147
+#: ../lib/Custom/SellingPricesGrid.php:148
 #: ../lib/Custom/ProductRessourceGrid.php:74
 #: ../lib/Custom/ProductRessourceGrid.php:75
 #: ../lib/Custom/ActorProductAddEdit.php:72
@@ -1476,7 +1477,7 @@ msgid "Price"
 msgstr "Precio"
 
 #: ../lib/Custom/SupplierPricesGrid.php:124
-#: ../lib/Custom/SupplierPricesGrid.php:160
+#: ../lib/Custom/SupplierPricesGrid.php:155
 #: ../lib/Custom/ProductPriceAddEdit.php:74
 #: ../lib/Custom/ProductPriceAddEdit.php:98
 #: ../lib/Custom/RTWMaterialAddEdit.php:99 ../lib/Objects/Alert.const.php:182
@@ -1493,7 +1494,7 @@ msgstr "Precio"
 msgid "Supplier"
 msgstr "Proveedor"
 
-#: ../lib/Custom/SupplierPricesGrid.php:157
+#: ../lib/Custom/SupplierPricesGrid.php:152
 #: ../lib/Custom/RTWMaterialGrid.php:59 ../lib/Custom/RTWMaterialGrid.php:60
 #: ../lib/Custom/RTWMaterialAddEdit.php:64
 msgid "Commercial designation"
@@ -1632,12 +1633,12 @@ msgstr "Nombre del cliente"
 #: ../lib/Objects/Alert.const.php:270 ../lib/DocumentGenerator.php:1839
 #: ../lib/DocumentGenerator.php:1915 ../lib/DocumentGenerator.php:2062
 #: ../lib/DocumentGenerator.php:3012 ../lib/DocumentGenerator.php:3741
-#: ../lib/DocumentGenerator.php:4684 ../ProductionTaskValidation.php:106
+#: ../lib/DocumentGenerator.php:4736 ../ProductionTaskValidation.php:106
 #: ../PrestationInvoiceAddEdit.php:131 ../ProductCommandSupplier.php:140
 #: ../ActivatedChainList.php:67 ../ActivatedMovementList.php:88
 #: ../ForwardingFormEdit.php:346 ../ChainCommandList.php:89 ../BoxList.php:50
 #: ../InvoiceList.php:71 ../ProductCommand.php:132
-#: ../LocationExecutedMovementList.php:81 ../CommandList.php:117
+#: ../LocationExecutedMovementList.php:84 ../CommandList.php:117
 #: ../EstimateToOrder.php:155 ../WorkOrderList.php:79
 #: ../PrestationCommandList.php:56 ../CourseCommandList.php:62
 #: ../CourseCommandList.php:148 ../DocumentList.php:60
@@ -1701,7 +1702,7 @@ msgstr "Añadir/actualizar servicio"
 #: ../LicenceList.php:93 ../LicenceList.php:129 ../ToHaveAdd.php:149
 #: ../ActionList.php:106 ../ChainCommandList.php:190
 #: ../StockProductRealandVirtualList.php:124
-#: ../LocationExecutedMovementList.php:266 ../UnavailabilityPlanning.php:703
+#: ../LocationExecutedMovementList.php:269 ../UnavailabilityPlanning.php:703
 #: ../ToHaveList.php:61 ../LicenceAddEdit.php:136
 #: ../PromotionProductAdd.php:61 ../ActorList.php:104 void:1
 msgid "Type"
@@ -1724,19 +1725,19 @@ msgstr "Precio recomendado"
 msgid "Pricing zone"
 msgstr "Banda de precios"
 
-#: ../lib/Custom/SellingPricesGrid.php:157
+#: ../lib/Custom/SellingPricesGrid.php:154
 #: ../lib/Custom/RTWModelForLookbookGrid.php:64
 #: ../lib/Custom/RTWModelForLookbookGrid.php:65
 #: ../lib/Custom/RTWModelForSupplierGrid.php:78
 #: ../lib/Custom/RTWModelForSupplierGrid.php:79
 #: ../lib/Objects/_RTWModel.php:3290 ../lib/Objects/_RTWModel.php:3291
 #: ../lib/DocumentGenerator.php:3613 ../lib/DocumentGenerator.php:4088
-#: ../lib/DocumentGenerator.php:4273 ../lib/DocumentGenerator.php:4498
+#: ../lib/DocumentGenerator.php:4273 ../lib/DocumentGenerator.php:4550
 #: ../BoardByCustomer.php:65 ../SalesmenCommission.php:64
 msgid "Season"
 msgstr "Temporada"
 
-#: ../lib/Custom/SellingPricesGrid.php:166
+#: ../lib/Custom/SellingPricesGrid.php:163
 #: ../lib/Custom/RTWModelForLookbookGrid.php:82
 #: ../lib/Custom/RTWModelForLookbookGrid.php:83
 #: ../lib/Custom/RTWModelForCatalogGrid.php:142
@@ -1762,7 +1763,7 @@ msgstr "Tasa"
 #: ../lib/Custom/RTWModelForCatalogGrid.php:134
 #: ../lib/Objects/_RTWModel.php:3317 ../lib/Objects/_RTWModel.php:3318
 #: ../lib/DocumentGenerator.php:4099 ../lib/DocumentGenerator.php:4303
-#: ../lib/DocumentGenerator.php:4509 ../CommandList.php:180
+#: ../lib/DocumentGenerator.php:4561 ../CommandList.php:180
 msgid "Style number"
 msgstr "Número de estilo "
 
@@ -1957,7 +1958,7 @@ msgstr "Operación"
 #: ../GroupableBoxActivatedChainTaskList.php:54 ../ActionList.php:82
 #: ../ChainCommandList.php:96 ../ActivatedChainTaskHistory.php:97
 #: ../ActivatedChainTaskList.php:146 ../BoxList.php:56
-#: ../BoardByProduct.php:62 ../LocationExecutedMovementList.php:125
+#: ../BoardByProduct.php:62 ../LocationExecutedMovementList.php:128
 #: ../CommandList.php:155 ../BoardBySupplier.php:63
 #: ../InventoryDetailList.php:83 ../WorkOrderList.php:86
 #: ../BoardByCategory.php:61 ../PrestationCommandList.php:61
@@ -1980,7 +1981,7 @@ msgstr "Filtrar por fecha"
 #: ../lib/Objects/_TermsOfPaymentItem.php:247
 #: ../lib/DocumentGenerator.php:2448 ../lib/DocumentGenerator.php:3408
 #: ../WorkOrderOpeTaskList.php:138 ../ActivatedChainList.php:122
-#: ../ActivatedFlightList.php:193 ../ActivatedMovementList.php:236
+#: ../ActivatedFlightList.php:193 ../ActivatedMovementList.php:248
 #: ../ActivityBasedCosting.php:46 ../ActivityBasedCosting.php:99
 #: ../DocumentModelPropertyAddEdit.php:323
 #: ../GroupableBoxActivatedChainTaskList.php:72
@@ -1988,8 +1989,8 @@ msgstr "Filtrar por fecha"
 #: ../ActivatedChainTaskHistory.php:90 ../ActivatedChainTaskHistory.php:130
 #: ../ActivatedChainTaskList.php:93 ../ActivatedChainTaskList.php:228
 #: ../TransportChainList.php:85 ../TransportChainList.php:104
-#: ../menu.inc.php:230 ../BoxList.php:116 ../InvoiceList.php:145
-#: ../InvoiceCommandList.php:266 ../LocationExecutedMovementList.php:305
+#: ../menu.inc.php:230 ../BoxList.php:121 ../InvoiceList.php:145
+#: ../InvoiceCommandList.php:266 ../LocationExecutedMovementList.php:308
 #: ../CommandList.php:299 ../UnavailabilityPlanning.php:117
 #: ../UnavailabilityPlanning.php:704 ../PrestationCommandList.php:120
 #: ../GroupableBoxList.php:69 ../DocumentList.php:148
@@ -2181,7 +2182,7 @@ msgid "Terms of payment lines"
 msgstr "Lineas de modalidades de pago"
 
 #: ../lib/Custom/RTWModelForCatalogGrid.php:89
-#: ../lib/Custom/ProductModelForCatalogGrid.php:89 ../SupplierCatalog.php:117
+#: ../lib/Custom/ProductModelForCatalogGrid.php:90 ../SupplierCatalog.php:117
 #: ../CustomerCatalog.php:164
 msgid "Reset all"
 msgstr "Reiniciar todo"
@@ -2229,7 +2230,7 @@ msgid "Accessory 3"
 msgstr ""
 
 #: ../lib/Custom/RTWModelForCatalogGrid.php:236
-#: ../lib/Custom/ProductModelForCatalogGrid.php:173
+#: ../lib/Custom/ProductModelForCatalogGrid.php:193
 #: ../ActivatedFlightList.php:93 ../ToHaveAdd.php:138
 #: ../ActivatedChainTaskList.php:109 ../UnavailabilityPlanning.php:134
 #: ../AgedTrialBalance.php:53 ../FlightNotebook.php:82
@@ -2238,31 +2239,31 @@ msgid "Select a customer"
 msgstr "Seleccione un cliente"
 
 #: ../lib/Custom/RTWModelForCatalogGrid.php:298
-#: ../lib/Custom/ProductModelForCatalogGrid.php:220 ../SupplierCatalog.php:361
+#: ../lib/Custom/ProductModelForCatalogGrid.php:301 ../SupplierCatalog.php:361
 #: ../TransportChainList.php:92 ../CustomerCatalog.php:500
 msgid "Ask for estimate"
 msgstr "Pida presupuesto"
 
 #: ../lib/Custom/RTWModelForCatalogGrid.php:305
-#: ../lib/Custom/ProductModelForCatalogGrid.php:227 ../SupplierCatalog.php:369
+#: ../lib/Custom/ProductModelForCatalogGrid.php:308 ../SupplierCatalog.php:369
 #: ../CustomerCatalog.php:508
 msgid "Order selected items"
 msgstr "Pedir artículos seleccionados"
 
 #: ../lib/Custom/RTWModelForCatalogGrid.php:324
-#: ../lib/Custom/ProductModelForCatalogGrid.php:246
+#: ../lib/Custom/ProductModelForCatalogGrid.php:327
 #: ../lib/Objects/_RTWSize.php:171 ../lib/DocumentGenerator.php:1306
 #: ../lib/DocumentGenerator.php:3641 ../menu.inc.php:430
 msgid "Sizes"
 msgstr "Tamaños"
 
 #: ../lib/Custom/RTWModelForCatalogGrid.php:328
-#: ../lib/Custom/ProductModelForCatalogGrid.php:251 ../ProductList.php:273
+#: ../lib/Custom/ProductModelForCatalogGrid.php:332 ../ProductList.php:273
 msgid "Unit price"
 msgstr "Precio por unidad"
 
 #: ../lib/Custom/RTWModelForCatalogGrid.php:332
-#: ../lib/Custom/ProductModelForCatalogGrid.php:255
+#: ../lib/Custom/ProductModelForCatalogGrid.php:336
 #: ../lib/Objects/ProductHandingByCategory.php:229
 #: ../lib/Objects/_Promotion.php:242 ../lib/CashBalanceManager.php:270
 #: ../lib/CashBalanceManager.php:271 ../lib/CashBalanceManager.php:318
@@ -2270,6 +2271,25 @@ msgstr "Precio por unidad"
 #: ../lib/DocumentGenerator.php:2765 void:1
 msgid "Total"
 msgstr "Total"
+
+#: ../lib/Custom/ProductModelForCatalogGrid.php:153
+#: ../lib/Custom/ProductModelForCatalogGrid.php:154
+#: ../lib/Custom/ProductModelForCatalogGrid.php:284
+#: ../lib/Objects/_ProductModel.php:647 ../lib/Objects/_ProductModel.php:648
+#: ../StockProductRealandVirtualList.php:63 ../ConcreteProductList.php:58
+#: ../DetailedLocationByProductList.php:156 ../StorebyStorageSiteList.php:244
+#: void:1
+msgid "Owner"
+msgstr "Propietario"
+
+#: ../lib/Custom/ProductModelForCatalogGrid.php:282
+#: ../StockStorageSiteList.php:82 ../DocumentModelAddEdit.php:147
+#: ../ProductByLocationList.php:85 ../StockProductRealandVirtualList.php:61
+#: ../LocationExecutedMovementList.php:106
+#: ../DetailedLocationByProductList.php:119 ../StorebyStorageSiteList.php:129
+#: ../LocationByProductList.php:85 ../ActionAddEdit.php:277
+msgid "Select an actor"
+msgstr "Seleccionar un agente"
 
 #: ../lib/Custom/RTWProductForLabelPrintingGrid.php:153 ../CommandList.php:279
 #: ../CommandList.php:280
@@ -2370,14 +2390,14 @@ msgstr ""
 
 #: ../lib/CustomGrid/Actions/GridActionActivatedMovementListExport.php:62
 #: ../lib/Objects/_Prestation.php:1112 ../lib/Objects/_Prestation.php:1113
-#: ../ActivatedMovementList.php:86 ../ActivatedMovementList.php:238
-#: ../LocationExecutedMovementList.php:116 void:1
+#: ../ActivatedMovementList.php:86 ../ActivatedMovementList.php:250
+#: ../LocationExecutedMovementList.php:119 void:1
 msgid "Movement type"
 msgstr "Tipo de movimiento"
 
 #: ../lib/CustomGrid/Actions/GridActionActivatedMovementListExport.php:62
-#: ../ActivatedChainList.php:72 ../ActivatedMovementList.php:105
-#: ../ActivatedMovementList.php:239
+#: ../lib/DocumentGenerator.php:4907 ../ActivatedChainList.php:72
+#: ../ActivatedMovementList.php:105 ../ActivatedMovementList.php:251
 msgid "Expeditor"
 msgstr "Remitente"
 
@@ -2439,7 +2459,7 @@ msgstr "Cantidad total"
 #: ../lib/Objects/Container.php:231 ../lib/Objects/Container.php:286
 #: ../lib/Objects/Container.php:342 ../lib/AlertSender.php:431
 #: ../lib/AlertSender.php:495 ../lib/DocumentGenerator.php:4141
-#: ../lib/DocumentGenerator.php:4551 ../crons/AlertTenDaysSinceLastFly.php:75
+#: ../lib/DocumentGenerator.php:4603 ../crons/AlertTenDaysSinceLastFly.php:75
 #: ../JS_Messages.php:322 ../InstallmentAddEdit.php:145
 #: ../InstallmentAddEdit.php:146 ../InvoiceAddEdit.php:390
 #: ../PaymentCommandList.php:80 ../WorkOrderList.php:183
@@ -2832,7 +2852,7 @@ msgid "Creation date"
 msgstr "Fecha de creación"
 
 #: ../lib/Objects/_Chain.php:1214 ../lib/Objects/_Chain.php:1215
-#: ../ActivatedMovementList.php:265 ../ActivityBasedCosting.php:112
+#: ../ActivatedMovementList.php:277 ../ActivityBasedCosting.php:112
 #: ../GroupableBoxActivatedChainTaskList.php:155 ../ChainCommandList.php:109
 #: ../ChainCommandList.php:183 ../ActivatedChainTaskList.php:158
 #: ../ActivatedChainTaskList.php:253 ../CommandList.php:152
@@ -2895,10 +2915,11 @@ msgstr "Flotante"
 #: ../lib/ApportionmentManager.php:302 ../lib/DocumentGenerator.php:636
 #: ../lib/DocumentGenerator.php:1842 ../lib/DocumentGenerator.php:2063
 #: ../lib/DocumentGenerator.php:4083 ../lib/DocumentGenerator.php:4269
-#: ../lib/DocumentGenerator.php:4493 ../PaymentToHaveList.php:87
-#: ../FlyBoardBook.php:125 ../ActivatedFlightList.php:177
-#: ../ActionList.php:111 ../ChainCommandList.php:175 ../BoxList.php:120
-#: ../CommandList.php:301 ../CommandList.php:322 ../CommandList.php:323
+#: ../lib/DocumentGenerator.php:4545 ../lib/DocumentGenerator.php:4902
+#: ../PaymentToHaveList.php:87 ../FlyBoardBook.php:125
+#: ../ActivatedFlightList.php:177 ../ActionList.php:111
+#: ../ChainCommandList.php:175 ../BoxList.php:125 ../CommandList.php:301
+#: ../CommandList.php:322 ../CommandList.php:323
 #: ../PrestationCommandList.php:121 ../FlightNotebook.php:161
 #: ../ToHaveList.php:117 ../DocumentList.php:151 ../SalesmenCommission.php:97
 #: void:1
@@ -3050,13 +3071,13 @@ msgid "by kilowatt"
 msgstr "por kilowatt"
 
 #: ../lib/Objects/_ActivatedChainTask.php:1532 ../lib/Objects/Action.php:374
-#: ../ActivatedMovementList.php:267
+#: ../ActivatedMovementList.php:279
 msgid "To do"
 msgstr "Por hacer"
 
 #: ../lib/Objects/_ActivatedChainTask.php:1533 ../lib/Objects/Action.php:375
 #: ../lib/Objects/_ActivatedMovement.php:183
-#: ../lib/Objects/_ExecutedMovement.php:231 ../ActivatedMovementList.php:268
+#: ../lib/Objects/_ExecutedMovement.php:231 ../ActivatedMovementList.php:280
 msgid "In progress"
 msgstr "En curso"
 
@@ -3102,7 +3123,7 @@ msgid "That caused cancellation"
 msgstr "Que provocó cancelación "
 
 #: ../lib/Objects/_LEMConcreteProduct.php:249
-#: ../LocationExecutedMovementList.php:119
+#: ../LocationExecutedMovementList.php:122
 msgid "Cancelled"
 msgstr "Cancelado"
 
@@ -3133,7 +3154,7 @@ msgstr "Presupuesto"
 #: ../lib/Objects/AbstractDocument.php:174
 #: ../lib/Objects/DocumentModelProperty.php:125
 #: ../lib/Objects/DocumentModel.inc.php:53 ../lib/DocumentGenerator.php:2411
-#: ../BoxList.php:118 ../DocumentList.php:53
+#: ../BoxList.php:123 ../DocumentList.php:53
 msgid "Packing list"
 msgstr "Lista de contenidos"
 
@@ -3145,15 +3166,15 @@ msgstr "Nota de crédito"
 
 #: ../lib/Objects/AbstractDocument.php:176
 #: ../lib/Objects/DocumentModel.inc.php:47 ../lib/DocumentGenerator.php:723
-#: ../lib/DocumentGenerator.php:876 ../LocationExecutedMovementList.php:276
-#: ../LocationExecutedMovementList.php:312 ../DocumentList.php:54
+#: ../lib/DocumentGenerator.php:876 ../LocationExecutedMovementList.php:279
+#: ../LocationExecutedMovementList.php:315 ../DocumentList.php:54
 msgid "Delivery order"
 msgstr "Pedido de entrega"
 
 #: ../lib/Objects/AbstractDocument.php:177
 #: ../lib/Objects/DocumentModel.inc.php:48
-#: ../LocationExecutedMovementList.php:285
-#: ../LocationExecutedMovementList.php:309 ../DocumentList.php:55
+#: ../LocationExecutedMovementList.php:288
+#: ../LocationExecutedMovementList.php:312 ../DocumentList.php:55
 msgid "Forwarding form"
 msgstr "Formulario de transporte"
 
@@ -3281,9 +3302,9 @@ msgstr "Versión"
 #: ../lib/DocumentGenerator.php:1799 ../lib/DocumentGenerator.php:2067
 #: ../lib/DocumentGenerator.php:2344 ../lib/DocumentGenerator.php:3460
 #: ../lib/DocumentGenerator.php:3624 ../PrestationInvoiceAddEdit.php:179
-#: ../ActivatedMovementList.php:246 ../InvoiceAddEdit.php:365
+#: ../ActivatedMovementList.php:258 ../InvoiceAddEdit.php:365
 #: ../InvoiceChainCommandList.php:224 ../ProductCommand.php:232
-#: ../LocationExecutedMovementList.php:316 ../InvoiceDetail.php:88
+#: ../LocationExecutedMovementList.php:319 ../InvoiceDetail.php:88
 #: ../InventoryDetailList.php:129 ../ChainCommandInvoiceDetail.php:80 void:1
 msgid "Qty"
 msgstr "Cantidad"
@@ -3358,7 +3379,7 @@ msgstr "Flujos previstos"
 #: ../lib/Objects/_ProductModel.php:674 ../lib/Objects/_ProductModel.php:675
 #: ../lib/DocumentGenerator.php:917 ../lib/DocumentGenerator.php:1290
 #: ../lib/DocumentGenerator.php:2447 ../lib/DocumentGenerator.php:4103
-#: ../lib/DocumentGenerator.php:4276 ../lib/DocumentGenerator.php:4513
+#: ../lib/DocumentGenerator.php:4276 ../lib/DocumentGenerator.php:4565
 #: ../ActivatedChainList.php:127 ../TransportChainList.php:88 void:1
 msgid "Description"
 msgstr "Descripción"
@@ -3755,7 +3776,7 @@ msgstr "Cancelación de movimiento"
 msgid "from"
 msgstr "de"
 
-#: ../lib/Objects/Alert.const.php:222 ../LocationExecutedMovementList.php:57
+#: ../lib/Objects/Alert.const.php:222 ../LocationExecutedMovementList.php:60
 msgid "Movement"
 msgstr "Movimiento"
 
@@ -4314,7 +4335,7 @@ msgstr "Vuelos completados"
 
 #: ../lib/Objects/Command.const.php:59
 #: ../lib/Objects/_ActivatedMovement.php:186 ../lib/Objects/_Command.php:859
-#: ../ActivatedMovementList.php:270
+#: ../ActivatedMovementList.php:282
 msgid "Locked"
 msgstr "Bloqueado"
 
@@ -4393,7 +4414,7 @@ msgid "multiple"
 msgstr "múltiple"
 
 #: ../lib/Objects/RTWProduct.php:83 ../lib/Objects/_Product.php:3037
-#: ../lib/Objects/_Product.php:3038 ../lib/DocumentGenerator.php:4687
+#: ../lib/Objects/_Product.php:3038 ../lib/DocumentGenerator.php:4739
 msgid "Size"
 msgstr "Tamaño"
 
@@ -4402,14 +4423,14 @@ msgid "In alert"
 msgstr "En alerta"
 
 #: ../lib/Objects/Contact.const.php:50 ../lib/Objects/_UserAccount.php:1339
-#: ../lib/Objects/_UserAccount.php:1340 ../lib/DocumentGenerator.php:4646
-#: ../lib/DocumentGenerator.php:4663 void:1
+#: ../lib/Objects/_UserAccount.php:1340 ../lib/DocumentGenerator.php:4698
+#: ../lib/DocumentGenerator.php:4715 void:1
 msgid "Email"
 msgstr "Correo electrónico"
 
 #: ../lib/Objects/Contact.const.php:51 ../lib/Objects/_UserAccount.php:1321
-#: ../lib/Objects/_UserAccount.php:1322 ../lib/DocumentGenerator.php:4643
-#: ../lib/DocumentGenerator.php:4660 void:1
+#: ../lib/Objects/_UserAccount.php:1322 ../lib/DocumentGenerator.php:4695
+#: ../lib/DocumentGenerator.php:4712 void:1
 msgid "Phone"
 msgstr "Teléfono"
 
@@ -4850,7 +4871,7 @@ msgstr "Ejecutado parcialemente"
 msgid "Not charged"
 msgstr "Sin cobrar"
 
-#: ../lib/Objects/_ExecutedMovement.php:233 ../ActivatedMovementList.php:269
+#: ../lib/Objects/_ExecutedMovement.php:233 ../ActivatedMovementList.php:281
 msgid "Partial"
 msgstr "Parcial"
 
@@ -4881,29 +4902,29 @@ msgstr "Modelos"
 
 #: ../lib/Objects/_RTWModel.php:3299 ../lib/Objects/_RTWModel.php:3300
 #: ../lib/DocumentGenerator.php:4110 ../lib/DocumentGenerator.php:4274
-#: ../lib/DocumentGenerator.php:4520
+#: ../lib/DocumentGenerator.php:4572
 msgid "Shape"
 msgstr "Forma"
 
 #: ../lib/Objects/_RTWModel.php:3335 ../lib/Objects/_RTWModel.php:3336
 #: ../lib/Objects/_ProductModel.php:656 ../lib/Objects/_ProductModel.php:657
-#: ../lib/DocumentGenerator.php:4094 ../lib/DocumentGenerator.php:4504
+#: ../lib/DocumentGenerator.php:4094 ../lib/DocumentGenerator.php:4556
 msgid "Manufacturer"
 msgstr "Fabricante"
 
 #: ../lib/Objects/_RTWModel.php:3344 ../lib/Objects/_RTWModel.php:3345
-#: ../lib/DocumentGenerator.php:4108 ../lib/DocumentGenerator.php:4518
+#: ../lib/DocumentGenerator.php:4108 ../lib/DocumentGenerator.php:4570
 msgid "Construction type"
 msgstr "Tipo de construcción "
 
 #: ../lib/Objects/_RTWModel.php:3353 ../lib/Objects/_RTWModel.php:3354
-#: ../lib/DocumentGenerator.php:4109 ../lib/DocumentGenerator.php:4519
-#: ../lib/DocumentGenerator.php:4686
+#: ../lib/DocumentGenerator.php:4109 ../lib/DocumentGenerator.php:4571
+#: ../lib/DocumentGenerator.php:4738
 msgid "Construction code"
 msgstr "Código de construcción "
 
 #: ../lib/Objects/_RTWModel.php:3362 ../lib/Objects/_RTWModel.php:3363
-#: ../lib/DocumentGenerator.php:4149 ../lib/DocumentGenerator.php:4558
+#: ../lib/DocumentGenerator.php:4149 ../lib/DocumentGenerator.php:4610
 msgid "Label (griffe)"
 msgstr "Sello"
 
@@ -4922,7 +4943,7 @@ msgstr "Imágenes"
 #: ../lib/Objects/_RTWModel.php:3758 ../lib/Objects/_RTWModel.php:3759
 #: ../lib/Objects/_ProductModel.php:683 ../lib/Objects/_ProductModel.php:684
 #: ../lib/DocumentGenerator.php:4156 ../lib/DocumentGenerator.php:4292
-#: ../lib/DocumentGenerator.php:4565
+#: ../lib/DocumentGenerator.php:4617
 msgid "Available sizes"
 msgstr "Tamaños disponibles"
 
@@ -5532,17 +5553,17 @@ msgid "Base entity"
 msgstr "Entidad de base"
 
 #: ../lib/Objects/_LocationExecutedMovement.php:459
-#: ../LocationExecutedMovementList.php:111
+#: ../LocationExecutedMovementList.php:114
 msgid "Cancellation"
 msgstr "Cancelación"
 
 #: ../lib/Objects/_LocationExecutedMovement.php:460
-#: ../LocationExecutedMovementList.php:112
+#: ../LocationExecutedMovementList.php:115
 msgid "Customer refusal"
 msgstr "Rechazo del cliente"
 
 #: ../lib/Objects/_LocationExecutedMovement.php:461
-#: ../LocationExecutedMovementList.php:112
+#: ../LocationExecutedMovementList.php:115
 msgid "Impossible delivery"
 msgstr "Entrega imposible"
 
@@ -5894,13 +5915,6 @@ msgstr "Modalidad"
 #: ../ActorList.php:293 void:1
 msgid "Terms of payment"
 msgstr "Modalidades de pago"
-
-#: ../lib/Objects/_ProductModel.php:647 ../lib/Objects/_ProductModel.php:648
-#: ../StockProductRealandVirtualList.php:63 ../ConcreteProductList.php:58
-#: ../DetailedLocationByProductList.php:156 ../StorebyStorageSiteList.php:244
-#: void:1
-msgid "Owner"
-msgstr "Propietario"
 
 #: ../lib/Quantificator/ProductCommandQuantificator.php:144
 #: ../lib/Quantificator/ChainCommandQuantificator.php:82
@@ -6630,7 +6644,7 @@ msgid "Date and operator"
 msgstr "Fecha y operador"
 
 #: ../lib/DocumentGenerator.php:3081 ../lib/DocumentGenerator.php:4161
-#: ../lib/DocumentGenerator.php:4570
+#: ../lib/DocumentGenerator.php:4622
 msgid "Observations"
 msgstr "Observaciones"
 
@@ -6679,7 +6693,7 @@ msgstr "Peso total crudo (Kg)"
 msgid "Disc."
 msgstr "Desc."
 
-#: ../lib/DocumentGenerator.php:3496 ../ActivatedMovementList.php:244
+#: ../lib/DocumentGenerator.php:3496 ../ActivatedMovementList.php:256
 #: ../CommandList.php:133 ../ActorProductAddEdit.php:167
 msgid "Purchase reference"
 msgstr "Referencia de compra"
@@ -6701,7 +6715,7 @@ msgstr "Peso por unidad"
 msgid "Estimate number"
 msgstr "Número de presupuesto"
 
-#: ../lib/DocumentGenerator.php:4078 ../lib/DocumentGenerator.php:4488
+#: ../lib/DocumentGenerator.php:4078 ../lib/DocumentGenerator.php:4540
 msgid "Worksheet"
 msgstr "Ficha técnica"
 
@@ -6713,9 +6727,14 @@ msgstr "Lookbook"
 msgid "Heel Height"
 msgstr "Altura del tacón"
 
-#: ../lib/DocumentGenerator.php:4703
+#: ../lib/DocumentGenerator.php:4755
 msgid "Made in CE"
 msgstr ""
+
+#: ../lib/DocumentGenerator.php:4912 ../ActivatedMovementList.php:107
+#: ../ActivatedMovementList.php:252
+msgid "Destinator"
+msgstr "Destinatario"
 
 #: ../rpc/XmlRpcServer.php:1489
 msgid "Cannot find task number "
@@ -6837,16 +6856,8 @@ msgstr "Capacidad"
 msgid "SN / Lot"
 msgstr "NS / Lote"
 
-#: ../StockStorageSiteList.php:82 ../DocumentModelAddEdit.php:147
-#: ../ProductByLocationList.php:85 ../StockProductRealandVirtualList.php:61
-#: ../LocationExecutedMovementList.php:103
-#: ../DetailedLocationByProductList.php:119 ../StorebyStorageSiteList.php:129
-#: ../LocationByProductList.php:85 ../ActionAddEdit.php:277
-msgid "Select an actor"
-msgstr "Seleccionar un agente"
-
 #: ../StockStorageSiteList.php:84 ../ProductByLocationList.php:87
-#: ../StockAccountingExport.php:244 ../LocationExecutedMovementList.php:105
+#: ../StockAccountingExport.php:244 ../LocationExecutedMovementList.php:108
 #: ../StorebyStorageSiteList.php:131 ../LocationByProductList.php:87
 msgid "Product owner"
 msgstr "Propietario del producto"
@@ -6859,7 +6870,7 @@ msgstr "Ubicación de almacenamiento"
 msgid "Actor linked"
 msgstr "Agente vinculado"
 
-#: ../StockStorageSiteList.php:109 ../LocationExecutedMovementList.php:93
+#: ../StockStorageSiteList.php:109 ../LocationExecutedMovementList.php:96
 #: void:1
 msgid "Stock owner"
 msgstr "Propietario de las existencias"
@@ -6917,7 +6928,7 @@ msgid "List of licenses for actor \"%s\"."
 msgstr "Lista de licencias del agente \"%s\" "
 
 #: ../LicenceList.php:92 ../FlowList.php:49
-#: ../LocationExecutedMovementList.php:109 ../CourseCommandList.php:71
+#: ../LocationExecutedMovementList.php:112 ../CourseCommandList.php:71
 msgid "Select one or more types"
 msgstr "Seleccione uno o varios tipos "
 
@@ -8438,20 +8449,20 @@ msgstr "Añadir un plazo"
 msgid "Select one or more movement types"
 msgstr "Seleccione uno o varios tipos de movimientos"
 
-#: ../ActivatedMovementList.php:107 ../ActivatedMovementList.php:240
-msgid "Destinator"
-msgstr "Destinatario"
+#: ../ActivatedMovementList.php:204
+msgid "Print order labels"
+msgstr ""
 
-#: ../ActivatedMovementList.php:203
+#: ../ActivatedMovementList.php:215
 msgid "Execute several movements"
 msgstr "Ejecutar varios movimientos"
 
-#: ../ActivatedMovementList.php:213
+#: ../ActivatedMovementList.php:225
 #: ../../../pwak/trunk/lib/GenericMessages.php:86 void:1
 msgid "Export"
 msgstr "Exportar"
 
-#: ../ActivatedMovementList.php:252
+#: ../ActivatedMovementList.php:264
 #: ../GroupableBoxActivatedChainTaskList.php:151
 #: ../ActivatedChainTaskHistory.php:133 ../ActivatedChainTaskList.php:245
 #: ../SaisonalityList.php:88 ../PromotionList.php:60
@@ -8459,7 +8470,7 @@ msgstr "Exportar"
 msgid "Beginning date"
 msgstr "Fecha de Inicio"
 
-#: ../ActivatedMovementList.php:263
+#: ../ActivatedMovementList.php:275
 msgid "Execute this movement"
 msgstr "Ejecutar este movimiento"
 
@@ -9134,7 +9145,7 @@ msgstr "Ubicación de salida de transportista"
 msgid "Carrier arrival site"
 msgstr "Ubicación de llegada del transportista"
 
-#: ../ForwardingFormEdit.php:378 ../LocationExecutedMovementList.php:286
+#: ../ForwardingFormEdit.php:378 ../LocationExecutedMovementList.php:289
 msgid "Print forwarding form"
 msgstr "Imprimir formulario de transporte"
 
@@ -9979,6 +9990,7 @@ msgid "Product references by customer"
 msgstr "Referencias de productos por cliente"
 
 #: ../menu.inc.php:326 ../menu.inc.php:563
+#: ../LocationExecutedMovementList.php:329
 msgid "SN/Lots"
 msgstr "NS / Lotes"
 
@@ -10484,23 +10496,23 @@ msgstr "Está a punto de desagrupar todos los paquetes, ¿seguir? "
 msgid "Regrouping reference (parcel, pallet, etc...)"
 msgstr "Reagrupación de referencia (paquete, palé, etc.)"
 
-#: ../BoxList.php:94
+#: ../BoxList.php:99
 msgid "Cancel regrouping"
 msgstr "Cancelar reagrupación"
 
-#: ../BoxList.php:100
+#: ../BoxList.php:105
 msgid "Print packing list"
 msgstr "Imprimir lista de contenidos"
 
-#: ../BoxList.php:107
+#: ../BoxList.php:112
 msgid "Print grouping labels"
 msgstr ""
 
-#: ../BoxList.php:122
+#: ../BoxList.php:127
 msgid "Regrouping reference"
 msgstr "Referencia de reagrupación "
 
-#: ../BoxList.php:124
+#: ../BoxList.php:129
 msgid "Content reference"
 msgstr "Referencia del contenido"
 
@@ -10766,27 +10778,27 @@ msgstr "Filtrar por fecha de pago"
 msgid "Registration date"
 msgstr "Fecha de registro"
 
-#: ../LocationExecutedMovementList.php:61
+#: ../LocationExecutedMovementList.php:64
 msgid "This movement was cancelled."
 msgstr "Este movimiento ha sido cancelado."
 
-#: ../LocationExecutedMovementList.php:121
+#: ../LocationExecutedMovementList.php:124
 msgid "Not cancelled"
 msgstr "Sin cancelar"
 
-#: ../LocationExecutedMovementList.php:277
+#: ../LocationExecutedMovementList.php:280
 msgid "Print delivery order"
 msgstr "Imprimir pedido de entrega"
 
-#: ../LocationExecutedMovementList.php:295
+#: ../LocationExecutedMovementList.php:298
 msgid "Cancel movement"
 msgstr "Cancelar movimiento"
 
-#: ../LocationExecutedMovementList.php:302
+#: ../LocationExecutedMovementList.php:305
 msgid "Executed movements"
 msgstr "Movimientos ejecutados"
 
-#: ../LocationExecutedMovementList.php:337
+#: ../LocationExecutedMovementList.php:343
 msgid "List of partial movements executed."
 msgstr "Lista de movimientos parciales ejecutados."
 
@@ -12348,11 +12360,11 @@ msgstr "Columnas por ocultar"
 msgid "You can't hide all columns."
 msgstr "No es posible ocultar todas las columnas."
 
-#: ../../../pwak/trunk/lib/Crud/GenericAddEdit.php:1156 void:1
+#: ../../../pwak/trunk/lib/Crud/GenericAddEdit.php:1157 void:1
 msgid "Select a date"
 msgstr "Seleccionar una fecha"
 
-#: ../../../pwak/trunk/lib/Crud/GenericAddEdit.php:1191 void:1
+#: ../../../pwak/trunk/lib/Crud/GenericAddEdit.php:1192 void:1
 msgid "confirm"
 msgstr "confirmar"
 

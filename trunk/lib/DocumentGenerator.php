@@ -4899,17 +4899,17 @@ class MovementLabelGenerator extends DocumentGenerator
             $i++;
                     
             $this->pdf->setXY($x, $y ) ;
-            $this->pdf->addInlineText( _('Date').": ".$mvt_date ,
+            $this->pdf->addText( _('Date').": ".$mvt_date ,
                                 array('fontSize' => 10, 'lineHeight' => $lineHeight)
                             ); 
 
             $this->pdf->setXY($x, $y + $lineHeight) ;
-            $this->pdf->addInlineText( _('Expeditor').": ".$cmd_expeditor,
+            $this->pdf->addText( _('Expeditor').": ".$cmd_expeditor,
                                 array('fontSize' => 10, 'lineHeight' => $lineHeight)
                             ); 
 
             $this->pdf->setXY($x, $y + $lineHeight + $lineHeight) ;
-            $this->pdf->addInlineText(  _('Destinator').": ".$cmd_destinator,
+            $this->pdf->addText(  _('Destinator').": ".$cmd_destinator,
                                 array('fontSize' => 10, 'lineHeight' => $lineHeight)
                             ); 
 
@@ -4919,7 +4919,7 @@ class MovementLabelGenerator extends DocumentGenerator
             $code_y = $y ;
             $this->pdf->Code128($code_x , $code_y , $cmd_ref , $codeWidth , $codeHeight );
             $this->pdf->setXY($code_x, $code_y + $codeHeight + $spacing);
-            $this->pdf->addInlineText( $cmd_ref ,
+            $this->pdf->addText( $cmd_ref ,
                                 array('fontSize' => 10, 'lineHeight' => $lineHeight)
                             ); 
 

@@ -4820,5 +4820,117 @@ class BoxLabelGenerator extends DocumentGenerator
 }
 
 // }}}
+// MovementLabelGenerator {{{
 
+/**
+ * MovementLabelGenerator {{{.
+ * Classe utilisee pour les impressions code barres commandes/mouvements
+ *
+ */
+class MovementLabelGenerator extends DocumentGenerator
+{
+    // __construct() {{{
+
+    /**
+     * Constructor
+     *
+     * @access protected
+     */
+    public function __construct($mvtInfo) {
+        // doc fictif car on ne sauve pas ces etiquettes ...
+        $document = new AbstractDocument();
+        $cur = false; // pas important ici...
+        parent::__construct($document, false, false, $cur, '');
+        $this->pdf->showExpeditor   = false;
+        $this->pdf->showPageNumbers = false;
+        $this->pdf->showEditionDate = false;
+        $this->pdf->setAutoPageBreak(true, 0);
+        $this->movementInfo = $mvtInfo;
+    }
+
+    // }}}
+    // ProductLabelGenerator::render() {{{
+
+    /**
+     * Construit le doc pdf
+     *
+     * @access public
+     * @return void
+     */
+    public function render() {
+
+        // Document dimensions
+        // should act on parent object ...
+        $pageHeight = 297 ;
+        $pageWidth = 210 ;
+
+        $codeHeight = 10 ;
+        $codeWidth = 80 ;
+
+        $pageMargeTop = 5 ;
+        $pageMargeBottom = 4 ;
+        $pageMargeLeft = 4 ;
+        $pageMargeRight = 4 ;
+
+        // Spacing between each elements
+        $spacing = 2 ;
+        $lineHeight = 4;
+
+        $nperpage = ($pageHeight - ($pageMargeTop+$pageMargeBottom)) 
+                            / ($codeHeight+(4*$spacing) + $lineHeight);
+
+        $nperpage = floor($nperpage);
+        $i = 0;
+        $cache = array();
+
+        foreach ($this->movementInfo as $array) {
+
+            list($mvt_date, $cmd_expeditor, $cmd_destinator, $cmd_ref) = $array;
+            $x = $pageMargeLeft ;
+            if ($i == 0 || ($i%$nperpage==0)) {
+                    $y = $pageMargeTop + $spacing ;
+                    $this->pdf->addPage();
+            } else {
+                    $y += $codeHeight + $lineHeight + (4 * $spacing ) ;
+            }
+
+            $x += $spacing ;
+
+            $i++;
+                    
+            $this->pdf->setXY($x, $y ) ;
+            $this->pdf->addInlineText( _('Date').": ".$mvt_date ,
+                                array('fontSize' => 10, 'lineHeight' => $lineHeight)
+                            ); 
+
+            $this->pdf->setXY($x, $y + $lineHeight) ;
+            $this->pdf->addInlineText( _('Expeditor').": ".$cmd_expeditor,
+                                array('fontSize' => 10, 'lineHeight' => $lineHeight)
+                            ); 
+
+            $this->pdf->setXY($x, $y + $lineHeight + $lineHeight) ;
+            $this->pdf->addInlineText(  _('Destinator').": ".$cmd_destinator,
+                                array('fontSize' => 10, 'lineHeight' => $lineHeight)
+                            ); 
+
+
+            // code barre no commande
+            $code_x = $x + 110 ;
+            $code_y = $y ;
+            $this->pdf->Code128($code_x , $code_y , $cmd_ref , $codeWidth , $codeHeight );
+            $this->pdf->setXY($code_x, $code_y + $codeHeight + $spacing);
+            $this->pdf->addInlineText( $cmd_ref ,
+                                array('fontSize' => 10, 'lineHeight' => $lineHeight)
+                            ); 
+
+            $line_y = $y + $codeHeight + $lineHeight + (3*$spacing) ;
+            $this->pdf->Line(0,$line_y ,210,$line_y );
+        }
+
+        return $this->pdf;
+    }
+    // }}}
+
+}
+// }}}
 ?>

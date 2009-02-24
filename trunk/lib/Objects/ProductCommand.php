@@ -327,7 +327,8 @@ class ProductCommand extends _ProductCommand {
             for($i=0; $i < $cCollection->getCount(); $i++) {
                 $component = $cCollection->getItem($i);
                 if($component instanceof Component) {
-                    $currentAlert = $this->_createActivatedMovement($activatedChainTask, $component->getProductId());
+                    $currentAlert =
+                    $this->_createActivatedMovement($activatedChainTask, $component->getProductId(),false,$component->getId());
                     if (is_array($currentAlert) && !empty($currentAlert)) {
                         $AlertArray[] = $currentAlert;
                     }
@@ -357,7 +358,8 @@ class ProductCommand extends _ProductCommand {
         return $AlertArray;
     }
 
-    function _createActivatedMovement($activatedChainTask, $productId, $percentWasted = false) {
+    function _createActivatedMovement($activatedChainTask, $productId,
+    $percentWasted = false, $componentId = 0) {
         require_once('Objects/Task.const.php');
         require_once('Objects/Command.const.php');
         require_once('Objects/Product.php');
@@ -400,8 +402,18 @@ class ProductCommand extends _ProductCommand {
             }
             $cCollection = $activatedChainTask->getComponentCollection(
                     array('Product.Id' => $productId));
+            /*
+            echo "\n<pre> collection : \n";
+            print_r($cCollection);
+            echo "</pre>" ;
+            */
             //La liste retourne un productcommanditem unique
-            $component = $cCollection->getItem(0);
+            if ($componentId) {
+               $component = $cCollection->getItemById($componentId);
+            } else {
+               $component = $cCollection->getItem(0);
+            }
+
             $useNomenclature = $activatedChainTask->getComponentQuantityRatio();
             if ($useNomenclature && $component instanceof Component) {
                 if ($MovementTypeID == ENTREE_INTERNE) {
@@ -452,10 +464,16 @@ class ProductCommand extends _ProductCommand {
                 }
             }
             $ActivatedMovement->setQuantity($quantity);
+            /*
+            echo "\n<pre>";
+            print_r($component);
+            echo $quantity; 
+            echo "</pre>" ;
+           */ 
         }
         $ActivatedMovement->save();
         if ($mustCreateWastedMovement) {
-            $this->_createActivatedMovement($activatedChainTask, $productId, true);
+            $this->_createActivatedMovement($activatedChainTask, $productId, true, $componentId);
         }
         // Mise a jour de la qte virtuelle
         $AlertMailData = $ActivatedMovement->setProductVirtualQuantity();

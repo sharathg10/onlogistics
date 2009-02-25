@@ -4396,78 +4396,130 @@ class ProductLabelGenerator extends DocumentGenerator
      * @return void
      */
     public function render() {
+
         $i = 0;
         $cache = array();
+
+        $PageHeight = 296 ;
+        $PageWidth = 210 ;
+
+        $PageMargeTop = 4 ;
+        $PageMargeBottom = 4 ;
+        $PageMargeLeft = 4 ;
+        $PageMargeRight = 4 ;
+
+        $StickerMargeLeft = 2 ;
+        $StickerMargeRight= 2 ;
+        $StickerMargeTop = 2 ;
+        $StickerMargeBottom = 2 ;
+        $StickerPerLine = 2 ;
+        $StickerPerRow = 6 ;
+        $StickerSpacing = 0 ;
+
+        $CodeHeight = 10 ;
+        $CodeWidth = 50 ;
+        $LineHeight = 4 ;
+
+        $DocumentWidth = $PageWidth - ($PageMargeLeft + $PageMargeRight) ;
+        $StickerWidth = $DocumentWidth / $StickerPerLine ;
+        $StickerRealWidth = $StickerWidth - ($StickerMargeLeft + $StickerMargeRight) ;
+        $PictureWidth = $StickerRealWidth - $CodeWidth - 20 ;
+
+        $DocumentHeight = $PageHeight - $PageMargeTop - $PageMargeBottom ;
+        $StickerHeight = ($DocumentHeight - (($StickerPerRow - 1) * $StickerSpacing )) / 6 ;
+        $StickerRealHeight = $StickerHeight - $StickerMargeTop - $StickerMargeBottom ;
+        $PictureHeight = $StickerRealHeight - 20 ;
+
         foreach ($this->productInfo as $array) {
+
             list($product, $qty) = $array;
             for ($j=0; $j<$qty; $j++) {
-                if ($i == 0 || !($i % 12)) {
-                    $x = 2;
-                    $y  = 4;
+
+                if ($i == 0 || ($i%12==0)) {
+                    $x = $PageMargeLeft ;
+                    $y  = $PageMargeTop +$StickerMargeTop ;
                     $newPage = true;
                     $this->pdf->addPage();
                 } else {
                     $newPage = false;
                 }
+
+
                 if ($i % 2 == 0) {
-                    $x = 2;
-                    if (!$newPage) {
-                        $y += 48;
-                    }
+                    $x = $PageMargeLeft ;
+                    if (!$newPage) $y += $StickerHeight+$StickerMargeTop ;
                 } else {
-                    $x = 107;
+                    $x = $PageWidth / 2 ;
                 }
+
+                $x += $StickerMargeLeft ;
+
                 $i++;
+
                 if (($model = $product->getModel()) instanceof RTWModel) {
                     $mid = $model->getId();
                     if (!isset($cache[$mid])) {
                         $cache[$mid] = array();
+
                         // image du produit
                         $infos = ImageManager::getFileInfo(md5($model->getImage()));
                         if ($infos['width'] > $infos['height']) {
-                            $cache[$mid]['w'] = 40;
                             $cache[$mid]['h'] = 0;
                         } else {
                             $cache[$mid]['w'] = 0;
-                            $cache[$mid]['h'] = 40;
                         }
+
+                        $cache[$mid]['w'] = $PictureWidth;
+                        $cache[$mid]['h'] = $PictureHeight;
+
                         if (is_array($infos) && !empty($infos['data'])) {
                             list(,$type) = explode('/', $infos['mimetype']);
                             $cache[$mid]['type'] = $type;
                             $cache[$mid]['data'] = $infos['data'];
                         }
+
                         // style number
                         $cache[$mid]['pressname'] = $model->getPressName()->toString();
                     }
+
+                    // Image
                     $this->pdf->setXY($x, $y);
                     $this->pdf->image($cache[$mid]['data'], $x, $y,
-                        $cache[$mid]['w'], $cache[$mid]['h'], $cache[$mid]['type']);
-                    $this->pdf->setXY($x+50, $y);
+                        $PictureWidth, $PictureHeight, $cache[$mid]['type']);
+
+                    // Nom Presse
+                    $this->pdf->setXY($x+$PictureWidth , $y);
                     $this->pdf->addText(
-                        $cache[$mid]['pressname'],
+                        trim($cache[$mid]['pressname']),
                         array('fontSize' => 10, 'lineHeight' => 4)
-                    );
+                    ); 
+                    
                 }
-                $this->pdf->setXY($x+86, $y);
+
+                // Taille
                 if (($size = $product->getSize()) instanceof RTWSize) {
-                    // taille
-                    $this->pdf->addText(
+                    $this->pdf->setXY($x + $PictureWidth + $CodeWidth , $y);
+                    $this->pdf->addText( 
                         $size->getName(),
-                        array('fontSize' => 12, 'lineHeight' => 4, 'fontStyle' => 'B')
+                        array('fontSize' => 12, 'lineHeight' => $LineHeight , 'fontStyle' => 'B', 'align' => 'L')
                     );
                 }
-                $this->pdf->setXY($x+50, $y+5);
-                // reference
-                $this->pdf->addText(
+                // reference 
+                $this->pdf->setXY($x + $PictureWidth, $y + $LineHeight+1 );
+                $this->pdf->addText( 
                     $product->getBaseReference(),
-                    array('fontSize' => 8, 'lineHeight' => 4)
+                    array('fontSize' => 8, 'lineHeight' => $LineHeight , 'align' => 'L')
                 );
+
                 // code barre
-                $this->pdf->Code128($x+50, $y+10, $product->getBaseReference(), 50, 10);
-                $this->pdf->setXY($x, $y+37);
+                $this->pdf->setXY($x + $PictureWidth , $y + 10 );
+                $this->pdf->Code128($x+ $PictureWidth, $y+10, $product->getBaseReference(), $CodeWidth , $CodeHeight );
+
+                // ligne descriptive ...
+                $this->pdf->setXY($x, $y+$PictureHeight);
                 $this->pdf->addText(
                     $product->getName(),
-                    array('fontSize' => 8, 'lineHeight' => 4, 'width' => 105, 'align' => 'C')
+                    array('fontSize' => 8, 'lineHeight' => 4, 'width' => $StickerRealWidth, 'align' => 'C')
                 );
             }
         }
@@ -4768,5 +4820,117 @@ class BoxLabelGenerator extends DocumentGenerator
 }
 
 // }}}
+// MovementLabelGenerator {{{
 
+/**
+ * MovementLabelGenerator {{{.
+ * Classe utilisee pour les impressions code barres commandes/mouvements
+ *
+ */
+class MovementLabelGenerator extends DocumentGenerator
+{
+    // __construct() {{{
+
+    /**
+     * Constructor
+     *
+     * @access protected
+     */
+    public function __construct($mvtInfo) {
+        // doc fictif car on ne sauve pas ces etiquettes ...
+        $document = new AbstractDocument();
+        $cur = false; // pas important ici...
+        parent::__construct($document, false, false, $cur, '');
+        $this->pdf->showExpeditor   = false;
+        $this->pdf->showPageNumbers = false;
+        $this->pdf->showEditionDate = false;
+        $this->pdf->setAutoPageBreak(true, 0);
+        $this->movementInfo = $mvtInfo;
+    }
+
+    // }}}
+    // ProductLabelGenerator::render() {{{
+
+    /**
+     * Construit le doc pdf
+     *
+     * @access public
+     * @return void
+     */
+    public function render() {
+
+        // Document dimensions
+        // should act on parent object ...
+        $pageHeight = 297 ;
+        $pageWidth = 210 ;
+
+        $codeHeight = 10 ;
+        $codeWidth = 80 ;
+
+        $pageMargeTop = 5 ;
+        $pageMargeBottom = 4 ;
+        $pageMargeLeft = 4 ;
+        $pageMargeRight = 4 ;
+
+        // Spacing between each elements
+        $spacing = 2 ;
+        $lineHeight = 4;
+
+        $nperpage = ($pageHeight - ($pageMargeTop+$pageMargeBottom)) 
+                            / ($codeHeight+(4*$spacing) + $lineHeight);
+
+        $nperpage = floor($nperpage);
+        $i = 0;
+        $cache = array();
+
+        foreach ($this->movementInfo as $array) {
+
+            list($mvt_date, $cmd_expeditor, $cmd_destinator, $cmd_ref) = $array;
+            $x = $pageMargeLeft ;
+            if ($i == 0 || ($i%$nperpage==0)) {
+                    $y = $pageMargeTop + $spacing ;
+                    $this->pdf->addPage();
+            } else {
+                    $y += $codeHeight + $lineHeight + (4 * $spacing ) ;
+            }
+
+            $x += $spacing ;
+
+            $i++;
+                    
+            $this->pdf->setXY($x, $y ) ;
+            $this->pdf->addText( _('Date').": ".$mvt_date ,
+                                array('fontSize' => 10, 'lineHeight' => $lineHeight)
+                            ); 
+
+            $this->pdf->setXY($x, $y + $lineHeight) ;
+            $this->pdf->addText( _('Expeditor').": ".$cmd_expeditor,
+                                array('fontSize' => 10, 'lineHeight' => $lineHeight)
+                            ); 
+
+            $this->pdf->setXY($x, $y + $lineHeight + $lineHeight) ;
+            $this->pdf->addText(  _('Destinator').": ".$cmd_destinator,
+                                array('fontSize' => 10, 'lineHeight' => $lineHeight)
+                            ); 
+
+
+            // code barre no commande
+            $code_x = $x + 110 ;
+            $code_y = $y ;
+            $this->pdf->Code128($code_x , $code_y , $cmd_ref , $codeWidth , $codeHeight );
+            $this->pdf->setXY($code_x, $code_y + $codeHeight + $spacing);
+            $this->pdf->addText( $cmd_ref ,
+                                array('fontSize' => 10, 'lineHeight' => $lineHeight)
+                            ); 
+
+            $line_y = $y + $codeHeight + $lineHeight + (3*$spacing) ;
+            $this->pdf->Line(0,$line_y ,210,$line_y );
+        }
+
+        return $this->pdf;
+    }
+    // }}}
+
+}
+// }}}
 ?>

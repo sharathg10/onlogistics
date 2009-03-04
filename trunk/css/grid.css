@@ -99,26 +99,19 @@
 	text-decoration: none;
 }
 
-.grid table tbody tr.grid_row_odd {
-	background-color: #E0E0E0;
+/* Couleurs de fond des grid et subgrid */
+.grid table tbody tr.grid_row_odd , 
+.grid table tbody tr.grid_row_odd .subgrid * { 
+	background-color: #E0E0E0; 
 }
-
-.grid table tbody tr.grid_row_even {
-	background-color: #D0D0D0;
+.grid table tbody tr.grid_row_even , 
+.grid table tbody tr.grid_row_even .subgrid * {
+	background-color: #D0D0D0; 
 }
-
-.grid table tbody tr.hover,
-.grid table tbody tr:hover {
-	background-color: #ffffe3;
-}
-
-.grid table tbody tr.grid_row_highlighted_even {
-	background-color: #99CC99;
-}
-
-.grid table tbody tr.grid_row_highlighted_odd {
-	background-color: #CCFFCC;
-}
+.grid table tbody tr.hover, .grid table tbody tr:hover { background-color: #ffffe3; }
+.grid table tbody tr:hover .subgrid * { background-color: #ffffe3; }
+.grid table tbody tr.grid_row_highlighted_even { background-color: #99CC99; }
+.grid table tbody tr.grid_row_highlighted_odd { background-color: #CCFFCC; }
 
 .grid table tbody tr td.grid_checkbox_column {
     text-align: right;
@@ -163,6 +156,11 @@
     text-align: right;
     float: right;
     padding: 2px;
+    white-space: normal;
+}
+
+.grid .grid_actions input {
+	margin-top: 2px;
 }
 
 .grid .grid_pager {
@@ -178,6 +176,16 @@
 	color: #fafafa;
     text-decoration: none;
 }
+
+/* reset des espaces et bordures du subgrid ... */
+.subgrid {
+	width: 100% ;
+	border: 0px ;
+	padding: 0 ;
+	margin: 0;
+}
+
+
 
 /* Concerne le layer de customisation de l'affichage des searchforms */
 

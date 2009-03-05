@@ -947,6 +947,20 @@ $menu_metadata = array(
                 'link'        => 'ActivityBasedCosting.php',
                 'description' => _('Activity based costing'),
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW)
+            ),
+            array(
+                'title'       => _('Per site orders'),
+                'link'        => 'PerSiteOrdersList.php',
+                'description' => _('Per site orders'),
+                'restrict_to_context' => array('readytowear'),
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW)
+            ),
+            array(
+                'title'       => _('Per site estimates'),
+                'link'        => 'PerSiteEstimatesList.php',
+                'description' => _('Per site estimates'),
+                'restrict_to_context' => array('readytowear'),
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW)
             )
         )
     ),

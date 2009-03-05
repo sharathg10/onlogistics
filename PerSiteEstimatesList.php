@@ -100,10 +100,7 @@ if (true === $form->displayGrid()) {
     define('COMMAND_EVENT_LIST_ITEMPERPAGE', 50);
     $grid = new Grid();
 	$grid->customizationEnabled = true;
-	$grid->javascriptFormOwnerName = 'CommandListSite';  // Pour ne pas avoir d'erreur js
-
-    // mettre ici: [nb de colonnes du SubGrid] (pour affichage correct)
-    //$grid->setNbSubGridColumns(-1);
+	$grid->javascriptFormOwnerName = 'PerSiteEstimatesList';  // Pour ne pas avoir d'erreur js
 
     $grid->itemPerPage = COMMAND_EVENT_LIST_ITEMPERPAGE;
 

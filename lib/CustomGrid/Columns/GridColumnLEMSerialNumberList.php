@@ -68,7 +68,7 @@ class GridColumnLEMSerialNumberList extends SubGridColumn {
             $fields
         );
 
-        return $subGrid->render($col, array(), array(), "Stock/LEMSerialNumberList.html");
+        return $subGrid->render($col);
     } 
 } 
 

@@ -269,9 +269,17 @@ if (true === $form->displayGrid()
     $grid->NewColumn('FieldMapper', _('Name'),
             array('Macro' => '<a href="ActorAddEdit.php?actId=%Id%">%Name%</a>',
                   'Enabled' => ($withFullRights),
-			      'SortField' => 'Name'));
+                  'SortField' => 'Name'));
     $grid->NewColumn('FieldMapper', _('Name'), array('Macro' => '%Name%',
-                  'Enabled' => (!$withFullRights)));
+        'Enabled' => (!$withFullRights)));
+
+    $grid->NewColumn('FieldMapper', _('Code'),
+            array('Macro' => '<a href="ActorAddEdit.php?actId=%Id%">%Code%</a>',
+                  'Enabled' => ($withFullRights),
+                  'SortField' => 'Code'));
+    $grid->NewColumn('FieldMapper', _('Code'), array('Macro' => '%Code%',
+        'Enabled' => (!$withFullRights)));
+
 	$grid->NewColumn('FieldMapperWithTranslation', _('Salesman'),
             array('Macro' => '%Commercial.Identity%',
 			      'TranslationMap' => array(0 => ''),

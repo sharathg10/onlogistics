@@ -45,6 +45,7 @@ function GLAO(){
 	this.isProductionTask = GLAO_isProductionTask;
 	this.isInternalStockTask = GLAO_isInternalStockTask;
 	this.isChainActivationTask = GLAO_isChainActivationTask;
+	this.isChainGenericActivationTask = GLAO_isChainGenericActivationTask;
 }
 
 function GLAO_isTransportTask(taskIndex){
@@ -68,3 +69,9 @@ function GLAO_isInternalStockTask(taskIndex){
 function GLAO_isChainActivationTask(taskIndex){
 	return (taskIndex == <?php echo TASK_ACTIVATION; ?>);
 }
+
+function GLAO_isChainGenericActivationTask(taskIndex){
+	return (taskIndex == <?php echo TASK_GENERIC_ACTIVATION; ?>);
+}
+
+

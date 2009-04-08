@@ -485,6 +485,7 @@ if (isset($_REQUEST['FormSubmitted'])) {
         foreach ($Tasks[$key] as $taskkey => $taskvalue) {
             $typeArray = array(
                 TASK_ACTIVATION,
+                TASK_GENERIC_ACTIVATION,
                 TASK_INTERNAL_STOCK_ENTRY,
                 TASK_INTERNAL_STOCK_EXIT
             );

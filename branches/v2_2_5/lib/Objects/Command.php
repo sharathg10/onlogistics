@@ -218,12 +218,28 @@ class Command extends _Command {
      */
     public function generateCommandNo($chain)
     {
-        $chain->setCommandSequence($chain->getCommandSequence() + 1);
-        $chain->save();
-        $serial = $chain->getReference() . '-' . $chain->getCommandSequence();
-        if ($this->getIsEstimate()) {
-            $serial = 'D_'.$serial;
+        $this->setCommandSequence($this->getCommandSequence() + 1);
+        //$this->save();
+        //$serial = $chain->getReference() . '-' . $chain->getCommandSequence();
+        $seq = $this->getCommandSequence();
+        
+        if($this->getType() == Command::TYPE_CUSTOMER) {
+            $serial = $this->getDestinator()->getCode() ;
+        } else {
+            $serial = $this->getExpeditor()->getCode() ;
         }
+
+        if($this->getParentCommand() != FALSE ) {
+            $serial = $this->getParentCommand()->getCommandNo()."-".$serial ;
+        } else {
+            $serial .= "-".$seq ;
+        }
+
+        if ($this->getIsEstimate()) {
+            $serial = 'D-'.$serial;
+        }
+
+
         $commandMapper = Mapper::singleton('Command');
         // on appelle la methode récursivement jusqu'à trouver un numéro unique
         if ($commandMapper->alreadyExists(array('CommandNo'=>$serial))) {
@@ -1170,6 +1186,40 @@ class Command extends _Command {
 
     // }}}
 
+    // CommandSequence string property + getter/setter {{{
+
+    /**
+     * CommandSequence int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_CommandSequence = 0;
+
+    /**
+     * _Chain::getCommandSequence
+     *
+     * @access public
+     * @return integer
+     */
+    public function getCommandSequence() {
+        return $this->_CommandSequence;
+    }
+
+    /**
+     * _Chain::setCommandSequence
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setCommandSequence($value) {
+        if ($value !== null) {
+            $this->_CommandSequence = (int)$value;
+        }
+    }
+
+    // }}}
 }
 
 ?>

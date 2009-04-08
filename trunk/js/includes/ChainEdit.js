@@ -82,12 +82,16 @@ function TaskDetail(operationIndex, taskIndex, winheight){
         alert(ChainEdit_0);
         return false;
     }
+
     if (GLAO.isChainActivationTask(taskID)) {
         detailURL = "ChainActivationTaskDetail.php?activationTask=1";
+    } else if (GLAO.isChainGenericActivationTask(taskID)) {
+        detailURL = "ChainGenericActivationTaskDetail.php";
     } else if (GLAO.isInternalStockTask(taskID)) {
         detailURL = "ChainActivationTaskDetail.php";
         var popupParams = "location=no,status=yes,width=800,height=420,scrollbars=yes";
     }
+
     var windowTaskDetails = window.open(detailURL, "TaskDetails", popupParams);
 
     if(!windowTaskDetails) {

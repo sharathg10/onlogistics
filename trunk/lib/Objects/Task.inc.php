@@ -300,7 +300,19 @@ function isPackingListEditionTask($ack) {
  */
 function isActivationTask($ack)
 {
-    return getTaskId($ack) == TASK_ACTIVATION;
+    $taskID = $ack->getTaskId();
+    return $taskID == TASK_ACTIVATION || $taskID == TASK_GENERIC_ACTIVATION ;
+}
+
+/**
+ * Retourne true si la tache est une tache d'activation generique
+ *  commande fournisseur + fabrication produit ...
+ *
+ * @param object ActivatedTask ou Task $ack
+ * @return bool
+ */
+function isGenericActivation($ack) {
+    return $ack->getTaskId() == TASK_GENERIC_ACTIVATION;
 }
 
 /**

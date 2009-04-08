@@ -74,6 +74,7 @@ function WriteLoadSettingsFunction($Chain)
     echo "  var aTask;\n";
     $typeArray = array(
         TASK_ACTIVATION,
+        TASK_GENERIC_ACTIVATION,
         TASK_INTERNAL_STOCK_ENTRY,
         TASK_INTERNAL_STOCK_EXIT
     );

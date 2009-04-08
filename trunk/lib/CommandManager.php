@@ -389,14 +389,15 @@ class CommandManager{
      **/
     public function _activateProcess($chain, $pdtIds = array(), $activationTask = false)
     {
-        $this->_debug('* Activation de la chaine ' . $chain->getReference());
+        $this->_debug('Commande : '.$this->command->_Id);
+        $this->_debug('--- Activation de la chaine : ' . $chain->getReference());
         // Activation de la chaîne
         $activatedChain = activateChain($chain, $this->command);
         $this->_activatedChainArray[] = $activatedChain;
         if (Tools::isException($activatedChain)) {
             return $activatedChain;
         }
-        $this->_debug(' -> ActivatedChain: ' . $activatedChain->getReference());
+        $this->_debug('--- ActivatedChain : ' . $activatedChain->getReference());
         // assignation de la chaîne aux commanditems et création des boxes s'il
         // y a lieu
         $cmiCol = $this->command->getCommandItemCollection();
@@ -433,7 +434,7 @@ class CommandManager{
             }
         }
         // Quantification de la chaîne
-        $this->_debug('* Quantification de de la chaine '.$activatedChain->getReference());
+        $this->_debug('--- Quantification de de la chaine '.$activatedChain->getReference());
         if ($this->commandType == 'ProductCommand') {
             $quantificator = new ProductCommandQuantificator($activatedChain, $this->command);
         } else {
@@ -523,13 +524,14 @@ class CommandManager{
             }
         }
         // Planification de la chaîne
-        $this->_debug('* Planification de de la chaine ' .
+        $this->_debug('--- Planification de de la chaine ' .
             $activatedChain->getReference());
         $result = $scheduler->scheduleActivatedChain(
             $activatedChain,
             $object->$getter_start(),
             $getter_end?$object->$getter_end():0
         );
+
         if (Tools::isException($result)) {
             return $result;
         }
@@ -594,6 +596,7 @@ class CommandManager{
             $chain = $chainArray[0][0];
             $command->generateCommandNo($chain);
         }
+        $this->_debug('* Validation commande ' .  $command->getCommandNo());
         $method = $this->productCommandType==Command::TYPE_CUSTOMER?
                 'getDestinator':'getExpeditor';
         $act = $command->$method();
@@ -631,6 +634,7 @@ class CommandManager{
             // somme des prix ht des commanditems
             $hbrPercent = $this->command->findHandingByRangePercent();
             $cmiCol = $command->getCommandItemCollection();
+
             $count = $cmiCol->getCount();
             $ht = $ttc = 0;
             for($i = 0; $i < $count; $i++){
@@ -1097,17 +1101,22 @@ class CommandManager{
             $this->command = $cmd;
         }
         // fin A VIRER
+
         if ($ach) {
             $achArray = array($ach);
         } else {
             $achArray = $this->_activatedChainArray;
         }
+
         foreach($achArray as $ach) {
-            if (!($ack = $ach->hasTaskOfType(TASK_ACTIVATION))) {
+            if (!(
+                ($ack = $ach->hasTaskOfType(TASK_ACTIVATION) ) || ($ack = $ach->hasTaskOfType(TASK_GENERIC_ACTIVATION) )
+                )
+            ) {
                 continue;
             }
             $ackCol = $ach->getActivatedChainTaskCollection(
-                array('Task.Id'=>TASK_ACTIVATION));
+                array('Task.Id'=>TASK_ACTIVATION, 'Task.Id'=>TASK_GENERIC_ACTIVATION));
             $count = $ackCol->getCount();
             for($i = 0; $i < $count; $i++){
                 $ack = $ackCol->getItem($i);
@@ -1141,7 +1150,7 @@ class CommandManager{
         // chaine à activer
         $chainToActivate = $ack->getChainToActivate();
         // XXX FOR TEST ONLY
-        if (false == $chainToActivate) {
+        if( (false == $chainToActivate) && ( $ack->getTaskId() != TASK_GENERIC_ACTIVATION ) ) {
             $task = $ack->getTask();
             return new Exception('Aucune chaîne à activer définie dans la ' .
                 'tâche d\'activation');
@@ -1151,16 +1160,17 @@ class CommandManager{
         // cas cmde de produit active cmde de produit     -> OK
         // cas cmde de transport active cmde de transport -> OK
         // cas cmde de transport active cmde de produit   -> KO
-        if ($ack->getCommandType() == false ||
-                ($ack->getCommandType() == 'ProductCommand' &&
-                    get_class($this->command) == 'ChainCommand')) {
+        if ( $ack->getCommandType() == false ||    
+            ($ack->getCommandType() == 'ProductCommand' && get_class($this->command) == 'ChainCommand') ){
             return new Exception(E_ACTIVATE_CHILD_PROCESS);
-        }
+        } 
+
         if ($ack->getActivationPerSupplier()) {
             // si on doit activer une commande par fournisseur, on appelle la
             // méthode adhoc
             return $this->_activateChildProcessByProduct($ack, $chainToActivate);
         }
+        
         $manager = new CommandManager(array(
             'CommandType'        => $ack->getCommandType(),
             'ProductCommandType' => $ack->getProductCommandType(),
@@ -1173,6 +1183,8 @@ class CommandManager{
         // XXX FIXME cela changera cf note dans la doc de la méthode
         $commandParams = $manager->_getCommandParams($this->command, $ack);
         // creation de la commande fille
+
+
         $result = $manager->createCommand($commandParams);
         if (Tools::isException($result)) {
             return $result;
@@ -1248,7 +1260,7 @@ class CommandManager{
                 'IsRootCommand'      => false,
             ));
             $manager->productCommandType = $ack->getProductCommandType();
-            $manager->_chainArray = array(array($chainToActivate, array()));
+
             $commandParams = $manager->_getCommandParams($this->command, $ack);
             // il faut changer les paramètres de l'expediteur/destinataire
             $supplier = $actMapper->load(array('Id'=>$supplierID));
@@ -1266,8 +1278,15 @@ class CommandManager{
             // supplier du produit associé
             $cmiCol = $supplierCommandItemMap[$supplierID];
             $count = $cmiCol->getCount();
+            $cmiChains = array();
             for($i = 0; $i < $count; $i++){
                 $cmi = $cmiCol->getItem($i);
+                $cmiProd = $cmi->getProduct();
+                $ref = $cmiProd->getBaseReference() ;
+
+                $cmiChain = Object::load('Chain', array('Reference'=>$ref)) ;
+                $manager->_chainArray = array(array($cmiChain, array()));
+
                 // XXX FIXME cela changera cf note dans la doc de la méthode
                 $cmiParams = $manager->_getCommandItemParams($cmi, $ack);
                 if (!$cmiParams) {
@@ -1277,11 +1296,20 @@ class CommandManager{
                 if (Tools::isException($result)) {
                     return $result;
                 }
+                $result = $manager->activateProcess($cmiChain);
+                if (Tools::isException($result)) {
+                    return $result;
+                }
             }
+
+            $manager->_chainArray = array(array($chainToActivate, array()));
             // activation et validation du processus
-            $result = $manager->activateProcess($ack);
-            if (Tools::isException($result)) {
-                return $result;
+            // 
+            if($ack->getTaskId()!= TASK_GENERIC_ACTIVATION) {
+                $result = $manager->activateProcess($ack);
+                if (Tools::isException($result)) {
+                    return $result;
+                }
             }
             $result = $manager->validateCommand();
             if (Tools::isException($result)) {

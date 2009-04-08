@@ -780,6 +780,9 @@ class ActivatedChainTask extends _ActivatedChainTask {
             }
             return 'ChainCommand';
         }
+        if( $this->getTaskId() == TASK_GENERIC_ACTIVATION ) {
+            return 'ProductCommand';
+        }
         return false;
     }
 

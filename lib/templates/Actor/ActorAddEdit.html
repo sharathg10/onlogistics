@@ -29,9 +29,10 @@
       <td>
 	  	<input name="Actor_Name" type="text" id="Actor_Name" style="width:100%" value="{if $Actor != 0}{$Actor->getName()}{/if}" />
       </td>
-      <td width="20%">{t}Code{/t} :</td>
+      <td width="20%">{t}Code{/t} *:</td>
       <td width="30%">
-	  	<input name="Actor_Code" type="text" id="Actor_Code" style="width:100%" value="{if $Actor != 0}{$Actor->getCode()}{/if}" />
+	  	<input name="Actor_Code" type="text" id="Actor_Code" value="{if $Actor != 0}{$Actor->getCode()}{/if}" />
+        <a onclick="genCode();" href="#">{t}Generate Code{/t}</a>
 	  </td>
     </tr>
     <tr>

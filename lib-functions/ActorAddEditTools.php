@@ -252,7 +252,7 @@ function generateCode($actorname){
     $j = 1 ; 
     while ($ActorTest instanceof Actor && $_SESSION['actor']->getId() != $ActorTest->getId()) {
         $code = substr($code,0,4).$j;
-        $ActorTest = $actorMapper->load(array('Code' => $ActorCode));
+        $ActorTest = $actorMapper->load(array('Code' => $code));
     }
     return $code ;
 }

@@ -279,11 +279,25 @@ $smarty->assign('customerId', $customer->getId());
 
 // On peut venir de la liste des devis ou du catalog client
 if (isset($_REQUEST['from']) && $_REQUEST['from'] == 'estimate') {
+    $est = Object::load('Command', $_SESSION['fromEstimateId']) ;
     $from = 'estimate';
+    restoreDates($smarty, 
+        $est->getWishedEndDate()>0, 
+        $est->getWishedStartDate(), 
+        $est->getWishedEndDate()
+    );
 } else {
     $from = '';
+    restoreDates(
+        $smarty,
+        isset($_REQUEST['WishedDate'])?$_REQUEST['WishedDate']:'',
+        isset($_REQUEST['StartDate'])?$_REQUEST['StartDate']:time(),
+        isset($_REQUEST['EndDate'])?$_REQUEST['EndDate']:time()
+    );
 }
+
 $smarty->assign('from', $from);
+
 // Pour les saisies de qte d'UE
 $smarty->assign('ueQtyPref', (Preferences::get('ProductCommandUEQty'))?1:0);
 if (isset($_REQUEST['isEstimate'])) {
@@ -298,15 +312,6 @@ if (in_array($auth->getProfile(), $customerProfiles)) {
     $smarty->assign('FormattedMiniAmountToOrder', 
             I18N::formatNumber($customer->getMiniAmountToOrder($currency)));
 }
-
-// date de début et de fin
-restoreDates(
-    $smarty,
-    isset($_REQUEST['WishedDate'])?$_REQUEST['WishedDate']:'',
-    isset($_REQUEST['StartDate'])?$_REQUEST['StartDate']:time(),
-    isset($_REQUEST['EndDate'])?$_REQUEST['EndDate']:time()
-);
-
 
 // Attention: number_format(NULL) = 0 !!, d'ou le test suivant
 $MaxIncur = (is_null($SupplierCustomer->getMaxIncur()))?

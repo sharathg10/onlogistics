@@ -80,14 +80,15 @@ if (true === $form->displayGrid()) {
 
     /*  Construction du filtre  */
     $FilterComponentArray = array_merge($FilterComponentArray,
-            $form->buildFilterComponentArray());
+        $form->buildFilterComponentArray());
+
 
     $season = SearchTools::requestOrSessionExist('Season');
     if ($season !== false && $season != '##') {
-            $FilterComponentArray[] = SearchTools::NewFilterComponent(
-                'Season',
-                'CommandItem()@ProductCommandItem.Product@RTWProduct.Model.Season.Id',
-                'Equals', $season, 1, 'Command');
+        $FilterComponentArray[] = SearchTools::NewFilterComponent(
+            'Season',
+            'CommandItem()@ProductCommandItem.Product@RTWProduct.Model.Season.Id',
+            'Equals', $season, 1, 'Command');
     }
 
     $Filter = SearchTools::filterAssembler($FilterComponentArray);
@@ -104,36 +105,37 @@ if (true === $form->displayGrid()) {
     //$grid->setNbSubGridColumns(-1);
 
     $grid->itemPerPage = COMMAND_EVENT_LIST_ITEMPERPAGE;
-
     $grid->NewAction('Print');
     $grid->NewAction('Export', array('FileName' => 'Commandes'));
 
     $grid->NewColumn('CommandProduct', _('Order'),
-            array('Sortable' => false));
+        array('Sortable' => false));
     $grid->NewColumn('FieldMapper', _('Date'),
-            array('Macro' => '%CommandDate|formatdate@DATE_SHORT%'));
-
+        array('Macro' => '%CommandDate|formatdate@DATE_SHORT%'));
+    $grid->NewColumn('FieldMapper', _('Wished Date'),
+        array('Macro' => '%WishedStartDate|formatdate@DATE_SHORT%'));
+    $grid->NewColumn('FieldMapper', _('Stock Exit Date'),
+        array('Macro' => '%StockExitDate|formatdate@DATE_SHORT%','Sortable' => false));
     $grid->NewColumn('FieldMapperWithTranslation', _('State'),
-            array('Macro' => '%State%','TranslationMap' => $ShortCommandStateArray));
+        array('Macro' => '%State%','TranslationMap' => $ShortCommandStateArray));
     $grid->NewColumn('MultiPrice', _('Amount incl. VAT'),
-            array('Method' => 'getTotalPriceTTC', 'Sortable' => false,
-                  'DataType' => 'numeric'));
+        array('Method' => 'getTotalPriceTTC', 'Sortable' => false,
+        'DataType' => 'numeric'));
     $grid->NewColumn('FieldMapper', _('Shipper'),
-            array('Macro' => '%Expeditor.Name%'));
+        array('Macro' => '%Expeditor.Name%'));
     $grid->NewColumn('FieldMapper', _('Addressee'),
-            array('Macro' => '%Destinator.Name%'));
+        array('Macro' => '%Destinator.Name%'));
     $grid->NewColumn('FieldMapper', _('Addressee site'),
-            array('Macro' => '%DestinatorSite.Name%'));
+        array('Macro' => '%DestinatorSite.Name%'));
     $grid->NewColumn('FieldMapper', _('Country'),
-            array('Macro' => '%DestinatorSite.Country%'));
+        array('Macro' => '%DestinatorSite.Country%'));
     $grid->NewColumn('FieldMapper', _('City'),
-            array('Macro' => '%DestinatorSite.CityName%'));
-
-    $cols = array(_('Style'),_('Press name'), _('Description'), _('Quantity'));
-
+        array('Macro' => '%DestinatorSite.CityName%'));
+    $cols = array(_('Style'),_('Press name'),
+        _('Description'), _('Quantity'));
     $grid->NewColumn('FieldMapper', _('Total quantity'),
-            array('Macro' => '%TotalQuantity%', 'Sortable' => false,
-                  'DataType' => 'numeric'));
+        array('Macro' => '%TotalQuantity%', 'Sortable' => false,
+        'DataType' => 'numeric'));
 
     // Colonne Custom pour le détail regrouppé par modèle ...
     $grid->NewColumn('CommandRTWModelList', $cols, array(

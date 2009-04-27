@@ -75,7 +75,10 @@ $okTitle    = I_CONFIRM_DO;
 $okBody     = _('Actor "%s" successfully saved');
 $pageTitle  = _('Add or update actor');
 $noSite     = _('Actor must have at least one site with an address, please correct.');
-$actorAlreadyExist = _('Actor could not be saved: an actor with the name provided already exists.');
+$actorNameAlreadyExist = _('Actor could not be saved: an actor with the name provided already exists.');
+$actorCodeAlreadyExist = _('Actor could not be saved: an actor with the code provided already exists.');
+$actorCodeAlNum= _('Actor code should only contain uppercase characters or numbers.');
+$actorCodeLength = _('Actor code should contain between 4 and 6 characters.');
 $actorNotDisable = _('Actor cannot be deactivated because he is the owner of a stock in a storage site.');
 $severalPdtsWithoutSupplier = _('Several active products have no main supplier.');
 $pdtsWithoutSupplier = _('The following active products have no main supplier: <ul><li>%s</li></ul>');
@@ -200,9 +203,40 @@ if (isset($_POST['formSubmitted'])) {
     $ActorTest = $actorMapper->load(array('Name' => $_POST['Actor_Name']));
     // si un Actor existe deja avec ce Name
 	if ($ActorTest instanceof Actor && $_SESSION['actor']->getId() != $ActorTest->getId()) {
-        Template::infoDialog($actorAlreadyExist, $_SERVER['PHP_SELF']);
+        Template::infoDialog($actorNameAlreadyExist, $_SERVER['PHP_SELF']);
         exit;
     }
+    
+    /* Verif du Code Acteur .... 
+     *
+     *
+     *
+     */
+    $ActorCode = $_POST['Actor_Code'] ;
+    $ActorCode = str_replace(" ", "", $ActorCode) ;
+    if($ActorCode == "") $ActorCode = generateCode($_POST['Actor_Name']);
+
+    $ActorTest = $actorMapper->load(array('Code' => $ActorCode));
+    // si un Actor existe deja avec ce Name
+	if ($ActorTest instanceof Actor && $_SESSION['actor']->getId() != $ActorTest->getId()) {
+        Template::infoDialog($actorCodeAlreadyExist, $_SERVER['PHP_SELF']);
+        exit;
+    }
+
+    /* Verification du format du code */
+    if(preg_match('/^[A-Z,0-9]+$/', $ActorCode , $matches) == 0 ) {
+        Template::infoDialog($actorCodeAlNum, $_SERVER['PHP_SELF']);
+        exit;
+    }
+
+    if ( (strlen($ActorCode) > 6) ||
+     (strlen($ActorCode) < 4) ) {
+        Template::infoDialog($actorCodeLength, $_SERVER['PHP_SELF']);
+        exit;
+    }
+
+    $_SESSION['actor']->setCode($ActorCode) ;
+
 
     // l'acteur n'est pas desactivable
     if(isset($_POST['Actor_Active']) && $_POST['Actor_Active']==0) {

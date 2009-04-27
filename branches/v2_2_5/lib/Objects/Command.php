@@ -1185,7 +1185,6 @@ class Command extends _Command {
     }
 
     // }}}
-
     // CommandSequence string property + getter/setter {{{
 
     /**
@@ -1218,6 +1217,47 @@ class Command extends _Command {
             $this->_CommandSequence = (int)$value;
         }
     }
+
+    // }}}
+    // Command::getStockExitDate() {{{
+
+   /*
+    * Methode Addon pour recuperer la date de la premiere sortie de stock
+    * @return datetime Content of value
+    */
+    function getStockExitDate()
+    {
+        require_once('Objects/MovementType.const.php');
+        $ExecutedMovementMapper = Mapper::singleton('ExecutedMovement');
+        $ActivatedMovementMapper = Mapper::singleton('ActivatedMovement');
+        $ExecutedMovementCollection = new Collection();
+        $ActivatedMovementCollection = new Collection();
+
+        $CommandItemCollection = $this->getCommandItemCollection();
+        if (($CommandItemCollection instanceof Collection) && ($CommandItemCollection->getCount() > 0)) {
+            $count = $CommandItemCollection->getCount();
+             for ($i = 0;$i < $count;$i++) {
+                $item = $CommandItemCollection->getItem($i);
+                $ActivatedMovementId = $item->getActivatedMovementId();
+
+                $ExecutedMovement = $ExecutedMovementMapper->load(array('ActivatedMovement' => $ActivatedMovementId));
+                $ActivatedMovement = $ActivatedMovementMapper->load(array('Id' => $ActivatedMovementId));
+                
+                if (($ExecutedMovement instanceof ExecutedMovement) && $ExecutedMovement->getId() > 0) {
+                    if ($ExecutedMovement->getTypeId()== SORTIE_NORMALE ) {
+                        return $ExecutedMovement->getStartDate();
+                    }
+                } elseif (($ActivatedMovement instanceof ActivatedMovement) && $ActivatedMovement->getId() > 0) {
+                    if ($ActivatedMovement->getTypeId()== SORTIE_NORMALE ) {
+                        return $ActivatedMovement->getStartDate();
+                    }
+                }
+                unset($ExecutedMovement);
+                unset($ActivatedMovement);
+             }
+        }
+        return(false);
+    }     // endFunction
 
     // }}}
 }

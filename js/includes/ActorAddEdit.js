@@ -109,3 +109,13 @@ function checkActors() {
     d.addCallbacks(onSuccess, onError);
     return true;
 }
+
+function genCode() {
+    var re = new RegExp("[^a-z,A-Z,0-9]");
+    var code = document.forms[0].elements['Actor_Name'].value.replace(re,"") ;
+    code = code.substr(0,5) ;
+    code = code.toUpperCase() ;
+    document.forms[0].elements['Actor_Code'].value = code ;
+    return true; 
+
+}

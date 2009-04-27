@@ -234,6 +234,30 @@ function generateTempId($object){
         return $_SESSION[$key];
     }
 }
+
+
+/**
+ * ::generateCode()
+ *
+ *
+ * @access public
+ * @param object
+ * @return void
+ **/
+function generateCode($actorname){
+    $actorMapper = Mapper::singleton('Actor');
+    $code = ereg_replace("[^[:alnum:]]", "" , $actorname) ;
+    $code = substr(strtoupper($code),0,5);
+    $ActorTest = $actorMapper->load(array('Code' => $code));
+    $j = 1 ; 
+    while ($ActorTest instanceof Actor && $_SESSION['actor']->getId() != $ActorTest->getId()) {
+        $code = substr($code,0,4).$j;
+        $ActorTest = $actorMapper->load(array('Code' => $code));
+        $j++ ;
+    }
+    return $code ;
+}
+
 /**
  * getItemInCollection()
  *

@@ -84,13 +84,19 @@ function getCarrierActorCollection() {
         'Active'=>1, 
         'Generic'=>0));
     $count = $actorCol->getCount();
+
+        // pour compat multilingue
+    $jobCarrier = Object::load('Job' , array('Id' => 2 )) ;
+    $jobCarrierName = $jobCarrier->getName() ;
+
     for($i=0 ; $i<$count ; $i++) {
         $actor = $actorCol->getItem($i);
-        $jobCol = $actor->getJobCollection(array('Name'=>'CARRIER'));
+        $jobCol = $actor->getJobCollection(array('Name' => $jobCarrierName));
         if($jobCol->getCount()>0) {
             $returnCol->setItem($actor);
         }
     }
+    
     return $returnCol;
 }
 

@@ -86,6 +86,17 @@ class GenericActorAddEdit extends GenericAddEdit {
             );
             exit(1);
         }
+        $obj = Object::load('Actor', array('Code'=>$_POST['Actor_Code']));
+        if ($obj instanceof Actor && $obj->getId() != $this->objID) {
+            Template::errorDialog(
+                sprintf(
+                    _('An actor with the code "%s" already exists, please correct.'),
+                    $this->object->getCode()
+                ), 
+                $this->url
+            );
+            exit(1);
+        }
     }
 
     // }}}
@@ -138,7 +149,8 @@ class GenericActorAddEdit extends GenericAddEdit {
     {
         return array(
             ''=>array(
-               'Name'=>array('label'=>_('Name'), 'required'=>true)
+               'Name'=>array('label'=>_('Name'), 'required'=>true),
+               'Code'=>array('label'=>_('Code'), 'required'=>true)
             ) 
         );
     }

@@ -148,7 +148,6 @@ DynAPI.onLoad = function() {
 			disableEnableDepartureWidgets(true);
 			show = false;
 		}
-		fw.dom.toggleElement('displayActivationPerSupplier', getProductCommandType()==2)
 		fw.dom.toggleElement('displayDepartureSiteSelect', show);
 
 		if(getChainArrivalActor() == 0) {

@@ -74,6 +74,10 @@ $form->addElement('text', 'DocumentNo', _('Invoice number'));
 $form->addElement('text', 'PaymentReference', _('Payment reference'), array(),
         array('Path' => 'InvoicePayment().Payment.Reference'));
 
+$currencyArray = SearchTools::CreateArrayIDFromCollection('Currency', array(),
+    '', 'ShortName');
+$form->addElement('select', 'Currency', _('Currency'), array($currencyArray));
+
 $form->addElement('checkbox', 'DateOrder1', _('Filter by date of issue'),
         array('', 'onclick="$(\\\'Date1\\\').style.'
                 . 'display=this.checked?\\\'block\\\':\\\'none\\\';"'));

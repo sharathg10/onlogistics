@@ -64,6 +64,12 @@ class GenericActorGrid extends GenericGrid {
                 'label'=>_('Name'), 
                 'shortlabel'=>_('Name'),
                 'required'=>true
+            ),
+            'Code'=>array(
+                'usedby'=>array('grid', 'addedit'),
+                'label'=>_('Code'), 
+                'shortlabel'=>_('Code'),
+                'required'=>true
             )
         );
     }

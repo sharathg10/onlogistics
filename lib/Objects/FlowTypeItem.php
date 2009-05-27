@@ -202,7 +202,7 @@ class FlowTypeItem extends _FlowTypeItem {
                         $payed = $result->fields['cmdPayed'];
                     } else {
                         $topay = $cmdTTC;
-                        $payed = $cmdTTC;
+                        $payed = 0 ;
                     }
                     
                     $topId  = $result->fields['scTermsOfPayment'];

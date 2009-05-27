@@ -1102,12 +1102,14 @@ class CommandManager{
         }
         // fin A VIRER
 
+        $this->_debug('* Activation des process fils de la commande ' .  
+            $this->command->getCommandNo());
+
         if ($ach) {
             $achArray = array($ach);
         } else {
             $achArray = $this->_activatedChainArray;
         }
-
         foreach($achArray as $ach) {
             if (!(
                 ($ack = $ach->hasTaskOfType(TASK_ACTIVATION) ) || ($ack = $ach->hasTaskOfType(TASK_GENERIC_ACTIVATION) )
@@ -1115,8 +1117,15 @@ class CommandManager{
             ) {
                 continue;
             }
-            $ackCol = $ach->getActivatedChainTaskCollection(
-                array('Task.Id'=>TASK_ACTIVATION, 'Task.Id'=>TASK_GENERIC_ACTIVATION));
+
+            $filterComponentArray[] = new FilterComponent(
+                new FilterRule( 'Task.Id', FilterRule::OPERATOR_EQUALS, TASK_ACTIVATION),
+                new FilterRule( 'Task.Id', FilterRule::OPERATOR_EQUALS, TASK_GENERIC_ACTIVATION),
+                FilterComponent::OPERATOR_OR);
+            $filter = SearchTools::filterAssembler($filterComponentArray);
+
+            $ackCol = $ach->getActivatedChainTaskCollection($filter);
+                
             $count = $ackCol->getCount();
             for($i = 0; $i < $count; $i++){
                 $ack = $ackCol->getItem($i);
@@ -1253,6 +1262,7 @@ class CommandManager{
         $supplierCommandItemMap = $this->command->getSupplierCommandItemArray($cpnCol, $ratio);
 
         foreach($supplierCommandItemMap as $supplierID=>$cmiCol){
+
             $manager = new CommandManager(array(
                 'CommandType'        => $ack->getCommandType(),
                 'ProductCommandType' => $ack->getProductCommandType(),
@@ -1284,8 +1294,10 @@ class CommandManager{
                 $cmiProd = $cmi->getProduct();
                 $ref = $cmiProd->getBaseReference() ;
 
-                $cmiChain = Object::load('Chain', array('Reference'=>$ref)) ;
-                $manager->_chainArray = array(array($cmiChain, array()));
+                if($ack->getTaskId() == TASK_GENERIC_ACTIVATION) {
+                    $cmiChain = Object::load('Chain', array('Reference'=>$ref)) ;
+                    $manager->_chainArray = array(array($cmiChain, array()));
+                }
 
                 // XXX FIXME cela changera cf note dans la doc de la méthode
                 $cmiParams = $manager->_getCommandItemParams($cmi, $ack);
@@ -1296,15 +1308,20 @@ class CommandManager{
                 if (Tools::isException($result)) {
                     return $result;
                 }
-                $result = $manager->activateProcess($cmiChain);
-                if (Tools::isException($result)) {
-                    return $result;
+
+                if($ack->getTaskId()== TASK_GENERIC_ACTIVATION) {
+                    if(!(Tools::IsException($cmiChain))) {
+                        $result = $manager->activateProcess($cmiChain);
+                        if (Tools::isException($result)) {
+                            return $result;
+                        }
+                    }
                 }
             }
 
             $manager->_chainArray = array(array($chainToActivate, array()));
+
             // activation et validation du processus
-            // 
             if($ack->getTaskId()!= TASK_GENERIC_ACTIVATION) {
                 $result = $manager->activateProcess($ack);
                 if (Tools::isException($result)) {
@@ -1705,8 +1722,9 @@ class CommandManager{
                     $params['Quantity'] = $qty;
                 }
             }
-
+        
             $qty = $cmi->getQuantity();
+
             // Si non fourni (peut etre fction d'une Handing (par ligne)
             // et d'une globalHanding
             if (!isset($params['PriceHT'])) {

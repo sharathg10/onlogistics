@@ -11,7 +11,8 @@ I. Installation de l'appli
 1) Vérifier la présence des prérequis pour OnLogistics (voir plus bas).
 
 2) Créer une base de donnée pour OnLogistics, et y créer la structure des tables
-   avec config/sql/onlogistics.sql.
+   avec config/sql/onlogistics.sql (ce dump contient le root applicatif par
+   defaut, qui est "toor" jusqu'à ce que vous le changiez).
 
 3) Créer un répertoire dans lequel l'utilisateur d'apache a le droit 
    d'écrire (ce sera la var SMARTY_COMPILE_DIR dans le fichier project.conf).

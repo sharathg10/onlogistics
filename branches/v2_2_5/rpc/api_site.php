@@ -85,6 +85,7 @@ class APISiteServer extends XmlRpcServer {
         $this->registerMethod('database.getCategoryCSVData');
         $this->registerMethod('database.getTVACSVData');
         $this->registerMethod('database.getImageCSVData');
+        $this->registerMethod('database.getProductTypeCSVData');
         $this->registerMethod('order.order');
         $this->registerMethod('order.checkActors');
         $this->registerMethod('order.getDataForOrder');
@@ -476,6 +477,29 @@ class APISiteServer extends XmlRpcServer {
         $lastUpdate = $params[0];
         $fields = array('_Id', '_UUID', '_Extension', '_Data');
         return $this->_getCSVData('Image', $fields, $lastUpdate);
+    }
+
+    // }}}
+    // APISiteServer::getProductTypeCSVData() {{{
+
+    /**
+     * Retourne le fichier csv de la table ProductType onlogistics, le format
+     * retourné est une chaîne de caractères csv avec les colonnes suivantes:
+     *     - Id
+     *     - DBId
+     *     - Name
+     *
+     * @rpc    database.getProductTypeCSVData()
+     * @param  string $lastUpdate datetime (au format mysql) du dernier
+     *         update de la bdd
+     * @access public
+     * @return string
+     */
+    protected function getProductTypeCSVData($method, $params) {
+        $this->auth();
+        $lastUpdate = $params[0];
+        $fields = array('_Id', '_DBId', '_Name');
+        return $this->_getCSVData('ProductType', $fields, $lastUpdate);
     }
 
     // }}}

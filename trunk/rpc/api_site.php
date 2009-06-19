@@ -374,8 +374,7 @@ class APISiteServer extends XmlRpcServer {
         $filter = new FilterComponent(
             new FilterRule(
                 'LastModified',
-                FilterRule::OPERATOR_EQUALS,
-                'NULL'
+                FilterRule::OPERATOR_IS_NULL,
             ),
             FilterComponent::OPERATOR_OR,
             new FilterRule(

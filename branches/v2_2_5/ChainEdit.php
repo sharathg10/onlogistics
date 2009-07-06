@@ -599,8 +599,12 @@ if (isset($_REQUEST['FormSubmitted'])) {
 
                 $stask->setCostType(ChainTask::COSTTYPE_FORFAIT);
 				$stask->setInteruptible(1);
-				$stask->setTriggerMode(ChainTask::TRIGGERMODE_MANUAL);
-				$stask->setChainToActivate($ChainToActivate[$key][$taskkey]);
+                $stask->setTriggerMode(ChainTask::TRIGGERMODE_MANUAL);
+                if ( $Tasks[$key][$taskkey] == TASK_GENERIC_ACTIVATION ) {
+                    $stask->setChainToActivate(0) ;
+                } else { 
+                    $stask->setChainToActivate($ChainToActivate[$key][$taskkey]);
+                }
 				$stask->setProductCommandType($ProductCommandType[$key][$taskkey]);
 				$stask->setDepartureActor($ChainDepartureActor[$key][$taskkey]);
 				$stask->setDepartureSite($ChainDepartureSite[$key][$taskkey]);

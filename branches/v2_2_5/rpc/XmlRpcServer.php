@@ -70,6 +70,8 @@ class OnlogisticsXmlRpcServer extends XmlRpcServer{
         $this->registerMethod('zaurus.unblockLocations');
         $this->registerMethod('zaurus.putCommands');
         $this->registerMethod('zaurus.getCommands');
+        $this->registerMethod('zaurus.getCustomerCommands');
+        $this->registerMethod('zaurus.getSupplierCommands');
         $this->registerMethod('zaurus.putUnexpectedMovement');
         $this->registerMethod('zaurus.blockMovements');
         $this->registerMethod('zaurus.unblockMovements');
@@ -528,6 +530,7 @@ class OnlogisticsXmlRpcServer extends XmlRpcServer{
 
     /**
      * getCommands => récupère les donnees du serveur pour traitement par le pda.
+     * ( pour les pdas non upgrades avec glao-embedded < 0.12 )
      *
      * @access protected
      * @return array(0 => string xmlcontent, 1 => ...)
@@ -538,6 +541,46 @@ class OnlogisticsXmlRpcServer extends XmlRpcServer{
         require_once('Execution/ExecutionDataXMLRenderer.php');
         $data = $params[0];
         $renderer = new MovementExecutionDataXMLRenderer($this->auth->getUser(), $data);
+        $result = $renderer->render();
+        return $result;
+    }
+
+    // }}}
+    // OnlogisticsXmlRpcServer::getCustomerCommands() {{{
+
+    /**
+     * getCustomerCommands => récupère les commandes clients
+     *  ( pda upgradés avec glao-embedded >= 0.12 )
+     *
+     * @access protected
+     * @return array(0 => string xmlcontent, 1 => ...)
+     */
+    protected function getCustomerCommands($method, $params){
+        $this->auth();
+        $this->log('OnlogisticsXmlRpcServer::getCommands called');
+        require_once('Execution/ExecutionDataXMLRenderer.php');
+        $data = $params[0];
+        $renderer = new MovementExecutionDataXMLRenderer($this->auth->getUser(), $data, 1);
+        $result = $renderer->render();
+        return $result;
+    }
+
+    // }}}
+    // OnlogisticsXmlRpcServer::getSupplierCommands() {{{
+
+    /**
+     * getSupplierCommands => récupère les commandes fournisseurs
+     *  ( pda upgradés avec glao-embedded >= 0.12 )
+     *
+     * @access protected
+     * @return array(0 => string xmlcontent, 1 => ...)
+     */
+    protected function getSupplierCommands($method, $params){
+        $this->auth();
+        $this->log('OnlogisticsXmlRpcServer::getCommands called');
+        require_once('Execution/ExecutionDataXMLRenderer.php');
+        $data = $params[0];
+        $renderer = new MovementExecutionDataXMLRenderer($this->auth->getUser(), $data , 2);
         $result = $renderer->render();
         return $result;
     }

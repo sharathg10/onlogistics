@@ -57,10 +57,22 @@ class MovementExecutionDataProvider
      * @access public 
      * @return void
      */
-    public function __construct($user, $cmdnum=false)
+    public function __construct($user, $cmdnum=false, $cmdtype = false)
     {
         $this->user = $user;
         $this->cmdnumber = $cmdnum==false?'%':str_replace('*', '%', $cmdnum);
+
+        if( $cmdtype == false ) {
+            $this->filtercmdtype = new FilterRule(
+                'Command.Type',
+                FilterRule::OPERATOR_LIKE,
+                '%');
+        } else {
+            $this->filtercmdtype = new FilterRule(
+                'Command.Type',
+                FilterRule::OPERATOR_EQUALS ,
+                $cmdtype);
+        }
     }
 
     /**
@@ -114,7 +126,8 @@ class MovementExecutionDataProvider
                         'Command.IsEstimate',
                         FilterRule::OPERATOR_EQUALS,
                         0
-                    )
+                    ),
+                    $this->filtercmdtype
                 )
             ),    
             FilterComponent::OPERATOR_AND,

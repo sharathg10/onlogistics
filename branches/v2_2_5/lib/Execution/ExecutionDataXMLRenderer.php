@@ -60,9 +60,9 @@ class MovementExecutionDataXMLRenderer {
      *
      * @access protected
      */
-    function MovementExecutionDataXMLRenderer($user, $cmdnumber = false)
+    function MovementExecutionDataXMLRenderer($user, $cmdnumber = false, $cmdtype=false)
     {
-        $dataprovider = new MovementExecutionDataProvider($user, $cmdnumber);
+        $dataprovider = new MovementExecutionDataProvider($user, $cmdnumber, $cmdtype);
         $this->_user = $user;
         $this->_commands = $dataprovider->execute();
     }
@@ -172,6 +172,7 @@ class MovementExecutionDataXMLRenderer {
 
             $xmldoc .= XML_Util::createTag('id', array(), $command->getId());
             $xmldoc .= XML_Util::createTag('state', array(), 0);
+            $xmldoc .= XML_Util::createTag('type', array(), $command->getType());
             $xmldoc .= XML_Util::createTag('date', array(), $command->getCommandDate());
             $xmldoc .= XML_Util::createTag('number', array(), $command->getCommandNo());
             $xmldoc .= XML_Util::createTag('comment', array(), $command->getComment());

@@ -11,7 +11,8 @@ I. Installation de l'appli
 1) Vérifier la présence des prérequis pour OnLogistics (voir plus bas).
 
 2) Créer une base de donnée pour OnLogistics, et y créer la structure des tables
-   avec config/sql/onlogistics.sql.
+   avec config/sql/onlogistics.sql (ce dump contient le root applicatif par
+   defaut, qui est "toor" jusqu'à ce que vous le changiez).
 
 3) Créer un répertoire dans lequel l'utilisateur d'apache a le droit 
    d'écrire (ce sera la var SMARTY_COMPILE_DIR dans le fichier project.conf).
@@ -27,7 +28,7 @@ I. Installation de l'appli
    éditer ce fichier et ajuster les paramètres.
 
 7) Pour permettre l'execution de taches planifiees internes à onlogistics, il 
-   faut configurer la crontab du système pour une execution toutes les minutes. 
+   faut configurer la crontab du système pour une execution toutes les heures.
    Exemple:
    0 * * * * root /usr/local/bin/php -q /path/onlogistics/CronTaskManager.php
 
@@ -43,11 +44,11 @@ II. Prérequis
   XML_Beautifier, Config, Mail, Numbers_Words, Calendar, Date, Net_SMTP,
   Mail_Mime, HTML_QuickForm_advmultiselect, Net_UserAgent_Detect,
   note: Numbers_Words et Calendar sont en version beta, donc s'installent avec
-  un "pear install -f".
+  un "pear install -f". La version beta de Calendar dépend de la version
+  alpha de Date à cette heure (une anomalie chez PEAR), donc lui aussi doit
+  être installé de la sorte.
 - Le module PEAR Console_CommandLine est utile pour le developpement (mais 
   n'est pas nécessaire pour le fonctionnement en prod).
-- les modules PEAR suivants sont _peut-être_ utiles (ou pas), les installer
-  au cas où : Cache_Lite, HTTP_Upload, HTTP_REQUEST, DB, HTML_Template_IT
 - le path de PEAR doit être dans le include_path de php.ini, 
   session.use_trans_sid doit être activé, register_argc_argv activé,
   file_uploads activé, magic_quotes_gpc désactivé.

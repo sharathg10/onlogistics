@@ -311,6 +311,7 @@ function parseCommand($file, $rang)
 				$LocationId  = clean((int)$xmlLoc->id);
 				$LocationStoreId  = clean((int)$xmlLoc->storeid);
                 $LocationFilter = array();
+                /*
                 if ($LocationId > 0) {
                     $LocationFilter['Id'] = $LocationId;
                 } else {
@@ -319,6 +320,8 @@ function parseCommand($file, $rang)
                         $LocationFilter['Store.Id'] = $LocationStoreId;
                     }
                 }
+                 */
+                $LocationFilter['Name'] = $LocationRef;
                 $Location = Object::load('Location', $LocationFilter);
                 if (Tools::isEmptyObject($Location)) {
                     $errors[] = $ErrorMsge . "Il n'a pas été trouvé en base de donnée d'emplacement " . $LocationRef . '.</li>';

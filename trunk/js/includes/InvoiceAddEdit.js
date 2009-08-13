@@ -405,7 +405,7 @@ function RecalculateTotal(updateAll) {
         beatifyTVAwidget();
 
     	if (elements["hiddenHasInvoice"].value == 1) {
-    		Ins = fw.i18n.extractNumber(elements["Installment"]);
+    		Ins = fw.i18n.extractNumber(elements["Instalment"]);
     		totalTTC = fw.i18n.extractNumber(elements["totalpriceTTC"]);
     		toPayVal = subs(totalTTC, Ins);
 
@@ -413,7 +413,7 @@ function RecalculateTotal(updateAll) {
     			toPayVal = 0;
     		}
             document.forms[0].elements["ToPay"].value = isNaN(toPayVal)?"---":troncature(toPayVal, true);
-            document.forms[0].elements["Installment"].value = isNaN(Ins)?"---":troncature(Ins, true);
+            document.forms[0].elements["Instalment"].value = isNaN(Ins)?"---":troncature(Ins, true);
     	}
 	}
 }

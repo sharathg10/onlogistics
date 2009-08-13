@@ -243,9 +243,16 @@ if (true === $form->displayGrid()) {
                             UserAccount::PROFILE_DIR_COMMERCIAL)));
 
     $grid->NewAction('Redirect', array(
-        'Caption' => _('Instalment'),
-        'Title' => _('Add or update instalment'),
-        'URL' => 'InstallmentAddEdit.php?CommandId=%d&returnURL=' . $returnURL,
+        'Caption' => _('Add Instalment'),
+        'Title' => _('Add instalment'),
+        'URL' => 'InstalmentAdd.php?CommandId=%d&returnURL=' . $returnURL,
+        'Profiles' => array(UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW, UserAccount::PROFILE_ADMIN_VENTES,
+                            UserAccount::PROFILE_AERO_ADMIN_VENTES, UserAccount::PROFILE_DIR_COMMERCIAL)));
+
+    $grid->NewAction('Redirect', array(
+        'Caption' => _('View Instalments'),
+        'Title' => _('View instalment'),
+        'URL' => 'ExpectedInstalmentList.php?CommandId=%d&returnURL=' . $returnURL,
         'Profiles' => array(UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW, UserAccount::PROFILE_ADMIN_VENTES,
                             UserAccount::PROFILE_AERO_ADMIN_VENTES, UserAccount::PROFILE_DIR_COMMERCIAL)));
 
@@ -297,9 +304,17 @@ if (true === $form->displayGrid()) {
     $grid->NewAction('Export', array('FileName' => 'Commandes'));
 
     $grid->NewColumn('CommandProduct', _('Order'),
-            array('Sortable' => false));
+        array('Sortable' => false));
+
     $grid->NewColumn('FieldMapper', _('Date'),
-            array('Macro' => '%CommandDate|formatdate@DATE_SHORT%'));
+        array('Macro' => '%CommandDate|formatdate@DATE_SHORT%'));
+
+    $grid->NewColumn('FieldMapper', _('Wished Date'),
+        array('Macro' => '%WishedDate|formatdate@DATE_SHORT%'));
+
+    $grid->NewColumn('FieldMapper', _('Terms of payment'),
+        array('Macro' => '%TermsOfPayment.Name%'));
+
     if ($ProfileId != UserAccount::PROFILE_RTW_SUPPLIER) {
         $grid->NewColumn('FieldMapperWithTranslation', _('State'),
             array('Macro' => '%State%','TranslationMap' => $ShortCommandStateArray));

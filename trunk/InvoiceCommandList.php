@@ -120,13 +120,22 @@ else if (isset($_REQUEST['FormSubmitted']) && $_REQUEST['FormSubmitted'] == 'tru
     $_POST['ToHaveRemainingTTC'] = I18N::extractNumber($_POST['ToHaveRemainingTTC']);
 
     $Payment = Object::load('Payment');
+    $PaymentMapper = Mapper::singleton('Payment');
+
+	// L'Id sert a composer le DocumentNo, s'il n'est pas saisi
+    $PaymentId = $PaymentMapper->generateId();
 
     $Payment->setDate(date('Y-m-d H-i-s'));
     $Payment->setTotalPriceTTC($_POST['invoicepriceTTC']);
     $Payment->setModality($_POST['Modality']);
+
     if (isset($_POST['reference'])) {
-        $Payment->setReference($_POST['reference']);
-    }
+	    $DocumentNo = $_REQUEST['reference'];
+	} else {
+		require_once('InvoiceItemTools.php');
+		$DocumentNo = GenerateDocumentNo('PA', 'Payment', $PaymentId);
+	}
+    $Payment->setDocumentNo($DocumentNo);
 
     // Gestion du ActorBankDetail
     if ($_POST['Modality'] != TermsOfPaymentItem::ASSETS && $_POST['ActorBankDetail'] != 0) {
@@ -305,7 +314,8 @@ if ($InvoiceCollection instanceof Collection && ($InvoiceCollection->getCount() 
         //recupere la collection des payments pour la facture associee
         $PaymentCollection = $item->getPaymentCollection();
         if ($PaymentCollection instanceof Collection
-                && ($PaymentCollection->getCount() > 0)) {
+            && ($PaymentCollection->getCount() > 0)) {
+            echo $Payment->getItem(0)->getReference();
             $HasPayment = 1;
         }
     }

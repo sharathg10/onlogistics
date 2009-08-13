@@ -208,9 +208,9 @@ if ($ced instanceof CommandExpeditionDetail) {
 $SupplierCustomer = $cmd->getSupplierCustomer();
 if (!$cmd->getIsEstimate() && $SupplierCustomer instanceof SupplierCustomer) {
     // Gestion de l'acompte eventuel
-    if ($cmd->getInstallment() > 0) {
+    if ($cmd->getTotalInstalments() > 0) {
         $SupplierCustomer->setUpdateIncur($SupplierCustomer->getUpdateIncur() +
-            $cmd->getInstallment());
+            $cmd->getTotalInstalments());
         saveInstance($SupplierCustomer, $retURL);
     }
     // gestion de la remise par pourcentage du CA annuel, il faut la diminuer 

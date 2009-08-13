@@ -747,6 +747,60 @@ class _Command extends Object {
     }
 
     // }}}
+    // TermsOfPayment foreignkey property + getter/setter {{{
+
+    /**
+     * TermsOfPayment foreignkey
+     *
+     * @access private
+     * @var mixed object TermsOfPayment or integer
+     */
+    private $_TermsOfPayment = false;
+
+    /**
+     * _SupplierCustomer::getTermsOfPayment
+     *
+     * @access public
+     * @return object TermsOfPayment
+     */
+    public function getTermsOfPayment() {
+        if (is_int($this->_TermsOfPayment) && $this->_TermsOfPayment > 0) {
+            $mapper = Mapper::singleton('TermsOfPayment');
+            $this->_TermsOfPayment = $mapper->load(
+                array('Id'=>$this->_TermsOfPayment));
+        }
+        return $this->_TermsOfPayment;
+    }
+
+    /**
+     * _SupplierCustomer::getTermsOfPaymentId
+     *
+     * @access public
+     * @return integer
+     */
+    public function getTermsOfPaymentId() {
+        if ($this->_TermsOfPayment instanceof TermsOfPayment) {
+            return $this->_TermsOfPayment->getId();
+        }
+        return (int)$this->_TermsOfPayment;
+    }
+
+    /**
+     * _SupplierCustomer::setTermsOfPayment
+     *
+     * @access public
+     * @param object TermsOfPayment $value
+     * @return void
+     */
+    public function setTermsOfPayment($value) {
+        if (is_numeric($value)) {
+            $this->_TermsOfPayment = (int)$value;
+        } else {
+            $this->_TermsOfPayment = $value;
+        }
+    }
+
+    // }}}
     // Commercial foreignkey property + getter/setter {{{
 
     /**
@@ -1131,40 +1185,6 @@ class _Command extends Object {
     public function setProcessed($value) {
         if ($value !== null) {
             $this->_Processed = (int)$value;
-        }
-    }
-
-    // }}}
-    // Installment float property + getter/setter {{{
-
-    /**
-     * Installment float property
-     *
-     * @access private
-     * @var float
-     */
-    private $_Installment = 0;
-
-    /**
-     * _Command::getInstallment
-     *
-     * @access public
-     * @return float
-     */
-    public function getInstallment() {
-        return $this->_Installment;
-    }
-
-    /**
-     * _Command::setInstallment
-     *
-     * @access public
-     * @param float $value
-     * @return void
-     */
-    public function setInstallment($value) {
-        if ($value !== null) {
-            $this->_Installment = round(I18N::extractNumber($value), 2);
         }
     }
 
@@ -1949,6 +1969,7 @@ class _Command extends Object {
             'DestinatorSite' => 'Site',
             'Customer' => 'Actor',
             'SupplierCustomer' => 'SupplierCustomer',
+            'TermsOfPayment' => 'TermsOfPayment',
             'Commercial' => 'UserAccount',
             'State' => Object::TYPE_CONST,
             'Handing' => Object::TYPE_DECIMAL,
@@ -1959,7 +1980,6 @@ class _Command extends Object {
             'TotalPriceHT' => Object::TYPE_DECIMAL,
             'TotalPriceTTC' => Object::TYPE_DECIMAL,
             'Processed' => Object::TYPE_INT,
-            'Installment' => Object::TYPE_DECIMAL,
             'CustomerRemExcep' => Object::TYPE_DECIMAL,
             'Duration' => Object::TYPE_TIME,
             'Cadenced' => Object::TYPE_BOOL,

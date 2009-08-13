@@ -177,9 +177,13 @@ $form->addElement('text', 'Emballage', _('Handling charges'), $onKeyUp);
 $form->addElement('text', 'Assurance', _('Insurances charges'), $onKeyUp);
 $form->addElement('text', 'GlobalHanding', _('Global discount'),
         'onKeyUp="RecalculateTotal(true);"'); // true pour recalculer les lignes
-$form->addElement('text', 'Installment', _('Instalment'),
+$form->addElement('text', 'Instalment', _('Instalment'),
         'onKeyUp="RecalculateToPay();RecalculateUpdateIncur();" '
         . 'style="width:80%" class="FieldWhite" value="0"');
+$form->addElement('select', 'InstalmentModality', 
+    _('Instalment').' - '._('Means of payment'), 
+    Instalment::getModalityConstArray(), 'style="width:80%"');
+
 $form->addElement('textarea', 'cmdComment', _('Comment'), 'cols="100%" rows="3"');
 
 // Site expediteur: par defaut le MainSite de Expeditor est selectionne

@@ -45,6 +45,9 @@ class GridColumnMultiPrice extends AbstractGridColumn {
         if (isset($params['Method'])) {
             $this->_method = $params['Method'];
         }
+        if (isset($params['Macro'])) {
+            $this->macro= $params['Macro'];
+        }
         if (isset($params['Currency'])) {
             $this->_currency = $params['Currency'];
         }
@@ -56,6 +59,7 @@ class GridColumnMultiPrice extends AbstractGridColumn {
      * @var string $_method
      **/
     var $_method = 'getTotalPriceHT';
+    private $macro = false;
 
     /**
      * GridColumnCommandPrice::render()
@@ -67,6 +71,12 @@ class GridColumnMultiPrice extends AbstractGridColumn {
         $cur = 0;
         if ($object instanceof ToHave) {
             $cur = $object->getCurrency();
+        } else if ($object instanceof Command || $object instanceof Invoice) {
+            $cur = $object->getCurrency();
+        } else if ($object instanceof Instalment) {
+            // on récupère via la commande liee
+            $cmd = $object->getCommand();
+            $cur = $cmd->getCurrency();
         } else if ($object instanceof Payment) {
             // on récupère via le premier item de la collection de
             // invoicepayment
@@ -82,16 +92,23 @@ class GridColumnMultiPrice extends AbstractGridColumn {
         } else if ($object instanceof CommandItem) {
             $cmd = $object->getCommand();
             $cur = $cmd->getCurrency();
-        } else if ($object instanceof Command || $object instanceof Invoice) {
-            $cur = $object->getCurrency();
         } else {
             // cas non géré
             return _('N/A');
         }
-        $curStr = $cur instanceof Currency ? 
-            $cur->getSymbol() : $this->_currency->getSymbol();
-        $method = $this->_method;
-        return I18N::formatCurrency($curStr, $object->$method());
+        if($cur instanceof Currency) {
+            $curStr = $cur->getSymbol() ;
+        } else { 
+            $this->_currency->getSymbol();
+        }
+
+        if($this->macro) {
+            $return = Tools::getValueFromMacro($object, $this->macro);
+            return I18N::formatCurrency($curStr, $return);
+        } else {
+            $method = $this->_method;
+            return I18N::formatCurrency($curStr, $object->$method());
+        }
     }
 }
 

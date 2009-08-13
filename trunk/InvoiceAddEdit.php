@@ -86,12 +86,13 @@ if (isset($_REQUEST['FormSubmitted']) && $_REQUEST['FormSubmitted'] == 'true') {
 	$Invoice->setFodecTaxRate($_POST['fodecTaxRate']);
 	$Invoice->setTaxStamp($_POST['taxStamp']);
 
-    if (isset($_POST['Installment']) && $_POST['Installment'] != 0) {
-        if ($Invoice->getTotalPriceTTC() <= $_POST['Installment']) {
+    if (isset($_POST['Instalment']) && $_POST['Instalment'] != 0) {
+        $PaidInstalment = I18N::extractNumber($_POST['Instalment']);
+        if ($Invoice->getTotalPriceTTC() <= $PaidInstalment) {
             //TotalPriceTTC de la facture est < a l'accompte
             $Invoice->setToPay(0);
         } else {
-            $Invoice->setToPay($Invoice->getTotalPriceTTC() - $_POST['Installment']);
+            $Invoice->setToPay($Invoice->getTotalPriceTTC() - $PaidInstalment);
         }
     } else {
         $Invoice->setToPay($Invoice->getTotalPriceTTC());
@@ -320,14 +321,17 @@ if ($hasTVA) {
     }
 }
 
-// Si cette commande a un acompte
+// Check des avoirs de la commande ( Instalment )
+
+$HasInstalment = 0 ;
+$TotalInstalments = $Command->getTotalInstalments() ;
+if ($TotalInstalments > 0 ) $HasInstalment = 1;
+
 $NoInvoice = 0;
 // si cette cde a deja des factures
-if ($Command->getInstallment() != 0) {
-    $InvoiceCollection = $InvoiceMapper->loadCollection(array('Command' => $Id));
-    if ($InvoiceCollection->getCount() == 0) { // pas de factures
-        $NoInvoice = 1;
-    }
+$InvoiceCollection = $InvoiceMapper->loadCollection(array('Command' => $Id));
+if ($InvoiceCollection->getCount() == 0) { // pas de factures
+    $NoInvoice = 1;
 }
 
 // pour l'affichage du grid
@@ -473,7 +477,7 @@ if ($sp instanceof SupplierCustomer) {
     $Smarty->assign('MaxIncur', $MaxIncur);
     $Smarty->assign('UpdateIncur', I18N::formatNumber($sp->getUpdateIncur()));
 	$Smarty->assign('ToHaveTTC', I18N::formatNumber($sp->getToHaveTTC()));
-    if (($top = $sp->getTermsOfPayment()) instanceof TermsOfPayment) {
+    if (($top = $Command->getTermsOfPayment()) instanceof TermsOfPayment) {
         $Smarty->assign('TermsOfPayment', $top->getName());
     }
 } else {
@@ -488,9 +492,9 @@ if($Command instanceof ProductCommand && $Command->getType()==Command::TYPE_SUPP
     $Smarty->assign('Invoice_EditionDate_Format', date('d-m-Y h:i:s'));
 }
 
-if ($NoInvoice == 1) { // un acompte et pas de factures
+if ($HasInstalment == 1) { // un acompte et pas de factures
     $Smarty->assign('HasInvoice', 1);
-    $Smarty->assign('Installment', $Command->getInstallment());
+    $Smarty->assign('Instalment', $TotalInstalments);
 }
 
 Template::page(

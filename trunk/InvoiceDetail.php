@@ -109,7 +109,7 @@ $InvoiceItemGrid = $grid->render($InvoiceItemCollection, false);
 
 $NoInvoice = 0;
 // La cde a un accompte; les factures de cette cde
-if ($ProductCommand->getInstallment() != 0) {
+if ($ProductCommand->getTotalInstalments() != 0) {
 	$InvoiceCollection = $InvoiceMapper->loadCollection(
             array('Command' => $ProductCommand->getId()));
 	if ($InvoiceCollection->getCount() == 1) { // 1 seule facture
@@ -161,8 +161,8 @@ $Smarty->assign('TotalPriceHTBeforeDiscount', I18N::formatNumber($handingDetail[
 $Smarty->assign('GlobalDiscount', I18N::formatNumber($handingDetail['handing']));
 if ($NoInvoice == 1) { //un accompte sur cette facture
 	$Smarty->assign('HasInvoice', 1);
-	$Smarty->assign('Installment', I18N::formatNumber($ProductCommand->getInstallment()));
-	$ToPay = max(0, $Invoice->getTotalPriceTTC() - $ProductCommand->getInstallment()); // tjs >=0
+	$Smarty->assign('Instalment', I18N::formatNumber($ProductCommand->getTotalInstalments()));
+	$ToPay = max(0, $Invoice->getTotalPriceTTC() - $ProductCommand->getTotalInstalments()); // tjs >=0
 	$Smarty->assign('ToPay', I18N::formatNumber($ToPay));
 }
 

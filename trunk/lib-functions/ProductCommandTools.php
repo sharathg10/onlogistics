@@ -228,7 +228,7 @@ function getErrorURL($cmdType) {
     // Les chps de saisie (hors grid, geres via ajax et session:
     $fields = array('cmdNumber', 'cmdIncoterm', 'cmdExpeditor', 'cmdDestinator',
         'cmdExpeditorSite', 'cmdDestinatorSite', 'cmdProjectManager',
-        'cmdCommercial', 'Port', 'Emballage','Assurance', 'Installment',
+        'cmdCommercial', 'Port', 'Emballage','Assurance', 'Instalment', 'InstalmentModality',
         'GlobalHanding', 'cmdComment', 'cadencedOrder', 'cadencedOrderCB',
         'WishedDate', 'StartDate', 'EndDate', 'from', 'isEstimate');
     $stringToPass = UrlTools::buildURLFromRequest($fields, false);// not$mochikitFormatted
@@ -525,7 +525,8 @@ function handleCommand($commandType, $pdtCollection, $curID, $isEstimate=false, 
             'Port'            => isset($_REQUEST['Port']) ? $_REQUEST['Port'] : 0,
             'Packing'         => isset($_REQUEST['Emballage']) ? $_REQUEST['Emballage'] : 0,
             'Insurance'       => isset($_REQUEST['Assurance']) ? $_REQUEST['Assurance'] : 0,
-            'Installment'     => $_REQUEST['Installment'],
+            'Instalment'            => $_REQUEST['Instalment'],
+            'InstalmentModality'    => $_REQUEST['InstalmentModality'],
             'Handing'         => isset($_REQUEST['GlobalHanding']) ? $_REQUEST['GlobalHanding'] : 0,
             'TotalPriceHT'    => $_REQUEST['TotalHT'],
             'TotalPriceTTC'   => $_REQUEST['TotalTTC'],
@@ -674,8 +675,8 @@ function handleIncurUpdate($cmd, $curStr) {
     $actor = $cmd->getType()==Command::TYPE_SUPPLIER?$cmd->getExpeditor():$cmd->getDestinator();
 
     //gestion de l'acompte
-    if ($cmd->getInstallment() != 0) {
-        $sc->setUpdateIncur($sc->getUpdateIncur() - $cmd->getInstallment());
+    if ($cmd->getTotalInstalments() != 0) {
+        $sc->setUpdateIncur($sc->getUpdateIncur() - $cmd->getTotalInstalments());
         $sc->save();
     }
 

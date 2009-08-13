@@ -66,256 +66,6 @@ function executeSQLforCollection($EntityName, $SQL)
 
 // }}}
 
-// request_StockProductRealandVirtualList() {{{
-
-/*
- * Utilise pour recuperer la qte en stock
- * @param integer $ConnectedActorId
- * @param integer $ProfileId
- * @param boolean $withDate : si vaut true, on supprime la condition:
- *      HAVING (NOT (virtualQuantity=0 AND (isnull(qty) OR qty=0)))
- * @return string la requete SQL
- */
-function request_StockProductRealandVirtualList(
-    $ConnectedActorId, $ProfileId, $withDate = false)
-{
-    $locale = I18N::getLocaleCode();
-    require_once('Objects/SellUnitType.const.php');
-    $where = 'WHERE PDT._SellUnitType=SUT._Id AND PDT._ProductType=PTY._Id AND I1._Id=PDT._Name AND I2._Id=SUT._ShortName ';
-    // XXX nécessaire ici ? je pense pas
-    if (defined('DATABASE_ID') && !Object::isPublicEntity('Product')) {
-        $where .= 'AND PDT._DBId=' . DATABASE_ID . ' ';
-    }
-	// Traitement lie au Profile connecte
-	switch ($ProfileId) {
-		case UserAccount::PROFILE_SUPPLIER_CONSIGNE:
-			$where .= 'AND LPQ._Location=LOC._Id AND LOC._Store=STO._Id AND '
-			 		. 'STO._StockOwner=' . $ConnectedActorId . ' ';
-			$addTable = ', Location LOC, Store STO ';
-			break;
-		case UserAccount::PROFILE_GESTIONNAIRE_STOCK:
-		case UserAccount::PROFILE_OPERATOR:
-			// Voient le stock dans lpq sur des sites dont son acteur est owner
-			$where .= 'AND LPQ._Location=LOC._Id AND LOC._Store=STO._Id AND
-        			STO._StorageSite=SIT._Id AND SIT._Owner=' . $ConnectedActorId . ' ';
-			$addTable = ', Location LOC, Store STO, Site SIT ';
-			break;
-		case UserAccount::PROFILE_ADMIN_VENTES:
-		case UserAccount::PROFILE_AERO_ADMIN_VENTES:
-			// Voient le stock dans lpq sur des sites dont son acteur est sitowner
-			// ou sur des stores dont son acteur est stockowner
-			$where .= 'AND LPQ._Location=LOC._Id AND LOC._Store=STO._Id AND
-        			STO._StorageSite=SIT._Id AND (SIT._Owner=' . $ConnectedActorId
-			 		. ' OR STO._StockOwner=' . $ConnectedActorId . ') ';
-			$addTable = ', Location LOC, Store STO, Site SIT ';
-			break;
-		case UserAccount::PROFILE_SUPPLIER:
-			$where .= 'AND AP._Product = PDT._Id and AP._Actor =' . $ConnectedActorId . ' ';
-			$addTable = ', ActorProduct AP ';
-			break;
-		default: // UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ACTOR
-			$addTable = '';
-	}
-	// Traitement lie aux criteres de recherche saisis
-    $baseReference = SearchTools::RequestOrSessionExist('BaseReference');
-	if ($baseReference !== false && $baseReference != '') {
-		$where .= 'AND PDT._BaseReference LIKE "'
-		      . str_replace('*', "%", $baseReference) . '" ';
-	}
-    $name = SearchTools::RequestOrSessionExist('Name');
-	if ($name !== false && $name != '') {
-		$where .= 'AND I1._StringValue_'.$locale.' LIKE "' . str_replace('*', "%", $name) . '" ';
-	}
-	if (SearchTools::RequestOrSessionExist('Activated') !== false) {
-		$where .= 'AND PDT._Activated=1 ';
-	 }
-	if (SearchTools::RequestOrSessionExist('NotActivated') !== false) {
-		$where .= 'AND PDT._Activated=0 ';
-	}
-	$owner = SearchTools::requestOrSessionExist('Owner');
-	if ($owner !== false && $owner != '##') {
-		$where .= 'AND PDT._Owner=' . $owner . ' ';
-	}
-	$where = ($where == 'WHERE ')?'':$where;
-
-	$request = 'SELECT DISTINCT PDT._BaseReference as baseReference, ';
-	$request .= 'PDT._SellUnitVirtualQuantity as virtualQuantity, ';
-	$request .= 'PDT._SellUnitMinimumStoredQuantity as minimumStoredQuantity, ';
-	$request .= 'I1._StringValue_'.$locale.' as pdtName, PDT._Id as pdtId, PDT._Category as category, ';
-	$request .= 'PDT._Activated AS Activated, PTY._Name as productType, ';
-	$request .= 'IF(SUT._Id>= ' . SELLUNITTYPE_KG .  ', I2._StringValue_'.$locale.',"") AS shortName, ';
-    $request .= 'SUM(LPQ._RealQuantity) as qty ';
-	$request .= 'FROM SellUnitType SUT, I18nString I1, I18nString I2, ProductType PTY, Product PDT LEFT JOIN LocationProductQuantities LPQ ON PDT._Id=LPQ._Product ';
-	$request .= $addTable . $where;
-	$request .= 'GROUP BY PDT._Id ';
-	if ($withDate === false) {
-        $request .= 'HAVING (NOT (virtualQuantity=0 AND (isnull(qty) OR qty=0))) ';
-	}
-	/*  $request .= 'HAVING (((Activated=0 AND (qty<>0 ';
- $request .= 'OR virtualQuantity<>0)) OR Activated=1) AND NOT (virtualQuantity=0 AND isnull(qty))) ';*/
-	$request .= 'ORDER BY baseReference';
-
-	return $request;
-}
-
-// }}}
-// Request_StockProductAtDate() {{{
-
-/*
- * Utilise pour recuperer la qte en stock a une date donnee
- * @param integer $ConnectedActorId
- * @param integer $ProfileId
- * @param boolean $withDate : si vaut true, on supprime la condition:
- *      HAVING (NOT (virtualQuantity=0 AND (isnull(qty) OR qty=0)))
- * @return string la requete SQL
- */
-function Request_StockProductAtDate($ConnectedActorId, $ProfileId, $addWhere = '')
-{
-    $locale = I18N::getLocaleCode();
-    require_once('Objects/SellUnitType.const.php');
-	// Traitement lie au Profile connecte
-	switch ($ProfileId) {
-		case UserAccount::PROFILE_SUPPLIER_CONSIGNE:
-			$where = 'WHERE LEM._Location=LOC._Id AND LOC._Store=STO._Id AND STO._StockOwner='
-			 		. $ConnectedActorId . ' AND ';
-			$addTable = ', Location LOC, Store STO ';
-			break;
-		case UserAccount::PROFILE_GESTIONNAIRE_STOCK:
-		case UserAccount::PROFILE_OPERATOR:
-			// Voient le stock dans lpq sur des sites dont son acteur est owner
-			$where = 'WHERE LEM._Location=LOC._Id AND LOC._Store=STO._Id AND
-        			STO._StorageSite=SIT._Id AND SIT._Owner=' . $ConnectedActorId . ' AND ';
-			$addTable = ', Location LOC, Store STO, Site SIT ';
-			break;
-		case UserAccount::PROFILE_ADMIN_VENTES:
-		case UserAccount::PROFILE_AERO_ADMIN_VENTES:
-			// Voient le stock dans lpq sur des sites dont son acteur est sitowner
-			// ou sur des stores dont son acteur est stockowner
-			$where = 'WHERE LOC._Location=LOC._Id AND LOC._Store=STO._Id AND
-        			STO._StorageSite=SIT._Id AND (SIT._Owner=' . $ConnectedActorId
-			 		. ' OR STO._StockOwner=' . $ConnectedActorId . ') AND ';
-			$addTable = ', Location LOC, Store STO, Site SIT ';
-			break;
-		case UserAccount::PROFILE_SUPPLIER:
-			$where = 'WHERE AP._Product=PDT._Id and AP._Actor=' . $ConnectedActorId . ' AND ';
-			$addTable = ', ActorProduct AP ';
-			break;
-		default: // UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ACTOR
-			$where = 'WHERE ';
-			$addTable = ' ';
-	}
-    // XXX nécessaire ici ? je pense pas
-    if (defined('DATABASE_ID') && !Object::isPublicEntity('LocationExecutedMovement')) {
-        $where .= 'LEM._DBId=' . DATABASE_ID . ' AND ';
-    }
-	// Traitement lie aux criteres de recherche saisis
-    $baseReference = SearchTools::RequestOrSessionExist('BaseReference');
-	if ($baseReference !== false && $baseReference != '') {
-		$where .= 'PDT._BaseReference LIKE "'
-		 		. str_replace('*', "%", $baseReference) . '" AND ';
-	}
-    $name = SearchTools::RequestOrSessionExist('Name');
-	if ($name !== false && $name != '') {
-		$where .= 'I1._StringValue_'.$locale.' LIKE "' . str_replace('*', "%", $name) . '" AND ';
-	}
-	if (SearchTools::RequestOrSessionExist('Activated') !== false) {
-		$where .= 'PDT._Activated=1  AND ';
-	}
-	if (SearchTools::RequestOrSessionExist('NotActivated') !== false) {
-		$where .= 'PDT._Activated=0 AND ';
-	}
-	$owner = SearchTools::requestOrSessionExist('Owner');
-	if ($owner !== false && $owner != '##') {
-		$where .= 'PDT._Owner=' . $owner . ' AND ';
-	}
-    $d = (isset($_REQUEST['Date']))?$_REQUEST['Date']:$_SESSION['Date'];
-    $date = sprintf("%d-%02d-%02d 23:59:59", $d['Y'], $d['m'], $d['d']);
-
-	$request = 'SELECT LEM._Product as pdtId, MVTT._EntrieExit as entryExit, ';
-	$request .= 'LEM._Quantity as qty, LEM._CancelledMovement as cancelledMvt, ';
-	$request .= 'IF(SUT._Id>= ' . SELLUNITTYPE_KG .  ',I2._StringValue_'.$locale.',"") AS shortName ';
-	$request .= 'FROM SellUnitType SUT, I18nString I1, I18nString I2, LocationExecutedMovement LEM, ExecutedMovement EXM, ';
-	$request .= 'MovementType MVTT, Product PDT ' . $addTable;
-	$request .= $where . $addWhere;
-	$request .= 'I1._Id=PDT._Name AND I2._Id=SUT._ShortName AND PDT._SellUnitType=SUT._Id AND ';
-	$request .= 'LEM._Product=PDT._Id AND LEM._ExecutedMovement=EXM._Id  AND EXM._Type=MVTT._Id ';
-	$request .= ' AND LEM._Date > "' . $date . '" ';
-	$request .= 'ORDER BY PDT._BaseReference;';
-	return $request;
-}
-
-// }}}
-// request_stockACMQuantity() {{{
-
-function request_stockACMQuantity($pdtID, $entries=true, $withDate=false) {
-    $states = array(
-        ActivatedMovement::CREE,
-        ActivatedMovement::ACM_EN_COURS,
-        ActivatedMovement::ACM_EXECUTE_PARTIELLEMENT,
-        ActivatedMovement::BLOQUE
-    );
-    $types = $entries ? array(ENTREE_NORMALE, ENTREE_INTERNE) :
-        array(SORTIE_NORMALE, SORTIE_INTERNE);
-
-    $sql = 'SELECT SUM(ACM._Quantity) as quantity FROM ActivatedMovement ACM '
-        . 'WHERE ACM._State IN ('.implode(',', $states).') AND '
-        . 'ACM._Type IN ('.implode(',', $types).') AND ACM._Product='.$pdtID;
-    if ($withDate) {
-	    $d = SearchTools::requestOrSessionExist('Date');
-	    if ($d && !empty($d)) {
-            $d = sprintf("%d-%02d-%02d 23:59:59", $d['Y'], $d['m'], $d['d']);
-            $sql .= ' AND ACM._StartDate <= "' . $d . '";';
-	    }
-    }
-    return executeSQL($sql);
-}
-
-// }}}
-// request_StockAccountingQty() {{{
-
-/*
- * Utilise pour recuperer la qte en stock, pour la compta matiere
- * @return string la requete SQL
- */
-function request_StockAccountingQty()
-{
-    $select = $from = $orderBy = $groupBy = '';
-    switch($_REQUEST['unitType']){
-        case 1: // UV
-            $qtyType = 'LPQ._RealQuantity';
-            break;
-        case 2: // KG
-            $qtyType = 'LPQ._RealQuantity * PDT._SellUnitWeight';
-            break;
-/*        case 3: // M3
-            $qtyType = 'LPQ._RealQuantity * PDT._Volume';
-            break;*/
-        default: // L // Completement contradictoire avec le case precedent....
-            $qtyType = 'LPQ._RealQuantity * PDT._Volume';
-    } // switch
-
-    $sqlParts = getSelectFromWhere();
-    $select .= $sqlParts['select'];
-    $from .= $sqlParts['from'];
-    $where = $sqlParts['where'];
-    $groupBy .= $sqlParts['groupBy'];
-    $orderBy .= $sqlParts['orderBy'];
-
-	$request = 'SELECT STO._Name as storeName ' . $select
-	         . ', SUM(' . $qtyType . ') as qty '
-             . 'FROM LocationProductQuantities LPQ, Location LOC, Store STO, Product PDT '
-             . $from
-             . 'WHERE LPQ._Location=LOC._Id AND LOC._Store=STO._Id AND '
-             . 'LOC._Store IN (' . implode(", ", $_REQUEST['Store']) . ') '
-             . 'AND LPQ._Product=PDT._Id AND PDT._ProductType='
-             . $_REQUEST['ProductType'] . ' AND PDT._Owner='
-             . $_REQUEST['ProductOwner'] . ' ' . $where
-             . 'GROUP BY STO._Id' . $groupBy . ' '
-             . 'ORDER BY STO._Name' . $orderBy . ';';
-	return $request;
-}
-
-// }}}
 // getSelectFromWhere() {{{
 
 /*
@@ -416,399 +166,6 @@ function getSelectFromWhere($context='LPQ') {
     }
     return array('select' => $select, 'from' => $from, 'where' => $where,
                 'groupBy' => $groupBy, 'orderBy' => $orderBy);
-}
-
-// }}}
-// request_StockAccountingLEM() {{{
-
-/*
- * Utilise pour recuperer la qte en stock a une date donnee, pour la compta matiere
- *
- * @param string $startDate : debut de creneau
- * @param string $endDate : fin de creneau : utile seulement pour les E/S
- * @return string la requete SQL
- */
-function request_StockAccountingLEM($startDate, $endDate='')
-{
-    $select = $from = $orderBy = $groupBy = '';
-    $startDate .= ($endDate == '')?' 23:59:59':' 00:00:00';
-
-    switch($_REQUEST['unitType']){
-        case 1: // UV
-            $qtyType = 'LEM._Quantity';
-            break;
-        case 2: // KG
-            $qtyType = 'LEM._Quantity * PDT._SellUnitWeight';
-            break;
-/*        case 3: // M3
-            $qtyType = 'LEM._Quantity * PDT._Volume';
-            break;*/
-        default: // L // Completement contradictoire avec le case precedent....
-            $qtyType = 'LEM._Quantity * PDT._Volume';
-    } // switch
-
-    $sqlParts = getSelectFromWhere('LEM');
-    $select .= $sqlParts['select'];
-    $from .= $sqlParts['from'];
-    $where = $sqlParts['where'];
-    $groupBy .= $sqlParts['groupBy'];
-    $orderBy .= $sqlParts['orderBy'];
-
-	$request = 'SELECT STO._Name as storeName, MVTT._EntrieExit as entryExit, ';
-	$request .= 'EXM._Type as mvtType, ';
-	$request .= $qtyType . ' AS qty, LEM._CancelledMovement as cancelledMvt ';
-    $request .= $select;
-	$request .= 'FROM LocationExecutedMovement LEM, ExecutedMovement EXM ';
-    $request .= ', Product PDT' . $from;
-	$request .= ', MovementType MVTT, Location LOC, Store STO ';
-	$request .= 'WHERE LEM._Location=LOC._Id AND LOC._Store=STO._Id AND ';
-    $request .= 'LOC._Store IN (' . implode(", ", $_REQUEST['Store']) . ') ';
-    $request .= 'AND LEM._Product=PDT._Id AND PDT._ProductType=';
-    $request .= $_REQUEST['ProductType'] . ' AND PDT._Owner=';
-    $request .= $_REQUEST['ProductOwner'] . ' '. $where;
-	$request .= 'AND LEM._ExecutedMovement=EXM._Id  AND EXM._Type=MVTT._Id ';
-	// Pour calcul Qtes a la fin de periode
-    if ($endDate == '') {
-        $request .= ' AND LEM._Date > "' . $startDate . '" ';
-	}
-	// Pour calcul des E/S pendant la periode
-    else {
-        $endDate .= ' 23:59:59';
-        $request .= ' AND LEM._Date < "' . $endDate . '" ';
-        $request .= ' AND LEM._Date >= "' . $startDate . '" ';
-        // LEM pas annulateur de type annulation et
-        // pas mvt non prevu annulé
-        $request .= ' AND (LEM._Cancelled != 1 AND NOT(LEM._Cancelled = -1 AND MVTT._Foreseeable != 1)) ';
-        $request .= ' AND EXM._Type NOT IN (' . SORTIE_DEPLACEMT . ', ' . ENTREE_DEPLACEMT . ') ';
-	}
-    $request .= 'ORDER BY STO._Name' . $orderBy . ';';
-	return $request;
-}
-
-// }}}
-// Request_WorkOrderList() {{{
-
-function Request_WorkOrderList($ConnectedActorId)
-{
-    // inutile de tester le DATABASE_ID puisqu'on passe un ID
-	return 'SELECT DISTINCT WKO._Id as wkoId FROM WorkOrder WKO,
-            ActivatedChainOperation ACO, ActivatedChain ACH,
-            CommandItem ACI, Command ABC, UserAccount UAC
-            WHERE WKO._Id = ACO._OwnerWorkerOrder AND ACO._ActivatedChain = ACH._Id
-            AND ACH._Id = ACI._ActivatedChain AND ACI._Command = ABC._Id
-            AND ABC._Customer = ' . $ConnectedActorId . '
-            ORDER BY wkoId';
-}
-
-// }}}
-// Request_ActivatedChainList() {{{
-
-function Request_ActivatedChainList($ConnectedActorId, $ProfileId)
-{
-    // inutile de tester le DATABASE_ID puisqu'on passe un ID
-	$addForActor1 = ($ProfileId == UserAccount::PROFILE_ACTOR)?'ActivatedChainOperation ACO, ':'';
-	$addForActor2 = ($ProfileId == UserAccount::PROFILE_ACTOR)?'AND ACH._Id = ACO._ActivatedChain ':'';
-	$addForActor3 = ($ProfileId == UserAccount::PROFILE_ACTOR)?' OR (ACO._Actor = ' . $ConnectedActorId . ')':'';
-	return "SELECT DISTINCT ACH._Id as FROM ActivatedChain ACH,
-            $addForActor1 CommandItem ACI, Command ABC
-            WHERE ACH._Id = ACI._ActivatedChain
-                AND ACI._Command = ABC._Id $addForActor2
-                AND (ACH._Owner = $ConnectedActorId OR
-                        (ABC._Customer = $ConnectedActorId OR
-                         ABC._Expeditor = $ConnectedActorId OR
-                         ABC._Destinator = $ConnectedActorId)
-                     $addForActor3)
-            ORDER BY ACH._Id";
-}
-
-// }}}
-// Request_LocationExecutedMovementList() {{{
-
-function Request_LocationExecutedMovementList($ConnectedActorId)
-{
-    // inutile de tester le DATABASE_ID puisqu'on passe un ID
-	return 'SELECT DISTINCT LEM._Id as lemId
-         FROM LocationExecutedMovement LEM, ExecutedMovement EXM,
-         ActivatedMovement ACM, CommandItem ACI, Command ABC,
-         ActivatedChainOperation ACO, ActivatedChain ACH
-         WHERE LEM._ExecutedMovement = EXM._Id
-             AND EXM._ActivatedMovement = ACM._Id
-             AND ACM._ProductCommandItem = ACI._Id
-             AND ACI._Command = ABC._Id
-             AND ACI._ActivatedChain = ACH._Id
-             AND (ABC._Expeditor = ' . $ConnectedActorId . '
-                 OR ABC._Destinator = ' . $ConnectedActorId . '
-                 OR ABC._Customer = ' . $ConnectedActorId . '
-                 OR ACH._Owner = ' . $ConnectedActorId . ')
-         ORDER BY lemId;';
-}
-
-// }}}
-// request_jobsWhitchHasActors() {{{
-
-// Retourne les ids des Jobs lies a au moins un Actor
-function request_jobsWhitchHasActors() {
-	return executeSQL('SELECT distinct(_ToJob) as job FROM actJob;');
-}
-
-// }}}
-// Request_ProductListForRPCClient() {{{
-
-function Request_ProductListForRPCClient()
-{
-    $locale = I18N::getLocaleCode();
-    $sql  = 'SELECT P._Id, P._BaseReference, P._TracingMode, I._StringValue_'.$locale.' AS _Name '
-          . 'FROM Product P, I18nString I WHERE _Activated=1 AND I._Id=P._Name';
-    if (defined('DATABASE_ID') && !Object::isPublicEntity('Product')) {
-        $sql .= ' AND P._DBId=' . DATABASE_ID;
-    }
-    $sql .= ' ORDER BY P._BaseReference ASC';
-	return ExecuteSQL($sql);
-}
-
-// }}}
-// Request_ConcreteProductListForRPCClient() {{{
-
-function Request_ConcreteProductListForRPCClient($pdtID)
-{
-    // inutile de tester le DATABASE_ID puisqu'on passe un ID
-    return ExecuteSQL('SELECT _SerialNumber FROM ConcreteProduct
-        WHERE _Product=' . $pdtID . ' ORDER BY _SerialNumber ASC');
-}
-
-// }}}
-// Request_ActorListForRPCClient() {{{
-
-function Request_ActorListForRPCClient()
-{
-    $request = 'SELECT t0._Id as actId, t0._Name as actName,
-	 t1._Name as siteName, t1._Phone as sitePhone,
-     t1._StreetType as adrStreetType, t1._StreetNumber as adrStreetNumber,
-     t1._StreetName as adrStreetName, t1._StreetAddons as adrStreetAddons,
-     t1._Cedex as adrCedex, t4._Code as zipCode, t5._Name as ctnName,
-     t6._Name as ctrName, IFNULL((SELECT t7._Name
-        FROM Contact t7 WHERE t7._Id=(SELECT MIN(t8._ToContact)
-            FROM sitContact t8 WHERE t8._FromSite=t1._Id
-            GROUP BY t8._FromSite)), "") as contactName
-     FROM Actor t0, Site t1,
-          CountryCity t3, Zip t4, CityName t5, Country t6
-     WHERE
-         t0._Active = 1
-         AND t0._Generic = 0
-         AND t0._Id = t1._Owner
-         AND t3._Id = t1._CountryCity
-         AND t4._Id = t3._Zip
-         AND t5._Id = t3._CityName
-         AND t6._Id = t3._Country';
-    if (defined('DATABASE_ID') && !Object::isPublicEntity('Actor')) {
-        $request .= ' AND t0._DBId = ' . DATABASE_ID;
-    }
-    $request .= ' ORDER BY actName ASC';
-	return ExecuteSQL($request);
-}
-
-// }}}
-// Request_StorageSiteListForRPCClient() {{{
-
-function Request_StorageSiteListForRPCClient($ownerId)
-{
-    // inutile de tester le DATABASE_ID puisqu'on passe un ID
-	$request = "SELECT SIT._Id as sitId, SIT._Name as sitName, STO._Id as stoId,
-     STO._Name as stoName, LOC._Id as locId, LOC._Name as locName
-     FROM Site SIT, Store STO, Location LOC
-     WHERE
-         SIT._ClassName='StorageSite' AND SIT._Owner=%s
-             AND STO._StorageSite = SIT._Id AND LOC._Store = STO._Id
-     ORDER BY locName ASC";
-	return ExecuteSQL(sprintf($request, $ownerId));
-}
-
-// }}}
-// request_CommandIsCompatibleWithUserForExecution() {{{
-
-function request_CommandIsCompatibleWithUserForExecution($activatedChainID, $actorID, $operationID)
-{
-    // inutile de tester le DATABASE_ID puisqu'on passe un ID
-	$request = "SELECT DISTINCT count(*) FROM ActivatedChainOperation T0
-     WHERE T0._ActivatedChain = '%s' AND T0._Actor = '%s'
-     AND T0._Operation = '%s'";
-	$request = sprintf($request, $activatedChainID, $actorID, $operationID);
-	return ExecuteSQL($request);
-}
-
-// }}}
-// request_ProductByLocationList() {{{
-
-function request_ProductByLocationList($StoreId)
-{
-    // inutile de tester le DATABASE_ID puisqu'on passe un ID
-    $addWhere = $addFrom = $addJoin = '';
-    $locationName = SearchTools::requestOrSessionExist('Location');
-	if ($locationName !== false && $locationName != '') {
-        $addWhere = ' AND LOC._Name LIKE "'
-                . str_replace('*', "%", $locationName) . '" ';
-    }
-    $baseReference = SearchTools::requestOrSessionExist('BaseReference');
-	if ($baseReference !== false && $baseReference != '') {
-        $addFrom = ', Product PDT ';
-        $addJoin = ' AND LPQ._Product=PDT._Id ';
-        $addWhere .= ' AND PDT._BaseReference LIKE "'
-                . str_replace('*', "%", $baseReference) . '" ';
-    }
-    $pdtName = SearchTools::requestOrSessionExist('PdtName');
-	if ($pdtName !== false && $pdtName != '') {
-        $locale = I18N::getLocaleCode();
-        $addFrom = ', Product PDT, I18nString I1 ';
-        $addJoin = ' AND LPQ._Product=PDT._Id AND I1._Id=PDT._Name ';
-        $addWhere .= ' AND I1._StringValue_'.$locale.' LIKE "'
-            . str_replace('*', "%", $pdtName) . '" ';
-    }
-    $ownerId = SearchTools::requestOrSessionExist('Owner');
-	if ($ownerId !== false && $ownerId != '##') {
-        $addFrom = ', Product PDT ';
-        $addJoin = ' AND LPQ._Product=PDT._Id ';
-        $addWhere .= ' AND PDT._Owner=' . $ownerId;
-    }
-	$SQLRequest = 'SELECT LPQ._Location as lpqLocation, LOC._Name as locName,
-        SUM( LPQ._RealQuantity ) AS Qty
-        FROM Location LOC, LocationProductQuantities LPQ' . $addFrom .  '
-        WHERE LPQ._Location = LOC._Id
-        AND LOC._Store = ' . $StoreId . $addJoin . $addWhere . '
-        GROUP BY LPQ._Location
-        HAVING SUM( LPQ._RealQuantity ) > 0
-        ORDER BY LOC._Name';
-	return $SQLRequest;
-}
-
-// }}}
-// request_LocationByProductList() {{{
-
-function request_LocationByProductList($StoreId)
-{
-    // inutile de tester le DATABASE_ID puisqu'on passe un ID
-    $addWhere = '';
-    $locationName = SearchTools::requestOrSessionExist('Location');
-	if ($locationName !== false && $locationName != '') {
-        $addWhere = ' AND LOC._Name LIKE "'
-                . str_replace('*', "%", $locationName) . '" ';
-    }
-    $baseReference = SearchTools::requestOrSessionExist('BaseReference');
-	if ($baseReference !== false && $baseReference != '') {
-        $addWhere .= ' AND PDT._BaseReference LIKE "'
-                . str_replace('*', "%", $baseReference) . '" ';
-    }
-    $pdtName = SearchTools::requestOrSessionExist('PdtName');
-	if ($pdtName !== false && $pdtName != '') {
-        $locale = I18N::getLocaleCode();
-        $addWhere .= ' AND I1._Id=PDT._Name AND I1._StringValue_'.$locale.' LIKE "'
-                . str_replace('*', "%", $pdtName) . '" ';
-    }
-
-    $ownerId = SearchTools::requestOrSessionExist('Owner');
-	if ($ownerId !== false && $ownerId != '##') {
-        $addWhere .= ' AND PDT._Owner=' . $ownerId;
-    }
-	$SQLRequest = 'SELECT DISTINCT PDT._BaseReference as pdtBaseReference,
-             LPQ._Product as lpqProduct
-             FROM LocationProductQuantities LPQ, Product PDT, I18nString I1, Location LOC
-             WHERE LPQ._Product = PDT._Id AND LPQ._Location = LOC._Id
-             AND LOC._Store = ' . $StoreId . $addWhere
-             . ' ORDER BY PDT._Basereference ';
-	return $SQLRequest;
-}
-
-// }}}
-// Request_GridColumnProductByLocationList() {{{
-
-function Request_GridColumnProductByLocationList($param)
-{
-    $locale = I18N::getLocaleCode();
-    // inutile de tester le DATABASE_ID puisqu'on passe un ID
-    return "SELECT PDT._BaseReference as pdtBaseReference,
-         LPQ._RealQuantity as lpqRealQuantity, I1._StringValue_".$locale." as unity,
-         PDT._SellUnitType as sutId
-         FROM Product PDT, LocationProductQuantities LPQ, SellUnitType SUT, I18nString I1
-         WHERE LPQ._Product = PDT._Id AND PDT._SellUnitType=SUT._Id AND I1._Id=SUT._ShortName
-         AND LPQ._Location = $param";
-}
-
-// }}}
-// Request_GridColumnLocationByProductList() {{{
-
-function Request_GridColumnLocationByProductList($param, $param2)
-{
-    // inutile de tester le DATABASE_ID puisqu'on passe un ID
-	return "SELECT LOC._Name as locName, LPQ._RealQuantity as lpqRealQuantity
-         FROM Location LOC, LocationProductQuantities LPQ WHERE
-         LPQ._Location = LOC._Id AND LPQ._Product = $param AND LOC._Store = $param2";
-}
-
-// }}}
-// request_AlertPaymentDate() {{{
-
-function request_AlertPaymentDate($ActorId)
-{
-    // inutile de tester le DATABASE_ID puisqu'on passe un ID
-	return "SELECT CMD._CommandNo as abcCommandNo, CMD._Id as abcId,
-     ADC._DocumentNo as adcDocumentNo, ADC._PaymentDate as adcPaymentDate,
-     CMD._State as abcState
-     FROM Command CMD, AbstractDocument ADC
-     WHERE ADC._Command = CMD._Id AND ADC._ClassName = 'Invoice' AND
-     ADC._PaymentDate < CURRENT_DATE AND ADC._PaymentDate != 0 AND
-     CMD._Destinator = $ActorId";
-}
-
-// }}}
-// request_Get_Interceptor() {{{
-
-require_once('Objects/Property.inc.php');
-
-function request_Get_Interceptor($propertyName, $product)
-{
-    // inutile de tester le DATABASE_ID puisqu'on passe un ID
-	$SQLRequest = "SELECT PPT._Type, PPV._StringValue, PPV._IntValue, " . "PPV._FloatValue, PPV._DateValue ";
-	$SQLRequest .= "FROM PropertyValue PPV, Property PPT WHERE PPT._Name = '%s' " . "AND PPV._Product = %s ";
-	$SQLRequest .= "AND PPV._Property = PPT._Id";
-	$SQLRequest = sprintf($SQLRequest, $propertyName, $product->getId());
-	$result = executeSQL($SQLRequest);
-
-	if (is_array($result->fields) && array_key_exists("_Type", $result->fields)) {
-		$type = "_" . getPropertyTypeColumn($result->fields["_Type"]);
-		if ($result->fields["_Type"] == Property::OBJECT_TYPE) {
-			$ptype = $product->getProductType();
-
-			if ($ptype instanceof ProductType) {
-				$properties = array_change_key_case($ptype->getPropertyArray());
-				if (array_key_exists($propertyName, $properties)) {
-					$prop = $properties[$propertyName];
-					return $prop->getValue($product->getId());
-				}
-			}
-		}
-		if (array_key_exists($type, $result->fields)) {
-			return empty($result->fields[$type])?"N/A":$result->fields[$type];
-		}
-	}
-	return "N/A";
-}
-
-// }}}
-// request_DynamicProperties_Search() {{{
-
-/**
- *
- * @access public
- * @return void
- */
-function request_DynamicProperties_Search($Attribute, $Type, $Operator, $Value)
-{
-	$SQL  = "SELECT P2._Product FROM Property P1, PropertyValue P2 ";
-	$SQL .= "WHERE P1._Name='%s' AND P1._Id=P2._Property AND P2._%s%s'%s'";
-    if (defined('DATABASE_ID') && !Object::isPublicEntity('Property')) {
-        $SQL .= ' AND P1._DBId=' . DATABASE_ID;
-    }
-	$SQL = sprintf($SQL, $Attribute, $Type, $Operator, $Value);
-	return ExecuteSQL($SQL);
 }
 
 // }}}
@@ -963,6 +320,38 @@ function getInternalActivatedMovementPerWeek($SupplierId, $TimeStampBegin, $Time
 }
 
 // }}}
+// getInternalQtyAtEndOfWeek() {{{
+
+/**
+ * TODO: filtre sur Actor connecté??: pas pour l'instant
+ * Retourne les qtes de Product pour un Supplier donne, impliques dans les
+ * ACM internes prevus pour la semaine 0 et non executes en entier
+ * f(x) = -2x + 1 => f(1)=-1 (sorties), et f(0)=1 (entrees)
+ * Permet d'additionner les enrees et retrancher les sorties
+ * @param mixed $ProductIdArray array of integer : Ids de Product
+ * @param integer $TimeStampBegin timestamp: limite inf
+ * @param integer $TimeStampEnd timestamp: limite sup
+ * @return Object resultset
+
+function getInternalQtyAtEndOfWeek($ProductIdArray, $TimeStampBegin, $TimeStampEnd) {
+    require_once('Objects/MovementType.const.php');
+    require_once('Objects/ActivatedMovement.php');
+	$ProductIds = implode(',', $ProductIdArray);
+	$sql = '
+    SELECT ACM._Product as pdtId,
+    SUM((-2 * MVT._EntrieExit + 1) * (ACM._Quantity - IFNULL(EXM._RealQuantity, 0))) AS qty
+    FROM MovementType MVT, ActivatedMovement ACM
+    LEFT JOIN ExecutedMovement EXM ON ACM._Id=EXM._ActivatedMovement
+    WHERE ACM._Type=MVT._Id AND ACM._Product IN ('.$ProductIds.')
+    AND ACM._Type IN (' . ENTREE_INTERNE . ', ' . SORTIE_INTERNE . ')
+    AND ACM._State !=' . ActivatedMovement::ACM_EXECUTE_TOTALEMENT . '
+    AND UNIX_TIMESTAMP(ACM._StartDate)<' . $TimeStampEnd . '
+    AND UNIX_TIMESTAMP(ACM._StartDate)>' . $TimeStampBegin . '
+    GROUP BY ACM._Product';
+	return executeSQL($sql);
+}*/
+
+// }}}
 // getLateInternalActivatedMovement() {{{
 
 /**
@@ -1005,38 +394,6 @@ function getInternalMvtQtyBeforeEndOfWeek($ProductIdArray, $TimeStampEnd)
 // Algo a conserver: f(x) = -2x + 1 => f(1)=-1 (sorties), et f(0)=1 (entrees)
 
 // }}}
-// getInternalQtyAtEndOfWeek() {{{
-
-/**
- * TODO: filtre sur Actor connecté??: pas pour l'instant
- * Retourne les qtes de Product pour un Supplier donne, impliques dans les
- * ACM internes prevus pour la semaine 0 et non executes en entier
- * f(x) = -2x + 1 => f(1)=-1 (sorties), et f(0)=1 (entrees)
- * Permet d'additionner les enrees et retrancher les sorties
- * @param mixed $ProductIdArray array of integer : Ids de Product
- * @param integer $TimeStampBegin timestamp: limite inf
- * @param integer $TimeStampEnd timestamp: limite sup
- * @return Object resultset
-
-function getInternalQtyAtEndOfWeek($ProductIdArray, $TimeStampBegin, $TimeStampEnd) {
-    require_once('Objects/MovementType.const.php');
-    require_once('Objects/ActivatedMovement.php');
-	$ProductIds = implode(',', $ProductIdArray);
-	$sql = '
-    SELECT ACM._Product as pdtId,
-    SUM((-2 * MVT._EntrieExit + 1) * (ACM._Quantity - IFNULL(EXM._RealQuantity, 0))) AS qty
-    FROM MovementType MVT, ActivatedMovement ACM
-    LEFT JOIN ExecutedMovement EXM ON ACM._Id=EXM._ActivatedMovement
-    WHERE ACM._Type=MVT._Id AND ACM._Product IN ('.$ProductIds.')
-    AND ACM._Type IN (' . ENTREE_INTERNE . ', ' . SORTIE_INTERNE . ')
-    AND ACM._State !=' . ActivatedMovement::ACM_EXECUTE_TOTALEMENT . '
-    AND UNIX_TIMESTAMP(ACM._StartDate)<' . $TimeStampEnd . '
-    AND UNIX_TIMESTAMP(ACM._StartDate)>' . $TimeStampBegin . '
-    GROUP BY ACM._Product';
-	return executeSQL($sql);
-}*/
-
-// }}}
 // getProductPromoImpactPerWeek() {{{
 
 /**
@@ -1074,6 +431,31 @@ function getProductPromoImpactPerWeek($ProductIdArray)
 		}
 	}
 	return $ApproImpactRateArray;
+}
+
+// }}}
+// getQuantities() {{{
+
+/*
+* Utilise pour corriger les quantites virtuelles des Product
+* en fonction de leur quantite en stock est des Mvts prevus
+**/
+function getQuantities()
+{
+	$sql = 'SELECT PDT._Id as pdtId, ACI._Quantity as aciQty,
+         EXM._RealQuantity as deliveredQty, M._Id as mvtId
+         FROM CommandItem ACI, Product PDT, MovementType M,
+         ActivatedMovement ACM
+         LEFT JOIN ExecutedMovement EXM ON ACM._Id=EXM._ActivatedMovement
+         WHERE ACI._Product=PDT._Id
+         AND ACM._ProductCommandItem=ACI._Id
+         AND ACM._Type = M._Id
+         AND ACM._State <> ' . ActivatedMovement::ACM_EXECUTE_TOTALEMENT;
+    if (defined('DATABASE_ID') && !Object::isPublicEntity('Product')) {
+        $sql .= ' AND PDT._DBId=' . DATABASE_ID;
+    }
+    $sql .= ' ORDER BY PDT._BaseReference;';
+	return ExecuteSQL($sql);
 }
 
 // }}}
@@ -1177,6 +559,31 @@ function getWaitedQtyPerWeek($ProductIdArray, $ActorId, $TimeStampEnd, $TimeStam
 }
 
 // }}}
+// getOrderedQtyAtEndOfWeek() {{{
+
+function getOrderedQtyAtEndOfWeek($ProductIdArray, $ActorId, $TimeStampBegin, $TimeStampEnd)
+{
+	require_once('Objects/ActivatedMovement.php');
+    require_once('Objects/MovementType.const.php');
+	$sql = 'SELECT DISTINCT PDT._Id as pdtId,
+         SUM(ACM._Quantity - IFNULL(EXM._RealQuantity, 0)) as qty
+         FROM Command CMD, Product PDT, ActivatedMovement ACM
+         LEFT JOIN ExecutedMovement EXM ON ACM._Id=EXM._ActivatedMovement
+         WHERE ACM._ProductCommand=CMD._Id AND ACM._Product=PDT._Id ';
+    if (Preferences::get('EstimateBehaviour', 0) != 1) {
+        $sql .= 'AND CMD._IsEstimate=0 ';
+    }
+    $sql .= 'AND CMD._Expeditor= ' . $ActorId . '
+         AND UNIX_TIMESTAMP(ACM._StartDate)<' . $TimeStampEnd . '
+         AND UNIX_TIMESTAMP(ACM._StartDate)>=' . $TimeStampBegin . '
+         AND PDT._Id IN (' . implode(',', $ProductIdArray) . ')
+         AND ACM._State <> ' . ActivatedMovement::ACM_EXECUTE_TOTALEMENT . '
+         AND ACM._Type=' . SORTIE_NORMALE . '
+         GROUP BY pdtId;';
+	return executeSQL($sql);
+}
+
+// }}}
 // getLateOrderedQty() {{{
 
 /**
@@ -1211,31 +618,6 @@ function getLateOrderedQty($SupplierId, $ActorId, $TimeStampEnd, $modelIds=array
 }
 
 // }}}
-// getOrderedQtyAtEndOfWeek() {{{
-
-function getOrderedQtyAtEndOfWeek($ProductIdArray, $ActorId, $TimeStampBegin, $TimeStampEnd)
-{
-	require_once('Objects/ActivatedMovement.php');
-    require_once('Objects/MovementType.const.php');
-	$sql = 'SELECT DISTINCT PDT._Id as pdtId,
-         SUM(ACM._Quantity - IFNULL(EXM._RealQuantity, 0)) as qty
-         FROM Command CMD, Product PDT, ActivatedMovement ACM
-         LEFT JOIN ExecutedMovement EXM ON ACM._Id=EXM._ActivatedMovement
-         WHERE ACM._ProductCommand=CMD._Id AND ACM._Product=PDT._Id ';
-    if (Preferences::get('EstimateBehaviour', 0) != 1) {
-        $sql .= 'AND CMD._IsEstimate=0 ';
-    }
-    $sql .= 'AND CMD._Expeditor= ' . $ActorId . '
-         AND UNIX_TIMESTAMP(ACM._StartDate)<' . $TimeStampEnd . '
-         AND UNIX_TIMESTAMP(ACM._StartDate)>=' . $TimeStampBegin . '
-         AND PDT._Id IN (' . implode(',', $ProductIdArray) . ')
-         AND ACM._State <> ' . ActivatedMovement::ACM_EXECUTE_TOTALEMENT . '
-         AND ACM._Type=' . SORTIE_NORMALE . '
-         GROUP BY pdtId;';
-	return executeSQL($sql);
-}
-
-// }}}
 // getProductInfoList() {{{
 
 // $SupplierId est necessaire dans le cas où n ActorProduct pour 1 Product
@@ -1254,6 +636,80 @@ function getProductInfoList($ProductIdArray, $SupplierId)
          ORDER BY _BaseReference;';
 	$result = executeSQL($sql);
 	return $result;
+}
+
+// }}}
+// ProductArrayForSelect() {{{
+
+/*
+* Recupere le tableau array(Id=>BaseReference) de tous les produits
+* @return array
+**/
+function ProductArrayForSelect($field='BaseReference')
+{
+    $otherTables=$otherConditions='';
+    if($field == 'Name') {
+        $otherTables = ', I18nString I1';
+        $otherConditions = ' PDT._'.$field.'=I1._Id';
+        $field = '_' . $field . ', I1._StringValue_' . I18n::getLocaleCode();
+    } else {
+        $field = '_' . $field;
+    }
+	$ProductArray = array();
+    $sql  = 'SELECT DISTINCT PDT._Id as pdtId, PDT.'.$field.' as pdtBaseReference FROM Product PDT';
+    $sql .= $otherTables;
+    $padding = ' WHERE';
+    if (defined('DATABASE_ID') && !Object::isPublicEntity('Product')) {
+        $sql .= ' WHERE PDT._DBId=' . DATABASE_ID;
+        $padding = ' AND';
+    }
+    if($otherConditions != '') {
+        $sql .= $padding . $otherConditions;
+    }
+    $sql .= ' ORDER BY pdtBaseReference;';
+	$rs = ExecuteSQL($sql);
+	if (false != $rs) {
+		while (!$rs->EOF) {
+			$ProductArray[$rs->fields['pdtId']] = $rs->fields['pdtBaseReference'];
+			$rs->MoveNext();
+		}
+	}
+	return $ProductArray;
+}
+
+// }}}
+// getProductArrayForFFPSelect() {{{
+
+/**
+ * Pour construire le select des CountryCity dans ZoneAddEdit.php
+ * @access public
+ * @return void
+ */
+function request_CountryCityForSelect($country=0, $state=0, $department=0)
+{
+    $return = array();
+    $whereAddon = $fromAddon = '';
+    if ($country != 0) {
+        $whereAddon .= ' AND CTC._Country = ' . $country;
+    }
+    if ($state != 0) {
+        $fromAddon .= ', Department DEP';
+        $whereAddon .= ' AND CTN._Department = DEP._Id AND DEP._State = ' . $state;
+    }
+    if ($department != 0) {
+        $whereAddon .= ' AND CTN._Department = ' . $department;
+    }
+    $sql = 'SELECT CTC._Id AS Id, CONCAT(CTN._Name, " (", Zip._Code, ")") as Name
+     FROM CityName CTN, CountryCity CTC, Zip ' . $fromAddon . '
+     WHERE (CTN._Id = CTC._CityName) AND (CTC._Zip = Zip._Id)
+     AND CTC._Zone = 0 ' . $whereAddon . '
+     ORDER BY Name;';
+     $rs = executeSQL($sql);
+     while (!$rs->EOF) {
+		$return[] = array($rs->fields['Id'], utf8_encode($rs->fields['Name']));
+		$rs->MoveNext();
+	}
+    return $return;
 }
 
 // }}}
@@ -1311,53 +767,674 @@ function stockProductArrayForSelect($Activated = 1, $SitOwnerId = 0, $lpqActivat
 }
 
 // }}}
-// ProductArrayForSelect() {{{
+// lastModifiedSpreadSheetDate() {{{
 
-/*
-* Recupere le tableau array(Id=>BaseReference) de tous les produits
-* @return array
-**/
-function ProductArrayForSelect($field='BaseReference')
-{
-    $otherTables=$otherConditions='';
-    if($field == 'Name') {
-        $otherTables = ', I18nString I1';
-        $otherConditions = ' PDT._'.$field.'=I1._Id';
-        $field = '_' . $field . ', I1._StringValue_' . I18n::getLocaleCode();
-    } else {
-        $field = '_' . $field;
+/**
+ * Retourne la date de modification la plus récente de la table SpreadSheet
+ *
+ * @return object
+ */
+function lastModifiedSpreadSheetDate() {
+    $sql = 'SELECT MAX(_LastModified) FROM SpreadSheet WHERE _Active=1';
+    if (defined('DATABASE_ID') && !Object::isPublicEntity('SpreadSheet')) {
+        $sql .= ' AND _DBId=' . DATABASE_ID;
     }
-	$ProductArray = array();
-    $sql  = 'SELECT DISTINCT PDT._Id as pdtId, PDT.'.$field.' as pdtBaseReference FROM Product PDT';
-    $sql .= $otherTables;
-    $padding = ' WHERE';
-    if (defined('DATABASE_ID') && !Object::isPublicEntity('Product')) {
-        $sql .= ' WHERE PDT._DBId=' . DATABASE_ID;
-        $padding = ' AND';
-    }
-    if($otherConditions != '') {
-        $sql .= $padding . $otherConditions;
-    }
-    $sql .= ' ORDER BY pdtBaseReference;';
-	$rs = ExecuteSQL($sql);
-	if (false != $rs) {
-		while (!$rs->EOF) {
-			$ProductArray[$rs->fields['pdtId']] = $rs->fields['pdtBaseReference'];
-			$rs->MoveNext();
-		}
-	}
-	return $ProductArray;
+    return Database::connection()->execute($sql);
 }
 
 // }}}
-// Request_ActorCityNameList() {{{
+
+// request_StockProductRealandVirtualList() {{{
+
+/*
+ * Utilise pour recuperer la qte en stock
+ * @param integer $ConnectedActorId
+ * @param integer $ProfileId
+ * @param boolean $withDate : si vaut true, on supprime la condition:
+ *      HAVING (NOT (virtualQuantity=0 AND (isnull(qty) OR qty=0)))
+ * @return string la requete SQL
+ */
+function request_StockProductRealandVirtualList(
+    $ConnectedActorId, $ProfileId, $withDate = false)
+{
+    $locale = I18N::getLocaleCode();
+    require_once('Objects/SellUnitType.const.php');
+    $where = 'WHERE PDT._SellUnitType=SUT._Id AND PDT._ProductType=PTY._Id AND I1._Id=PDT._Name AND I2._Id=SUT._ShortName ';
+    // XXX nécessaire ici ? je pense pas
+    if (defined('DATABASE_ID') && !Object::isPublicEntity('Product')) {
+        $where .= 'AND PDT._DBId=' . DATABASE_ID . ' ';
+    }
+	// Traitement lie au Profile connecte
+	switch ($ProfileId) {
+		case UserAccount::PROFILE_SUPPLIER_CONSIGNE:
+			$where .= 'AND LPQ._Location=LOC._Id AND LOC._Store=STO._Id AND '
+			 		. 'STO._StockOwner=' . $ConnectedActorId . ' ';
+			$addTable = ', Location LOC, Store STO ';
+			break;
+		case UserAccount::PROFILE_GESTIONNAIRE_STOCK:
+		case UserAccount::PROFILE_OPERATOR:
+			// Voient le stock dans lpq sur des sites dont son acteur est owner
+			$where .= 'AND LPQ._Location=LOC._Id AND LOC._Store=STO._Id AND
+        			STO._StorageSite=SIT._Id AND SIT._Owner=' . $ConnectedActorId . ' ';
+			$addTable = ', Location LOC, Store STO, Site SIT ';
+			break;
+		case UserAccount::PROFILE_ADMIN_VENTES:
+		case UserAccount::PROFILE_AERO_ADMIN_VENTES:
+			// Voient le stock dans lpq sur des sites dont son acteur est sitowner
+			// ou sur des stores dont son acteur est stockowner
+			$where .= 'AND LPQ._Location=LOC._Id AND LOC._Store=STO._Id AND
+        			STO._StorageSite=SIT._Id AND (SIT._Owner=' . $ConnectedActorId
+			 		. ' OR STO._StockOwner=' . $ConnectedActorId . ') ';
+			$addTable = ', Location LOC, Store STO, Site SIT ';
+			break;
+		case UserAccount::PROFILE_SUPPLIER:
+			$where .= 'AND AP._Product = PDT._Id and AP._Actor =' . $ConnectedActorId . ' ';
+			$addTable = ', ActorProduct AP ';
+			break;
+		default: // UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ACTOR
+			$addTable = '';
+	}
+	// Traitement lie aux criteres de recherche saisis
+    $baseReference = SearchTools::RequestOrSessionExist('BaseReference');
+	if ($baseReference !== false && $baseReference != '') {
+		$where .= 'AND PDT._BaseReference LIKE "'
+		      . str_replace('*', "%", $baseReference) . '" ';
+	}
+    $name = SearchTools::RequestOrSessionExist('Name');
+	if ($name !== false && $name != '') {
+		$where .= 'AND I1._StringValue_'.$locale.' LIKE "' . str_replace('*', "%", $name) . '" ';
+	}
+	if (SearchTools::RequestOrSessionExist('Activated') !== false) {
+		$where .= 'AND PDT._Activated=1 ';
+	 }
+	if (SearchTools::RequestOrSessionExist('NotActivated') !== false) {
+		$where .= 'AND PDT._Activated=0 ';
+	}
+	$owner = SearchTools::requestOrSessionExist('Owner');
+	if ($owner !== false && $owner != '##') {
+		$where .= 'AND PDT._Owner=' . $owner . ' ';
+	}
+	$where = ($where == 'WHERE ')?'':$where;
+
+	$request = 'SELECT DISTINCT PDT._BaseReference as baseReference, ';
+	$request .= 'PDT._SellUnitVirtualQuantity as virtualQuantity, ';
+	$request .= 'PDT._SellUnitMinimumStoredQuantity as minimumStoredQuantity, ';
+	$request .= 'I1._StringValue_'.$locale.' as pdtName, PDT._Id as pdtId, PDT._Category as category, ';
+	$request .= 'PDT._Activated AS Activated, PTY._Name as productType, ';
+	$request .= 'IF(SUT._Id>= ' . SELLUNITTYPE_KG .  ', I2._StringValue_'.$locale.',"") AS shortName, ';
+    $request .= 'SUM(LPQ._RealQuantity) as qty ';
+	$request .= 'FROM SellUnitType SUT, I18nString I1, I18nString I2, ProductType PTY, Product PDT LEFT JOIN LocationProductQuantities LPQ ON PDT._Id=LPQ._Product ';
+	$request .= $addTable . $where;
+	$request .= 'GROUP BY PDT._Id ';
+	if ($withDate === false) {
+        $request .= 'HAVING (NOT (virtualQuantity=0 AND (isnull(qty) OR qty=0))) ';
+	}
+	/*  $request .= 'HAVING (((Activated=0 AND (qty<>0 ';
+ $request .= 'OR virtualQuantity<>0)) OR Activated=1) AND NOT (virtualQuantity=0 AND isnull(qty))) ';*/
+	$request .= 'ORDER BY baseReference';
+
+	return $request;
+}
+
+// }}}
+// request_StockProductAtDate() {{{
+
+/*
+ * Utilise pour recuperer la qte en stock a une date donnee
+ * @param integer $ConnectedActorId
+ * @param integer $ProfileId
+ * @param boolean $withDate : si vaut true, on supprime la condition:
+ *      HAVING (NOT (virtualQuantity=0 AND (isnull(qty) OR qty=0)))
+ * @return string la requete SQL
+ */
+function request_StockProductAtDate($ConnectedActorId, $ProfileId, $addWhere = '')
+{
+    $locale = I18N::getLocaleCode();
+    require_once('Objects/SellUnitType.const.php');
+	// Traitement lie au Profile connecte
+	switch ($ProfileId) {
+		case UserAccount::PROFILE_SUPPLIER_CONSIGNE:
+			$where = 'WHERE LEM._Location=LOC._Id AND LOC._Store=STO._Id AND STO._StockOwner='
+			 		. $ConnectedActorId . ' AND ';
+			$addTable = ', Location LOC, Store STO ';
+			break;
+		case UserAccount::PROFILE_GESTIONNAIRE_STOCK:
+		case UserAccount::PROFILE_OPERATOR:
+			// Voient le stock dans lpq sur des sites dont son acteur est owner
+			$where = 'WHERE LEM._Location=LOC._Id AND LOC._Store=STO._Id AND
+        			STO._StorageSite=SIT._Id AND SIT._Owner=' . $ConnectedActorId . ' AND ';
+			$addTable = ', Location LOC, Store STO, Site SIT ';
+			break;
+		case UserAccount::PROFILE_ADMIN_VENTES:
+		case UserAccount::PROFILE_AERO_ADMIN_VENTES:
+			// Voient le stock dans lpq sur des sites dont son acteur est sitowner
+			// ou sur des stores dont son acteur est stockowner
+			$where = 'WHERE LOC._Location=LOC._Id AND LOC._Store=STO._Id AND
+        			STO._StorageSite=SIT._Id AND (SIT._Owner=' . $ConnectedActorId
+			 		. ' OR STO._StockOwner=' . $ConnectedActorId . ') AND ';
+			$addTable = ', Location LOC, Store STO, Site SIT ';
+			break;
+		case UserAccount::PROFILE_SUPPLIER:
+			$where = 'WHERE AP._Product=PDT._Id and AP._Actor=' . $ConnectedActorId . ' AND ';
+			$addTable = ', ActorProduct AP ';
+			break;
+		default: // UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ACTOR
+			$where = 'WHERE ';
+			$addTable = ' ';
+	}
+    // XXX nécessaire ici ? je pense pas
+    if (defined('DATABASE_ID') && !Object::isPublicEntity('LocationExecutedMovement')) {
+        $where .= 'LEM._DBId=' . DATABASE_ID . ' AND ';
+    }
+	// Traitement lie aux criteres de recherche saisis
+    $baseReference = SearchTools::RequestOrSessionExist('BaseReference');
+	if ($baseReference !== false && $baseReference != '') {
+		$where .= 'PDT._BaseReference LIKE "'
+		 		. str_replace('*', "%", $baseReference) . '" AND ';
+	}
+    $name = SearchTools::RequestOrSessionExist('Name');
+	if ($name !== false && $name != '') {
+		$where .= 'I1._StringValue_'.$locale.' LIKE "' . str_replace('*', "%", $name) . '" AND ';
+	}
+	if (SearchTools::RequestOrSessionExist('Activated') !== false) {
+		$where .= 'PDT._Activated=1  AND ';
+	}
+	if (SearchTools::RequestOrSessionExist('NotActivated') !== false) {
+		$where .= 'PDT._Activated=0 AND ';
+	}
+	$owner = SearchTools::requestOrSessionExist('Owner');
+	if ($owner !== false && $owner != '##') {
+		$where .= 'PDT._Owner=' . $owner . ' AND ';
+	}
+    $d = (isset($_REQUEST['Date']))?$_REQUEST['Date']:$_SESSION['Date'];
+    $date = sprintf("%d-%02d-%02d 23:59:59", $d['Y'], $d['m'], $d['d']);
+
+	$request = 'SELECT LEM._Product as pdtId, MVTT._EntrieExit as entryExit, ';
+	$request .= 'LEM._Quantity as qty, LEM._CancelledMovement as cancelledMvt, ';
+	$request .= 'IF(SUT._Id>= ' . SELLUNITTYPE_KG .  ',I2._StringValue_'.$locale.',"") AS shortName ';
+	$request .= 'FROM SellUnitType SUT, I18nString I1, I18nString I2, LocationExecutedMovement LEM, ExecutedMovement EXM, ';
+	$request .= 'MovementType MVTT, Product PDT ' . $addTable;
+	$request .= $where . $addWhere;
+	$request .= 'I1._Id=PDT._Name AND I2._Id=SUT._ShortName AND PDT._SellUnitType=SUT._Id AND ';
+	$request .= 'LEM._Product=PDT._Id AND LEM._ExecutedMovement=EXM._Id  AND EXM._Type=MVTT._Id ';
+	$request .= ' AND LEM._Date > "' . $date . '" ';
+	$request .= 'ORDER BY PDT._BaseReference;';
+	return $request;
+}
+
+// }}}
+// request_StockACMQuantity() {{{
+
+function request_stockACMQuantity($pdtID, $entries=true, $withDate=false) {
+    $states = array(
+        ActivatedMovement::CREE,
+        ActivatedMovement::ACM_EN_COURS,
+        ActivatedMovement::ACM_EXECUTE_PARTIELLEMENT,
+        ActivatedMovement::BLOQUE
+    );
+    $types = $entries ? array(ENTREE_NORMALE, ENTREE_INTERNE) :
+        array(SORTIE_NORMALE, SORTIE_INTERNE);
+
+    $sql = 'SELECT SUM(ACM._Quantity) as quantity FROM ActivatedMovement ACM '
+        . 'WHERE ACM._State IN ('.implode(',', $states).') AND '
+        . 'ACM._Type IN ('.implode(',', $types).') AND ACM._Product='.$pdtID;
+    if ($withDate) {
+	    $d = SearchTools::requestOrSessionExist('Date');
+	    if ($d && !empty($d)) {
+            $d = sprintf("%d-%02d-%02d 23:59:59", $d['Y'], $d['m'], $d['d']);
+            $sql .= ' AND ACM._StartDate <= "' . $d . '";';
+	    }
+    }
+    return executeSQL($sql);
+}
+
+// }}}
+// request_StockAccountingQty() {{{
+
+/*
+ * Utilise pour recuperer la qte en stock, pour la compta matiere
+ * @return string la requete SQL
+ */
+function request_StockAccountingQty()
+{
+    $select = $from = $orderBy = $groupBy = '';
+    switch($_REQUEST['unitType']){
+        case 1: // UV
+            $qtyType = 'LPQ._RealQuantity';
+            break;
+        case 2: // KG
+            $qtyType = 'LPQ._RealQuantity * PDT._SellUnitWeight';
+            break;
+/*        case 3: // M3
+            $qtyType = 'LPQ._RealQuantity * PDT._Volume';
+            break;*/
+        default: // L // Completement contradictoire avec le case precedent....
+            $qtyType = 'LPQ._RealQuantity * PDT._Volume';
+    } // switch
+
+    $sqlParts = getSelectFromWhere();
+    $select .= $sqlParts['select'];
+    $from .= $sqlParts['from'];
+    $where = $sqlParts['where'];
+    $groupBy .= $sqlParts['groupBy'];
+    $orderBy .= $sqlParts['orderBy'];
+
+	$request = 'SELECT STO._Name as storeName ' . $select
+	         . ', SUM(' . $qtyType . ') as qty '
+             . 'FROM LocationProductQuantities LPQ, Location LOC, Store STO, Product PDT '
+             . $from
+             . 'WHERE LPQ._Location=LOC._Id AND LOC._Store=STO._Id AND '
+             . 'LOC._Store IN (' . implode(", ", $_REQUEST['Store']) . ') '
+             . 'AND LPQ._Product=PDT._Id AND PDT._ProductType='
+             . $_REQUEST['ProductType'] . ' AND PDT._Owner='
+             . $_REQUEST['ProductOwner'] . ' ' . $where
+             . 'GROUP BY STO._Id' . $groupBy . ' '
+             . 'ORDER BY STO._Name' . $orderBy . ';';
+	return $request;
+}
+
+// }}}
+// request_StockAccountingLEM() {{{
+
+/*
+ * Utilise pour recuperer la qte en stock a une date donnee, pour la compta matiere
+ *
+ * @param string $startDate : debut de creneau
+ * @param string $endDate : fin de creneau : utile seulement pour les E/S
+ * @return string la requete SQL
+ */
+function request_StockAccountingLEM($startDate, $endDate='')
+{
+    $select = $from = $orderBy = $groupBy = '';
+    $startDate .= ($endDate == '')?' 23:59:59':' 00:00:00';
+
+    switch($_REQUEST['unitType']){
+        case 1: // UV
+            $qtyType = 'LEM._Quantity';
+            break;
+        case 2: // KG
+            $qtyType = 'LEM._Quantity * PDT._SellUnitWeight';
+            break;
+/*        case 3: // M3
+            $qtyType = 'LEM._Quantity * PDT._Volume';
+            break;*/
+        default: // L // Completement contradictoire avec le case precedent....
+            $qtyType = 'LEM._Quantity * PDT._Volume';
+    } // switch
+
+    $sqlParts = getSelectFromWhere('LEM');
+    $select .= $sqlParts['select'];
+    $from .= $sqlParts['from'];
+    $where = $sqlParts['where'];
+    $groupBy .= $sqlParts['groupBy'];
+    $orderBy .= $sqlParts['orderBy'];
+
+	$request = 'SELECT STO._Name as storeName, MVTT._EntrieExit as entryExit, ';
+	$request .= 'EXM._Type as mvtType, ';
+	$request .= $qtyType . ' AS qty, LEM._CancelledMovement as cancelledMvt ';
+    $request .= $select;
+	$request .= 'FROM LocationExecutedMovement LEM, ExecutedMovement EXM ';
+    $request .= ', Product PDT' . $from;
+	$request .= ', MovementType MVTT, Location LOC, Store STO ';
+	$request .= 'WHERE LEM._Location=LOC._Id AND LOC._Store=STO._Id AND ';
+    $request .= 'LOC._Store IN (' . implode(", ", $_REQUEST['Store']) . ') ';
+    $request .= 'AND LEM._Product=PDT._Id AND PDT._ProductType=';
+    $request .= $_REQUEST['ProductType'] . ' AND PDT._Owner=';
+    $request .= $_REQUEST['ProductOwner'] . ' '. $where;
+	$request .= 'AND LEM._ExecutedMovement=EXM._Id  AND EXM._Type=MVTT._Id ';
+	// Pour calcul Qtes a la fin de periode
+    if ($endDate == '') {
+        $request .= ' AND LEM._Date > "' . $startDate . '" ';
+	}
+	// Pour calcul des E/S pendant la periode
+    else {
+        $endDate .= ' 23:59:59';
+        $request .= ' AND LEM._Date < "' . $endDate . '" ';
+        $request .= ' AND LEM._Date >= "' . $startDate . '" ';
+        // LEM pas annulateur de type annulation et
+        // pas mvt non prevu annulé
+        $request .= ' AND (LEM._Cancelled != 1 AND NOT(LEM._Cancelled = -1 AND MVTT._Foreseeable != 1)) ';
+        $request .= ' AND EXM._Type NOT IN (' . SORTIE_DEPLACEMT . ', ' . ENTREE_DEPLACEMT . ') ';
+	}
+    $request .= 'ORDER BY STO._Name' . $orderBy . ';';
+	return $request;
+}
+
+// }}}
+// request_WorkOrderList() {{{
+
+function request_WorkOrderList($ConnectedActorId)
+{
+    // inutile de tester le DATABASE_ID puisqu'on passe un ID
+	return 'SELECT DISTINCT WKO._Id as wkoId FROM WorkOrder WKO,
+            ActivatedChainOperation ACO, ActivatedChain ACH,
+            CommandItem ACI, Command ABC, UserAccount UAC
+            WHERE WKO._Id = ACO._OwnerWorkerOrder AND ACO._ActivatedChain = ACH._Id
+            AND ACH._Id = ACI._ActivatedChain AND ACI._Command = ABC._Id
+            AND ABC._Customer = ' . $ConnectedActorId . '
+            ORDER BY wkoId';
+}
+
+// }}}
+// request_ActivatedChainList() {{{
+
+function request_ActivatedChainList($ConnectedActorId, $ProfileId)
+{
+    // inutile de tester le DATABASE_ID puisqu'on passe un ID
+	$addForActor1 = ($ProfileId == UserAccount::PROFILE_ACTOR)?'ActivatedChainOperation ACO, ':'';
+	$addForActor2 = ($ProfileId == UserAccount::PROFILE_ACTOR)?'AND ACH._Id = ACO._ActivatedChain ':'';
+	$addForActor3 = ($ProfileId == UserAccount::PROFILE_ACTOR)?' OR (ACO._Actor = ' . $ConnectedActorId . ')':'';
+	return "SELECT DISTINCT ACH._Id as FROM ActivatedChain ACH,
+            $addForActor1 CommandItem ACI, Command ABC
+            WHERE ACH._Id = ACI._ActivatedChain
+                AND ACI._Command = ABC._Id $addForActor2
+                AND (ACH._Owner = $ConnectedActorId OR
+                        (ABC._Customer = $ConnectedActorId OR
+                         ABC._Expeditor = $ConnectedActorId OR
+                         ABC._Destinator = $ConnectedActorId)
+                     $addForActor3)
+            ORDER BY ACH._Id";
+}
+
+// }}}
+// request_LocationExecutedMovementList() {{{
+
+function request_LocationExecutedMovementList($ConnectedActorId)
+{
+    // inutile de tester le DATABASE_ID puisqu'on passe un ID
+	return 'SELECT DISTINCT LEM._Id as lemId
+         FROM LocationExecutedMovement LEM, ExecutedMovement EXM,
+         ActivatedMovement ACM, CommandItem ACI, Command ABC,
+         ActivatedChainOperation ACO, ActivatedChain ACH
+         WHERE LEM._ExecutedMovement = EXM._Id
+             AND EXM._ActivatedMovement = ACM._Id
+             AND ACM._ProductCommandItem = ACI._Id
+             AND ACI._Command = ABC._Id
+             AND ACI._ActivatedChain = ACH._Id
+             AND (ABC._Expeditor = ' . $ConnectedActorId . '
+                 OR ABC._Destinator = ' . $ConnectedActorId . '
+                 OR ABC._Customer = ' . $ConnectedActorId . '
+                 OR ACH._Owner = ' . $ConnectedActorId . ')
+         ORDER BY lemId;';
+}
+
+// }}}
+// request_jobsWhitchHasActors() {{{
+
+// Retourne les ids des Jobs lies a au moins un Actor
+function request_jobsWhitchHasActors() {
+	return executeSQL('SELECT distinct(_ToJob) as job FROM actJob;');
+}
+
+// }}}
+// request_ProductListForRPCClient() {{{
+
+function request_ProductListForRPCClient()
+{
+    $locale = I18N::getLocaleCode();
+    $sql  = 'SELECT P._Id, P._BaseReference, P._TracingMode, I._StringValue_'.$locale.' AS _Name '
+          . 'FROM Product P, I18nString I WHERE _Activated=1 AND I._Id=P._Name';
+    if (defined('DATABASE_ID') && !Object::isPublicEntity('Product')) {
+        $sql .= ' AND P._DBId=' . DATABASE_ID;
+    }
+    $sql .= ' ORDER BY P._BaseReference ASC';
+	return ExecuteSQL($sql);
+}
+
+// }}}
+// request_ConcreteProductListForRPCClient() {{{
+
+function request_ConcreteProductListForRPCClient($pdtID)
+{
+    // inutile de tester le DATABASE_ID puisqu'on passe un ID
+    return ExecuteSQL('SELECT _SerialNumber FROM ConcreteProduct
+        WHERE _Product=' . $pdtID . ' ORDER BY _SerialNumber ASC');
+}
+
+// }}}
+// request_ActorListForRPCClient() {{{
+
+function request_ActorListForRPCClient()
+{
+    $request = 'SELECT t0._Id as actId, t0._Name as actName,
+	 t1._Name as siteName, t1._Phone as sitePhone,
+     t1._StreetType as adrStreetType, t1._StreetNumber as adrStreetNumber,
+     t1._StreetName as adrStreetName, t1._StreetAddons as adrStreetAddons,
+     t1._Cedex as adrCedex, t4._Code as zipCode, t5._Name as ctnName,
+     t6._Name as ctrName, IFNULL((SELECT t7._Name
+        FROM Contact t7 WHERE t7._Id=(SELECT MIN(t8._ToContact)
+            FROM sitContact t8 WHERE t8._FromSite=t1._Id
+            GROUP BY t8._FromSite)), "") as contactName
+     FROM Actor t0, Site t1,
+          CountryCity t3, Zip t4, CityName t5, Country t6
+     WHERE
+         t0._Active = 1
+         AND t0._Generic = 0
+         AND t0._Id = t1._Owner
+         AND t3._Id = t1._CountryCity
+         AND t4._Id = t3._Zip
+         AND t5._Id = t3._CityName
+         AND t6._Id = t3._Country';
+    if (defined('DATABASE_ID') && !Object::isPublicEntity('Actor')) {
+        $request .= ' AND t0._DBId = ' . DATABASE_ID;
+    }
+    $request .= ' ORDER BY actName ASC';
+	return ExecuteSQL($request);
+}
+
+// }}}
+// request_StorageSiteListForRPCClient() {{{
+
+function request_StorageSiteListForRPCClient($ownerId)
+{
+    // inutile de tester le DATABASE_ID puisqu'on passe un ID
+	$request = "SELECT SIT._Id as sitId, SIT._Name as sitName, STO._Id as stoId,
+     STO._Name as stoName, LOC._Id as locId, LOC._Name as locName
+     FROM Site SIT, Store STO, Location LOC
+     WHERE
+         SIT._ClassName='StorageSite' AND SIT._Owner=%s
+             AND STO._StorageSite = SIT._Id AND LOC._Store = STO._Id
+     ORDER BY locName ASC";
+	return ExecuteSQL(sprintf($request, $ownerId));
+}
+
+// }}}
+// request_CommandIsCompatibleWithUserForExecution() {{{
+
+function request_CommandIsCompatibleWithUserForExecution($activatedChainID, $actorID, $operationID)
+{
+    // inutile de tester le DATABASE_ID puisqu'on passe un ID
+	$request = "SELECT DISTINCT count(*) FROM ActivatedChainOperation T0
+     WHERE T0._ActivatedChain = '%s' AND T0._Actor = '%s'
+     AND T0._Operation = '%s'";
+	$request = sprintf($request, $activatedChainID, $actorID, $operationID);
+	return ExecuteSQL($request);
+}
+
+// }}}
+// request_ProductByLocationList() {{{
+
+function request_ProductByLocationList($StoreId)
+{
+    // inutile de tester le DATABASE_ID puisqu'on passe un ID
+    $addWhere = $addFrom = $addJoin = '';
+    $locationName = SearchTools::requestOrSessionExist('Location');
+	if ($locationName !== false && $locationName != '') {
+        $addWhere = ' AND LOC._Name LIKE "'
+                . str_replace('*', "%", $locationName) . '" ';
+    }
+    $baseReference = SearchTools::requestOrSessionExist('BaseReference');
+	if ($baseReference !== false && $baseReference != '') {
+        $addFrom = ', Product PDT ';
+        $addJoin = ' AND LPQ._Product=PDT._Id ';
+        $addWhere .= ' AND PDT._BaseReference LIKE "'
+                . str_replace('*', "%", $baseReference) . '" ';
+    }
+    $pdtName = SearchTools::requestOrSessionExist('PdtName');
+	if ($pdtName !== false && $pdtName != '') {
+        $locale = I18N::getLocaleCode();
+        $addFrom = ', Product PDT, I18nString I1 ';
+        $addJoin = ' AND LPQ._Product=PDT._Id AND I1._Id=PDT._Name ';
+        $addWhere .= ' AND I1._StringValue_'.$locale.' LIKE "'
+            . str_replace('*', "%", $pdtName) . '" ';
+    }
+    $ownerId = SearchTools::requestOrSessionExist('Owner');
+	if ($ownerId !== false && $ownerId != '##') {
+        $addFrom = ', Product PDT ';
+        $addJoin = ' AND LPQ._Product=PDT._Id ';
+        $addWhere .= ' AND PDT._Owner=' . $ownerId;
+    }
+	$SQLRequest = 'SELECT LPQ._Location as lpqLocation, LOC._Name as locName,
+        SUM( LPQ._RealQuantity ) AS Qty
+        FROM Location LOC, LocationProductQuantities LPQ' . $addFrom .  '
+        WHERE LPQ._Location = LOC._Id
+        AND LOC._Store = ' . $StoreId . $addJoin . $addWhere . '
+        GROUP BY LPQ._Location
+        HAVING SUM( LPQ._RealQuantity ) > 0
+        ORDER BY LOC._Name';
+	return $SQLRequest;
+}
+
+// }}}
+// request_LocationByProductList() {{{
+
+function request_LocationByProductList($StoreId)
+{
+    // inutile de tester le DATABASE_ID puisqu'on passe un ID
+    $addWhere = '';
+    $locationName = SearchTools::requestOrSessionExist('Location');
+	if ($locationName !== false && $locationName != '') {
+        $addWhere = ' AND LOC._Name LIKE "'
+                . str_replace('*', "%", $locationName) . '" ';
+    }
+    $baseReference = SearchTools::requestOrSessionExist('BaseReference');
+	if ($baseReference !== false && $baseReference != '') {
+        $addWhere .= ' AND PDT._BaseReference LIKE "'
+                . str_replace('*', "%", $baseReference) . '" ';
+    }
+    $pdtName = SearchTools::requestOrSessionExist('PdtName');
+	if ($pdtName !== false && $pdtName != '') {
+        $locale = I18N::getLocaleCode();
+        $addWhere .= ' AND I1._Id=PDT._Name AND I1._StringValue_'.$locale.' LIKE "'
+                . str_replace('*', "%", $pdtName) . '" ';
+    }
+
+    $ownerId = SearchTools::requestOrSessionExist('Owner');
+	if ($ownerId !== false && $ownerId != '##') {
+        $addWhere .= ' AND PDT._Owner=' . $ownerId;
+    }
+	$SQLRequest = 'SELECT DISTINCT PDT._BaseReference as pdtBaseReference,
+             LPQ._Product as lpqProduct
+             FROM LocationProductQuantities LPQ, Product PDT, I18nString I1, Location LOC
+             WHERE LPQ._Product = PDT._Id AND LPQ._Location = LOC._Id
+             AND LOC._Store = ' . $StoreId . $addWhere
+             . ' ORDER BY PDT._Basereference ';
+	return $SQLRequest;
+}
+
+// }}}
+// request_GridColumnProductByLocationList() {{{
+
+function request_GridColumnProductByLocationList($param)
+{
+    $locale = I18N::getLocaleCode();
+    // inutile de tester le DATABASE_ID puisqu'on passe un ID
+    return "SELECT PDT._BaseReference as pdtBaseReference,
+         LPQ._RealQuantity as lpqRealQuantity, I1._StringValue_".$locale." as unity,
+         PDT._SellUnitType as sutId
+         FROM Product PDT, LocationProductQuantities LPQ, SellUnitType SUT, I18nString I1
+         WHERE LPQ._Product = PDT._Id AND PDT._SellUnitType=SUT._Id AND I1._Id=SUT._ShortName
+         AND LPQ._Location = $param";
+}
+
+// }}}
+// request_GridColumnLocationByProductList() {{{
+
+function request_GridColumnLocationByProductList($param, $param2)
+{
+    // inutile de tester le DATABASE_ID puisqu'on passe un ID
+	return "SELECT LOC._Name as locName, LPQ._RealQuantity as lpqRealQuantity
+         FROM Location LOC, LocationProductQuantities LPQ WHERE
+         LPQ._Location = LOC._Id AND LPQ._Product = $param AND LOC._Store = $param2";
+}
+
+// }}}
+// request_AlertPaymentDate() {{{
+
+function request_AlertPaymentDate($ActorId)
+{
+    // inutile de tester le DATABASE_ID puisqu'on passe un ID
+	return "SELECT CMD._CommandNo as abcCommandNo, CMD._Id as abcId,
+     ADC._DocumentNo as adcDocumentNo, ADC._PaymentDate as adcPaymentDate,
+     CMD._State as abcState
+     FROM Command CMD, AbstractDocument ADC
+     WHERE ADC._Command = CMD._Id AND ADC._ClassName = 'Invoice' AND
+     ADC._PaymentDate < CURRENT_DATE AND ADC._PaymentDate != 0 AND
+     CMD._Destinator = $ActorId";
+}
+
+// }}}
+// request_Get_Interceptor() {{{
+
+require_once('Objects/Property.inc.php');
+
+function request_Get_Interceptor($propertyName, $product)
+{
+    // inutile de tester le DATABASE_ID puisqu'on passe un ID
+	$SQLRequest = "SELECT PPT._Type, PPV._StringValue, PPV._IntValue, " . "PPV._FloatValue, PPV._DateValue ";
+	$SQLRequest .= "FROM PropertyValue PPV, Property PPT WHERE PPT._Name = '%s' " . "AND PPV._Product = %s ";
+	$SQLRequest .= "AND PPV._Property = PPT._Id";
+	$SQLRequest = sprintf($SQLRequest, $propertyName, $product->getId());
+	$result = executeSQL($SQLRequest);
+
+	if (is_array($result->fields) && array_key_exists("_Type", $result->fields)) {
+		$type = "_" . getPropertyTypeColumn($result->fields["_Type"]);
+		if ($result->fields["_Type"] == Property::OBJECT_TYPE) {
+			$ptype = $product->getProductType();
+
+			if ($ptype instanceof ProductType) {
+				$properties = array_change_key_case($ptype->getPropertyArray());
+				if (array_key_exists($propertyName, $properties)) {
+					$prop = $properties[$propertyName];
+					return $prop->getValue($product->getId());
+				}
+			}
+		}
+		if (array_key_exists($type, $result->fields)) {
+			return empty($result->fields[$type])?"N/A":$result->fields[$type];
+		}
+	}
+	return "N/A";
+}
+
+// }}}
+// request_DynamicProperties_Search() {{{
 
 /**
  *
  * @access public
  * @return void
  */
-function Request_ActorCityNameList()
+function request_DynamicProperties_Search($Attribute, $Type, $Operator, $Value)
+{
+	$SQL  = "SELECT P2._Product FROM Property P1, PropertyValue P2 ";
+	$SQL .= "WHERE P1._Name='%s' AND P1._Id=P2._Property AND P2._%s%s'%s'";
+    if (defined('DATABASE_ID') && !Object::isPublicEntity('Property')) {
+        $SQL .= ' AND P1._DBId=' . DATABASE_ID;
+    }
+	$SQL = sprintf($SQL, $Attribute, $Type, $Operator, $Value);
+	return ExecuteSQL($SQL);
+}
+
+// }}}
+// request_ActorCityNameList() {{{
+
+/**
+ *
+ * @access public
+ * @return void
+ */
+function request_ActorCityNameList()
 {
 	$sql = 'SELECT ACT._Id as actId, CTN._Name as ctnName
             FROM CityName CTN, CountryCity CTC, Site SIT, Actor ACT
@@ -1372,7 +1449,7 @@ function Request_ActorCityNameList()
 }
 
 // }}}
-// Request_ActorCommandsBySupplier() {{{
+// request_ActorCommandsBySupplier() {{{
 
 /*
 * Utilisé par les fichiers BoardXOXOXO.php
@@ -1385,7 +1462,7 @@ function Request_ActorCityNameList()
 * @param $commandType le type de la commande
 * @return array
 **/
-function Request_ActorCommandsBySupplier($expeditorId, $supplierId, $dateStart, $dateEnd, $commandType, $currency=false)
+function request_ActorCommandsBySupplier($expeditorId, $supplierId, $dateStart, $dateEnd, $commandType, $currency=false)
 {
     $takeSupplier = array(Command::TYPE_TRANSPORT, Command::TYPE_COURSE, Command::TYPE_PRESTATION);
     if (in_array($commandType, $takeSupplier)) {
@@ -1421,12 +1498,12 @@ function Request_ActorCommandsBySupplier($expeditorId, $supplierId, $dateStart, 
 }
 
 // }}}
-// Request_CustomersWithCommand() {{{
+// request_CustomersWithCommand() {{{
 
 /*
  * retourne les ids des clients ayant passe au moins une commande
  */
-function Request_CustomersWithCommand($actorId, $start_date, $end_date, $commandType, $currency)
+function request_CustomersWithCommand($actorId, $start_date, $end_date, $commandType, $currency)
 {
 	$takeSupplier = array(Command::TYPE_TRANSPORT, Command::TYPE_COURSE, Command::TYPE_PRESTATION);
     $cliIdsArray = array();
@@ -1457,12 +1534,12 @@ function Request_CustomersWithCommand($actorId, $start_date, $end_date, $command
 }
 
 // }}}
-// Request_CommercialsWithCommand() {{{
+// request_CommercialsWithCommand() {{{
 
 /*
  * Retourne les Ids des commerciaux ayant au moins 1 commande
  */
-function Request_CommercialsWithCommand($actorId, $start_date, $end_date, $commandType, $currencyId)
+function request_CommercialsWithCommand($actorId, $start_date, $end_date, $commandType, $currencyId)
 {
 	$cliIdsArray = array();
 	$takeSupplier = array(Command::TYPE_TRANSPORT, Command::TYPE_COURSE, Command::TYPE_PRESTATION);
@@ -1493,12 +1570,12 @@ function Request_CommercialsWithCommand($actorId, $start_date, $end_date, $comma
 }
 
 // }}}
-// Request_SuppliersWithCommand() {{{
+// request_SuppliersWithCommand() {{{
 
 /*
  * Retourne les Ids des supppliers dont au moins 1 prod a ete commandé
  */
-function Request_SuppliersWithCommand ($actorId, $start_date, $end_date, $commandType, $currency)
+function request_SuppliersWithCommand ($actorId, $start_date, $end_date, $commandType, $currency)
 {
     $takeSupplier = array(Command::TYPE_TRANSPORT, Command::TYPE_COURSE, Command::TYPE_PRESTATION);
 	$supIdsArray = array();
@@ -1535,9 +1612,9 @@ function Request_SuppliersWithCommand ($actorId, $start_date, $end_date, $comman
 }
 
 // }}}
-// Request_GetSuppliersWithOrders() {{{
+// request_GetSuppliersWithOrders() {{{
 
-function Request_GetSuppliersWithOrders($actorId, $dateStart, $DateEnd, $commandType, $currency)
+function request_GetSuppliersWithOrders($actorId, $dateStart, $DateEnd, $commandType, $currency)
 {
     $takeSupplier = array(Command::TYPE_TRANSPORT, Command::TYPE_COURSE, Command::TYPE_PRESTATION);
 	$supIdsArray = array();
@@ -1574,9 +1651,9 @@ function Request_GetSuppliersWithOrders($actorId, $dateStart, $DateEnd, $command
 }
 
 // }}}
-// Request_CategoryWithCommands() {{{
+// request_CategoryWithCommands() {{{
 
-function Request_CategoryWithCommands($actorId, $dateStart, $DateEnd, $commandType, $currency)
+function request_CategoryWithCommands($actorId, $dateStart, $DateEnd, $commandType, $currency)
 {
     $takeSupplier = array(Command::TYPE_TRANSPORT, Command::TYPE_COURSE, Command::TYPE_PRESTATION);
 	$supIdsArray = array();
@@ -1612,9 +1689,9 @@ function Request_CategoryWithCommands($actorId, $dateStart, $DateEnd, $commandTy
 }
 
 // }}}
-// Request_ProductWithCommand() {{{
+// request_ProductWithCommand() {{{
 
-function Request_ProductWithCommand ($actorId, $dateStart, $DateEnd, $commandType, $currency)
+function request_ProductWithCommand ($actorId, $dateStart, $DateEnd, $commandType, $currency)
 {
     $takeSupplier = array(Command::TYPE_TRANSPORT, Command::TYPE_COURSE, Command::TYPE_PRESTATION);
 	$supIdsArray = array();
@@ -1837,47 +1914,6 @@ function request_ProductHandingByCategory($pdtID, $catID)
 }
 
 // }}}
-// getQuantities() {{{
-
-/*
-* Utilise pour corriger les quantites virtuelles des Product
-* en fonction de leur quantite en stock est des Mvts prevus
-**/
-function getQuantities()
-{
-	$sql = 'SELECT PDT._Id as pdtId, ACI._Quantity as aciQty,
-         EXM._RealQuantity as deliveredQty, M._Id as mvtId
-         FROM CommandItem ACI, Product PDT, MovementType M,
-         ActivatedMovement ACM
-         LEFT JOIN ExecutedMovement EXM ON ACM._Id=EXM._ActivatedMovement
-         WHERE ACI._Product=PDT._Id
-         AND ACM._ProductCommandItem=ACI._Id
-         AND ACM._Type = M._Id
-         AND ACM._State <> ' . ActivatedMovement::ACM_EXECUTE_TOTALEMENT;
-    if (defined('DATABASE_ID') && !Object::isPublicEntity('Product')) {
-        $sql .= ' AND PDT._DBId=' . DATABASE_ID;
-    }
-    $sql .= ' ORDER BY PDT._BaseReference;';
-	return ExecuteSQL($sql);
-}
-
-// }}}
-// lastModifiedSpreadSheetDate() {{{
-
-/**
- * Retourne la date de modification la plus récente de la table SpreadSheet
- *
- * @return object
- */
-function lastModifiedSpreadSheetDate() {
-    $sql = 'SELECT MAX(_LastModified) FROM SpreadSheet WHERE _Active=1';
-    if (defined('DATABASE_ID') && !Object::isPublicEntity('SpreadSheet')) {
-        $sql .= ' AND _DBId=' . DATABASE_ID;
-    }
-    return Database::connection()->execute($sql);
-}
-
-// }}}
 // request_groupableBoxCount() {{{
 
 /**
@@ -1931,7 +1967,7 @@ function request_commandForCashBalance($cmdType, $currency) {
     $request = 'SELECT DISTINCT(CMD._Id) as cmdId, CMD._Type as cmdType, 
         CMD._TotalPriceTTC as cmdTotalTTC,
         CMD._State as cmdState,
-        SC._TermsOfPayment as scTermsOfPayment,
+        CMD._TermsOfPayment as cmdTermsOfPayment,
         IF((select count(_Id) from AbstractDocument where _ClassName="Invoice" and _Command=CMD._Id),
             (select sum(_TotalPriceTTC) - sum(_ToPay) from AbstractDocument where _ClassName="Invoice" and _Command=CMD._Id),
             0) as cmdPayed';
@@ -1954,41 +1990,6 @@ function request_commandForCashBalance($cmdType, $currency) {
     $request .= ';';
 
     return Database::connection()->execute($request);
-}
-
-// }}}
-// getProductArrayForFFPSelect() {{{
-
-/**
- * Pour construire le select des CountryCity dans ZoneAddEdit.php
- * @access public
- * @return void
- */
-function request_CountryCityForSelect($country=0, $state=0, $department=0)
-{
-    $return = array();
-    $whereAddon = $fromAddon = '';
-    if ($country != 0) {
-        $whereAddon .= ' AND CTC._Country = ' . $country;
-    }
-    if ($state != 0) {
-        $fromAddon .= ', Department DEP';
-        $whereAddon .= ' AND CTN._Department = DEP._Id AND DEP._State = ' . $state;
-    }
-    if ($department != 0) {
-        $whereAddon .= ' AND CTN._Department = ' . $department;
-    }
-    $sql = 'SELECT CTC._Id AS Id, CONCAT(CTN._Name, " (", Zip._Code, ")") as Name
-     FROM CityName CTN, CountryCity CTC, Zip ' . $fromAddon . '
-     WHERE (CTN._Id = CTC._CityName) AND (CTC._Zip = Zip._Id)
-     AND CTC._Zone = 0 ' . $whereAddon . '
-     ORDER BY Name;';
-     $rs = executeSQL($sql);
-     while (!$rs->EOF) {
-		$return[] = array($rs->fields['Id'], utf8_encode($rs->fields['Name']));
-		$rs->MoveNext();
-	}
-    return $return;
 }
 
 // }}}
@@ -2142,7 +2143,6 @@ function request_prestation_findACO($opeIds, $begin, $end, $actorId) {
 }
 
 // }}}
-
 // request_prestation_findOL() {{{
 
 /**
@@ -2236,7 +2236,6 @@ function request_getProductPrestationCost($prestationId, $productId) {
 }
 
 // }}}
-
 // request_getLastDayOLs() {{{
 
 /**
@@ -2300,4 +2299,104 @@ function request_TVAIsDeletable($tvaID)
 }
 
 // }}}
+
+// request_CommandsWithInstalments() {{{
+
+function request_CommandsWithInstalments($customerName, $supplierName, $commandNo, $dateStart, $dateEnd)
+{
+
+    $sql = "SELECT
+    (Command._TotalPriceTTC * TermsOfPaymentItem._PercentOfTotal) / 100  as Instalment, 
+    Command._CommandNo as CommandNo,
+    Command._TotalPriceTTC as CommandTotal,
+    TermsOfPaymentItem._PercentOfTotal as PercentTotal,
+    Command._Currency as Currency,
+    SupplierCustomer._Id as SupplierCustomerId,
+    Command._Id as CommandId,
+    Command._Id as _Command,
+    ADDDATE(Command._CommandDate, TermsOfPaymentItem._PaymentDelay) as InstalmentDate 
+FROM Command, SupplierCustomer, TermsOfPayment, TermsOfPaymentItem, Actor ActorSupplier, Actor ActorCustomer
+WHERE 
+    Command._SupplierCustomer = SupplierCustomer._Id
+    AND Command._TermsOfPayment = TermsOfPayment._Id
+    AND TermsOfPaymentItem._TermsOfPayment = TermsOfPayment._Id
+    AND ( TermsOfPaymentItem._PaymentEvent=3
+        OR TermsOfPaymentItem._PaymentEvent=4
+        OR TermsOfPaymentItem._PaymentEvent=5
+    )
+    AND ActorSupplier._Id=SupplierCustomer._Supplier
+    AND ActorCustomer._Id=SupplierCustomer._Customer";
+
+    if($customerName != "" ) 
+        $sql .= "
+    AND ActorCustomer._Name LIKE ('".str_replace('*', '%', $customerName)."') ";
+    
+    if($supplierName != "" ) 
+        $sql .= "
+    AND ActorSupplier._Name LIKE ('".str_replace('*', '%', $supplierName)."') ";
+
+    if($commandNo != "" ) 
+        $sql .= "
+    AND Command._CommandNo LIKE ('".str_replace('*', '%', $commandNo)."') ";
+
+	$rs = ExecuteSQL($sql);
+	return $rs ;
+}
+
+// }}}
+// request_instalmentForCashBalance() {{{
+
+/**
+ * Récupère les commande à prendre en compte pour
+ * la trésorerie prévisionnelle
+ *
+ * @return Object
+ */
+function request_instalmentForCashBalance($cmdType, $currency) {
+    $request = '
+SELECT DISTINCT(Instalment._Id) as insId, 
+    Instalment._Instalment as total,
+    Instalment._InstalmentDate as date,
+    Instalment._DocumentNo as DocumentNo,
+    CMD._CommandNo as CommandNo
+FROM Instalment, Command CMD
+WHERE Instalment._Cancelled = FALSE
+    AND CMD._Type = ' . $cmdType . ' 
+    AND Instalment._Command=CMD._Id';
+
+    if($currency) {
+        $request .= ' AND CMD._Currency = ' . $currency ;
+    }
+    $request .= ';';
+    return Database::connection()->execute($request);
+}
+
+// }}}
+// request_checkCommandInstalments() {{{
+
+function request_checkCommandInstalments($commandId)
+{
+
+    $sql = "SELECT
+    (Command._TotalPriceTTC * TermsOfPaymentItem._PercentOfTotal) / 100  as Instalment, 
+    ADDDATE(Command._CommandDate, TermsOfPaymentItem._PaymentDelay) as InstalmentDate 
+FROM Command, TermsOfPayment, TermsOfPaymentItem, SupplierCustomer
+WHERE 
+    Command._SupplierCustomer = SupplierCustomer._Id
+    AND SupplierCustomer._TermsOfPayment = TermsOfPayment._Id
+    AND TermsOfPaymentItem._TermsOfPayment = TermsOfPayment._Id
+    AND ( TermsOfPaymentItem._PaymentEvent=3
+        OR TermsOfPaymentItem._PaymentEvent=4
+        OR TermsOfPaymentItem._PaymentEvent=5
+    )
+    AND Command._Id=".$commandId ;
+
+    $rs = ExecuteSQL($sql);
+    if($rs != FALSE ) return $rs->fields['Instalment'] ;
+    return FALSE ;
+}
+
+// }}}
+
+
 ?>

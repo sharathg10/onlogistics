@@ -64,6 +64,8 @@ $form->addElement('text', 'Destinator', _('Customer'), array(),
 		array('Path' => 'Command.Destinator.Name'));
 $form->addElement('text', 'Expeditor', _('Supplier'), array(),
 		array('Path' => 'Command.Expeditor.Name'));
+$form->addElement('text', 'Factor', _('Factor'), array(),
+		array('Path' => 'Command.SupplierCustomer.Factor'));
 // $form->AddBlankElement();  // pour la mise en page
 $form->addElement('checkbox', 'DateOrder1', _('Filter by date'),
 		array('', 'onclick="$(\\\'Date1\\\').'

@@ -138,7 +138,7 @@ function getPrestationErrorURL(){
 	// Les chps de saisie:
     $fields = array('cmdNumber', 'invoiceDocumentNo', 'SupplierSite',
          'CustomerSite', 'Commercial', 'Port', 'Emballage', 'Assurance',
-         'Installment', 'GlobalHanding', 'cmdComment');
+         'Instalment', 'InstalmentModality', 'GlobalHanding', 'cmdComment');
     $stringToPass = UrlTools::buildURLFromRequest($fields);
     return 'PrestationInvoiceAddEdit.php?' . $stringToPass;
 }

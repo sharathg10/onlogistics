@@ -97,8 +97,8 @@ function DisplayRemExcep() {
 
 function RecalculateUpdateIncur() {
 	UpdateIncur = fw.i18n.extractNumber(document.forms[0].elements["HiddenUpdateIncur"]);
-	Installment = fw.i18n.extractNumber(document.forms[0].elements["Installment"]);
-	UpdateIncur = subs(UpdateIncur, Installment);
+	Instalment = fw.i18n.extractNumber(document.forms[0].elements["Instalment"]);
+	UpdateIncur = subs(UpdateIncur, Instalment);
 	// arrondi: inutile, suite a la troncature
     document.forms[0].elements["UpdateIncur"].value = isNaN(UpdateIncur)?"---":troncature(UpdateIncur, true);
 }
@@ -178,18 +178,18 @@ function validation(evt) {
 function RecalculateToPay(){
 	var ToPay = 0;
 	var TotalTTC = fw.i18n.extractNumber(document.forms[0].elements["TotalTTC"]);
-	var installment = fw.i18n.extractNumber(document.forms[0].elements["Installment"]);
+	var instalment = fw.i18n.extractNumber(document.forms[0].elements["Instalment"]);
 
-	if (installment < 0) {
+	if (instalment < 0) {
 		alert(ProductCommand_2);
-		document.forms[0].elements["Installment"].value = 0;
+		document.forms[0].elements["Instalment"].value = 0;
 		RecalculateUpdateIncur();
 	}
 
-	ToPay = subs(TotalTTC, installment);
+	ToPay = subs(TotalTTC, instalment);
 	if (ToPay < 0) {
 		alert(ProductCommand_3);
-		document.forms[0].elements["Installment"].value = 0;
+		document.forms[0].elements["Instalment"].value = 0;
 		RecalculateUpdateIncur();
 		ToPay = TotalTTC;
 	}

@@ -150,9 +150,13 @@ $form->addElement('text', 'Port', _('Forwarding charges'), $onKeyUp);
 $form->addElement('text', 'Emballage', _('Handling charges'), $onKeyUp);
 $form->addElement('text', 'Assurance', _('Insurances charges'), $onKeyUp);
 $form->addElement('text', 'GlobalHanding', _('Global discount'), $onKeyUp);
-$form->addElement('text', 'Installment', _('Instalment'),
+$form->addElement('text', 'Instalment', _('Instalment'),
         'onKeyUp="RecalculateToPay();RecalculateUpdateIncur();" '
         . 'size="15" class="FieldWhite" value="0"');
+$form->addElement('select', 'InstalmentModality', 
+    _('Instalment').' - '._('Means of payment'), 
+    Instalment::getModalityConstArray(), 'style="width:80%"');
+
 $form->addElement('textarea', 'cmdComment', _('Comment'), 'cols="100%" rows="3"');
 
 // A partir de $_REQUEST, si retour apres erreur

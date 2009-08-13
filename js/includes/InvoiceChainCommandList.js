@@ -57,14 +57,14 @@ function recalculateTotalPrice()
     var tvaTotal = fw.i18n.extractNumber('tvaTotal');
 
     totalPriceTTC = add(totalPriceHT, tvaTotal);
-    var installment = fw.i18n.extractNumber('Installment');
-    var toPay = subs(totalPriceTTC, installment);
+    var instalment = fw.i18n.extractNumber('Instalment');
+    var toPay = subs(totalPriceTTC, instalment);
     if (toPay < 0) {
         toPay = 0;
     }
     $('totalpriceTTC').value = isNaN(totalPriceTTC)?"---":fw.i18n.formatNumber(totalPriceTTC);
     $('ToPay').value = isNaN(toPay)?"---":fw.i18n.formatNumber(toPay);
-    $('Installment').value = isNaN(installment)?"---":fw.i18n.formatNumber(installment);
+    $('Instalment').value = isNaN(instalment)?"---":fw.i18n.formatNumber(instalment);
 }
 
 function validation() {

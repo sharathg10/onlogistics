@@ -41,6 +41,7 @@ class _FlowTypeItem extends Object {
     const BREAKDOWN_PACKING = 2;
     const BREAKDOWN_PORT = 3;
     const BREAKDOWN_INVOICE_ITEM = 4;
+    const BREAKDOWN_INSTALMENT_ITEM = 5;
 
     // }}}
     // Constructeur {{{
@@ -246,7 +247,8 @@ class _FlowTypeItem extends Object {
             _FlowTypeItem::BREAKDOWN_INSURANCE => _("insurance charges"), 
             _FlowTypeItem::BREAKDOWN_PACKING => _("packing charges"), 
             _FlowTypeItem::BREAKDOWN_PORT => _("forwarding charges"), 
-            _FlowTypeItem::BREAKDOWN_INVOICE_ITEM => _("invoices items")
+            _FlowTypeItem::BREAKDOWN_INVOICE_ITEM => _("invoices items"),
+            _FlowTypeItem::BREAKDOWN_INSTALMENT_ITEM => _("instalments items")
         );
         asort($array);
         return $keys?array_keys($array):$array;

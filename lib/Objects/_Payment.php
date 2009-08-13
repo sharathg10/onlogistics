@@ -50,6 +50,38 @@ class _Payment extends Object {
     }
 
     // }}}
+    // DocumentNo string property + getter/setter {{{
+
+    /**
+     * DocumentNo string property
+     *
+     * @access private
+     * @var string
+     */
+    private $_DocumentNo = '';
+
+    /**
+     * _AbstractDocument::getDocumentNo
+     *
+     * @access public
+     * @return string
+     */
+    public function getDocumentNo() {
+        return $this->_DocumentNo;
+    }
+
+    /**
+     * _AbstractDocument::setDocumentNo
+     *
+     * @access public
+     * @param string $value
+     * @return void
+     */
+    public function setDocumentNo($value) {
+        $this->_DocumentNo = $value;
+    }
+
+    // }}}
     // Date datetime property + getter/setter {{{
 
     /**
@@ -117,38 +149,6 @@ class _Payment extends Object {
         if ($value !== null) {
             $this->_Modality = (int)$value;
         }
-    }
-
-    // }}}
-    // Reference string property + getter/setter {{{
-
-    /**
-     * Reference string property
-     *
-     * @access private
-     * @var string
-     */
-    private $_Reference = '';
-
-    /**
-     * _Payment::getReference
-     *
-     * @access public
-     * @return string
-     */
-    public function getReference() {
-        return $this->_Reference;
-    }
-
-    /**
-     * _Payment::setReference
-     *
-     * @access public
-     * @param string $value
-     * @return void
-     */
-    public function setReference($value) {
-        $this->_Reference = $value;
     }
 
     // }}}
@@ -377,7 +377,7 @@ class _Payment extends Object {
         $return = array(
             'Date' => Object::TYPE_DATETIME,
             'Modality' => Object::TYPE_INT,
-            'Reference' => Object::TYPE_STRING,
+            'DocumentNo' => Object::TYPE_STRING,
             'TotalPriceTTC' => Object::TYPE_DECIMAL,
             'CancellationDate' => Object::TYPE_DATETIME,
             'ActorBankDetail' => 'ActorBankDetail');

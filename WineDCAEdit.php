@@ -179,7 +179,7 @@ if (isset($_REQUEST['FormSubmitted']) && $_REQUEST['FormSubmitted'] == 'true') {
         $DCADate = date('Y-m-d H:i:s');
         $WineDCAPeriodical = Object::load('WineDCAPeriodical');
         $WineDCAPeriodical->setEditionDate($DCADate);
-        $WineDCAPeriodical->setDocumentNo('DCAPeriodical-'.$DCAid);
+        $WineDCAPeriodical->setDocumentNo('MvtPeriodical-'.$DCAid);
 
         $pdfDoc = new Document ;
         $pdfDoc->setType(Document::TYPE_CSV);
@@ -198,7 +198,7 @@ if (isset($_REQUEST['FormSubmitted']) && $_REQUEST['FormSubmitted'] == 'true') {
         updateLEMDCA($DCAdatas[1], $WineDCAPeriodical, 0) ;
         Database::connection()->completeTrans();
 
-        $message = _("DCA have been generated").":<br/>
+        $message = _("DCA has been generated").":<br/>
             ".$WineDCAPeriodical->DocumentNo." : 
             <a href=\"?print=1&doc=".$WineDCAPeriodical->Id."\">"._("Download file");
 

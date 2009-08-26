@@ -221,12 +221,12 @@ function generateDCA($itemsIds) {
     if (empty($DCA_LEMids)) return FALSE ;
 
     while (list($k,$v)=each($hdr_line)) {
-        $DCA_header .= implode(";", $v)."\n";
+        $DCA_header .= implode(";", $v)."\r\n";
     }
 
     while (list($k,$v)=each($dtl_line)) {
         while (list($ki,$vi)=each($v)) {
-            $DCA_details .= implode(";", $vi)."\n";
+            $DCA_details .= implode(";", $vi)."\r\n";
         }
     }
     // }}}
@@ -354,7 +354,7 @@ function generateDCAPeriodical() {
     $DCAPeriodicalCSV = "" ;
     while (list($k,$v)=each($DCAPeriodical)) {
         while (list($l,$w)=each($v)) {
-            $DCAPeriodicalCSV .= implode(";", $w)."\n";
+            $DCAPeriodicalCSV .= implode(";", $w)."\r\n";
         }
     }
     // }}}

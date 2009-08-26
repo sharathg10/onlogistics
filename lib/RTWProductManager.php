@@ -93,9 +93,9 @@ class RTWProductManager extends AbstractProductManager
             // construit la ref produit
             $size = Object::load('RTWSize', $sizeId);
             if ($size instanceof RTWSize) {
-                $ref = sprintf('%s-%07d-%s', $model->getStyleNumber(), $product->getId(), $size->toString());
+                $ref = sprintf('%s-%s', $model->getStyleNumber(), $size->toString());
             } else {
-                $ref = sprintf('%s-%07d-T00', $model->getStyleNumber(), $product->getId());
+                $ref = sprintf('%s-T00', $model->getStyleNumber());
             }
             $product->setBaseReference($ref);
             // assigne le supplier via ActorProduct

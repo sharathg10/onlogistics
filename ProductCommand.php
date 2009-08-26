@@ -59,7 +59,7 @@ SearchTools::inputDataInSession(1, '', false);
 // Détermination du type de commande
 $commandType = Command::TYPE_CUSTOMER;
 
-
+//Database::connection()->debug=true;
 // Controles
 checkBeforeDisplay($commandType);
 

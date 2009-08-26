@@ -100,7 +100,7 @@ function generateDCA($itemsIds) {
                     // {{{ Settings from Forwarding form ...
                     if ($ForwardingForm instanceof ForwardingForm) {
                         $docNo = $ForwardingForm->DocumentNo ;
-                        $docDate = $ForwardingForm->EditionDate;
+                        $docDate = date("Ymd",$ForwardingForm->getEditionDate('timestamp'));
                         $Supplier = $ForwardingForm->getSupplierCustomer()->getSupplier();
                         $Customer = $ForwardingForm->getSupplierCustomer()->getCustomer();
 
@@ -122,7 +122,7 @@ function generateDCA($itemsIds) {
                     // {{{ Settings from DeliveryOrder ...
                     if ($DeliveryOrder instanceof DeliveryOrder) {
                         $docNo = $DeliveryOrder->DocumentNo ;
-                        $docDate = $DeliveryOrder->EditionDate;
+                        $docDate = date("Ymd",$DeliveryOrder->getEditionDate('timestamp'));
                         $Order = $LEM->getExecutedMovement()->getActivatedMovement()->getProductCommand();
                         $Supplier = $Order->getSupplierCustomer()->getSupplier();
                         $Customer = $Order->getCustomer();
@@ -295,10 +295,10 @@ function generateDCAPeriodical() {
 
         if(!isset($DCAPeriodical[$MovementType][$ProductId])) {
             $DCAPeriodical[$MovementType][$ProductId] = $periodic_template ;
-            $DCAPeriodical[$MovementType][$ProductId]['CODESOC'] = '' ;
-            $DCAPeriodical[$MovementType][$ProductId]['CODEREG'] = '' ;
+            $DCAPeriodical[$MovementType][$ProductId]['CODESOC'] = '1' ;
+            $DCAPeriodical[$MovementType][$ProductId]['CODEREG'] = '1' ;
             $DCAPeriodical[$MovementType][$ProductId]['SITE'] = $LEM->Location->Store->StorageSite->Name ;
-            $DCAPeriodical[$MovementType][$ProductId]['DATE'] = $LEM->Date ;
+            $DCAPeriodical[$MovementType][$ProductId]['DATE'] = date("Ymd",$LEM->getDate('timestamp')) ;
             $DCAPeriodical[$MovementType][$ProductId]['CODEMVT'] = 'VTE' ;
             $DCAPeriodical[$MovementType][$ProductId]['CRD'] = $properties['Winetaxes'] ;
             $DCAPeriodical[$MovementType][$ProductId]['TRANSFERTVENTE'] = 'VTE' ;

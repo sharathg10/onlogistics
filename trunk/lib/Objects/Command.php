@@ -243,7 +243,14 @@ class Command extends _Command {
         $commandMapper = Mapper::singleton('Command');
         // on appelle la methode récursivement jusqu'à trouver un numéro unique
         if ($commandMapper->alreadyExists(array('CommandNo'=>$serial))) {
-            $serial = $this->generateCommandNo($chain);
+            if($this->getParentCommand() != FALSE ) {
+                $serial .= "-".$seq ;
+                if ($commandMapper->alreadyExists(array('CommandNo'=>$serial))) {
+                    $serial = $this->generateCommandNo($chain);
+                }
+            } else {
+                $serial = $this->generateCommandNo($chain);
+            }
         } else {
             $this->setCommandNo($serial);
         }

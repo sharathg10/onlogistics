@@ -71,16 +71,32 @@ if (!($doc instanceof AbstractDocument)) {
     exit(1);
 }
 
-$pdfDoc = $doc->getPDFDocument();
-if (!($pdfDoc instanceof PDFDocument) || ($data = $pdfDoc->getData()) == null) {
+$pdfDoc = $doc->getDocument();
+if (!($pdfDoc instanceof Document) || ($data = $pdfDoc->getData()) == null) {
     $url = $doc->getDocumentReeditionURL(get_class($doc));
     Tools::redirectTo(sprintf($url, $_GET['id']));
     exit(0);
 }
+$docTypeArray = $pdfDoc->getTypeConstArray();
+switch($pdfDoc->getType()){
+    case Document::TYPE_PDF:
+        $fileextension = "pdf" ;
+        $contenttype = "application/pdf" ;
+        break;
+    case Document::TYPE_CSV:
+        $fileextension = "csv" ;
+        $contenttype = "text/csv" ;
+        break;
+    case Document::TYPE_TXT :
+    default:
+        $fileextension = "txt" ;
+        $contenttype = "text/plain" ;
+        break;
+}
 
-header('Content-Type: application/pdf');
+header('Content-Type: '.$contenttype);
 header('Content-Length: '.strlen($data));
-header('Content-disposition: inline; filename="reedition.pdf"');
+header('Content-disposition: inline; filename="'.$doc->DocumentNo.'-reedition.'.$fileextension.'"');
 echo $data;
 
 ?>

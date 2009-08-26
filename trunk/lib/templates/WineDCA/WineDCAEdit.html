@@ -1,0 +1,70 @@
+<!--$Id: WineDCAEdit.html 9 2008-06-06 09:12:09Z izimobil $ -->
+<form {$form.attributes}>
+{$form.hidden}
+<table border="0" cellspacing="0" cellpadding="4" class="form">
+{if $showGenerate}
+    {if $selectDate}
+    <thead>
+      <tr><td colspan="4">{t}Select dates to generate periodical DCA :{/t}</td></tr>
+    </thead>
+    <!-- champs du formulaire -->
+    <tbody>
+      <tr>
+        <td width="35%">{$form.startDate.label}</td>
+        <td width="35%">{$form.startDate.html}</td>
+      <tr>
+      </tr>
+        <td width="35%">{$form.endDate.label}</td>
+        <td width="35%">{$form.endDate.html}</td>
+      </tr>
+  </tbody>
+    <tfoot>
+      <tr>
+        <td align="right" colspan="4">
+          <input name="valider" type="button" 
+          onclick="validateForm();" value="{t}Generate periodical DCA{/t}" 
+          class="Button" />&nbsp;
+    {else}
+    <tbody>
+      <tr>
+        <td>{$message}</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td align="right" colspan="4">
+          <input name="valider" type="button" 
+          onclick="validateForm();" value="{t}Generate DCA files{/t}" 
+          class="Button" />&nbsp;
+    {/if }
+    <!-- action du form -->
+          <input name="annuler" type="button" 
+          onclick="javascript:window.close();" 
+          value="{t}Cancel{/t}" class="Button" />
+        </td>
+      </tr>
+  </tfoot>
+{else}
+    <thead>
+      <tr>
+        <td colspan="4">{t}DCA Documents :{/t}</td>
+      </tr>
+  </thead>
+    <tbody>
+      <tr>
+        <td>{$message}</td>
+      </tr>
+    </tbody>
+    <!-- action du form -->
+    <tfoot>
+      <tr>
+        <td align="right" colspan="4">
+          <input name="annuler" type="button" 
+          onclick="javascript:window.close();" 
+          value="{t}Close Window{/t}" class="Button" />
+        </td>
+      </tr>
+  </tfoot>
+{/if}
+  </table>
+</form>

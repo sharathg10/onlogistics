@@ -58,7 +58,7 @@ function generateDocument($document, $reedit=0, $output='I') {
         $count = $document->getCount(); // Collection d'Invoice
         for($i = 0; $i < $count; $i++) {
             $invoice = $document->getItem($i);
-            $pdfDoc = $invoice->getPDFDocument();
+            $pdfDoc = $invoice->getDocument();
             // On sauve le doc pdf en base si besoin
             if (Tools::isEmptyObject($pdfDoc)) {
                 Database::connection()->startTrans();
@@ -66,10 +66,11 @@ function generateDocument($document, $reedit=0, $output='I') {
                 $generator = new InvoiceGenerator($invoice, true);
         	    $pdf = $generator->render();
                 $data = $pdf->output('', 'S');
-                $pdfDoc = new PDFDocument();
+                $pdfDoc = new Document();
+                $pdfDoc->setType(Document::TYPE_PDF);
                 $pdfDoc->setData($data);
                 $pdfDoc->save();
-                $invoice->setPDFDocument($pdfDoc->getId());
+                $invoice->setDocument($pdfDoc->getId());
                 $invoice->save();
                 Database::connection()->completeTrans();
             }
@@ -100,11 +101,13 @@ function generateDocument($document, $reedit=0, $output='I') {
         } else {
             $generator_name = $prefix.'EstimateGenerator';
         }
+    } else if ($document instanceof DCADocument) { 
+        $generator_name = 'DCAGenerator' ;
     } else {
         $generator_name = get_class($document) . 'Generator';
     }
     if (class_exists($generator_name)) {
-        $pdfDoc = $document->getPDFDocument();
+        $pdfDoc = $document->getDocument();
         // Si le pdf existe deja en base
         if (!Tools::isEmptyObject($pdfDoc)) {
             Tools::redirectTo('DocumentReedit.php?id=' . $document->getId());
@@ -115,10 +118,11 @@ function generateDocument($document, $reedit=0, $output='I') {
         $generator = new $generator_name($document, true);
 	    $pdf = $generator->render();
         $data =  $pdf->output('', 'S');
-        $pdfDoc = new PDFDocument();
+        $pdfDoc = new Document();
+        $pdfDoc->setType(Document::TYPE_PDF);
         $pdfDoc->setData($data);
         $pdfDoc->save();
-        $document->setPDFDocument($pdfDoc->getId());
+        $document->setDocument($pdfDoc->getId());
         $document->save();
         Database::connection()->completeTrans();
         // pour affichage sur navigateur

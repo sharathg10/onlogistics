@@ -662,6 +662,7 @@ var __i18n = {
      */
     formatNumber: function(value, dec_num, cookie) {
         MochiKit.Format.LOCALE.en_GB = MochiKit.Format.LOCALE.en_US;
+        MochiKit.Format.LOCALE.pl_PL = MochiKit.Format.LOCALE.en_US;
         MochiKit.Format.LOCALE.nl_NL = MochiKit.Format.LOCALE.pt_BR;
         MochiKit.Format.LOCALE.tr_TR = MochiKit.Format.LOCALE.pt_BR;
         MochiKit.Format.LOCALE.es_ES = MochiKit.Format.LOCALE.pt_BR;
@@ -692,6 +693,7 @@ var __i18n = {
                 break;
             case 'en_GB':
             case 'en_US':
+            case 'pl_PL':
                 // gere les saisies telles que: 123,456,789.123
                 input = parseFloat(value.replace(/,/g, '').replace(/\s/g, ''));
                 break;

@@ -182,7 +182,7 @@ $form->addElement('text', 'Instalment', _('Instalment'),
         . 'style="width:80%" class="FieldWhite" value="0"');
 $form->addElement('select', 'InstalmentModality', 
     _('Instalment').' - '._('Means of payment'), 
-    Instalment::getModalityConstArray(), 'style="width:80%"');
+    TermsOfPaymentItem::getPaymentModalityConstArray(), 'style="width:80%"');
 
 $form->addElement('textarea', 'cmdComment', _('Comment'), 'cols="100%" rows="3"');
 

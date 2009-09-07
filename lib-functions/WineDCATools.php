@@ -294,67 +294,76 @@ function generateDCAPeriodical() {
             }
         }
 
-        $Owner = $LEM->Product->getOwner();
-        $OwnerId = $Owner->getId();
-        $OwnerSiteCol = $Owner->getSiteCollection();
-        $OwnerMainSite = $OwnerSiteCol->getItem(0);
-        $OwnerMainSiteAddress = $OwnerMainSite->getAddressInfos();
+        //  On ne s'occupe que des produits ayant cette caracteristique ...
+        if($properties['Winetaxes'] != "N/A"){
+            $Owner = $LEM->Product->getOwner();
+            $OwnerId = $Owner->getId();
+            $OwnerSiteCol = $Owner->getSiteCollection();
+            $OwnerMainSite = $OwnerSiteCol->getItem(0);
+            $OwnerMainSiteAddress = $OwnerMainSite->getAddressInfos();
 
-        if(!isset($DCAPeriodical[$OwnerId][$MovementType][$ProductId])) {
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId] = $periodic_template ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CODESOC'] = '1' ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CODEREG'] = '1' ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['SITE'] = $LEM->Location->Store->StorageSite->Name ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['DATE'] = date("Ymd",$LEM->getDate('timestamp')) ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CODEMVT'] = 'VTE' ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CRD'] = $properties['Winetaxes'] ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['TRANSFERTVENTE'] = 'VTE' ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CODEMVT'] = 'VTE' ;
+            if(!isset($DCAPeriodical[$OwnerId][$MovementType][$ProductId])) {
+                $DCAPeriodical[$OwnerId][$MovementType][$ProductId] = $periodic_template ;
+                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CODESOC'] = '1' ;
+                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CODEREG'] = '1' ;
+                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['SITE'] = $LEM->Location->Store->StorageSite->Name ;
+                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['DATE'] = date("Ymd",$LEM->getDate('timestamp')) ;
+                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CODEMVT'] = 'VTE' ;
+                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CRD'] = $properties['Winetaxes'] ;
+                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['TRANSFERTVENTE'] = '2' ;
 
-            if($MovementType == 1 ) {
-                // Sortie
-                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['TYPE'] = 'S' ;
-                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['EXPED'] = '' ;
+                if($MovementType == 1 ) {
+                    // Sortie
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['TYPE'] = 'S' ;
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['EXPED'] = $Owner->Code ;
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CPOSTEXP'] = '' ;
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['COMMUNEEXP'] = '' ;
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['PAYSEXP'] = '' ;
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['DEST'] = $Owner->Code ;
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CPOSTDEST'] = $OwnerMainSiteAddress['Zip'] ;
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['COMMUNEDEST'] =  $OwnerMainSiteAddress['CityName'] ;
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['PAYSDEST'] = 
+                        $OwnerMainSite->getCountry()->getInterCountryCode();
+                } else { 
+                    // Entree
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['TYPE'] = 'E' ;
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['EXPED'] = $Owner->Code ;
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CPOSTEXP'] = $OwnerMainSiteAddress['Zip'] ;
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['COMMUNEEXP'] =  $OwnerMainSiteAddress['CityName'] ;
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['PAYSEXP'] = 
+                        $OwnerMainSite->getCountry()->getInterCountryCode();
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['DEST'] = $Owner->Code ;
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CPOSTDEST'] = '' ;
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['COMMUNEDEST'] = '' ;
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['PAYSDEST'] = '' ;
+                }
+                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CODEART'] = $LEM->Product->BaseReference ;
+                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['NBCOLS'] = $LEM->Quantity ;
+                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CONTENANCE'] = $LEM->Product->Volume ;
+                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['VOLUMEFLACON'] = $LEM->Quantity * $LEM->Product->Volume ;
+                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CUMULE'] = "N";
+            } else {
+                if($MovementType == 1 ) {
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['EXPED'] = $Owner->Code ;
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['DEST'] = '' ;
+                } else { 
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['EXPED'] = '' ;
+                    $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['DEST'] = $Owner->Code ;
+                }
                 $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CPOSTEXP'] = '' ;
                 $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['COMMUNEEXP'] = '' ;
                 $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['PAYSEXP'] = '' ;
-                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['DEST'] = $Owner->Code ;
-                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CPOSTDEST'] = $OwnerMainSiteAddress['Zip'] ;
-                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['COMMUNEDEST'] =  $OwnerMainSiteAddress['CityName'] ;
-                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['PAYSDEST'] = 
-                    $OwnerMainSite->getCountry()->getInterCountryCode();
-            } else { 
-                // Entree
-                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['TYPE'] = 'E' ;
-                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['EXPED'] = $Owner->Code ;
-                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CPOSTEXP'] = $OwnerMainSiteAddress['Zip'] ;
-                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['COMMUNEEXP'] =  $OwnerMainSiteAddress['CityName'] ;
-                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['PAYSEXP'] = 
-                    $OwnerMainSite->getCountry()->getInterCountryCode();
-                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['DEST'] = '' ;
+
                 $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CPOSTDEST'] = '' ;
                 $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['COMMUNEDEST'] = '' ;
                 $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['PAYSDEST'] = '' ;
+
+                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['NBCOLS'] += $LEM->Quantity ;
+                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['VOLUMEFLACON'] += $LEM->Quantity * $LEM->Product->Volume ;
+                $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CUMULE'] = "O";
             }
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CODEART'] = $LEM->Product->BaseReference ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['NBCOLS'] = $LEM->Quantity ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CONTENANCE'] = $LEM->Product->Volume ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['VOLUMEFLACON'] = $LEM->Quantity * $LEM->Product->Volume ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CUMULE'] = "N";
-        } else {
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['EXPED'] = '' ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CPOSTEXP'] = '' ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['COMMUNEEXP'] = '' ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['PAYSEXP'] = '' ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['DEST'] = '' ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CPOSTDEST'] = '' ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['COMMUNEDEST'] = '' ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['PAYSDEST'] = '' ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['NBCOLS'] += $LEM->Quantity ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['VOLUMEFLACON'] += $LEM->Quantity * $LEM->Product->Volume ;
-            $DCAPeriodical[$OwnerId][$MovementType][$ProductId]['CUMULE'] = "O";
+            $DCA_LEMids[] = $LEM->Id ;
         }
-        $DCA_LEMids[] = $LEM->Id ;
     }
     unset($LEMCollection);
 

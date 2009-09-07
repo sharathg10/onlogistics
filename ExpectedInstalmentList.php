@@ -81,9 +81,10 @@ $form->addDate2DateElement(
 if(isset($_REQUEST['CommandId'])) {
     $Command = Object::load('Command', $_REQUEST['CommandId']);
     $form->setDefaultValues(array('Command' => $Command->getCommandNo()));
+    $_REQUEST['Command'] = $Command->getCommandNo() ;
+    $displayGrid = 1 ;
 }
 
-$displayGrid = 1 ;
 
 /*  Affichage du Grid  */
 if (true === $form->DisplayGrid($displayGrid)) {
@@ -171,6 +172,8 @@ if (true === $form->DisplayGrid($displayGrid)) {
     $form->setItemsCollection($Collection);
     $form->displayResult($grid, true, array(), array(), $pageTitle);
 
-} 
+} else { // on n'affiche que le formulaire de recherche, pas le Grid
+    Template::page('', $form->render() . '</form>');
+}
 
 ?>

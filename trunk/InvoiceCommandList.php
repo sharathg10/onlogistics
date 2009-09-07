@@ -315,7 +315,7 @@ if ($InvoiceCollection instanceof Collection && ($InvoiceCollection->getCount() 
         $PaymentCollection = $item->getPaymentCollection();
         if ($PaymentCollection instanceof Collection
             && ($PaymentCollection->getCount() > 0)) {
-            echo $Payment->getItem(0)->getReference();
+            echo $PaymentCollection->getItem(0)->getReference();
             $HasPayment = 1;
         }
     }

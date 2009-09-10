@@ -137,8 +137,7 @@ $form->addElement('select', 'TI_Customer', _('Customer'), $CustomerArray,
 
 $form->addElement('text', 'TI_DocumentNo', _('Instalment DocumentNo'), 'style="width:100%"');  
 $form->addElement('text', 'TI_Instalment', 'Total', 'style="width:100%"');
-$InstalmentModalityArray = array(0 => _('Select a type')) + TermsOfPaymentItem::getPaymentModalityConstArray();
-$form->addElement('select', 'TI_Modality', _('Type'), $InstalmentModalityArray,
+$form->addElement('select', 'TI_Modality', _('Type'), TermsOfPaymentItem::getPaymentModalityConstArray(),
     'style="width:100%" onchange="onTypeSelectChanged();"');
 
 // devise

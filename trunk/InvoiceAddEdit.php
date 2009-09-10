@@ -86,7 +86,8 @@ if (isset($_REQUEST['FormSubmitted']) && $_REQUEST['FormSubmitted'] == 'true') {
 	$Invoice->setFodecTaxRate($_POST['fodecTaxRate']);
 	$Invoice->setTaxStamp($_POST['taxStamp']);
 
-    if (isset($_POST['Instalment']) && $_POST['Instalment'] != 0) {
+    if( ($Invoice->isFirstInvoiceForCommand())
+    AND (isset($_POST['Instalment']) && $_POST['Instalment'] != 0)) {
         $PaidInstalment = I18N::extractNumber($_POST['Instalment']);
         if ($Invoice->getTotalPriceTTC() <= $PaidInstalment) {
             //TotalPriceTTC de la facture est < a l'accompte
@@ -492,7 +493,7 @@ if($Command instanceof ProductCommand && $Command->getType()==Command::TYPE_SUPP
     $Smarty->assign('Invoice_EditionDate_Format', date('d-m-Y h:i:s'));
 }
 
-if ($HasInstalment == 1) { // un acompte et pas de factures
+if ( ($HasInstalment == 1) && ($NoInvoice == 1) ) { // un acompte et pas de factures
     $Smarty->assign('HasInvoice', 1);
     $Smarty->assign('Instalment', $TotalInstalments);
 }

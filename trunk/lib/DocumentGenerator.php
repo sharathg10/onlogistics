@@ -647,9 +647,13 @@ class CommandDocumentGenerator extends DocumentGenerator
             if ( ($event == TermsOfPaymentItem::ORDER 
                 OR $event == TermsOfPaymentItem::BEFORE_ORDER 
                 OR $event == TermsOfPaymentItem::BEFORE_DELIVERY)  
-            AND (!Tools::isEmptyObject($payments)) ) {
-                    // Cas d'un acompte attendu et deja regle :
-                    // On ne l'affiche pas ....
+            AND ($this instanceof InvoiceGenerator )) {
+                // Cas d'un acompte attendu 
+                // On ne l'affiche pas du moment qu'on fait une facture car
+                // soit il est deja regle 
+                // soit on le zappe etant donné qu'on ne 
+                // peut enregistrer de nouvel acompte si une facture est emise 
+                // ... ( cqfd ... )
             } else {
 
                 list($date, $amount, $to) = $item->getDateAndAmountForOrder($this->command);
@@ -671,10 +675,14 @@ class CommandDocumentGenerator extends DocumentGenerator
                                 $tmpAmount += $Payment->getTotalPriceTTC();
                             }
                         }
-                        $amount = $this->command->getTotalPriceTTC() - $tmpAmount;
+                        // Test pour voir si c'est suffisant ...
+                        $amount = $this->document->getToPayForDocument() ;
                     }
                 }
-                $pdfDoc->tableBody(array(0 => array($date, $amount, $toName)));
+
+                $pdfDoc->tableBody(array(0 => array($date, 
+                    DocumentGenerator::formatCurrency($this->currency, $amount), 
+                    $toName)));
             }
         }
         $pdfDoc->ln(3);

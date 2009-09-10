@@ -51,11 +51,6 @@ for($i = 0; $i < $count; $i++){
 echo '
 
 function checkBeforeSubmit(){
-    // check du type
-	if (document.forms[0].elements["TI_Modality"].value == 0) {
-		alert(\'' . _('Please select a modality.') . '\');
-		return false;
-	}
 	if (document.forms[0].elements["TI_Instalment"].value == "" || 
         document.forms[0].elements["TI_Instalment"].value == "0" ) {
 		alert(\'' . _('Please provide an amount for this Instalment.') . '\');

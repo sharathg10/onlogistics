@@ -1045,7 +1045,7 @@ class PrestationManager {
     public function saveAll() {
         require_once('InvoiceItemTools.php');
         // Champs numeriques a traiter avant de les sauver
-        $numFields = array('Port', 'Emballage', 'Assurance', 'Instalment', 'InstalmentModality'
+        $numFields = array('Port', 'Emballage', 'Assurance', 'Instalment', 'InstalmentModality',
             'GlobalHanding', 'TotalHT', 'TotalTTC', 'ToPay');
         foreach($numFields as $field) {
             $$field = isset($_REQUEST[$field]) ?

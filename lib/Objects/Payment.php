@@ -49,7 +49,61 @@ class Payment extends _Payment {
     }
 
     // }}}
-/**
+    // Command foreignkey property + getter/setter {{{
+
+    /**
+     * Command foreignkey
+     *
+     * @access private
+     * @var mixed object Command or integer
+     */
+    private $_Command = false;
+
+    /**
+     * Instalment::getCommand
+     *
+     * @access public
+     * @return object Command
+     */
+    public function getCommand() {
+        if (is_int($this->_Command) && $this->_Command > 0) {
+            $mapper = Mapper::singleton('Command');
+            $this->_Command = $mapper->load(
+                array('Id'=>$this->_Command));
+        }
+        return $this->_Command;
+    }
+
+    /**
+     * Instalment::getCommandId
+     *
+     * @access public
+     * @return integer
+     */
+    public function getCommandId() {
+        if ($this->_Command instanceof Command) {
+            return $this->_Command->getId();
+        }
+        return (int)$this->_Command;
+    }
+
+    /**
+     * Instalment::setCommand
+     *
+     * @access public
+     * @param object Command $value
+     * @return void
+     */
+    public function setCommand($value) {
+        if (is_numeric($value)) {
+            $this->_Command = (int)$value;
+        } else {
+            $this->_Command = $value;
+        }
+    }
+
+    // }}}
+    /**
      * Recupere les factures associees, via InvoicePayment
      * @access public
      * @return void 

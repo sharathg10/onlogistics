@@ -63,7 +63,7 @@ $grid->NewAction('Cancel', array('Caption' => 'Retour', 'ReturnURL' => 'InvoiceL
 $grid->NewColumn('FieldMapper', _('Invoice number'), array('Macro' => '%Invoice.DocumentNo%'));
 $grid->NewColumn('FieldMapper', _('Edition date'),
     	array('Macro' => '%Invoice.EditionDate|formatdate@DATE_SHORT%'));
-$grid->NewColumn('FieldMapper', _('Reference'), array('Macro' => '%Payment.Reference%'));
+$grid->NewColumn('FieldMapper', _('Reference'), array('Macro' => '%Payment.DocumentNo%'));
 $grid->NewColumn('FieldMapperWithTranslation', _('Means of payment'),
     	array('Macro' => '%Payment.Modality%',
               'TranslationMap' => TermsOfPaymentItem::getPaymentModalityConstArray()));

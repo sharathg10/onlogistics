@@ -295,7 +295,7 @@ function getAlertContent($alertId=0) {
     		<td><b>'._('VAT').': </b>{$commandTVA} €</td>
     		<td><b>'._('Amount excl. VAT').': </b>{$commandTotalPriceHT} €</td>
     		<td><b>'._('Amount incl. VAT').': </b>{$commandTotalPriceTTC} €</td>
-    		<td><b>'._('Instalment').':</b> {$commandInstallment} €</td>
+    		<td><b>'._('Instalment').':</b> {$commandInstalment} €</td>
     		<td><b>'._('To pay').':</b> {$commandToPay} €</td>
     	</tr>
     	<tr>

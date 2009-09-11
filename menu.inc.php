@@ -649,6 +649,12 @@ $menu_metadata = array(
                 'description' => _('List of credit notes'),
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES)
             ),
+            array(
+                'title'       => _('Instalments'),
+                'link'        => 'ExpectedInstalmentList.php',
+                'description' => _('List of Expected Instalments'),
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES)
+            ),
         )
     ),
     // }}}
@@ -708,10 +714,22 @@ $menu_metadata = array(
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ACCOUNTANT,UserAccount::PROFILE_SUBSIDIARY_ACCOUNTANT)
             ),
             array(
-                'title'       => _('History'),
-                'link'        => 'InvoiceList.php',
-                'description' => _('History'),
+                'title'       => _('Payments History'),
+                'link'        => 'PaymentsHistory.php',
+                'description' => _('History of all payments'),
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_ACCOUNTANT,UserAccount::PROFILE_SUBSIDIARY_ACCOUNTANT)
+            ),
+            array(
+                'title'       => _('Invoices List'),
+                'link'        => 'InvoiceList.php',
+                'description' => _('List of Invoices'),
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES)
+            ),
+            array(
+                'title'       => _('Paid Instalments'),
+                'link'        => 'InstalmentList.php',
+                'description' => _('List of paid Instalments'),
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES)
             ),
             array(
                 'title'       => _('Accounts receivable aging'),

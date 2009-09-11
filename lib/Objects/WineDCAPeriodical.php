@@ -27,19 +27,19 @@
  * @author    ATEOR dev team <dev@ateor.com>
  * @copyright 2003-2008 ATEOR <contact@ateor.com> 
  * @license   http://www.fsf.org/licensing/licenses/agpl-3.0.html GNU AGPL
- * @version   SVN: $Id$
+ * @version   SVN: $Id: _ForwardingForm.php 9 2008-06-06 09:12:09Z izimobil $
  * @link      http://www.onlogistics.org
  * @link      http://onlogistics.googlecode.com
  * @since     File available since release 0.1.0
  * @filesource
  */
 
-class PDFDocument extends Object {
+class WineDCAPeriodical extends AbstractDocument {
     
     // Constructeur {{{
 
     /**
-     * PDFDocument::__construct()
+     * _ForwardingForm::__construct()
      * Constructeur
      *
      * @access public
@@ -50,62 +50,61 @@ class PDFDocument extends Object {
     }
 
     // }}}
-    // Data string property + getter/setter {{{
+    // LocationExecutedMovement one to many relation + getter/setter {{{
 
     /**
-     * Data string property
+     * LocationExecutedMovement 1..* relation
      *
      * @access private
-     * @var string
+     * @var Collection
      */
-    private $_Data = '';
+    private $_LocationExecutedMovementCollection = false;
 
     /**
-     * PDFDocument::getData
+     * _ForwardingForm::getLocationExecutedMovementCollection
      *
      * @access public
-     * @return string
+     * @return object Collection
      */
-    public function getData() {
-        return $this->_Data;
+    public function getLocationExecutedMovementCollection($filter = array(),
+        $sortOrder = array(), $fields = array()) {
+        // si un paramètre est passé on force le rechargement de la collection
+        // on ne met en cache mémoire que les collections brutes
+        if (!empty($filter) || !empty($sortOrder) || !empty($fields)) {
+            $mapper = Mapper::singleton('ForwardingForm');
+            return $mapper->getOneToMany($this->getId(),
+                'LocationExecutedMovement', $filter, $sortOrder, $fields);
+        }
+        // si la collection n'est pas en mémoire on la charge
+        if (false == $this->_LocationExecutedMovementCollection) {
+            $mapper = Mapper::singleton('ForwardingForm');
+            $this->_LocationExecutedMovementCollection = $mapper->getOneToMany($this->getId(),
+                'LocationExecutedMovement');
+        }
+        return $this->_LocationExecutedMovementCollection;
     }
 
     /**
-     * PDFDocument::setData
+     * _ForwardingForm::getLocationExecutedMovementCollectionIds
      *
      * @access public
-     * @param string $value
+     * @param $filter FilterComponent or array
+     * @return array
+     */
+    public function getLocationExecutedMovementCollectionIds($filter = array()) {
+        $col = $this->getLocationExecutedMovementCollection($filter, array(), array('Id'));
+        return $col instanceof Collection?$col->getItemIds():array();
+    }
+
+    /**
+     * _ForwardingForm::setLocationExecutedMovementCollection
+     *
+     * @access public
+     * @param object Collection $value
      * @return void
      */
-    public function setData($value) {
-        $this->_Data = $value;
-    }
-
-    // }}}
-    // AbstractDocument one to one relation getter {{{
-    /**
-     * PDFDocument::getAbstractDocument
-     *
-     * @access public
-     * @return object AbstractDocument
-     */
-    public function getAbstractDocument() {
-        $mapper = Mapper::singleton('AbstractDocument');
-        return $mapper->load(array('PDFDocument'=>$this->getId()));
-    }
-
-    /**
-     * PDFDocument::getAbstractDocumentId
-     *
-     * @access public
-     * @return integer
-     */
-    public function getAbstractDocumentId() {
-        $return = $this->getAbstractDocument();
-        if ($return instanceof AbstractDocument) {
-            return $return->getId();
-        }
-        return 0;
+    public function setLocationExecutedMovementCollection($value) {
+        $this->_LocationExecutedMovementCollection = $value;
     }
 
     // }}}
@@ -119,7 +118,7 @@ class PDFDocument extends Object {
      * @return string
      */
     public static function getTableName() {
-        return 'PDFDocument';
+        return 'AbstractDocument';
     }
 
     // }}}
@@ -148,10 +147,9 @@ class PDFDocument extends Object {
      * @return array
      * @see Object.php
      */
-    public static function getProperties() {
-        $return = array(
-            'Data' => Object::TYPE_LONGTEXT);
-        return $return;
+    public static function getProperties($ownOnly = false) {
+        $return = array();
+        return $ownOnly?$return:array_merge(parent::getProperties(), $return);
     }
 
     // }}}
@@ -166,9 +164,15 @@ class PDFDocument extends Object {
      * @return array
      * @see Object.php
      */
-    public static function getLinks() {
-        $return = array();
-        return $return;
+    public static function getLinks($ownOnly = false) {
+        $return = array(
+            'LocationExecutedMovement'=>array(
+                'linkClass'     => 'LocationExecutedMovement',
+                'field'         => 'ForwardingForm',
+                'ondelete'      => 'nullify',
+                'multiplicity'  => 'onetomany'
+            ));
+        return $ownOnly?$return:array_merge(parent::getLinks(), $return);
     }
 
     // }}}
@@ -184,7 +188,7 @@ class PDFDocument extends Object {
      */
     public static function getUniqueProperties() {
         $return = array();
-        return $return;
+        return array_merge(parent::getUniqueProperties(), $return);
     }
 
     // }}}
@@ -200,7 +204,7 @@ class PDFDocument extends Object {
      */
     public static function getEmptyForDeleteProperties() {
         $return = array();
-        return $return;
+        return array_merge(parent::getEmptyForDeleteProperties(), $return);
     }
 
     // }}}
@@ -231,9 +235,40 @@ class PDFDocument extends Object {
      * @return array
      * @see Object.php
      */
-    public static function getMapping() {
+    public static function getMapping($ownOnly = false) {
         $return = array();
-        return $return;
+        return $ownOnly?$return:array_merge(parent::getMapping(), $return);
+    }
+
+    // }}}
+    // useInheritance() {{{
+
+    /**
+     * Détermine si l'entité est une entité qui utilise l'héritage.
+     * (classe parente ou classe fille). Ceci afin de differencier les entités
+     * dans le mapper car classes filles et parentes sont mappées dans la même
+     * table.
+     *
+     * @static
+     * @access public
+     * @return bool
+     */
+    public static function useInheritance() {
+        return true;
+    }
+
+    // }}}
+    // getParentClassName() {{{
+
+    /**
+     * Retourne le nom de la première classe parente
+     *
+     * @static
+     * @access public
+     * @return string
+     */
+    public static function getParentClassName() {
+        return 'AbstractDocument';
     }
 
     // }}}

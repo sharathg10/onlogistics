@@ -74,7 +74,7 @@ $grid->NewAction('Cancel', array('Caption'=>_('State of orders'), 'ReturnURL'=>$
 $grid->NewColumn('PaymentId', _('Payment number'), array('Sortable' => false));
 $grid->NewColumn('FieldMapper', _('Edition date'),
     	array('Macro' => '%Date|formatdate@DATE_SHORT%'));
-$grid->NewColumn('FieldMapper', _('Reference'), array('Macro' => '%Reference%'));
+$grid->NewColumn('FieldMapper', _('Reference'), array('Macro' => '%DocumentNo%'));
 $grid->NewColumn('FieldMapperWithTranslation', _('Means of payment'),
     	array('Macro' => '%Modality%',
               'TranslationMap' => array(-1=>_('N/A')) + TermsOfPaymentItem::getPaymentModalityConstArray()));
@@ -84,6 +84,9 @@ $grid->NewColumn('MultiPrice', _('Total amount incl. VAT'),
     	array('Method' => 'getTotalPriceTTC', 'Currency' => $Command->getCurrency()));
 $grid->NewColumn('FieldMapper', _('Invoice(s)'),
         array('Macro' => '%InvoiceCollection%', 'Sortable' => false));
+$grid->NewColumn('FieldMapperWithTranslation', _('Order'),
+        array('Macro' => '%Command.CommandNo%' , '0' => 'N/A',
+            'TranslationMap' => array(0 => _('N/A'))));
 
 if ($grid->isPendingAction()) {
     $PaymentCollection = false;
@@ -94,14 +97,7 @@ if ($grid->isPendingAction()) {
         Template::errorDialog($dispatchResult->getMessage(), $phpself);
     }
 } else {
-    if (($inst = $Command->getInstallment()) > 0) {
-        $Payment = new Payment();
-        $Payment->setReference(_('Instalment'));
-        $Payment->setTotalPriceTTC($inst);
-        $Payment->setModality(-1);
-        $Payment->setActorBankDetail($Command->getInstallmentBank());
-        $PaymentCollection->setItem($Payment);
-    }
+//    $PaymentCollection = $Command->getInstalmentCollection() ;
   	$result = $grid->render($PaymentCollection);
     Template::page(
 	    sprintf(_('List of payments for order %s'), $Command->getCommandNo()) . '  ',

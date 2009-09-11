@@ -243,7 +243,14 @@ class Command extends _Command {
         $commandMapper = Mapper::singleton('Command');
         // on appelle la methode récursivement jusqu'à trouver un numéro unique
         if ($commandMapper->alreadyExists(array('CommandNo'=>$serial))) {
-            $serial = $this->generateCommandNo($chain);
+            if($this->getParentCommand() != FALSE ) {
+                $serial .= "-".$seq ;
+                if ($commandMapper->alreadyExists(array('CommandNo'=>$serial))) {
+                    $serial = $this->generateCommandNo($chain);
+                }
+            } else {
+                $serial = $this->generateCommandNo($chain);
+            }
         } else {
             $this->setCommandNo($serial);
         }
@@ -754,7 +761,102 @@ class Command extends _Command {
                 unset($item, $PaymtCollection);
             }
         }
+
+        $InstalmentCollection = $this->getInstalmentCollection();
+        if (!Tools::isEmptyObject($InstalmentCollection)) {
+            $jcount = $InstalmentCollection->getCount();
+            for($j = 0; $j < $jcount; $j++){ 
+                $Payment = $InstalmentCollection->getItem($j); 
+                $PaymentCollection->SetItem($Payment);
+                unset($Payment);
+            }
+        }
+        unset($InstalmentCollection);
         return $PaymentCollection;
+    }
+
+    // }}}
+    // Command::getInstalmentCollection() {{{
+
+    /**
+     * Retourne la collection des accomptes
+     * @param $state integer: 0 par defaut: ceux non annulés 
+     *                           1: tous
+     * @access public
+     * @return Instalment Collection
+     */
+    function getInstalmentCollection($state=0) {
+        // la collection qui sera retournee
+        $InstalmentCollection = new Collection();
+        $InstalmentCollection->acceptDuplicate = false;
+        $InstalmentMapper = Mapper::singleton('Instalment');
+
+        if($state=1) {
+            $InstalmentCollection = $InstalmentMapper->loadCollection(
+                array( 'Command'=>$this->getId() ));
+        } else {
+            $InstalmentCollection = $InstalmentMapper->loadCollection(
+                array( 'Command'=>$this->getId(), 'CancellationDate'=> NULL));
+        }
+
+        return $InstalmentCollection ;
+    }
+
+    // }}}
+    // Command::getInvoiceCollection() {{{
+
+    /**
+     * Retourne la collection des accomptes
+     * @param $state integer: 0 par defaut: ceux non annulés 
+     *                           1: tous
+     * @access public
+     * @return Invoice Collection
+     */
+    function getInvoiceCollection($state=0) {
+        // la collection qui sera retournee
+        $InvoiceCollection = new Collection();
+        $InvoiceCollection->acceptDuplicate = false;
+        $InvoiceMapper = Mapper::singleton('Invoice');
+
+            $InvoiceCollection = $InvoiceMapper->loadCollection(
+                array( 'Command'=>$this->getId() ));
+
+        return $InvoiceCollection ;
+    }
+
+    // }}}
+    // Command::getTotalInstalments() {{{
+
+    /**
+     * Retourne le montant total des accomptes valides ( non annulés )
+     * @access public
+     * @return float $TotalInstalments
+     * montant total des accomptes convertis dans la monnaie de la 
+     * commande 
+     */
+    function getTotalInstalments( $begin_date = FALSE , $end_date = FALSE) {
+        // la collection qui sera retournee
+        $InstalmentCollection = new Collection();
+        $InstalmentCollection->acceptDuplicate = false;
+        $InstalmentMapper = Mapper::singleton('Instalment');
+        $InstalmentCollection = $InstalmentMapper->loadCollection( 
+            array( 'Command'=>$this->getId())); // 'CancellationDate'=> NULL ));
+
+        $TotalInstalments = 0 ;
+
+        if (!Tools::isEmptyObject($InstalmentCollection)) {
+            $count = $InstalmentCollection->getCount();
+            for($i = 0; $i < $count; $i++){
+                $item = $InstalmentCollection->getItem($i);
+                $doOk = true ;
+                if(($begin_date != FALSE) OR ( $end_date != FALSE )) {
+                    if ($begin_date > $item->getDate()) $doOk = false ;
+                    if ($end_date < $item->getDate()) $doOk = false ;
+                }
+                if ($doOk) $TotalInstalments += $item->getTotalPriceTTC() ;
+            }
+        }
+        return $TotalInstalments;
     }
 
     // }}}

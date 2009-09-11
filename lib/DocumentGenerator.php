@@ -626,7 +626,7 @@ class CommandDocumentGenerator extends DocumentGenerator
      */
     protected function renderTermsOfPayment($pdfDoc=false) {
         $pdfDoc = (!$pdfDoc)?$this->pdf:$pdfDoc;
-        $top = $this->supplierCustomer->getTermsOfPayment();
+        $top = $this->command->getTermsOfPayment();
         if (!($top instanceof TermsOfPayment)) {
             return;
         }
@@ -639,11 +639,51 @@ class CommandDocumentGenerator extends DocumentGenerator
         ), 1);
         $items = $top->getTermsOfPaymentItemCollection();
         foreach ($items as $item) {
-            list($date, $amount, $to) = $item->getDateAndAmountForOrder($this->command);
-            $toName = ($to instanceof Actor) ? $to->getName() : '';
-            $date   = I18N::formatDate($date, I18N::DATE_LONG);
-            $amount = $this->formatCurrency($this->currency, $amount);
-            $pdfDoc->tableBody(array(0 => array($date, $amount, $toName)));
+            $event = $item->getPaymentEvent();
+            $payments = $this->command->getInstalmentCollection();
+            $instalmentsPaid = $this->command->getTotalInstalments();
+
+
+            if ( ($event == TermsOfPaymentItem::ORDER 
+                OR $event == TermsOfPaymentItem::BEFORE_ORDER 
+                OR $event == TermsOfPaymentItem::BEFORE_DELIVERY)  
+            AND ($this instanceof InvoiceGenerator )) {
+                // Cas d'un acompte attendu 
+                // On ne l'affiche pas du moment qu'on fait une facture car
+                // soit il est deja regle 
+                // soit on le zappe etant donné qu'on ne 
+                // peut enregistrer de nouvel acompte si une facture est emise 
+                // ... ( cqfd ... )
+            } else {
+
+                list($date, $amount, $to) = $item->getDateAndAmountForOrder($this->command);
+                $toName = ($to instanceof Actor) ? $to->getName() : '';
+                $date   = I18N::formatDate($date, I18N::DATE_LONG);
+                $amount = $this->formatCurrency($this->currency, $amount);
+
+                // if it's the last we need to adjust the amount
+                // only for invoices ...
+                if($this instanceof InvoiceGenerator ) {
+                    $itemIds = $top->getTermsOfPaymentItemCollectionIds();
+                    if ($item->getId() == array_pop($itemIds)) {
+                        $tmpAmount = 0;
+                        $realPayments = $this->command->getPaymentCollection();
+                        if (!Tools::isEmptyObject($realPayments)) {
+                            $jcount = $realPayments->getCount();
+                            for($j = 0; $j < $jcount; $j++){
+                                $Payment = $realPayments->getItem($j);
+                                $tmpAmount += $Payment->getTotalPriceTTC();
+                            }
+                        }
+                        // Test pour voir si c'est suffisant ...
+                        $amount = $this->document->getToPayForDocument() ;
+                    }
+                }
+
+                $pdfDoc->tableBody(array(0 => array($date, 
+                    DocumentGenerator::formatCurrency($this->currency, $amount), 
+                    $toName)));
+            }
         }
         $pdfDoc->ln(3);
     }
@@ -1114,13 +1154,13 @@ class InvoiceGenerator extends CommandDocumentGenerator
         }
         // Ajout d'une ligne s'il y a un acompte, et que c'est la 1ere facture
         // pour la commande associee
-        $installment = $this->command->getInstallment();
-        if ($installment > 0 && $this->document->isFirstInvoiceForCommand()) {
+        $TotalInstalments = $this->command->getTotalInstalments() ;
+        if ($TotalInstalments > 0 && $this->document->isFirstInvoiceForCommand()) {
             $pdfDoc->tableHeader(
                 array(
                     '' => 120,
                     _('Instalment') . ': ' 
-                    . DocumentGenerator::formatCurrency($this->currency, $installment) => 70
+                    . DocumentGenerator::formatCurrency($this->currency, $TotalInstalments) => 70
                     )
                 );
         }
@@ -1435,7 +1475,7 @@ class CourseCommandInvoiceGenerator extends InvoiceGenerator
                 DocumentGenerator::formatNumber($this->document->getTotalPriceTTC())
                 ))
             );
-        $toPay = $this->document->getTotalPriceTTC() - $this->command->getInstallment();
+        $toPay = $this->document->getTotalPriceTTC() - $this->command->getTotalInstalments();
         
         // Ajout d'une ligne s'il y a une taxe Fodec
         $fodecTaxRate = $this->document->getFodecTaxRate();
@@ -1654,13 +1694,13 @@ class ChainCommandInvoiceGenerator extends InvoiceGenerator
         }
         // Ajout d'une ligne s'il y a un acompte, et que c'est la 1ere facture
         // pour la commande associee
-        $installment = $this->command->getInstallment();
-        if ($installment > 0 && $this->document->isFirstInvoiceForCommand()) {
+        $instalment = $this->command->getTotalInstalments();
+        if ($instalment > 0 && $this->document->isFirstInvoiceForCommand()) {
             $this->pdf->tableHeader(
                 array(
                     '' => 120,
                     _('Instalment') . ': ' 
-                    . DocumentGenerator::formatCurrency($this->currency, $installment) => 70
+                    . DocumentGenerator::formatCurrency($this->currency, $instalment) => 70
                     )
                 );
         }
@@ -2167,13 +2207,13 @@ class PrestationInvoiceGenerator extends InvoiceGenerator
         }
         // Ajout d'une ligne s'il y a un acompte, et que c'et la 1ere facture
         // pour la commande associee
-        $installment = $this->command->getInstallment();
-        if ($installment > 0 && $this->document->isFirstInvoiceForCommand()) {
+        $instalment = $this->command->getTotalInstalments();
+        if ($instalment > 0 && $this->document->isFirstInvoiceForCommand()) {
             $this->pdf->tableHeader(
                 array(
                     '' => 120,
                     _('Instalment') . ': ' 
-                    . DocumentGenerator::formatCurrency($this->currency, $installment) => 70
+                    . DocumentGenerator::formatCurrency($this->currency, $instalment) => 70
                     )
                 );
         }
@@ -3545,15 +3585,15 @@ class CommandReceiptGenerator extends CommandDocumentGenerator
         $this->pdf->tableHeader($header, 1);
         $this->pdf->tableBody($data, $header);
 
-        $installment = DocumentGenerator::formatNumber($this->command->getInstallment());
-        if ($ttcTotalPrice < $installment) {
+        $instalment = DocumentGenerator::formatNumber($this->command->getTotalInstalments());
+        if ($ttcTotalPrice < $instalment) {
             $toPay = 0;
         } else {
-            $toPay = $ttcTotalPrice - $installment;
+            $toPay = $ttcTotalPrice - $instalment;
         }
         $this->pdf->setX(150);
         $this->pdf->tableHeader(array(
-            _('Instalment') . ' ' . $this->currency . ' : ' . $installment=>50));
+            _('Instalment') . ' ' . $this->currency . ' : ' . $instalment=>50));
         $this->pdf->setX(150);
         $this->pdf->tableHeader(array(
             _('To pay') . ' ' . $this->currency .' : ' . $toPay=>50));
@@ -3825,15 +3865,15 @@ class ChainCommandReceiptGenerator extends CommandReceiptGenerator
             _('Amount incl. VAT') . ' ' . $this->currency => 33,
             _('Instalment') . ' ' . $this->currency => 33,
             _('To pay') . ' ' . $this->currency => 33);
-        $installment = $this->command->getInstallment();
-        $toPay = DocumentGenerator::formatNumber($this->command->getTotalPriceTTC()-$installment);
+        $instalment = $this->command->getTotalInstalments();
+        $toPay = DocumentGenerator::formatNumber($this->command->getTotalPriceTTC()-$instalment);
         $data = array(array(
             $this->command->getPacking(),
             $this->command->getInsurance(),
             DocumentGenerator::formatNumber($this->command->getTotalPriceTTC() -
                 $this->command->getTotalPriceHT()),
             DocumentGenerator::formatNumber($this->command->getTotalPriceTTC()),
-            $installment?DocumentGenerator::formatNumber($installment):'0',
+            $instalment?DocumentGenerator::formatNumber($instalment):'0',
             $toPay));
 
         $this->pdf->tableHeader($header, 1);
@@ -4933,4 +4973,6 @@ class MovementLabelGenerator extends DocumentGenerator
 
 }
 // }}}
+// }}}
+
 ?>

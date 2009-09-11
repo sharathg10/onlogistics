@@ -164,7 +164,7 @@ function savePaymentDate($Invoice, $Command) {
 
     if (!Tools::isEmptyObject($SupplierCustomer)) {
         // met la date de paiment de la facture au premier reglement
-        $top = $SupplierCustomer->getTermsOfPayment();
+        $top = $Command->getTermsOfPayment();
         $paymentDate = false;
         if ($top instanceof TermsOfPayment) {
             $topItems = $top->getTermsOfPaymentItemCollection();
@@ -345,10 +345,10 @@ function chargeSeveralCommands($cmdIds) {
         }
 
         // Prix total, toPay, en fonction d'un eventuel acompte...
-        // Si acompte (Installment), seule la 1ere facture pour cette cmde en
+        // Si acompte (Instalment), seule la 1ere facture pour cette cmde en
         // tient compte
-        $installment = ($cmd->getInstallment() != 0 && $invoice->isFirstInvoiceForCommand())?
-            $cmd->getInstallment():0;
+        $instalment = ($cmd->getTotalInstalments() != 0 && $invoice->isFirstInvoiceForCommand())?
+            $cmd->getTotalInstalments():0;
 
         // Calcul du prix HT total pour l'invoice
         $totalpriceHT = $totalpriceTTC = 0;
@@ -393,10 +393,10 @@ function chargeSeveralCommands($cmdIds) {
     	$invoice->setTotalPriceTTC(troncature($totalpriceTTC, 2));
 
         //TotalPriceTTC de la facture est <= a l'accompte
-        if ($invoice->getTotalPriceTTC() <= $installment) {
+        if ($invoice->getTotalPriceTTC() <= $instalment) {
             $invoice->setToPay(0);
         } else {
-            $invoice->setToPay($invoice->getTotalPriceTTC() - $installment);
+            $invoice->setToPay($invoice->getTotalPriceTTC() - $instalment);
         }
 
         // calcule la commission du commercial
@@ -532,12 +532,14 @@ function createInvoice($cmdId) {
         $DocumentNo = $_POST['InvoiceNumero'];
     }
 	else {
+        require_once('AbstractDocumentTools.php');
         $cdetype = (in_array($cmdType, $typesCustomer))?'FC':'FF';
-		$invoiceId = $invoiceMapper->generateId();
-        $DocumentNo = generateDocumentNo($cdetype, 'AbstractDocument', $invoiceId);
+        $DocumentId= (in_array($cmdType, $typesCustomer))?generateClassId('Invoice'):generateClassId('SupplierInvoice');
+        $DocumentNo = generateDocumentNo($cdetype, 'AbstractDocument', $DocumentId);
     }
+
 	if (!isset($invoiceId)) {
-	    $invoiceId = $invoiceMapper->generateId();
+	    $invoiceId = $invoiceMapper->generateId(true);
 	}
 	$invoice->setId($invoiceId);
 	$invoice->setDocumentNo($DocumentNo);

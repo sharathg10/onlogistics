@@ -504,9 +504,9 @@ class AlertSender{
         $packing = $cmd->getPacking();
         $params['commandPacking'] = $packing>0?I18N::formatNumber($packing):'0';
         // Accompte
-        $installment = $cmd->getInstallment();
-        $params['commandInstallment'] = $installment?
-            I18N::formatNumber($installment):'0';
+        $instalment = $cmd->getTotalInstalments();
+        $params['commandInstalment'] = $instalment?
+            I18N::formatNumber($instalment):'0';
         // Remise globale
         $handing = $cmd->getHanding();
         $params['commandHanding'] = $handing?

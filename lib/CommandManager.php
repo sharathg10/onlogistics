@@ -44,6 +44,7 @@ require_once('Objects/ChainCommandItem.php');
 require_once('Objects/Task.inc.php');
 require_once('Objects/TVA.inc.php');
 require_once('ProductCommandTools.php');
+require_once('InvoiceItemTools.php');
 require_once('ActivateChain.php');
 require_once('PlanningTools.php');
 require_once('Scheduler/Scheduler.php');
@@ -252,7 +253,7 @@ class CommandManager{
             $setter = 'set' . $name;
             if (method_exists($this->command, $setter)) {
                 $this->command->$setter($value);
-            }
+            } 
         }
         // sauvegarde (dans transaction)
         $this->command->save();
@@ -596,6 +597,8 @@ class CommandManager{
             $chain = $chainArray[0][0];
             $command->generateCommandNo($chain);
         }
+
+
         $this->_debug('* Validation commande ' .  $command->getCommandNo());
         $method = $this->productCommandType==Command::TYPE_CUSTOMER?
                 'getDestinator':'getExpeditor';
@@ -753,6 +756,26 @@ class CommandManager{
             }
         }
 
+        $spc  = $command->getSupplierCustomer();
+        $command->setTermsOfPayment($spc->getTermsOfPayment());
+
+        if(( $_REQUEST['Instalment'] > 0) && $this->isRootCommand ) { 
+            // On doit creer un nouvel accompte
+	        $newInstalment = Object::load('Instalment');
+            $InstalmentMapper = Mapper::singleton('Instalment');
+            $InstalmentId = $InstalmentMapper->generateId();
+            $newInstalment->setId($InstalmentId);
+            $DocumentNo = GenerateDocumentNo('IN', 'Instalment', $InstalmentId);
+            $newInstalment->setDocumentNo($DocumentNo);
+            $newInstalment->setCommand($command);
+            $newInstalment->setDate(date('Y-m-d H:i:s'));
+            $newInstalment->setModality($_REQUEST['InstalmentModality']);
+            $newInstalment->setTotalPriceTTC($_REQUEST['Instalment']);
+            $newInstalment->save();
+        }
+
+
+         
         $command->save();
 
         // active les processus fils uniquement si ce n'est pas un devis
@@ -899,7 +922,7 @@ class CommandManager{
         } catch (Exception $exc) {
             return $exc;
         }
-        $toPay = troncature($prices['ttc'] - $this->command->getInstallment());
+        $toPay = troncature($prices['ttc'] - $this->command->getTotalInstalments());
         $resultData = array();
         $resultData['ChainCommand_RawHT']         = $prices['raw_ht'];
         $resultData['ChainCommand_TotalPriceHT']  = $prices['ht'];
@@ -916,6 +939,7 @@ class CommandManager{
         );
         $this->command->generateCommandNo($this->command->getChain());
         $this->command->setSupplierCustomer($spc);
+        $this->command->setTermsOfPayment($spc->getTermsOfPayment());
         $currency = Object::load('Currency', array('Id'=>1));
         $this->command->setCurrency($currency);
 
@@ -1825,8 +1849,8 @@ class CommandManagerTest {
                     'Handing' => 10,
                     'Port' => 20,
                     'Packing' => 100,
-                    'Insurance' => 30,
-                    'Installment' => 40);
+                    'Insurance' => 30
+            );
         }
         if (!isset($cmdParamsArray['Customer'])) {
             $cmdParamsArray['Customer'] = $auth->getActorId();

@@ -593,9 +593,12 @@ class ActivatedChainTask extends _ActivatedChainTask {
         $InvoiceMapper = Mapper::singleton('Invoice');
         $InvoiceId = $InvoiceMapper->generateId();
         $Invoice->SetId($InvoiceId);
+        require_once('AbstractDocumentTools.php');
+        $DocumentId = generateClassId('Invoice');
 
         require_once('InvoiceItemTools.php');
-        $Invoice->setDocumentNo(GenerateDocumentNo('FC', 'AbstractDocument', $InvoiceId)); // facture client
+        $Invoice->setDocumentNo(GenerateDocumentNo('FC', 'AbstractDocument', $DocumentId)); // facture client
+
         $Invoice->setEditionDate(date("Y-m-d H-i-s"));
         $Invoice->setCommand($CourseCommand);
         $Invoice->setCommandType($CourseCommand->getInvoiceCommandType());

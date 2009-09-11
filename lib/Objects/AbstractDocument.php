@@ -166,7 +166,7 @@ class AbstractDocument extends _AbstractDocument {
      */
     function getDocumentList()
     {
-        return array(
+        $documentlist = array(
             'CommandReceipt'         => _('Command receipt'),
             'CommandReceiptSupplier' => _('Supplier order'),
             'Invoice'                => _('Invoice'),
@@ -176,6 +176,16 @@ class AbstractDocument extends _AbstractDocument {
             'DeliveryOrder'          => _('Delivery order'),
             'ForwardingForm'         => _('Forwarding form')
         );
+
+        $context = Preferences::get('TradeContext', array());
+        if(in_array('wine', $context))
+            $documentlist =array_merge($documentlist, array(
+                'WineDCAHeader'          => _('DCA Header'),
+                'WineDCADetails'         => _('DCA Footer'),
+                'WineDCAPeriodical'      => _('Periodical DCA')
+            )) ;
+ 
+        return $documentlist ;
     }
 
     // }}}
@@ -200,8 +210,17 @@ class AbstractDocument extends _AbstractDocument {
             'PackingList'            => 'PackingListEdit.php?reedit=1&pId=%d',
             'ToHave'                 => 'ToHaveEdit.php?reedit=1&thId=%d',
             'DeliveryOrder'          => 'DeliveryOrderEdit.php?reedit=1&idBL=%d',
-            'ForwardingForm'         => 'ForwardingFormEdit.php?print=1&reedit=1&doc=%d'
+            'ForwardingForm'         => 'ForwardingFormEdit.php?print=1&reedit=1&doc=%d',
         );
+
+        $context = Preferences::get('TradeContext', array());
+        if(in_array('wine', $context))
+            $urls =array_merge($urls , array(
+                'WineDCAHeader'          => 'WineDCAEdit.php?print=1&reedit=1&doc=%d',
+                'WineDCADetails'         => 'WineDCAEdit.php?print=1&reedit=1&doc=%d',
+                'WineDCAPeriodical'      => 'WineDCAEdit.php?print=1&reedit=1&doc=%d'
+            )) ;
+ 
         return isset($urls[$docType]) ? $urls[$docType] : false;
     }
     

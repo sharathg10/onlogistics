@@ -109,6 +109,7 @@ class FlowTypeItem extends _FlowTypeItem {
         if($flowType->getType() == FlowType::CHARGE) {
             $coeff = -1;
         }
+
         if($flowType->getInvoiceType() > 0) {
             // on aura besoin des TVA de fraix annexes on les charges ici pour 
             // ne le faire qu'une fois
@@ -180,9 +181,15 @@ class FlowTypeItem extends _FlowTypeItem {
                     $ttc = troncature($inv->getPort() + troncature($inv->getPort() * 
                         $TVARates['DELIVERY EXPENSES'] / 100));
                 }
-                $total += $ttc;
-                $totals['total'] += $coeff * $ttc;
+                $date = $inv->getPaymentDate();
+
+                if( ($date >= $beginDate && $date <= $endDate) && ($ttc > 0 )) {
+                    $total += $ttc;
+                    $totals['total'] += $coeff * $ttc;
+                }
             }
+
+            // Lignes de factures non facturées {{{
             // commandes non facturés: on ne détaille pas et on ajoute à la 
             // ligne des lignes de facture
             if($breakdownPart == self::BREAKDOWN_INVOICE_ITEM) {
@@ -194,34 +201,24 @@ class FlowTypeItem extends _FlowTypeItem {
                 //$beginDate;
                 //$endDate; 
                 while($result && !$result->EOF) {
-                    
                     $cmdTTC = $result->fields['cmdTotalTTC'];
-                    if ($result->fields['cmdState'] == Command::REGLEMT_PARTIEL ||
-                        $result->fields['cmdState'] == Command::REGLEMT_TOTAL) {
-                        $topay  = troncature($cmdTTC - $result->fields['cmdPayed']);
-                        $payed = $result->fields['cmdPayed'];
-                    } else {
-                        $topay = $cmdTTC;
-                        $payed = 0 ;
-                    }
-                    
-                    $topId  = $result->fields['scTermsOfPayment'];
+                    $order = Object::load('Command', $result->fields['cmdId']);
+                    $instalment_deduc = $order->getTotalInstalments( FALSE, $endDate); 
+                    $instalment_payed = $order->getTotalInstalments( $beginDate, $endDate); 
+                    $topay = troncature($cmdTTC - $result->fields['cmdPayed'] - $instalment_deduc);
+                    $payed = $result->fields['cmdPayed'] + $instalment_payed;
+                    $topId  = $result->fields['cmdTermsOfPayment'];
+
                     if ($topId > 0 && ($top = Object::load('TermsOfPayment', $topId)) instanceof TermsOfPayment) {
-                        $order = Object::load('Command', $result->fields['cmdId']);
                         $topItems = $top->getTermsOfPaymentItemCollection();
                         foreach($topItems as $topItem) {
                             list($date, $amount, $supplier) = $topItem->getDateAndAmountForOrder($order, $topay);
                             if ($date >= $beginDate && $date <= $endDate) {
-                                $total += $amount;
-                                $totals['total'] += $coeff * $amount;
-                            }
-                            list($date, $amount, $supplier) = $topItem->getDateAndAmountForOrder($order, $payed);
-                            if ($date >= $beginDate && $date <= $endDate) {
-                                $totals['total'] += $coeff * $amount;
+                                $total += $amount ;
+                                $totals['total'] += $coeff * $payed ;
                             }
                         }
                     } else {
-                        $order = Object::load('Command', $result->fields['cmdId']);
                         $date = $order->getWishedDate();
                         if ($date >= $beginDate && $date <= $endDate) {
                             $total += $topay;
@@ -231,6 +228,25 @@ class FlowTypeItem extends _FlowTypeItem {
                     $result->moveNext();
                 }
             }
+            // }}}
+            // Lignes pour les accomptes encaissés  {{{
+            if($breakdownPart == self::BREAKDOWN_INSTALMENT_ITEM) {
+                require_once('SQLRequest.php');
+                $result = request_instalmentForCashBalance(
+                    $flowType->getCommandType(),
+                    $currency);
+
+                while($result && !$result->EOF) {
+                    $payed =  $result->fields['total'] ;
+                    $date =  $result->fields['date'] ;
+                    if ($date >= $beginDate && $date <= $endDate) {
+                        //$total += $payed ;
+                        $totals['total'] += $coeff * $payed ;
+                    }
+                    $result->moveNext();
+                }
+            }
+            // }}}
         }
 
         // prévisionnel correspondant

@@ -240,7 +240,7 @@ $smarty->assign('Currency', $cur instanceof Currency?$cur->getSymbol():'&euro;')
 
 //Information liées au supplierCustomer
 $MaxIncur = (is_null($sp->getMaxIncur()))?_('Undefined'):I18N::formatNumber($sp->getMaxIncur());
-$top = $sp->getTermsOfPayment();
+$top = $Command->getTermsOfPayment();
 if ($top instanceof TermsOfPayment) {
     $smarty->assign('TermsOfPayment', $top->getName());
 }
@@ -277,7 +277,7 @@ $smarty->assign('Packing', $packing);
 $smarty->assign('Insurance', $insurance);
 $smarty->assign('totalPrestHT', $rawht);
 $smarty->assign('TotalPriceHT', $ht);
-$smarty->assign('ToPay', $ttc-$Command->getInstallment());
+$smarty->assign('ToPay', $ttc-$Command->getTotalInstalments());
 $smarty->assign('TVATotal', $ttc-$ht);
 $smarty->assign('GlobalHanding', $handing);
 
@@ -287,7 +287,7 @@ if ($hasTVA) {
 }
 
 //Totaux
-$smarty->assign('Installment', $Command->getInstallment());
+$smarty->assign('Instalment', $Command->getTotalInstalments());
 
 /*
 Affichage

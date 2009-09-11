@@ -114,7 +114,7 @@ if (true === $form->displayGrid()) {
     }
     /*  Construction du filtre  */
     $FilterComponentArray = array_merge($FilterComponentArray,
-            $form->buildFilterComponentArray());
+           $form->buildFilterComponentArray());
     $Filter = SearchTools::filterAssembler($FilterComponentArray);
     $returnURL = basename($_SERVER['PHP_SELF']);
 

@@ -32,8 +32,8 @@ connect(window, 'onload', function() {
     connect('CancelButton', 'onclick', function() {
         window.location.href=RETURN_URL;
     });
-    if ($('ChainCommand_Installment'))
-        connect('ChainCommand_Installment', 'onkeyup', recalculateToPay);
+    if ($('ChainCommand_Instalment'))
+        connect('ChainCommand_Instalment', 'onkeyup', recalculateToPay);
     if ($('ChainCommand_RawHT')) {
         connect('ChainCommand_RawHT', 'onchange', function() {
             $('PriceModified').value = 1;
@@ -515,9 +515,9 @@ var setFormData = function(formdata) {
  */
 var recalculateToPay = function() {
     with(document.forms["ChainCommand"]) {
-        var installment = troncature(elements['ChainCommand_Installment'].value);
+        var instalment = troncature(elements['ChainCommand_Instalment'].value);
         var ttc = troncature(elements['ChainCommand_TotalPriceTTC'].value);
-        elements['ChainCommand_ToPay'].value = troncature(ttc - installment);
+        elements['ChainCommand_ToPay'].value = troncature(ttc - instalment);
     }
 }
 

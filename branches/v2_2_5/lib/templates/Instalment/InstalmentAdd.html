@@ -1,0 +1,42 @@
+{$form.javascript}
+<form {$form.attributes}>
+<input type="hidden" name="formSubmitted" value="0">
+  
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	<tbody>
+  	<tr>
+  		<td width="20%">{$form.TI_Supplier.label}: </td>
+  		<td width="30%">{$form.TI_Supplier.html}</td>
+		<td width="20%">{$form.TI_Customer.label}:</td>
+		<td width="30%">{$form.TI_Customer.html}</td>
+  	</tr>
+	<tr>
+  		<td>{$form.TI_DocumentNo.label}: </td>
+  		<td>{$form.TI_DocumentNo.html}</td>
+  		<td>{$form.TI_Modality.label}: </td>
+  		<td>{$form.TI_Modality.html}</td>
+  	</tr>
+	<tr>
+		<td>{$form.TI_Instalment.label}:</td>
+		<td>{$form.TI_Instalment.html}</td>
+  		<td>{$form.TI_Currency.label}: </td>
+  		<td>{$form.TI_Currency.html}</td>
+    </tr>
+	<tr>
+    <td colspan ="4">&nbsp;{$form.hidden}</td>
+    </tr>
+	</tbody>
+</table>
+  <table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	<tfoot>
+	<tr> 
+      <td align="right">
+	  <input name="submitPrintForm" value="{t}Ok{/t}" type="submit" />
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  <input onclick="javascript:window.location='InstalmentList.php'" name="Cancel" value="{t}Cancel{/t}" type="button" />
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  </td>
+    </tr>
+	</tfoot> 
+  </table>
+</form>

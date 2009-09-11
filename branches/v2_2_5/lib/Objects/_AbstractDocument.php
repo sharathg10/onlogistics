@@ -465,56 +465,56 @@ class _AbstractDocument extends Object {
     }
 
     // }}}
-    // PDFDocument foreignkey property + getter/setter {{{
+    // Document foreignkey property + getter/setter {{{
 
     /**
-     * PDFDocument foreignkey
+     * Document foreignkey
      *
      * @access private
-     * @var mixed object PDFDocument or integer
+     * @var mixed object Document or integer
      */
-    private $_PDFDocument = false;
+    private $_Document = false;
 
     /**
-     * _AbstractDocument::getPDFDocument
+     * _AbstractDocument::getDocument
      *
      * @access public
-     * @return object PDFDocument
+     * @return object Document
      */
-    public function getPDFDocument() {
-        if (is_int($this->_PDFDocument) && $this->_PDFDocument > 0) {
-            $mapper = Mapper::singleton('PDFDocument');
-            $this->_PDFDocument = $mapper->load(
-                array('Id'=>$this->_PDFDocument));
+    public function getDocument() {
+        if (is_int($this->_Document) && $this->_Document > 0) {
+            $mapper = Mapper::singleton('Document');
+            $this->_Document = $mapper->load(
+                array('Id'=>$this->_Document));
         }
-        return $this->_PDFDocument;
+        return $this->_Document;
     }
 
     /**
-     * _AbstractDocument::getPDFDocumentId
+     * _AbstractDocument::getDocumentId
      *
      * @access public
      * @return integer
      */
-    public function getPDFDocumentId() {
-        if ($this->_PDFDocument instanceof PDFDocument) {
-            return $this->_PDFDocument->getId();
+    public function getDocumentId() {
+        if ($this->_Document instanceof Document) {
+            return $this->_Document->getId();
         }
-        return (int)$this->_PDFDocument;
+        return (int)$this->_Document;
     }
 
     /**
-     * _AbstractDocument::setPDFDocument
+     * _AbstractDocument::setDocument
      *
      * @access public
-     * @param object PDFDocument $value
+     * @param object Document $value
      * @return void
      */
-    public function setPDFDocument($value) {
+    public function setDocument($value) {
         if (is_numeric($value)) {
-            $this->_PDFDocument = (int)$value;
+            $this->_Document = (int)$value;
         } else {
-            $this->_PDFDocument = $value;
+            $this->_Document = $value;
         }
     }
 
@@ -600,7 +600,7 @@ class _AbstractDocument extends Object {
             'SupplierCustomer' => 'SupplierCustomer',
             'Currency' => 'Currency',
             'AccountingTypeActor' => 'Actor',
-            'PDFDocument' => 'PDFDocument',
+            'Document' => 'Document',
             'Locale' => Object::TYPE_STRING);
         return $return;
     }
@@ -619,8 +619,8 @@ class _AbstractDocument extends Object {
      */
     public static function getLinks() {
         $return = array(
-            'PDFDocument'=>array(
-                'linkClass'     => 'PDFDocument',
+            'Document'=>array(
+                'linkClass'     => 'Document',
                 'field'         => 'AbstractDocument',
                 'ondelete'      => 'cascade',
                 'multiplicity'  => 'onetoone'

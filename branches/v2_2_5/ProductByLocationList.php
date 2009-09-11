@@ -134,7 +134,7 @@ if (true === $form->displayGrid(1)) {
     $grid->withNoSortableColumn = true;
 
     $grid->NewAction('Print', array());
-    $grid->NewAction('Export', array('FileName'=>'StockParEmplacement'));
+    $grid->NewAction('Export', array('FileName'=>'StockByLocation'));
     $grid->NewAction('Cancel', array('Caption' => _('Back to list of stores'),
             'ReturnURL' => $returnUrl));
 

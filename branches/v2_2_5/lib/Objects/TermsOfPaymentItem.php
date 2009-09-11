@@ -69,13 +69,52 @@ class TermsOfPaymentItem extends _TermsOfPaymentItem {
      */
     public function getDateAndAmountForOrder($order, $orderAmount = null)
     {
-        // calculate date
-        $event = $this->getPaymentEvent();
-        if ($event == TermsOfPaymentItem::ORDER) {
-            $date = $order->getCommandDate();
-        } else {
-            $date = $order->getWishedDate();
+        // Find base date ... 
+        // First Retrieve useful dates
+
+        // Order date and wished delivery date 
+        $CommandDate = $order->getCommandDate();
+        $WishedDate = $order->getWishedDate();
+        
+        // First Invoice Date
+        $invoices = $order->getInvoiceCollection();
+        if (!Tools::isEmptyObject($invoices)) {
+            $firstInvoice = $invoices->getItem(0); 
+            $FirstInvoiceDate = $firstInvoice->getEditionDate();
+            unset($invoices, $firstInvoice );
         }
+
+        // First Instalment Payment Date
+        $instalments= $order->getInstalmentCollection();
+        if (!Tools::isEmptyObject($instalments)) {
+            $firstInstalment = $instalments->getItem(0); 
+            $FirstInstalmentDate= $firstInstalment->getDate();
+            $totalInstalments = $order->getTotalInstalments();
+            unset($instalments, $firstInstalment);
+        } 
+        
+        // Select the right base date according to event type
+        $event = $this->getPaymentEvent();
+        // payment command
+        if ($event == TermsOfPaymentItem::ORDER) {
+            $date = $CommandDate ;
+        } else {
+            $date = $WishedDate ;
+        }
+
+        if ( isset ( $FirstInstalmentDate) ) {
+            $date = $FirstInstalmentDate;
+        } else if ( isset ( $FirstInvoiceDate ) ) {
+            $date = $FirstInvoiceDate ;
+        } else {
+            if ( ($event == TermsOfPaymentItem::ORDER) 
+            OR ($event == TermsOfPaymentItem::BEFORE_ORDER) 
+            OR ($event == TermsOfPaymentItem::BEFORE_DELIVERY) ) {
+                $date = DateTimeTools::timeStampToMySQLDate(time());
+            }
+        }
+
+        // Delay 
         $delay = $this->getPaymentDelay();
         if ($delay > 0) {
             $ts   = DateTimeTools::MysqlDateToTimeStamp($date);
@@ -83,12 +122,15 @@ class TermsOfPaymentItem extends _TermsOfPaymentItem {
                 $ts + ($delay * DateTimeTools::ONE_DAY)
             ); 
         }
+
+        //Option 
         $option = $this->getPaymentOption();
         if ($option == self::END_OF_MONTH) {
             $date = DateTimeTools::lastDayInMonth($date);
         } else if ($option == self::END_OF_NEXT_MONTH) {
             $date = DateTimeTools::lastDayInMonth($date, 1);
         }
+
         // calculate amount
         if ($orderAmount === null) {
             $orderAmount = $order->getTotalPriceTTC();
@@ -98,6 +140,7 @@ class TermsOfPaymentItem extends _TermsOfPaymentItem {
         if ($amount > 0 && $percent > 0 && $percent != 100) {
             $amount = round($amount * ($percent / 100), 2);
         }
+
         // if it's the last we need to adjust the amount
         $parent  = $this->getTermsOfPayment();
         $itemIds = $parent->getTermsOfPaymentItemCollectionIds();
@@ -107,16 +150,18 @@ class TermsOfPaymentItem extends _TermsOfPaymentItem {
                 $item = Object::load('TermsOfPaymentItem', $id);
                 list($d, $t, $s) = $item->getDateAndAmountForOrder($order);
                 $tmpAmount += $t;
+                $tmpAmount += $amount;
             }
-            $tmpAmount += $amount;
             if ($tmpAmount != $orderAmount) {
-                $amount += $orderAmount - $tmpAmount;
+                $amount = $orderAmount - $tmpAmount;
             }
         }
+
         // find actor
         if (!(($supplier = $this->getSupplier()) instanceof Supplier)) {
             $supplier = $order->getSupplierCustomer()->getSupplier();
         }
+
         // return date and amount in an array
         return array($date, $amount, $supplier);
     }

@@ -1045,7 +1045,7 @@ class PrestationManager {
     public function saveAll() {
         require_once('InvoiceItemTools.php');
         // Champs numeriques a traiter avant de les sauver
-        $numFields = array('Port', 'Emballage', 'Assurance', 'Installment',
+        $numFields = array('Port', 'Emballage', 'Assurance', 'Instalment', 'InstalmentModality'
             'GlobalHanding', 'TotalHT', 'TotalTTC', 'ToPay');
         foreach($numFields as $field) {
             $$field = isset($_REQUEST[$field]) ?
@@ -1086,19 +1086,37 @@ class PrestationManager {
         $command->setHanding($GlobalHanding);
         $command->setTotalPriceHT($TotalHT);
         $command->setTotalPriceTTC($TotalTTC);
-        $command->setInstallment($Installment);
         $command->setCustomerRemExcep($_REQUEST['RemExcep']);
         $spc = findSupplierCustomer(
             $command->getExpeditor(),
             $command->getDestinator(),
             ($TotalTTC - $TotalHT > 0)
         );
+
         $command->setSupplierCustomer($spc);
         $command->setCurrency($currency);
         $command->setComment(stripslashes($_REQUEST['cmdComment']));
         $command->setType(Command::TYPE_PRESTATION);
         $command->setCommandItemCollection($this->commandItems);
         $command->save();
+
+        // }}}
+        // Creation d'un Instalment (Accompte) si besoin {{{
+        if($Instalment > 0) { // On doit creer un nouvel accompte
+	        $newInstalment = Object::load('Instalment');
+            $InstalmentMapper = Mapper::singleton('Instalment');
+            $InstalmentId = $InstalmentMapper->generateId();
+            $newInstalment->setId($InstalmentId);
+            $DocumentNo = GenerateDocumentNo('IN', 'Instalment', $InstalmentId);
+            $newInstalment->setDocumentNo($DocumentNo);
+            $newInstalment->setCommand($command);
+            $newInstalment->setSupplierCustomer($spc);
+            $newInstalment->setInstalmentDate(date('Y-m-d H:i:s'));
+            $newInstalment->setModality($InstallmentModality);
+            $newInstalment->setInstalment($Instalment);
+            $newInstalment->setCurrency($currency);
+            $newInstalment->save();
+        }
         // }}}
         // Création de la facture {{{
         $invoice = Object::load('Invoice');
@@ -1503,7 +1521,6 @@ class PrestationManager {
     }
 
     // }}}
-
     // PrestationManager::calculChainCommandCost() {{{
 
     /**

@@ -49,6 +49,7 @@ unset($_SESSION['LCPCollection']);
 
 $smarty = new Template();
 $session = Session::Singleton();
+//Database::connection()->debug = true;
 
 $grid = new Grid();
 // Pour ne pas avoir d'erreur js liee a customisation searchForms
@@ -69,7 +70,11 @@ $grid->NewColumn('FieldMapper', 'Date', array('Macro' => '%Date|formatdate%'));
 $FilterComponentArray = array(); // Tableau de filtres
 
 // Place ici, pour eviter error si on vient de ActivatedMovtAddWithPrevision.php
-$form = new SearchForm('LocationExecutedMovement');
+if (in_array('wine', Preferences::get('TradeContext', array()))) {
+    $form = new SearchForm('WineLocationExecutedMovement');
+} else {
+    $form = new SearchForm('LocationExecutedMovement');
+}
 
 $form->customizationEnabled = true;  // les criteres de recherches sont desactivables
 $form->hiddenCriteriaByDefault = array('Commercial', 'CommandDate');
@@ -302,6 +307,7 @@ if (isset($_REQUEST['exmId']) || true === $form->displayGrid() || $form->isFirst
                                           UserAccount::PROFILE_GESTIONNAIRE_STOCK)));
         // Pour tous les Profiles
         $grid->NewAction('Print');
+
         $grid->NewAction('Export', array('FileName' => _('Executed movements'),
                 'FirstArrival' => $form->isFirstArrival()));
 
@@ -314,7 +320,25 @@ if (isset($_REQUEST['exmId']) || true === $form->displayGrid() || $form->isFirst
                       'TranslationMap'=>array(0=>'')));
         $grid->NewColumn('FieldMapperWithTranslation', _('Delivery order'),
                 array('Macro' =>'%DeliveryOrder.DocumentNo%',
-                      'TranslationMap'=>array(0=>'')));
+                'TranslationMap'=>array(0=>'')));
+
+        if (in_array('wine', Preferences::get('TradeContext', array()))) {
+            $grid->NewAction('Redirect',
+                array('Caption' => _('Generate DCA'),
+                    'Title' => _('Generate and Print DCA'),
+                    'TransmitedArrayName'=>'itemsIds',
+                    'TargetPopup' => true,
+                    'allowEmptySelection' => True,
+                    'Profiles' => array(UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,
+                                          UserAccount::PROFILE_GESTIONNAIRE_STOCK),
+                    'ReturnURL' => 'javascript:window.close();',
+                    'URL' => 'WineDCAEdit.php?'));
+
+            $grid->NewColumn('FieldMapperWithTranslation', _('DCA'),
+                array('Macro' =>'%DCA.DocumentNo%',
+                'TranslationMap'=>array(0=>'')));
+        }
+
     }
     $grid->NewColumn('FieldMapperWithTranslationExpression', _('Qty'),
             array('Macro' =>'%Product.SellUnitType.Id%',

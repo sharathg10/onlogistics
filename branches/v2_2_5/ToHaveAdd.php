@@ -72,15 +72,17 @@ if (isset($_REQUEST['formSubmitted'])) {
 	$ToHave->setSupplierCustomer($SupplierCustomer);
 	// L'Id sert a composer le DocumentNo, s'il n'est pas saisi
 	$ToHaveMapper = Mapper::singleton('ToHave');
-    $ToHaveId = $ToHaveMapper->generateId();
+    $ToHaveId = $ToHaveMapper->generateId(true);
 	$ToHave->setId($ToHaveId);
 	
 	if (!empty($_REQUEST['TH_DocumentNo'])) {
 	    $DocumentNo = $_REQUEST['TH_DocumentNo'];
 	}
 	else {
+		require_once('AbstractDocumentTools.php');
+		$DocumentId = generateClassId('ToHave');
 		require_once('InvoiceItemTools.php');
-		$DocumentNo = GenerateDocumentNo('AV', 'ToHave', $ToHaveId);
+		$DocumentNo = GenerateDocumentNo('AV', 'ToHave', $DocumentId);
 	}
 	
 	$ToHave->setDocumentNo($DocumentNo);

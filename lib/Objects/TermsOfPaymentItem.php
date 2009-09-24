@@ -150,11 +150,8 @@ class TermsOfPaymentItem extends _TermsOfPaymentItem {
                 $item = Object::load('TermsOfPaymentItem', $id);
                 list($d, $t, $s) = $item->getDateAndAmountForOrder($order);
                 $tmpAmount += $t;
-                $tmpAmount += $amount;
             }
-            if ($tmpAmount != $orderAmount) {
-                $amount = $orderAmount - $tmpAmount;
-            }
+            $amount = $orderAmount - $tmpAmount;
         }
 
         // find actor

@@ -677,12 +677,10 @@ class CommandDocumentGenerator extends DocumentGenerator
                         }
                         // Test pour voir si c'est suffisant ...
                         $amount = $this->document->getToPayForDocument() ;
+                        $amount = DocumentGenerator::formatCurrency($this->currency, $amount, 2) ;
                     }
                 }
-
-                $pdfDoc->tableBody(array(0 => array($date, 
-                    DocumentGenerator::formatCurrency($this->currency, $amount), 
-                    $toName)));
+                $pdfDoc->tableBody(array(0 => array($date, $amount, $toName)));
             }
         }
         $pdfDoc->ln(3);

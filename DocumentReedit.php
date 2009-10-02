@@ -49,7 +49,8 @@ $auth->checkProfiles(array(
     UserAccount::PROFILE_DIR_COMMERCIAL,
     UserAccount::PROFILE_GESTIONNAIRE_STOCK, 
     UserAccount::PROFILE_OPERATOR, 
-    UserAccount::PROFILE_TRANSPORTEUR
+    UserAccount::PROFILE_TRANSPORTEUR,
+    UserAccount::PROFILE_RTW_SUPPLIER
 ));
 
 if(!isset($_GET['id'])) {

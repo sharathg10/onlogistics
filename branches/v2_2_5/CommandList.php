@@ -280,6 +280,7 @@ if (true === $form->displayGrid()) {
         'Profiles' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,
                             UserAccount::PROFILE_ACTOR,UserAccount::PROFILE_ADMIN_VENTES,
                             UserAccount::PROFILE_COMMERCIAL,UserAccount::PROFILE_CUSTOMER,
+                            UserAccount::PROFILE_RTW_SUPPLIER,
                             UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_DIR_COMMERCIAL)));
 
     $grid->NewAction('Redirect', array(

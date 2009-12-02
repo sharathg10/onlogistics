@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
 <!-- Version: $Id$ -->
 <application name="onlogistics"
-    outputdir="/home/izi/GL/php/onlogistics/trunk/lib/Objects"
-    addonsdir="/home/izi/GL/php/onlogistics/trunk/lib/Objects/Addons"
-    sqloutputdir="/home/izi/GL/php/onlogistics/trunk/config/sql">
+    outputdir="/home/izi/ateor/onlogistics/lib/Objects"
+    addonsdir="/home/izi/ateor/onlogistics/lib/Objects/Addons"
+    sqloutputdir="/home/izi/ateor/onlogistics/config/sql">
     <databaseoptions type="MySQL" name="onlogistics" fieldprefix="_" />
 
     <!-- entity AbstractDocument -->
@@ -3139,6 +3139,7 @@
         <property type="foreignkey" name="Model" class="RTWModel" label="model"
             usedby="addedit,grid,searchform" required="1" ondelete="cascade"
             navigable="1"/>
+        <property type="string" name="EAN13Code" length="13" unique="1" />
     </entity>
 
     <!-- Entity RTWElement -->

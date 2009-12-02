@@ -1,0 +1,29 @@
+<form name="PreferencesWebSite" method="POST" action="{$formAction}">
+  <div class="grid">
+	<table id="table" width="100%" cellpadding="4" cellspacing="0" class="form" border="0">
+	  <thead>
+	  <tr>
+		<td colspan="2">{t}Product preferences{/t}</td>
+	  </tr>
+	  </thead>
+	  <tbody>
+	  	<tr class="grid_row_even">
+	        <td><label for="EAN13Prefix">{t}EAN13 prefix{/t}</label></td>
+            <td><input type="text" value="{$EAN13Prefix}" name="EAN13Prefix" id="EAN13Prefix" />&nbsp;</td>
+        </tr>
+        </tr>
+	  	<tr class="grid_row_odd">
+	        <td><label for="EstimateValidityDays">{t}EAN13 Sequence{/t}<br/>{t}Important: do not change this unless you are configuring a new prefix{/t}</label></td>
+            <td><input type="text" value="{$EAN13Sequence}" name="EAN13Sequence" id="EAN13Sequence" />&nbsp;</td>
+        </tr>
+	  </tbody>
+	  <tfoot>
+	  <tr>
+	    <td align="right" colspan="2">
+	      <input type="submit" name="Ok" value="{t}Ok{/t}" class="button" />
+		</td>
+	  </tr>
+	  </tfoot>
+	</table>
+  </div>
+<form>

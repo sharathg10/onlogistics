@@ -80,6 +80,7 @@ class RTWProductManager extends AbstractProductManager
             if (!($product instanceof Product)) {
                 $product = new RTWProduct();
                 $product->generateId();
+                $product->generateEAN13Code();
                 self::setProductDefaults($product);
                 $product->setSize($sizeId);
                 // affecte le produit à la chaine

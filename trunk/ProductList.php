@@ -217,6 +217,13 @@ if (in_array('readytowear', $tradeContext)) {
             'Operator'=>'In'
         )
     );
+    $customArray['EAN13Code'] = array(
+        'Name'=>'EAN13Code',
+        'SearchOptions'=>array(
+            'Path'=>'EAN13Code',
+            'Operator'=>'Like'
+        )
+    );
 }
 $res = $catalog->buildSearchForm($form, array(), $customArray);
 if (false == $res) {

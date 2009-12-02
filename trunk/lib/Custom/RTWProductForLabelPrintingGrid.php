@@ -95,6 +95,15 @@ class RTWProductForLabelPrintingGrid extends GenericGrid
                 'add_button'   => false,
                 'section'      => ''
             ),
+            'EAN13Code'=>array(
+                'label'        => _('EAN13 Code'),
+                'shortlabel'   => _('EAN13 Code'),
+                'usedby'       => array('grid', 'searchform'),
+                'required'     => true,
+                'inplace_edit' => false,
+                'add_button'   => false,
+                'section'      => ''
+            ),
         );
     }
     

@@ -4454,9 +4454,9 @@ class ProductLabelGenerator extends DocumentGenerator
         $StickerPerRow = 6 ;
         $StickerSpacing = 0 ;
 
-        $CodeHeight = 10 ;
+        $CodeHeight = 3 ;
         $CodeWidth = 50 ;
-        $LineHeight = 4 ;
+        $LineHeight = 3 ;
 
         $DocumentWidth = $PageWidth - ($PageMargeLeft + $PageMargeRight) ;
         $StickerWidth = $DocumentWidth / $StickerPerLine ;
@@ -4526,10 +4526,10 @@ class ProductLabelGenerator extends DocumentGenerator
                         $PictureWidth, $PictureHeight, $cache[$mid]['type']);
 
                     // Nom Presse
-                    $this->pdf->setXY($x+$PictureWidth , $y);
+                    $this->pdf->setXY($x+$PictureWidth-1 , $y);
                     $this->pdf->addText(
                         trim($cache[$mid]['pressname']),
-                        array('fontSize' => 10, 'lineHeight' => 4)
+                        array('fontSize' => 8, 'lineHeight' => 3, 'align' => 'L')
                     ); 
                     
                 }
@@ -4539,25 +4539,27 @@ class ProductLabelGenerator extends DocumentGenerator
                     $this->pdf->setXY($x + $PictureWidth + $CodeWidth , $y);
                     $this->pdf->addText( 
                         $size->getName(),
-                        array('fontSize' => 12, 'lineHeight' => $LineHeight , 'fontStyle' => 'B', 'align' => 'L')
+                        array('fontSize' => 10, 'lineHeight' => $LineHeight , 'fontStyle' => 'B', 'align' => 'L')
                     );
                 }
                 // reference 
-                $this->pdf->setXY($x + $PictureWidth, $y + $LineHeight+1 );
+                $this->pdf->setXY($x + $PictureWidth -1, $y + $LineHeight-0.3 );
                 $this->pdf->addText( 
                     $product->getBaseReference(),
-                    array('fontSize' => 8, 'lineHeight' => $LineHeight , 'align' => 'L')
+                    array('fontSize' => 7, 'lineHeight' => $LineHeight-0.3, 'align' => 'L')
                 );
 
-                // code barre
-                $this->pdf->setXY($x + $PictureWidth , $y + 10 );
-                $this->pdf->Code128($x+ $PictureWidth, $y+10, $product->getBaseReference(), $CodeWidth , $CodeHeight );
+                // codes barre Code 128 + EAN 13
+                $this->pdf->Code128($x + $PictureWidth, $y + 6, $product->getBaseReference(), $CodeWidth , $CodeHeight );
+                if ($product->getEAN13Code()) {
+                    $this->pdf->EAN13($x + $PictureWidth, $y + 10, $product->getEAN13Code(), 10);
+                }
 
                 // ligne descriptive ...
                 $this->pdf->setXY($x, $y+$PictureHeight);
                 $this->pdf->addText(
                     $product->getName(),
-                    array('fontSize' => 8, 'lineHeight' => 4, 'width' => $StickerRealWidth, 'align' => 'C')
+                    array('fontSize' => 7, 'lineHeight' => $LineHeight, 'width' => $StickerRealWidth, 'align' => 'C')
                 );
             }
         }

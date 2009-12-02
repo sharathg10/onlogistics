@@ -4500,20 +4500,22 @@ class ProductLabelGenerator extends DocumentGenerator
                         $cache[$mid] = array();
 
                         // image du produit
-                        $infos = ImageManager::getFileInfo(md5($model->getImage()));
-                        if ($infos['width'] > $infos['height']) {
-                            $cache[$mid]['h'] = 0;
-                        } else {
-                            $cache[$mid]['w'] = 0;
-                        }
+                        if ($model->getImage()) {
+                            $infos = ImageManager::getFileInfo(md5($model->getImage()));
+                            if ($infos['width'] > $infos['height']) {
+                                $cache[$mid]['h'] = 0;
+                            } else {
+                                $cache[$mid]['w'] = 0;
+                            }
 
-                        $cache[$mid]['w'] = $PictureWidth;
-                        $cache[$mid]['h'] = $PictureHeight;
+                            $cache[$mid]['w'] = $PictureWidth;
+                            $cache[$mid]['h'] = $PictureHeight;
 
-                        if (is_array($infos) && !empty($infos['data'])) {
-                            list(,$type) = explode('/', $infos['mimetype']);
-                            $cache[$mid]['type'] = $type;
-                            $cache[$mid]['data'] = $infos['data'];
+                            if (is_array($infos) && !empty($infos['data'])) {
+                                list(,$type) = explode('/', $infos['mimetype']);
+                                $cache[$mid]['type'] = $type;
+                                $cache[$mid]['data'] = $infos['data'];
+                            }
                         }
 
                         // style number
@@ -4522,8 +4524,10 @@ class ProductLabelGenerator extends DocumentGenerator
 
                     // Image
                     $this->pdf->setXY($x, $y);
-                    $this->pdf->image($cache[$mid]['data'], $x, $y,
-                        $PictureWidth, $PictureHeight, $cache[$mid]['type']);
+                    if ($model->getImage()) {
+                        $this->pdf->image($cache[$mid]['data'], $x, $y,
+                            $PictureWidth, $PictureHeight, $cache[$mid]['type']);
+                    }
 
                     // Nom Presse
                     $this->pdf->setXY($x+$PictureWidth-1 , $y);

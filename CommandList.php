@@ -59,7 +59,7 @@ if(!empty($siteIds)) {
     $filterCmpnt[] = SearchTools::newFilterComponent('ExpeditorSite', '', 'In', $siteIds, 1);
     $FilterComponentArray[] = SearchTools::filterAssembler($filterCmpnt, FilterComponent::OPERATOR_OR);
 }
-if ($ProfileId == UserAccount::PROFILE_CUSTOMER || $ProfileId == UserAccount::PROFILE_AERO_CUSTOMER) {
+if ($ProfileId == UserAccount::PROFILE_CUSTOMER || $ProfileId == UserAccount::PROFILE_OWNER_CUSTOMER || $ProfileId == UserAccount::PROFILE_AERO_CUSTOMER) {
     // restriction aux commandes qui ont pour destinataire l'acteur connecte
     $FilterComponentArray[] = SearchTools::NewFilterComponent(
             'Destinator', '', 'Equals', $UserConnectedActorId, 1);
@@ -129,7 +129,7 @@ if ($consultingContext) {
 }
 if ($ProfileId != UserAccount::PROFILE_RTW_SUPPLIER) {
     // Le profile client ne voit pas les ref d'achat
-    if ($ProfileId != UserAccount::PROFILE_CUSTOMER){
+    if ($ProfileId != UserAccount::PROFILE_CUSTOMER && $ProfileId != UserAccount::PROFILE_OWNER_CUSTOMER){
         $form->addElement('text', 'SupplierReference', _('Purchase reference'), array(),
             array('Path' => 'CommandItem().Product.ActorProduct().AssociatedProductReference'));
     }
@@ -279,7 +279,9 @@ if (true === $form->displayGrid()) {
         'ReturnURL' => 'javascript:window.close();',
         'Profiles' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,
                             UserAccount::PROFILE_ACTOR,UserAccount::PROFILE_ADMIN_VENTES,
-                            UserAccount::PROFILE_COMMERCIAL,UserAccount::PROFILE_CUSTOMER,
+                            UserAccount::PROFILE_COMMERCIAL,
+                            UserAccount::PROFILE_CUSTOMER,
+                            UserAccount::PROFILE_OWNER_CUSTOMER,
                             UserAccount::PROFILE_RTW_SUPPLIER,
                             UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_DIR_COMMERCIAL)));
 

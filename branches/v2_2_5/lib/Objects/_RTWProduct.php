@@ -110,6 +110,38 @@ class _RTWProduct extends Product {
     }
 
     // }}}
+    // EAN13Code string property + getter/setter {{{
+
+    /**
+     * EAN13Code string property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_EAN13Code = '';
+
+    /**
+     * _Product::getEAN13Code
+     *
+     * @access public
+     * @return string
+     */
+    public function getEAN13Code() {
+        return $this->_EAN13Code;
+    }
+
+    /**
+     * _Product::setEAN13Code
+     *
+     * @access public
+     * @param string $value
+     * @return void
+     */
+    public function setEAN13Code($value) {
+        $this->_EAN13Code = $value;
+    }
+
+    // }}}
     // getTableName() {{{
 
     /**
@@ -151,7 +183,8 @@ class _RTWProduct extends Product {
      */
     public static function getProperties($ownOnly = false) {
         $return = array(
-            'Model' => 'RTWModel');
+            'Model' => 'RTWModel',
+            'EAN13Code' => Object::TYPE_STRING);
         return $ownOnly?$return:array_merge(parent::getProperties(), $return);
     }
 
@@ -184,7 +217,7 @@ class _RTWProduct extends Product {
      * @return array
      */
     public static function getUniqueProperties() {
-        $return = array();
+        $return = array('EAN13Code');
         return array_merge(parent::getUniqueProperties(), $return);
     }
 

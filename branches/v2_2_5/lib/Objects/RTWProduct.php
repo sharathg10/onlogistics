@@ -135,6 +135,21 @@ class RTWProduct extends _RTWProduct {
     }
 
     // }}}
+    // RTWProduct::generateEAN13Code() {{{
+
+    /**
+     * Generates the EAN13 code for the current product.
+     *
+     * @access public
+     * @return void
+     */
+    public function generateEAN13Code()
+    {
+        include_once 'EAN13Tools.php';
+        $this->setEAN13Code(generateEAN13Code());
+    }
+
+    // }}}
 
 }
 

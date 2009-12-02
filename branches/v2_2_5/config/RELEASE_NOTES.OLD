@@ -4586,6 +4586,380 @@ ALTER TABLE `ActivatedChainOperation` ADD `_InvoicePrestation` INT( 11 ) NOT NUL
 ALTER TABLE `ActivatedChainOperation` ADD INDEX ( `_InvoicePrestation` ) ;
 ALTER TABLE CronTask ADD _Active INT(1) DEFAULT 1;
 
+
+####################################
+# RELEASE v2_2_5
+####################################
+
+ALTER TABLE Command ADD _ParentCommand INT(11) NOT NULL DEFAULT 0 AFTER _Command;
+
+DROP TABLE IF EXISTS RTWModel;
+DROP TABLE IF EXISTS RTWElement;
+DROP TABLE IF EXISTS rTWModelRTWOption;
+DROP TABLE IF EXISTS rTWModelRTWMaterial1;
+DROP TABLE IF EXISTS rTWModelRTWMaterial2;
+DROP TABLE IF EXISTS rTWModelRTWAccessory1;
+DROP TABLE IF EXISTS rTWModelRTWAccessory2;
+DROP TABLE IF EXISTS rTWModelRTWSize;
+
+ALTER TABLE Product DROP COLUMN _Material1;
+ALTER TABLE Product DROP COLUMN _Material2;
+ALTER TABLE Product DROP COLUMN _Accessory1;
+ALTER TABLE Product DROP COLUMN _Accessory2;
+ALTER TABLE Product DROP COLUMN _Size;
+ALTER TABLE Product ADD COLUMN _Size INT(11) NOT NULL DEFAULT 0 AFTER _Model;
+
+--
+-- Table structure for RTWModel
+--
+DROP TABLE IF EXISTS RTWModel;
+CREATE TABLE RTWModel (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Season INT(11) NOT NULL DEFAULT 0,
+  _Shape INT(11) NOT NULL DEFAULT 0,
+  _PressName INT(11) NOT NULL DEFAULT 0,
+  _StyleNumber VARCHAR(255) DEFAULT NULL,
+  _ConstructionType INT(11) NOT NULL DEFAULT 0,
+  _ConstructionCode INT(11) NOT NULL DEFAULT 0,
+  _Description VARCHAR(255) DEFAULT NULL,
+  _Manufacturer INT(11) NOT NULL DEFAULT 0,
+  _Label INT(11) NOT NULL DEFAULT 0,
+  _HeelHeight INT(11) NOT NULL DEFAULT 0,
+  _HeelReference INT(11) NOT NULL DEFAULT 0,
+  _HeelReferenceQuantity DECIMAL(10,3) DEFAULT NULL,
+  _Sole INT(11) NOT NULL DEFAULT 0,
+  _SoleQuantity DECIMAL(10,3) DEFAULT NULL,
+  _Box INT(11) NOT NULL DEFAULT 0,
+  _BoxQuantity DECIMAL(10,3) DEFAULT NULL,
+  _HandBag INT(11) NOT NULL DEFAULT 0,
+  _HandBagQuantity DECIMAL(10,3) DEFAULT NULL,
+  _Material1 INT(11) NOT NULL DEFAULT 0,
+  _Material1Quantity DECIMAL(10,3) DEFAULT NULL,
+  _Material2 INT(11) NOT NULL DEFAULT 0,
+  _Material2Quantity DECIMAL(10,3) DEFAULT NULL,
+  _Accessory1 INT(11) NOT NULL DEFAULT 0,
+  _Accessory1Quantity DECIMAL(10,3) DEFAULT NULL,
+  _Accessory2 INT(11) NOT NULL DEFAULT 0,
+  _Accessory2Quantity DECIMAL(10,3) DEFAULT NULL,
+  _Lining INT(11) NOT NULL DEFAULT 0,
+  _LiningQuantity DECIMAL(10,3) DEFAULT NULL,
+  _Insole INT(11) NOT NULL DEFAULT 0,
+  _InsoleQuantity DECIMAL(10,3) DEFAULT NULL,
+  _UnderSole INT(11) NOT NULL DEFAULT 0,
+  _UnderSoleQuantity DECIMAL(10,3) DEFAULT NULL,
+  _Lagrima INT(11) NOT NULL DEFAULT 0,
+  _LagrimaQuantity DECIMAL(10,3) DEFAULT NULL,
+  _HeelCovering INT(11) NOT NULL DEFAULT 0,
+  _HeelCoveringQuantity DECIMAL(10,3) DEFAULT NULL,
+  _Selvedge INT(11) NOT NULL DEFAULT 0,
+  _SelvedgeQuantity DECIMAL(10,3) DEFAULT NULL,
+  _Thread1 INT(11) NOT NULL DEFAULT 0,
+  _Thread2 INT(11) NOT NULL DEFAULT 0,
+  _Bamboo INT(11) NOT NULL DEFAULT 0,
+  _BambooQuantity DECIMAL(10,3) DEFAULT NULL,
+  _Image VARCHAR(255) DEFAULT NULL,
+  _Comment TEXT DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _Season ON RTWModel (_Season);
+CREATE INDEX _Shape ON RTWModel (_Shape);
+CREATE INDEX _PressName ON RTWModel (_PressName);
+CREATE INDEX _ConstructionType ON RTWModel (_ConstructionType);
+CREATE INDEX _ConstructionCode ON RTWModel (_ConstructionCode);
+CREATE INDEX _Manufacturer ON RTWModel (_Manufacturer);
+CREATE INDEX _Label ON RTWModel (_Label);
+CREATE INDEX _HeelHeight ON RTWModel (_HeelHeight);
+CREATE INDEX _HeelReference ON RTWModel (_HeelReference);
+CREATE INDEX _Sole ON RTWModel (_Sole);
+CREATE INDEX _Box ON RTWModel (_Box);
+CREATE INDEX _HandBag ON RTWModel (_HandBag);
+CREATE INDEX _Material1 ON RTWModel (_Material1);
+CREATE INDEX _Material2 ON RTWModel (_Material2);
+CREATE INDEX _Accessory1 ON RTWModel (_Accessory1);
+CREATE INDEX _Accessory2 ON RTWModel (_Accessory2);
+CREATE INDEX _Lining ON RTWModel (_Lining);
+CREATE INDEX _Insole ON RTWModel (_Insole);
+CREATE INDEX _UnderSole ON RTWModel (_UnderSole);
+CREATE INDEX _Lagrima ON RTWModel (_Lagrima);
+CREATE INDEX _HeelCovering ON RTWModel (_HeelCovering);
+CREATE INDEX _Selvedge ON RTWModel (_Selvedge);
+CREATE INDEX _Thread1 ON RTWModel (_Thread1);
+CREATE INDEX _Thread2 ON RTWModel (_Thread2);
+CREATE INDEX _Bamboo ON RTWModel (_Bamboo);
+
+--
+-- Table structure for RTWElement
+--
+DROP TABLE IF EXISTS RTWElement;
+CREATE TABLE RTWElement (
+  _Id int(11) unsigned NOT NULL default '0',
+  _DBId int(11) default 0,
+  _ClassName VARCHAR(255) DEFAULT NULL,
+  _Name INT(11) NOT NULL DEFAULT '0',
+  _SupplierReference VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+--
+-- Table structure for rTWModelRTWSize
+--
+DROP TABLE IF EXISTS rTWModelRTWSize;
+CREATE TABLE rTWModelRTWSize (
+  _ToRTWSize int(11) unsigned NOT NULL default '0',
+  _FromRTWModel int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_ToRTWSize, _FromRTWModel)
+) TYPE=InnoDB CHARSET=latin1;
+
+# nettoyage properties/catalogues
+delete from CatalogCriteria where _Property not in (select _Id from Property);
+
+# modif chaines
+ALTER TABLE Chain ADD COLUMN _AutoAssignTo INT(3) NOT NULL DEFAULT 0;
+
+# modif prix
+
+ALTER TABLE PriceByCurrency ADD COLUMN 
+    _RecommendedPrice DECIMAL(10,2) NOT NULL DEFAULT 0 AFTER _DBId;
+ALTER TABLE PriceByCurrency ADD COLUMN 
+    _PricingZone INT(11) NOT NULL DEFAULT 0;
+CREATE INDEX _PricingZone ON PriceByCurrency (_PricingZone);
+ALTER TABLE Actor ADD COLUMN 
+    _PricingZone INT(11) NOT NULL DEFAULT 0 AFTER _Currency;
+CREATE INDEX _PricingZone ON Actor (_PricingZone);
+
+DROP TABLE IF EXISTS PricingZone;
+CREATE TABLE PricingZone (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+# ajout polonais
+ALTER TABLE I18nString ADD _StringValue_pl_PL TEXT DEFAULT NULL;
+
+# modif composant
+ALTER TABLE Component ADD _PercentWasted DECIMAL(10,2) NOT NULL DEFAULT 0 AFTER _Quantity;
+
+# Table structure for ContactRole
+DROP TABLE IF EXISTS ContactRole;
+CREATE TABLE ContactRole (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+ALTER TABLE Contact DROP COLUMN _Fonction;
+ALTER TABLE Contact ADD _Role INT(11) NOT NULL DEFAULT 0;
+
+# optim appro
+insert into FW_Preferences values ('PreCalculateOptimApproSuppliers', NULL, 'boolean', NULL, 1, 0, 0, NULL, NULL);
+
+# ajout media planta
+ALTER TABLE RTWModel ADD _MediaPlanta INT(11) NOT NULL DEFAULT 0 AFTER _UnderSoleQuantity;
+ALTER TABLE RTWModel ADD _MediaPlantaQuantity DECIMAL(10,3) DEFAULT NULL AFTER _MediaPlanta;
+ALTER TABLE RTWModel ADD _ColorImage VARCHAR(255) DEFAULT NULL AFTER _Image;
+ALTER TABLE UserAccount ADD _CommissionPercent DECIMAL(10,2) NOT NULL DEFAULT 0;
+ALTER TABLE AbstractDocument ADD _CommercialCommissionPercent DECIMAL(10,2) NOT NULL DEFAULT 0 AFTER _TaxStamp;
+ALTER TABLE AbstractDocument ADD _CommercialCommissionAmount DECIMAL(10,2) NOT NULL DEFAULT 0 AFTER _CommercialCommissionPercent;
+
+# Table structure for DocumentAppendix
+DROP TABLE IF EXISTS DocumentAppendix;
+CREATE TABLE DocumentAppendix (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Code VARCHAR(255) DEFAULT NULL,
+  _Title VARCHAR(255) DEFAULT NULL,
+  _Body TEXT DEFAULT NULL,
+  _Image VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE UNIQUE INDEX _Code ON DocumentAppendix (_Code);
+
+# Table structure for actDocumentAppendix
+DROP TABLE IF EXISTS actDocumentAppendix;
+CREATE TABLE actDocumentAppendix (
+  _FromActor int(11) unsigned NOT NULL default '0',
+  _ToDocumentAppendix int(11) unsigned NOT NULL default '0',
+  PRIMARY KEY (_FromActor, _ToDocumentAppendix)
+) TYPE=InnoDB CHARSET=latin1;
+
+
+set @id=(select IFNULL(max(_Id),0) from DocumentModel);
+INSERT INTO `DocumentModel` VALUES (@id+1,0,'RECEPISSE DE COMMANDE','',1,'CommandReceipt',1,0,1,1,1,0);
+
+ALTER TABLE I18nString ADD _StringValue_es_ES TEXT DEFAULT NULL;
+
+
+set @id=(select IFNULL(max(_Id),0) from Incoterm);
+insert into Incoterm values (@id+1, NULL, "FD", "Free Domicile", 0, 1);
+
+# migration CommercialName / ScientificName
+ALTER TABLE Product ADD _ScientificName VARCHAR(255) DEFAULT NULL AFTER _CommercialName;
+UPDATE Product SET _ScientificName=(SELECT _StringValue_fr_FR FROM I18nString where _Id=_Name) WHERE _ClassName='RTWMaterial';
+UPDATE I18nString i, Product p SET i._StringValue_fr_FR=p._CommercialName WHERE i._Id=p._Name and p._ClassName="RTWMaterial";
+ALTER TABLE Product DROP _CommercialName;
+
+# sell unit types
+ALTER TABLE SellUnitType ADD _ConstName VARCHAR(255) DEFAULT NULL;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_UB" WHERE _Id=1;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_UC" WHERE _Id=2;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_UE" WHERE _Id=3;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_UR" WHERE _Id=4;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_KG" WHERE _Id=5;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_LI" WHERE _Id=6;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_GA" WHERE _Id=7;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_OZ" WHERE _Id=8;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_MM" WHERE _Id=9;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_CM" WHERE _Id=10;
+UPDATE SellUnitType SET _ConstName="SELLUNITTYPE_MT" WHERE _Id=11;
+
+# terms of payment
+ALTER TABLE Actor DROP _PaymentCondition;
+ALTER TABLE AbstractDocument DROP _PaymentCondition;
+ALTER TABLE SupplierCustomer DROP _Option;
+ALTER TABLE SupplierCustomer DROP _TotalDays;
+ALTER TABLE SupplierCustomer DROP _Modality;
+ALTER TABLE SupplierCustomer ADD _TermsOfPayment INT(11) NOT NULL DEFAULT 0 AFTER _Customer;
+
+DROP TABLE IF EXISTS TermsOfPayment;
+CREATE TABLE TermsOfPayment (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _Name VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+DROP TABLE IF EXISTS TermsOfPaymentItem;
+CREATE TABLE TermsOfPaymentItem (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _PercentOfTotal DECIMAL(10,2) DEFAULT NULL,
+  _PaymentDelay INT(11) NOT NULL DEFAULT 0,
+  _PaymentOption INT(3) NOT NULL DEFAULT 0,
+  _PaymentEvent INT(3) NOT NULL DEFAULT 0,
+  _PaymentModality INT(3) NOT NULL DEFAULT 0,
+  _TermsOfPayment INT(11) NOT NULL DEFAULT 0,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE INDEX _TermsOfPayment ON TermsOfPaymentItem (_TermsOfPayment);
+
+insert into TermsOfPayment values (1, NULL, 'Chèque 30 jours net');
+insert into TermsOfPaymentItem values (1, NULL, 100, 30, 1, 6, 0, 1);
+update SupplierCustomer set _TermsOfPayment=1 where 1;
+
+# ajout TermsOfPaymentItem supplier
+ALTER TABLE TermsOfPaymentItem ADD _Supplier INT(11) NOT NULL DEFAULT 0;
+
+# nettoyage documents
+DELETE FROM AbstractDocument WHERE _Command=0 AND _ClassName IN ('Invoice','DeliveryOrder','CommandReceipt', 'Estimate');
+UPDATE AbstractDocument abd, Command cmd SET abd._ClassName='Estimate' WHERE cmd._Id = abd._Command and cmd._IsEstimate=1;
+DELETE FROM PDFDocument WHERE _Id NOT IN (select _PDFDocument from AbstractDocument);
+
+# ajout document model devis
+set @id=(select IFNULL(max(_Id),0) from DocumentModel);
+INSERT INTO `DocumentModel` VALUES (@id+1, 0, 'DEVIS', '', 1, 'Estimate', 1, 0, 1, 1, 1, 0);
+
+
+set @id=(SELECT IFNULL(MAX(_Id), 0)+1 FROM I18nString);
+INSERT INTO I18nString VALUES (@id, NULL, 'Estimate', 'Devis', '', '', '', '', '');
+INSERT INTO Alert VALUES (55001, NULL, @id, NULL, NULL);
+
+
+ALTER TABLE MovementType ADD _ConstName VARCHAR(255) DEFAULT NULL;
+ALTER TABLE MovementType CHANGE COLUMN _EntrieExit _EntrieExit INT(3) NOT NULL DEFAULT 0;
+
+UPDATE MovementType SET _ConstName="SORTIE_NORMALE" where _Id=1;
+UPDATE MovementType SET _ConstName="ENTREE_NORMALE" where _Id=2;
+UPDATE MovementType SET _ConstName="SORTIE_CASSE" where _Id=3;
+UPDATE MovementType SET _ConstName="ENTREE_SURPLUS" where _Id=4;
+UPDATE MovementType SET _ConstName="SORTIE_INVENT" where _Id=5;
+UPDATE MovementType SET _ConstName="ENTREE_INVENT" where _Id=6;
+UPDATE MovementType SET _ConstName="SORTIE_DEPLACEMT" where _Id=8;
+UPDATE MovementType SET _ConstName="ENTREE_DEPLACEMT" where _Id=9;
+UPDATE MovementType SET _ConstName="SORTIE_ECHANTILLON" where _Id=10;
+UPDATE MovementType SET _ConstName="ENTREE_ECHANTILLON" where _Id=11;
+UPDATE MovementType SET _ConstName="SORTIE_MODIF_COND" where _Id=12;
+UPDATE MovementType SET _ConstName="ENTREE_MODIF_COND" where _Id=13;
+UPDATE MovementType SET _ConstName="ENTREE_INTERNE" where _Id=14;
+UPDATE MovementType SET _ConstName="SORTIE_INTERNE" where _Id=15;
+
+UPDATE AbstractDocument SET _ClassName='CommandReceiptSupplier' where _ClassName='CommandReceipt' and _CommandType=2;
+set @id=(select IFNULL(max(_Id),0) from DocumentModel);
+INSERT INTO `DocumentModel` VALUES (@id+1,0,'COMMANDE FOURNISSEUR','',1,'CommandReceiptSupplier',1,0,1,1,1,0);
+
+ALTER TABLE SupplierCustomer ADD _Factor INT(11) NOT NULL DEFAULT 0;
+
+ALTER TABLE RTWModel ADD _Material3 INT(11) NOT NULL DEFAULT 0 AFTER _Material2Quantity;
+ALTER TABLE RTWModel ADD _Material3Quantity DECIMAL(10,3) DEFAULT NULL AFTER _Material3;
+ALTER TABLE RTWModel ADD _Accessory3 INT(11) NOT NULL DEFAULT 0 AFTER _Accessory2Quantity;
+ALTER TABLE RTWModel ADD _Accessory3Quantity DECIMAL(10,3) DEFAULT NULL AFTER _Accessory3;
+CREATE INDEX _Material3 ON RTWModel (_Material3);
+CREATE INDEX _Accessory3 ON RTWModel (_Accessory3);
+
+ALTER TABLE RTWModel ADD _HeelReferenceNomenclature INT(1) DEFAULT 1 AFTER _HeelReferenceQuantity;
+ALTER TABLE RTWModel ADD _SoleNomenclature INT(1) DEFAULT 1 AFTER _SoleQuantity;
+ALTER TABLE RTWModel ADD _BoxNomenclature INT(1) DEFAULT 1 AFTER _BoxQuantity;
+ALTER TABLE RTWModel ADD _HandBagNomenclature INT(1) DEFAULT 1 AFTER _HandBagQuantity;
+ALTER TABLE RTWModel ADD _Material1Nomenclature INT(1) DEFAULT 1 AFTER _Material1Quantity;
+ALTER TABLE RTWModel ADD _Material2Nomenclature INT(1) DEFAULT 1 AFTER _Material2Quantity;
+ALTER TABLE RTWModel ADD _Material3Nomenclature INT(1) DEFAULT 1 AFTER _Material3Quantity;
+ALTER TABLE RTWModel ADD _Accessory1Nomenclature INT(1) DEFAULT 1 AFTER _Accessory1Quantity;
+ALTER TABLE RTWModel ADD _Accessory2Nomenclature INT(1) DEFAULT 1 AFTER _Accessory2Quantity;
+ALTER TABLE RTWModel ADD _Accessory3Nomenclature INT(1) DEFAULT 1 AFTER _Accessory3Quantity;
+ALTER TABLE RTWModel ADD _LiningNomenclature INT(1) DEFAULT 1 AFTER _LiningQuantity;
+ALTER TABLE RTWModel ADD _InsoleNomenclature INT(1) DEFAULT 1 AFTER _InsoleQuantity;
+ALTER TABLE RTWModel ADD _UnderSoleNomenclature INT(1) DEFAULT 1 AFTER _UnderSoleQuantity;
+ALTER TABLE RTWModel ADD _MediaPlantaNomenclature INT(1) DEFAULT 1 AFTER _MediaPlantaQuantity;
+ALTER TABLE RTWModel ADD _LagrimaNomenclature INT(1) DEFAULT 1 AFTER _LagrimaQuantity;
+ALTER TABLE RTWModel ADD _HeelCoveringNomenclature INT(1) DEFAULT 1 AFTER _HeelCoveringQuantity;
+ALTER TABLE RTWModel ADD _SelvedgeNomenclature INT(1) DEFAULT 1 AFTER _SelvedgeQuantity;
+ALTER TABLE RTWModel ADD _BambooNomenclature INT(1) DEFAULT 1 AFTER _BambooQuantity;
+
+
+ALTER TABLE AbstractDocument DROP _Box;
+ALTER TABLE Product ADD _ProductModel INT(11) NOT NULL DEFAULT 0 AFTER _Owner;
+CREATE INDEX _ProductModel ON Product (_ProductModel);
+
+DROP TABLE IF EXISTS ProductModel;
+CREATE TABLE ProductModel (
+  _Id int(11) unsigned NOT NULL default 0,
+  _DBId int(11) default 0,
+  _BaseReference VARCHAR(255) DEFAULT NULL,
+  _ProductType INT(11) NOT NULL DEFAULT 0,
+  _Owner INT(11) NOT NULL DEFAULT 0,
+  _Manufacturer INT(11) NOT NULL DEFAULT 0,
+  _TVA INT(11) NOT NULL DEFAULT 0,
+  _Description TEXT DEFAULT NULL,
+  PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+CREATE UNIQUE INDEX _BaseReference ON ProductModel (_BaseReference);
+CREATE INDEX _ProductType ON ProductModel (_ProductType);
+CREATE INDEX _Owner ON ProductModel (_Owner);
+CREATE INDEX _Manufacturer ON ProductModel (_Manufacturer);
+CREATE INDEX _TVA ON ProductModel (_TVA);
+
+DROP TABLE IF EXISTS productModelRTWSize;
+CREATE TABLE productModelRTWSize (
+  _FromProductModel int(11) unsigned NOT NULL default 0,
+  _ToRTWSize int(11) unsigned NOT NULL default 0,
+  PRIMARY KEY (_FromProductModel, _ToRTWSize)
+) TYPE=InnoDB CHARSET=latin1;
+
+
+DELETE FROM FW_Preferences WHERE name in ('EAN13Prefix', 'EAN13Sequence');
+INSERT INTO FW_Preferences (name, type, string_value) VALUES ('EAN13Prefix', 'string', '123456');
+INSERT INTO FW_Preferences (name, type, int_value) VALUES ('EAN13Sequence', 'integer', 0);
+ALTER TABLE Product ADD `_EAN13Code` varchar(13) default NULL AFTER _Model;
+ALTER TABLE Product ADD UNIQUE KEY `_EAN13Code` (`_EAN13Code`);
+
+
 ####################################
 # Ne pas enlever
 COMMIT;

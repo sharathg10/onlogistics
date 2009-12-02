@@ -76,6 +76,7 @@ function generateEAN13Code()
 
     // ok now we must increment the EAN13 sequence
     Preferences::set('EAN13Sequence', $seq+1);
+    Preferences::save();
 
     return $digits . $check_digit;
 }

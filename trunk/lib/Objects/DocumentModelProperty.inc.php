@@ -84,7 +84,8 @@ function getDocumentModelPropertyCellValue($cell, $documentGenerator, $cmd=false
     if($cmd instanceof Command) {
         $destinator = $cmd->getDestinator();
     }
-    if ($documentGenerator instanceof InvoicesListGenerator) {
+    if ($documentGenerator instanceof InvoicesListGenerator ||
+        $documentGenerator instanceof ToHaveGenerator) {
     	$destinator = $documentGenerator->destinator;
     }
     $value = '';

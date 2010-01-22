@@ -609,6 +609,12 @@ $menu_metadata = array(
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_AERO_CUSTOMER,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_AERO_INSTRUCTOR,UserAccount::PROFILE_DIR_COMMERCIAL),
                 'restrict_to_context' => array('aero')
             ),
+            array(
+                'title' => _('Eots reports'),
+                'link' => 'dispatcher.php?entity=EotsReport',
+                'description' => _('List the EOTS reports'),
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_CUSTOMER,UserAccount::PROFILE_COMMERCIAL,UserAccount::PROFILE_ADMIN_VENTES,UserAccount::PROFILE_AERO_ADMIN_VENTES,UserAccount::PROFILE_DIR_COMMERCIAL,UserAccount::PROFILE_OWNER_CUSTOMER,UserAccount::PROFILE_PRODUCT_MANAGER)
+            ),
         )
     ),
     // }}}

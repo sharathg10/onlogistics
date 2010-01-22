@@ -41,6 +41,22 @@ INSERT INTO FW_Preferences (name, type, int_value) VALUES ('EAN13Sequence', 'int
 ALTER TABLE Product ADD `_EAN13Code` varchar(13) default NULL AFTER _Model;
 ALTER TABLE Product ADD UNIQUE KEY `_EAN13Code` (`_EAN13Code`);
 
+create table EotsReport (
+    _Id int(11) unsigned NOT NULL default '0',
+    _Command int(11) NOT NULL DEFAULT '0',
+    _ShipperID text,
+    PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
+create table EotsReportItem (
+    _Id int(11) unsigned NOT NULL default '0',
+    _EotsReport int(11) NOT NULL DEFAULT '0',
+    _SN text,
+    _State int(11),
+    _Detail int,
+    PRIMARY KEY (_Id)
+) TYPE=InnoDB CHARSET=latin1;
+
 ####################################
 # Ne pas enlever
 COMMIT;

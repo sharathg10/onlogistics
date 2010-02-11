@@ -1029,7 +1029,7 @@ class InvoiceGenerator extends CommandDocumentGenerator
         $this->renderIncoterm($pdfDoc);
         $this->renderTermsOfPayment($pdfDoc);
         $this->renderComment($pdfDoc);
-        $this->renderAppendices($pdfDoc);
+        //$this->renderAppendices($pdfDoc);
         return $pdfDoc;
     }
     // }}}
@@ -1304,7 +1304,7 @@ class RTWInvoiceGenerator extends InvoiceGenerator
         $this->renderIncoterm($pdfDoc);
         $this->renderTermsOfPayment($pdfDoc);
         $this->renderComment($pdfDoc);
-        $this->renderAppendices($pdfDoc);
+        //$this->renderAppendices($pdfDoc);
         return $pdfDoc;
     }
 

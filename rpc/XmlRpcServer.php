@@ -1607,7 +1607,14 @@ class OnlogisticsXmlRpcServer extends XmlRpcServer{
     }
 
     // }}}
-    
+   
+    /**
+     * Recupère les SN liés à une commande et retourne la liste
+     *
+     * @param string $method
+     * @param array $params le numéro de la commande
+     * @return array
+     */
     public function getCommandSNs($method, $params)
     {
         $this->auth();
@@ -1633,6 +1640,13 @@ class OnlogisticsXmlRpcServer extends XmlRpcServer{
         return $snList;
     }
 
+    /**
+     * Sauve les rapports EOTS en base
+     *
+     * @param string $method
+     * @param array $params eots report
+     * @return mixed
+     */
     protected function putEotsReport($method, $params)
     {
         $this->auth();

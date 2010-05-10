@@ -37,7 +37,7 @@
             class="SupplierCustomer" navigable="1" />
         <property type="foreignkey" name="Currency" class="Currency" />
         <property type="foreignkey" name="AccountingTypeActor" class="Actor" />
-        <property type="foreignkey" name="PDFDocument" class="PDFDocument"
+        <property type="foreignkey" name="Document" class="Document"
              multiplicity="onetoone" ondelete="cascade" navigable="1" />
         <property type="string" length="10" name="Locale" />
     </entity>
@@ -2081,8 +2081,13 @@
         <property type="foreignkey" name="ActorBankDetail" class="ActorBankDetail" />
     </entity>
 
-    <!-- entity PDFDocument -->
-    <entity name="PDFDocument" tablename="PDFDocument">
+    <!-- entity Document -->
+    <entity name="Document" tablename="Document">
+        <property type="const" name="Type" default="0" required="1">
+            <const name="TYPE_TXT" label="text/plain" value="0" />
+            <const name="TYPE_PDF" label="application/pdf" value="1" />
+            <const name="TYPE_CSV" label="text/csv" value="2" />
+        </property>
         <property type="longtext" name="Data" />
     </entity>
 

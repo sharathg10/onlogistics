@@ -73,7 +73,7 @@ if (!($doc instanceof AbstractDocument)) {
 }
 
 $pdfDoc = $doc->getDocument();
-if (!($pdfDoc instanceof Document) || ($data = $pdfDoc->getData()) == null) {
+if (!($pdfDoc instanceof Document)) {// || ($data = $pdfDoc->getData()) == null) {
     $url = $doc->getDocumentReeditionURL(get_class($doc));
     Tools::redirectTo(sprintf($url, $_GET['id']));
     exit(0);
@@ -95,6 +95,7 @@ switch($pdfDoc->getType()){
         break;
 }
 
+$data = $pdfDoc->getData();
 header('Content-Type: '.$contenttype);
 header('Content-Length: '.strlen($data));
 header('Content-disposition: inline; filename="'.$doc->DocumentNo.'-reedition.'.$fileextension.'"');

@@ -344,10 +344,10 @@ class DocumentGenerator
             $float = strval($float) . '0';
         }
         $numberWords = new Numbers_Words();
-        $str = $numberWords->toCurrency($float, getNumberWordsLangParam(), $this->currencyCode);
-        if(is_string($str)) {
-            return $str;
-        }
+        //$str = $numberWords->toCurrency($float, getNumberWordsLangParam(), $this->currencyCode);
+        //if(is_string($str)) {
+        //    return $str;
+        //}
         // pas de méthode pour la langue, on fait ca à l'ancienne
         // fonction définie dans lib-functions/LangTools.php
         $lparam = getNumberWordsLangParam();

@@ -59,6 +59,9 @@ if(!empty($siteIds)) {
     $filterCmpnt[] = SearchTools::newFilterComponent('ExpeditorSite', '', 'In', $siteIds, 1);
     $FilterComponentArray[] = SearchTools::filterAssembler($filterCmpnt, FilterComponent::OPERATOR_OR);
 }
+
+$CommandStateArray = array('##'=>_('Select one or more states')) + Command::getStateConstArray();
+
 if ($ProfileId == UserAccount::PROFILE_CUSTOMER || $ProfileId == UserAccount::PROFILE_OWNER_CUSTOMER || $ProfileId == UserAccount::PROFILE_AERO_CUSTOMER) {
     // restriction aux commandes qui ont pour destinataire l'acteur connecte
     $FilterComponentArray[] = SearchTools::NewFilterComponent(
@@ -147,8 +150,6 @@ if ($ProfileId != UserAccount::PROFILE_RTW_SUPPLIER) {
     $form->addElement('checkbox', 'Closed', _('Closed'));
     $form->addElement('checkbox', 'NotClosed', _('Not closed'), array(),
         array('Path' => 'Closed', 'Operator' => 'NotEquals'));
-    $CommandStateArray = array('##'=>_('Select one or more states'))
-        + Command::getStateConstArray();
     $form->addElement('select', 'State', _('State'),
         array($CommandStateArray, 'multiple="multiple" size="5"'));
 
@@ -180,6 +181,8 @@ if ($ProfileId != UserAccount::PROFILE_RTW_SUPPLIER) {
     $form->addElement('text', 'StyleNumber', _('Style number'), array(), array(
         'Path' => 'CommandItem().Product@RTWProduct.Model.StyleNumber'
     ));
+    $form->addElement('select', 'State', _('State'),
+        array($CommandStateArray, 'multiple="multiple" size="5"'));
 }
 
 
@@ -317,10 +320,11 @@ if (true === $form->displayGrid()) {
 
     $grid->NewColumn('FieldMapper', _('Terms of payment'),
         array('Macro' => '%TermsOfPayment.Name%'));
+    
+    $grid->NewColumn('FieldMapperWithTranslation', _('State'),
+        array('Macro' => '%State%','TranslationMap' => $ShortCommandStateArray));
 
     if ($ProfileId != UserAccount::PROFILE_RTW_SUPPLIER) {
-        $grid->NewColumn('FieldMapperWithTranslation', _('State'),
-            array('Macro' => '%State%','TranslationMap' => $ShortCommandStateArray));
         $grid->NewColumn('MultiPrice', _('Amount incl. VAT'),
             array('Method' => 'getTotalPriceTTC', 'Sortable' => false,
                   'DataType' => 'numeric'));

@@ -47,6 +47,7 @@ connect(window, 'onload', function() {
             }
             subd.addCallback(subdCB);
 	    }
+        RecalculateTotalQuantity();
     }
     connect(document.forms[0], 'onsubmit', validation);
 });
@@ -101,6 +102,18 @@ function RecalculateUpdateIncur() {
 	UpdateIncur = subs(UpdateIncur, Instalment);
 	// arrondi: inutile, suite a la troncature
     document.forms[0].elements["UpdateIncur"].value = isNaN(UpdateIncur)?"---":troncature(UpdateIncur, true);
+}
+
+function RecalculateTotalQuantity() {
+    try {
+        totalQty = 0;
+        for (var i=0; i < document.forms[0].elements['qty[]'].length; i++) {
+            totalQty += parseInt(document.forms[0].elements['qty[]'][i].value);
+        }
+        document.forms[0].elements['totalItemQuantity'].value = isNaN(totalQty) ? '---' : totalQty;
+    } catch (e) {
+        document.forms[0].elements['totalItemQuantity'].value = '---';
+    }
 }
 
 function validation(evt) {
@@ -377,6 +390,7 @@ function RecalculateTotal(updateAll) {
         document.forms[0].elements["TotalHT"].value = isNaN(totalHT)?"---":troncature(totalHT, true);
         document.forms[0].elements["TotalTTC"].value = isNaN(totalTTC)?"---":troncature(totalTTC, true);
 	}
+	RecalculateTotalQuantity()
 	RecalculateToPay()
 }
 

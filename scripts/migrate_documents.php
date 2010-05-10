@@ -48,7 +48,7 @@ if (!defined('ARCHIVED_DOCUMENTS_DIR')) {
     );
 }
 
-$sql     = 'SELECT _Id, _Type, _Data from Document limit 5;';
+$sql     = 'SELECT _Id, _Type, _Data from Document;';
 $typemap = array('txt', 'pdf', 'csv');
 $basedir = ARCHIVED_DOCUMENTS_DIR . DIRECTORY_SEPARATOR . ENVIRONMENT;
 
@@ -77,6 +77,9 @@ foreach($GLOBALS['DSNS'] as $dsn_name) {
 
     while (!$rs->EOF) {
         $file = $basedir_with_realm . DIRECTORY_SEPARATOR . $rs->fields['_Id'];
+        if (file_exists($file)) {
+            continue;
+        }
         if (isset($typemap[$rs->fields['_Type']])) {
             $file .= '.' . $typemap[$rs->fields['_Type']];
         }

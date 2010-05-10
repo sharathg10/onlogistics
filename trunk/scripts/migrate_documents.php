@@ -50,19 +50,7 @@ if (!defined('ARCHIVED_DOCUMENTS_DIR')) {
 
 $sql     = 'SELECT _Id, _Type, _Data from Document limit 5;';
 $typemap = array('txt', 'pdf', 'csv');
-$basedir = ARCHIVED_DOCUMENTS_DIR . DIRECTORY_SEPARATOR . ENVIRONMENT
-         . DIRECTORY_SEPARATOR;
-
-if (!is_dir($basedir)) {
-    // we're permissive here because scripts are not run under the same user as 
-    // the webserver... so nevermind, let's make this writable to the world !
-    if (!@mkdir($basedir, 0777, true)) {
-        trigger_error(
-            "Cannot create ${basedir}, make sure ARCHIVED_DOCUMENTS_DIR is writable.",
-            E_USER_ERROR
-        );
-    }
-}
+$basedir = ARCHIVED_DOCUMENTS_DIR . DIRECTORY_SEPARATOR . ENVIRONMENT;
 
 foreach($GLOBALS['DSNS'] as $dsn_name) {
     $realm = strtolower(substr($dsn_name, 4));
@@ -73,9 +61,22 @@ foreach($GLOBALS['DSNS'] as $dsn_name) {
     Database::connection($dsn)->connect();
     Database::connection()->startTrans();
     $rs = Database::connection()->execute($sql);
+    if (false === $rs) {
+        continue;
+    }
+    $basedir_with_realm = $basedir . DIRECTORY_SEPARATOR . $realm;
+
+    if (!is_dir($basedir_with_realm)) {
+        if (!@mkdir($basedir_with_realm, 0777, true)) {
+            trigger_error(
+                "Cannot create ${basedir_with_realm}, make sure ARCHIVED_DOCUMENTS_DIR is writable.",
+                E_USER_ERROR
+            );
+        }
+    }
 
     while (!$rs->EOF) {
-        $file = $basedir . Auth::getRealm() . DIRECTORY_SEPARATOR . $rs->fields['_Id'];
+        $file = $basedir_with_realm . DIRECTORY_SEPARATOR . $rs->fields['_Id'];
         if (isset($typemap[$rs->fields['_Type']])) {
             $file .= '.' . $typemap[$rs->fields['_Type']];
         }

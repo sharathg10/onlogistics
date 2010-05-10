@@ -253,17 +253,27 @@ $smarty->assign('ToHaveTTC', I18N::formatNumber($sp->getToHaveTTC()));
 $smarty->assign('InvoiceItemGrid', $InvoiceItemGrid);
 
 // calcul de la facture
+$handing   = $Command->getHanding();
+$insurance = $Command->getInsurance();
+$packing   = $Command->getPacking();
+$ht = $ttc = $rawht = 0;
+
+/*
 $prsManager = new PrestationManager();
 $prices = $prsManager->calculChainCommandCost($Command);
-$ht = $ttc = 0;
 foreach($prices as $key=>$values) {
     $ht += $values['totalht'];
     $ttc += $values['totalttc'];
 }
 $rawht = $ht;
-$handing   = $Command->getHanding();
-$insurance = $Command->getInsurance();
-$packing   = $Command->getPacking();
+*/
+
+// remplace le code commente ci-dessus
+$ht = $Command->getTotalPriceHT();
+$ttc = $Command->getTotalPriceTTC();
+$rawht = $ht;
+// end remplace
+
 $ht  = ($ht - ($ht * $handing/100)) + $insurance + $packing;
 $ttc = ($ttc - ($ttc * $handing/100)) + $insurance + $packing;
 $sc  = $Command->getSupplierCustomer();
@@ -272,12 +282,13 @@ if (!($sc instanceof SupplierCustomer) || $sc->getHasTVA()) {
     $ttc += ($insurance * (getTVARateByCategory(TVA::TYPE_INSURANCE)/100))
         + ($packing   * (getTVARateByCategory(TVA::TYPE_PACKING)/100));
 }
+
 //frais annexes et remises
 $smarty->assign('Packing', $packing);
 $smarty->assign('Insurance', $insurance);
 $smarty->assign('totalPrestHT', $rawht);
 $smarty->assign('TotalPriceHT', $ht);
-$smarty->assign('ToPay', $ttc-$Command->getTotalInstalments());
+$smarty->assign('ToPay', $ttc - $Command->getTotalInstalments());
 $smarty->assign('TVATotal', $ttc-$ht);
 $smarty->assign('GlobalHanding', $handing);
 

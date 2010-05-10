@@ -45,6 +45,18 @@
     {/section}
   </tbody>
   <tfoot>
+	<tr>
+        <td valign="middle" align="right" colspan="4">Quantite totale</td>
+        <td valign="middle" align="left"><input type="text" id="totalItemQuantity" value="{$totalItemQuantity}" style="width: 50px;"/></td>
+        <td colspan="6">&nbsp;</td>
+    </tr>
+
+	<td colspan="{math equation="y + x" y=$smarty.section.GridHeader.total x=1}">
+		<input type="image" name="suppr" src="images/sup.gif" border="0"
+		alt="{t}Delete selected items{/t}"
+		onclick="javascript:return validSuppr();" />
+	</td>
+	</tr>
 	<tr align="right">
 	<td colspan="{math equation="y + x" y=$smarty.section.GridHeader.total x=1}">
 		<input type="image" name="suppr" src="images/sup.gif" border="0"

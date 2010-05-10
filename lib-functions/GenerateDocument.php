@@ -82,7 +82,7 @@ function generateDocument($document, $reedit=0, $output='I') {
         return $pdf->output($name, $output);
     } else if ($document instanceof DeliveryOrder) { 
         $cmd = $document->getCommand();
-        if (in_array('readytowear', $context) && $cmd->getType() == Command::TYPE_CUSTOMER) {
+        if ((in_array('readytowear', $context) || in_array('readytowear2', $context)) && $cmd->getType() == Command::TYPE_CUSTOMER) {
             $generator_name = 'RTWDeliveryOrderGenerator';
         } else {
             $generator_name = 'DeliveryOrderGenerator';

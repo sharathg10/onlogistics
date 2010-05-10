@@ -1605,6 +1605,67 @@ class OnlogisticsXmlRpcServer extends XmlRpcServer{
     }
 
     // }}}
+   
+    /**
+     * Recupère les SN liés à une commande et retourne la liste
+     *
+     * @param string $method
+     * @param array $params le numéro de la commande
+     * @return array
+     */
+    public function getCommandSNs($method, $params)
+    {
+        $this->auth();
+        $this->log('OnlogisticsXmlRpcServer::getCommandSNs called');
+
+        $user = $this->auth->getUser();
+        $cmdNumber = $params[0];
+        
+        $mapper_cp = Mapper::singleton('ConcreteProduct');
+        $filter= SearchTools::NewFilterComponent(
+            'commandNo', 
+            'Product.ProductCommandItem().Command.CommandNo', 
+            'Equals', 
+            $cmdNumber, 
+            true, 
+            'ConcreteProduct');
+
+        $concreteProducts = $mapper_cp->loadCollection($filter);
+        $snList = array();
+        foreach ($concreteProducts as $cp) {
+            $snList[] = $cp->getSerialNumber();
+        }
+        return $snList;
+    }
+
+    /**
+     * Sauve les rapports EOTS en base
+     *
+     * @param string $method
+     * @param array $params eots report
+     * @return mixed
+     */
+    protected function putEotsReport($method, $params)
+    {
+        $this->auth();
+        $this->log('OnlogisticsXmlRpcServer::putEotsReport called');
+        require_once('EotsXMLParsing.php');
+        $data = $params[0];
+        $errors = "";
+        $padding = "";
+        foreach($data as $rang=>$xmldata) {
+            $this->log('parse report ' . $rang);
+            $result = parseEotsReport($xmldata, $rang);
+            if (is_string($result)) {
+                $errors .= $padding . $result;
+                $padding = "<br />";
+            }
+        }
+        if (strlen($errors) == 0) {
+            return true;
+        }
+        return $errors;
+    }
 }
 
 ?>

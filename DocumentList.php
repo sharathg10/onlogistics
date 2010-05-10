@@ -146,7 +146,6 @@ if (true == $form->displayGrid()){// || $form->isFirstArrival()) {
             'TransmitedArrayName'=>'id',
             'EntityType'=>'Document'));
     }
-	$grid->NewColumn('FieldMapper', _('Document Id'), array('Macro' =>'%Document.Id%'));
 	$grid->NewColumn('FieldMapper', _('Document'), array('Macro' =>'%DocumentNo%'));
 	$grid->NewColumn('FieldMapperWithTranslation', _('Order'),
 	       array('Macro' =>'%Command.CommandNo%',

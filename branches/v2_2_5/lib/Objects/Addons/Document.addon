@@ -1,36 +1,3 @@
-<?php
-
-/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
-
-/**
- * $Source: /home/cvs/codegen/codegentemplates.py,v $
- *
- * Ceci est un fichier généré, NE PAS EDITER, éditez plutôt le fichier
- * .addon correspondant qui doit se trouver dans le répertoire Addons.
- *
- * @copyright 2002-2006 ATEOR - All rights reserved
- */
-
-/**
- * Document class
- *
- * Classe contenant des méthodes additionnelles
- */
-class Document extends _Document {
-    // Constructeur {{{
-
-    /**
-     * Document::__construct()
-     * Constructeur
-     *
-     * @access public
-     * @return void
-     */
-    public function __construct() {
-        parent::__construct();
-    }
-
-    // }}}
     // Document::getData() {{{
 
     /**
@@ -111,6 +78,3 @@ class Document extends _Document {
     }
 
     // }}}
-}
-
-?>

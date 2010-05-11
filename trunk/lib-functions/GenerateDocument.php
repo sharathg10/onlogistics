@@ -119,6 +119,7 @@ function generateDocument($document, $reedit=0, $output='I') {
 	    $pdf = $generator->render();
         $data =  $pdf->output('', 'S');
         $pdfDoc = new Document();
+        $pdfDoc->generateId();
         $pdfDoc->setType(Document::TYPE_PDF);
         $pdfDoc->setData($data);
         $pdfDoc->save();

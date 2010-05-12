@@ -2088,7 +2088,6 @@
             <const name="TYPE_PDF" label="application/pdf" value="1" />
             <const name="TYPE_CSV" label="text/csv" value="2" />
         </property>
-        <property type="longtext" name="Data" />
     </entity>
 
     <!-- entity Prestation -->

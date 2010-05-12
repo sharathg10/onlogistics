@@ -661,7 +661,7 @@ class Command extends _Command {
                 $modelId = $model->getId();
             } else {
                 $baseRef = $rtwProduct->getBaseReference();
-                $modelId = substr($baseRef, 0, -strrpos($baseRef, '-')-1);
+                $modelId = substr($baseRef, 0, strrpos($baseRef, '-'));
                 $ref = $modelId;
             }
             if (!isset($ret[$modelId])) {

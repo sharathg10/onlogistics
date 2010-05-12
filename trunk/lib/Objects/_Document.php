@@ -92,38 +92,6 @@ class _Document extends Object {
     }
 
     // }}}
-    // Data string property + getter/setter {{{
-
-    /**
-     * Data string property
-     *
-     * @access private
-     * @var string
-     */
-    private $_Data = '';
-
-    /**
-     * _Document::getData
-     *
-     * @access public
-     * @return string
-     */
-    public function getData() {
-        return $this->_Data;
-    }
-
-    /**
-     * _Document::setData
-     *
-     * @access public
-     * @param string $value
-     * @return void
-     */
-    public function setData($value) {
-        $this->_Data = $value;
-    }
-
-    // }}}
     // AbstractDocument one to one relation getter {{{
     /**
      * _Document::getAbstractDocument
@@ -192,8 +160,7 @@ class _Document extends Object {
      */
     public static function getProperties() {
         $return = array(
-            'Type' => Object::TYPE_CONST,
-            'Data' => Object::TYPE_LONGTEXT);
+            'Type' => Object::TYPE_CONST);
         return $return;
     }
 

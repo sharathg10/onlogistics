@@ -45,9 +45,6 @@ class Document extends _Document {
      * @return string 
      */
     public function getData() {
-        if (!defined('ARCHIVED_DOCUMENTS_DIR')) {
-            return parent::getData();    
-        }
         // uncomment the @ operator if something goes wrong...
         return @file_get_contents($this->getDocumentFullPath());
     }
@@ -68,9 +65,6 @@ class Document extends _Document {
      * @return boolean 
      */
     public function setData($data) {
-        if (!defined('ARCHIVED_DOCUMENTS_DIR')) {
-            return parent::setData($data);    
-        }
         // uncomment the @ operator if something goes wrong...
         return @file_put_contents($this->getDocumentFullPath(), $data);
     }

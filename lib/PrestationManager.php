@@ -1889,6 +1889,30 @@ $totalQty = $totalPackagingQty = 0;
     }
 
     // }}}
+    // getChainCommands() {{{
+
+    /**
+     * Returns all chaincommand instances used in the prestation.
+     *
+     * @return array
+     */
+    public function getChainCommands()
+    {
+        $chainCommands = array();
+        foreach($this->acoCollection as $aco) {
+            try {
+                $cmd = $aco->getActivatedChain()->getCommandItemCollection(array('Command.Type' => Command::TYPE_TRANSPORT))->getItem(0)->getCommand();
+            } catch (Exception $exc) {
+                continue;
+            }
+            if (!isset($chainCommands[$cmd->getId()])) {
+                $chainCommands[$cmd->getId()] = $cmd;
+            }
+        }    
+        return array_values($chainCommands);
+    }
+    
+    // }}}
 }
 
 ?>

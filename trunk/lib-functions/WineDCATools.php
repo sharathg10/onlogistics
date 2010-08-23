@@ -198,8 +198,7 @@ function generateDCA($itemsIds) {
                     $dtl_line[$curId][$LEM->Product->Id]['CODE EMBALLAGE'] = '' ;
                     $dtl_line[$curId][$LEM->Product->Id]['CONTENANCE'] = $LEM->Product->Volume ;
                     $dtl_line[$curId][$LEM->Product->Id]['QUANTITE'] =  $LEM->Quantity ;
-                    $dtl_line[$curId][$LEM->Product->Id]['VOL EN LITRE'] = 
-                        $ProductProperties['Volume']->getValue($LEM->Product->Id) * $LEM->Quantity ;
+                    $dtl_line[$curId][$LEM->Product->Id]['VOL EN LITRE'] = isset($ProductProperties['Volume']) ? $ProductProperties['Volume']->getValue($LEM->Product->Id) * $LEM->Quantity : 0;
                     $dtl_line[$curId][$LEM->Product->Id]['TOTAL NET'] = '' ;
                     $dtl_line[$curId][$LEM->Product->Id]['TOTAL BRUT'] = '' ;
                     // }}}    

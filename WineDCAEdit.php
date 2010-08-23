@@ -106,7 +106,7 @@ if (isset($_REQUEST['FormSubmitted']) && $_REQUEST['FormSubmitted'] == 'true') {
         Database::connection()->startTrans();
 
         $DCADate = date('Y-m-d H:i:s');
-        $DCAid = generateClassId('WineDCA');
+        $DCAid = generateClassId('WineDCAHeader');
         
         // Fichier Entete ( DCAEnt / WineDCAHeader)
         $WineDCAHeader = Object::load('WineDCAHeader');
@@ -175,7 +175,7 @@ if (isset($_REQUEST['FormSubmitted']) && $_REQUEST['FormSubmitted'] == 'true') {
         //  Commit de la transaction {{{
         Database::connection()->startTrans();
 
-        $DCAid = generateClassId('WineDCA');
+        $DCAid = generateClassId('WineDCAPeriodical');
         $DCADate = date('Y-m-d H:i:s');
         $WineDCAPeriodical = Object::load('WineDCAPeriodical');
         $WineDCAPeriodical->setEditionDate($DCADate);

@@ -88,6 +88,10 @@ if (isset($_REQUEST['exmId'])) {  // si on vient de ActivatedMovtAddWithPrevisio
     /*  Contruction du formulaire de recherche  */
     $form->addElement('text', 'CommandNo', _('Order number'), array(),
         array('Path' => 'ExecutedMovement.ActivatedMovement.ProductCommand.CommandNo'));
+    $form->addElement('select', 'ProductType', _('Product type'), array(
+        SearchTools::createArrayIDFromCollection('ProductType', array(),
+            _('Select a product type'))), array('Path' => 'Product.ProductType')
+    );
     $form->addElement('text', 'Product', _('Reference'), array(),
             array('Path' => 'Product.BaseReference'));
     $form->addElement('text', 'Location', _('Location'), array(),
@@ -268,6 +272,9 @@ if (isset($_REQUEST['exmId']) || true === $form->displayGrid() || $form->isFirst
         $FilterComponentArray[] = $FilterComponent;
     }
 
+
+    $grid->NewColumn('FieldMapper', _('Product type'),
+            array('Macro' =>'%Product.ProductType%'));
     $grid->NewColumn('FieldMapper', _('Reference'),
             array('Macro' =>'%Product.BaseReference%'));
     $grid->NewColumn('FieldMapper', _('Designation'), array('Macro' =>'%Product.Name%'));

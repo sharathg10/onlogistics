@@ -77,6 +77,13 @@ if (isset($_REQUEST['formSubmitted']) && $_REQUEST['formSubmitted'] == 'true') {
 
     // Sauvegarde tout en base
     $ivId = $manager->saveAll();
+
+    // passe les éventuelles commandes de transport a l'etat facture
+    foreach($manager->getChainCommands() as $chainCommand) {
+        $chainCommand->setState(Command::FACT_COMPLETE);
+        $chainCommand->save();
+    }
+
     PrestationManager::cleanSession();
     if (Database::connection()->HasFailedTrans()) {
         trigger_error(Database::connection()->errorMsg(), E_USER_WARNING);

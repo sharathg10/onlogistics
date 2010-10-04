@@ -1901,7 +1901,11 @@ $totalQty = $totalPackagingQty = 0;
         $chainCommands = array();
         foreach($this->acoCollection as $aco) {
             try {
-                $cmd = $aco->getActivatedChain()->getCommandItemCollection(array('Command.Type' => Command::TYPE_TRANSPORT))->getItem(0)->getCommand();
+                $cmi = $aco->getActivatedChain()->getCommandItemCollection(array('Command.Type' => Command::TYPE_TRANSPORT))->getItem(0);
+                if (!$cmi instanceof CommandItem) {
+                    continue;
+                }
+                $cmd = $cmi->getCommand();
             } catch (Exception $exc) {
                 continue;
             }

@@ -783,7 +783,6 @@ function lastModifiedSpreadSheetDate() {
 }
 
 // }}}
-
 // request_StockProductRealandVirtualList() {{{
 
 /*
@@ -806,6 +805,7 @@ function request_StockProductRealandVirtualList(
     }
 	// Traitement lie au Profile connecte
 	switch ($ProfileId) {
+		case UserAccount::PROFILE_OWNER_CUSTOMER:
 		case UserAccount::PROFILE_SUPPLIER_CONSIGNE:
 			$where .= 'AND LPQ._Location=LOC._Id AND LOC._Store=STO._Id AND '
 			 		. 'STO._StockOwner=' . $ConnectedActorId . ' ';
@@ -893,6 +893,7 @@ function request_StockProductAtDate($ConnectedActorId, $ProfileId, $addWhere = '
     require_once('Objects/SellUnitType.const.php');
 	// Traitement lie au Profile connecte
 	switch ($ProfileId) {
+		case UserAccount::PROFILE_OWNER_CUSTOMER:
 		case UserAccount::PROFILE_SUPPLIER_CONSIGNE:
 			$where = 'WHERE LEM._Location=LOC._Id AND LOC._Store=STO._Id AND STO._StockOwner='
 			 		. $ConnectedActorId . ' AND ';

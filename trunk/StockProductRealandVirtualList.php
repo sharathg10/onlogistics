@@ -56,6 +56,7 @@ $form->addElement('text', 'Name', _('Designation'));
 if (in_array($auth->getProfile(), array(UserAccount::PROFILE_OWNER_CUSTOMER, UserAccount::PROFILE_SUPPLIER_CONSIGNE))) {
     $owners = SearchTools::createArrayIDFromCollection(
             'Actor', array('Id' => $auth->getActorId()));
+    $_SESSION['Owner'] = $auth->getActorId();
 }else {
     $owners = SearchTools::createArrayIDFromCollection(
             'Actor', array(),_('Select an actor'));

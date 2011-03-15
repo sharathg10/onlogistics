@@ -97,6 +97,11 @@ if (true === $form->displayGrid()) {
         array('Macro'=>'%TotalTTC|formatnumber% %Currency.Symbol%'));
     $grid->NewColumn('FieldMapper', _('Payment date'),
         array('Macro'=>'%PaymentDate|formatdate@DATE_SHORT%'));
+    $grid->NewColumn('FieldMapperWithTranslation', _('Terms of payment'), array(
+            'Macro'=>'%TermsOfPayment%',
+            'TranslationMap' => array(0=>_('N/A')) + TermsOfPaymentItem::getPaymentModalityConstArray()
+        )
+    );
 
     $form->displayResult($grid, true, $filter, array('Name'=>SORT_ASC));
 } else {

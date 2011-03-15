@@ -253,6 +253,8 @@ $dateFormat['format']  = I18N::getHTMLSelectDateFormat();
 $dateFormat['minYear'] = date("Y");
 $dateFormat['maxYear'] = date("Y") + 10;
 $form->addElement('date', 'Flow_PaymentDate', _('Payment date'), $dateFormat);
+$topArray = array(0 => _('N/A')) + TermsOfPaymentItem::getPaymentModalityConstArray();
+$form->addElement('select', 'Flow_TermsOfPayment', _('Terms of payment'), $topArray, 'style="width:100%"');
 $form->addElement('date', 'Flow_EditionDate', _('Expense/receipt issue date'), $dateFormat);
 
 // valeurs par défaut pour le mode édition
@@ -260,6 +262,7 @@ if ($flow->getId() > 0 || $flow->getNumber()!='') {
     $defaultValues = FormTools::getDefaultValues($form, $flow);
     $defaultValues['Flow_PaymentDate'] = DateTimeTools::mySQLToQuickFormDate(
         $flow->getPaymentDate());
+    $defaultValues['Flow_TermsOfPayment'] = $flow->getTermsOfPayment();
     $defaultValues['Flow_EditionDate'] = DateTimeTools::mySQLToQuickFormDate(
         $flow->getEditionDate());
     $defaultValues['Flow_Paid'] = 0;
@@ -274,6 +277,7 @@ if ($flow->getId() > 0 || $flow->getNumber()!='') {
     $defaultValues['Flow_Currency_ID'] = $currency->getId();
     $defaultValues['Flow_EditionDate'] = $defaultValues['Flow_PaymentDate'] =
         DateTimeTools::mySQLToQuickFormDate(date('Y-m-d h:i:s'));
+    $defaultValues['Flow_TermsOfPayment'] = 0;
     $defaultValues['Flow_Paid'] = 0;
     $defaultValues['Flow_Handing'] = 0;
     $rs = request_flowLastPieceNo();

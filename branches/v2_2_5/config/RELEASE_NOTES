@@ -35,7 +35,7 @@ BEGIN;
 TRUNCATE TABLE IdHashTable;
 ####################################
 
-ALTER TABLE Document DROP _Data;
+ALTER TABLE Flow  ADD _TermsOfPayment INT(11) NOT NULL DEFAULT 0 AFTER _PaymentDate;
 
 ####################################
 # Ne pas enlever

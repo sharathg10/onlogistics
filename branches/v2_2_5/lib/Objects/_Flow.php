@@ -390,6 +390,38 @@ class _Flow extends Object {
     }
 
     // }}}
+    // TermsOfPayment int property + getter/setter {{{
+
+    /**
+     * TermsOfPayment int property
+     *
+     * @access private
+     * @var integer
+     */
+    private $_TermsOfPayment = 0;
+
+    /**
+     * _Flow::getTermsOfPayment
+     *
+     * @access public
+     * @return integer
+     */
+    public function getTermsOfPayment() {
+        return $this->_TermsOfPayment;
+    }
+
+    /**
+     * _Flow::setTermsOfPayment
+     *
+     * @access public
+     * @param integer $value
+     * @return void
+     */
+    public function setTermsOfPayment($value) {
+        $this->_TermsOfPayment = ($value===null || $value === '')?0:(int)$value;
+    }
+
+    // }}}
     // EditionDate datetime property + getter/setter {{{
 
     /**
@@ -588,6 +620,7 @@ class _Flow extends Object {
             'Paid' => Object::TYPE_DECIMAL,
             'Currency' => 'Currency',
             'PaymentDate' => Object::TYPE_DATETIME,
+            'TermsOfPayment' => Object::TYPE_INT,
             'EditionDate' => Object::TYPE_DATETIME,
             'ActorBankDetail' => 'ActorBankDetail');
         return $return;

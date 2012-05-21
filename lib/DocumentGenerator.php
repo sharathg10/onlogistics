@@ -4555,7 +4555,7 @@ class ProductLabelGenerator extends DocumentGenerator
 
                 // codes barre Code 128 + EAN 13
                 $this->pdf->Code128($x + $PictureWidth, $y + 6, $product->getBaseReference(), $CodeWidth , $CodeHeight );
-                if ($product->getEAN13Code()) {
+                if ($product instanceof RTWProduct && $product->getEAN13Code()) {
                     $this->pdf->EAN13($x + $PictureWidth, $y + 10, $product->getEAN13Code(), 10);
                 }
 
@@ -4565,6 +4565,26 @@ class ProductLabelGenerator extends DocumentGenerator
                     $product->getName(),
                     array('fontSize' => 7, 'lineHeight' => $LineHeight, 'width' => $StickerRealWidth, 'align' => 'C')
                 );
+		// Adresse Maloles
+		/*
+		if ($product instanceof RTWProduct)
+		{
+			// Adresse
+                	// XXX ajout en prod (enfin dans le trunk.current), non commite, par ben, a la demande de Gerard.
+                	$this->pdf->setXY($x, $y+$PictureHeight+$LineHeight);
+                	$this->pdf->addText(
+                    		"Maloles Sas, 62 Rue Tiquetonne, 75002 Paris-France, FR08448523084",
+                    		array('fontSize' => 7, 'lineHeight' => $LineHeight, 'width' => $StickerRealWidth, 'align' => 'C')
+                	);
+		}
+		*/
+		$actor   = Auth::getDatabaseOwner();
+		$address = $actor->getMainSite()->getFormatAddressInfos(', ');
+		$this->pdf->setXY($x, $y+$PictureHeight+$LineHeight);
+		$this->pdf->addText(
+			sprintf('%s, %s', $actor->getName(), $address),
+			array('fontSize' => 7, 'lineHeight' => $LineHeight, 'width' => $StickerRealWidth, 'align' => 'C')
+		);
             }
         }
         return $this->pdf;

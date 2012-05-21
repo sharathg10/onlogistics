@@ -899,6 +899,13 @@ $menu_metadata = array(
                 'description' => _('Product labels'),
                 'restrict_to_context' => array('readytowear'),
                 'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_RTW_SUPPLIER)
+            ),	
+	    array(
+                'title'       => _('Product labels'),
+                'link'        => 'dispatcher.php?entity=Product&altname=ProductForLabelPrinting',
+                'description' => _('Product labels'),
+                'restrict_to_context' => array('readytowear2'),
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_RTW_SUPPLIER)
             ),
             array(
                 'title'       => _('Worksheets'),

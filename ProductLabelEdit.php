@@ -55,18 +55,21 @@ if (isset($_REQUEST['cmdId'])) {
     $cmiCol = $order->getCommandItemCollection();
     foreach ($cmiCol as $cmi) {
         $product  = $cmi->getProduct();
-        if (!$product instanceof RTWProduct) {
-            continue;
-        }
+        //if (!$product instanceof RTWProduct) {
+        //    continue;
+        //}
         $quantity = $cmi->getQuantity();
         $productInfo[] = array($product, $quantity);
     }
 
 } else if (isset($_REQUEST['pdtIds'])) {
     foreach ($_REQUEST['pdtIds'] as $id) {
-        $product = Object::load('RTWProduct', $id);
-        if (!$product instanceof RTWProduct) {
-            continue;
+       	$product = Object::load('RTWProduct', $id);
+   	if (!$product instanceof RTWProduct) {
+           $product = Object::load('Product', $id);
+	   if (!$product instanceof Product) {
+	      continue;
+	   }
         }
         $fname = 'qty_' . $id;
         $quantity = isset($_SESSION[$fname]) && is_numeric($_SESSION[$fname]) ?

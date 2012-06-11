@@ -121,6 +121,26 @@ if (in_array('readytowear', $tradeContext)) {
             'Operator'=>'In'
         )
     );
+
+    // ajout david le 27/04/2012, non commite
+    $customArray['Season'] = array(
+        'Name'=>'Season',
+        'Type'=>'select',
+        'Params'=> array(
+            SearchTools::createArrayIDFromCollection(
+                'RTWSeason',
+                array(),
+                _('Select one or more items')
+            ),
+            'multiple, size="6"'
+        ),
+        'SearchOptions'=>array(
+            'Path'=>'Model.Season.Id',
+            'Operator'=>'In'
+        )
+    );
+    // fin ajout
+
     $customArray['Material1'] = array(
         'Name'=>'Material1',
         'Type'=>'select',
@@ -239,7 +259,7 @@ $form->addAction(array('URL'=>'ProductAddEdit.php?returnURL=ProductList.php'));
 /*  Affichage du Grid  */
 if (true === $form->displayGrid()) {
     if (in_array('readytowear', $tradeContext)) {
-        $rtwProductProperties = array('PressName', 'Material1', 'Material2',
+        $rtwProductProperties = array('PressName', 'Season', 'Material1', 'Material2',
             'Material3', 'Accessory1', 'Accessory2', 'Accessory3');
         foreach ($rtwProductProperties as $prop) {
             if (SearchTools::requestOrSessionExist($prop, array(0=>'##'), 'NotEquals')) {

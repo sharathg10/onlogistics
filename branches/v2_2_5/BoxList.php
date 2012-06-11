@@ -114,7 +114,7 @@ if (true === $form->displayGrid()) {
 
 	/*  Colonnes du grid  */
 	$grid->NewColumn('FieldMapper', _('Order'),
-			array('Macro' => '%Box[0].ActivatedChain.CommandItem[0].Command.CommandNo%'));
+			array('Macro' => '%PackingList.Command.CommandNo%'));
 	$grid->NewColumn('FieldMapper', _('Packing list'),
 			array('Macro' => '%PackingList.DocumentNo|default%'));
 	$grid->NewColumn('FieldMapper', _('Date'),

@@ -36,6 +36,8 @@
  * @filesource
  */
 
+require_once('FormatNumber.php');
+
 /**
  * Invoice class
  *
@@ -71,7 +73,6 @@ class Invoice extends _Invoice {
         require_once('Objects/Task.const.php');
         require_once('Objects/SellUnitType.const.php');
         require_once('Objects/Property.inc.php');
-        require_once('FormatNumber.php');
 
         $InvoiceItemCollection = $this->getInvoiceItemCollection();
         $NewInvoiceItemCollection = new Collection();

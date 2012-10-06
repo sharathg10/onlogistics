@@ -36,7 +36,7 @@
 
 require_once('config.inc.php');
 $auth = Auth::Singleton();
-$auth->checkProfiles(array(UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW));
+$auth->checkProfiles(array(UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_DIR_COMMERCIAL,UserAccount::PROFILE_COMMERCIAL));
 //Database::connection()->debug = true;
 
 SearchTools::prolongDataInSession();

@@ -41,7 +41,7 @@ $menu_metadata = array(
     array(
         'title'       => _('Admin'),
         'link'        => 'home.php?help_page=Administration',
-        'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW),
+        'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_DIR_COMMERCIAL,UserAccount::PROFILE_COMMERCIAL),
         'children'    => array(
             array(
                 'title'       => _('Profiles table'),
@@ -95,7 +95,7 @@ $menu_metadata = array(
                 'title'       => _('Cities'),
                 'link'        => 'CountryCityList.php',
                 'description' => _('List of cities'),
-                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW)
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_DIR_COMMERCIAL,UserAccount::PROFILE_COMMERCIAL)
             ),
             array(
                 'title'       => _('Licenses'),
@@ -600,7 +600,7 @@ $menu_metadata = array(
                 'title'       => _('Carriage service'),
                 'link'        => 'TransportChainList.php',
                 'description' => _('List of carriage services'),
-                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_CLIENT_TRANSPORT,UserAccount::PROFILE_DIR_COMMERCIAL)
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_CLIENT_TRANSPORT,UserAccount::PROFILE_DIR_COMMERCIAL,UserAccount::PROFILE_COMMERCIAL)
             ),
             array(
                 'title'       => _('Class booking'),

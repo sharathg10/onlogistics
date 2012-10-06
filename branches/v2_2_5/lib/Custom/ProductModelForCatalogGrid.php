@@ -198,7 +198,7 @@ class ProductModelForCatalogGrid extends GenericGrid
             $customerSelectMsg = '';
             $clientIsConnected = true;
         } else if ($pf == UserAccount::PROFILE_COMMERCIAL){
-            $CustomerFilter = array('Commercial' => $auth->getUserId(), 'Active' => 1);
+            $CustomerFilter = array('Commercial' => $this->auth->getUserId(), 'Active' => 1);
         } else {
             $filter = array('Active' => 1);
         }

@@ -628,7 +628,7 @@ $menu_metadata = array(
                 'title'       => _('Carriage orders'),
                 'link'        => 'ChainCommandList.php',
                 'description' => _('State of orders'),
-                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_CLIENT_TRANSPORT,UserAccount::PROFILE_DIR_COMMERCIAL)
+                'restrict_to' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_CLIENT_TRANSPORT,UserAccount::PROFILE_DIR_COMMERCIAL,UserAccount::PROFILE_COMMERCIAL)
             ),
             array(
                 'title'       => _('Class bookings'),

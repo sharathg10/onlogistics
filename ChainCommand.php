@@ -72,7 +72,7 @@ $currency = $currencyMapper->load(array('Id'=>1));
 
 $auth = Auth::Singleton();
 $auth->checkProfiles(
-    array(UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW, UserAccount::PROFILE_CLIENT_TRANSPORT),
+    array(UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW, UserAccount::PROFILE_CLIENT_TRANSPORT,UserAccount::PROFILE_COMMERCIAL,UserAccount::PROFILE_DIR_COMMERCIAL),
     array('showErrorDialog' => true)
 );
 $session = Session::singleton();
@@ -123,7 +123,7 @@ $smarty->assign('FormAction', $_SERVER['PHP_SELF']);
 $smarty->assign('ReturnURL',  $retURL);
 $smarty->assign('Currency', $currency->getSymbol());
 $smarty->assign('IsAdmin', in_array($auth->getProfile(), 
-    array(UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW)));
+    array(UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW, UserAccount::PROFILE_COMMERCIAL,UserAccount::PROFILE_DIR_COMMERCIAL,UserAccount::PROFILE_TRANSPORT)));
 if (isset($_REQUEST['isEstimate'])) {
     $smarty->assign('isEstimate', 1);
 }

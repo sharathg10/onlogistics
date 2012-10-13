@@ -94,7 +94,9 @@ if (true === $form->displayGrid()) {
                 UserAccount::PROFILE_ADMIN,
                 UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,
                 UserAccount::PROFILE_ADMIN_VENTES,
-                UserAccount::PROFILE_AERO_ADMIN_VENTES
+                UserAccount::PROFILE_AERO_ADMIN_VENTES,
+		UserAccount::PROFILE_COMMERCIAL,
+		UserAccount::PROFILE_DIR_COMMERCIAL
             ),
             'URL'=>'ChainCommand.php?chnId=%d&isEstimate=1'
         )
@@ -107,7 +109,9 @@ if (true === $form->displayGrid()) {
                 UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,
                 UserAccount::PROFILE_ADMIN_VENTES,
                 UserAccount::PROFILE_AERO_ADMIN_VENTES,
-                UserAccount::PROFILE_CLIENT_TRANSPORT
+                UserAccount::PROFILE_CLIENT_TRANSPORT,
+		UserAccount::PROFILE_COMMERCIAL,
+		UserAccount::PROFILE_DIR_COMMERCIAL
             ),
             'URL'=>'ChainCommand.php?chnId=%d'
         )

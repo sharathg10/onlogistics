@@ -123,7 +123,7 @@ $smarty->assign('FormAction', $_SERVER['PHP_SELF']);
 $smarty->assign('ReturnURL',  $retURL);
 $smarty->assign('Currency', $currency->getSymbol());
 $smarty->assign('IsAdmin', in_array($auth->getProfile(), 
-    array(UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW, UserAccount::PROFILE_COMMERCIAL,UserAccount::PROFILE_DIR_COMMERCIAL,UserAccount::PROFILE_TRANSPORT)));
+    array(UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW, UserAccount::PROFILE_COMMERCIAL,UserAccount::PROFILE_DIR_COMMERCIAL)));
 if (isset($_REQUEST['isEstimate'])) {
     $smarty->assign('isEstimate', 1);
 }

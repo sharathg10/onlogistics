@@ -834,12 +834,23 @@ function request_StockProductRealandVirtualList(
 		default: // UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ACTOR
 			$addTable = '';
 	}
+	if ($ProfileId != UserAccount::PROFILE_SUPPLIER){
+		$where .= 'AND AP._Product = PDT._Id ';
+		$addTable = ', ActorProduct AP ';
+	}
+
+
 	// Traitement lie aux criteres de recherche saisis
     $baseReference = SearchTools::RequestOrSessionExist('BaseReference');
 	if ($baseReference !== false && $baseReference != '') {
 		$where .= 'AND PDT._BaseReference LIKE "'
 		      . str_replace('*', "%", $baseReference) . '" ';
 	}
+	$associatedProductReference = SearchTools::RequestOrSessionExist('AssociatedProductReference');
+	if ($associatedProductReference !== false && $associatedProductReference != '') {
+                $where .= 'AND AP._AssociatedProductReference LIKE "'
+                      . str_replace('*', "%", $associatedProductReference) . '" ';
+        }
     $name = SearchTools::RequestOrSessionExist('Name');
 	if ($name !== false && $name != '') {
 		$where .= 'AND I1._StringValue_'.$locale.' LIKE "' . str_replace('*', "%", $name) . '" ';
@@ -862,7 +873,8 @@ function request_StockProductRealandVirtualList(
 	$request .= 'I1._StringValue_'.$locale.' as pdtName, PDT._Id as pdtId, PDT._Category as category, ';
 	$request .= 'PDT._Activated AS Activated, PTY._Name as productType, ';
 	$request .= 'IF(SUT._Id>= ' . SELLUNITTYPE_KG .  ', I2._StringValue_'.$locale.',"") AS shortName, ';
-    $request .= 'SUM(LPQ._RealQuantity) as qty ';
+    	$request .= 'SUM(LPQ._RealQuantity) as qty, ';
+	$request .= 'group_concat(AP._AssociatedProductReference) AS associatedProductReference ';	
 	$request .= 'FROM SellUnitType SUT, I18nString I1, I18nString I2, ProductType PTY, Product PDT LEFT JOIN LocationProductQuantities LPQ ON PDT._Id=LPQ._Product ';
 	$request .= $addTable . $where;
 	$request .= 'GROUP BY PDT._Id ';

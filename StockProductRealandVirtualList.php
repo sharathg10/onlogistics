@@ -51,6 +51,7 @@ $form = new SearchForm('Licence');
 // On fait suivre ce qui passe dans l'URL
 //$form->BuildHiddenField(array('actorID' => $_REQUEST['actorID']));
 $form->addElement('text', 'BaseReference', _('Reference'));
+$form->addElement('text', 'AssociatedProductReference', _('Purchase reference'));
 $form->addElement('text', 'Name', _('Designation'));
 
 if (in_array($auth->getProfile(), array(UserAccount::PROFILE_OWNER_CUSTOMER, UserAccount::PROFILE_SUPPLIER_CONSIGNE))) {
@@ -100,6 +101,7 @@ if (true === $form->displayGrid()) {
 
 	$grid->NewAction('Export', array('FileName' => 'Stock'));
 	$grid->NewColumn('FieldMapper', _('Reference'), array('Macro' => '%BaseReference%'));
+	$grid->NewColumn('FieldMapper', _('Purchase reference'), array('Macro' => '%AssociatedProductReference%'));
 	$grid->NewColumn('FieldMapper', _('Designation'), array('Macro' => '%Name%'));
 	$grid->NewColumn('FieldMapper', _('Quantity'),
             array('Macro' => '%Quantity|formatnumber@3@1% %SellUnitTypeShortName%',
@@ -146,6 +148,7 @@ if (true === $form->displayGrid()) {
 		$pq = new ProductQuantity();
 		$pq->setId($rs->fields['pdtId']);
 		$pq->setBaseReference($rs->fields['baseReference']);
+		$pq->setAssociatedProductReference($rs->fields['associatedProductReference']);
 		$pq->setName($rs->fields['pdtName']);
 		$pq->setSellUnitTypeShortName($rs->fields['shortName']);
 		$pq->setQuantity((isset($rs->fields['qty']))?$rs->fields['qty']:0);

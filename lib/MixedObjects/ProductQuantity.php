@@ -70,6 +70,33 @@ class ProductQuantity extends Object {
         return $this->_BaseReference;
     }
 
+    /**
+     *
+     * @access private
+     * @var string
+     */
+    private $_AssociatedProductReference = "";
+
+    /**
+     *
+     * @param string $value The new value
+     * @access public
+     */
+    public function setAssociatedProductReference($value) {
+        $this->_AssociatedProductReference = $value;
+    }
+
+    /**
+     *
+     * @return string Content of value
+     * @access public
+     */
+    public function getAssociatedProductReference() {
+        return $this->_AssociatedProductReference;
+    }
+
+
+
 	/**
      *
      * @access private

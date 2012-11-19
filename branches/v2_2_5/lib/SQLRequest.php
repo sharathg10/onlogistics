@@ -834,11 +834,6 @@ function request_StockProductRealandVirtualList(
 		default: // UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,UserAccount::PROFILE_ACTOR
 			$addTable = '';
 	}
-	if ($ProfileId != UserAccount::PROFILE_SUPPLIER){
-		$where .= 'AND AP._Product = PDT._Id ';
-		$addTable = ', ActorProduct AP ';
-	}
-
 
 	// Traitement lie aux criteres de recherche saisis
     $baseReference = SearchTools::RequestOrSessionExist('BaseReference');
@@ -875,7 +870,12 @@ function request_StockProductRealandVirtualList(
 	$request .= 'IF(SUT._Id>= ' . SELLUNITTYPE_KG .  ', I2._StringValue_'.$locale.',"") AS shortName, ';
     	$request .= 'SUM(LPQ._RealQuantity) as qty, ';
 	$request .= 'group_concat(AP._AssociatedProductReference) AS associatedProductReference ';	
+	//$request .= 'NULL AS associatedProductReference ';
 	$request .= 'FROM SellUnitType SUT, I18nString I1, I18nString I2, ProductType PTY, Product PDT LEFT JOIN LocationProductQuantities LPQ ON PDT._Id=LPQ._Product ';
+	if ($ProfileId != UserAccount::PROFILE_SUPPLIER){
+		$request .= 'LEFT JOIN ActorProduct AP ON PDT._Id=AP._Product ';
+	}
+
 	$request .= $addTable . $where;
 	$request .= 'GROUP BY PDT._Id ';
 	if ($withDate === false) {

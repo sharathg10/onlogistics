@@ -4396,6 +4396,143 @@ class LookbookGenerator extends WorksheetGenerator
 }
 
 // }}}
+// PackLabelGenerator {{{
+
+/**
+ * PackLabelGenerator.
+ * Classe utilisee pour les etiquettes commande transport.
+ *
+ */
+class PackLabelGenerator extends DocumentGenerator
+{
+    protected $chainCommandList;
+
+    // __construct() {{{
+
+    /**
+     * Constructor
+     *
+     * @access protected
+     */
+    public function __construct($chainCommandList) {
+        // doc fictif car on ne sauve pas ces fiches suiveuses
+        $document = new AbstractDocument();
+        $cur = false; // pas important ici...
+        parent::__construct($document, false, false, $cur, '');
+        $this->pdf->showExpeditor   = false;
+    	$this->pdf->showPageNumbers = false;
+        $this->pdf->showEditionDate = false;
+        $this->pdf->setAutoPageBreak(true, 0);
+        $this->chainCommandList = $chainCommandList;
+    }
+    // }}}
+    // PackLabelGenerator::render() {{{
+
+    /**
+     * Construit le doc pdf
+     *
+     * @access public
+     * @return void
+     */
+    public function render() {
+
+        $i = 0;
+        $cache = array();
+
+        $PageHeight = 296 ;
+        $PageWidth = 210 ;
+
+        $PageMargeTop = 4 ;
+        $PageMargeBottom = 4 ;
+        $PageMargeLeft = 4 ;
+        $PageMargeRight = 4 ;
+
+        $StickerMargeLeft = 2 ;
+        $StickerMargeRight= 2 ;
+        $StickerMargeTop = 2 ;
+        $StickerMargeBottom = 2 ;
+        $StickerPerLine = 2 ;
+        $StickerPerRow = 6 ;
+        $StickerSpacing = 0 ;
+
+        $CodeHeight = 8 ;
+        $CodeWidth = 50 ;
+        $LineHeight = 3 ;
+
+        $DocumentWidth = $PageWidth - ($PageMargeLeft + $PageMargeRight) ;
+        $StickerWidth = $DocumentWidth / $StickerPerLine ;
+        $StickerRealWidth = $StickerWidth - ($StickerMargeLeft + $StickerMargeRight) ;
+        $PictureWidth = $StickerRealWidth - $CodeWidth - 20 ;
+
+        $DocumentHeight = $PageHeight - $PageMargeTop - $PageMargeBottom ;
+        $StickerHeight = ($DocumentHeight - (($StickerPerRow - 1) * $StickerSpacing )) / 6 ;
+        $StickerRealHeight = $StickerHeight - $StickerMargeTop - $StickerMargeBottom ;
+        $PictureHeight = $StickerRealHeight - 20 ;
+
+	$total = 0;
+	foreach ($this->chainCommandList as $chainCommandItem) {
+		$total += $chainCommandItem->getQuantity();
+	}
+
+
+        foreach ($this->chainCommandList as $chainCommandItem) {
+
+	  for ($j = 0; $j < $chainCommandItem->getQuantity(); $j++){
+
+                if ($i == 0 || ($i%12==0)) {
+                    $x = $PageMargeLeft ;
+                    $y  = $PageMargeTop +$StickerMargeTop ;
+                    $newPage = true;
+                    $this->pdf->addPage();
+                } else {
+                    $newPage = false;
+                }
+
+
+                if ($i % 2 == 0) {
+                    $x = $PageMargeLeft ;
+                    if (!$newPage) $y += $StickerHeight+$StickerMargeTop ;
+                } else {
+                    $x = $PageWidth / 2 ;
+                }
+
+                $x += $StickerMargeLeft ;
+
+		$pack = $i + 1;
+		$id = sprintf("%s %d/%d", $chainCommandItem->getCommand()->getCommandNo(), $pack, $total);
+
+		$this->pdf->setXY($x + $PictureWidth, $y);
+
+                $this->pdf->addText(
+                        trim($chainCommandItem->getCoverType()->getName()),
+			array('fontSize' => 8, 'lineHeight' => 3, 'width' => $CodeWidth, 'align' => 'L')
+                    );
+
+	 	$this->pdf->setXY($x + $PictureWidth, $y);
+
+		$this->pdf->addText(
+                        "$pack / $total",
+                        array('fontSize' => 8, 'lineHeight' => 3, 'width' => $CodeWidth, 'align' => 'R', 'fontStyle' => 'B')
+                   );
+
+                // codes barre Code 128
+                $this->pdf->Code128($x + $PictureWidth, $y + 6, $id, $CodeWidth , $CodeHeight);
+
+		$this->pdf->setXY($x + $PictureWidth, $y + 16);
+		$this->pdf->addText(
+			$id,
+			array('fontSize' => 8, 'lineHeight' => 3, 'width' => $CodeWidth, 'align' => 'C', 'fontStyle' => 'B')
+		    );
+
+		$i++;
+           }     
+        }
+        return $this->pdf;
+   }
+}
+// }}}
+
+
 // ProductLabelGenerator {{{
 
 /**

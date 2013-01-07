@@ -937,7 +937,16 @@ class CommandManager{
             $this->command->getDestinator(),
             ($prices['ttc'] - $ht > 0)
         );
-        $this->command->generateCommandNo($this->command->getChain());
+	$serial = $this->command->getCommandNo();
+	if (trim($serial) == ''){
+	    $this->command->generateCommandNo($this->command->getChain());
+	}
+	else {
+	    $commandMapper = Mapper::singleton('Command');
+	    if ($commandMapper->alreadyExists(array('CommandNo'=>$serial))) {
+              return new Exception(E_COMMANDNO_EXISTS);
+            }
+	}
         $this->command->setSupplierCustomer($spc);
         $this->command->setTermsOfPayment($spc->getTermsOfPayment());
         $currency = Object::load('Currency', array('Id'=>1));

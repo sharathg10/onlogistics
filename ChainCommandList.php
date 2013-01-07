@@ -167,6 +167,16 @@ if (true === $form->displayGrid()) {
         'Profiles' => array(UserAccount::PROFILE_ADMIN, UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW, UserAccount::PROFILE_ADMIN_VENTES,
                             UserAccount::PROFILE_AERO_ADMIN_VENTES, UserAccount::PROFILE_DIR_COMMERCIAL)));
 
+	 $grid->NewAction('Redirect', array(
+        'Caption' => _('Print pack labels'),
+        'Title' => _('Print pack labels'),
+        'TargetPopup' => true,
+            'URL' => 'PackLabelEdit.php?cmdId=%d',
+        'ReturnURL' => 'javascript:window.close();',
+        'Profiles' => array(UserAccount::PROFILE_ADMIN,UserAccount::PROFILE_ADMIN_WITHOUT_CASHFLOW,
+                            UserAccount::PROFILE_RTW_SUPPLIER)));
+
+
 	$grid->NewAction('Print');
 	$grid->NewAction('Export', array('FileName' => 'Commandes'));
 

@@ -228,7 +228,7 @@ class Command extends _Command {
        	}
 
 	$parentCommand = $this->getParentCommand();
-	if (parentCommand != FALSE)
+	if ($parentCommand != FALSE)
 	{
 		$parentCommandNo = $this->getParentCommand()->getCommandNo();
 	}

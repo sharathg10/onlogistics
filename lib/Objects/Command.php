@@ -218,43 +218,54 @@ class Command extends _Command {
      */
     public function generateCommandNo($chain)
     {
-        $this->setCommandSequence($this->getCommandSequence() + 1);
-        //$this->save();
-        //$serial = $chain->getReference() . '-' . $chain->getCommandSequence();
-        $seq = $this->getCommandSequence();
+	$i = 0;
+	while ($i < 10000)
+	{
+        	$this->setCommandSequence($this->getCommandSequence() + 1);
         
-        if($this->getType() == Command::TYPE_CUSTOMER) {
-            $serial = $this->getDestinator()->getCode() ;
-        } else {
-            $serial = $this->getExpeditor()->getCode() ;
-        }
+		$seq = $this->getCommandSequence();
+        
+        	if($this->getType() == Command::TYPE_CUSTOMER) 
+		{
+	            $serial = $this->getDestinator()->getCode() ;
+	        } 
+		else 
+		{
+	            $serial = $this->getExpeditor()->getCode() ;
+	        }
 
-        if($this->getParentCommand() != FALSE ) {
-            $serial = $this->getParentCommand()->getCommandNo()."-".$serial ;
-        } else {
-            $serial .= "-".$seq ;
-        }
+	        if($this->getParentCommand() != FALSE ) 
+		{
+	            $serial = $this->getParentCommand()->getCommandNo()."-".$serial ;
+	        } 
+		else 
+		{
+	            $serial .= "-".$seq ;
+	        }
 
-        if ($this->getIsEstimate()) {
-            $serial = 'D-'.$serial;
-        }
+	        if ($this->getIsEstimate()) 
+		{
+	            $serial = 'D-' . $serial;
+	        }
 
-
-        $commandMapper = Mapper::singleton('Command');
-        // on appelle la methode récursivement jusqu'à trouver un numéro unique
-        if ($commandMapper->alreadyExists(array('CommandNo'=>$serial))) {
-            if($this->getParentCommand() != FALSE ) {
-                $serial .= "-".$seq ;
-                if ($commandMapper->alreadyExists(array('CommandNo'=>$serial))) {
-                    $serial = $this->generateCommandNo($chain);
-                }
-            } else {
-                $serial = $this->generateCommandNo($chain);
-            }
-        } else {
-            $this->setCommandNo($serial);
-        }
-        return $serial;
+		$commandMapper = Mapper::singleton('Command');
+		if ($commandMapper->alreadyExists(array('CommandNo'=>$serial)) == false) 
+		{
+			$this->setCommandNo($serial);
+			return $serial;
+		}
+		else if ($this->getParentCommand() != FALSE)
+		{
+			$serial .= "-".$seq ;
+			if ($commandMapper->alreadyExists(array('CommandNo'=>$serial)) == false)
+	                {
+				$this->setCommandNo($serial);
+	                	return $serial;
+			}
+		}
+		$i++;
+	}
+	throw new Exception('Max commandNo achieved (max = 10000)');
     }
 
     // }}}

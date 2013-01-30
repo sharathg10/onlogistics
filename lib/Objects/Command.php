@@ -218,6 +218,25 @@ class Command extends _Command {
      */
     public function generateCommandNo($chain)
     {
+	if($this->getType() == Command::TYPE_CUSTOMER)
+       	{
+       		$code = $this->getDestinator()->getCode() ;
+      	}
+      	else
+        {
+       		$code = $this->getExpeditor()->getCode() ;
+       	}
+
+	$parentCommand = $this->getParentCommand();
+	if (parentCommand != FALSE)
+	{
+		$parentCommandNo = $this->getParentCommand()->getCommandNo();
+	}
+
+	$estimate = $this->getIsEstimate();
+
+	$commandMapper = Mapper::singleton('Command');
+
 	$i = 0;
 	while ($i < 10000)
 	{
@@ -225,36 +244,28 @@ class Command extends _Command {
         
 		$seq = $this->getCommandSequence();
         
-        	if($this->getType() == Command::TYPE_CUSTOMER) 
-		{
-	            $serial = $this->getDestinator()->getCode() ;
-	        } 
-		else 
-		{
-	            $serial = $this->getExpeditor()->getCode() ;
-	        }
+		$serial = $code;
 
-	        if($this->getParentCommand() != FALSE ) 
+	        if($parentCommand != FALSE ) 
 		{
-	            $serial = $this->getParentCommand()->getCommandNo()."-".$serial ;
+	            $serial = $parentCommandNo."-".$serial ;
 	        } 
 		else 
 		{
 	            $serial .= "-".$seq ;
 	        }
 
-	        if ($this->getIsEstimate()) 
+	        if ($estimate) 
 		{
 	            $serial = 'D-' . $serial;
 	        }
 
-		$commandMapper = Mapper::singleton('Command');
 		if ($commandMapper->alreadyExists(array('CommandNo'=>$serial)) == false) 
 		{
 			$this->setCommandNo($serial);
 			return $serial;
 		}
-		else if ($this->getParentCommand() != FALSE)
+		else if ($parentCommand != FALSE)
 		{
 			$serial .= "-".$seq ;
 			if ($commandMapper->alreadyExists(array('CommandNo'=>$serial)) == false)
